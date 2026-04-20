@@ -2,7 +2,11 @@
 
 namespace App\Providers;
 
+use App\Support\Interfaces\Repositories\CategoryRepository;
+use App\Support\Interfaces\Repositories\CategoryRepositoryInterface;
+use App\Support\Interfaces\Repositories\CategoryServiceInterface;
 use Carbon\CarbonImmutable;
+use CategoryService;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\ServiceProvider;
@@ -15,7 +19,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->bind(CategoryRepositoryInterface::class, CategoryRepository::class);
+        $this->app->bind(CategoryServiceInterface::class, CategoryService::class);
     }
 
     /**
@@ -37,14 +42,15 @@ class AppServiceProvider extends ServiceProvider
             app()->isProduction(),
         );
 
-        Password::defaults(fn (): ?Password => app()->isProduction()
-            ? Password::min(12)
+        Password::defaults(
+            fn(): ?Password => app()->isProduction()
+                ? Password::min(12)
                 ->mixedCase()
                 ->letters()
                 ->numbers()
                 ->symbols()
                 ->uncompromised()
-            : null,
+                : null,
         );
     }
 }
