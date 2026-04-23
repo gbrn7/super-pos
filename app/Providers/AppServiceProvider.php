@@ -2,11 +2,11 @@
 
 namespace App\Providers;
 
-use App\Support\Interfaces\Repositories\CategoryRepository;
+use App\Repositories\CategoryRepository as RepositoriesCategoryRepository;
+use App\Services\CategoryService as ServicesCategoryService;
 use App\Support\Interfaces\Repositories\CategoryRepositoryInterface;
-use App\Support\Interfaces\Repositories\CategoryServiceInterface;
+use App\Support\Interfaces\Services\CategoryServiceInterface as ServicesCategoryServiceInterface;
 use Carbon\CarbonImmutable;
-use CategoryService;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\ServiceProvider;
@@ -19,8 +19,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->bind(CategoryRepositoryInterface::class, CategoryRepository::class);
-        $this->app->bind(CategoryServiceInterface::class, CategoryService::class);
+        $this->app->bind(CategoryRepositoryInterface::class, RepositoriesCategoryRepository::class);
+        $this->app->bind(ServicesCategoryServiceInterface::class, ServicesCategoryService::class);
     }
 
     /**
