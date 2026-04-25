@@ -22,6 +22,8 @@ class ProductSeeder extends Seeder
                 "stock" => 100,
                 "price" => 10000,
                 "cost_price" => 7000,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
         ]);
     }

@@ -15,13 +15,19 @@ class UnitSeeder extends Seeder
     {
         Unit::insert([
             [
-                "name" => "Kilogram"
+                "name" => "Kilogram",
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
-                "name" => "Liter"
+                "name" => "Liter",
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
-                "name" => "Pcs"
+                "name" => "Pcs",
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
         ]);
     }

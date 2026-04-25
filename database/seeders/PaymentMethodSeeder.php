@@ -16,11 +16,15 @@ class PaymentMethodSeeder extends Seeder
         PaymentMethod::insert([
             [
                 "name" => "Cash",
-                "desc" => "Pembayaran dengan uang tunai"
+                "desc" => "Pembayaran dengan uang tunai",
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 "name" => "Qris",
-                "desc" => "Pembayaran dengan QRIS"
+                "desc" => "Pembayaran dengan QRIS",
+                'created_at' => now(),
+                'updated_at' => now(),
             ]
         ]);
     }
