@@ -10,16 +10,17 @@ use Illuminate\Support\Collection;
 
 class CategoryRepository implements CategoryRepositoryInterface
 {
-    public function getAllByIndex(GetCategoryReqModel $request, ?int $paginate = 5): Paginator|Collection
+    public function getAllByIndex(GetCategoryReqModel $request): Paginator|Collection
     {
         $query = Category::query()
-            ->when($request->name, fn ($query) => $query->where('name', 'like', "%{$request->name}%"));
+            ->orderBy('id', 'desc')
+            ->when($request->name, fn($query) => $query->where('name', 'like', "%{$request->name}%"));
 
-        if ($paginate === null) {
+        if ($request->limit === null) {
             return $query->get();
         }
 
-        return $query->paginate($paginate);
+        return $query->paginate($request->limit)->onEachSide(1);
     }
 
     public function getById(int $id): ?Category

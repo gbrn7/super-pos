@@ -12,7 +12,7 @@ interface CategoryServiceInterface
     /**
      * Get all categories.
      */
-    public function getAllByIndex(GetCategoryReqModel $request, ?int $paginate = 5): Paginator|Collection;
+    public function getAllByIndex(GetCategoryReqModel $request): Paginator|Collection;
 
     /**
      * Get a category by its ID.

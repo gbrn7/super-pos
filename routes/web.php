@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\api\ApiCategoryController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ExampleController;
 use Illuminate\Support\Facades\Route;
@@ -15,6 +16,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('categories', CategoryController::class);
 
     Route::resource('example', ExampleController::class);
+
+
+    Route::group(['prefix' => 'api'], function () {
+        Route::resource('categories', ApiCategoryController::class)->names('apiCategories');
+    });
 });
 
 require __DIR__ . '/settings.php';

@@ -24,15 +24,36 @@ import {
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination"
+import { Skeleton } from "@/components/ui/skeleton"
+import { MetaLink } from "@/support/interfaces/metaLink"
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { SetDataAction } from "@inertiajs/react"
+import { QueryParam } from "@/support/interfaces/queryParam"
+
+
+
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
-  data: TData[]
+  data: TData[],
+  paginationLinks: MetaLink[],
+  processing?: boolean
+  handleLimitChange: (value: string) => void,
+  handlePageChange: (page: number) => void,
+  limitOptions: number[],
+  queryParam: QueryParam,
 }
-
 export function DataTable<TData, TValue>({
   columns,
   data,
+  paginationLinks,
+  processing,
+  handleLimitChange,
+  handlePageChange,
+  limitOptions,
+  queryParam
+
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([])
 
@@ -59,11 +80,6 @@ export function DataTable<TData, TValue>({
       columnFilters,
       columnVisibility,
       rowSelection,
-      pagination: {
-        pageIndex: 0,
-        pageSize: 5
-      },
-
     },
   })
 
@@ -130,7 +146,17 @@ export function DataTable<TData, TValue>({
             ))}
           </TableHeader>
           <TableBody>
-            {table.getRowModel().rows?.length ? (
+            {processing ? (
+              Array.from({ length: data.length }).map((_, index) => (
+                <TableRow key={index}>
+                  {table.getAllColumns().map((column) => (
+                    <TableCell key={column.id}>
+                      <Skeleton className="h-6 w-full" />
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))
+            ) : table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}
@@ -153,28 +179,49 @@ export function DataTable<TData, TValue>({
           </TableBody>
         </Table>
       </div>
-      <div className="flex items-center justify-end space-x-2 py-4">
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => table.previousPage()}
-          disabled={!table.getCanPreviousPage()}
-        >
-          Previous
-        </Button>
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => table.nextPage()}
-          disabled={!table.getCanNextPage()}
-        >
-          Next
-        </Button>
-      </div>
+      <Pagination className="flex items-center justify-between space-x-2 py-4 overflow-auto">
+        <Select defaultValue={queryParam.limit.toString()} onValueChange={handleLimitChange}>
+          <SelectTrigger className="w-full max-w-48">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              <SelectLabel>Limit</SelectLabel>
+              {limitOptions.map((option) => (
+                <SelectItem key={option} value={option.toString()}>
+                  {option}
+                </SelectItem>
+              ))}
+            </SelectGroup>
+          </SelectContent>
+        </Select>
+        <PaginationContent>
+          {
+            paginationLinks.map((link, index) => {
+              return (
+                <PaginationItem key={index} className="cursor-pointer">
+                  {
+                    index === 0 ? (
+                      <PaginationPrevious onClick={() => handlePageChange(link.page || 1)} />
+                    ) : index === paginationLinks.length - 1 ? (
+                      <PaginationNext onClick={() => handlePageChange(link.page || 1)} />
+                    ) : (
+                      <PaginationLink isActive={link.active} onClick={() => handlePageChange(link.page || 1)}>
+                        {link.label.replace(/&laquo;|&raquo;/g, '')}
+                      </PaginationLink>
+                    )
+                  }
+
+                </PaginationItem>
+              )
+            })
+          }
+        </PaginationContent >
+      </Pagination >
       <div className="flex-1 text-sm text-muted-foreground">
         {table.getFilteredSelectedRowModel().rows.length} of{" "}
         {table.getFilteredRowModel().rows.length} row(s) selected.
       </div>
-    </div>
+    </div >
   )
 }

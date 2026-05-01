@@ -1,93 +1,85 @@
-import { Head, usePage } from "@inertiajs/react";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import { Card, CardContent } from "@/components/ui/card";
-import { columns, Category } from "./columns"
+import { Head, usePage, useHttp } from "@inertiajs/react";
+import { columns } from "./columns"
 import { DataTable } from "./data-table"
+import { Category } from "@/support/models/category";
+import { ResourceResponse } from "@/support/interfaces/resourceResponse";
+import { useState, useEffect } from "react";
+import { index as apiGetCategories } from '@/routes/apiCategories';
+import { QueryParam } from "@/support/interfaces/queryParam";
+import { index as categories } from "@/routes/categories";
 
-// interface Category {
-//   id: number;
-//   name: string;
-//   desc: string | null;
-//   created_at: string;
-//   updated_at: string;
-// }
-
-async function getData(): Promise<Category[]> {
-  // Fetch data from your API here.
-  return [
-    {
-      id: 1,
-      name: "Test Category",
-      desc: "This is a test category",
-      created_at: "2023-01-01 00:00:00",
-      updated_at: "2023-01-01 00:00:00",
-    },
-    // ...
-  ]
-}
-
-
-
-
-
-interface PaginationLink {
-  url: string | null;
-  label: string;
-  page: number | null;
-  active: boolean;
-}
-
-interface CategoryPaginatedResponse {
-  current_page: number;
-  data: Category[];
-  first_page_url: string;
-  from: number;
-  last_page: number;
-  last_page_url: string;
-  links: PaginationLink[];
-  next_page_url: string | null;
-  path: string;
-  per_page: number;
-  prev_page_url: string | null;
-  to: number;
-  total: number;
-}
-
+const { url } = categories();
 
 
 export default function index() {
-  const { categories } = usePage<{ categories?: CategoryPaginatedResponse }>().props;
+  const { url: apiUrl } = apiGetCategories();
 
-  console.log(categories);
+  const LimitOptions = [10, 20, 50, 100]
 
-  // const data = await getData()
+  const [categoriesRes, setCategoriesRes] = useState<ResourceResponse<Category>>()
 
+  const { data, setData, get, processing } = useHttp<QueryParam>({
+    query: '',
+    page: 1,
+    column: 'name',
+    limit: 10,
+  });
+
+
+  const fetchCategories = () => {
+    try {
+      get(
+        apiUrl,
+        {
+          onSuccess: (response) => {
+            setCategoriesRes(response as ResourceResponse<Category>);
+          },
+        },
+      )
+    } catch (error) {
+      console.error('Failed to fetch categories:', error);
+    }
+  };
+
+
+  useEffect(() => {
+    console.log("data", data)
+    fetchCategories();
+  }, [data]);
+
+  const handleLimitChange = (value: string) => {
+    setData((prev) => ({ ...prev, limit: Number(value) }))
+  }
+
+  const handlePageChange = (page: number) => {
+    setData((prev) => ({ ...prev, page }))
+  }
 
   return (
     <>
       <Head title="Kategori" />
       <div className="flex h-full flex-1 flex-col overflow-x-auto rounded-xl p-4">
-        <div className="grid grid-cols-3 gap-4">
-
-        </div>
-        <DataTable columns={columns} data={categories?.data || []} />
+        <DataTable
+          columns={columns}
+          processing={processing}
+          paginationLinks={categoriesRes?.meta.links || []}
+          data={categoriesRes?.data || []}
+          handleLimitChange={handleLimitChange}
+          handlePageChange={handlePageChange}
+          limitOptions={LimitOptions}
+          queryParam={data}
+        />
       </div>
     </>
   );
 }
 
 index.layout = {
+
   breadcrumbs: [
     {
       title: 'Kategori',
-      href: '/categories',
+      href: url,
     },
   ],
 };

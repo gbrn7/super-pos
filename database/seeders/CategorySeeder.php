@@ -17,8 +17,9 @@ class CategorySeeder extends Seeder
             Category::create(
                 [
                     "name" => fake()->word(),
-                    'created_at' => now(),
-                    'updated_at' => now(),
+                    "desc" => fake()->sentence(),
+                    "created_at" => now(),
+                    "updated_at" => now(),
                 ]
             );
         }

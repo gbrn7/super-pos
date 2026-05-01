@@ -12,10 +12,10 @@ interface CategoryRepositoryInterface
   /**
    * Get all categories.
    * @param GetCategoryReqModel $request
-   * @param int|null $paginate
+   * @param int|null $limit
    * @return Paginator|SupportCollection
    */
-  public function getAllByIndex(GetCategoryReqModel $request, ?int $paginate): Paginator|Collection;
+  public function getAllByIndex(GetCategoryReqModel $request): Paginator|Collection;
 
   /**
    * Get a category by its ID.

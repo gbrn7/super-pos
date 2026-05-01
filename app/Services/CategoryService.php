@@ -14,9 +14,9 @@ class CategoryService implements CategoryServiceInterface
 {
     public function __construct(protected CategoryRepositoryInterface $categoryRepository) {}
 
-    public function getAllByIndex(GetCategoryReqModel $request, ?int $paginate = 5): Paginator|Collection
+    public function getAllByIndex(GetCategoryReqModel $request): Paginator|Collection
     {
-        return $this->categoryRepository->getAllByIndex($request, $paginate);
+        return $this->categoryRepository->getAllByIndex($request);
     }
 
     public function getById(int $id): ?Category
