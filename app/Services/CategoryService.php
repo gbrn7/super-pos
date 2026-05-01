@@ -5,7 +5,7 @@ namespace App\Services;
 use App\Models\Category;
 use App\Support\Interfaces\Repositories\CategoryRepositoryInterface;
 use App\Support\Interfaces\Services\CategoryServiceInterface;
-use App\Support\Model\Request\GetCategoryReqModel;
+use App\Support\Models\Category\GetCategoryReqModel;
 use Exception;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Support\Collection;

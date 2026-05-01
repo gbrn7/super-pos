@@ -6,10 +6,13 @@ import {
   flexRender,
   getCoreRowModel,
   getPaginationRowModel,
+  getFilteredRowModel,
+  getSortedRowModel,
   useReactTable,
   SortingState,
   ColumnFiltersState,
   VisibilityState,
+  PaginationState,
 } from "@tanstack/react-table"
 
 
@@ -24,12 +27,10 @@ import {
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination"
+import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination"
 import { Skeleton } from "@/components/ui/skeleton"
-import { MetaLink } from "@/support/interfaces/metaLink"
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { SetDataAction } from "@inertiajs/react"
-import { QueryParam } from "@/support/interfaces/queryParam"
+import { CreateDialog } from "./create-dialog"
 
 
 
@@ -37,23 +38,16 @@ import { QueryParam } from "@/support/interfaces/queryParam"
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[],
-  paginationLinks: MetaLink[],
   processing?: boolean
-  handleLimitChange: (value: string) => void,
-  handlePageChange: (page: number) => void,
-  limitOptions: number[],
-  queryParam: QueryParam,
+  limitOptions?: number[],
+  onRefresh?: () => void
 }
 export function DataTable<TData, TValue>({
   columns,
   data,
-  paginationLinks,
   processing,
-  handleLimitChange,
-  handlePageChange,
-  limitOptions,
-  queryParam
-
+  limitOptions = [10, 20, 50, 100],
+  onRefresh,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([])
 
@@ -66,79 +60,122 @@ export function DataTable<TData, TValue>({
 
   const [rowSelection, setRowSelection] = React.useState({})
 
+  const [pagination, setPagination] = React.useState<PaginationState>({
+    pageIndex: 0,
+    pageSize: 10,
+  })
+
+  const [searchColumn, setSearchColumn] = React.useState<string>("name")
+
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    getSortedRowModel: getSortedRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     onColumnVisibilityChange: setColumnVisibility,
     onRowSelectionChange: setRowSelection,
+    onPaginationChange: setPagination,
     state: {
       sorting,
       columnFilters,
       columnVisibility,
       rowSelection,
+      pagination,
     },
   })
 
+  const disabledClass = "pointer-events-none opacity-50"
 
 
   return (
     <div>
-      <div className="flex items-center pb-4">
-        <Input
-          placeholder="Nama Kategori"
-          value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
-          onChange={(event) =>
-            table.getColumn("name")?.setFilterValue(event.target.value)
-          }
-          className="max-w-sm"
-        />
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="ml-auto">
-              Columns
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            {table
-              .getAllColumns()
-              .filter(
-                (column) => column.getCanHide()
-              )
-              .map((column) => {
-                return (
-                  <DropdownMenuCheckboxItem
-                    key={column.id}
-                    className="capitalize"
-                    checked={column.getIsVisible()}
-                    onCheckedChange={(value) =>
-                      column.toggleVisibility(!!value)
-                    }
-                  >
-                    {column.id}
-                  </DropdownMenuCheckboxItem>
+      <div className="items-center pb-4 flex-col ">
+        <div className="flex first-row  gap-2">
+          <Select value={searchColumn} onValueChange={setSearchColumn}>
+            <SelectTrigger className="w-full max-w-48">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectLabel>Pencarian Berdasarkan</SelectLabel>
+                <SelectItem value="name">Nama</SelectItem>
+                <SelectItem value="desc">Deskripsi</SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+          <Input
+            placeholder={`Search by ${searchColumn === "name" ? "name" : "description"}...`}
+            value={(table.getColumn(searchColumn)?.getFilterValue() as string) ?? ""}
+            onChange={(event) => {
+              table.getColumn(searchColumn)?.setFilterValue(event.target.value)
+            }}
+            className="max-w-sm"
+          />
+        </div>
+        <div className="second-row mt-2 flex justify-end gap-2">
+          <CreateDialog onSuccess={onRefresh || (() => { })} />
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline">
+                Columns
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              {table
+                .getAllColumns()
+                .filter(
+                  (column) => column.getCanHide()
                 )
-              })}
-          </DropdownMenuContent>
-        </DropdownMenu>
+                .map((column) => {
+                  return (
+                    <DropdownMenuCheckboxItem
+                      key={column.id}
+                      className="capitalize"
+                      checked={column.getIsVisible()}
+                      onCheckedChange={(value) =>
+                        column.toggleVisibility(!!value)
+                      }
+                    >
+                      {column.id}
+                    </DropdownMenuCheckboxItem>
+                  )
+                })}
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
       </div>
       <div className="overflow-hidden rounded-md border">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => {
+                {headerGroup.headers.map((header, index) => {
                   return (
                     <TableHead key={header.id}>
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
+                      {header.isPlaceholder ? null : (
+                        <div
+                          onClick={header.column.getToggleSortingHandler()}
+                          className="flex items-center gap-2 cursor-pointer hover:text-foreground select-none"
+                        >
+                          {flexRender(
+                            header.column.columnDef.header,
+                            header.getContext()
+                          )}
+                          {index > 0 && (
+                            <span className="text-xs">
+                              {header.column.getIsSorted() === "asc"
+                                ? "↑"
+                                : header.column.getIsSorted() === "desc"
+                                  ? "↓"
+                                  : "↕"}
+                            </span>
+                          )}
+                        </div>
+                      )}
                     </TableHead>
                   )
                 })}
@@ -147,7 +184,7 @@ export function DataTable<TData, TValue>({
           </TableHeader>
           <TableBody>
             {processing ? (
-              Array.from({ length: data.length }).map((_, index) => (
+              Array.from({ length: pagination.pageSize }).map((_, index) => (
                 <TableRow key={index}>
                   {table.getAllColumns().map((column) => (
                     <TableCell key={column.id}>
@@ -180,13 +217,15 @@ export function DataTable<TData, TValue>({
         </Table>
       </div>
       <Pagination className="flex items-center justify-between space-x-2 py-4 overflow-auto">
-        <Select defaultValue={queryParam.limit.toString()} onValueChange={handleLimitChange}>
+        <Select value={pagination.pageSize.toString()} onValueChange={(value) => {
+          table.setPageSize(Number(value))
+        }}>
           <SelectTrigger className="w-full max-w-48">
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
-              <SelectLabel>Limit</SelectLabel>
+              <SelectLabel>Rows per page</SelectLabel>
               {limitOptions.map((option) => (
                 <SelectItem key={option} value={option.toString()}>
                   {option}
@@ -196,31 +235,35 @@ export function DataTable<TData, TValue>({
           </SelectContent>
         </Select>
         <PaginationContent>
-          {
-            paginationLinks.map((link, index) => {
-              return (
-                <PaginationItem key={index} className="cursor-pointer">
-                  {
-                    index === 0 ? (
-                      <PaginationPrevious onClick={() => handlePageChange(link.page || 1)} />
-                    ) : index === paginationLinks.length - 1 ? (
-                      <PaginationNext onClick={() => handlePageChange(link.page || 1)} />
-                    ) : (
-                      <PaginationLink isActive={link.active} onClick={() => handlePageChange(link.page || 1)}>
-                        {link.label.replace(/&laquo;|&raquo;/g, '')}
-                      </PaginationLink>
-                    )
-                  }
+          <PaginationItem>
+            <PaginationPrevious
+              onClick={() => table.previousPage()}
+              className={!table.getCanPreviousPage() ? disabledClass : "cursor-pointer"}
+            />
+          </PaginationItem>
 
-                </PaginationItem>
-              )
-            })
-          }
-        </PaginationContent >
-      </Pagination >
-      <div className="flex-1 text-sm text-muted-foreground">
-        {table.getFilteredSelectedRowModel().rows.length} of{" "}
-        {table.getFilteredRowModel().rows.length} row(s) selected.
+          {Array.from({ length: table.getPageCount() }).map((_, index) => (
+            <PaginationItem key={index}>
+              <PaginationLink
+                isActive={pagination.pageIndex === index}
+                onClick={() => table.setPageIndex(index)}
+                className="cursor-pointer"
+              >
+                {index + 1}
+              </PaginationLink>
+            </PaginationItem>
+          ))}
+
+          <PaginationItem>
+            <PaginationNext
+              onClick={() => table.nextPage()}
+              className={!table.getCanNextPage() ? disabledClass : "cursor-pointer"}
+            />
+          </PaginationItem>
+        </PaginationContent>
+      </Pagination>
+      <div className="flex-1 text-sm text-muted-foreground mt-2">
+        Page {table.getState().pagination.pageIndex + 1} of {table.getPageCount()} | {table.getFilteredRowModel().rows.length} total row(s)
       </div>
     </div >
   )

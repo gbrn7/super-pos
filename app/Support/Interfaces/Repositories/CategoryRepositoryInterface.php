@@ -3,7 +3,7 @@
 namespace App\Support\Interfaces\Repositories;
 
 use App\Models\Category;
-use App\Support\Model\Request\GetCategoryReqModel;
+use App\Support\Models\Category\GetCategoryReqModel;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Support\Collection;
 

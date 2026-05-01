@@ -30,9 +30,11 @@ export const columns: ColumnDef<Category>[] = [
   {
     accessorKey: "name",
     header: "Nama",
+    enableSorting: true,
   },
   {
     accessorKey: "desc",
     header: "Deskripsi",
+    enableSorting: true,
   },
 ]
