@@ -31,6 +31,7 @@ import { Pagination, PaginationContent, PaginationItem, PaginationLink, Paginati
 import { Skeleton } from "@/components/ui/skeleton"
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { CreateDialog } from "./create-dialog"
+import { ArrowDown, ArrowUp, ArrowUpDown } from "lucide-react"
 
 
 
@@ -164,15 +165,6 @@ export function DataTable<TData, TValue>({
                           {flexRender(
                             header.column.columnDef.header,
                             header.getContext()
-                          )}
-                          {index > 0 && (
-                            <span className="text-xs">
-                              {header.column.getIsSorted() === "asc"
-                                ? "↑"
-                                : header.column.getIsSorted() === "desc"
-                                  ? "↓"
-                                  : "↕"}
-                            </span>
                           )}
                         </div>
                       )}

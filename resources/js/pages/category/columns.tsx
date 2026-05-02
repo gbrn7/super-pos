@@ -2,6 +2,10 @@
 import { ColumnDef } from "@tanstack/react-table"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Category } from "@/support/models/category"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { Button } from "@/components/ui/button"
+import { MoreHorizontal } from "lucide-react"
+import { DataTableHeader } from "@/components/data-table-header"
 
 
 export const columns: ColumnDef<Category>[] = [
@@ -29,12 +33,41 @@ export const columns: ColumnDef<Category>[] = [
   },
   {
     accessorKey: "name",
-    header: "Nama",
+    header: ({ column }) =>
+    (
+      <DataTableHeader column={column} title="Nama" />
+    )
+    ,
     enableSorting: true,
   },
   {
     accessorKey: "desc",
-    header: "Deskripsi",
+    header: ({ column }) =>
+    (
+      <DataTableHeader column={column} title="Deskripsi" />
+    )
+    ,
     enableSorting: true,
+  },
+  {
+    id: "actions",
+    cell: () =>
+    (
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button variant="ghost" className="h-8 w-8 p-0">
+            <span className="sr-only">Open menu</span>
+            <MoreHorizontal className="h-4 w-4" />
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end">
+          <DropdownMenuLabel>Action</DropdownMenuLabel>
+          <DropdownMenuItem>Detail Data</DropdownMenuItem>
+          <DropdownMenuItem>Edit Data</DropdownMenuItem>
+          <DropdownMenuItem>Delete Data</DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    )
+    ,
   },
 ]
