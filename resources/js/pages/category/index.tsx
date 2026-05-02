@@ -1,10 +1,12 @@
 import { Head } from "@inertiajs/react";
 import { columns } from "./columns"
 import { DataTable } from "./data-table"
+import { DetailSheet } from "./detail-sheet"
 import { Category } from "@/support/models/category";
 import { useState, useEffect } from "react";
 import { index as apiGetCategories } from '@/routes/apiCategories';
 import { index as categories } from "@/routes/categories";
+import { DetailCard } from "./detail-card";
 
 const { url } = categories();
 
@@ -14,6 +16,8 @@ export default function index() {
 
   const [allCategories, setAllCategories] = useState<Category[]>([])
   const [processing, setProcessing] = useState(false)
+  const [detailOpen, setDetailOpen] = useState(false)
+  const [selectedCategory, setSelectedCategory] = useState<Category | null>(null)
 
   const fetchAllCategories = async () => {
     try {
@@ -27,6 +31,11 @@ export default function index() {
       setProcessing(false)
     }
   };
+
+  const handleDetailClick = (category: Category) => {
+    setSelectedCategory(category)
+    setDetailOpen(true)
+  }
 
   useEffect(() => {
     fetchAllCategories();
@@ -42,8 +51,15 @@ export default function index() {
           data={allCategories}
           limitOptions={[10, 20, 50, 100]}
           onRefresh={fetchAllCategories}
+          onDetailClick={handleDetailClick}
         />
       </div>
+
+      <DetailCard
+        isOpen={detailOpen}
+        category={selectedCategory}
+        onOpenChange={setDetailOpen}
+      />
     </>
   );
 }

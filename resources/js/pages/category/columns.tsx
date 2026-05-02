@@ -7,8 +7,11 @@ import { Button } from "@/components/ui/button"
 import { FileText, MoreHorizontal, Pencil, Trash } from "lucide-react"
 import { DataTableHeader } from "@/components/data-table-header"
 
+interface ColumnsProps {
+  onDetailClick?: (category: Category) => void
+}
 
-export const columns: ColumnDef<Category>[] = [
+export const columns = (props?: ColumnsProps): ColumnDef<Category>[] => [
   {
     id: "select",
     header: ({ table }) => (
@@ -51,7 +54,7 @@ export const columns: ColumnDef<Category>[] = [
   },
   {
     id: "actions",
-    cell: () =>
+    cell: ({ row }) =>
     (
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
@@ -64,7 +67,7 @@ export const columns: ColumnDef<Category>[] = [
           <DropdownMenuLabel>
             Action
           </DropdownMenuLabel>
-          <DropdownMenuItem>
+          <DropdownMenuItem onClick={() => props?.onDetailClick?.(row.original)}>
             <FileText className="mr-0.5 h-4 w-4" />
             Detail Data
           </DropdownMenuItem>

@@ -37,19 +37,22 @@ import { ArrowDown, ArrowUp, ArrowUpDown } from "lucide-react"
 
 
 interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[]
+  columns: ColumnDef<TData, TValue>[] | ((props: any) => ColumnDef<TData, TValue>[])
   data: TData[],
   processing?: boolean
   limitOptions?: number[],
   onRefresh?: () => void
+  onDetailClick?: (data: TData) => void
 }
 export function DataTable<TData, TValue>({
-  columns,
+  columns: columnsOrFn,
   data,
   processing,
   limitOptions = [10, 20, 50, 100],
   onRefresh,
+  onDetailClick,
 }: DataTableProps<TData, TValue>) {
+  const columns = typeof columnsOrFn === 'function' ? columnsOrFn({ onDetailClick }) : columnsOrFn
   const [sorting, setSorting] = React.useState<SortingState>([])
 
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -102,9 +105,9 @@ export function DataTable<TData, TValue>({
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
-                <SelectLabel>Pencarian Berdasarkan</SelectLabel>
-                <SelectItem value="name">Nama</SelectItem>
-                <SelectItem value="desc">Deskripsi</SelectItem>
+                <SelectLabel>Search By</SelectLabel>
+                <SelectItem value="name">Name</SelectItem>
+                <SelectItem value="desc">Description</SelectItem>
               </SelectGroup>
             </SelectContent>
           </Select>
