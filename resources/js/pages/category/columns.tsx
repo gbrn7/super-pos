@@ -4,7 +4,7 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { Category } from "@/support/models/category"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { Button } from "@/components/ui/button"
-import { MoreHorizontal } from "lucide-react"
+import { FileText, MoreHorizontal, Pencil, Trash } from "lucide-react"
 import { DataTableHeader } from "@/components/data-table-header"
 
 
@@ -61,10 +61,21 @@ export const columns: ColumnDef<Category>[] = [
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
-          <DropdownMenuLabel>Action</DropdownMenuLabel>
-          <DropdownMenuItem>Detail Data</DropdownMenuItem>
-          <DropdownMenuItem>Edit Data</DropdownMenuItem>
-          <DropdownMenuItem>Delete Data</DropdownMenuItem>
+          <DropdownMenuLabel>
+            Action
+          </DropdownMenuLabel>
+          <DropdownMenuItem>
+            <FileText className="mr-0.5 h-4 w-4" />
+            Detail Data
+          </DropdownMenuItem>
+          <DropdownMenuItem>
+            <Pencil className="mr-0.5 h-4 w-4" />
+            Edit Data
+          </DropdownMenuItem>
+          <DropdownMenuItem variant="destructive">
+            <Trash className="mr-0.5 h-4 w-4" />
+            Delete Data
+          </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
     )
