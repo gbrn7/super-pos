@@ -7,6 +7,7 @@ import { useState, useEffect } from "react";
 import { index as apiGetCategories } from '@/routes/apiCategories';
 import { index as categories } from "@/routes/categories";
 import { DetailCard } from "./detail-card";
+import { EditDialog } from "./edit-dialog";
 
 const { url } = categories();
 
@@ -17,6 +18,7 @@ export default function index() {
   const [allCategories, setAllCategories] = useState<Category[]>([])
   const [processing, setProcessing] = useState(false)
   const [detailOpen, setDetailOpen] = useState(false)
+  const [editOpen, setEditOpen] = useState(false)
   const [selectedCategory, setSelectedCategory] = useState<Category | null>(null)
 
   const fetchAllCategories = async () => {
@@ -37,6 +39,11 @@ export default function index() {
     setDetailOpen(true)
   }
 
+  const handleEditClick = (category: Category) => {
+    setSelectedCategory(category)
+    setEditOpen(true)
+  }
+
   useEffect(() => {
     fetchAllCategories();
   }, []);
@@ -52,6 +59,7 @@ export default function index() {
           limitOptions={[10, 20, 50, 100]}
           onRefresh={fetchAllCategories}
           onDetailClick={handleDetailClick}
+          onEditClick={handleEditClick}
         />
       </div>
 
@@ -59,6 +67,13 @@ export default function index() {
         isOpen={detailOpen}
         category={selectedCategory}
         onOpenChange={setDetailOpen}
+      />
+
+      <EditDialog
+        isOpen={editOpen}
+        onSuccess={fetchAllCategories}
+        setOpen={setEditOpen}
+        category={selectedCategory}
       />
     </>
   );

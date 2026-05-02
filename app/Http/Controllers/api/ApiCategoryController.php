@@ -69,7 +69,21 @@ class ApiCategoryController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        try {
+            $category = $this->categoryService->update($id, $request->all());
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Product updated successfully',
+                'data'    => $category,
+            ], 201);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Something went wrong',
+                'error'   => $th->getMessage(),
+            ], 500);
+        }
     }
 
     /**

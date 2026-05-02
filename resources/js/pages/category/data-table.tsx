@@ -41,8 +41,9 @@ interface DataTableProps<TData, TValue> {
   data: TData[],
   processing?: boolean
   limitOptions?: number[],
-  onRefresh?: () => void
-  onDetailClick?: (data: TData) => void
+  onRefresh?: () => void,
+  onDetailClick?: (data: TData) => void,
+  onEditClick?: (data: TData) => void
 }
 export function DataTable<TData, TValue>({
   columns: columnsOrFn,
@@ -51,8 +52,12 @@ export function DataTable<TData, TValue>({
   limitOptions = [10, 20, 50, 100],
   onRefresh,
   onDetailClick,
+  onEditClick,
 }: DataTableProps<TData, TValue>) {
-  const columns = typeof columnsOrFn === 'function' ? columnsOrFn({ onDetailClick }) : columnsOrFn
+  const columns = typeof columnsOrFn === 'function'
+    ? columnsOrFn({ onDetailClick, onEditClick })
+    : columnsOrFn
+
   const [sorting, setSorting] = React.useState<SortingState>([])
 
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(

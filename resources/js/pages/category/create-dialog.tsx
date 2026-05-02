@@ -2,10 +2,9 @@ import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
-import { store as getStoreUrl } from "@/routes/apiCategories"
+import { store as storeCategory } from "@/routes/apiCategories"
 import { Textarea } from "@/components/ui/textarea"
 import { Field, FieldGroup } from "@/components/ui/field"
-import { Label } from "@/components/ui/label"
 import axios from 'axios';
 import { CategoryForm } from "@/support/interfaces/request/createCategory"
 
@@ -31,7 +30,6 @@ export function CreateDialog({ onSuccess }: CreateDialogProps) {
 
   const handleSubmit = async (e: React.SubmitEvent) => {
     e.preventDefault()
-    console.log("first")
 
     if (!formData.name.trim()) {
       alert("Category name is required")
@@ -41,7 +39,7 @@ export function CreateDialog({ onSuccess }: CreateDialogProps) {
     try {
       setLoading(true)
 
-      const res = await axios.post(getStoreUrl().url, formData)
+      await axios.post(storeCategory().url, formData)
 
       setFormData({ name: "", desc: "" })
       setOpen(false)
@@ -107,7 +105,7 @@ export function CreateDialog({ onSuccess }: CreateDialogProps) {
                 Cancel
               </Button>
             </DialogClose>
-            <Button type="submit" >
+            <Button type="submit" disabled={loading} >
               {loading ? "Creating..." : "Create"}
             </Button>
           </DialogFooter>

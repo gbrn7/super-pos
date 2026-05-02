@@ -37,7 +37,17 @@ class CategoryService implements CategoryServiceInterface
             throw new Exception("Kategori dengan ID {$id} tidak ditemukan.");
         }
 
-        return $this->categoryRepository->update($category, $data);
+        try {
+            $isSuccess = $this->categoryRepository->update($category, $data);
+
+            if (!$isSuccess) {
+                throw new Exception("Interal Server Error");
+            }
+
+            return $category;
+        } catch (\Throwable $th) {
+            throw new Exception($th->getMessage());
+        }
     }
 
     public function delete(int $id): bool
