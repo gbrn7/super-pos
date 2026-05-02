@@ -1,13 +1,14 @@
 import { Head } from "@inertiajs/react";
 import { columns } from "./columns"
 import { DataTable } from "./data-table"
-import { DetailSheet } from "./detail-sheet"
+import { DetailSheet } from "./dialog-modal/detail-sheet"
 import { Category } from "@/support/models/category";
 import { useState, useEffect } from "react";
 import { index as apiGetCategories } from '@/routes/apiCategories';
 import { index as categories } from "@/routes/categories";
-import { DetailCard } from "./detail-card";
-import { EditDialog } from "./edit-dialog";
+import { DetailCard } from "./dialog-modal/detail-dialog";
+import { EditDialog } from "./dialog-modal/edit-dialog";
+import { DeleteDialog } from "./dialog-modal/delete-dialog";
 
 const { url } = categories();
 
@@ -19,6 +20,7 @@ export default function index() {
   const [processing, setProcessing] = useState(false)
   const [detailOpen, setDetailOpen] = useState(false)
   const [editOpen, setEditOpen] = useState(false)
+  const [deleteOpen, setDeleteOpen] = useState(false)
   const [selectedCategory, setSelectedCategory] = useState<Category | null>(null)
 
   const fetchAllCategories = async () => {
@@ -44,6 +46,11 @@ export default function index() {
     setEditOpen(true)
   }
 
+  const handleDeleteClick = (category: Category) => {
+    setSelectedCategory(category)
+    setDeleteOpen(true)
+  }
+
   useEffect(() => {
     fetchAllCategories();
   }, []);
@@ -60,6 +67,7 @@ export default function index() {
           onRefresh={fetchAllCategories}
           onDetailClick={handleDetailClick}
           onEditClick={handleEditClick}
+          onDeleteClick={handleDeleteClick}
         />
       </div>
 
@@ -75,6 +83,14 @@ export default function index() {
         setOpen={setEditOpen}
         category={selectedCategory}
       />
+
+      <DeleteDialog
+        isOpen={deleteOpen}
+        onSuccess={fetchAllCategories}
+        setOpen={setDeleteOpen}
+        category={selectedCategory}
+      />
+
     </>
   );
 }

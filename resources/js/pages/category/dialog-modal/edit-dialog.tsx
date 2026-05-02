@@ -16,7 +16,8 @@ interface EditDialogProps {
   setOpen: (open: boolean) => void
 }
 
-export function EditDialog({ isOpen, onSuccess, category, setOpen }: EditDialogProps) {
+export function EditDialog(
+  { isOpen, onSuccess, category, setOpen }: EditDialogProps) {
   const [loading, setLoading] = useState<boolean>(false)
   const [formData, setFormData] = useState<CategoryForm>({
     name: "",
@@ -40,8 +41,6 @@ export function EditDialog({ isOpen, onSuccess, category, setOpen }: EditDialogP
     }))
   }
 
-
-
   const handleSubmit = async (e: React.SubmitEvent) => {
     e.preventDefault()
 
@@ -56,13 +55,13 @@ export function EditDialog({ isOpen, onSuccess, category, setOpen }: EditDialogP
       await axios.put(updateCategory(category?.id || "").url, formData)
 
       setFormData({ name: "", desc: "" })
-      setOpen(false)
       onSuccess()
     } catch (error) {
       console.error("Error creating category:", error)
       alert("Failed to edit category")
     } finally {
       setLoading(false)
+      setOpen(false)
     }
   }
 

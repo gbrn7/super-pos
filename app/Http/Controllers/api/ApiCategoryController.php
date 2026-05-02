@@ -36,7 +36,7 @@ class ApiCategoryController extends Controller
 
             return response()->json([
                 'success' => true,
-                'message' => 'Product created successfully',
+                'message' => 'Category created successfully',
                 'data'    => $category,
             ], 201);
         } catch (\Throwable $th) {
@@ -74,7 +74,7 @@ class ApiCategoryController extends Controller
 
             return response()->json([
                 'success' => true,
-                'message' => 'Product updated successfully',
+                'message' => 'Category updated successfully',
                 'data'    => $category,
             ], 201);
         } catch (\Throwable $th) {
@@ -91,6 +91,20 @@ class ApiCategoryController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try {
+            $category = $this->categoryService->delete($id);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Category updated successfully',
+                'data'    => $category,
+            ], 201);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Something went wrong',
+                'error'   => $th->getMessage(),
+            ], 500);
+        }
     }
 }

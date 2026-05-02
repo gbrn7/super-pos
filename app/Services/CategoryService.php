@@ -57,7 +57,16 @@ class CategoryService implements CategoryServiceInterface
         if (! $category) {
             throw new Exception("Kategori dengan ID {$id} tidak ditemukan.");
         }
+        try {
+            $isSuccess = $this->categoryRepository->delete($category);
 
-        return $this->categoryRepository->delete($category);
+            if (!$isSuccess) {
+                throw new Exception("Interal Server Error");
+            }
+
+            return true;
+        } catch (\Throwable $th) {
+            throw new Exception($th->getMessage());
+        }
     }
 }

@@ -8,8 +8,9 @@ import { FileText, MoreHorizontal, Pencil, Trash } from "lucide-react"
 import { DataTableHeader } from "@/components/data-table-header"
 
 interface ColumnsProps {
-  onDetailClick?: (category: Category) => void,
-  onEditClick?: (category: Category) => void,
+  onDetailClick: (category: Category) => void,
+  onEditClick: (category: Category) => void,
+  onDeleteClick: (category: Category) => void,
 }
 
 export const columns = (props?: ColumnsProps): ColumnDef<Category>[] => [
@@ -69,18 +70,20 @@ export const columns = (props?: ColumnsProps): ColumnDef<Category>[] => [
             Action
           </DropdownMenuLabel>
           <DropdownMenuItem onClick={
-            () => props?.onDetailClick?.(row.original)
+            () => props?.onDetailClick(row.original)
           }>
             <FileText className="mr-0.5 h-4 w-4" />
             Detail Data
           </DropdownMenuItem>
           <DropdownMenuItem onClick={
-            () => props?.onEditClick?.(row.original)
+            () => props?.onEditClick(row.original)
           }>
             <Pencil className="mr-0.5 h-4 w-4" />
             Edit Data
           </DropdownMenuItem>
-          <DropdownMenuItem variant="destructive">
+          <DropdownMenuItem onClick={
+            () => props?.onDeleteClick(row.original)
+          } variant="destructive">
             <Trash className="mr-0.5 h-4 w-4" />
             Delete Data
           </DropdownMenuItem>

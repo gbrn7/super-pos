@@ -42,13 +42,13 @@ export function CreateDialog({ onSuccess }: CreateDialogProps) {
       await axios.post(storeCategory().url, formData)
 
       setFormData({ name: "", desc: "" })
-      setOpen(false)
       onSuccess()
     } catch (error) {
       console.error("Error creating category:", error)
       alert("Failed to create category")
     } finally {
       setLoading(false)
+      setOpen(false)
     }
   }
 
