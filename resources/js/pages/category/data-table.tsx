@@ -14,12 +14,20 @@ import type {
     PaginationState,
 } from '@tanstack/react-table';
 import * as React from 'react';
-import { Trash2 } from 'lucide-react';
+import * as XLSX from 'xlsx';
+import { jsPDF } from 'jspdf';
 import { Button } from '@/components/ui/button';
 import {
     DropdownMenu,
     DropdownMenuCheckboxItem,
     DropdownMenuContent,
+    DropdownMenuGroup,
+    DropdownMenuItem,
+    DropdownMenuPortal,
+    DropdownMenuSeparator,
+    DropdownMenuSub,
+    DropdownMenuSubContent,
+    DropdownMenuSubTrigger,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Input } from '@/components/ui/input';
@@ -130,6 +138,109 @@ export function DataTable<TData, TValue>({
 
     const disabledClass = 'pointer-events-none opacity-50';
 
+    const handleExportExcel = () => {
+        // Prepare data for export
+        const exportData = data.map((row: any) => ({
+            Name: row.name || '',
+            Description: row.desc || '',
+            'Created At': row.created_at || '',
+            'Updated At': row.updated_at || '',
+        }));
+
+        // Create a new workbook and worksheet
+        const worksheet = XLSX.utils.json_to_sheet(exportData);
+        const workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, 'Categories');
+
+        // Set column widths
+        worksheet['!cols'] = [
+            { wch: 25 },
+            { wch: 30 },
+            { wch: 20 },
+            { wch: 20 },
+        ];
+
+        // Generate file name with current timestamp
+        const fileName = `Categories_${new Date().toISOString().split('T')[0]}.xlsx`;
+
+        // Write the file
+        XLSX.writeFile(workbook, fileName);
+    };
+
+    const handleExportPDF = () => {
+        // Create PDF document
+        const doc = new jsPDF();
+        const pageWidth = doc.internal.pageSize.getWidth();
+        const pageHeight = doc.internal.pageSize.getHeight();
+        let yPosition = 20;
+
+        // Add title
+        doc.setFontSize(16);
+        doc.text('Categories', pageWidth / 2, yPosition, { align: 'center' });
+        yPosition += 15;
+
+        // Add metadata
+        doc.setFontSize(10);
+        doc.text(
+            `Generated on: ${new Date().toLocaleDateString()}`,
+            pageWidth / 2,
+            yPosition,
+            { align: 'center' }
+        );
+        yPosition += 10;
+
+        // Add table headers
+        doc.setFontSize(11);
+        doc.setFont('helvetica', 'bold');
+        const columnWidths = [50, 70, 35, 35];
+        const columns = ['Name', 'Description', 'Created At', 'Updated At'];
+        let xPosition = 10;
+
+        columns.forEach((col, index) => {
+            doc.text(col, xPosition, yPosition);
+            xPosition += columnWidths[index];
+        });
+
+        yPosition += 8;
+        doc.setDrawColor(200);
+        doc.line(10, yPosition, pageWidth - 10, yPosition);
+        yPosition += 5;
+
+        // Add table data
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(9);
+
+        data.forEach((row: any) => {
+            // Check if we need a new page
+            if (yPosition > pageHeight - 20) {
+                doc.addPage();
+                yPosition = 20;
+            }
+
+            xPosition = 10;
+            const rowData = [
+                row.name || '',
+                row.desc || '',
+                row.created_at || '',
+                row.updated_at || '',
+            ];
+
+            rowData.forEach((cell, index) => {
+                const cellText = String(cell).substring(0, 20);
+                doc.text(cellText, xPosition, yPosition);
+                xPosition += columnWidths[index];
+            });
+
+            yPosition += 7;
+        });
+
+        // Generate file name with current timestamp
+        const fileName = `Categories_${new Date().toISOString().split('T')[0]}.pdf`;
+
+        // Save the document
+        doc.save(fileName);
+    };
+
     return (
         <div>
             <div className="flex-col items-center pb-4">
@@ -167,6 +278,30 @@ export function DataTable<TData, TValue>({
                     />
                 </div>
                 <div className="second-row mt-2 flex justify-end gap-2">
+                    <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                            <Button variant="outline">Action</Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent>
+                            <DropdownMenuGroup>
+                                <DropdownMenuSub>
+                                    <DropdownMenuSubTrigger>Export</DropdownMenuSubTrigger>
+                                    <DropdownMenuPortal>
+                                        <DropdownMenuSubContent>
+                                            <DropdownMenuItem onClick={handleExportExcel}>
+                                                Export Excel
+                                            </DropdownMenuItem>
+                                            <DropdownMenuItem onClick={handleExportPDF}>
+                                                Export PDF
+                                            </DropdownMenuItem>
+                                            <DropdownMenuSeparator />
+                                        </DropdownMenuSubContent>
+                                    </DropdownMenuPortal>
+                                </DropdownMenuSub>
+                                <DropdownMenuItem>Import Excel</DropdownMenuItem>
+                            </DropdownMenuGroup>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
                     <CreateDialog onSuccess={onRefresh || (() => { })} />
                     <BulkDeleteDialog
                         isDisabled={!(Object.keys(rowSelection).length > 0) && true}

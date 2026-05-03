@@ -90,7 +90,7 @@ export function BulkDeleteDialog({
             variant="destructive"
             disabled={loading}
           >
-            {loading ? 'Deleting...' : 'Delete All'}
+            {loading ? 'Deleting...' : 'Delete'}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

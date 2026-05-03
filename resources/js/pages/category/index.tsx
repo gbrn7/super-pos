@@ -8,7 +8,6 @@ import { DataTable } from './data-table';
 import { DeleteDialog } from './dialog-modal/delete-dialog';
 import { DetailDialog } from './dialog-modal/detail-dialog';
 import { EditDialog } from './dialog-modal/edit-dialog';
-import { BulkDeleteDialog } from './dialog-modal/bulk-delete-dialog';
 
 const { url } = categories();
 
