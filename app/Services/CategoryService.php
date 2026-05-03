@@ -2,13 +2,16 @@
 
 namespace App\Services;
 
+use App\Imports\CategoryImport;
 use App\Models\Category;
 use App\Support\Interfaces\Repositories\CategoryRepositoryInterface;
 use App\Support\Interfaces\Services\CategoryServiceInterface;
 use App\Support\Models\Category\GetCategoryReqModel;
 use Exception;
 use Illuminate\Contracts\Pagination\Paginator;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Collection;
+use Maatwebsite\Excel\Facades\Excel;
 
 class CategoryService implements CategoryServiceInterface
 {
@@ -16,17 +19,29 @@ class CategoryService implements CategoryServiceInterface
 
     public function getAllByIndex(GetCategoryReqModel $request): Paginator|Collection
     {
-        return $this->categoryRepository->getAllByIndex($request);
+        try {
+            return $this->categoryRepository->getAllByIndex($request);
+        } catch (\Throwable $th) {
+            throw $th;
+        }
     }
 
     public function getById(int $id): ?Category
     {
-        return $this->categoryRepository->getById($id);
+        try {
+            return $this->categoryRepository->getById($id);
+        } catch (\Throwable $th) {
+            throw $th;
+        }
     }
 
     public function create(array $data): Category
     {
-        return $this->categoryRepository->create($data);
+        try {
+            return $this->categoryRepository->create($data);
+        } catch (\Throwable $th) {
+            throw $th;
+        }
     }
 
     public function update(int $id, array $data): ?Category
@@ -46,7 +61,7 @@ class CategoryService implements CategoryServiceInterface
 
             return $category;
         } catch (\Throwable $th) {
-            throw new Exception($th->getMessage());
+            throw $th;
         }
     }
 
@@ -66,7 +81,7 @@ class CategoryService implements CategoryServiceInterface
 
             return true;
         } catch (\Throwable $th) {
-            throw new Exception($th->getMessage());
+            throw $th;
         }
     }
 
@@ -81,7 +96,34 @@ class CategoryService implements CategoryServiceInterface
 
             return $deletedCount;
         } catch (\Throwable $th) {
-            throw new Exception($th->getMessage());
+            throw $th;
+        }
+    }
+
+
+    public function importExcel(UploadedFile $file)
+    {
+        try {
+            $raws = Excel::toArray(new CategoryImport(), $file);
+
+            $newData = Collection::make();
+
+            foreach ($raws as $raw) {
+                foreach ($raw as $row) {
+
+                    $newData->push([
+                        'name' => $row['nama'],
+                        'desc' => $row['deskripsi'],
+                    ]);
+                }
+            }
+
+            $isSuccess = $this->categoryRepository->insert($newData->toArray());
+            if (!$isSuccess) {
+                throw new Exception("Something went wrong");
+            }
+        } catch (\Throwable $th) {
+            throw $th;
         }
     }
 }

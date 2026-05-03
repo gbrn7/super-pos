@@ -5,6 +5,7 @@ namespace App\Support\Interfaces\Services;
 use App\Models\Category;
 use App\Support\Models\Category\GetCategoryReqModel;
 use Illuminate\Contracts\Pagination\Paginator;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Collection;
 
 interface CategoryServiceInterface
@@ -38,4 +39,9 @@ interface CategoryServiceInterface
      * Bulk delete a categories by ids.
      */
     public function bulkDelete(array $ids): int;
+
+    /**
+     * Import categories by excel file.
+     */
+    public function importExcel(UploadedFile $file);
 }

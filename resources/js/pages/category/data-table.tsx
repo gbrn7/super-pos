@@ -60,6 +60,7 @@ import {
 import { CreateDialog } from './create-dialog';
 import { BulkDeleteDialog } from './dialog-modal/bulk-delete-dialog';
 import type { Category } from '@/support/models/category';
+import { ImportExcelDialog } from './dialog-modal/import-excel-dialog';
 
 interface DataTableProps<TData, TValue> {
     columns:
@@ -114,6 +115,8 @@ export function DataTable<TData, TValue>({
     });
 
     const [searchColumn, setSearchColumn] = React.useState<string>('name');
+
+
 
     const table = useReactTable({
         data,
@@ -278,27 +281,19 @@ export function DataTable<TData, TValue>({
                     />
                 </div>
                 <div className="second-row mt-2 flex justify-end gap-2">
+                    <ImportExcelDialog onSuccess={onRefresh} />
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
-                            <Button variant="outline">Action</Button>
+                            <Button variant="outline">Export</Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent>
                             <DropdownMenuGroup>
-                                <DropdownMenuSub>
-                                    <DropdownMenuSubTrigger>Export</DropdownMenuSubTrigger>
-                                    <DropdownMenuPortal>
-                                        <DropdownMenuSubContent>
-                                            <DropdownMenuItem onClick={handleExportExcel}>
-                                                Export Excel
-                                            </DropdownMenuItem>
-                                            <DropdownMenuItem onClick={handleExportPDF}>
-                                                Export PDF
-                                            </DropdownMenuItem>
-                                            <DropdownMenuSeparator />
-                                        </DropdownMenuSubContent>
-                                    </DropdownMenuPortal>
-                                </DropdownMenuSub>
-                                <DropdownMenuItem>Import Excel</DropdownMenuItem>
+                                <DropdownMenuItem onClick={handleExportExcel}>
+                                    Export Excel
+                                </DropdownMenuItem>
+                                <DropdownMenuItem onClick={handleExportPDF}>
+                                    Export PDF
+                                </DropdownMenuItem>
                             </DropdownMenuGroup>
                         </DropdownMenuContent>
                     </DropdownMenu>

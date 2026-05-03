@@ -49,4 +49,9 @@ class CategoryRepository implements CategoryRepositoryInterface
     {
         return Category::destroy($ids);
     }
+
+    public function insert(array $data): bool
+    {
+        return Category::insert($data);
+    }
 }

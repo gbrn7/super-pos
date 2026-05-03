@@ -63,6 +63,7 @@
         "radix-ui": "^1.4.3",
         "react": "^19.2.0",
         "react-dom": "^19.2.0",
+        "remixicon": "^4.9.1",
         "sonner": "^2.0.0",
         "sweetalert2": "^11.26.24",
         "sweetalert2-react-content": "^5.1.2",

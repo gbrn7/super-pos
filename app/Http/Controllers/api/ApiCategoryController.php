@@ -7,6 +7,7 @@ use App\Http\Resources\CategoryResource;
 use App\Support\Interfaces\Services\CategoryServiceInterface;
 use App\Support\Models\Category\GetCategoryReqModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class ApiCategoryController extends Controller
 {
@@ -123,6 +124,60 @@ class ApiCategoryController extends Controller
                 'message' => "{$deletedCount} categories deleted successfully",
                 'data' => ['deleted_count' => $deletedCount],
             ], 200);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Something went wrong',
+                'error' => $th->getMessage(),
+            ], 500);
+        }
+    }
+
+    public function getCategoryImportTemplate()
+    {
+        $fileName = 'import-category-template.xlsx';
+        $filePath = 'template/' . $fileName;
+
+        if (!file_exists($filePath)) {
+            return response()->json([
+                'success' => false,
+                'message' => "File not found.",
+            ], 404);
+        }
+
+        return response()->download(
+            public_path($filePath),
+            $fileName,
+            [
+                'Content-Type'        => mime_content_type($filePath),
+                'Content-Disposition' => 'attachment; filename="' . $fileName . '"',
+            ]
+        );
+    }
+
+    public function importStudentExcelData(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'file_import' => 'required|mimes:xlsx',
+        ]);
+
+        if ($validator->fails()) return redirect()
+            ->back()
+            ->withInput()
+            ->with('toast_error', join(', ', $validator->messages()->all()));
+
+        try {
+            $data = $validator->safe()->all();
+
+            $file = $data['file_import'];
+
+            $this->categoryService->importExcel($file);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Category updated successfully',
+                'data' => "",
+            ], 201);
         } catch (\Throwable $th) {
             return response()->json([
                 'success' => false,

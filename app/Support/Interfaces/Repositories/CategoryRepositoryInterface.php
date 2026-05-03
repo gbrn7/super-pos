@@ -56,4 +56,13 @@ interface CategoryRepositoryInterface
    * @return int
    */
   public function deleteMany(array $ids): int;
+
+
+  /**
+   * Insert new categories.
+   *
+   * @param array $data
+   * @return bool
+   */
+  public function insert(array $data): bool;
 }
