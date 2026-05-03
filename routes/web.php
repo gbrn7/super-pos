@@ -17,10 +17,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::resource('example', ExampleController::class);
 
-
     Route::group(['prefix' => 'api'], function () {
+        Route::post('categories/bulk-delete', [ApiCategoryController::class, 'bulkDelete'])->name('apiCategories.bulkDelete');
         Route::resource('categories', ApiCategoryController::class)->names('apiCategories');
     });
 });
 
-require __DIR__ . '/settings.php';
+require __DIR__.'/settings.php';

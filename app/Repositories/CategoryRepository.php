@@ -7,6 +7,7 @@ use App\Support\Interfaces\Repositories\CategoryRepositoryInterface;
 use App\Support\Models\Category\GetCategoryReqModel;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Support\Collection;
+use Override;
 
 class CategoryRepository implements CategoryRepositoryInterface
 {
@@ -41,5 +42,11 @@ class CategoryRepository implements CategoryRepositoryInterface
     public function delete(Category $category): bool
     {
         return $category->delete();
+    }
+
+
+    public function deleteMany(array $ids): int
+    {
+        return Category::destroy($ids);
     }
 }

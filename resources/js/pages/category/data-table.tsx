@@ -14,6 +14,7 @@ import type {
     PaginationState,
 } from '@tanstack/react-table';
 import * as React from 'react';
+import { Trash2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
     DropdownMenu,
@@ -49,18 +50,24 @@ import {
     TableRow,
 } from '@/components/ui/table';
 import { CreateDialog } from './create-dialog';
+import { BulkDeleteDialog } from './dialog-modal/bulk-delete-dialog';
+import type { Category } from '@/support/models/category';
 
 interface DataTableProps<TData, TValue> {
     columns:
-        | ColumnDef<TData, TValue>[]
-        | ((props: any) => ColumnDef<TData, TValue>[]);
+    | ColumnDef<TData, TValue>[]
+    | ((props: any) => ColumnDef<TData, TValue>[]);
     data: TData[];
     processing?: boolean;
     limitOptions?: number[];
-    onRefresh?: () => void;
+    onRefresh: () => void;
     onDetailClick: (data: TData) => void;
     onEditClick: (data: TData) => void;
     onDeleteClick: (data: TData) => void;
+    onBulkDeleteClick?: (data: TData[]) => void;
+    isBulkDeleteDialogOpen: boolean;
+    setOpenBulkDeleteDialogOpen: (open: boolean) => void;
+    selectedBulkCategories: Category[]
 }
 export function DataTable<TData, TValue>({
     columns: columnsOrFn,
@@ -71,6 +78,10 @@ export function DataTable<TData, TValue>({
     onDetailClick,
     onEditClick,
     onDeleteClick,
+    onBulkDeleteClick,
+    isBulkDeleteDialogOpen,
+    setOpenBulkDeleteDialogOpen,
+    selectedBulkCategories
 }: DataTableProps<TData, TValue>) {
     'use no memo';
 
@@ -156,7 +167,23 @@ export function DataTable<TData, TValue>({
                     />
                 </div>
                 <div className="second-row mt-2 flex justify-end gap-2">
-                    <CreateDialog onSuccess={onRefresh || (() => {})} />
+                    <CreateDialog onSuccess={onRefresh || (() => { })} />
+                    <BulkDeleteDialog
+                        isDisabled={!(Object.keys(rowSelection).length > 0) && true}
+                        selectedLength={table.getSelectedRowModel().rows.length}
+                        isOpen={isBulkDeleteDialogOpen}
+                        onSuccess={() => {
+                            onRefresh()
+                            table.resetRowSelection()
+                        }}
+                        setOpen={setOpenBulkDeleteDialogOpen}
+                        categories={selectedBulkCategories}
+                        onBulkDeleteClick={() => {
+                            const selectedRows = table.getSelectedRowModel().rows.map((row) => row.original);
+                            console.log("datatable", selectedRows)
+                            onBulkDeleteClick?.(selectedRows);
+                        }}
+                    />
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                             <Button variant="outline">Columns</Button>

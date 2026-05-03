@@ -12,8 +12,7 @@ interface CategoryRepositoryInterface
   /**
    * Get all categories.
    * @param GetCategoryReqModel $request
-   * @param int|null $limit
-   * @return Paginator|SupportCollection
+   * @return Paginator|Collection
    */
   public function getAllByIndex(GetCategoryReqModel $request): Paginator|Collection;
 
@@ -38,7 +37,7 @@ interface CategoryRepositoryInterface
    *
    * @param Category $category
    * @param array $data
-   * @return Category|null
+   * @return bool
    */
   public function update(Category $category, array $data): bool;
 
@@ -49,4 +48,12 @@ interface CategoryRepositoryInterface
    * @return bool
    */
   public function delete(Category $category): bool;
+
+  /**
+   * Delete a categories by its Ids.
+   *
+   * @param array $ids
+   * @return int
+   */
+  public function deleteMany(array $ids): int;
 }

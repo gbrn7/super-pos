@@ -8,6 +8,7 @@ import { DataTable } from './data-table';
 import { DeleteDialog } from './dialog-modal/delete-dialog';
 import { DetailDialog } from './dialog-modal/detail-dialog';
 import { EditDialog } from './dialog-modal/edit-dialog';
+import { BulkDeleteDialog } from './dialog-modal/bulk-delete-dialog';
 
 const { url } = categories();
 
@@ -19,9 +20,11 @@ export default function Index() {
     const [detailOpen, setDetailOpen] = useState(false);
     const [editOpen, setEditOpen] = useState(false);
     const [deleteOpen, setDeleteOpen] = useState(false);
+    const [bulkDeleteOpen, setBulkDeleteOpen] = useState(false);
     const [selectedCategory, setSelectedCategory] = useState<Category | null>(
         null,
     );
+    const [selectedCategories, setSelectedCategories] = useState<Category[]>([]);
 
     const fetchAllCategories = async () => {
         try {
@@ -33,6 +36,7 @@ export default function Index() {
             console.error('Failed to fetch categories:', error);
         } finally {
             setProcessing(false);
+            setSelectedCategories([])
         }
     };
 
@@ -49,6 +53,11 @@ export default function Index() {
     const handleDeleteClick = (category: Category) => {
         setSelectedCategory(category);
         setDeleteOpen(true);
+    };
+
+    const handleBulkDeleteClick = (categories: Category[]) => {
+        setSelectedCategories(categories);
+        setBulkDeleteOpen(true);
     };
 
     useEffect(() => {
@@ -70,6 +79,10 @@ export default function Index() {
                     onDetailClick={handleDetailClick}
                     onEditClick={handleEditClick}
                     onDeleteClick={handleDeleteClick}
+                    onBulkDeleteClick={handleBulkDeleteClick}
+                    isBulkDeleteDialogOpen={bulkDeleteOpen}
+                    setOpenBulkDeleteDialogOpen={setBulkDeleteOpen}
+                    selectedBulkCategories={selectedCategories}
                 />
             </div>
 
@@ -93,6 +106,7 @@ export default function Index() {
                 setOpen={setDeleteOpen}
                 category={selectedCategory}
             />
+
         </>
     );
 }

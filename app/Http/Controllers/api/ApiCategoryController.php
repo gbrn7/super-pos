@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 class ApiCategoryController extends Controller
 {
     public function __construct(protected CategoryServiceInterface $categoryService) {}
+
     /**
      * Display a listing of the resource.
      */
@@ -37,13 +38,13 @@ class ApiCategoryController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => 'Category created successfully',
-                'data'    => $category,
+                'data' => $category,
             ], 201);
         } catch (\Throwable $th) {
             return response()->json([
                 'success' => false,
                 'message' => 'Something went wrong',
-                'error'   => $th->getMessage(),
+                'error' => $th->getMessage(),
             ], 500);
         }
     }
@@ -75,13 +76,13 @@ class ApiCategoryController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => 'Category updated successfully',
-                'data'    => $category,
+                'data' => $category,
             ], 201);
         } catch (\Throwable $th) {
             return response()->json([
                 'success' => false,
                 'message' => 'Something went wrong',
-                'error'   => $th->getMessage(),
+                'error' => $th->getMessage(),
             ], 500);
         }
     }
@@ -97,13 +98,36 @@ class ApiCategoryController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => 'Category updated successfully',
-                'data'    => $category,
+                'data' => $category,
             ], 201);
         } catch (\Throwable $th) {
             return response()->json([
                 'success' => false,
                 'message' => 'Something went wrong',
-                'error'   => $th->getMessage(),
+                'error' => $th->getMessage(),
+            ], 500);
+        }
+    }
+
+    /**
+     * Bulk delete resources.
+     */
+    public function bulkDelete(Request $request)
+    {
+        try {
+            $ids = $request->input('ids', []);
+            $deletedCount = $this->categoryService->bulkDelete($ids);
+
+            return response()->json([
+                'success' => true,
+                'message' => "{$deletedCount} categories deleted successfully",
+                'data' => ['deleted_count' => $deletedCount],
+            ], 200);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Something went wrong',
+                'error' => $th->getMessage(),
             ], 500);
         }
     }

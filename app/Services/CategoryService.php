@@ -40,8 +40,8 @@ class CategoryService implements CategoryServiceInterface
         try {
             $isSuccess = $this->categoryRepository->update($category, $data);
 
-            if (!$isSuccess) {
-                throw new Exception("Interal Server Error");
+            if (! $isSuccess) {
+                throw new Exception('Interal Server Error');
             }
 
             return $category;
@@ -60,11 +60,26 @@ class CategoryService implements CategoryServiceInterface
         try {
             $isSuccess = $this->categoryRepository->delete($category);
 
-            if (!$isSuccess) {
-                throw new Exception("Interal Server Error");
+            if (! $isSuccess) {
+                throw new Exception('Interal Server Error');
             }
 
             return true;
+        } catch (\Throwable $th) {
+            throw new Exception($th->getMessage());
+        }
+    }
+
+    public function bulkDelete(array $ids): int
+    {
+        if (empty($ids)) {
+            throw new Exception('No categories selected for deletion.');
+        }
+
+        try {
+            $deletedCount = $this->categoryRepository->deleteMany($ids);
+
+            return $deletedCount;
         } catch (\Throwable $th) {
             throw new Exception($th->getMessage());
         }

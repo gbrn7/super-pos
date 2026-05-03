@@ -33,4 +33,9 @@ interface CategoryServiceInterface
      * Delete a category by its ID.
      */
     public function delete(int $id): bool;
+
+    /**
+     * Bulk delete a categories by ids.
+     */
+    public function bulkDelete(array $ids): int;
 }

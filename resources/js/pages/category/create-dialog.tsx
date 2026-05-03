@@ -65,7 +65,7 @@ export function CreateDialog({ onSuccess }: CreateDialogProps) {
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-                <Button variant="default">+ Add Category</Button>
+                <Button variant="outline">Add Category</Button>
             </DialogTrigger>
             <DialogContent>
                 <form onSubmit={handleSubmit} className="space-y-4">
