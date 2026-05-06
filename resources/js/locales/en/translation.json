@@ -1,0 +1,10 @@
+{
+  "category":{
+    "dialog_modal":{
+      "create_dialog": {
+        "add_category_dialog_title": "Add Category",
+        "add_category_button": "Add Category"
+      }
+    }
+  }
+}
