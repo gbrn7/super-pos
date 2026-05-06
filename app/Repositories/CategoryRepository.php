@@ -54,4 +54,14 @@ class CategoryRepository implements CategoryRepositoryInterface
     {
         return Category::insert($data);
     }
+
+    public function getByName(string $name): ?Category
+    {
+        return Category::where('name', $name)->first();
+    }
+
+    public function getByNameExceptID(string $name, int $id): ?Category
+    {
+        return Category::where('name', $name)->where('id', "!=", $id)->first();
+    }
 }

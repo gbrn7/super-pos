@@ -16,6 +16,7 @@ import {
 import { bulkDelete } from '@/routes/apiCategories';
 import type { Category } from '@/support/models/category';
 import { Button } from '@/components/ui/button';
+import { toast } from 'sonner';
 
 interface BulkDeleteDialogProps {
   isDisabled: boolean,
@@ -45,17 +46,17 @@ export function BulkDeleteDialog({
       const ids = categories.map((cat) => cat.id);
       await axios.post(bulkDelete().url, { ids });
 
+      toast.success("Delete categories successfully")
       onSuccess();
     } catch (error) {
       console.error('Error deleting categories:', error);
-      alert('Failed to delete categories');
+      toast.error("Failed to delete categories")
     } finally {
       setLoading(false);
       setOpen(false);
     }
   };
 
-  console.log("categories", categories)
 
   return (
     <AlertDialog open={isOpen} onOpenChange={setOpen}>

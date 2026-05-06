@@ -15,6 +15,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { update as updateCategory } from '@/routes/apiCategories';
 import type { Category } from '@/support/models/category';
+import { toast } from 'sonner';
 
 interface EditDialogProps {
     isOpen: boolean;
@@ -58,10 +59,11 @@ export function EditDialog({
             await axios.put(updateCategory(category?.id || '').url, formData);
 
             setFormData({ name: '', desc: '' });
+            toast.success("Edit category successfully")
             onSuccess();
         } catch (error) {
-            console.error('Error creating category:', error);
-            alert('Failed to edit category');
+            console.error('Error updating category:', error);
+            toast.error("Failed to edit category")
         } finally {
             setLoading(false);
             setOpen(false);

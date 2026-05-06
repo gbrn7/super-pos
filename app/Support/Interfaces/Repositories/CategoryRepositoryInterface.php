@@ -65,4 +65,22 @@ interface CategoryRepositoryInterface
    * @return bool
    */
   public function insert(array $data): bool;
+
+  /**
+   * Get a category by its name.
+   *
+   * @param string $name
+   * @return Category|null
+   */
+  public function getByName(string $name): ?Category;
+
+
+  /**
+   * Get a category by its name except id.
+   *
+   * @param string $name
+   * @param int $id
+   * @return Category|null
+   */
+  public function getByNameExceptID(string $name, int $id): ?Category;
 }

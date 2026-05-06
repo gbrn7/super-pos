@@ -14,6 +14,7 @@ import {
 } from '@/components/ui/alert-dialog';
 import { update as deleteCategory } from '@/routes/apiCategories';
 import type { Category } from '@/support/models/category';
+import { toast } from 'sonner';
 
 interface DeleteDialogProps {
     isOpen: boolean;
@@ -37,9 +38,10 @@ export function DeleteDialog({
             await axios.delete(deleteCategory(category?.id || '').url);
 
             onSuccess();
+            toast.success("Delete category successfully")
         } catch (error) {
             console.error('Error deleting category:', error);
-            alert('Failed to delete category');
+            toast.success("Failed to delete category")
         } finally {
             setLoading(false);
             setOpen(false);

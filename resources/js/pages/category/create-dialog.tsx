@@ -16,6 +16,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { store as storeCategory } from '@/routes/apiCategories';
 import type { CategoryForm } from '@/support/interfaces/request/createCategory';
+import { toast } from 'sonner';
 
 interface CreateDialogProps {
     onSuccess: () => void;
@@ -52,10 +53,11 @@ export function CreateDialog({ onSuccess }: CreateDialogProps) {
             await axios.post(storeCategory().url, formData);
 
             setFormData({ name: '', desc: '' });
+            toast.success("Create category successfully")
             onSuccess();
         } catch (error) {
             console.error('Error creating category:', error);
-            alert('Failed to create category');
+            toast.error("Failed to edit category")
         } finally {
             setLoading(false);
             setOpen(false);

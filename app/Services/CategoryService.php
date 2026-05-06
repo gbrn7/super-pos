@@ -38,6 +38,12 @@ class CategoryService implements CategoryServiceInterface
     public function create(array $data): Category
     {
         try {
+            $isCategoryExist = $this->categoryRepository->getByName($data['name']);
+
+            if (isset($isCategoryExist)) {
+                throw new Exception("Category name already used");
+            }
+
             return $this->categoryRepository->create($data);
         } catch (\Throwable $th) {
             throw $th;
@@ -46,13 +52,19 @@ class CategoryService implements CategoryServiceInterface
 
     public function update(int $id, array $data): ?Category
     {
-        $category = $this->categoryRepository->getById($id);
-
-        if (! $category) {
-            throw new Exception("Kategori dengan ID {$id} tidak ditemukan.");
-        }
-
         try {
+            $category = $this->categoryRepository->getById($id);
+
+            if (!isset($category)) {
+                throw new Exception("Category Not Found");
+            }
+
+            $isCategoryExist = $this->categoryRepository->getByNameExceptID($data['name'], $id);
+
+            if (isset($isCategoryExist)) {
+                throw new Exception("Category name already used");
+            }
+
             $isSuccess = $this->categoryRepository->update($category, $data);
 
             if (! $isSuccess) {
@@ -69,14 +81,14 @@ class CategoryService implements CategoryServiceInterface
     {
         $category = $this->categoryRepository->getById($id);
 
-        if (! $category) {
-            throw new Exception("Kategori dengan ID {$id} tidak ditemukan.");
+        if (!isset($category)) {
+            throw new Exception("Category not found");
         }
         try {
             $isSuccess = $this->categoryRepository->delete($category);
 
             if (! $isSuccess) {
-                throw new Exception('Interal Server Error');
+                throw new Exception('Internal Server Error');
             }
 
             return true;

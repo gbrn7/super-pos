@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Category\StoreCategoryRequest;
+use App\Http\Requests\Category\UpdateCategoryRequest;
 use App\Http\Resources\CategoryResource;
 use App\Support\Interfaces\Services\CategoryServiceInterface;
 use App\Support\Models\Category\GetCategoryReqModel;
@@ -31,10 +33,10 @@ class ApiCategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreCategoryRequest $request)
     {
         try {
-            $category = $this->categoryService->create($request->all());
+            $category = $this->categoryService->create($request->validated());
 
             return response()->json([
                 'success' => true,
@@ -69,10 +71,10 @@ class ApiCategoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateCategoryRequest $request, string $id)
     {
         try {
-            $category = $this->categoryService->update($id, $request->all());
+            $category = $this->categoryService->update($id, $request->validated());
 
             return response()->json([
                 'success' => true,
