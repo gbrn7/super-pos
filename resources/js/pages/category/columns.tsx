@@ -11,6 +11,7 @@ import {
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import type { Category } from '@/support/models/category';
+import { useTranslation } from 'react-i18next';
 
 interface ColumnsProps {
     onDetailClick: (category: Category) => void;

@@ -57,7 +57,7 @@ import {
     TableHeader,
     TableRow,
 } from '@/components/ui/table';
-import { CreateDialog } from './create-dialog';
+import { CreateDialog } from './dialog-modal/create-dialog';
 import { BulkDeleteDialog } from './dialog-modal/bulk-delete-dialog';
 import type { Category } from '@/support/models/category';
 import { ImportExcelDialog } from './dialog-modal/import-excel-dialog';

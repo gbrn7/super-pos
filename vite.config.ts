@@ -22,4 +22,9 @@ export default defineConfig({
             formVariants: true,
         }),
     ],
+    resolve: {
+        alias: {
+            "@lang": '/lang'
+        }
+    }
 });
