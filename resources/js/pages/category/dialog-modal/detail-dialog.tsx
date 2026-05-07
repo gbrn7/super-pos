@@ -5,6 +5,7 @@ import {
     DialogTitle,
 } from '@/components/ui/dialog';
 import type { Category } from '@/support/models/category';
+import { useTranslation } from 'react-i18next';
 
 interface DetailSheetProps {
     isOpen: boolean;
@@ -17,6 +18,8 @@ export function DetailDialog({
     category,
     onOpenChange,
 }: DetailSheetProps) {
+    const { t } = useTranslation();
+
     if (!category) {
         return null;
     }
@@ -25,18 +28,18 @@ export function DetailDialog({
         <Dialog open={isOpen} onOpenChange={onOpenChange}>
             <DialogContent showCloseButton={true}>
                 <DialogHeader>
-                    <DialogTitle>Detail Category</DialogTitle>
+                    <DialogTitle>{t('category.dialog_modal.detail_dialog.dialog_title', "Detail Kategori")}</DialogTitle>
                     <DialogContent>
                         <div>
                             <p className="text-sm font-medium text-muted-foreground">
-                                Name
+                                {t("category.dialog_modal.detail_dialog.name_label", "Nama")}
                             </p>
                             <p className="mt-1 text-base">{category.name}</p>
                         </div>
 
                         <div>
                             <p className="text-sm font-medium text-muted-foreground">
-                                Description
+                                {t("category.dialog_modal.detail_dialog.desc_label", "Nama")}
                             </p>
                             <p className="mt-1 text-base">
                                 {category.desc || '-'}
@@ -46,30 +49,11 @@ export function DetailDialog({
                         {category.created_at && (
                             <div>
                                 <p className="text-sm font-medium text-muted-foreground">
-                                    Created At
+                                    {t('category.dialog_modal.detail_dialog.created_at_label', "Tanggal Dibuat")}
                                 </p>
                                 <p className="mt-1 text-base">
                                     {new Date(
                                         category.created_at,
-                                    ).toLocaleDateString('id-ID', {
-                                        year: 'numeric',
-                                        month: 'long',
-                                        day: 'numeric',
-                                        hour: '2-digit',
-                                        minute: '2-digit',
-                                    })}
-                                </p>
-                            </div>
-                        )}
-
-                        {category.updated_at && (
-                            <div>
-                                <p className="text-sm font-medium text-muted-foreground">
-                                    Updated At
-                                </p>
-                                <p className="mt-1 text-base">
-                                    {new Date(
-                                        category.updated_at,
                                     ).toLocaleDateString('id-ID', {
                                         year: 'numeric',
                                         month: 'long',

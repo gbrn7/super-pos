@@ -17,6 +17,9 @@ import { bulkDelete } from '@/routes/apiCategories';
 import type { Category } from '@/support/models/category';
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
+import { Spinner } from '@/components/ui/spinner';
+import { t } from 'i18next';
+import { sprintf } from 'sprintf-js';
 
 interface BulkDeleteDialogProps {
   isDisabled: boolean,
@@ -63,7 +66,11 @@ export function BulkDeleteDialog({
       <AlertDialogTrigger asChild>
         <Button disabled={isDisabled} variant="destructive" onClick={() => onBulkDeleteClick()}>
           <Trash2 className="h-4 w-4" />
-          Delete {selectedLength}
+          {sprintf
+            (
+              t("category.dialog_modal.bulk_delete_dialog.dialog_button", "Hapus %d kategori"),
+              selectedLength)
+          }
         </Button>
       </AlertDialogTrigger>
       <AlertDialogContent
@@ -74,9 +81,15 @@ export function BulkDeleteDialog({
           <AlertDialogMedia className="bg-destructive/10 text-destructive dark:bg-destructive/20 dark:text-destructive">
             <Trash2Icon />
           </AlertDialogMedia>
-          <AlertDialogTitle>Delete {selectedLength} Categories</AlertDialogTitle>
+          <AlertDialogTitle>
+            {sprintf
+              (
+                t("category.dialog_modal.bulk_delete_dialog.dialog_title", "Hapus %d kategori"),
+                selectedLength)
+            }
+          </AlertDialogTitle>
           <AlertDialogDescription>
-            Are you sure you want to delete {selectedLength} selected {selectedLength === 1 ? 'category' : 'categories'}?
+            {sprintf(t("category.dialog_modal.bulk_delete_dialog.dialog_desc", "Apakah anda yakin akan menghapus %d kategori ?"), selectedLength)}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
@@ -91,7 +104,7 @@ export function BulkDeleteDialog({
             variant="destructive"
             disabled={loading}
           >
-            {loading ? 'Deleting...' : 'Delete'}
+            {loading ? <Spinner /> : t("category.dialog_modal.bulk_delete_dialog.confirm_button", "Hapus Kategori")}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

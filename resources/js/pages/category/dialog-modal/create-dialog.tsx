@@ -18,6 +18,7 @@ import { store as storeCategory } from '@/routes/apiCategories';
 import type { CategoryForm } from '@/support/interfaces/request/createCategory';
 import { toast } from 'sonner';
 import { useTranslation } from 'react-i18next';
+import { Spinner } from '@/components/ui/spinner';
 
 interface CreateDialogProps {
     onSuccess: () => void;
@@ -69,25 +70,25 @@ export function CreateDialog({ onSuccess }: CreateDialogProps) {
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-                <Button variant="outline">{t('category.dialog_modal.create_dialog.add_category_button', 'Add Record')}</Button>
+                <Button variant="outline">{t('category.dialog_modal.create_dialog.dialog_button', 'Tambah Kategori')}</Button>
             </DialogTrigger>
             <DialogContent>
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <DialogHeader>
-                        <DialogTitle>{t('category.dialog_modal.create_dialog.add_category_dialog_title')}</DialogTitle>
+                        <DialogTitle>{t("category.dialog_modal.create_dialog.dialog_title", "Tambah Kategori")}</DialogTitle>
                         <DialogDescription>
-                            Add a new category to your inventory
+                            {t("category.dialog_modal.create_dialog.dialog_desc", "Tambahkan kategori baru produk anda")}
                         </DialogDescription>
                     </DialogHeader>
                     <FieldGroup>
                         <Field>
                             <label htmlFor="name" className="text-sm">
-                                Category Name
+                                {t("category.dialog_modal.create_dialog.name_input_label", "Nama")}
                             </label>
                             <Input
                                 id="name"
                                 name="name"
-                                placeholder="Enter category name"
+                                placeholder={t("category.dialog_modal.create_dialog.name_input_placeholder", "Masukkan nama kategori")}
                                 value={formData.name}
                                 onChange={handleChange}
                                 disabled={loading}
@@ -96,12 +97,12 @@ export function CreateDialog({ onSuccess }: CreateDialogProps) {
                         </Field>
                         <Field>
                             <label htmlFor="desc" className="text-sm">
-                                Description
+                                {t("category.dialog_modal.create_dialog.desc_input_label", "Deskripsi")}
                             </label>
                             <Textarea
                                 id="desc"
                                 name="desc"
-                                placeholder="Enter category description (optional)"
+                                placeholder={t("category.dialog_modal.create_dialog.desc_input_placeholder", "Masukkan deskripsi kategori (Opsional)")}
                                 value={formData.desc}
                                 onChange={handleChange}
                                 disabled={loading}
@@ -117,11 +118,11 @@ export function CreateDialog({ onSuccess }: CreateDialogProps) {
                                 onClick={() => setOpen(false)}
                                 disabled={loading}
                             >
-                                Cancel
+                                {t("category.dialog_modal.create_dialog.cancel_button", "Batal")}
                             </Button>
                         </DialogClose>
                         <Button type="submit" disabled={loading}>
-                            {loading ? 'Creating...' : 'Create'}
+                            {loading ? <Spinner /> : t("category.dialog_modal.create_dialog.confirm_button", "Tambah")}
                         </Button>
                     </DialogFooter>
                 </form>

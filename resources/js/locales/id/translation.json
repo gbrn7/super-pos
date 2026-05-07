@@ -2,8 +2,57 @@
   "category":{
     "dialog_modal":{
       "create_dialog": {
-        "add_category_dialog_title": "Tambah Kategori",
-        "add_category_button": "Tambah Kategori"
+        "dialog_button": "Tambah Data",
+        "dialog_title": "Tambah Kategori",
+        "dialog_desc": "Tambahkan kategori baru produk anda",
+        "name_input_label":"Nama",
+        "name_input_placeholder":"Masukkan nama kategori",
+        "desc_input_label":"Deskripsi",
+        "desc_input_placeholder":"Masukkan deskripsi kategori(Opsional)",
+        "cancel_button":"Batal",
+        "confirm_button":"Tambah Kategori"
+      },
+      "edit_dialog": {
+        "dialog_button": "Edit Data",
+        "dialog_title": "Edit Kategori",
+        "dialog_desc": "Edit data kategori",
+        "name_input_label":"Nama",
+        "name_input_placeholder":"Masukkan nama kategori",
+        "desc_input_label":"Deskripsi",
+        "desc_input_placeholder":"Masukkan deskripsi kategori(Opsional)",
+        "cancel_button":"Batal",
+        "confirm_button":"Edit Kategori"
+      },
+      "detail_dialog": {
+        "dialog_button": "Detail Data",
+        "dialog_title": "Detail Kategori",
+        "dialog_desc": "Detail data kategori",
+        "name_label":"Nama",
+        "desc_label":"Deskripsi",
+        "created_at_label":"Tanggal Dibuat"
+      }, 
+      "delete_dialog": {
+        "dialog_button": "Hapus Data",
+        "dialog_title": "Hapus Kategori",
+        "dialog_desc": "Apakah anda yakin akan menghapus data ini ?",
+        "cancel_button":"Batal",
+        "confirm_button":"Hapus Kategori"
+      }, 
+      "bulk_delete_dialog": {
+        "dialog_button": "Hapus %d kategori",
+        "dialog_title": "Hapus %d kategori",
+        "dialog_desc": "Apakah anda yakin akan menghapus %d kategori ?",
+        "cancel_button":"Batal",
+        "confirm_button":"Hapus Kategori"
+      }, 
+      "import_excel_dialog": {
+        "dialog_button": "Impor Excel",
+        "dialog_title": "Impor Excel",
+        "dialog_desc": "Impor data kategori dari file Excel",
+        "template_label":"Templat",
+        "file_excel_label":"File Excel",
+        "cancel_button":"Batal",
+        "confirm_button":"Impor"
       }
     }
   }

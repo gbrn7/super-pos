@@ -17,11 +17,9 @@ const languages: languageSwitcher[] = [
     { value: "en", label: "English" },
 ]
 
-const lang = localStorage.getItem('lang') || 'en';
-
-
-
 export default function Appearance() {
+    const lang = localStorage.getItem('lang') || 'en';
+
     const { i18n } = useTranslation();
 
     const defaultLang = languages.find(l => l.value === lang) || languages[0];

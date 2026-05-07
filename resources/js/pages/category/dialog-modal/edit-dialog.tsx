@@ -16,6 +16,8 @@ import { Textarea } from '@/components/ui/textarea';
 import { update as updateCategory } from '@/routes/apiCategories';
 import type { Category } from '@/support/models/category';
 import { toast } from 'sonner';
+import { useTranslation } from 'react-i18next';
+import { Spinner } from '@/components/ui/spinner';
 
 interface EditDialogProps {
     isOpen: boolean;
@@ -30,6 +32,8 @@ export function EditDialog({
     category,
     setOpen,
 }: EditDialogProps) {
+    const { t } = useTranslation();
+
     const [loading, setLoading] = useState<boolean>(false);
     const [formData, setFormData] = useState({
         name: category?.name ?? '',
@@ -75,20 +79,20 @@ export function EditDialog({
             <DialogContent onOpenAutoFocus={(e) => e.preventDefault()}>
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <DialogHeader>
-                        <DialogTitle>Update Category</DialogTitle>
+                        <DialogTitle>{t("category.dialog_modal.edit_dialog.dialog_title", "Edit Kategori")}</DialogTitle>
                         <DialogDescription>
-                            Update data category
+                            {t("category.dialog_modal.edit_dialog.dialog_desc", "Edit data kategori")}
                         </DialogDescription>
                     </DialogHeader>
                     <FieldGroup>
                         <Field>
                             <label htmlFor="name" className="text-sm">
-                                Category Name
+                                {t("category.dialog_modal.edit_dialog.name_input_label", "Nama")}
                             </label>
                             <Input
                                 id="name"
                                 name="name"
-                                placeholder="Enter category name"
+                                placeholder={t("category.dialog_modal.edit_dialog.name_input_placeholder", "Masukkan nama kategori")}
                                 value={formData.name}
                                 onChange={handleChange}
                                 disabled={loading}
@@ -97,12 +101,12 @@ export function EditDialog({
                         </Field>
                         <Field>
                             <label htmlFor="desc" className="text-sm">
-                                Description
+                                {t("category.dialog_modal.edit_dialog.desc_input_label", "Deskripsi")}
                             </label>
                             <Textarea
                                 id="desc"
                                 name="desc"
-                                placeholder="Enter category description (optional)"
+                                placeholder={t("category.dialog_modal.edit_dialog.desc_input_placeholder", "Masukkan deskripsi kategori (Opsional)")}
                                 value={formData.desc}
                                 onChange={handleChange}
                                 disabled={loading}
@@ -118,11 +122,11 @@ export function EditDialog({
                                 onClick={() => setOpen(false)}
                                 disabled={loading}
                             >
-                                Cancel
+                                {t("category.dialog_modal.edit_dialog.cancel_button", "Batal")}
                             </Button>
                         </DialogClose>
                         <Button type="submit" disabled={loading}>
-                            {loading ? 'Updating...' : 'Update'}
+                            {loading ? <Spinner /> : t("category.dialog_modal.edit_dialog.confirm_button", "Edit Kategori")}
                         </Button>
                     </DialogFooter>
                 </form>

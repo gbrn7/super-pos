@@ -12,9 +12,11 @@ import {
 import { Field, FieldGroup } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { Spinner } from "@/components/ui/spinner"
 import { getCategoryImportTemplate, importStudentExcelData } from '@/routes/apiCategories';
 import axios from 'axios';
 import { useState } from 'react';
+import { useTranslation } from "react-i18next"
 import { toast } from 'sonner';
 
 interface ImportExcelDialogProps {
@@ -22,6 +24,7 @@ interface ImportExcelDialogProps {
 }
 
 export function ImportExcelDialog({ onSuccess }: ImportExcelDialogProps) {
+  const { t } = useTranslation()
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [file, setFile] = useState<File | null>(null);
@@ -68,22 +71,22 @@ export function ImportExcelDialog({ onSuccess }: ImportExcelDialogProps) {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline">Import Excel</Button>
+        <Button variant="outline">{t('category.dialog_modal.import_excel_dialog.dialog_button', "Impor Excel")}</Button>
       </DialogTrigger>
       <DialogContent className="sm">
         <DialogHeader>
-          <DialogTitle>Import Excel</DialogTitle>
+          <DialogTitle>{t('category.dialog_modal.import_excel_dialog.dialog_title', "Impor Excel")}</DialogTitle>
           <DialogDescription>
-            Import Data From Excel File
+            {t('category.dialog_modal.import_excel_dialog.dialog_desc', "Import Excel")}
           </DialogDescription>
         </DialogHeader>
         <FieldGroup>
           <Field>
-            <Label htmlFor="file-import">Template</Label>
+            <Label htmlFor="file-import">{t("category.dialog_modal.import_excel_dialog.template_label", "Templat")}</Label>
             <p className="text-blue-500"><a href={getCategoryImportTemplate().url}>import-category-template.xlsx</a></p>
           </Field>
           <Field>
-            <Label htmlFor="file_import">File Excel</Label>
+            <Label htmlFor="file_import">{t("category.dialog_modal.import_excel_dialog.file_excel_label", "File Excel")}</Label>
             <Input
               type="file"
               id="file_import"
@@ -96,10 +99,10 @@ export function ImportExcelDialog({ onSuccess }: ImportExcelDialogProps) {
         </FieldGroup>
         <DialogFooter >
           <DialogClose asChild>
-            <Button variant="outline" disabled={isLoading}>Cancel</Button>
+            <Button variant="outline" disabled={isLoading}>{t("category.dialog_modal.import_excel_dialog.cancel_button", "Batal")}</Button>
           </DialogClose>
           <Button onClick={handleSubmit} disabled={isLoading}>
-            {isLoading ? 'Importing...' : 'Import'}
+            {isLoading ? <Spinner /> : t("category.dialog_modal.import_excel_dialog.confirm_button", "Impor")}
           </Button>
         </DialogFooter>
       </DialogContent>

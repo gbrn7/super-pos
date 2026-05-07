@@ -1,9 +1,58 @@
 {
-  "category":{
-    "dialog_modal":{
+  "category": {
+    "dialog_modal": {
       "create_dialog": {
-        "add_category_dialog_title": "Add Category",
-        "add_category_button": "Add Category"
+        "dialog_button": "Add Data",
+        "dialog_title": "Add Category",
+        "dialog_desc": "Add a new category for your product",
+        "name_input_label": "Name",
+        "name_input_placeholder": "Enter category name",
+        "desc_input_label": "Description",
+        "desc_input_placeholder": "Enter category description (Optional)",
+        "cancel_button": "Cancel",
+        "confirm_button": "Add Category"
+      },
+      "edit_dialog": {
+        "dialog_button": "Edit Data",
+        "dialog_title": "Edit Category",
+        "dialog_desc": "Edit category data",
+        "name_input_label": "Name",
+        "name_input_placeholder": "Enter category name",
+        "desc_input_label": "Description",
+        "desc_input_placeholder": "Enter category description (Optional)",
+        "cancel_button": "Cancel",
+        "confirm_button": "Edit Category"
+      },
+      "detail_dialog": {
+        "dialog_button": "View Details",
+        "dialog_title": "Category Details",
+        "dialog_desc": "Category detail information",
+        "name_label": "Name",
+        "desc_label": "Description",
+        "created_at_label": "Created At"
+      },
+      "delete_dialog": {
+        "dialog_button": "Delete Data",
+        "dialog_title": "Delete Category",
+        "dialog_desc": "Are you sure you want to delete this data?",
+        "cancel_button": "Cancel",
+        "confirm_button": "Delete Category"
+      },
+      "bulk_delete_dialog": {
+        "dialog_button": "Delete %d Categories",
+        "dialog_title": "Delete %d Categories",
+        "dialog_desc": "Are you sure you want to delete %d categories?",
+        "cancel_button": "Cancel",
+        "confirm_button": "Delete Categories"
+      },
+      "import_excel_dialog": {
+        "dialog_button": "Import Excel",
+        "dialog_title": "Import Excel",
+        "dialog_desc": "Import category data from an Excel file",
+        "template_label": "Template",
+        "file_excel_label": "Excel File",
+        "cancel_button": "Cancel",
+        "confirm_button": "Import"
       }
     }
   }
