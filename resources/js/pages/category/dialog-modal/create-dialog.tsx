@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import {
@@ -19,6 +18,13 @@ import type { CategoryForm } from '@/support/interfaces/request/createCategory';
 import { toast } from 'sonner';
 import { useTranslation } from 'react-i18next';
 import { Spinner } from '@/components/ui/spinner';
+import axiosInstance from '@/lib/axios';
+import { ResponseApi } from '@/support/interfaces/response/Response';
+import { Category } from '@/support/models/category';
+import { ResponseErrorApi } from '@/support/interfaces/response/ResponseError';
+import axios from 'axios';
+import { Message } from '@/constants/Index';
+import { handleApiError } from '@/lib/utils';
 
 interface CreateDialogProps {
     onSuccess: () => void;
@@ -53,14 +59,18 @@ export function CreateDialog({ onSuccess }: CreateDialogProps) {
         try {
             setLoading(true);
 
-            await axios.post(storeCategory().url, formData);
+            const res = await axiosInstance.post<ResponseApi<Category>>(storeCategory().url, formData);
 
             setFormData({ name: '', desc: '' });
-            toast.success("Create category successfully")
+            if (!res.data.success) {
+                toast.info(res.data.message)
+                return
+            }
+            toast.success(res.data.message)
             onSuccess();
         } catch (error) {
             console.error('Error creating category:', error);
-            toast.error("Failed to edit category")
+            handleApiError(error)
         } finally {
             setLoading(false);
             setOpen(false);

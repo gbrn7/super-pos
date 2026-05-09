@@ -10,6 +10,13 @@ import { DetailDialog } from './dialog-modal/detail-dialog';
 import { EditDialog } from './dialog-modal/edit-dialog';
 import { useTranslation } from 'react-i18next';
 import i18next from 'i18next';
+import axiosInstance from '@/lib/axios';
+import { toast } from 'sonner';
+import { ResponseApi } from '@/support/interfaces/response/Response';
+import axios from 'axios';
+import { ResponseErrorApi } from '@/support/interfaces/response/ResponseError';
+import { Message } from '@/constants/Index';
+import { handleApiError } from '@/lib/utils';
 
 const { url } = categories();
 
@@ -33,11 +40,14 @@ export default function Index() {
     const fetchAllCategories = async () => {
         try {
             setProcessing(true);
-            const response = await fetch(`${apiUrl}`);
-            const result = await response.json();
-            setAllCategories(result.data || []);
+            const res = await axiosInstance.get<ResponseApi<Category[]>>(apiUrl);
+            if (!res.data.success) {
+                toast.info(res.data.message)
+                return
+            }
+            setAllCategories(res.data.data);
         } catch (error) {
-            console.error('Failed to fetch categories:', error);
+            handleApiError(error)
         } finally {
             setProcessing(false);
             setSelectedCategories([])

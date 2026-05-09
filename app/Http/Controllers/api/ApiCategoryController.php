@@ -20,9 +20,23 @@ class ApiCategoryController extends Controller
      */
     public function index(Request $request)
     {
-        $categories = $this->categoryService->getAllByIndex(new GetCategoryReqModel($request));
+        try {
+            $categories = $this->categoryService->getAllByIndex(new GetCategoryReqModel($request));
 
-        return CategoryResource::collection($categories);
+            $data = CategoryResource::collection($categories);
+
+            return response()->json([
+                'success' => true,
+                'message' => '',
+                'data' => $data,
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Something went wrong',
+                'error' => $th->getMessage(),
+            ], 500);
+        }
     }
 
     /**

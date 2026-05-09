@@ -18,6 +18,9 @@ import type { Category } from '@/support/models/category';
 import { toast } from 'sonner';
 import { useTranslation } from 'react-i18next';
 import { Spinner } from '@/components/ui/spinner';
+import axiosInstance from '@/lib/axios';
+import { ResponseApi } from '@/support/interfaces/response/Response';
+import { handleApiError } from '@/lib/utils';
 
 interface EditDialogProps {
     isOpen: boolean;
@@ -60,14 +63,19 @@ export function EditDialog({
         try {
             setLoading(true);
 
-            await axios.put(updateCategory(category?.id || '').url, formData);
+            const res = await axiosInstance.put<ResponseApi<Category>>(updateCategory(category?.id || '').url, formData);
+
+            if (!res.data.success) {
+                toast.info(res.data.message)
+                return
+            }
 
             setFormData({ name: '', desc: '' });
-            toast.success("Edit category successfully")
+            toast.success(res.data.message)
             onSuccess();
         } catch (error) {
             console.error('Error updating category:', error);
-            toast.error("Failed to edit category")
+            handleApiError(error)
         } finally {
             setLoading(false);
             setOpen(false);

@@ -6,6 +6,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { useTranslation } from 'react-i18next';
 import { ChangeEvent, EventHandler, MouseEvent, MouseEventHandler, useState } from 'react';
 import i18next from 'i18next';
+import { languageCode, localStorageKey } from '@/constants/Index';
 
 
 interface languageSwitcher {
@@ -19,7 +20,7 @@ const languages: languageSwitcher[] = [
 ]
 
 export default function Appearance() {
-    const lang = localStorage.getItem('lang') || 'en';
+    const lang = localStorage.getItem(localStorageKey.LanguageKey) || languageCode.DefaultLanguageCode;
 
     const { i18n, t } = useTranslation();
 

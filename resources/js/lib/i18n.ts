@@ -2,6 +2,7 @@ import i18next from 'i18next'
 import { initReactI18next } from 'react-i18next'
 import en from "@/locales/en/translation.json"
 import id from "@/locales/id/translation.json"
+import { languageCode, localStorageKey } from '@/constants/Index'
 
 i18next
   .use(initReactI18next)
@@ -14,7 +15,7 @@ i18next
         translation: id
       },
     },
-    lng: localStorage.getItem('lang') || 'id',
+    lng: localStorageKey.LanguageKey || languageCode.DefaultLanguageCode,
     returnEmptyString: false,
     fallbackLng: 'id',
     defaultNS: 'translation'

@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { Trash2Icon } from 'lucide-react';
 import { useState } from 'react';
 import {
@@ -17,6 +16,9 @@ import type { Category } from '@/support/models/category';
 import { toast } from 'sonner';
 import { Spinner } from '@/components/ui/spinner';
 import { t } from 'i18next';
+import { handleApiError } from '@/lib/utils';
+import { ResponseApi } from '@/support/interfaces/response/Response';
+import axiosInstance from '@/lib/axios';
 
 interface DeleteDialogProps {
     isOpen: boolean;
@@ -37,13 +39,18 @@ export function DeleteDialog({
         try {
             setLoading(true);
 
-            await axios.delete(deleteCategory(category?.id || '').url);
+            const res = await axiosInstance.delete<ResponseApi<boolean>>(deleteCategory(category?.id || '').url);
+
+            if (!res.data.success) {
+                toast.info(res.data.message)
+                return
+            }
 
             onSuccess();
-            toast.success("Delete category successfully")
+            toast.success(res.data.message)
         } catch (error) {
             console.error('Error deleting category:', error);
-            toast.success("Failed to delete category")
+            handleApiError(error)
         } finally {
             setLoading(false);
             setOpen(false);
