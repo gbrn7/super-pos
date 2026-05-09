@@ -1,5 +1,134 @@
 {
+  "component":{
+    "sidebar":{
+      "dashboard_menu_label":"Dasbor",
+      "example_menu_label":"Example",
+      "category_menu_label":"Kategori"
+    },
+    "data_table": {
+      "search_component":{
+        "search_by": "Pencarian Berdasarkan",
+        "name":"Nama",
+        "description":"Deskripsi"
+      },
+      "export":{
+        "label":"Ekspor",
+        "export_excel_btn":"Ekspor Excel",
+        "export_pdf_btn":"Ekspor Pdf"
+      },
+      "columns":{
+        "label":"Kolom"
+      },
+      "action_menu":{
+        "label":"Aksi",
+        "trigger_btn_label":"Buka Menu",
+        "detail_data_btn":"Detail Data",
+        "edit_data_btn":"Edit Data",
+        "delete_data_btn":"Hapus Data"
+      },
+      "no_result":"Tidak ada hasil",
+      "row_per_page":"Baris per halaman",
+      "pagination_info":"Halaman %d dari %d | total %d baris"
+    }
+  },
+  "page":{
+  "auth":{
+    "confirm_password":{
+      "form":{
+        "password_input_label":"Kata sandi",
+        "confirm_password_btn":"Konfirmasi Kata sandi"
+      },
+      "title":"Konfirmasi kata sandi anda",
+      "deskripsi":"Ini adalah area aman dalam aplikasi. Harap konfirmasi kata sandi Anda sebelum melanjutkan."
+    },
+    "forgot_password":{
+      "form":{
+        "email_input_label":"Email",
+        "confirm_forgot_password_btn":"Tautan setel ulang kata sandi email"
+      },
+      "title":"Lupa Kata sandi",
+      "description":"Masukkan email Anda untuk menerima tautan pengaturan ulang kata sandi.",
+      "or_return_to":"Atau, kembali ke",
+      "login_btn":"Log in"
+    }, 
+    "login":{
+      "form":{
+        "email_input_label":"Email",
+        "password_input_label":"Kata sandi",
+        "login_btn":"Log in"
+      },
+      "title":"Masuk ke akun Anda",
+      "description":"Masukkan email dan kata sandi Anda di bawah ini untuk masuk.",
+      "remember_me":"Ingat saya",
+      "dont_have_account":"Tidak punya akun?",
+      "signup_btn":"Daftar",
+      "forgot_password_link":"Forgot kata sandi?"
+    }, 
+    "register":{
+      "form":{
+        "name_input_label":"Nama",
+        "email_input_label":"Email",
+        "password_input_label":"Kata sandi",
+        "confirm_password_input_label":"Konfirmasi Kata sandi",
+        "confirm_register_btn":"Buat Akun"
+      },
+      "title":"Buat akun Anda",
+      "description":"Masukkan detail Anda di bawah ini untuk membuat akun Anda.",
+      "remember_me":"Ingat saya",
+      "already_have_account":"Sudah punya akun?",
+      "login_btn":"Log in"
+    },
+    "reset_password":{
+      "form":{
+        "email_input_label":"Email",
+        "password_input_label":"Kata sandi",
+        "confirm_password_input_label":"Konfirmasi Kata sandi",
+        "reset_btn":"Setel ulang kata sandi"
+      },
+      "title":"Setel ulang kata sandi",
+      "description":"Silakan masukkan kata sandi baru Anda di bawah ini."
+    }, 
+    "two_factor_challenge":{
+      "title":"Otentikasi dua faktor",
+      "form":{
+        "recovery_code_input_label":"Kode pemulihan",
+        "recovery_code_input_placeholder":"Masukkan Kode pemulihan",
+        "logout_btn":"Log out"
+      },
+      "recovery_code":{
+        "title":"Kode pemulihan",
+        "description":"Harap konfirmasikan akses ke akun Anda dengan memasukkan salah satu kode pemulihan darurat Anda.",
+        "toggle_text":"masuk menggunakan kode otentikasi"
+      },
+      "authentication_code":{
+        "title":"Kode otentikasi",
+        "description":"Masukkan kode otentikasi yang diberikan oleh aplikasi otentikasi Anda.",
+        "toggle_text":"masuk menggunakan kode pemulihan"
+      },
+      "continue_btn":"Melanjutkan",
+      "or_you_can":"atau anda dapat"
+    },
+    "email_verification":{
+      "form":{
+        "resend_email_btn":"Kirim ulang email verifikasi",
+        "logout_btn":"Log out"
+      },
+      "title":"Verifikasi email",
+      "description":"Silakan verifikasi alamat email Anda dengan mengklik tautan yang baru saja kami kirimkan melalui email.",
+      "info":"Tautan verifikasi baru telah dikirim ke alamat email yang Anda berikan saat pendaftaran."
+    }
+  },
+  "dashboard":{
+    "title":"Dasbor"
+  },
   "category":{
+    "page_name":"Kategori",
+    "data_table":{
+      "columns":{
+        "name_column_label":"Nama",
+        "desc_column_label":"Deskripsi"
+      }
+    },
     "dialog_modal":{
       "create_dialog": {
         "dialog_button": "Tambah Data",
@@ -19,7 +148,7 @@
         "name_input_label":"Nama",
         "name_input_placeholder":"Masukkan nama kategori",
         "desc_input_label":"Deskripsi",
-        "desc_input_placeholder":"Masukkan deskripsi kategori(Opsional)",
+        "desc_input_placeholder":"Masukkan deskripsi kategori (Opsional)",
         "cancel_button":"Batal",
         "confirm_button":"Edit Kategori"
       },
@@ -55,5 +184,45 @@
         "confirm_button":"Impor"
       }
     }
+  },
+  "settings":{
+    "appearance":{
+      "title":"Pengaturan penampilan",
+      "description":"Perbarui pengaturan tampilan akun Anda",
+      "language_label":"Bahasa"
+    },
+    "profile":{
+      "title":"Pengaturan profil",
+      "description":"Perbarui nama dan alamat email Anda",
+      "form":{
+        "name_input_label":"Nama",
+        "email_input_label":"Email",
+        "your_email_unverified":"Alamat email Anda belum terverifikasi.",
+        "click_to_resend_verification_email":"Klik di sini untuk mengirim ulang email verifikasi.",
+        "verification_status":"Tautan verifikasi baru telah dikirim ke alamat email Anda.",
+        "save_btn":"Simpan"
+      }
+    },
+    "security":{
+      "title":"Pengaturan keamanan",
+      "title_secondary":"Perbarui kata sandi",
+      "description":"Pastikan akun Anda menggunakan kata sandi yang panjang dan acak agar tetap aman.",
+      "language_label":"Bahasa",
+      "current_password_input_label":"Kata sandi saat ini",
+      "current_password_input_placeholder":"Masukkan kata sandi saat ini",
+      "new_password_input_label":"Kata sandi baru",
+      "new_password_input_placeholder":"Masukkan kata sandi baru",
+      "confirm_password_input_label":"Konfirmasi Kata sandi baru",
+      "confirm_password_input_placeholder":"Masukkan Konfirmasi kata sandi baru",
+      "save_password_btn":"Simpan kata sandi",
+      "two_factor_title":"Otentikasi dua langkah",
+      "two_factor_desc":"Kelola pengaturan otentikasi dua faktor Anda",
+      "two_factor_enabled_desc":"Anda akan diminta memasukkan PIN acak yang aman selama proses login, yang dapat Anda peroleh dari aplikasi yang mendukung TOTP di ponsel Anda.",
+      "disable_two_fa_btn":"Nonaktifkan 2FA",
+      "two_factor_disabled_desc":"Saat Anda mengaktifkan otentikasi dua faktor, Anda akan diminta memasukkan PIN aman saat masuk. PIN ini dapat diperoleh dari aplikasi yang mendukung TOTP di ponsel Anda.",
+      "continue_setup":"Lanjutkan pengaturan",
+      "enable_two_factor_btn":"Aktifkan 2FA"
+    }
   }
+}
 }

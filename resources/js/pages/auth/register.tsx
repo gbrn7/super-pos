@@ -8,11 +8,13 @@ import { Label } from '@/components/ui/label';
 import { Spinner } from '@/components/ui/spinner';
 import { login } from '@/routes';
 import { store } from '@/routes/register';
+import { useTranslation } from 'react-i18next';
 
 export default function Register() {
+    const { t } = useTranslation();
     return (
         <>
-            <Head title="Register" />
+            <Head title={t("page.auth.register.title", "Buat akun")} />
             <Form
                 {...store.form()}
                 resetOnSuccess={['password', 'password_confirmation']}
@@ -23,7 +25,7 @@ export default function Register() {
                     <>
                         <div className="grid gap-6">
                             <div className="grid gap-2">
-                                <Label htmlFor="name">Name</Label>
+                                <Label htmlFor="name">{t("page.auth.register.form.name_input_label", "Nama")}</Label>
                                 <Input
                                     id="name"
                                     type="text"
@@ -41,7 +43,7 @@ export default function Register() {
                             </div>
 
                             <div className="grid gap-2">
-                                <Label htmlFor="email">Email address</Label>
+                                <Label htmlFor="email">{t("page.auth.register.form.email_input_label", "Email")}</Label>
                                 <Input
                                     id="email"
                                     type="email"
@@ -55,7 +57,7 @@ export default function Register() {
                             </div>
 
                             <div className="grid gap-2">
-                                <Label htmlFor="password">Password</Label>
+                                <Label htmlFor="password">{t("page.auth.register.form.password_input_label", "Password")}</Label>
                                 <PasswordInput
                                     id="password"
                                     required
@@ -69,7 +71,7 @@ export default function Register() {
 
                             <div className="grid gap-2">
                                 <Label htmlFor="password_confirmation">
-                                    Confirm password
+                                    {t("page.auth.register.form.confirm_password_input_label", "Konfirmasi Password")}
                                 </Label>
                                 <PasswordInput
                                     id="password_confirmation"
@@ -91,14 +93,14 @@ export default function Register() {
                                 data-test="register-user-button"
                             >
                                 {processing && <Spinner />}
-                                Create account
+                                {t("page.auth.register.form.confirm_register_btn", "Buat akun")}
                             </Button>
                         </div>
 
                         <div className="text-center text-sm text-muted-foreground">
-                            Already have an account?{' '}
+                            {t("page.auth.register.already_have_account", "Sudah punya akun?")} {' '}
                             <TextLink href={login()} tabIndex={6}>
-                                Log in
+                                {t("page.auth.register.login_btn", "Log in?")} {' '}
                             </TextLink>
                         </div>
                     </>

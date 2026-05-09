@@ -11,6 +11,7 @@ import {
 } from '@/components/ui/input-otp';
 import { OTP_MAX_LENGTH } from '@/hooks/use-two-factor-auth';
 import { store } from '@/routes/two-factor/login';
+import { t } from 'i18next';
 
 export default function TwoFactorChallenge() {
     const [showRecoveryInput, setShowRecoveryInput] = useState<boolean>(false);
@@ -51,7 +52,7 @@ export default function TwoFactorChallenge() {
 
     return (
         <>
-            <Head title="Two-factor authentication" />
+            <Head title={t("page.auth.two_factor_challenge.title", "Otentikasi dua faktor")} />
 
             <div className="space-y-6">
                 <Form
@@ -67,7 +68,7 @@ export default function TwoFactorChallenge() {
                                     <Input
                                         name="recovery_code"
                                         type="text"
-                                        placeholder="Enter recovery code"
+                                        placeholder={t("page.auth.two_factor_challenge.form.recovery_code_input_placeholder", "Masukkan Kode pemulihan")}
                                         autoFocus={showRecoveryInput}
                                         required
                                     />
@@ -108,11 +109,11 @@ export default function TwoFactorChallenge() {
                                 className="w-full"
                                 disabled={processing}
                             >
-                                Continue
+                                {t("page.auth.two_factor_challenge.continue_btn", "Melajutkan")}
                             </Button>
 
                             <div className="text-center text-sm text-muted-foreground">
-                                <span>or you can </span>
+                                <span> {t("page.auth.two_factor_challenge.or_you_can", "atau anda dapat")} </span>
                                 <button
                                     type="button"
                                     className="cursor-pointer text-foreground underline decoration-neutral-300 underline-offset-4 transition-colors duration-300 ease-out hover:decoration-current! dark:decoration-neutral-500"

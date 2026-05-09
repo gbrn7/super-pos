@@ -19,78 +19,81 @@ interface ColumnsProps {
     onDeleteClick: (category: Category) => void;
 }
 
-export const columns = (props?: ColumnsProps): ColumnDef<Category>[] => [
-    {
-        id: 'select',
-        header: ({ table }) => (
-            <Checkbox
-                checked={
-                    table.getIsAllPageRowsSelected() ||
-                    (table.getIsSomePageRowsSelected() && 'indeterminate')
-                }
-                onCheckedChange={(value) =>
-                    table.toggleAllPageRowsSelected(!!value)
-                }
-                aria-label="Select all"
-            />
-        ),
-        cell: ({ row }) => (
-            <Checkbox
-                checked={row.getIsSelected()}
-                onCheckedChange={(value) => row.toggleSelected(!!value)}
-                aria-label="Select row"
-            />
-        ),
-        enableSorting: false,
-        enableHiding: false,
-    },
-    {
-        accessorKey: 'name',
-        header: ({ column }) => (
-            <DataTableHeader column={column} title="Nama" />
-        ),
-        enableSorting: true,
-    },
-    {
-        accessorKey: 'desc',
-        header: ({ column }) => (
-            <DataTableHeader column={column} title="Deskripsi" />
-        ),
-        enableSorting: true,
-    },
-    {
-        id: 'actions',
-        cell: ({ row }) => (
-            <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" className="h-8 w-8 p-0">
-                        <span className="sr-only">Open menu</span>
-                        <MoreHorizontal className="h-4 w-4" />
-                    </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end">
-                    <DropdownMenuLabel>Action</DropdownMenuLabel>
-                    <DropdownMenuItem
-                        onClick={() => props?.onDetailClick(row.original)}
-                    >
-                        <FileText className="mr-0.5 h-4 w-4" />
-                        Detail Data
-                    </DropdownMenuItem>
-                    <DropdownMenuItem
-                        onClick={() => props?.onEditClick(row.original)}
-                    >
-                        <Pencil className="mr-0.5 h-4 w-4" />
-                        Edit Data
-                    </DropdownMenuItem>
-                    <DropdownMenuItem
-                        onClick={() => props?.onDeleteClick(row.original)}
-                        variant="destructive"
-                    >
-                        <Trash className="mr-0.5 h-4 w-4" />
-                        Delete Data
-                    </DropdownMenuItem>
-                </DropdownMenuContent>
-            </DropdownMenu>
-        ),
-    },
-];
+export const columns = (props?: ColumnsProps): ColumnDef<Category>[] => {
+    const { t } = useTranslation()
+    return [
+        {
+            id: 'select',
+            header: ({ table }) => (
+                <Checkbox
+                    checked={
+                        table.getIsAllPageRowsSelected() ||
+                        (table.getIsSomePageRowsSelected() && 'indeterminate')
+                    }
+                    onCheckedChange={(value) =>
+                        table.toggleAllPageRowsSelected(!!value)
+                    }
+                    aria-label="Select all"
+                />
+            ),
+            cell: ({ row }) => (
+                <Checkbox
+                    checked={row.getIsSelected()}
+                    onCheckedChange={(value) => row.toggleSelected(!!value)}
+                    aria-label="Select row"
+                />
+            ),
+            enableSorting: false,
+            enableHiding: false,
+        },
+        {
+            accessorKey: 'name',
+            header: ({ column }) => (
+                <DataTableHeader column={column} title={t("page.category.data_table.columns.name_column_label", "Nama")} />
+            ),
+            enableSorting: true,
+        },
+        {
+            accessorKey: 'desc',
+            header: ({ column }) => (
+                <DataTableHeader column={column} title={t("page.category.data_table.columns.desc_column_label", "Deskripsi")} />
+            ),
+            enableSorting: true,
+        },
+        {
+            id: 'actions',
+            cell: ({ row }) => (
+                <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                        <Button variant="ghost" className="h-8 w-8 p-0">
+                            <span className="sr-only">{t("component.data_table.action_menu.trigger_btn_label", "Buka Menu")}</span>
+                            <MoreHorizontal className="h-4 w-4" />
+                        </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end">
+                        <DropdownMenuLabel>{t("component.data_table.action_menu.label", "Aksi")}</DropdownMenuLabel>
+                        <DropdownMenuItem
+                            onClick={() => props?.onDetailClick(row.original)}
+                        >
+                            <FileText className="mr-0.5 h-4 w-4" />
+                            {t("component.data_table.action_menu.detail_data_btn", "Detail data")}
+                        </DropdownMenuItem>
+                        <DropdownMenuItem
+                            onClick={() => props?.onEditClick(row.original)}
+                        >
+                            <Pencil className="mr-0.5 h-4 w-4" />
+                            {t("component.data_table.action_menu.edit_data_btn", "Edit data")}
+                        </DropdownMenuItem>
+                        <DropdownMenuItem
+                            onClick={() => props?.onDeleteClick(row.original)}
+                            variant="destructive"
+                        >
+                            <Trash className="mr-0.5 h-4 w-4" />
+                            {t("component.data_table.action_menu.delete_data_btn", "Hapus data")}
+                        </DropdownMenuItem>
+                    </DropdownMenuContent>
+                </DropdownMenu>
+            ),
+        },
+    ]
+};

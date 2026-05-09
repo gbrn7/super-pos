@@ -71,22 +71,22 @@ export function ImportExcelDialog({ onSuccess }: ImportExcelDialogProps) {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline">{t('category.dialog_modal.import_excel_dialog.dialog_button', "Impor Excel")}</Button>
+        <Button variant="outline">{t("page.category.dialog_modal.import_excel_dialog.dialog_button", "Impor Excel")}</Button>
       </DialogTrigger>
       <DialogContent className="sm">
         <DialogHeader>
-          <DialogTitle>{t('category.dialog_modal.import_excel_dialog.dialog_title', "Impor Excel")}</DialogTitle>
+          <DialogTitle>{t("page.category.dialog_modal.import_excel_dialog.dialog_title", "Impor Excel")}</DialogTitle>
           <DialogDescription>
-            {t('category.dialog_modal.import_excel_dialog.dialog_desc', "Import Excel")}
+            {t("page.category.dialog_modal.import_excel_dialog.dialog_desc", "Import Excel")}
           </DialogDescription>
         </DialogHeader>
         <FieldGroup>
           <Field>
-            <Label htmlFor="file-import">{t("category.dialog_modal.import_excel_dialog.template_label", "Templat")}</Label>
+            <Label htmlFor="file-import">{t("page.category.dialog_modal.import_excel_dialog.template_label", "Templat")}</Label>
             <p className="text-blue-500"><a href={getCategoryImportTemplate().url}>import-category-template.xlsx</a></p>
           </Field>
           <Field>
-            <Label htmlFor="file_import">{t("category.dialog_modal.import_excel_dialog.file_excel_label", "File Excel")}</Label>
+            <Label htmlFor="file_import">{t("page.category.dialog_modal.import_excel_dialog.file_excel_label", "File Excel")}</Label>
             <Input
               type="file"
               id="file_import"
@@ -99,10 +99,10 @@ export function ImportExcelDialog({ onSuccess }: ImportExcelDialogProps) {
         </FieldGroup>
         <DialogFooter >
           <DialogClose asChild>
-            <Button variant="outline" disabled={isLoading}>{t("category.dialog_modal.import_excel_dialog.cancel_button", "Batal")}</Button>
+            <Button variant="outline" disabled={isLoading}>{t("page.category.dialog_modal.import_excel_dialog.cancel_button", "Batal")}</Button>
           </DialogClose>
           <Button onClick={handleSubmit} disabled={isLoading}>
-            {isLoading ? <Spinner /> : t("category.dialog_modal.import_excel_dialog.confirm_button", "Impor")}
+            {isLoading ? <Spinner /> : t("page.category.dialog_modal.import_excel_dialog.confirm_button", "Impor")}
           </Button>
         </DialogFooter>
       </DialogContent>

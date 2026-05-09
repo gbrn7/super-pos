@@ -70,25 +70,25 @@ export function CreateDialog({ onSuccess }: CreateDialogProps) {
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-                <Button variant="outline">{t('category.dialog_modal.create_dialog.dialog_button', 'Tambah Kategori')}</Button>
+                <Button variant="outline">{t("page.category.dialog_modal.create_dialog.dialog_button", "Tambah Kategori")}</Button>
             </DialogTrigger>
             <DialogContent>
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <DialogHeader>
-                        <DialogTitle>{t("category.dialog_modal.create_dialog.dialog_title", "Tambah Kategori")}</DialogTitle>
+                        <DialogTitle>{t("page.category.dialog_modal.create_dialog.dialog_title", "Tambah Kategori")}</DialogTitle>
                         <DialogDescription>
-                            {t("category.dialog_modal.create_dialog.dialog_desc", "Tambahkan kategori baru produk anda")}
+                            {t("page.category.dialog_modal.create_dialog.dialog_desc", "Tambahkan kategori baru produk anda")}
                         </DialogDescription>
                     </DialogHeader>
                     <FieldGroup>
                         <Field>
                             <label htmlFor="name" className="text-sm">
-                                {t("category.dialog_modal.create_dialog.name_input_label", "Nama")}
+                                {t("page.category.dialog_modal.create_dialog.name_input_label", "Nama")}
                             </label>
                             <Input
                                 id="name"
                                 name="name"
-                                placeholder={t("category.dialog_modal.create_dialog.name_input_placeholder", "Masukkan nama kategori")}
+                                placeholder={t("page.category.dialog_modal.create_dialog.name_input_placeholder", "Masukkan nama kategori")}
                                 value={formData.name}
                                 onChange={handleChange}
                                 disabled={loading}
@@ -97,12 +97,12 @@ export function CreateDialog({ onSuccess }: CreateDialogProps) {
                         </Field>
                         <Field>
                             <label htmlFor="desc" className="text-sm">
-                                {t("category.dialog_modal.create_dialog.desc_input_label", "Deskripsi")}
+                                {t("page.category.dialog_modal.create_dialog.desc_input_label", "Deskripsi")}
                             </label>
                             <Textarea
                                 id="desc"
                                 name="desc"
-                                placeholder={t("category.dialog_modal.create_dialog.desc_input_placeholder", "Masukkan deskripsi kategori (Opsional)")}
+                                placeholder={t("page.category.dialog_modal.create_dialog.desc_input_placeholder", "Masukkan deskripsi kategori (Opsional)")}
                                 value={formData.desc}
                                 onChange={handleChange}
                                 disabled={loading}
@@ -118,11 +118,11 @@ export function CreateDialog({ onSuccess }: CreateDialogProps) {
                                 onClick={() => setOpen(false)}
                                 disabled={loading}
                             >
-                                {t("category.dialog_modal.create_dialog.cancel_button", "Batal")}
+                                {t("page.category.dialog_modal.create_dialog.cancel_button", "Batal")}
                             </Button>
                         </DialogClose>
                         <Button type="submit" disabled={loading}>
-                            {loading ? <Spinner /> : t("category.dialog_modal.create_dialog.confirm_button", "Tambah")}
+                            {loading ? <Spinner /> : t("page.category.dialog_modal.create_dialog.confirm_button", "Tambah")}
                         </Button>
                     </DialogFooter>
                 </form>

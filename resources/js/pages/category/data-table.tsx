@@ -61,6 +61,8 @@ import { CreateDialog } from './dialog-modal/create-dialog';
 import { BulkDeleteDialog } from './dialog-modal/bulk-delete-dialog';
 import type { Category } from '@/support/models/category';
 import { ImportExcelDialog } from './dialog-modal/import-excel-dialog';
+import { useTranslation } from 'react-i18next';
+import { sprintf } from 'sprintf-js';
 
 interface DataTableProps<TData, TValue> {
     columns:
@@ -92,7 +94,7 @@ export function DataTable<TData, TValue>({
     setOpenBulkDeleteDialogOpen,
     selectedBulkCategories
 }: DataTableProps<TData, TValue>) {
-    'use no memo';
+    const { t } = useTranslation();
 
     const columns =
         typeof columnsOrFn === 'function'
@@ -257,16 +259,14 @@ export function DataTable<TData, TValue>({
                         </SelectTrigger>
                         <SelectContent>
                             <SelectGroup>
-                                <SelectLabel>Search By</SelectLabel>
-                                <SelectItem value="name">Name</SelectItem>
-                                <SelectItem value="desc">
-                                    Description
-                                </SelectItem>
+                                <SelectLabel>{t("component.data_table.search_component.search_by", "Pencarian berdasarkan")}</SelectLabel>
+                                <SelectItem value="name">{t("component.data_table.search_component.name", "Nama")}</SelectItem>
+                                <SelectItem value="desc">{t("component.data_table.search_component.description", "Deskripsi")}</SelectItem>
                             </SelectGroup>
                         </SelectContent>
                     </Select>
                     <Input
-                        placeholder={`Search by ${searchColumn === 'name' ? 'name' : 'description'}...`}
+                        placeholder={`${t("component.data_table.search_component.search_by")} ${searchColumn === 'name' ? t("component.data_table.search_component.name", "Nama") : t("component.data_table.search_component.description", "Deskripsi")}...`}
                         value={
                             (table
                                 .getColumn(searchColumn)
@@ -284,15 +284,15 @@ export function DataTable<TData, TValue>({
                     <ImportExcelDialog onSuccess={onRefresh} />
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
-                            <Button variant="outline">Export</Button>
+                            <Button variant="outline">{t("component.data_table.export.label", "Ekspor")}</Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent>
                             <DropdownMenuGroup>
                                 <DropdownMenuItem onClick={handleExportExcel}>
-                                    Export Excel
+                                    {t("component.data_table.export.export_excel_btn", "Ekspor Excel")}
                                 </DropdownMenuItem>
                                 <DropdownMenuItem onClick={handleExportPDF}>
-                                    Export PDF
+                                    {t("component.data_table.export.export_pdf_btn", "Ekspor Pdf")}
                                 </DropdownMenuItem>
                             </DropdownMenuGroup>
                         </DropdownMenuContent>
@@ -316,7 +316,7 @@ export function DataTable<TData, TValue>({
                     />
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
-                            <Button variant="outline">Columns</Button>
+                            <Button variant="outline">{t("component.data_table.columns.label", "Kolom")}</Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
                             {table
@@ -403,7 +403,7 @@ export function DataTable<TData, TValue>({
                                     colSpan={columns.length}
                                     className="h-24 text-center"
                                 >
-                                    No results.
+                                    {t("component.data_table.no_result", "Tidak ada hasil")}
                                 </TableCell>
                             </TableRow>
                         )}
@@ -422,7 +422,7 @@ export function DataTable<TData, TValue>({
                     </SelectTrigger>
                     <SelectContent>
                         <SelectGroup>
-                            <SelectLabel>Rows per page</SelectLabel>
+                            <SelectLabel>{t("component.data_table.row_per_page", "Baris per halaman")}</SelectLabel>
                             {limitOptions.map((option) => (
                                 <SelectItem
                                     key={option}
@@ -473,9 +473,10 @@ export function DataTable<TData, TValue>({
                 </PaginationContent>
             </Pagination>
             <div className="mt-2 flex-1 text-sm text-muted-foreground">
-                Page {table.getState().pagination.pageIndex + 1} of{' '}
-                {table.getPageCount()} |{' '}
-                {table.getFilteredRowModel().rows.length} total row(s)
+                {sprintf
+                    (
+                        t("component.data_table.pagination_info", "Halaman %d dari %d | total %d baris"), (table.getState().pagination.pageIndex + 1), table.getPageCount(), table.getFilteredRowModel().rows.length)
+                }
             </div>
         </div>
     );

@@ -5,6 +5,7 @@ import { edit as editAppearance } from '@/routes/appearance';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useTranslation } from 'react-i18next';
 import { ChangeEvent, EventHandler, MouseEvent, MouseEventHandler, useState } from 'react';
+import i18next from 'i18next';
 
 
 interface languageSwitcher {
@@ -20,7 +21,7 @@ const languages: languageSwitcher[] = [
 export default function Appearance() {
     const lang = localStorage.getItem('lang') || 'en';
 
-    const { i18n } = useTranslation();
+    const { i18n, t } = useTranslation();
 
     const defaultLang = languages.find(l => l.value === lang) || languages[0];
 
@@ -38,19 +39,19 @@ export default function Appearance() {
 
     return (
         <>
-            <Head title="Appearance settings" />
+            <Head title={t("page.settings.appearance.title", "Pengaturan penampilan")} />
 
-            <h1 className="sr-only">Appearance settings</h1>
+            <h1 className="sr-only">{t("page.settings.appearance.title", "Pengaturan penampilan")}</h1>
 
             <div className="space-y-6">
                 <Heading
                     variant="small"
-                    title="Appearance settings"
-                    description="Update your account's appearance settings"
+                    title={t("page.settings.appearance.title", "Pengaturan penampilan")}
+                    description={t("page.settings.appearance.description", "Perbarui pengaturan tampilan akun Anda")}
                 />
                 <AppearanceTabs />
                 <div className='flex flex-col gap-2'>
-                    <label htmlFor="name" className="text-sm">Language
+                    <label htmlFor="name" className="text-sm">{t("page.settings.appearance.language_label", "Bahasa")}
                     </label>
                     <Select onValueChange={changeLanguage} value={languageSelect.value}>
                         <SelectTrigger className="w-44">
@@ -76,7 +77,7 @@ export default function Appearance() {
 Appearance.layout = {
     breadcrumbs: [
         {
-            title: 'Appearance settings',
+            title: i18next.t("page.settings.appearance.title", "Pengaturan penampilan"),
             href: editAppearance(),
         },
     ],

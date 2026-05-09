@@ -6,6 +6,8 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Spinner } from '@/components/ui/spinner';
 import { update } from '@/routes/password';
+import i18next from 'i18next';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
     token: string;
@@ -13,9 +15,10 @@ type Props = {
 };
 
 export default function ResetPassword({ token, email }: Props) {
+    const { t } = useTranslation();
     return (
         <>
-            <Head title="Reset password" />
+            <Head title={t("page.auth.reset_password.title", "Setel Ulang Password")} />
 
             <Form
                 {...update.form()}
@@ -25,7 +28,7 @@ export default function ResetPassword({ token, email }: Props) {
                 {({ processing, errors }) => (
                     <div className="grid gap-6">
                         <div className="grid gap-2">
-                            <Label htmlFor="email">Email</Label>
+                            <Label htmlFor="email">{t("page.auth.reset_password.form.email_input_label", "Email")}</Label>
                             <Input
                                 id="email"
                                 type="email"
@@ -42,7 +45,7 @@ export default function ResetPassword({ token, email }: Props) {
                         </div>
 
                         <div className="grid gap-2">
-                            <Label htmlFor="password">Password</Label>
+                            <Label htmlFor="password">{t("page.auth.reset_password.form.password_input_label", "Password")}</Label>
                             <PasswordInput
                                 id="password"
                                 name="password"
@@ -56,7 +59,7 @@ export default function ResetPassword({ token, email }: Props) {
 
                         <div className="grid gap-2">
                             <Label htmlFor="password_confirmation">
-                                Confirm password
+                                {t("page.auth.reset_password.form.confirm_password_input_label", "Konfirmasi Password")}
                             </Label>
                             <PasswordInput
                                 id="password_confirmation"
@@ -78,7 +81,7 @@ export default function ResetPassword({ token, email }: Props) {
                             data-test="reset-password-button"
                         >
                             {processing && <Spinner />}
-                            Reset password
+                            {t("page.auth.reset_password.form.reset_btn", "Setel ulang password")}
                         </Button>
                     </div>
                 )}
@@ -88,6 +91,6 @@ export default function ResetPassword({ token, email }: Props) {
 }
 
 ResetPassword.layout = {
-    title: 'Reset password',
-    description: 'Please enter your new password below',
+    title: i18next.t("page.auth.reset_password.title", "Setel ulang password"),
+    description: i18next.t("page.auth.reset_password.description", "Silakan masukkan kata sandi baru Anda di bawah ini."),
 };

@@ -28,18 +28,18 @@ export function DetailDialog({
         <Dialog open={isOpen} onOpenChange={onOpenChange}>
             <DialogContent showCloseButton={true}>
                 <DialogHeader>
-                    <DialogTitle>{t('category.dialog_modal.detail_dialog.dialog_title', "Detail Kategori")}</DialogTitle>
+                    <DialogTitle>{t("page.category.dialog_modal.detail_dialog.dialog_title", "Detail Kategori")}</DialogTitle>
                     <DialogContent>
                         <div>
                             <p className="text-sm font-medium text-muted-foreground">
-                                {t("category.dialog_modal.detail_dialog.name_label", "Nama")}
+                                {t("page.category.dialog_modal.detail_dialog.name_label", "Nama")}
                             </p>
                             <p className="mt-1 text-base">{category.name}</p>
                         </div>
 
                         <div>
                             <p className="text-sm font-medium text-muted-foreground">
-                                {t("category.dialog_modal.detail_dialog.desc_label", "Nama")}
+                                {t("page.category.dialog_modal.detail_dialog.desc_label", "Nama")}
                             </p>
                             <p className="mt-1 text-base">
                                 {category.desc || '-'}
@@ -49,7 +49,7 @@ export function DetailDialog({
                         {category.created_at && (
                             <div>
                                 <p className="text-sm font-medium text-muted-foreground">
-                                    {t('category.dialog_modal.detail_dialog.created_at_label', "Tanggal Dibuat")}
+                                    {t("page.category.dialog_modal.detail_dialog.created_at_label", "Tanggal Dibuat")}
                                 </p>
                                 <p className="mt-1 text-base">
                                     {new Date(

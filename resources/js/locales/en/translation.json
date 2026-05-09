@@ -1,58 +1,227 @@
 {
-  "category": {
-    "dialog_modal": {
-      "create_dialog": {
-        "dialog_button": "Add Data",
-        "dialog_title": "Add Category",
-        "dialog_desc": "Add a new category for your product",
-        "name_input_label": "Name",
-        "name_input_placeholder": "Enter category name",
-        "desc_input_label": "Description",
-        "desc_input_placeholder": "Enter category description (Optional)",
-        "cancel_button": "Cancel",
-        "confirm_button": "Add Category"
+  "component": {
+    "sidebar": {
+      "dashboard_menu_label": "Dashboard",
+      "example_menu_label": "Example",
+      "category_menu_label": "Category"
+    },
+    "data_table": {
+      "search_component": {
+        "search_by": "Search By",
+        "name": "Name",
+        "description": "Description"
       },
-      "edit_dialog": {
-        "dialog_button": "Edit Data",
-        "dialog_title": "Edit Category",
-        "dialog_desc": "Edit category data",
-        "name_input_label": "Name",
-        "name_input_placeholder": "Enter category name",
-        "desc_input_label": "Description",
-        "desc_input_placeholder": "Enter category description (Optional)",
-        "cancel_button": "Cancel",
-        "confirm_button": "Edit Category"
+      "export": {
+        "label": "Export",
+        "export_excel_btn": "Export Excel",
+        "export_pdf_btn": "Export PDF"
       },
-      "detail_dialog": {
-        "dialog_button": "View Details",
-        "dialog_title": "Category Details",
-        "dialog_desc": "Category detail information",
-        "name_label": "Name",
-        "desc_label": "Description",
-        "created_at_label": "Created At"
+      "columns": {
+        "label": "Columns"
       },
-      "delete_dialog": {
-        "dialog_button": "Delete Data",
-        "dialog_title": "Delete Category",
-        "dialog_desc": "Are you sure you want to delete this data?",
-        "cancel_button": "Cancel",
-        "confirm_button": "Delete Category"
+      "action_menu": {
+        "label": "Actions",
+        "trigger_btn_label": "Open Menu",
+        "detail_data_btn": "View Details",
+        "edit_data_btn": "Edit Data",
+        "delete_data_btn": "Delete Data"
       },
-      "bulk_delete_dialog": {
-        "dialog_button": "Delete %d Categories",
-        "dialog_title": "Delete %d Categories",
-        "dialog_desc": "Are you sure you want to delete %d categories?",
-        "cancel_button": "Cancel",
-        "confirm_button": "Delete Categories"
+      "no_result": "No results found",
+      "row_per_page": "Rows per page",
+      "pagination_info": "Page %d of %d | total %d rows"
+    }
+  },
+  "page": {
+    "auth": {
+      "confirm_password": {
+        "form": {
+          "password_input_label": "Password",
+          "confirm_password_btn": "Confirm Password"
+        },
+        "title": "Confirm your password",
+        "deskripsi": "This is a secure area of the application. Please confirm your password before continuing."
       },
-      "import_excel_dialog": {
-        "dialog_button": "Import Excel",
-        "dialog_title": "Import Excel",
-        "dialog_desc": "Import category data from an Excel file",
-        "template_label": "Template",
-        "file_excel_label": "Excel File",
-        "cancel_button": "Cancel",
-        "confirm_button": "Import"
+      "forgot_password": {
+        "form": {
+          "email_input_label": "Email",
+          "confirm_forgot_password_btn": "Email Password Reset Link"
+        },
+        "title": "Forgot Password",
+        "description": "Enter your email to receive a password reset link.",
+        "or_return_to": "Or, return to",
+        "login_btn": "Log in"
+      },
+      "login": {
+        "form": {
+          "email_input_label": "Email",
+          "password_input_label": "Password",
+          "login_btn": "Log in"
+        },
+        "title": "Sign in to your account",
+        "description": "Enter your email and password below to sign in.",
+        "remember_me": "Remember me",
+        "dont_have_account": "Don't have an account?",
+        "signup_btn": "Sign up",
+        "forgot_password_link": "Forgot password?"
+      },
+      "register": {
+        "form": {
+          "name_input_label": "Name",
+          "email_input_label": "Email",
+          "password_input_label": "Password",
+          "confirm_password_input_label": "Confirm Password",
+          "confirm_register_btn": "Create Account"
+        },
+        "title": "Create your account",
+        "description": "Enter your details below to create your account.",
+        "remember_me": "Remember me",
+        "already_have_account": "Already have an account?",
+        "login_btn": "Log in"
+      },
+      "reset_password": {
+        "form": {
+          "email_input_label": "Email",
+          "password_input_label": "Password",
+          "confirm_password_input_label": "Confirm Password",
+          "reset_btn": "Reset Password"
+        },
+        "title": "Reset Password",
+        "description": "Please enter your new password below."
+      },
+      "two_factor_challenge": {
+        "title": "Two-Factor Authentication",
+        "form": {
+          "recovery_code_input_label": "Recovery Code",
+          "recovery_code_input_placeholder": "Enter Recovery Code",
+          "logout_btn": "Log out"
+        },
+        "recovery_code": {
+          "title": "Recovery Code",
+          "description": "Please confirm access to your account by entering one of your emergency recovery codes.",
+          "toggle_text": "sign in using an authentication code"
+        },
+        "authentication_code": {
+          "title": "Authentication Code",
+          "description": "Enter the authentication code provided by your authentication app.",
+          "toggle_text": "sign in using a recovery code"
+        },
+        "continue_btn": "Continue",
+        "or_you_can": "or you can"
+      },
+      "email_verification": {
+        "form": {
+          "resend_email_btn": "Resend Verification Email",
+          "logout_btn": "Log out"
+        },
+        "title": "Email Verification",
+        "description": "Please verify your email address by clicking the link we just emailed to you.",
+        "info": "A new verification link has been sent to the email address you provided during registration."
+      }
+    },
+    "dashboard": {
+      "title": "Dashboard"
+    },
+    "category": {
+      "page_name": "Category",
+      "data_table": {
+        "columns": {
+          "name_column_label": "Name",
+          "desc_column_label": "Description"
+        }
+      },
+      "dialog_modal": {
+        "create_dialog": {
+          "dialog_button": "Add Data",
+          "dialog_title": "Add Category",
+          "dialog_desc": "Add a new product category",
+          "name_input_label": "Name",
+          "name_input_placeholder": "Enter category name",
+          "desc_input_label": "Description",
+          "desc_input_placeholder": "Enter category description (Optional)",
+          "cancel_button": "Cancel",
+          "confirm_button": "Add Category"
+        },
+        "edit_dialog": {
+          "dialog_button": "Edit Data",
+          "dialog_title": "Edit Category",
+          "dialog_desc": "Edit category data",
+          "name_input_label": "Name",
+          "name_input_placeholder": "Enter category name",
+          "desc_input_label": "Description",
+          "desc_input_placeholder": "Enter category description (Optional)",
+          "cancel_button": "Cancel",
+          "confirm_button": "Edit Category"
+        },
+        "detail_dialog": {
+          "dialog_button": "View Details",
+          "dialog_title": "Category Details",
+          "dialog_desc": "Category data details",
+          "name_label": "Name",
+          "desc_label": "Description",
+          "created_at_label": "Created At"
+        },
+        "delete_dialog": {
+          "dialog_button": "Delete Data",
+          "dialog_title": "Delete Category",
+          "dialog_desc": "Are you sure you want to delete this data?",
+          "cancel_button": "Cancel",
+          "confirm_button": "Delete Category"
+        },
+        "bulk_delete_dialog": {
+          "dialog_button": "Delete %d categories",
+          "dialog_title": "Delete %d categories",
+          "dialog_desc": "Are you sure you want to delete %d categories?",
+          "cancel_button": "Cancel",
+          "confirm_button": "Delete Category"
+        },
+        "import_excel_dialog": {
+          "dialog_button": "Import Excel",
+          "dialog_title": "Import Excel",
+          "dialog_desc": "Import category data from an Excel file",
+          "template_label": "Template",
+          "file_excel_label": "Excel File",
+          "cancel_button": "Cancel",
+          "confirm_button": "Import"
+        }
+      }
+    },
+    "settings": {
+      "appearance": {
+        "title": "Appearance Settings",
+        "description": "Update your account appearance settings",
+        "language_label": "Language"
+      },
+      "profile": {
+        "title": "Profile Settings",
+        "description": "Update your name and email address",
+        "form": {
+          "name_input_label": "Name",
+          "email_input_label": "Email",
+          "your_email_unverified": "Your email address is unverified.",
+          "click_to_resend_verification_email": "Click here to resend the verification email.",
+          "verification_status": "A new verification link has been sent to your email address.",
+          "save_btn": "Save"
+        }
+      },
+      "security": {
+        "title": "Security Settings",
+        "title_secondary": "Update Password",
+        "description": "Ensure your account uses a long, random password to stay secure.",
+        "language_label": "Language",
+        "current_password_input_label": "Current Password",
+        "current_password_input_placeholder": "Enter current password",
+        "new_password_input_label": "New Password",
+        "new_password_input_placeholder": "Enter new password",
+        "confirm_password_input_label": "Confirm New Password",
+        "confirm_password_input_placeholder": "Enter new password confirmation",
+        "save_password_btn": "Save Password",
+        "two_factor_title": "Two-Factor Authentication",
+        "two_factor_desc": "Manage your two-factor authentication settings",
+        "two_factor_enabled_desc": "You will be prompted to enter a secure random PIN during login, which you can obtain from a TOTP-supported app on your phone.",
+        "disable_two_fa_btn": "Disable 2FA",
+        "two_factor_disabled_desc": "When you enable two-factor authentication, you will be prompted to enter a secure PIN during login. This PIN can be obtained from a TOTP-supported app on your phone.",
+        "continue_setup": "Continue Setup",
+        "enable_two_factor_btn": "Enable 2FA"
       }
     }
   }

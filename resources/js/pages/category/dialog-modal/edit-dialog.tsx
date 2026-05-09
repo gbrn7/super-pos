@@ -79,20 +79,20 @@ export function EditDialog({
             <DialogContent onOpenAutoFocus={(e) => e.preventDefault()}>
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <DialogHeader>
-                        <DialogTitle>{t("category.dialog_modal.edit_dialog.dialog_title", "Edit Kategori")}</DialogTitle>
+                        <DialogTitle>{t("page.category.dialog_modal.edit_dialog.dialog_title", "Edit Kategori")}</DialogTitle>
                         <DialogDescription>
-                            {t("category.dialog_modal.edit_dialog.dialog_desc", "Edit data kategori")}
+                            {t("page.category.dialog_modal.edit_dialog.dialog_desc", "Edit data kategori")}
                         </DialogDescription>
                     </DialogHeader>
                     <FieldGroup>
                         <Field>
                             <label htmlFor="name" className="text-sm">
-                                {t("category.dialog_modal.edit_dialog.name_input_label", "Nama")}
+                                {t("page.category.dialog_modal.edit_dialog.name_input_label", "Nama")}
                             </label>
                             <Input
                                 id="name"
                                 name="name"
-                                placeholder={t("category.dialog_modal.edit_dialog.name_input_placeholder", "Masukkan nama kategori")}
+                                placeholder={t("page.category.dialog_modal.edit_dialog.name_input_placeholder", "Masukkan nama kategori")}
                                 value={formData.name}
                                 onChange={handleChange}
                                 disabled={loading}
@@ -101,12 +101,12 @@ export function EditDialog({
                         </Field>
                         <Field>
                             <label htmlFor="desc" className="text-sm">
-                                {t("category.dialog_modal.edit_dialog.desc_input_label", "Deskripsi")}
+                                {t("page.category.dialog_modal.edit_dialog.desc_input_label", "Deskripsi")}
                             </label>
                             <Textarea
                                 id="desc"
                                 name="desc"
-                                placeholder={t("category.dialog_modal.edit_dialog.desc_input_placeholder", "Masukkan deskripsi kategori (Opsional)")}
+                                placeholder={t("page.category.dialog_modal.edit_dialog.desc_input_placeholder", "Masukkan deskripsi kategori (Opsional)")}
                                 value={formData.desc}
                                 onChange={handleChange}
                                 disabled={loading}
@@ -122,11 +122,11 @@ export function EditDialog({
                                 onClick={() => setOpen(false)}
                                 disabled={loading}
                             >
-                                {t("category.dialog_modal.edit_dialog.cancel_button", "Batal")}
+                                {t("page.category.dialog_modal.edit_dialog.cancel_button", "Batal")}
                             </Button>
                         </DialogClose>
                         <Button type="submit" disabled={loading}>
-                            {loading ? <Spinner /> : t("category.dialog_modal.edit_dialog.confirm_button", "Edit Kategori")}
+                            {loading ? <Spinner /> : t("page.category.dialog_modal.edit_dialog.confirm_button", "Edit Kategori")}
                         </Button>
                     </DialogFooter>
                 </form>

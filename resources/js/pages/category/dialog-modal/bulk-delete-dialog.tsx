@@ -68,7 +68,7 @@ export function BulkDeleteDialog({
           <Trash2 className="h-4 w-4" />
           {sprintf
             (
-              t("category.dialog_modal.bulk_delete_dialog.dialog_button", "Hapus %d kategori"),
+              t("page.category.dialog_modal.bulk_delete_dialog.dialog_button", "Hapus %d kategori"),
               selectedLength)
           }
         </Button>
@@ -84,12 +84,12 @@ export function BulkDeleteDialog({
           <AlertDialogTitle>
             {sprintf
               (
-                t("category.dialog_modal.bulk_delete_dialog.dialog_title", "Hapus %d kategori"),
+                t("page.category.dialog_modal.bulk_delete_dialog.dialog_title", "Hapus %d kategori"),
                 selectedLength)
             }
           </AlertDialogTitle>
           <AlertDialogDescription>
-            {sprintf(t("category.dialog_modal.bulk_delete_dialog.dialog_desc", "Apakah anda yakin akan menghapus %d kategori ?"), selectedLength)}
+            {sprintf(t("page.category.dialog_modal.bulk_delete_dialog.dialog_desc", "Apakah anda yakin akan menghapus %d kategori ?"), selectedLength)}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
@@ -104,7 +104,7 @@ export function BulkDeleteDialog({
             variant="destructive"
             disabled={loading}
           >
-            {loading ? <Spinner /> : t("category.dialog_modal.bulk_delete_dialog.confirm_button", "Hapus Kategori")}
+            {loading ? <Spinner /> : t("page.category.dialog_modal.bulk_delete_dialog.confirm_button", "Hapus Kategori")}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

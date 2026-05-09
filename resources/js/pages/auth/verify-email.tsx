@@ -5,17 +5,17 @@ import { Button } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
 import { logout } from '@/routes';
 import { send } from '@/routes/verification';
+import { useTranslation } from 'react-i18next';
+import i18next from 'i18next';
 
 export default function VerifyEmail({ status }: { status?: string }) {
+    const { t } = useTranslation()
     return (
         <>
-            <Head title="Email verification" />
+            <Head title={t("page.auth.email_verification.title", "Verifikasi Email")} />
 
             {status === 'verification-link-sent' && (
-                <div className="mb-4 text-center text-sm font-medium text-green-600">
-                    A new verification link has been sent to the email address
-                    you provided during registration.
-                </div>
+                <div className="mb-4 text-center text-sm font-medium text-green-600">{t("page.auth.email_verification.info", "Tautan verifikasi baru telah dikirim ke alamat email yang Anda berikan saat pendaftaran.")}</div>
             )}
 
             <Form {...send.form()} className="space-y-6 text-center">
@@ -23,14 +23,14 @@ export default function VerifyEmail({ status }: { status?: string }) {
                     <>
                         <Button disabled={processing} variant="secondary">
                             {processing && <Spinner />}
-                            Resend verification email
+                            {t("page.auth.email_verification.form.resend_email_btn", "Kirim ulang email verifikasi")}
                         </Button>
 
                         <TextLink
                             href={logout()}
                             className="mx-auto block text-sm"
                         >
-                            Log out
+                            {t("page.auth.email_verification.form.logout_btn", "Log out")}
                         </TextLink>
                     </>
                 )}
@@ -40,7 +40,7 @@ export default function VerifyEmail({ status }: { status?: string }) {
 }
 
 VerifyEmail.layout = {
-    title: 'Verify email',
+    title: i18next.t("page.auth.email_verification.title", "Verifikasi Email"),
     description:
-        'Please verify your email address by clicking on the link we just emailed to you.',
+        i18next.t("page.auth.email_verification.description", "Silakan verifikasi alamat email Anda dengan mengklik tautan yang baru saja kami kirimkan melalui email."),
 };

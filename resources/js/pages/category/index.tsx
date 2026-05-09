@@ -9,11 +9,15 @@ import { DeleteDialog } from './dialog-modal/delete-dialog';
 import { DetailDialog } from './dialog-modal/detail-dialog';
 import { EditDialog } from './dialog-modal/edit-dialog';
 import { useTranslation } from 'react-i18next';
+import i18next from 'i18next';
 
 const { url } = categories();
 
+
 export default function Index() {
     const { url: apiUrl } = apiGetCategories();
+    const { t } = useTranslation()
+
 
     const [allCategories, setAllCategories] = useState<Category[]>([]);
     const [processing, setProcessing] = useState(false);
@@ -68,7 +72,7 @@ export default function Index() {
 
     return (
         <>
-            <Head title="Kategori" />
+            <Head title={t("page.category.page_name", "Kategori")} />
             <div className="mb-16 flex h-full flex-1 flex-col overflow-x-auto rounded-xl p-4">
                 <DataTable
                     columns={columns}
@@ -114,7 +118,7 @@ export default function Index() {
 Index.layout = {
     breadcrumbs: [
         {
-            title: 'Category',
+            title: i18next.t("page.category.page_name", "Kategori"),
             href: url,
         },
     ],

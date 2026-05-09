@@ -60,9 +60,9 @@ export function DeleteDialog({
                     <AlertDialogMedia className="bg-destructive/10 text-destructive dark:bg-destructive/20 dark:text-destructive">
                         <Trash2Icon />
                     </AlertDialogMedia>
-                    <AlertDialogTitle>{t("category.dialog_modal.delete_dialog.dialog_title", "Hapus Data")}</AlertDialogTitle>
+                    <AlertDialogTitle>{t("page.category.dialog_modal.delete_dialog.dialog_title", "Hapus Data")}</AlertDialogTitle>
                     <AlertDialogDescription>
-                        {t("category.dialog_modal.delete_dialog.dialog_desc", "Apakah anda yakin akan menghapus data ini ?")}
+                        {t("page.category.dialog_modal.delete_dialog.dialog_desc", "Apakah anda yakin akan menghapus data ini ?")}
                     </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
@@ -70,14 +70,14 @@ export function DeleteDialog({
                         variant={'outline'}
                         onClick={() => setOpen(false)}
                     >
-                        {t("category.dialog_modal.delete_dialog.cancel_button", "Batal")}
+                        {t("page.category.dialog_modal.delete_dialog.cancel_button", "Batal")}
                     </AlertDialogCancel>
                     <AlertDialogAction
                         onClick={handleDelete}
                         variant="destructive"
                         disabled={loading}
                     >
-                        {loading ? <Spinner /> : t("category.dialog_modal.delete_dialog.confirm_button", "Hapus Kategori")}
+                        {loading ? <Spinner /> : t("page.category.dialog_modal.delete_dialog.confirm_button", "Hapus Kategori")}
                     </AlertDialogAction>
                 </AlertDialogFooter>
             </AlertDialogContent>

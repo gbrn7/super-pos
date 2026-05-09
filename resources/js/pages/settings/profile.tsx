@@ -1,4 +1,3 @@
-import { Form, Head, Link, usePage } from '@inertiajs/react';
 import ProfileController from '@/actions/App/Http/Controllers/Settings/ProfileController';
 import DeleteUser from '@/components/delete-user';
 import Heading from '@/components/heading';
@@ -8,6 +7,8 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { edit } from '@/routes/profile';
 import { send } from '@/routes/verification';
+import { Form, Head, Link, usePage } from '@inertiajs/react';
+import i18next from 'i18next';
 
 export default function Profile({
     mustVerifyEmail,
@@ -96,11 +97,11 @@ export default function Profile({
 
                                         {status ===
                                             'verification-link-sent' && (
-                                            <div className="mt-2 text-sm font-medium text-green-600">
-                                                A new verification link has been
-                                                sent to your email address.
-                                            </div>
-                                        )}
+                                                <div className="mt-2 text-sm font-medium text-green-600">
+                                                    A new verification link has been
+                                                    sent to your email address.
+                                                </div>
+                                            )}
                                     </div>
                                 )}
 
@@ -125,7 +126,7 @@ export default function Profile({
 Profile.layout = {
     breadcrumbs: [
         {
-            title: 'Profile settings',
+            title: i18next.t("page.settings.profile.title", "Pengaturan profil"),
             href: edit(),
         },
     ],

@@ -1,6 +1,7 @@
 import { Head } from '@inertiajs/react';
 import { PlaceholderPattern } from '@/components/ui/placeholder-pattern';
 import { dashboard } from '@/routes';
+import i18next from 'i18next';
 
 export default function Dashboard() {
     return (
@@ -29,7 +30,7 @@ export default function Dashboard() {
 Dashboard.layout = {
     breadcrumbs: [
         {
-            title: 'Dashboard',
+            title: i18next.t("page.dashboard.title", "Dasbor"),
             href: dashboard(),
         },
     ],
