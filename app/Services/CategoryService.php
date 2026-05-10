@@ -113,7 +113,7 @@ class CategoryService implements CategoryServiceInterface
     }
 
 
-    public function importExcel(UploadedFile $file)
+    public function importExcel(UploadedFile $file): int
     {
         try {
             $raws = Excel::toArray(new CategoryImport(), $file);
@@ -134,6 +134,8 @@ class CategoryService implements CategoryServiceInterface
             if (!$isSuccess) {
                 throw new Exception("Something went wrong");
             }
+
+            return $newData->count();
         } catch (\Throwable $th) {
             throw $th;
         }

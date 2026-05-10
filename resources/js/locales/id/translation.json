@@ -9,7 +9,8 @@
       "search_component":{
         "search_by": "Pencarian Berdasarkan",
         "name":"Nama",
-        "description":"Deskripsi"
+        "description":"Deskripsi",
+        "placeholder":"Telusuri"
       },
       "export":{
         "label":"Ekspor",
@@ -126,7 +127,8 @@
     "data_table":{
       "columns":{
         "name_column_label":"Nama",
-        "desc_column_label":"Deskripsi"
+        "desc_column_label":"Deskripsi",
+        "created_at_column_label":"Dibuat pada"
       }
     },
     "dialog_modal":{
@@ -186,24 +188,44 @@
     }
   },
   "settings":{
+    "title": "Pengaturan",
+    "log_out_menu":"Log out",
+    "description": "Kelola profil dan pengaturan akun Anda",
     "appearance":{
+      "label":"Penampilan",
       "title":"Pengaturan penampilan",
       "description":"Perbarui pengaturan tampilan akun Anda",
       "language_label":"Bahasa"
     },
     "profile":{
+      "label":"Profil",
       "title":"Pengaturan profil",
+      "heading_title":"Informasi Profil",
       "description":"Perbarui nama dan alamat email Anda",
       "form":{
         "name_input_label":"Nama",
+        "name_input_placeholder":"Masukkan nama",
         "email_input_label":"Email",
+        "email_input_placeholder":"Masukkan alamat email",
         "your_email_unverified":"Alamat email Anda belum terverifikasi.",
         "click_to_resend_verification_email":"Klik di sini untuk mengirim ulang email verifikasi.",
         "verification_status":"Tautan verifikasi baru telah dikirim ke alamat email Anda.",
         "save_btn":"Simpan"
+      },
+      "deleteUser":{
+        "warning": "peringatan",
+        "description": "Harap berhati-hati, tindakan ini tidak dapat dibatalkan.",
+        "delete_account": "Hapus akun",
+        "dialog_title": "Apakah Anda yakin ingin menghapus akun Anda?",
+        "dialog_desc": "Setelah akun Anda dihapus, semua sumber daya dan datanya juga akan dihapus secara permanen. Silakan masukkan kata sandi Anda untuk mengkonfirmasi bahwa Anda ingin menghapus akun Anda secara permanen.",
+        "password_input_label": "Kata sandi",
+        "password_input_placeholder": "Masukkan Kata sandi",
+        "cancel_btn": "Batal",
+        "confirm_delete_btn": "Hapus akun"
       }
     },
     "security":{
+      "label":"Keamanan",
       "title":"Pengaturan keamanan",
       "title_secondary":"Perbarui kata sandi",
       "description":"Pastikan akun Anda menggunakan kata sandi yang panjang dan acak agar tetap aman.",

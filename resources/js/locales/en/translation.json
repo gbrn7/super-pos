@@ -9,7 +9,8 @@
       "search_component": {
         "search_by": "Search By",
         "name": "Name",
-        "description": "Description"
+        "description": "Description",
+        "placeholder": "Search"
       },
       "export": {
         "label": "Export",
@@ -20,9 +21,9 @@
         "label": "Columns"
       },
       "action_menu": {
-        "label": "Actions",
+        "label": "Action",
         "trigger_btn_label": "Open Menu",
-        "detail_data_btn": "View Details",
+        "detail_data_btn": "Detail Data",
         "edit_data_btn": "Edit Data",
         "delete_data_btn": "Delete Data"
       },
@@ -57,8 +58,8 @@
           "password_input_label": "Password",
           "login_btn": "Log in"
         },
-        "title": "Sign in to your account",
-        "description": "Enter your email and password below to sign in.",
+        "title": "Log in to your account",
+        "description": "Enter your email and password below to log in.",
         "remember_me": "Remember me",
         "dont_have_account": "Don't have an account?",
         "signup_btn": "Sign up",
@@ -89,7 +90,7 @@
         "description": "Please enter your new password below."
       },
       "two_factor_challenge": {
-        "title": "Two-Factor Authentication",
+        "title": "Two Factor Authentication",
         "form": {
           "recovery_code_input_label": "Recovery Code",
           "recovery_code_input_placeholder": "Enter Recovery Code",
@@ -98,12 +99,12 @@
         "recovery_code": {
           "title": "Recovery Code",
           "description": "Please confirm access to your account by entering one of your emergency recovery codes.",
-          "toggle_text": "sign in using an authentication code"
+          "toggle_text": "log in using authentication code"
         },
         "authentication_code": {
           "title": "Authentication Code",
-          "description": "Enter the authentication code provided by your authentication app.",
-          "toggle_text": "sign in using a recovery code"
+          "description": "Enter the authentication code provided by your authentication application.",
+          "toggle_text": "log in using recovery code"
         },
         "continue_btn": "Continue",
         "or_you_can": "or you can"
@@ -126,14 +127,15 @@
       "data_table": {
         "columns": {
           "name_column_label": "Name",
-          "desc_column_label": "Description"
+          "desc_column_label": "Description",
+          "created_at_column_label": "Created At"
         }
       },
       "dialog_modal": {
         "create_dialog": {
           "dialog_button": "Add Data",
           "dialog_title": "Add Category",
-          "dialog_desc": "Add a new product category",
+          "dialog_desc": "Add a new category for your product",
           "name_input_label": "Name",
           "name_input_placeholder": "Enter category name",
           "desc_input_label": "Description",
@@ -153,12 +155,12 @@
           "confirm_button": "Edit Category"
         },
         "detail_dialog": {
-          "dialog_button": "View Details",
-          "dialog_title": "Category Details",
-          "dialog_desc": "Category data details",
+          "dialog_button": "Detail Data",
+          "dialog_title": "Category Detail",
+          "dialog_desc": "Category detail data",
           "name_label": "Name",
           "desc_label": "Description",
-          "created_at_label": "Created At"
+          "created_at_label": "Created Date"
         },
         "delete_dialog": {
           "dialog_button": "Delete Data",
@@ -177,7 +179,7 @@
         "import_excel_dialog": {
           "dialog_button": "Import Excel",
           "dialog_title": "Import Excel",
-          "dialog_desc": "Import category data from an Excel file",
+          "dialog_desc": "Import category data from Excel file",
           "template_label": "Template",
           "file_excel_label": "Excel File",
           "cancel_button": "Cancel",
@@ -186,27 +188,47 @@
       }
     },
     "settings": {
+      "title": "Settings",
+       "log_out_menu":"Log out",
+      "description": "Manage your profile and account settings",
       "appearance": {
+        "label": "Appearance",
         "title": "Appearance Settings",
         "description": "Update your account appearance settings",
         "language_label": "Language"
       },
       "profile": {
+        "label": "Profile",
         "title": "Profile Settings",
+        "heading_title": "Profile Information",
         "description": "Update your name and email address",
         "form": {
           "name_input_label": "Name",
+          "name_input_placeholder": "Enter name",
           "email_input_label": "Email",
+          "email_input_placeholder": "Enter email address",
           "your_email_unverified": "Your email address is unverified.",
           "click_to_resend_verification_email": "Click here to resend the verification email.",
           "verification_status": "A new verification link has been sent to your email address.",
           "save_btn": "Save"
+        },
+        "deleteUser": {
+          "warning": "warning",
+          "description": "Please be careful, this action cannot be undone.",
+          "delete_account": "Delete Account",
+          "dialog_title": "Are you sure you want to delete your account?",
+          "dialog_desc": "Once your account is deleted, all of its resources and data will also be permanently deleted. Please enter your password to confirm that you want to permanently delete your account.",
+          "password_input_label": "Password",
+          "password_input_placeholder": "Enter Password",
+          "cancel_btn": "Cancel",
+          "confirm_delete_btn": "Delete Account"
         }
       },
       "security": {
+        "label": "Security",
         "title": "Security Settings",
         "title_secondary": "Update Password",
-        "description": "Ensure your account uses a long, random password to stay secure.",
+        "description": "Ensure your account uses a long and random password to stay secure.",
         "language_label": "Language",
         "current_password_input_label": "Current Password",
         "current_password_input_placeholder": "Enter current password",
@@ -215,11 +237,11 @@
         "confirm_password_input_label": "Confirm New Password",
         "confirm_password_input_placeholder": "Enter new password confirmation",
         "save_password_btn": "Save Password",
-        "two_factor_title": "Two-Factor Authentication",
-        "two_factor_desc": "Manage your two-factor authentication settings",
-        "two_factor_enabled_desc": "You will be prompted to enter a secure random PIN during login, which you can obtain from a TOTP-supported app on your phone.",
+        "two_factor_title": "Two Factor Authentication",
+        "two_factor_desc": "Manage your two factor authentication settings",
+        "two_factor_enabled_desc": "You will be prompted to enter a secure random PIN during login, which you can obtain from a TOTP-supported application on your phone.",
         "disable_two_fa_btn": "Disable 2FA",
-        "two_factor_disabled_desc": "When you enable two-factor authentication, you will be prompted to enter a secure PIN during login. This PIN can be obtained from a TOTP-supported app on your phone.",
+        "two_factor_disabled_desc": "When you enable two factor authentication, you will be prompted to enter a secure PIN during login. This PIN can be obtained from a TOTP-supported application on your phone.",
         "continue_setup": "Continue Setup",
         "enable_two_factor_btn": "Enable 2FA"
       }

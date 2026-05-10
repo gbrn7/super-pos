@@ -8,8 +8,12 @@ use App\Http\Requests\Category\UpdateCategoryRequest;
 use App\Http\Resources\CategoryResource;
 use App\Support\Interfaces\Services\CategoryServiceInterface;
 use App\Support\Models\Category\GetCategoryReqModel;
+use App\Support\Utils\MessageResponse;
+use App\Support\Utils\ResponseApi;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Symfony\Component\HttpFoundation\Response;
 
 class ApiCategoryController extends Controller
 {
@@ -25,17 +29,11 @@ class ApiCategoryController extends Controller
 
             $data = CategoryResource::collection($categories);
 
-            return response()->json([
-                'success' => true,
-                'message' => '',
-                'data' => $data,
-            ]);
+
+            return ResponseApi::make(true, trans('message.success.success'), $data);
         } catch (\Throwable $th) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Something went wrong',
-                'error' => $th->getMessage(),
-            ], 500);
+            //make log for error
+            return ResponseApi::make(false, trans('message.error.something_went_wrong'), null, Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -52,17 +50,9 @@ class ApiCategoryController extends Controller
         try {
             $category = $this->categoryService->create($request->validated());
 
-            return response()->json([
-                'success' => true,
-                'message' => 'Category created successfully',
-                'data' => $category,
-            ], 201);
+            return ResponseApi::make(true, trans('message.success.created'), $category, Response::HTTP_CREATED);
         } catch (\Throwable $th) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Something went wrong',
-                'error' => $th->getMessage(),
-            ], 500);
+            return ResponseApi::make(false, trans('message.error.something_went_wrong'), null, Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -90,17 +80,9 @@ class ApiCategoryController extends Controller
         try {
             $category = $this->categoryService->update($id, $request->validated());
 
-            return response()->json([
-                'success' => true,
-                'message' => 'Category updated successfully',
-                'data' => $category,
-            ], 201);
+            return ResponseApi::make(true, trans('message.success.updated'), $category);
         } catch (\Throwable $th) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Something went wrong',
-                'error' => $th->getMessage(),
-            ], 500);
+            return ResponseApi::make(false, trans('message.error.something_went_wrong'), null, Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -110,19 +92,13 @@ class ApiCategoryController extends Controller
     public function destroy(string $id)
     {
         try {
-            $category = $this->categoryService->delete($id);
+            $isSuccessDelete = $this->categoryService->delete($id);
 
-            return response()->json([
-                'success' => true,
-                'message' => 'Category updated successfully',
-                'data' => $category,
-            ], 201);
+            if (!$isSuccessDelete) throw new Exception();
+
+            return ResponseApi::make(true, trans('message.success.deleted'), null, Response::HTTP_NO_CONTENT);
         } catch (\Throwable $th) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Something went wrong',
-                'error' => $th->getMessage(),
-            ], 500);
+            return ResponseApi::make(false, trans('message.error.something_went_wrong'), null, Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -135,40 +111,22 @@ class ApiCategoryController extends Controller
             $ids = $request->input('ids', []);
             $deletedCount = $this->categoryService->bulkDelete($ids);
 
-            return response()->json([
-                'success' => true,
-                'message' => "{$deletedCount} categories deleted successfully",
-                'data' => ['deleted_count' => $deletedCount],
-            ], 200);
+            return ResponseApi::make(true, trans('message.success.bulkDelete', ['count' => $deletedCount]), null, Response::HTTP_NO_CONTENT);
         } catch (\Throwable $th) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Something went wrong',
-                'error' => $th->getMessage(),
-            ], 500);
+            return ResponseApi::make(false, trans('message.error.something_went_wrong'), null, Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
     public function getCategoryImportTemplate()
     {
         $fileName = 'import-category-template.xlsx';
-        $filePath = 'template/' . $fileName;
+        $publiFilePath = 'template/' . $fileName;
 
-        if (!file_exists($filePath)) {
-            return response()->json([
-                'success' => false,
-                'message' => "File not found.",
-            ], 404);
+        if (!file_exists($publiFilePath)) {
+            return ResponseApi::make(false, trans('message.error.not_found', ['resource' => 'file']), null, Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
-        return response()->download(
-            public_path($filePath),
-            $fileName,
-            [
-                'Content-Type'        => mime_content_type($filePath),
-                'Content-Disposition' => 'attachment; filename="' . $fileName . '"',
-            ]
-        );
+        return ResponseApi::download($fileName, $publiFilePath);
     }
 
     public function importStudentExcelData(Request $request)
@@ -187,19 +145,11 @@ class ApiCategoryController extends Controller
 
             $file = $data['file_import'];
 
-            $this->categoryService->importExcel($file);
+            $createdCount = $this->categoryService->importExcel($file);
 
-            return response()->json([
-                'success' => true,
-                'message' => 'Category updated successfully',
-                'data' => "",
-            ], 201);
+            return ResponseApi::make(true, trans('message.success.bulk_created', $createdCount), null, Response::HTTP_CREATED);
         } catch (\Throwable $th) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Something went wrong',
-                'error' => $th->getMessage(),
-            ], 500);
+            return ResponseApi::make(false, trans('message.error.something_went_wrong'), null, Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 }

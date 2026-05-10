@@ -13,7 +13,10 @@ import { Field, FieldGroup } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Spinner } from "@/components/ui/spinner"
+import axiosInstance from "@/lib/axios"
+import { handleApiError } from "@/lib/utils"
 import { getCategoryImportTemplate, importStudentExcelData } from '@/routes/apiCategories';
+import { ResponseApi } from "@/support/interfaces/response/Response"
 import axios from 'axios';
 import { useState } from 'react';
 import { useTranslation } from "react-i18next"
@@ -50,19 +53,19 @@ export function ImportExcelDialog({ onSuccess }: ImportExcelDialogProps) {
       const formData = new FormData();
       formData.append('file_import', file);
 
-      await axios.post(importStudentExcelData().url, formData, {
+      const res = await axiosInstance.post<ResponseApi<Number>>(importStudentExcelData().url, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
 
-      toast.success('Categories imported successfully');
+      toast.success(res.data.message);
       setIsOpen(false);
       setFile(null);
       onSuccess?.();
     } catch (error) {
       console.error('Error importing categories:', error);
-      toast.error('Failed to import categories');
+      handleApiError(error);
     } finally {
       setIsLoading(false);
     }

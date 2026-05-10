@@ -9,33 +9,39 @@ import { edit as editAppearance } from '@/routes/appearance';
 import { edit } from '@/routes/profile';
 import { edit as editSecurity } from '@/routes/security';
 import type { NavItem } from '@/types';
+import { useTranslation } from 'react-i18next';
 
-const sidebarNavItems: NavItem[] = [
-    {
-        title: 'Profile',
-        href: edit(),
-        icon: null,
-    },
-    {
-        title: 'Security',
-        href: editSecurity(),
-        icon: null,
-    },
-    {
-        title: 'Appearance',
-        href: editAppearance(),
-        icon: null,
-    },
-];
+
 
 export default function SettingsLayout({ children }: PropsWithChildren) {
+    const { t } = useTranslation()
     const { isCurrentOrParentUrl } = useCurrentUrl();
+
+    const sidebarNavItems: NavItem[] =
+        [
+            {
+                title: t("page.settings.profile.label", "Profil"),
+                href: edit(),
+                icon: null,
+            },
+            {
+                title: t("page.settings.security.label", "Keamanan"),
+                href: editSecurity(),
+                icon: null,
+            },
+            {
+                title: t("page.settings.appearance.label", ""),
+                href: editAppearance(),
+                icon: null,
+            },
+        ];
+
 
     return (
         <div className="px-4 py-6">
             <Heading
-                title="Settings"
-                description="Manage your profile and account settings"
+                title={t("page.settings.title", "Pengaturan")}
+                description={t("page.settings.description", "Kelola profil dan pengaturan akun Anda")}
             />
 
             <div className="flex flex-col lg:flex-row lg:space-x-12">

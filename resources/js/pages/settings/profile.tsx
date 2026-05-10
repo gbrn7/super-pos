@@ -9,6 +9,7 @@ import { edit } from '@/routes/profile';
 import { send } from '@/routes/verification';
 import { Form, Head, Link, usePage } from '@inertiajs/react';
 import i18next from 'i18next';
+import { useTranslation } from 'react-i18next';
 
 export default function Profile({
     mustVerifyEmail,
@@ -17,19 +18,20 @@ export default function Profile({
     mustVerifyEmail: boolean;
     status?: string;
 }) {
+    const { t } = useTranslation();
     const { auth } = usePage().props;
 
     return (
         <>
-            <Head title="Profile settings" />
+            <Head title={t("page.settings.profile.title", "Pengaturan profile")} />
 
-            <h1 className="sr-only">Profile settings</h1>
+            <h1 className="sr-only">{t("page.settings.profile.title", "Pengaturan profile")}</h1>
 
             <div className="space-y-6">
                 <Heading
                     variant="small"
-                    title="Profile information"
-                    description="Update your name and email address"
+                    title={t("page.settings.profile.heading_title", "Informasi Profil")}
+                    description={t("page.settings.profile.description", "Perbarui nama dan alamat email Anda")}
                 />
 
                 <Form
@@ -42,7 +44,7 @@ export default function Profile({
                     {({ processing, errors }) => (
                         <>
                             <div className="grid gap-2">
-                                <Label htmlFor="name">Name</Label>
+                                <Label htmlFor="name">{t("page.settings.profile.form.name_input_label", "Nama")}</Label>
 
                                 <Input
                                     id="name"
@@ -51,7 +53,7 @@ export default function Profile({
                                     name="name"
                                     required
                                     autoComplete="name"
-                                    placeholder="Full name"
+                                    placeholder={t("page.settings.profile.form.name_input_placeholder", "Masukkan nama")}
                                 />
 
                                 <InputError
@@ -61,7 +63,7 @@ export default function Profile({
                             </div>
 
                             <div className="grid gap-2">
-                                <Label htmlFor="email">Email address</Label>
+                                <Label htmlFor="email">{t("page.settings.profile.form.email_input_label", "Email")}</Label>
 
                                 <Input
                                     id="email"
@@ -71,7 +73,7 @@ export default function Profile({
                                     name="email"
                                     required
                                     autoComplete="username"
-                                    placeholder="Email address"
+                                    placeholder={t("page.settings.profile.form.email_input_placeholder", "Masukkan alamat email")}
                                 />
 
                                 <InputError
@@ -84,22 +86,20 @@ export default function Profile({
                                 auth.user.email_verified_at === null && (
                                     <div>
                                         <p className="-mt-4 text-sm text-muted-foreground">
-                                            Your email address is unverified.{' '}
+                                            {t("page.settings.profile.form.your_email_unverified", "Alamat email Anda belum terverifikasi.")} {' '}
                                             <Link
                                                 href={send()}
                                                 as="button"
                                                 className="text-foreground underline decoration-neutral-300 underline-offset-4 transition-colors duration-300 ease-out hover:decoration-current! dark:decoration-neutral-500"
                                             >
-                                                Click here to resend the
-                                                verification email.
+                                                {t("page.settings.profile.form.click_to_resend_verification_email", "Klik di sini untuk mengirim ulang email verifikasi.")}
                                             </Link>
                                         </p>
 
                                         {status ===
                                             'verification-link-sent' && (
                                                 <div className="mt-2 text-sm font-medium text-green-600">
-                                                    A new verification link has been
-                                                    sent to your email address.
+                                                    {t("page.settings.profile.form.verification_status", "Tautan verifikasi baru telah dikirim ke alamat email Anda.")}
                                                 </div>
                                             )}
                                     </div>
@@ -110,7 +110,7 @@ export default function Profile({
                                     disabled={processing}
                                     data-test="update-profile-button"
                                 >
-                                    Save
+                                    {t("page.settings.profile.form.save_btn", "Simpan")}
                                 </Button>
                             </div>
                         </>

@@ -6,7 +6,7 @@ const axiosInstance = axios.create({
   headers: {
     Accept: 'application/json',
     'Content-Type': 'application/json',
-    'X-Lang': localStorage.getItem(localStorageKey.LanguageKey) || languageCode.DefaultLanguageCode,
+    'X-Language': localStorage.getItem(localStorageKey.LanguageKey) || languageCode.DefaultLanguageCode,
   },
 });
 

@@ -149,24 +149,22 @@ export function DataTable<TData, TValue>({
             Name: row.name || '',
             Description: row.desc || '',
             'Created At': row.created_at || '',
-            'Updated At': row.updated_at || '',
         }));
 
         // Create a new workbook and worksheet
         const worksheet = XLSX.utils.json_to_sheet(exportData);
         const workbook = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(workbook, worksheet, 'Categories');
+        XLSX.utils.book_append_sheet(workbook, worksheet, t("page.category.page_name", "Kategori"));
 
         // Set column widths
         worksheet['!cols'] = [
             { wch: 25 },
             { wch: 30 },
             { wch: 20 },
-            { wch: 20 },
         ];
 
         // Generate file name with current timestamp
-        const fileName = `Categories_${new Date().toISOString().split('T')[0]}.xlsx`;
+        const fileName = `${t("page.category.page_name", "Kategori")}_${new Date().toISOString().split('T')[0]}.xlsx`;
 
         // Write the file
         XLSX.writeFile(workbook, fileName);
@@ -181,7 +179,7 @@ export function DataTable<TData, TValue>({
 
         // Add title
         doc.setFontSize(16);
-        doc.text('Categories', pageWidth / 2, yPosition, { align: 'center' });
+        doc.text(t("page.category.page_name", "Kategori"), pageWidth / 2, yPosition, { align: 'center' });
         yPosition += 15;
 
         // Add metadata
@@ -197,8 +195,8 @@ export function DataTable<TData, TValue>({
         // Add table headers
         doc.setFontSize(11);
         doc.setFont('helvetica', 'bold');
-        const columnWidths = [50, 70, 35, 35];
-        const columns = ['Name', 'Description', 'Created At', 'Updated At'];
+        const columnWidths = [50, 70, 35];
+        const columns = [t("page.category.data_table.columns.name_column_label", "Nama"), t("page.category.data_table.columns.desc_column_label", "Deskripsi"), t("page.category.data_table.columns.created_at_column_label", "Dibuat pada")];
         let xPosition = 10;
 
         columns.forEach((col, index) => {
@@ -227,7 +225,6 @@ export function DataTable<TData, TValue>({
                 row.name || '',
                 row.desc || '',
                 row.created_at || '',
-                row.updated_at || '',
             ];
 
             rowData.forEach((cell, index) => {
@@ -266,7 +263,7 @@ export function DataTable<TData, TValue>({
                         </SelectContent>
                     </Select>
                     <Input
-                        placeholder={`${t("component.data_table.search_component.search_by")} ${searchColumn === 'name' ? t("component.data_table.search_component.name", "Nama") : t("component.data_table.search_component.description", "Deskripsi")}...`}
+                        placeholder={t("component.data_table.search_component.placeholder", "Telusuri")}
                         value={
                             (table
                                 .getColumn(searchColumn)

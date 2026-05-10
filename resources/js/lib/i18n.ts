@@ -15,7 +15,7 @@ i18next
         translation: id
       },
     },
-    lng: localStorageKey.LanguageKey || languageCode.DefaultLanguageCode,
+    lng: localStorage.getItem(localStorageKey.LanguageKey) || languageCode.DefaultLanguageCode,
     returnEmptyString: false,
     fallbackLng: 'id',
     defaultNS: 'translation'

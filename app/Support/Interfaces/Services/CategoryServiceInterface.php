@@ -43,5 +43,5 @@ interface CategoryServiceInterface
     /**
      * Import categories by excel file.
      */
-    public function importExcel(UploadedFile $file);
+    public function importExcel(UploadedFile $file): int;
 }
