@@ -23,11 +23,6 @@ import {
     DropdownMenuContent,
     DropdownMenuGroup,
     DropdownMenuItem,
-    DropdownMenuPortal,
-    DropdownMenuSeparator,
-    DropdownMenuSub,
-    DropdownMenuSubContent,
-    DropdownMenuSubTrigger,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Input } from '@/components/ui/input';
@@ -63,6 +58,9 @@ import type { Category } from '@/support/models/category';
 import { ImportExcelDialog } from './dialog-modal/import-excel-dialog';
 import { useTranslation } from 'react-i18next';
 import { sprintf } from 'sprintf-js';
+import { DetailDialog } from './dialog-modal/detail-dialog';
+import { EditDialog } from './dialog-modal/edit-dialog';
+import { DeleteDialog } from './dialog-modal/delete-dialog';
 
 interface DataTableProps<TData, TValue> {
     columns:
@@ -72,6 +70,12 @@ interface DataTableProps<TData, TValue> {
     processing?: boolean;
     limitOptions?: number[];
     onRefresh: () => void;
+    detailDataOpen: boolean;
+    editOpen: boolean;
+    deleteOpen: boolean;
+    setDetailOpen: (open: boolean) => void;
+    setEditOpen: (open: boolean) => void;
+    setDeleteOpen: (open: boolean) => void;
     onDetailClick: (data: TData) => void;
     onEditClick: (data: TData) => void;
     onDeleteClick: (data: TData) => void;
@@ -79,6 +83,7 @@ interface DataTableProps<TData, TValue> {
     isBulkDeleteDialogOpen: boolean;
     setOpenBulkDeleteDialogOpen: (open: boolean) => void;
     selectedBulkCategories: Category[]
+    selectedCategory: Category | null
 }
 export function DataTable<TData, TValue>({
     columns: columnsOrFn,
@@ -86,15 +91,23 @@ export function DataTable<TData, TValue>({
     processing,
     limitOptions = [10, 20, 50, 100],
     onRefresh,
+    detailDataOpen,
+    editOpen,
+    deleteOpen,
+    setDetailOpen,
+    setEditOpen,
+    setDeleteOpen,
     onDetailClick,
     onEditClick,
     onDeleteClick,
     onBulkDeleteClick,
     isBulkDeleteDialogOpen,
     setOpenBulkDeleteDialogOpen,
-    selectedBulkCategories
+    selectedBulkCategories,
+    selectedCategory
 }: DataTableProps<TData, TValue>) {
     const { t } = useTranslation();
+
 
     const columns =
         typeof columnsOrFn === 'function'
@@ -406,6 +419,26 @@ export function DataTable<TData, TValue>({
                         )}
                     </TableBody>
                 </Table>
+                <DetailDialog
+                    isOpen={detailDataOpen}
+                    category={selectedCategory}
+                    onOpenChange={setDetailOpen}
+                />
+
+                <EditDialog
+                    isOpen={editOpen}
+                    onSuccess={onRefresh}
+                    setOpen={setEditOpen}
+                    category={selectedCategory}
+                    key={selectedCategory?.id}
+                />
+
+                <DeleteDialog
+                    isOpen={deleteOpen}
+                    onSuccess={onRefresh}
+                    setOpen={setDeleteOpen}
+                    category={selectedCategory}
+                />
             </div>
             <Pagination className="flex items-center justify-between space-x-2 overflow-auto py-4">
                 <Select

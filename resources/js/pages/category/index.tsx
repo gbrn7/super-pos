@@ -5,17 +5,11 @@ import { index as categories } from '@/routes/categories';
 import type { Category } from '@/support/models/category';
 import { columns } from './columns';
 import { DataTable } from './data-table';
-import { DeleteDialog } from './dialog-modal/delete-dialog';
-import { DetailDialog } from './dialog-modal/detail-dialog';
-import { EditDialog } from './dialog-modal/edit-dialog';
 import { useTranslation } from 'react-i18next';
 import i18next from 'i18next';
 import axiosInstance from '@/lib/axios';
 import { toast } from 'sonner';
 import { ResponseApi } from '@/support/interfaces/response/Response';
-import axios from 'axios';
-import { ResponseErrorApi } from '@/support/interfaces/response/ResponseError';
-import { Message } from '@/constants/Index';
 import { handleApiError } from '@/lib/utils';
 
 const { url } = categories();
@@ -90,6 +84,12 @@ export default function Index() {
                     data={allCategories}
                     limitOptions={[10, 20, 50, 100]}
                     onRefresh={fetchAllCategories}
+                    detailDataOpen={detailOpen}
+                    editOpen={editOpen}
+                    deleteOpen={deleteOpen}
+                    setDetailOpen={setDetailOpen}
+                    setEditOpen={setEditOpen}
+                    setDeleteOpen={setDeleteOpen}
                     onDetailClick={handleDetailClick}
                     onEditClick={handleEditClick}
                     onDeleteClick={handleDeleteClick}
@@ -97,30 +97,9 @@ export default function Index() {
                     isBulkDeleteDialogOpen={bulkDeleteOpen}
                     setOpenBulkDeleteDialogOpen={setBulkDeleteOpen}
                     selectedBulkCategories={selectedCategories}
+                    selectedCategory={selectedCategory}
                 />
             </div>
-
-            <DetailDialog
-                isOpen={detailOpen}
-                category={selectedCategory}
-                onOpenChange={setDetailOpen}
-            />
-
-            <EditDialog
-                isOpen={editOpen}
-                onSuccess={fetchAllCategories}
-                setOpen={setEditOpen}
-                category={selectedCategory}
-                key={selectedCategory?.id}
-            />
-
-            <DeleteDialog
-                isOpen={deleteOpen}
-                onSuccess={fetchAllCategories}
-                setOpen={setDeleteOpen}
-                category={selectedCategory}
-            />
-
         </>
     );
 }
