@@ -17,3 +17,7 @@ export const languageCode = {
 export const localStorageKey = {
     LanguageKey: "lang"
 }
+
+export const LanguageSystem = typeof localStorage !== "undefined"
+    ? localStorage.getItem(localStorageKey.LanguageKey) || languageCode.DefaultLanguageCode
+    : languageCode.DefaultLanguageCode
