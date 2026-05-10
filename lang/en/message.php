@@ -4,11 +4,11 @@ return [
   'success' => [
     'success' => 'Sukses',
     'created' => 'Data created successfully',
-    'bulk_created' => ':count Data created successfully',
+    'bulk_created' => ':count data created successfully',
     'updated' => 'Data updated successfully',
     'bulk_updated' => ':count data updated successfully',
     'deleted' => 'Data deleted successfully',
-    'bulk_deleted' => ':count Data deleted successfully',
+    'bulk_deleted' => ':count data deleted successfully',
   ],
 
 

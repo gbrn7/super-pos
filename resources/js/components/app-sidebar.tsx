@@ -18,26 +18,6 @@ import { index as categories } from '@/routes/categories';
 import type { NavItem } from '@/types';
 import { useTranslation } from 'react-i18next';
 
-const mainNavItems = (): NavItem[] => {
-    const { t } = useTranslation()
-    return [
-        {
-            title: t("component.sidebar.dashboard_menu_label", "Dasbor"),
-            href: dashboard(),
-            icon: LayoutGrid,
-        },
-        {
-            title: 'Example',
-            href: '/example',
-            icon: Book,
-        },
-        {
-            title: t("component.sidebar.category_menu_label", "Kategori"),
-            href: categories(),
-            icon: Tags,
-        },
-    ];
-}
 
 const footerNavItems: NavItem[] = [
     // {
@@ -53,6 +33,27 @@ const footerNavItems: NavItem[] = [
 ];
 
 export function AppSidebar() {
+
+    const { t } = useTranslation()
+    const mainNavItems: NavItem[] =
+        [
+            {
+                title: t("component.sidebar.dashboard_menu_label", "Dasbor"),
+                href: dashboard(),
+                icon: LayoutGrid,
+            },
+            {
+                title: 'Example',
+                href: '/example',
+                icon: Book,
+            },
+            {
+                title: t("component.sidebar.category_menu_label", "Kategori"),
+                href: categories(),
+                icon: Tags,
+            },
+        ];
+
     return (
         <Sidebar collapsible="icon" variant="inset">
             <SidebarHeader>
@@ -68,7 +69,7 @@ export function AppSidebar() {
             </SidebarHeader>
 
             <SidebarContent>
-                <NavMain items={mainNavItems()} />
+                <NavMain items={mainNavItems} />
             </SidebarContent>
 
             <SidebarFooter>

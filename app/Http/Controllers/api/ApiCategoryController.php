@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Category\ImportCategoryRequest;
 use App\Http\Requests\Category\StoreCategoryRequest;
 use App\Http\Requests\Category\UpdateCategoryRequest;
 use App\Http\Resources\CategoryResource;
@@ -96,8 +97,9 @@ class ApiCategoryController extends Controller
 
             if (!$isSuccessDelete) throw new Exception();
 
-            return ResponseApi::make(true, trans('message.success.deleted'), null, Response::HTTP_NO_CONTENT);
+            return ResponseApi::make(true, trans('message.success.deleted'), null, Response::HTTP_OK);
         } catch (\Throwable $th) {
+            dd($th->getMessage());
             return ResponseApi::make(false, trans('message.error.something_went_wrong'), null, Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
@@ -111,7 +113,7 @@ class ApiCategoryController extends Controller
             $ids = $request->input('ids', []);
             $deletedCount = $this->categoryService->bulkDelete($ids);
 
-            return ResponseApi::make(true, trans('message.success.bulkDelete', ['count' => $deletedCount]), null, Response::HTTP_NO_CONTENT);
+            return ResponseApi::make(true, trans('message.success.bulk_deleted', ['count' => $deletedCount]), null, Response::HTTP_OK);
         } catch (\Throwable $th) {
             return ResponseApi::make(false, trans('message.error.something_went_wrong'), null, Response::HTTP_INTERNAL_SERVER_ERROR);
         }
@@ -129,25 +131,14 @@ class ApiCategoryController extends Controller
         return ResponseApi::download($fileName, $publiFilePath);
     }
 
-    public function importStudentExcelData(Request $request)
+    public function importCategoryExcelData(ImportCategoryRequest $request)
     {
-        $validator = Validator::make($request->all(), [
-            'file_import' => 'required|mimes:xlsx',
-        ]);
-
-        if ($validator->fails()) return redirect()
-            ->back()
-            ->withInput()
-            ->with('toast_error', join(', ', $validator->messages()->all()));
-
         try {
-            $data = $validator->safe()->all();
-
-            $file = $data['file_import'];
+            $file = $request->validated('file_import');
 
             $createdCount = $this->categoryService->importExcel($file);
 
-            return ResponseApi::make(true, trans('message.success.bulk_created', $createdCount), null, Response::HTTP_CREATED);
+            return ResponseApi::make(true, trans('message.success.bulk_created', ["count" => $createdCount]), null, Response::HTTP_CREATED);
         } catch (\Throwable $th) {
             return ResponseApi::make(false, trans('message.error.something_went_wrong'), null, Response::HTTP_INTERNAL_SERVER_ERROR);
         }

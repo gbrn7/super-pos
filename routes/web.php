@@ -28,7 +28,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
             Route::get('/download/categoryImportTemplate', [ApiCategoryController::class, 'getCategoryImportTemplate'])->name('apiCategories.getCategoryImportTemplate');
 
-            Route::post('/import-categories', [ApiCategoryController::class, 'importStudentExcelData'])->name('apiCategories.importStudentExcelData');
+            Route::post('/import-categories', [ApiCategoryController::class, 'importCategoryExcelData'])->name('apiCategories.importStudentExcelData');
         });
     });
 });
