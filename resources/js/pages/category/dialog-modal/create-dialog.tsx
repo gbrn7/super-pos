@@ -21,9 +21,6 @@ import { Spinner } from '@/components/ui/spinner';
 import axiosInstance from '@/lib/axios';
 import { ResponseApi } from '@/support/interfaces/response/Response';
 import { Category } from '@/support/models/category';
-import { ResponseErrorApi } from '@/support/interfaces/response/ResponseError';
-import axios from 'axios';
-import { Message } from '@/constants/Index';
 import { handleApiError } from '@/lib/utils';
 
 interface CreateDialogProps {
