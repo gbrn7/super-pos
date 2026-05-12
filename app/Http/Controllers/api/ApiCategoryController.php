@@ -30,7 +30,6 @@ class ApiCategoryController extends Controller
 
             $data = CategoryResource::collection($categories);
 
-
             return ResponseApi::make(true, trans('message.success.success'), $data);
         } catch (\Throwable $th) {
             //make log for error

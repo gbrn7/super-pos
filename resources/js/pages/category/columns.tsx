@@ -12,6 +12,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import type { Category } from '@/support/models/category';
 import { useTranslation } from 'react-i18next';
+import { formatDate } from '@/lib/formatdate';
 
 interface ColumnsProps {
     onDetailClick: (category: Category) => void;
@@ -59,6 +60,22 @@ export const columns = (props?: ColumnsProps): ColumnDef<Category>[] => {
                 <DataTableHeader column={column} title={t("page.category.data_table.columns.desc_column_label", "Deskripsi")} />
             ),
             enableSorting: true,
+        },
+        {
+            accessorKey: 'created_at',
+            header: ({ column }) => (
+                <DataTableHeader column={column} title={t("page.category.data_table.columns.created_at_column_label", "Tanggal Dibuat")} />
+            ),
+            enableSorting: true,
+            cell: ({ row }) => formatDate(row.original.created_at),
+        },
+        {
+            accessorKey: 'updated_at',
+            header: ({ column }) => (
+                <DataTableHeader column={column} title={t("page.category.data_table.columns.updated_at_column_label", "Tanggal Diperbarui")} />
+            ),
+            enableSorting: true,
+            cell: ({ row }) => formatDate(row.original.updated_at),
         },
         {
             id: 'actions',

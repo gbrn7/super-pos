@@ -128,7 +128,8 @@
       "columns":{
         "name_column_label":"Nama",
         "desc_column_label":"Deskripsi",
-        "created_at_column_label":"Dibuat pada"
+        "created_at_column_label":"Tanggal Dibuat",
+        "updated_at_column_label":"Tanggal Diperbarui"
       }
     },
     "dialog_modal":{

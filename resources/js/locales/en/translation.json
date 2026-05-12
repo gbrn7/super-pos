@@ -128,7 +128,8 @@
         "columns": {
           "name_column_label": "Name",
           "desc_column_label": "Description",
-          "created_at_column_label": "Created At"
+          "created_at_column_label": "Created At",
+          "updated_at_column_label": "Updated At"
         }
       },
       "dialog_modal": {

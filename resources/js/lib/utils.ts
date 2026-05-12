@@ -1,4 +1,3 @@
-import { ResponseApi } from '@/support/interfaces/response/Response';
 import { ResponseErrorApi } from '@/support/interfaces/response/ResponseError';
 import type { InertiaLinkProps } from '@inertiajs/react';
 import axios from 'axios';

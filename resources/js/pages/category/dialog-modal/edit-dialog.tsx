@@ -70,7 +70,6 @@ export function EditDialog({
                 return
             }
 
-            setFormData({ name: '', desc: '' });
             toast.success(res.data.message)
             onSuccess();
         } catch (error) {
