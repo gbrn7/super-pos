@@ -61,6 +61,7 @@ import { sprintf } from 'sprintf-js';
 import { DetailDialog } from './dialog-modal/detail-dialog';
 import { EditDialog } from './dialog-modal/edit-dialog';
 import { DeleteDialog } from './dialog-modal/delete-dialog';
+import { IconChevronLeft, IconChevronRight, IconChevronsLeft, IconChevronsRight } from '@tabler/icons-react';
 
 interface DataTableProps<TData, TValue> {
     columns:
@@ -258,7 +259,7 @@ export function DataTable<TData, TValue>({
 
     return (
         <div>
-            <div className="flex-col items-center pb-4">
+            <div className="flex:col md:flex justify-between items-center pb-4">
                 <div className="first-row flex gap-2">
                     <Select
                         value={searchColumn}
@@ -290,7 +291,7 @@ export function DataTable<TData, TValue>({
                         className="max-w-sm"
                     />
                 </div>
-                <div className="second-row mt-2 flex justify-end gap-2">
+                <div className="second-row mt-2 flex justify-start md:justify-end gap-2">
                     <ImportExcelDialog onSuccess={onRefresh} />
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
@@ -320,7 +321,6 @@ export function DataTable<TData, TValue>({
                         categories={selectedBulkCategories}
                         onBulkDeleteClick={() => {
                             const selectedRows = table.getSelectedRowModel().rows.map((row) => row.original);
-                            console.log("datatable", selectedRows)
                             onBulkDeleteClick?.(selectedRows);
                         }}
                     />
@@ -440,73 +440,87 @@ export function DataTable<TData, TValue>({
                     category={selectedCategory}
                 />
             </div>
-            <Pagination className="flex items-center justify-between space-x-2 overflow-auto py-4">
-                <Select
-                    value={pagination.pageSize.toString()}
-                    onValueChange={(value) => {
-                        table.setPageSize(Number(value));
-                    }}
-                >
-                    <SelectTrigger className="w-full max-w-48">
-                        <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                        <SelectGroup>
-                            <SelectLabel>{t("component.data_table.row_per_page", "Baris per halaman")}</SelectLabel>
-                            {limitOptions.map((option) => (
-                                <SelectItem
-                                    key={option}
-                                    value={option.toString()}
-                                >
-                                    {option}
-                                </SelectItem>
-                            ))}
-                        </SelectGroup>
-                    </SelectContent>
-                </Select>
-                <PaginationContent>
-                    <PaginationItem>
-                        <PaginationPrevious
-                            onClick={() => table.previousPage()}
-                            className={
-                                !table.getCanPreviousPage()
-                                    ? disabledClass
-                                    : 'cursor-pointer'
-                            }
-                        />
-                    </PaginationItem>
-
-                    {Array.from({ length: table.getPageCount() }).map(
-                        (_, index) => (
-                            <PaginationItem key={index}>
-                                <PaginationLink
-                                    isActive={pagination.pageIndex === index}
-                                    onClick={() => table.setPageIndex(index)}
-                                    className="cursor-pointer"
-                                >
-                                    {index + 1}
-                                </PaginationLink>
-                            </PaginationItem>
-                        ),
+            <div className="flex items-center justify-end space-x-4 overflow-auto py-4">
+                <div className="hidden flex-1 text-sm text-muted-foreground lg:flex">
+                    {sprintf(
+                        t("component.data_table.selected_row", "%d dari %d baris terpilih."),
+                        table.getFilteredSelectedRowModel().rows.length,
+                        table.getFilteredRowModel().rows.length
                     )}
-
-                    <PaginationItem>
-                        <PaginationNext
+                </div>
+                <div className="flex w-full items-center gap-8 lg:w-fit">
+                    <Select
+                        value={pagination.pageSize.toString()}
+                        onValueChange={(value) => {
+                            table.setPageSize(Number(value));
+                        }}
+                    >
+                        <SelectTrigger className="w-20">
+                            <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectGroup>
+                                <SelectLabel>{t("component.data_table.row_per_page", "Baris per halaman")}</SelectLabel>
+                                {limitOptions.map((option) => (
+                                    <SelectItem
+                                        key={option}
+                                        value={option.toString()}
+                                    >
+                                        {option}
+                                    </SelectItem>
+                                ))}
+                            </SelectGroup>
+                        </SelectContent>
+                    </Select>
+                    <div className="text-sm text-muted-foreground">
+                        {sprintf
+                            (
+                                t("component.data_table.pagination_info", "Halaman %d dari %d"), (table.getState().pagination.pageIndex + 1), table.getPageCount())
+                        }
+                    </div>
+                    <div className="ml-auto flex items-center gap-2 lg:ml-0">
+                        <Button
+                            variant="outline"
+                            className="hidden h-8 w-8 p-0 lg:flex"
+                            onClick={() => table.setPageIndex(0)}
+                            disabled={!table.getCanPreviousPage()}
+                        >
+                            <span className="sr-only">Go to first page</span>
+                            <IconChevronsLeft />
+                        </Button>
+                        <Button
+                            variant="outline"
+                            className="size-8"
+                            size="icon"
+                            onClick={() => table.previousPage()}
+                            disabled={!table.getCanPreviousPage()}
+                        >
+                            <span className="sr-only">Go to previous page</span>
+                            <IconChevronLeft />
+                        </Button>
+                        <Button
+                            variant="outline"
+                            className="size-8"
+                            size="icon"
                             onClick={() => table.nextPage()}
-                            className={
-                                !table.getCanNextPage()
-                                    ? disabledClass
-                                    : 'cursor-pointer'
-                            }
-                        />
-                    </PaginationItem>
-                </PaginationContent>
-            </Pagination>
-            <div className="mt-2 flex-1 text-sm text-muted-foreground">
-                {sprintf
-                    (
-                        t("component.data_table.pagination_info", "Halaman %d dari %d | total %d baris"), (table.getState().pagination.pageIndex + 1), table.getPageCount(), table.getFilteredRowModel().rows.length)
-                }
+                            disabled={!table.getCanNextPage()}
+                        >
+                            <span className="sr-only">Go to next page</span>
+                            <IconChevronRight />
+                        </Button>
+                        <Button
+                            variant="outline"
+                            className="hidden size-8 lg:flex"
+                            size="icon"
+                            onClick={() => table.setPageIndex(table.getPageCount() - 1)}
+                            disabled={!table.getCanNextPage()}
+                        >
+                            <span className="sr-only">Go to last page</span>
+                            <IconChevronsRight />
+                        </Button>
+                    </div>
+                </div>
+
             </div>
         </div>
     );

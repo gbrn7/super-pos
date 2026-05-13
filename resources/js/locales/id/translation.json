@@ -29,7 +29,8 @@
       },
       "no_result":"Tidak ada hasil",
       "row_per_page":"Baris per halaman",
-      "pagination_info":"Halaman %d dari %d | total %d baris"
+      "selected_row": "%d dari %d baris terpilih",
+      "pagination_info":"Halaman %d dari %d"
     }
   },
   "page":{
@@ -171,7 +172,7 @@
         "confirm_button":"Hapus Kategori"
       }, 
       "bulk_delete_dialog": {
-        "dialog_button": "Hapus %d kategori",
+        "dialog_button": "Hapus",
         "dialog_title": "Hapus %d kategori",
         "dialog_desc": "Apakah anda yakin akan menghapus %d kategori ?",
         "cancel_button":"Batal",

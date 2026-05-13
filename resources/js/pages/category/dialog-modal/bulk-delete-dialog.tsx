@@ -72,11 +72,10 @@ export function BulkDeleteDialog({
   return (
     <AlertDialog open={isOpen} onOpenChange={setOpen}>
       <AlertDialogTrigger asChild>
-        <Button disabled={isDisabled} variant="destructive" onClick={() => onBulkDeleteClick()}>
-          <Trash2 className="h-4 w-4" />
+        <Button disabled={isDisabled} variant="outline" onClick={() => onBulkDeleteClick()}>
           {sprintf
             (
-              t("page.category.dialog_modal.bulk_delete_dialog.dialog_button", "Hapus %d kategori"),
+              t("page.category.dialog_modal.bulk_delete_dialog.dialog_button", "Hapus"),
               selectedLength)
           }
         </Button>

@@ -29,7 +29,8 @@
       },
       "no_result": "No results found",
       "row_per_page": "Rows per page",
-      "pagination_info": "Page %d of %d | total %d rows"
+      "selected_row": "%d of %d row(s) selected",
+      "pagination_info": "Page %d of %d"
     }
   },
   "page": {
@@ -171,7 +172,7 @@
           "confirm_button": "Delete Category"
         },
         "bulk_delete_dialog": {
-          "dialog_button": "Delete %d categories",
+          "dialog_button": "Delete",
           "dialog_title": "Delete %d categories",
           "dialog_desc": "Are you sure you want to delete %d categories?",
           "cancel_button": "Cancel",
