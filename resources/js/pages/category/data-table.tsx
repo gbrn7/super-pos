@@ -153,7 +153,7 @@ export function DataTable<TData, TValue>({
                         value={searchColumn}
                         onValueChange={setSearchColumn}
                     >
-                        <SelectTrigger className="w-full lg:w-20 xl:w-56">
+                        <SelectTrigger className="w-full lg:w-24 xl:w-56">
                             <SelectValue />
                         </SelectTrigger>
                         <SelectContent>
@@ -179,6 +179,7 @@ export function DataTable<TData, TValue>({
                         className="max-w-sm"
                     />
                 </div>
+
                 <div className="second-row overflow-auto flex justify-start sm:justify-end gap-2 mt-2 lg:mt-0">
                     <ImportExcelDialog onSuccess={onRefresh} />
                     <ExportDropdownMenu data={data} />
@@ -225,6 +226,7 @@ export function DataTable<TData, TValue>({
                     </DropdownMenu>
                     <CreateDialog onSuccess={onRefresh} />
                 </div>
+
             </div>
             <div className="overflow-hidden rounded-md border">
                 <Table>
