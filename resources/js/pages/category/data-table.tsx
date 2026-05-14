@@ -259,13 +259,13 @@ export function DataTable<TData, TValue>({
 
     return (
         <div>
-            <div className="flex:col md:flex justify-between items-center pb-4">
+            <div className="flex:col lg:flex justify-between items-center pb-4">
                 <div className="first-row flex gap-2">
                     <Select
                         value={searchColumn}
                         onValueChange={setSearchColumn}
                     >
-                        <SelectTrigger className="w-full max-w-48">
+                        <SelectTrigger className="w-full lg:w-56">
                             <SelectValue />
                         </SelectTrigger>
                         <SelectContent>
@@ -291,7 +291,7 @@ export function DataTable<TData, TValue>({
                         className="max-w-sm"
                     />
                 </div>
-                <div className="second-row mt-2 flex justify-start md:justify-end gap-2">
+                <div className="second-row overflow-auto flex justify-start sm:justify-end gap-2 mt-2 lg:mt-0">
                     <ImportExcelDialog onSuccess={onRefresh} />
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
