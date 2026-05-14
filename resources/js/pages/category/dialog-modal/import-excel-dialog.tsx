@@ -17,7 +17,7 @@ import axiosInstance from "@/lib/axios"
 import { handleApiError } from "@/lib/utils"
 import { getCategoryImportTemplate, importStudentExcelData } from '@/routes/apiCategories';
 import { ResponseApi } from "@/support/interfaces/response/Response"
-import axios from 'axios';
+import { UploadCloud } from "lucide-react"
 import { useState } from 'react';
 import { useTranslation } from "react-i18next"
 import { toast } from 'sonner';
@@ -74,7 +74,10 @@ export function ImportExcelDialog({ onSuccess }: ImportExcelDialogProps) {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline">{t("page.category.dialog_modal.import_excel_dialog.dialog_button", "Impor Excel")}</Button>
+        <Button variant="outline">
+          <UploadCloud className="h-4" />
+          {t("page.category.dialog_modal.import_excel_dialog.dialog_button", "Impor Excel")}
+        </Button>
       </DialogTrigger>
       <DialogContent className="sm">
         <DialogHeader>

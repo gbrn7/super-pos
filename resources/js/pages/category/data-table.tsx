@@ -14,15 +14,11 @@ import type {
     PaginationState,
 } from '@tanstack/react-table';
 import * as React from 'react';
-import * as XLSX from 'xlsx';
-import { jsPDF } from 'jspdf';
 import { Button } from '@/components/ui/button';
 import {
     DropdownMenu,
     DropdownMenuCheckboxItem,
     DropdownMenuContent,
-    DropdownMenuGroup,
-    DropdownMenuItem,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Input } from '@/components/ui/input';
@@ -55,6 +51,7 @@ import { EditDialog } from './dialog-modal/edit-dialog';
 import { DeleteDialog } from './dialog-modal/delete-dialog';
 import { IconChevronLeft, IconChevronRight, IconChevronsLeft, IconChevronsRight } from '@tabler/icons-react';
 import { ExportDropdownMenu } from './export-data-menu/export-dropdown-menu';
+import { TableIcon } from 'lucide-react';
 
 interface DataTableProps<TData, TValue> {
     columns:
@@ -156,7 +153,7 @@ export function DataTable<TData, TValue>({
                         value={searchColumn}
                         onValueChange={setSearchColumn}
                     >
-                        <SelectTrigger className="w-full lg:w-56">
+                        <SelectTrigger className="w-full lg:w-20 xl:w-56">
                             <SelectValue />
                         </SelectTrigger>
                         <SelectContent>
@@ -185,9 +182,7 @@ export function DataTable<TData, TValue>({
                 <div className="second-row overflow-auto flex justify-start sm:justify-end gap-2 mt-2 lg:mt-0">
                     <ImportExcelDialog onSuccess={onRefresh} />
                     <ExportDropdownMenu data={data} />
-                    <CreateDialog onSuccess={onRefresh || (() => { })} />
-                    <BulkDeleteDialog
-                        isDisabled={!(Object.keys(rowSelection).length > 0) && true}
+                    <BulkDeleteDialog isDisabled={!(Object.keys(rowSelection).length > 0) && true}
                         selectedLength={table.getSelectedRowModel().rows.length}
                         isOpen={isBulkDeleteDialogOpen}
                         onSuccess={() => {
@@ -203,7 +198,10 @@ export function DataTable<TData, TValue>({
                     />
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
-                            <Button variant="outline">{t("component.data_table.columns.label", "Kolom")}</Button>
+                            <Button variant="outline">
+                                <TableIcon className='h-4' />
+                                {t("component.data_table.columns.label", "Kolom")}
+                            </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
                             {table
@@ -225,6 +223,7 @@ export function DataTable<TData, TValue>({
                                 })}
                         </DropdownMenuContent>
                     </DropdownMenu>
+                    <CreateDialog onSuccess={onRefresh} />
                 </div>
             </div>
             <div className="overflow-hidden rounded-md border">

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Trash2, Trash2Icon } from 'lucide-react';
+import { Trash2Icon } from 'lucide-react';
 import { useState } from 'react';
 import {
   AlertDialog,
@@ -73,6 +73,7 @@ export function BulkDeleteDialog({
     <AlertDialog open={isOpen} onOpenChange={setOpen}>
       <AlertDialogTrigger asChild>
         <Button disabled={isDisabled} variant="outline" onClick={() => onBulkDeleteClick()}>
+          <Trash2Icon className="h-4" />
           {sprintf
             (
               t("page.category.dialog_modal.bulk_delete_dialog.dialog_button", "Hapus"),

@@ -22,6 +22,7 @@ import axiosInstance from '@/lib/axios';
 import { ResponseApi } from '@/support/interfaces/response/Response';
 import { Category } from '@/support/models/category';
 import { handleApiError } from '@/lib/utils';
+import { PlusCircle } from 'lucide-react';
 
 interface CreateDialogProps {
     onSuccess: () => void;
@@ -77,7 +78,10 @@ export function CreateDialog({ onSuccess }: CreateDialogProps) {
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-                <Button variant="outline">{t("page.category.dialog_modal.create_dialog.dialog_button", "Tambah Kategori")}</Button>
+                <Button variant="outline">
+                    <PlusCircle className="h-4" />
+                    {t("page.category.dialog_modal.create_dialog.dialog_button", "Tambah Kategori")}
+                </Button>
             </DialogTrigger>
             <DialogContent>
                 <form onSubmit={handleSubmit} className="space-y-4">
