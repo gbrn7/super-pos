@@ -27,14 +27,6 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Input } from '@/components/ui/input';
 import {
-    Pagination,
-    PaginationContent,
-    PaginationItem,
-    PaginationLink,
-    PaginationNext,
-    PaginationPrevious,
-} from '@/components/ui/pagination';
-import {
     Select,
     SelectContent,
     SelectGroup,
@@ -62,6 +54,7 @@ import { DetailDialog } from './dialog-modal/detail-dialog';
 import { EditDialog } from './dialog-modal/edit-dialog';
 import { DeleteDialog } from './dialog-modal/delete-dialog';
 import { IconChevronLeft, IconChevronRight, IconChevronsLeft, IconChevronsRight } from '@tabler/icons-react';
+import { ExportDropdownMenu } from './export-data-menu/export-dropdown-menu';
 
 interface DataTableProps<TData, TValue> {
     columns:
@@ -155,108 +148,6 @@ export function DataTable<TData, TValue>({
         },
     });
 
-    const disabledClass = 'pointer-events-none opacity-50';
-
-    const handleExportExcel = () => {
-        // Prepare data for export
-        const exportData = data.map((row: any) => ({
-            Name: row.name || '',
-            Description: row.desc || '',
-            'Created At': row.created_at || '',
-        }));
-
-        // Create a new workbook and worksheet
-        const worksheet = XLSX.utils.json_to_sheet(exportData);
-        const workbook = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(workbook, worksheet, t("page.category.page_name", "Kategori"));
-
-        // Set column widths
-        worksheet['!cols'] = [
-            { wch: 25 },
-            { wch: 30 },
-            { wch: 20 },
-        ];
-
-        // Generate file name with current timestamp
-        const fileName = `${t("page.category.page_name", "Kategori")}_${new Date().toISOString().split('T')[0]}.xlsx`;
-
-        // Write the file
-        XLSX.writeFile(workbook, fileName);
-    };
-
-    const handleExportPDF = () => {
-        // Create PDF document
-        const doc = new jsPDF();
-        const pageWidth = doc.internal.pageSize.getWidth();
-        const pageHeight = doc.internal.pageSize.getHeight();
-        let yPosition = 20;
-
-        // Add title
-        doc.setFontSize(16);
-        doc.text(t("page.category.page_name", "Kategori"), pageWidth / 2, yPosition, { align: 'center' });
-        yPosition += 15;
-
-        // Add metadata
-        doc.setFontSize(10);
-        doc.text(
-            `Generated on: ${new Date().toLocaleDateString()}`,
-            pageWidth / 2,
-            yPosition,
-            { align: 'center' }
-        );
-        yPosition += 10;
-
-        // Add table headers
-        doc.setFontSize(11);
-        doc.setFont('helvetica', 'bold');
-        const columnWidths = [50, 70, 35];
-        const columns = [t("page.category.data_table.columns.name_column_label", "Nama"), t("page.category.data_table.columns.desc_column_label", "Deskripsi"), t("page.category.data_table.columns.created_at_column_label", "Dibuat pada")];
-        let xPosition = 10;
-
-        columns.forEach((col, index) => {
-            doc.text(col, xPosition, yPosition);
-            xPosition += columnWidths[index];
-        });
-
-        yPosition += 8;
-        doc.setDrawColor(200);
-        doc.line(10, yPosition, pageWidth - 10, yPosition);
-        yPosition += 5;
-
-        // Add table data
-        doc.setFont('helvetica', 'normal');
-        doc.setFontSize(9);
-
-        data.forEach((row: any) => {
-            // Check if we need a new page
-            if (yPosition > pageHeight - 20) {
-                doc.addPage();
-                yPosition = 20;
-            }
-
-            xPosition = 10;
-            const rowData = [
-                row.name || '',
-                row.desc || '',
-                row.created_at || '',
-            ];
-
-            rowData.forEach((cell, index) => {
-                const cellText = String(cell).substring(0, 20);
-                doc.text(cellText, xPosition, yPosition);
-                xPosition += columnWidths[index];
-            });
-
-            yPosition += 7;
-        });
-
-        // Generate file name with current timestamp
-        const fileName = `Categories_${new Date().toISOString().split('T')[0]}.pdf`;
-
-        // Save the document
-        doc.save(fileName);
-    };
-
     return (
         <div>
             <div className="flex:col lg:flex justify-between items-center pb-4">
@@ -293,21 +184,7 @@ export function DataTable<TData, TValue>({
                 </div>
                 <div className="second-row overflow-auto flex justify-start sm:justify-end gap-2 mt-2 lg:mt-0">
                     <ImportExcelDialog onSuccess={onRefresh} />
-                    <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                            <Button variant="outline">{t("component.data_table.export.label", "Ekspor")}</Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent>
-                            <DropdownMenuGroup>
-                                <DropdownMenuItem onClick={handleExportExcel}>
-                                    {t("component.data_table.export.export_excel_btn", "Ekspor Excel")}
-                                </DropdownMenuItem>
-                                <DropdownMenuItem onClick={handleExportPDF}>
-                                    {t("component.data_table.export.export_pdf_btn", "Ekspor Pdf")}
-                                </DropdownMenuItem>
-                            </DropdownMenuGroup>
-                        </DropdownMenuContent>
-                    </DropdownMenu>
+                    <ExportDropdownMenu data={data} />
                     <CreateDialog onSuccess={onRefresh || (() => { })} />
                     <BulkDeleteDialog
                         isDisabled={!(Object.keys(rowSelection).length > 0) && true}
