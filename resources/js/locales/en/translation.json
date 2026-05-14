@@ -203,9 +203,13 @@
       "description": "Manage your profile and account settings",
       "appearance": {
         "label": "Appearance",
-        "title": "Appearance Settings",
-        "description": "Update your account appearance settings",
-        "language_label": "Language"
+        "title": "Appearance settings",
+        "description": "Update your appearance settings"
+      },
+      "language":{
+        "label":"Language",
+        "title":"Language settings",
+        "description":"Update your language settings"
       },
       "profile": {
         "label": "Profile",

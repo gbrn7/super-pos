@@ -204,8 +204,12 @@
     "appearance":{
       "label":"Penampilan",
       "title":"Pengaturan penampilan",
-      "description":"Perbarui pengaturan tampilan akun Anda",
-      "language_label":"Bahasa"
+      "description":"Perbarui pengaturan tampilan Anda"
+    },
+    "language":{
+      "label":"Bahasa",
+      "title":"Pengaturan Bahasa",
+      "description":"Perbarui pengaturan bahasa Anda"
     },
     "profile":{
       "label":"Profil",

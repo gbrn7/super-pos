@@ -2,41 +2,15 @@ import { Head } from '@inertiajs/react';
 import AppearanceTabs from '@/components/appearance-tabs';
 import Heading from '@/components/heading';
 import { edit as editAppearance } from '@/routes/appearance';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { useTranslation } from 'react-i18next';
-import { ChangeEvent, EventHandler, MouseEvent, MouseEventHandler, useState } from 'react';
 import i18next from 'i18next';
-import { languageCode, localStorageKey } from '@/constants/Index';
+import { useTranslation } from 'react-i18next';
+import AppLayout from '@/layouts/app-layout';
 
 
-interface languageSwitcher {
-    value: string,
-    label: string
-}
-
-const languages: languageSwitcher[] = [
-    { value: "id", label: "Indonesia" },
-    { value: "en", label: "English" },
-]
 
 export default function Appearance() {
-    const lang = localStorage.getItem(localStorageKey.LanguageKey) || languageCode.DefaultLanguageCode;
+    const { t } = useTranslation();
 
-    const { i18n, t } = useTranslation();
-
-    const defaultLang = languages.find(l => l.value === lang) || languages[0];
-
-    const [languageSelect, setLanguageSelect] = useState<languageSwitcher>(defaultLang);
-
-    const changeLanguage = (value: string) => {
-        const selected = languages.find((lang) => lang.value === value);
-
-        if (!selected) return;
-
-        setLanguageSelect(selected);
-        i18n.changeLanguage(selected.value);
-        localStorage.setItem('lang', selected.value);
-    };
 
     return (
         <>
@@ -51,25 +25,6 @@ export default function Appearance() {
                     description={t("page.settings.appearance.description", "Perbarui pengaturan tampilan akun Anda")}
                 />
                 <AppearanceTabs />
-                <div className='flex flex-col gap-2'>
-                    <label htmlFor="name" className="text-sm">{t("page.settings.appearance.language_label", "Bahasa")}
-                    </label>
-                    <Select onValueChange={changeLanguage} value={languageSelect.value}>
-                        <SelectTrigger className="w-44">
-                            <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent>
-                            {languages.map((lang) => (
-                                <SelectItem key={lang.value} value={lang.value}>
-                                    <span className="flex items-center gap-2">
-                                        {lang.label}
-                                    </span>
-                                </SelectItem>
-                            ))}
-                        </SelectContent>
-                    </Select>
-                </div>
-
             </div >
         </>
     );
@@ -83,3 +38,25 @@ Appearance.layout = {
         },
     ],
 };
+
+
+// function AppearanceLayout({ children }: { children: React.ReactNode }) {
+//     const { t } = useTranslation();
+
+//     return (
+//         <AppLayout
+//             breadcrumbs={[
+//                 {
+//                     title: t("page.settings.appearance.title"),
+//                     href: editAppearance(),
+//                 },
+//             ]}
+//         >
+//             {children}
+//         </AppLayout>
+//     );
+// }
+
+// Appearance.layout = (page: React.ReactNode) => (
+//     <AppearanceLayout>{page}</AppearanceLayout>
+// );
