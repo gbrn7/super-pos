@@ -15,14 +15,15 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { store as storeCategory } from '@/routes/apiCategories';
 import type { CategoryForm } from '@/support/interfaces/request/createCategory';
-import { toast } from 'sonner';
 import { useTranslation } from 'react-i18next';
 import { Spinner } from '@/components/ui/spinner';
 import axiosInstance from '@/lib/axios';
 import { ResponseApi } from '@/support/interfaces/response/Response';
 import { Category } from '@/support/models/category';
-import { handleApiError } from '@/lib/utils';
-import { PlusCircle } from 'lucide-react';
+import { handleApiError, showSuccessToast, showWarningToast } from '@/lib/utils';
+import { PlusCircle, XCircle, XCircleIcon } from 'lucide-react';
+import z from 'zod';
+import ErrorFormInfo from '@/components/errorFormInfo';
 
 interface CreateDialogProps {
     onSuccess: () => void;
@@ -37,6 +38,16 @@ export function CreateDialog({ onSuccess }: CreateDialogProps) {
         desc: '',
     });
 
+    const [errorForm, setErrorForm] = useState<CategoryForm>({
+        name: "",
+        desc: ""
+    });
+
+    const categorySchema = z.object({
+        name: z.string().trim().min(1, t("validation.category.required.name", "Nama tidak boleh kosong")),
+        desc: z.string().trim(),
+    });
+
     const handleChange = (
         e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     ) => {
@@ -45,13 +56,33 @@ export function CreateDialog({ onSuccess }: CreateDialogProps) {
             ...prev,
             [name]: value,
         }));
+
+        setErrorForm({
+            ...errorForm,
+            [name]: '',
+        });
     };
 
     const handleSubmit = async (e: React.SubmitEvent) => {
         e.preventDefault();
 
-        if (!formData.name.trim()) {
-            return alert('Category name is required');
+        const resultValidation = categorySchema.safeParse(formData);
+
+        if (!resultValidation.success) {
+            const fieldErrors: CategoryForm = {
+                name: "",
+                desc: ""
+            };
+
+            resultValidation.error.issues.forEach((error) => {
+                const fieldName = error.path[0] as keyof CategoryForm;
+
+                fieldErrors[fieldName] = error.message;
+            });
+
+            setErrorForm(fieldErrors);
+
+            return;
         }
 
         try {
@@ -59,12 +90,14 @@ export function CreateDialog({ onSuccess }: CreateDialogProps) {
 
             const res = await axiosInstance.post<ResponseApi<Category>>(storeCategory().url, formData);
 
-            setFormData({ name: '', desc: '' });
+
             if (!res.data.success) {
-                toast.info(res.data.message)
+                showWarningToast(res.data.message)
                 return
             }
-            toast.success(res.data.message)
+
+            showSuccessToast(res.data.message)
+            setFormData({ name: '', desc: '' });
             onSuccess();
         } catch (error) {
             console.error('Error creating category:', error);
@@ -103,8 +136,11 @@ export function CreateDialog({ onSuccess }: CreateDialogProps) {
                                 value={formData.name}
                                 onChange={handleChange}
                                 disabled={loading}
-                                required
                             />
+                            {errorForm.name && (
+                                <ErrorFormInfo message={errorForm.name} />
+
+                            )}
                         </Field>
                         <Field>
                             <label htmlFor="desc" className="text-sm">
@@ -119,6 +155,10 @@ export function CreateDialog({ onSuccess }: CreateDialogProps) {
                                 disabled={loading}
                                 rows={4}
                             />
+                            {errorForm.desc && (
+                                <ErrorFormInfo message={errorForm.desc} />
+
+                            )}
                         </Field>
                     </FieldGroup>
                     <DialogFooter>

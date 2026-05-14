@@ -1,4 +1,12 @@
 {
+  "validation":{
+    "category":{
+      "required": {
+        "name":"Name field required",
+        "file":"Excel file import required"
+      }
+    }
+  },
   "component": {
     "sidebar": {
       "dashboard_menu_label": "Dashboard",
@@ -248,5 +256,8 @@
         "enable_two_factor_btn": "Enable 2FA"
       }
     }
+  },
+      "error":{
+    "default":"Internal server error"
   }
 }

@@ -9,6 +9,8 @@ return [
     'bulk_updated' => ':count data berhasil diperbarui',
     'deleted' => 'Data berhasil dihapus',
     'bulk_deleted' => ':count data berhasil dihapus',
+    'profile_updated' => 'Profil berhasil diperbarui',
+    'password_updated' => 'Password diperbarui',
   ],
 
   'error' => [

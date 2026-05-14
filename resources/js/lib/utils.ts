@@ -1,8 +1,10 @@
+import { toastPosition } from '@/constants/Index';
 import { ResponseErrorApi } from '@/support/interfaces/response/ResponseError';
 import type { InertiaLinkProps } from '@inertiajs/react';
 import axios from 'axios';
 import { clsx } from 'clsx';
 import type { ClassValue } from 'clsx';
+import { t } from 'i18next';
 import { toast } from 'sonner';
 import { twMerge } from 'tailwind-merge';
 
@@ -28,15 +30,51 @@ export function handleApiError<T = ResponseErrorApi>(
             callback(data);
         }
 
+        if ((data as ResponseErrorApi)?.errors) {
+            showValidationErrors((data as ResponseErrorApi)?.errors)
+            return;
+        }
+
         // default toast
         const message =
             (data as ResponseErrorApi)?.message ??
-            'Something went wrong';
+            t("error.default", "Kesalahan sistem internal");
 
-        toast.error(message);
+
+        showErrorToast(message)
 
         return;
     }
 
     toast.error('Unknown error occurred');
+}
+
+export function showValidationErrors(
+    errors: Record<string, string[]>
+) {
+    Object.values(errors).forEach((fieldErrors) => {
+        fieldErrors.forEach((message) => {
+            showErrorToast(message)
+        })
+    })
+}
+
+export function showToast(message: string) {
+    toast(message, { position: toastPosition })
+}
+
+export function showInfoToast(message: string) {
+    toast.info(message, { position: toastPosition })
+}
+
+export function showErrorToast(message: string) {
+    toast.error(message, { position: toastPosition })
+}
+
+export function showWarningToast(message: string) {
+    toast.warning(message, { position: toastPosition })
+}
+
+export function showSuccessToast(message: string) {
+    toast.success(message, { position: toastPosition })
 }

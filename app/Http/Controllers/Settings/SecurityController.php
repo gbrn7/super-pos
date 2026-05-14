@@ -21,8 +21,8 @@ class SecurityController extends Controller implements HasMiddleware
     {
         return Features::canManageTwoFactorAuthentication()
             && Features::optionEnabled(Features::twoFactorAuthentication(), 'confirmPassword')
-                ? [new Middleware('password.confirm', only: ['edit'])]
-                : [];
+            ? [new Middleware('password.confirm', only: ['edit'])]
+            : [];
     }
 
     /**
@@ -53,7 +53,7 @@ class SecurityController extends Controller implements HasMiddleware
             'password' => $request->password,
         ]);
 
-        Inertia::flash('toast', ['type' => 'success', 'message' => __('Password updated.')]);
+        Inertia::flash('toast', ['type' => 'success', 'message' => trans('message.success.password_updated', "Password berhasil diperbarui")]);
 
         return back();
     }

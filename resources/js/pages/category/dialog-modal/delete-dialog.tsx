@@ -13,10 +13,9 @@ import {
 } from '@/components/ui/alert-dialog';
 import { update as deleteCategory } from '@/routes/apiCategories';
 import type { Category } from '@/support/models/category';
-import { toast } from 'sonner';
 import { Spinner } from '@/components/ui/spinner';
 import { t } from 'i18next';
-import { handleApiError } from '@/lib/utils';
+import { handleApiError, showSuccessToast, showWarningToast } from '@/lib/utils';
 import { ResponseApi } from '@/support/interfaces/response/Response';
 import axiosInstance from '@/lib/axios';
 
@@ -42,12 +41,12 @@ export function DeleteDialog({
             const res = await axiosInstance.delete<ResponseApi<boolean>>(deleteCategory(category?.id || '').url);
 
             if (!res.data.success) {
-                toast.info(res.data.message)
+                showWarningToast(res.data.message)
                 return
             }
 
             onSuccess();
-            toast.success(res.data.message)
+            showSuccessToast(res.data.message)
         } catch (error) {
             console.error('Error deleting category:', error);
             handleApiError(error)

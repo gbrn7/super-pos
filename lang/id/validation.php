@@ -1,0 +1,28 @@
+<?php
+
+return [
+
+  'required' => ':attribute wajib diisi.',
+
+  'string' => ':attribute harus berupa teks.',
+
+  'numeric' => ':attribute harus berupa angka.',
+
+  'min' => [
+    'string' => ':attribute minimal :min karakter.',
+    'numeric' => ':attribute minimal :min.',
+    'array' => ':attribute minimal memiliki :min item.',
+  ],
+
+  'max' => [
+    'string' => ':attribute maksimal :max karakter.',
+    'numeric' => ':attribute maksimal :max.',
+  ],
+
+  'attributes' => [
+    'name' => 'Nama',
+    'desc' => 'Deskripsi',
+    'age' => 'Umur',
+  ],
+
+];

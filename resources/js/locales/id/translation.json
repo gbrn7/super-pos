@@ -1,4 +1,12 @@
 {
+  "validation":{
+    "category":{
+      "required": {
+        "name":"Nama tidak boleh kosong",
+        "file":"File impor excel tidak boleh kosong"
+      }
+    }
+  },
   "component":{
     "sidebar":{
       "dashboard_menu_label":"Dasbor",
@@ -141,7 +149,7 @@
         "name_input_label":"Nama",
         "name_input_placeholder":"Masukkan nama kategori",
         "desc_input_label":"Deskripsi",
-        "desc_input_placeholder":"Masukkan deskripsi kategori(Opsional)",
+        "desc_input_placeholder":"Masukkan deskripsi kategori (Opsional)",
         "cancel_button":"Batal",
         "confirm_button":"Tambah Kategori"
       },
@@ -248,5 +256,8 @@
       "enable_two_factor_btn":"Aktifkan 2FA"
     }
   }
-}
+  },
+  "error":{
+    "default":"Kesalahan sistem internal"
+  }
 }

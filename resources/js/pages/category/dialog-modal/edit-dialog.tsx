@@ -15,12 +15,15 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { update as updateCategory } from '@/routes/apiCategories';
 import type { Category } from '@/support/models/category';
-import { toast } from 'sonner';
 import { useTranslation } from 'react-i18next';
 import { Spinner } from '@/components/ui/spinner';
 import axiosInstance from '@/lib/axios';
 import { ResponseApi } from '@/support/interfaces/response/Response';
-import { handleApiError } from '@/lib/utils';
+import { handleApiError, showSuccessToast, showWarningToast } from '@/lib/utils';
+import { CategoryForm } from '@/support/interfaces/request/createCategory';
+import z from 'zod';
+import { XCircleIcon } from 'lucide-react';
+import ErrorFormInfo from '@/components/errorFormInfo';
 
 interface EditDialogProps {
     isOpen: boolean;
@@ -38,9 +41,20 @@ export function EditDialog({
     const { t } = useTranslation();
 
     const [loading, setLoading] = useState<boolean>(false);
+
     const [formData, setFormData] = useState({
         name: category?.name ?? '',
         desc: category?.desc ?? '',
+    });
+
+    const [errorForm, setErrorForm] = useState<CategoryForm>({
+        name: "",
+        desc: ""
+    });
+
+    const categorySchema = z.object({
+        name: z.string().trim().min(1, t("validation.category.required.name", "Nama tidak boleh kosong")),
+        desc: z.string().trim(),
     });
 
     const handleChange = (
@@ -51,26 +65,48 @@ export function EditDialog({
             ...prev,
             [name]: value,
         }));
+
+        setErrorForm({
+            ...errorForm,
+            [name]: '',
+        });
     };
 
     const handleSubmit = async (e: React.SubmitEvent) => {
         e.preventDefault();
 
-        if (!formData.name.trim()) {
-            return alert('Category name is required');
+        const resultValidation = categorySchema.safeParse(formData);
+
+        if (!resultValidation.success) {
+            const fieldErrors: CategoryForm = {
+                name: "",
+                desc: ""
+            };
+
+            resultValidation.error.issues.forEach((error) => {
+                const fieldName = error.path[0] as keyof CategoryForm;
+
+                fieldErrors[fieldName] = error.message;
+            });
+
+            setErrorForm(fieldErrors);
+
+            return;
         }
+
 
         try {
             setLoading(true);
 
+
             const res = await axiosInstance.put<ResponseApi<Category>>(updateCategory(category?.id || '').url, formData);
 
             if (!res.data.success) {
-                toast.info(res.data.message)
+                showWarningToast(res.data.message)
                 return
             }
 
-            toast.success(res.data.message)
+            showSuccessToast(res.data.message)
             onSuccess();
         } catch (error) {
             console.error('Error updating category:', error);
@@ -103,8 +139,10 @@ export function EditDialog({
                                 value={formData.name}
                                 onChange={handleChange}
                                 disabled={loading}
-                                required
                             />
+                            {errorForm.name && (
+                                <ErrorFormInfo message={errorForm.name} />
+                            )}
                         </Field>
                         <Field>
                             <label htmlFor="desc" className="text-sm">
@@ -119,6 +157,9 @@ export function EditDialog({
                                 disabled={loading}
                                 rows={4}
                             />
+                            {errorForm.desc && (
+                                <ErrorFormInfo message={errorForm.desc} />
+                            )}
                         </Field>
                     </FieldGroup>
                     <DialogFooter>

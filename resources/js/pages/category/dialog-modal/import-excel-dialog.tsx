@@ -1,3 +1,4 @@
+import ErrorFormInfo from "@/components/errorFormInfo"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -14,13 +15,13 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Spinner } from "@/components/ui/spinner"
 import axiosInstance from "@/lib/axios"
-import { handleApiError } from "@/lib/utils"
+import { handleApiError, showErrorToast, showSuccessToast } from "@/lib/utils"
 import { getCategoryImportTemplate, importStudentExcelData } from '@/routes/apiCategories';
 import { ResponseApi } from "@/support/interfaces/response/Response"
-import { UploadCloud } from "lucide-react"
+import { UploadCloud, XCircleIcon } from "lucide-react"
 import { useState } from 'react';
 import { useTranslation } from "react-i18next"
-import { toast } from 'sonner';
+import z from "zod"
 
 interface ImportExcelDialogProps {
   onSuccess?: () => void;
@@ -31,6 +32,7 @@ export function ImportExcelDialog({ onSuccess }: ImportExcelDialogProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [file, setFile] = useState<File | null>(null);
+  const [errorForm, setErrorForm] = useState<{ file: string }>({ file: '' });
 
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -43,8 +45,8 @@ export function ImportExcelDialog({ onSuccess }: ImportExcelDialogProps) {
     e.preventDefault();
 
     if (!file) {
-      toast.error('Please select a file to import');
-      return;
+      setErrorForm({ file: t("validation.category.required.file", "File impor tidak boleh kosong") })
+      return
     }
 
     setIsLoading(true);
@@ -59,7 +61,7 @@ export function ImportExcelDialog({ onSuccess }: ImportExcelDialogProps) {
         },
       });
 
-      toast.success(res.data.message);
+      showSuccessToast(res.data.message);
       setIsOpen(false);
       setFile(null);
       onSuccess?.();
@@ -101,6 +103,9 @@ export function ImportExcelDialog({ onSuccess }: ImportExcelDialogProps) {
               onChange={handleFileChange}
               disabled={isLoading}
             />
+            {errorForm.file && (
+              <ErrorFormInfo message={errorForm.file} />
+            )}
           </Field>
         </FieldGroup>
         <DialogFooter >

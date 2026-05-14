@@ -8,9 +8,8 @@ import { DataTable } from './data-table';
 import { useTranslation } from 'react-i18next';
 import i18next from 'i18next';
 import axiosInstance from '@/lib/axios';
-import { toast } from 'sonner';
 import { ResponseApi } from '@/support/interfaces/response/Response';
-import { handleApiError } from '@/lib/utils';
+import { handleApiError, showWarningToast } from '@/lib/utils';
 
 const { url } = categories();
 
@@ -36,7 +35,7 @@ export default function Index() {
             setProcessing(true);
             const res = await axiosInstance.get<ResponseApi<Category[]>>(apiUrl);
             if (!res.data.success) {
-                toast.info(res.data.message)
+                showWarningToast(res.data.message)
                 return
             }
             setAllCategories(res.data.data);

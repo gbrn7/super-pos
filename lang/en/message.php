@@ -9,6 +9,8 @@ return [
     'bulk_updated' => ':count data successfully updated',
     'deleted' => 'Data successfully deleted',
     'bulk_deleted' => ':count data successfully deleted',
+    'profile_updated' => 'Profil updated',
+    'password_updated' => 'Password updated',
   ],
 
 

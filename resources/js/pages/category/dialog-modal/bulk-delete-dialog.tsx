@@ -16,11 +16,10 @@ import {
 import { bulkDelete } from '@/routes/apiCategories';
 import type { Category } from '@/support/models/category';
 import { Button } from '@/components/ui/button';
-import { toast } from 'sonner';
 import { Spinner } from '@/components/ui/spinner';
 import { t } from 'i18next';
 import { sprintf } from 'sprintf-js';
-import { handleApiError } from '@/lib/utils';
+import { handleApiError, showSuccessToast, showWarningToast } from '@/lib/utils';
 import axiosInstance from '@/lib/axios';
 import { ResponseApi } from '@/support/interfaces/response/Response';
 
@@ -53,11 +52,11 @@ export function BulkDeleteDialog({
       const res = await axiosInstance.post<ResponseApi<boolean>>(bulkDelete().url, { ids });
 
       if (!res.data.success) {
-        toast.info(res.data.message)
+        showWarningToast(res.data.message)
         return
       }
 
-      toast.success(res.data.message)
+      showSuccessToast(res.data.message)
       onSuccess();
     } catch (error) {
       console.error('Error deleting categories:', error);
