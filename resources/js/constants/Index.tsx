@@ -22,4 +22,4 @@ export const LanguageSystem = typeof localStorage !== "undefined"
     ? localStorage.getItem(localStorageKey.LanguageKey) || languageCode.DefaultLanguageCode
     : languageCode.DefaultLanguageCode
 
-export const toastPosition = "top-right"
+export const toastPosition = "top-center"
