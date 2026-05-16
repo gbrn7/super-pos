@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use App\Support\Enums\RoleEnums;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -14,14 +15,25 @@ class UserSeeder extends Seeder
     public function run(): void
     {
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'superuser@gmail.com',
+        $superadmin = User::factory()->create([
+            'name' => 'super user',
+            'email' => 'superuser@example.com',
         ]);
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+        $superadmin->assignRole(RoleEnums::SUPER_ADMIN->value);
+
+        $admin = User::factory()->create([
+            'name' => 'admin',
+            'email' => 'admin@example.com',
         ]);
+
+        $admin->assignRole(RoleEnums::ADMIN->value);
+
+        $user = User::factory()->create([
+            'name' => 'admin',
+            'email' => 'user@example.com',
+        ]);
+
+        $user->assignRole(RoleEnums::USER->value);
     }
 }

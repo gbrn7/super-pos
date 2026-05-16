@@ -4,11 +4,13 @@ namespace App\Providers;
 
 use App\Repositories\CategoryRepository as RepositoriesCategoryRepository;
 use App\Services\CategoryService as ServicesCategoryService;
+use App\Support\Enums\RoleEnums;
 use App\Support\Interfaces\Repositories\CategoryRepositoryInterface;
 use App\Support\Interfaces\Services\CategoryServiceInterface as ServicesCategoryServiceInterface;
 use Carbon\CarbonImmutable;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Validation\Rules\Password;
 
@@ -29,6 +31,10 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->configureDefaults();
+
+        Gate::before(function ($user, $ability) {
+            return $user->hasRole(RoleEnums::SUPER_ADMIN->value) ? true : null;
+        });
     }
 
     /**
