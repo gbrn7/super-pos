@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
-use App\Support\Enums\PermissionEnums;
+use App\Support\Enums\CategoryPermissionEnums;
+use App\Support\Enums\DashboardPermissionEnums;
 use App\Support\Enums\RoleEnums;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
@@ -16,7 +16,13 @@ class PermissionSeeder extends Seeder
      */
     public function run(): void
     {
-        foreach (PermissionEnums::cases() as $permission) {
+        foreach (CategoryPermissionEnums::cases() as $permission) {
+            Permission::firstOrCreate([
+                'name' => $permission->value,
+            ]);
+        }
+
+        foreach (DashboardPermissionEnums::cases() as $permission) {
             Permission::firstOrCreate([
                 'name' => $permission->value,
             ]);
@@ -27,19 +33,19 @@ class PermissionSeeder extends Seeder
         $admin = Role::findByName(RoleEnums::ADMIN->value);
 
         $admin->givePermissionTo([
-            PermissionEnums::READ_CATEGORY->value,
-            PermissionEnums::CREATE_CATEGORY->value,
-            // PermissionEnums::EDIT_CATEGORY->value,
-            // PermissionEnums::DELETE_CATEGORY->value,
+            DashboardPermissionEnums::READ_DASHBOARD->value,
+
+            CategoryPermissionEnums::CREATE_CATEGORY->value,
+            CategoryPermissionEnums::READ_CATEGORY->value,
+            // CategoryPermissionEnums::UPDATE_CATEGORY->value,
+            // CategoryPermissionEnums::DELETE_CATEGORY->value,
         ]);
 
         $user = Role::findByName(RoleEnums::USER->value);
 
         $user->givePermissionTo([
-            PermissionEnums::READ_CATEGORY->value,
-            // PermissionEnums::CREATE_CATEGORY->value,
-            // PermissionEnums::EDIT_CATEGORY->value,
-            // PermissionEnums::DELETE_CATEGORY->value,
+            DashboardPermissionEnums::READ_DASHBOARD->value,
+            // CategoryPermissionEnums::READ_CATEGORY->value,
         ]);
     }
 }

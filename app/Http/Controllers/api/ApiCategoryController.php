@@ -8,17 +8,44 @@ use App\Http\Requests\Category\ImportCategoryRequest;
 use App\Http\Requests\Category\StoreCategoryRequest;
 use App\Http\Requests\Category\UpdateCategoryRequest;
 use App\Http\Resources\CategoryResource;
+use App\Support\Enums\CategoryPermissionEnums;
 use App\Support\Interfaces\Services\CategoryServiceInterface;
 use App\Support\Models\Category\GetCategoryReqModel;
 use App\Support\Utils\ResponseApi;
 use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Symfony\Component\HttpFoundation\Response;
 
-class ApiCategoryController extends Controller
+class ApiCategoryController extends Controller implements HasMiddleware
 {
     public function __construct(protected CategoryServiceInterface $categoryService) {}
+
+    public static function middleware(): array
+    {
+        return [
+            new Middleware(
+                'permission:' . CategoryPermissionEnums::READ_CATEGORY->value,
+                only: ['index']
+            ),
+
+            new Middleware(
+                'permission:' . CategoryPermissionEnums::CREATE_CATEGORY->value,
+                only: ['store']
+            ),
+
+            new Middleware(
+                'permission:' . CategoryPermissionEnums::UPDATE_CATEGORY->value,
+                only: ['update', 'getCategoryImportTemplate', 'importCategoryExcelData']
+            ),
+
+            new Middleware(
+                'permission:' . CategoryPermissionEnums::DELETE_CATEGORY->value,
+                only: ['destroy', 'bulkDelete']
+            ),
+        ];
+    }
 
     /**
      * Display a listing of the resource.

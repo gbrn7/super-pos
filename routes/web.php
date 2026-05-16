@@ -20,7 +20,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('example', ExampleController::class);
 
     Route::group(['prefix' => 'api'], function () {
-        Route::resource('categories', ApiCategoryController::class)->names('apiCategories');
+        Route::resource('categories', ApiCategoryController::class)->names('apiCategories')->only(['index', 'store', 'update', 'destroy']);
 
 
         Route::group(['prefix' => 'categories'], function () {

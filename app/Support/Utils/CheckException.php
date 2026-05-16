@@ -5,6 +5,7 @@ namespace App\Support\Utils;
 use Exception;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Log;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class CheckException
 {
@@ -16,9 +17,19 @@ class CheckException
       'code' => $th->getCode(),
     ]);
 
+    $code = $th->getCode();
 
-    //check if code is 0 the message is cannot be displayed like sql error
-    $th = $th->getCode() != 0 ? $th : throw new Exception(trans('message.error.internal_server_error'), Response::HTTP_INTERNAL_SERVER_ERROR);
+    if (
+      !is_int($code) ||
+      $code < 100 ||
+      $code > 599
+    ) {
+      dd(trans('message.error.internal_server_error'));
+      return new Exception(
+        trans('message.error.internal_server_error'),
+        Response::HTTP_INTERNAL_SERVER_ERROR
+      );
+    }
 
     return $th;
   }

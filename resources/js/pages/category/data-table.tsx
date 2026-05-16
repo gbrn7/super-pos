@@ -52,6 +52,8 @@ import { DeleteDialog } from './dialog-modal/delete-dialog';
 import { IconChevronLeft, IconChevronRight, IconChevronsLeft, IconChevronsRight } from '@tabler/icons-react';
 import { ExportDropdownMenu } from './export-data-menu/export-dropdown-menu';
 import { TableIcon } from 'lucide-react';
+import { Can } from '@/components/auth/can';
+import { CategoryPermissionEnums } from '@/support/enums/PermissionEnums';
 
 interface DataTableProps<TData, TValue> {
     columns:
@@ -181,22 +183,28 @@ export function DataTable<TData, TValue>({
                 </div>
 
                 <div className="second-row overflow-auto flex justify-start sm:justify-end gap-2 mt-2 lg:mt-0">
-                    <ImportExcelDialog onSuccess={onRefresh} />
+                    <Can permission={CategoryPermissionEnums.CREATE_CATEGORY}>
+                        <ImportExcelDialog onSuccess={onRefresh} />
+                    </Can>
                     <ExportDropdownMenu data={data} />
-                    <BulkDeleteDialog isDisabled={!(Object.keys(rowSelection).length > 0) && true}
-                        selectedLength={table.getSelectedRowModel().rows.length}
-                        isOpen={isBulkDeleteDialogOpen}
-                        onSuccess={() => {
-                            onRefresh()
-                            table.resetRowSelection()
-                        }}
-                        setOpen={setOpenBulkDeleteDialogOpen}
-                        categories={selectedBulkCategories}
-                        onBulkDeleteClick={() => {
-                            const selectedRows = table.getSelectedRowModel().rows.map((row) => row.original);
-                            onBulkDeleteClick?.(selectedRows);
-                        }}
-                    />
+                    <Can
+                        permission={CategoryPermissionEnums.DELETE_CATEGORY}
+                    >
+                        <BulkDeleteDialog isDisabled={!(Object.keys(rowSelection).length > 0) && true}
+                            selectedLength={table.getSelectedRowModel().rows.length}
+                            isOpen={isBulkDeleteDialogOpen}
+                            onSuccess={() => {
+                                onRefresh()
+                                table.resetRowSelection()
+                            }}
+                            setOpen={setOpenBulkDeleteDialogOpen}
+                            categories={selectedBulkCategories}
+                            onBulkDeleteClick={() => {
+                                const selectedRows = table.getSelectedRowModel().rows.map((row) => row.original);
+                                onBulkDeleteClick?.(selectedRows);
+                            }}
+                        />
+                    </Can>
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                             <Button variant="outline">
@@ -224,7 +232,11 @@ export function DataTable<TData, TValue>({
                                 })}
                         </DropdownMenuContent>
                     </DropdownMenu>
-                    <CreateDialog onSuccess={onRefresh} />
+                    <Can
+                        permission={CategoryPermissionEnums.CREATE_CATEGORY}
+                    >
+                        <CreateDialog onSuccess={onRefresh} />
+                    </Can>
                 </div>
 
             </div>

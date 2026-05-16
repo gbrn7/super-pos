@@ -17,6 +17,7 @@ import { dashboard } from '@/routes';
 import { index as categories } from '@/routes/categories';
 import type { NavItem } from '@/types';
 import { useTranslation } from 'react-i18next';
+import { CategoryPermissionEnums, DashboardPermissionEnums } from '@/support/enums/PermissionEnums';
 
 
 const footerNavItems: NavItem[] = [
@@ -41,16 +42,22 @@ export function AppSidebar() {
                 title: t("component.sidebar.dashboard_menu_label", "Dasbor"),
                 href: dashboard(),
                 icon: LayoutGrid,
+                permission: DashboardPermissionEnums.READ_DASHBOARD,
+                role: []
             },
             {
                 title: 'Example',
                 href: '/example',
                 icon: Book,
+                permission: [DashboardPermissionEnums.READ_DASHBOARD],
+                role: []
             },
             {
                 title: t("component.sidebar.category_menu_label", "Kategori"),
                 href: categories(),
                 icon: Tags,
+                permission: CategoryPermissionEnums.READ_CATEGORY,
+                role: []
             },
         ];
 

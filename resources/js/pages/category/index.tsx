@@ -15,6 +15,8 @@ const { url } = categories();
 
 
 export default function Index() {
+
+
     const { url: apiUrl } = apiGetCategories();
     const { t } = useTranslation()
 

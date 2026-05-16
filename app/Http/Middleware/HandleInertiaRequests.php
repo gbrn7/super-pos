@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Support\Enums\RoleEnums;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 
@@ -39,7 +40,21 @@ class HandleInertiaRequests extends Middleware
             ...parent::share($request),
             'name' => config('app.name'),
             'auth' => [
-                'user' => $request->user(),
+                // 'user' => $request->user(),
+                'user' =>  $request->user() ? [
+                    'id' => $request->user()->id,
+                    'name' => $request->user()->name,
+                    'email' => $request->user()->email,
+                    // Get all roles
+                    'roles' => $request->user()->getRoleNames()->toArray(),
+                    // Get all permissions (flattened)
+                    'permissions' => $request->user()
+                        ->getAllPermissions()
+                        ->pluck('name')
+                        ->toArray(),
+                    // check is superadmin
+                    'isSuperAdmin' => $request->user()?->hasRole(RoleEnums::SUPER_ADMIN->value),
+                ] : [],
             ],
             'sidebarOpen' => ! $request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
         ];

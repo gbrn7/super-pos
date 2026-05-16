@@ -16,8 +16,8 @@ class UserSeeder extends Seeder
     {
 
         $superadmin = User::factory()->create([
-            'name' => 'super user',
-            'email' => 'superuser@example.com',
+            'name' => 'super admin',
+            'email' => 'superadmin@example.com',
         ]);
 
         $superadmin->assignRole(RoleEnums::SUPER_ADMIN->value);
@@ -30,7 +30,7 @@ class UserSeeder extends Seeder
         $admin->assignRole(RoleEnums::ADMIN->value);
 
         $user = User::factory()->create([
-            'name' => 'admin',
+            'name' => 'user',
             'email' => 'user@example.com',
         ]);
 

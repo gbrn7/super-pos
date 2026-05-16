@@ -31,5 +31,16 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
-        //
+        $exceptions->render(function (
+            \Spatie\Permission\Exceptions\UnauthorizedException $e,
+            $request
+        ) {
+            if ($request->expectsJson()) {
+                return response()->json([
+                    'message' => trans('message.error.unauthorized'),
+                ], 403);
+            }
+
+            abort(403, trans('message.error.unauthorized'));
+        });
     })->create();

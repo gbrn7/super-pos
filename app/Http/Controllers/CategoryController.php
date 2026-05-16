@@ -2,17 +2,26 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\CategoryResource;
-use App\Models\Category;
+use App\Support\Enums\CategoryPermissionEnums;
 use App\Support\Interfaces\Services\CategoryServiceInterface;
-use App\Support\Model\Request\GetCategoryReqModel;
-use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 
-class CategoryController extends Controller
+class CategoryController extends Controller implements HasMiddleware
 {
     public function __construct(protected CategoryServiceInterface $categoryService) {}
 
-    public function Index(Request $request)
+    public static function middleware(): array
+    {
+        return [
+            new Middleware(
+                'permission:' . CategoryPermissionEnums::READ_CATEGORY->value,
+                only: ['index']
+            ),
+        ];
+    }
+
+    public function index()
     {
         return inertia('category/index');
     }

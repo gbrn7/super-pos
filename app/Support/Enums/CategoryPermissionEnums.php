@@ -2,10 +2,10 @@
 
 namespace App\Support\Enums;
 
-enum PermissionEnums: string
+enum CategoryPermissionEnums: string
 {
-  case READ_CATEGORY = 'read category';
   case CREATE_CATEGORY = 'create category';
-  case EDIT_CATEGORY = 'edit category';
+  case READ_CATEGORY = 'read category';
+  case UPDATE_CATEGORY = 'update category';
   case DELETE_CATEGORY = 'delete category';
 }

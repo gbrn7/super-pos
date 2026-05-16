@@ -4,10 +4,12 @@ namespace App\Services;
 
 use App\Imports\CategoryImport;
 use App\Models\Category;
+use App\Support\Constants\ErrorCode;
 use App\Support\Interfaces\Repositories\CategoryRepositoryInterface;
 use App\Support\Interfaces\Services\CategoryServiceInterface;
 use App\Support\Models\Category\GetCategoryReqModel;
 use App\Support\Utils\CheckException;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Http\Response;
@@ -118,12 +120,16 @@ class CategoryService implements CategoryServiceInterface
 
             $newData = Collection::make();
 
+            $unixTime = Carbon::now()->unix();
+
             foreach ($raws as $raw) {
                 foreach ($raw as $row) {
 
                     $newData->push([
                         'name' => $row['nama'],
                         'desc' => $row['deskripsi'],
+                        'created_at' => $unixTime,
+                        'updated_at' => $unixTime,
                     ]);
                 }
             }
@@ -135,6 +141,11 @@ class CategoryService implements CategoryServiceInterface
 
             return $newData->count();
         } catch (\Throwable $th) {
+
+            if ($th->getCode() === ErrorCode::SQL_UNIQUE_VIOLATION) {
+                $th = new Exception(trans('message.error.internal_server_error_import'), RESPONSE::HTTP_INTERNAL_SERVER_ERROR);
+            }
+
             throw CheckException::Check($th);
         }
     }
