@@ -15,8 +15,10 @@ return [
 
 
   'error' => [
+    'data_not_found' => 'Data not found',
+    'data_already_exists' => 'Data already exist',
+    'internal_server_error' => 'Internal server error',
     'something_went_wrong' => 'Something went wrong',
-    'not_found' => ':resource not found',
     'unauthorized' => 'Unauthorized access',
     'validation' => 'Validation failed',
   ],

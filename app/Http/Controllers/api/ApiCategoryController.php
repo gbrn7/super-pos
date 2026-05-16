@@ -3,17 +3,17 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Category\BulkDeleteCategoryRequest;
 use App\Http\Requests\Category\ImportCategoryRequest;
 use App\Http\Requests\Category\StoreCategoryRequest;
 use App\Http\Requests\Category\UpdateCategoryRequest;
 use App\Http\Resources\CategoryResource;
 use App\Support\Interfaces\Services\CategoryServiceInterface;
 use App\Support\Models\Category\GetCategoryReqModel;
-use App\Support\Utils\MessageResponse;
 use App\Support\Utils\ResponseApi;
 use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\Response;
 
 class ApiCategoryController extends Controller
@@ -32,8 +32,7 @@ class ApiCategoryController extends Controller
 
             return ResponseApi::make(true, trans('message.success.success'), $data);
         } catch (\Throwable $th) {
-            //make log for error
-            return ResponseApi::make(false, trans('message.error.something_went_wrong'), null, Response::HTTP_INTERNAL_SERVER_ERROR);
+            return ResponseApi::make(false, $th->getMessage(), null, $th->getcode());
         }
     }
 
@@ -52,7 +51,7 @@ class ApiCategoryController extends Controller
 
             return ResponseApi::make(true, trans('message.success.created'), $category, Response::HTTP_CREATED);
         } catch (\Throwable $th) {
-            return ResponseApi::make(false, trans('message.error.something_went_wrong'), null, Response::HTTP_INTERNAL_SERVER_ERROR);
+            return ResponseApi::make(false, $th->getMessage(), null, $th->getcode());
         }
     }
 
@@ -82,7 +81,7 @@ class ApiCategoryController extends Controller
 
             return ResponseApi::make(true, trans('message.success.updated'), $category);
         } catch (\Throwable $th) {
-            return ResponseApi::make(false, trans('message.error.something_went_wrong'), null, Response::HTTP_INTERNAL_SERVER_ERROR);
+            return ResponseApi::make(false, $th->getMessage(), null, $th->getcode());
         }
     }
 
@@ -98,23 +97,21 @@ class ApiCategoryController extends Controller
 
             return ResponseApi::make(true, trans('message.success.deleted'), null, Response::HTTP_OK);
         } catch (\Throwable $th) {
-            dd($th->getMessage());
-            return ResponseApi::make(false, trans('message.error.something_went_wrong'), null, Response::HTTP_INTERNAL_SERVER_ERROR);
+            return ResponseApi::make(false, $th->getMessage(), null, $th->getcode());
         }
     }
 
     /**
      * Bulk delete resources.
      */
-    public function bulkDelete(Request $request)
+    public function bulkDelete(BulkDeleteCategoryRequest $request)
     {
         try {
-            $ids = $request->input('ids', []);
-            $deletedCount = $this->categoryService->bulkDelete($ids);
+            $deletedCount = $this->categoryService->bulkDelete($request->validated('ids'));
 
             return ResponseApi::make(true, trans('message.success.bulk_deleted', ['count' => $deletedCount]), null, Response::HTTP_OK);
         } catch (\Throwable $th) {
-            return ResponseApi::make(false, trans('message.error.something_went_wrong'), null, Response::HTTP_INTERNAL_SERVER_ERROR);
+            return ResponseApi::make(false, $th->getMessage(), null, $th->getcode());
         }
     }
 
@@ -139,7 +136,7 @@ class ApiCategoryController extends Controller
 
             return ResponseApi::make(true, trans('message.success.bulk_created', ["count" => $createdCount]), null, Response::HTTP_CREATED);
         } catch (\Throwable $th) {
-            return ResponseApi::make(false, trans('message.error.something_went_wrong'), null, Response::HTTP_INTERNAL_SERVER_ERROR);
+            return ResponseApi::make(false, $th->getMessage(), null, $th->getcode());
         }
     }
 }

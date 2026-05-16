@@ -7,8 +7,10 @@ use App\Models\Category;
 use App\Support\Interfaces\Repositories\CategoryRepositoryInterface;
 use App\Support\Interfaces\Services\CategoryServiceInterface;
 use App\Support\Models\Category\GetCategoryReqModel;
+use App\Support\Utils\CheckException;
 use Exception;
 use Illuminate\Contracts\Pagination\Paginator;
+use Illuminate\Http\Response;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Facades\Excel;
@@ -22,7 +24,7 @@ class CategoryService implements CategoryServiceInterface
         try {
             return $this->categoryRepository->getAllByIndex($request);
         } catch (\Throwable $th) {
-            throw $th;
+            throw CheckException::Check($th);
         }
     }
 
@@ -31,7 +33,7 @@ class CategoryService implements CategoryServiceInterface
         try {
             return $this->categoryRepository->getById($id);
         } catch (\Throwable $th) {
-            throw $th;
+            throw CheckException::Check($th);
         }
     }
 
@@ -41,12 +43,12 @@ class CategoryService implements CategoryServiceInterface
             $isCategoryExist = $this->categoryRepository->getByName($data['name']);
 
             if (isset($isCategoryExist)) {
-                throw new Exception("Category name already used");
+                throw new Exception(trans('message.error.data_already_exists'), Response::HTTP_UNPROCESSABLE_ENTITY);
             }
 
             return $this->categoryRepository->create($data);
         } catch (\Throwable $th) {
-            throw $th;
+            throw CheckException::Check($th);
         }
     }
 
@@ -56,62 +58,58 @@ class CategoryService implements CategoryServiceInterface
             $category = $this->categoryRepository->getById($id);
 
             if (!isset($category)) {
-                throw new Exception("Category Not Found");
+                throw new Exception(trans("message.error.data_not_found"), Response::HTTP_NOT_FOUND);
             }
 
             $isCategoryExist = $this->categoryRepository->getByNameExceptID($data['name'], $id);
 
             if (isset($isCategoryExist)) {
-                throw new Exception("Category name already used");
+                throw new Exception(trans('message.error.data_already_exists'), Response::HTTP_UNPROCESSABLE_ENTITY);
             }
 
             $isSuccess = $this->categoryRepository->update($category, $data);
 
             if (! $isSuccess) {
-                throw new Exception('Interal Server Error');
+                throw new Exception(trans('message.error.internal_server_error'), Response::HTTP_INTERNAL_SERVER_ERROR);
             }
 
             return $category;
         } catch (\Throwable $th) {
-            throw $th;
+            throw CheckException::Check($th);
         }
     }
 
     public function delete(int $id): bool
     {
-        $category = $this->categoryRepository->getById($id);
-
-        if (!isset($category)) {
-            throw new Exception("Category not found");
-        }
         try {
+            $category = $this->categoryRepository->getById($id);
+
+            if (!isset($category)) {
+                throw new Exception(trans("message.error.data_not_found"), Response::HTTP_NOT_FOUND);
+            }
+
             $isSuccess = $this->categoryRepository->delete($category);
 
             if (! $isSuccess) {
-                throw new Exception('Internal Server Error');
+                throw new Exception(trans('message.error.internal_server_error'), Response::HTTP_INTERNAL_SERVER_ERROR);
             }
 
             return true;
         } catch (\Throwable $th) {
-            throw $th;
+            throw CheckException::Check($th);
         }
     }
 
     public function bulkDelete(array $ids): int
     {
-        if (empty($ids)) {
-            throw new Exception('No categories selected for deletion.');
-        }
-
         try {
             $deletedCount = $this->categoryRepository->deleteMany($ids);
 
             return $deletedCount;
         } catch (\Throwable $th) {
-            throw $th;
+            throw CheckException::Check($th);
         }
     }
-
 
     public function importExcel(UploadedFile $file): int
     {
@@ -132,12 +130,12 @@ class CategoryService implements CategoryServiceInterface
 
             $isSuccess = $this->categoryRepository->insert($newData->toArray());
             if (!$isSuccess) {
-                throw new Exception("Something went wrong");
+                throw new Exception(trans('message.error.internal_server_error'), Response::HTTP_INTERNAL_SERVER_ERROR);
             }
 
             return $newData->count();
         } catch (\Throwable $th) {
-            throw $th;
+            throw CheckException::Check($th);
         }
     }
 }

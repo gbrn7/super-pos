@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Category;
 
+use App\Models\Category;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
@@ -23,6 +24,7 @@ class UpdateCategoryRequest extends FormRequest
      */
     public function rules(): array
     {
+        $request = $this->all();
 
         return [
             'name' => [

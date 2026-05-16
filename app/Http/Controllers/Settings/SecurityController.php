@@ -53,7 +53,7 @@ class SecurityController extends Controller implements HasMiddleware
             'password' => $request->password,
         ]);
 
-        Inertia::flash('toast', ['type' => 'success', 'message' => trans('message.success.password_updated', "Password berhasil diperbarui")]);
+        Inertia::flash('toast', ['type' => 'success', 'message' => trans('message.success.password_updated')]);
 
         return back();
     }

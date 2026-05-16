@@ -15,7 +15,8 @@ class ResponseApi
     ?int $httpCode = Response::HTTP_OK
   ): JsonResponse {
 
-    if (!isset($httpCode) && !$isSuccess) {
+    if ($httpCode == 0 && !$isSuccess) {
+      $message = trans('message.error.internal_server_error');
       $httpCode = Response::HTTP_INTERNAL_SERVER_ERROR;
     }
 

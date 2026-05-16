@@ -12,9 +12,10 @@ return [
     'profile_updated' => 'Profil berhasil diperbarui',
     'password_updated' => 'Password diperbarui',
   ],
-
   'error' => [
-    'something_went_wrong' => 'Terjadi kesalahan',
+    'data_not_found' => 'Data tidak ditemukan',
+    'data_already_exists' => 'Data sudah tersedia',
+    'internal server_error' => 'Kesalahan server internal',
     'not_found' => ':resource tidak ditemukan',
     'unauthorized' => 'Akses tidak diizinkan',
     'validation' => 'Validasi gagal',

@@ -2,12 +2,10 @@
 
 namespace App\Http\Requests\Category;
 
-use App\Models\Category;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
-class StoreCategoryRequest extends FormRequest
+class BulkDeleteCategoryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,8 +23,7 @@ class StoreCategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:255', Rule::unique(Category::class)],
-            'desc' => ['nullable', 'string',],
+            'ids' => ['required', 'array'],
         ];
     }
 }

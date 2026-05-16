@@ -6,7 +6,11 @@ return [
 
   'string' => ':attribute harus berupa teks.',
 
+  'array' => ':attribute harus berupa array.',
+
   'numeric' => ':attribute harus berupa angka.',
+
+  'unique' => ':attribute sudah ada',
 
   'min' => [
     'string' => ':attribute minimal :min karakter.',
