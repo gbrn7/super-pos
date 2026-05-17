@@ -143,7 +143,7 @@ class CategoryService implements CategoryServiceInterface
         } catch (\Throwable $th) {
 
             if ($th->getCode() === ErrorCode::SQL_UNIQUE_VIOLATION) {
-                $th = new Exception(trans('message.error.internal_server_error_import'), RESPONSE::HTTP_INTERNAL_SERVER_ERROR);
+                $th = new Exception(trans('message.error.duplicate_data_error_import'), RESPONSE::HTTP_INTERNAL_SERVER_ERROR);
             }
 
             throw CheckException::Check($th);

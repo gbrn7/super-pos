@@ -18,7 +18,7 @@ return [
     'data_not_found' => 'Data not found',
     'data_already_exists' => 'Data already exist',
     'internal_server_error' => 'Internal server error',
-    'internal_server_error_import' => 'Internal server error or duplicate data',
+    'duplicate_data_error_import' => 'There is duplicate data',
     'something_went_wrong' => 'Something went wrong',
     'unauthorized' => 'Unauthorized access',
     'validation' => 'Validation failed',

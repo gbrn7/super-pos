@@ -26,7 +26,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::group(['prefix' => 'categories'], function () {
             Route::post('/bulk-delete', [ApiCategoryController::class, 'bulkDelete'])->name('apiCategories.bulkDelete');
 
-            Route::get('/download/categoryImportTemplate', [ApiCategoryController::class, 'getCategoryImportTemplate'])->name('apiCategories.getCategoryImportTemplate');
+            Route::get('/download/categoryImportTemplate', [ApiCategoryController::class, 'getCategoryImportTemplater'])->name('apiCategories.getCategoryImportTemplate');
 
             Route::post('/import-categories', [ApiCategoryController::class, 'importCategoryExcelData'])->name('apiCategories.importStudentExcelData');
         });

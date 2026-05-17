@@ -32,12 +32,12 @@ class ApiCategoryController extends Controller implements HasMiddleware
 
             new Middleware(
                 'permission:' . CategoryPermissionEnums::CREATE_CATEGORY->value,
-                only: ['store']
+                only: ['store', 'getCategoryImportTemplate', 'importCategoryExcelData']
             ),
 
             new Middleware(
                 'permission:' . CategoryPermissionEnums::UPDATE_CATEGORY->value,
-                only: ['update', 'getCategoryImportTemplate', 'importCategoryExcelData']
+                only: ['update']
             ),
 
             new Middleware(

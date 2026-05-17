@@ -18,10 +18,9 @@ import axiosInstance from "@/lib/axios"
 import { handleApiError, showErrorToast, showSuccessToast } from "@/lib/utils"
 import { getCategoryImportTemplate, importStudentExcelData } from '@/routes/apiCategories';
 import { ResponseApi } from "@/support/interfaces/response/Response"
-import { UploadCloud, XCircleIcon } from "lucide-react"
+import { UploadCloud } from "lucide-react"
 import { useState } from 'react';
 import { useTranslation } from "react-i18next"
-import z from "zod"
 
 interface ImportExcelDialogProps {
   onSuccess?: () => void;

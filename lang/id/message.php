@@ -16,7 +16,7 @@ return [
     'data_not_found' => 'Data tidak ditemukan',
     'data_already_exists' => 'Data sudah tersedia',
     'internal_server_error' => 'Kesalahan server internal',
-    'internal_server_error_import' => 'Kesalahan server internal atau terdapat data yang duplikat',
+    'duplicate_data_error_import' => 'Terdapat data yang duplikat',
     'not_found' => ':resource tidak ditemukan',
     'unauthorized' => 'Anda tidak memiliki izin',
     'validation' => 'Validasi gagal',

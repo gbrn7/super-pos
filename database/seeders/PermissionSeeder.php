@@ -45,7 +45,7 @@ class PermissionSeeder extends Seeder
 
         $user->givePermissionTo([
             DashboardPermissionEnums::READ_DASHBOARD->value,
-            // CategoryPermissionEnums::READ_CATEGORY->value,
+            CategoryPermissionEnums::READ_CATEGORY->value,
         ]);
     }
 }
