@@ -209,6 +209,9 @@
           "updated_at_column_label": "Updated At"
         }
       },
+      "create":{
+        "page_name": "Add Role"
+      },
       "dialog_modal": {
         "create_dialog": {
           "dialog_button": "Add Data",

@@ -23,4 +23,9 @@ class RoleController extends Controller implements HasMiddleware
     {
         return inertia('role/index');
     }
+
+    public function create()
+    {
+        return inertia('role/create');
+    }
 }

@@ -10,13 +10,12 @@ import i18next from 'i18next';
 import axiosInstance from '@/lib/axios';
 import { ResponseApi } from '@/support/interfaces/response/Response';
 import { handleApiError, showWarningToast } from '@/lib/utils';
+import HeaderContent from '@/components/header-content';
 
 const { url } = roles();
 
 
-export default function Index() {
-
-
+export default function index() {
     const { url: apiUrl } = apiGetRoles();
     const { t } = useTranslation()
 
@@ -79,6 +78,9 @@ export default function Index() {
         <>
             <Head title={t("page.role.page_name", "Peran")} />
             <div className="mb-16 flex h-full flex-1 flex-col overflow-x-auto rounded-xl p-4">
+                <HeaderContent>
+                    {t("page.role.page_name", "Peran")}
+                </HeaderContent>
                 <DataTable
                     columns={columns}
                     processing={processing}
@@ -105,7 +107,7 @@ export default function Index() {
     );
 }
 
-Index.layout = {
+index.layout = {
     breadcrumbs: [
         {
             title: i18next.t("page.role.page_name", "Peran"),

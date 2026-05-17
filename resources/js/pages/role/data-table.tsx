@@ -49,9 +49,11 @@ import { DetailDialog } from './dialog-modal/detail-dialog';
 import { EditDialog } from './dialog-modal/edit-dialog';
 import { DeleteDialog } from './dialog-modal/delete-dialog';
 import { IconChevronLeft, IconChevronRight, IconChevronsLeft, IconChevronsRight } from '@tabler/icons-react';
-import { TableIcon } from 'lucide-react';
+import { PlusCircle, TableIcon } from 'lucide-react';
 import { Can } from '@/components/auth/can';
 import { RolePermissionEnums } from '@/support/enums/PermissionEnums';
+import { Link } from '@inertiajs/react';
+import { create } from '@/routes/roles';
 
 interface DataTableProps<TData, TValue> {
     columns:
@@ -146,7 +148,7 @@ export function DataTable<TData, TValue>({
     });
 
     return (
-        <div>
+        <div className='p-3 border rounded-2xl'>
             <div className="flex:col lg:flex justify-between items-center pb-4">
                 <div className="first-row flex gap-2">
                     <Select
@@ -229,7 +231,15 @@ export function DataTable<TData, TValue>({
                     <Can
                         permission={RolePermissionEnums.CREATE_ROLE}
                     >
-                        <CreateDialog onSuccess={onRefresh} />
+                        {/* <CreateDialog onSuccess={() => {
+                            onRefresh()
+                        }} /> */}
+                        <Link href={create().url}>
+                            <Button variant="outline">
+                                <PlusCircle className="h-4" />
+                                {t("page.role.dialog_modal.create_dialog.dialog_button", "Tambah Peran")}
+                            </Button>
+                        </Link>
                     </Can>
                 </div>
 

@@ -209,6 +209,9 @@
         "updated_at_column_label":"Tanggal Diperbarui"
       }
     },
+    "create":{
+      "page_name": "Tambah Peran"
+    },
     "dialog_modal":{
       "create_dialog": {
         "dialog_button": "Tambah Data",
