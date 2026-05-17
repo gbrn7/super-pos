@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\ApiCategoryController;
 use App\Http\Controllers\Api\ApiRoleController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ExampleController;
+use App\Http\Controllers\RoleController;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
 
@@ -18,7 +19,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::resource('categories', CategoryController::class)->only('index');
 
-    Route::resource('roles', CategoryController::class)->only('index');
+    Route::resource('roles', RoleController::class)->only('index');
 
     Route::resource('example', ExampleController::class);
 

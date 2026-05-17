@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import {
@@ -9,51 +8,40 @@ import {
     DialogFooter,
     DialogHeader,
     DialogTitle,
+    DialogTrigger,
 } from '@/components/ui/dialog';
 import { Field, FieldGroup } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import { update as updateCategory } from '@/routes/apiCategories';
-import type { Category } from '@/support/models/category';
+import { store as storeRole } from '@/routes/apiRoles';
+import type { RoleForm } from '@/support/interfaces/request/createRole';
 import { useTranslation } from 'react-i18next';
 import { Spinner } from '@/components/ui/spinner';
 import axiosInstance from '@/lib/axios';
 import { ResponseApi } from '@/support/interfaces/response/Response';
+import { Role } from '@/support/models/role';
 import { handleApiError, showSuccessToast, showWarningToast } from '@/lib/utils';
-import { CategoryForm } from '@/support/interfaces/request/createCategory';
+import { PlusCircle } from 'lucide-react';
 import z from 'zod';
 import ErrorFormInfo from '@/components/errorFormInfo';
 
-interface EditDialogProps {
-    isOpen: boolean;
+interface CreateDialogProps {
     onSuccess: () => void;
-    category: Category | null;
-    setOpen: (open: boolean) => void;
 }
 
-export function EditDialog({
-    isOpen,
-    onSuccess,
-    category,
-    setOpen,
-}: EditDialogProps) {
+export function CreateDialog({ onSuccess }: CreateDialogProps) {
     const { t } = useTranslation();
-
+    const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState<boolean>(false);
-
-    const [formData, setFormData] = useState({
-        name: category?.name ?? '',
-        desc: category?.desc ?? '',
+    const [formData, setFormData] = useState<RoleForm>({
+        name: ''
     });
 
-    const [errorForm, setErrorForm] = useState<CategoryForm>({
-        name: "",
-        desc: ""
+    const [errorForm, setErrorForm] = useState<RoleForm>({
+        name: ""
     });
 
-    const categorySchema = z.object({
-        name: z.string().trim().min(1, t("validation.category.required.name", "Nama tidak boleh kosong")),
-        desc: z.string().trim(),
+    const roleSchema = z.object({
+        name: z.string().trim().min(1, t("validation.role.required.name", "Nama tidak boleh kosong")),
     });
 
     const handleChange = (
@@ -74,16 +62,15 @@ export function EditDialog({
     const handleSubmit = async (e: React.SubmitEvent) => {
         e.preventDefault();
 
-        const resultValidation = categorySchema.safeParse(formData);
+        const resultValidation = roleSchema.safeParse(formData);
 
         if (!resultValidation.success) {
-            const fieldErrors: CategoryForm = {
-                name: "",
-                desc: ""
+            const fieldErrors: RoleForm = {
+                name: ""
             };
 
             resultValidation.error.issues.forEach((error) => {
-                const fieldName = error.path[0] as keyof CategoryForm;
+                const fieldName = error.path[0] as keyof RoleForm;
 
                 fieldErrors[fieldName] = error.message;
             });
@@ -93,12 +80,11 @@ export function EditDialog({
             return;
         }
 
-
         try {
             setLoading(true);
 
+            const res = await axiosInstance.post<ResponseApi<Role>>(storeRole().url, formData);
 
-            const res = await axiosInstance.put<ResponseApi<Category>>(updateCategory(category?.id || '').url, formData);
 
             if (!res.data.success) {
                 showWarningToast(res.data.message)
@@ -106,9 +92,10 @@ export function EditDialog({
             }
 
             showSuccessToast(res.data.message)
+            setFormData({ name: '' });
             onSuccess();
         } catch (error) {
-            console.error('Error updating category:', error);
+            console.error('Error creating role:', error);
             handleApiError(error)
         } finally {
             setLoading(false);
@@ -117,47 +104,37 @@ export function EditDialog({
     };
 
     return (
-        <Dialog open={isOpen} onOpenChange={setOpen}>
-            <DialogContent onOpenAutoFocus={(e) => e.preventDefault()}>
+        <Dialog open={open} onOpenChange={setOpen}>
+            <DialogTrigger asChild>
+                <Button variant="outline">
+                    <PlusCircle className="h-4" />
+                    {t("page.role.dialog_modal.create_dialog.dialog_button", "Tambah Peran")}
+                </Button>
+            </DialogTrigger>
+            <DialogContent>
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <DialogHeader>
-                        <DialogTitle>{t("page.category.dialog_modal.edit_dialog.dialog_title", "Edit Kategori")}</DialogTitle>
+                        <DialogTitle>{t("page.role.dialog_modal.create_dialog.dialog_title", "Tambah Peran")}</DialogTitle>
                         <DialogDescription>
-                            {t("page.category.dialog_modal.edit_dialog.dialog_desc", "Edit data kategori")}
+                            {t("page.role.dialog_modal.create_dialog.dialog_desc", "Tambahkan peran baru toko anda")}
                         </DialogDescription>
                     </DialogHeader>
                     <FieldGroup>
                         <Field>
                             <label htmlFor="name" className="text-sm">
-                                {t("page.category.dialog_modal.edit_dialog.name_input_label", "Nama")}
+                                {t("page.role.dialog_modal.create_dialog.name_input_label", "Nama")}
                             </label>
                             <Input
                                 id="name"
                                 name="name"
-                                placeholder={t("page.category.dialog_modal.edit_dialog.name_input_placeholder", "Masukkan nama kategori")}
+                                placeholder={t("page.role.dialog_modal.create_dialog.name_input_placeholder", "Masukkan nama peran")}
                                 value={formData.name}
                                 onChange={handleChange}
                                 disabled={loading}
                             />
                             {errorForm.name && (
                                 <ErrorFormInfo message={errorForm.name} />
-                            )}
-                        </Field>
-                        <Field>
-                            <label htmlFor="desc" className="text-sm">
-                                {t("page.category.dialog_modal.edit_dialog.desc_input_label", "Deskripsi")}
-                            </label>
-                            <Textarea
-                                id="desc"
-                                name="desc"
-                                placeholder={t("page.category.dialog_modal.edit_dialog.desc_input_placeholder", "Masukkan deskripsi kategori (Opsional)")}
-                                value={formData.desc}
-                                onChange={handleChange}
-                                disabled={loading}
-                                rows={4}
-                            />
-                            {errorForm.desc && (
-                                <ErrorFormInfo message={errorForm.desc} />
+
                             )}
                         </Field>
                     </FieldGroup>
@@ -169,11 +146,11 @@ export function EditDialog({
                                 onClick={() => setOpen(false)}
                                 disabled={loading}
                             >
-                                {t("page.category.dialog_modal.edit_dialog.cancel_button", "Batal")}
+                                {t("page.role.dialog_modal.create_dialog.cancel_button", "Batal")}
                             </Button>
                         </DialogClose>
                         <Button type="submit" disabled={loading}>
-                            {loading ? <Spinner /> : t("page.category.dialog_modal.edit_dialog.confirm_button", "Edit Kategori")}
+                            {loading ? <Spinner /> : t("page.role.dialog_modal.create_dialog.confirm_button", "Tambah")}
                         </Button>
                     </DialogFooter>
                 </form>

@@ -5,23 +5,23 @@ import {
     DialogTitle,
 } from '@/components/ui/dialog';
 import { formatDate } from '@/lib/formatdate';
-import type { Category } from '@/support/models/category';
+import type { Role } from '@/support/models/role';
 import { useTranslation } from 'react-i18next';
 
 interface DetailSheetProps {
     isOpen: boolean;
-    category: Category | null;
+    role: Role | null;
     onOpenChange: (open: boolean) => void;
 }
 
 export function DetailDialog({
     isOpen,
-    category,
+    role,
     onOpenChange,
 }: DetailSheetProps) {
     const { t } = useTranslation();
 
-    if (!category) {
+    if (!role) {
         return null;
     }
 
@@ -29,33 +29,31 @@ export function DetailDialog({
         <Dialog open={isOpen} onOpenChange={onOpenChange}>
             <DialogContent showCloseButton={true}>
                 <DialogHeader>
-                    <DialogTitle>{t("page.category.dialog_modal.detail_dialog.dialog_title", "Detail Kategori")}</DialogTitle>
+                    <DialogTitle>{t("page.role.dialog_modal.detail_dialog.dialog_title", "Detail Peran")}</DialogTitle>
                     <DialogContent>
                         <div>
                             <p className="text-sm font-medium text-muted-foreground">
-                                {t("page.category.dialog_modal.detail_dialog.name_label", "Nama")}
+                                {t("page.role.dialog_modal.detail_dialog.name_label", "Nama")}
                             </p>
-                            <p className="mt-1 text-base">{category.name}</p>
+                            <p className="mt-1 text-base">{role.name}</p>
                         </div>
 
                         <div>
                             <p className="text-sm font-medium text-muted-foreground">
-                                {t("page.category.dialog_modal.detail_dialog.desc_label", "Nama")}
+                                {t("page.role.dialog_modal.detail_dialog.desc_label", "Nama")}
                             </p>
                             <p className="mt-1 text-base">
-                                {category.desc || '-'}
+                                {role.guard_name || '-'}
                             </p>
                         </div>
 
-                        {category.created_at && (
+                        {role.created_at && (
                             <div>
                                 <p className="text-sm font-medium text-muted-foreground">
-                                    {t("page.category.dialog_modal.detail_dialog.created_at_label", "Tanggal Dibuat")}
+                                    {t("page.role.dialog_modal.detail_dialog.created_at_label", "Tanggal Dibuat")}
                                 </p>
                                 <p className="mt-1 text-base">
-                                    {
-                                        formatDate(category.created_at)
-                                    }
+                                    {formatDate(role.created_at)}
                                 </p>
                             </div>
                         )}

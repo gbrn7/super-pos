@@ -2,8 +2,8 @@
 
 namespace App\Services;
 
-use App\Imports\RoleImport;
-use App\Support\Constants\ErrorCode;
+use App\Models\Role;
+use App\Support\Enums\RoleEnums;
 use App\Support\Interfaces\Repositories\RoleRepositoryInterface;
 use App\Support\Interfaces\Services\RoleServiceInterface;
 use App\Support\Models\Role\GetRoleReqModel;
@@ -12,7 +12,6 @@ use Exception;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Http\Response;
 use Illuminate\Support\Collection;
-use Spatie\Permission\Models\Role;
 
 class RoleService implements RoleServiceInterface
 {
@@ -66,6 +65,10 @@ class RoleService implements RoleServiceInterface
                 throw new Exception(trans('message.error.data_already_exists'), Response::HTTP_UNPROCESSABLE_ENTITY);
             }
 
+            if ($role->name === RoleEnums::SUPER_ADMIN->value) {
+                throw new Exception(trans('message.error.super_admin_cannot_be_updated'), Response::HTTP_UNPROCESSABLE_ENTITY);
+            }
+
             $isSuccess = $this->roleRepository->update($role, $data);
 
             if (! $isSuccess) {
@@ -87,6 +90,15 @@ class RoleService implements RoleServiceInterface
                 throw new Exception(trans("message.error.data_not_found"), Response::HTTP_NOT_FOUND);
             }
 
+            if ($role->name === RoleEnums::SUPER_ADMIN->value) {
+                throw new Exception(trans('message.error.super_admin_cannot_be_deleted'), Response::HTTP_UNPROCESSABLE_ENTITY);
+            }
+
+            $count = $role->users()->count();
+            if ($count > 0) {
+                throw new Exception(trans('message.error.role_data_used_by_user'), Response::HTTP_UNPROCESSABLE_ENTITY);
+            }
+
             $isSuccess = $this->roleRepository->delete($role);
 
             if (! $isSuccess) {
@@ -102,7 +114,31 @@ class RoleService implements RoleServiceInterface
     public function bulkDelete(array $ids): int
     {
         try {
-            $deletedCount = $this->roleRepository->deleteMany($ids);
+            $deletedCount = 0;
+            foreach ($ids as $id) {
+                $role = $this->roleRepository->getById($id);
+
+                if (!isset($role)) {
+                    throw new Exception(trans("message.error.data_not_found"), Response::HTTP_NOT_FOUND);
+                }
+
+                if ($role->name === RoleEnums::SUPER_ADMIN->value) {
+                    throw new Exception(trans('message.error.super_admin_cannot_be_deleted'), Response::HTTP_UNPROCESSABLE_ENTITY);
+                }
+
+                $count = $role->users()->count();
+                if ($count > 0) {
+                    throw new Exception(trans('message.error.role_data_used_by_user'), Response::HTTP_UNPROCESSABLE_ENTITY);
+                }
+
+                $isSuccess = $this->roleRepository->delete($role);
+
+                if (! $isSuccess) {
+                    throw new Exception(trans('message.error.internal_server_error'), Response::HTTP_INTERNAL_SERVER_ERROR);
+                }
+
+                $deletedCount++;
+            }
 
             return $deletedCount;
         } catch (\Throwable $th) {

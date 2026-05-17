@@ -2,10 +2,10 @@
 
 namespace App\Support\Interfaces\Repositories;
 
+use App\Models\Role;
 use App\Support\Models\Role\GetRoleReqModel;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Support\Collection;
-use Spatie\Permission\Models\Role;
 
 interface RoleRepositoryInterface
 {

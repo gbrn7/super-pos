@@ -11,13 +11,15 @@
     "sidebar":{
       "dashboard_menu_label":"Dasbor",
       "example_menu_label":"Example",
-      "category_menu_label":"Kategori"
+      "category_menu_label":"Kategori",
+      "role_menu_label":"Peran"
     },
     "data_table": {
       "search_component":{
         "search_by": "Pencarian Berdasarkan",
         "name":"Nama",
         "description":"Deskripsi",
+        "guard_name":"Nama Garda",
         "placeholder":"Telusuri"
       },
       "export":{
@@ -190,6 +192,72 @@
         "dialog_button": "Impor Excel",
         "dialog_title": "Impor Excel",
         "dialog_desc": "Impor data kategori dari file Excel",
+        "template_label":"Templat",
+        "file_excel_label":"File Excel",
+        "cancel_button":"Batal",
+        "confirm_button":"Impor"
+      }
+    }
+  },
+  "role":{
+    "page_name":"Peran",
+    "data_table":{
+      "columns":{
+        "name_column_label":"Nama",
+        "guard_name_column_label":"Nama Garda",
+        "created_at_column_label":"Tanggal Dibuat",
+        "updated_at_column_label":"Tanggal Diperbarui"
+      }
+    },
+    "dialog_modal":{
+      "create_dialog": {
+        "dialog_button": "Tambah Data",
+        "dialog_title": "Tambah Peran",
+        "dialog_desc": "Tambahkan peran baru toko anda",
+        "name_input_label":"Nama",
+        "name_input_placeholder":"Masukkan nama peran",
+        "desc_input_label":"Deskripsi",
+        "desc_input_placeholder":"Masukkan deskripsi peran (Opsional)",
+        "cancel_button":"Batal",
+        "confirm_button":"Tambah Peran"
+      },
+      "edit_dialog": {
+        "dialog_button": "Edit Data",
+        "dialog_title": "Edit Peran",
+        "dialog_desc": "Edit data peran",
+        "name_input_label":"Nama",
+        "name_input_placeholder":"Masukkan nama peran",
+        "desc_input_label":"Deskripsi",
+        "desc_input_placeholder":"Masukkan deskripsi peran (Opsional)",
+        "cancel_button":"Batal",
+        "confirm_button":"Edit Peran"
+      },
+      "detail_dialog": {
+        "dialog_button": "Detail Data",
+        "dialog_title": "Detail Peran",
+        "dialog_desc": "Detail data peran",
+        "name_label":"Nama",
+        "desc_label":"Deskripsi",
+        "created_at_label":"Tanggal Dibuat"
+      }, 
+      "delete_dialog": {
+        "dialog_button": "Hapus Data",
+        "dialog_title": "Hapus Peran",
+        "dialog_desc": "Apakah anda yakin akan menghapus data ini ?",
+        "cancel_button":"Batal",
+        "confirm_button":"Hapus Peran"
+      }, 
+      "bulk_delete_dialog": {
+        "dialog_button": "Hapus",
+        "dialog_title": "Hapus %d peran",
+        "dialog_desc": "Apakah anda yakin akan menghapus %d peran ?",
+        "cancel_button":"Batal",
+        "confirm_button":"Hapus Peran"
+      }, 
+      "import_excel_dialog": {
+        "dialog_button": "Impor Excel",
+        "dialog_title": "Impor Excel",
+        "dialog_desc": "Impor data peran dari file Excel",
         "template_label":"Templat",
         "file_excel_label":"File Excel",
         "cancel_button":"Batal",

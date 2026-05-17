@@ -1,5 +1,5 @@
 import { Link } from '@inertiajs/react';
-import { Book, BookOpen, FolderGit2, LayoutGrid, Tags } from 'lucide-react';
+import { Book, LayoutGrid, Tags } from 'lucide-react';
 import AppLogo from '@/components/app-logo';
 import { NavFooter } from '@/components/nav-footer';
 import { NavMain } from '@/components/nav-main';
@@ -15,9 +15,11 @@ import {
 } from '@/components/ui/sidebar';
 import { dashboard } from '@/routes';
 import { index as categories } from '@/routes/categories';
+import { index as roles } from '@/routes/roles';
 import type { NavItem } from '@/types';
 import { useTranslation } from 'react-i18next';
-import { CategoryPermissionEnums, DashboardPermissionEnums } from '@/support/enums/PermissionEnums';
+import { CategoryPermissionEnums, DashboardPermissionEnums, RolePermissionEnums } from '@/support/enums/PermissionEnums';
+import { IconUserKey } from '@tabler/icons-react';
 
 
 const footerNavItems: NavItem[] = [
@@ -57,6 +59,13 @@ export function AppSidebar() {
                 href: categories(),
                 icon: Tags,
                 permission: CategoryPermissionEnums.READ_CATEGORY,
+                role: []
+            },
+            {
+                title: t("component.sidebar.role_menu_label", "Peran"),
+                href: roles(),
+                icon: IconUserKey,
+                permission: RolePermissionEnums.READ_ROLE,
                 role: []
             },
         ];

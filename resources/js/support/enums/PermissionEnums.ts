@@ -8,3 +8,10 @@ export enum CategoryPermissionEnums {
 export enum DashboardPermissionEnums {
   READ_DASHBOARD = 'read dashboard',
 }
+
+export enum RolePermissionEnums {
+  CREATE_ROLE = 'create role',
+  READ_ROLE = 'read role',
+  UPDATE_ROLE = 'update role',
+  DELETE_ROLE = 'delete role',
+}

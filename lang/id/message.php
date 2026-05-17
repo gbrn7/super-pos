@@ -15,6 +15,9 @@ return [
   'error' => [
     'data_not_found' => 'Data tidak ditemukan',
     'data_already_exists' => 'Data sudah tersedia',
+    'super_admin_cannot_be_updated' => 'Data super admin tidak dapat diubah',
+    'super_admin_cannot_be_deleted' => 'Data super admin tidak dapat dihapus',
+    'role_data_used_by_user' => 'Data peran masih digunakan pengguna',
     'internal_server_error' => 'Kesalahan server internal',
     'duplicate_data_error_import' => 'Terdapat data yang duplikat',
     'not_found' => ':resource tidak ditemukan',

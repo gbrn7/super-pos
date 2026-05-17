@@ -2,11 +2,11 @@ import { Head, usePage, useHttp } from "@inertiajs/react";
 import { columns } from "./columns"
 import { DataTable } from "./data-table"
 import { Category } from "@/support/models/category";
-import { ResourceResponse } from "@/support/interfaces/resourceResponse";
 import { useState, useEffect } from "react";
 import { index as apiGetCategories } from '@/routes/apiCategories';
-import { QueryParam } from "@/support/interfaces/queryParam";
 import { index as categories } from "@/routes/categories";
+import { ResourceResponse } from "@/support/interfaces/resource/resourceResponse";
+import { QueryParam } from "@/support/interfaces/resource/queryParam";
 
 const { url } = categories();
 
