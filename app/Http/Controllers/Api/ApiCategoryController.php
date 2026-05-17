@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\api;
+namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Category\BulkDeleteCategoryRequest;
@@ -27,7 +27,7 @@ class ApiCategoryController extends Controller implements HasMiddleware
         return [
             new Middleware(
                 'permission:' . CategoryPermissionEnums::READ_CATEGORY->value,
-                only: ['index']
+                only: ['index', 'show']
             ),
 
             new Middleware(
@@ -64,11 +64,6 @@ class ApiCategoryController extends Controller implements HasMiddleware
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create() {}
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(StoreCategoryRequest $request)
@@ -87,15 +82,13 @@ class ApiCategoryController extends Controller implements HasMiddleware
      */
     public function show(string $id)
     {
-        //
-    }
+        try {
+            $data = $this->categoryService->getById($id);
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
+            return ResponseApi::make(true, trans('message.success.success'), $data);
+        } catch (\Throwable $th) {
+            return ResponseApi::make(false, $th->getMessage(), null, $th->getcode());
+        }
     }
 
     /**

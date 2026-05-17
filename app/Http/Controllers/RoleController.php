@@ -1,0 +1,26 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Support\Enums\RolePermissionEnums;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
+
+class RoleController extends Controller implements HasMiddleware
+{
+
+    public static function middleware(): array
+    {
+        return [
+            new Middleware(
+                'permission:' . RolePermissionEnums::READ_ROLE->value,
+                only: ['index']
+            ),
+        ];
+    }
+
+    public function index()
+    {
+        return inertia('role/index');
+    }
+}

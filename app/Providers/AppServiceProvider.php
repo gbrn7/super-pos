@@ -2,11 +2,15 @@
 
 namespace App\Providers;
 
-use App\Repositories\CategoryRepository as RepositoriesCategoryRepository;
-use App\Services\CategoryService as ServicesCategoryService;
+use App\Repositories\CategoryRepository;
+use App\Repositories\RoleRepository;
+use App\Services\CategoryService;
+use App\Services\RoleService;
 use App\Support\Enums\RoleEnums;
 use App\Support\Interfaces\Repositories\CategoryRepositoryInterface;
-use App\Support\Interfaces\Services\CategoryServiceInterface as ServicesCategoryServiceInterface;
+use App\Support\Interfaces\Repositories\RoleRepositoryInterface;
+use App\Support\Interfaces\Services\CategoryServiceInterface;
+use App\Support\Interfaces\Services\RoleServiceInterface;
 use Carbon\CarbonImmutable;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
@@ -21,8 +25,13 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->bind(CategoryRepositoryInterface::class, RepositoriesCategoryRepository::class);
-        $this->app->bind(ServicesCategoryServiceInterface::class, ServicesCategoryService::class);
+        //Category service
+        $this->app->bind(CategoryRepositoryInterface::class, CategoryRepository::class);
+        $this->app->bind(CategoryServiceInterface::class, CategoryService::class);
+
+        //Role service
+        $this->app->bind(RoleRepositoryInterface::class, RoleRepository::class);
+        $this->app->bind(RoleServiceInterface::class, RoleService::class);
     }
 
     /**

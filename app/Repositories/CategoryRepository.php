@@ -7,7 +7,6 @@ use App\Support\Interfaces\Repositories\CategoryRepositoryInterface;
 use App\Support\Models\Category\GetCategoryReqModel;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Support\Collection;
-use Override;
 
 class CategoryRepository implements CategoryRepositoryInterface
 {

@@ -1,6 +1,7 @@
 <?php
 
-use App\Http\Controllers\api\ApiCategoryController;
+use App\Http\Controllers\Api\ApiCategoryController;
+use App\Http\Controllers\Api\ApiRoleController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ExampleController;
 use Illuminate\Support\Facades\Route;
@@ -15,12 +16,15 @@ Route::inertia('/', 'welcome', [
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::inertia('dashboard', 'dashboard')->name('dashboard');
 
-    Route::resource('categories', CategoryController::class);
+    Route::resource('categories', CategoryController::class)->only('index');
+
+    Route::resource('roles', CategoryController::class)->only('index');
 
     Route::resource('example', ExampleController::class);
 
     Route::group(['prefix' => 'api'], function () {
-        Route::resource('categories', ApiCategoryController::class)->names('apiCategories')->only(['index', 'store', 'update', 'destroy']);
+        //categories
+        Route::resource('categories', ApiCategoryController::class)->names('apiCategories')->only(['index', 'store', 'show', 'update', 'destroy']);
 
 
         Route::group(['prefix' => 'categories'], function () {
@@ -29,6 +33,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::get('/download/categoryImportTemplate', [ApiCategoryController::class, 'getCategoryImportTemplater'])->name('apiCategories.getCategoryImportTemplate');
 
             Route::post('/import-categories', [ApiCategoryController::class, 'importCategoryExcelData'])->name('apiCategories.importStudentExcelData');
+        });
+
+        //roles
+        Route::resource('roles', ApiRoleController::class)->names('apiRoles')->only(['index', 'store', 'show', 'update', 'destroy']);
+
+        Route::group(['prefix' => 'roles'], function () {
+            Route::post('/bulk-delete', [ApiRoleController::class, 'bulkDelete'])->name('apiRoles.bulkDelete');
         });
     });
 });
