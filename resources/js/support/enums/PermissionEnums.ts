@@ -1,17 +1,23 @@
-export enum CategoryPermissionEnums {
-  CREATE_CATEGORY = 'create category',
-  READ_CATEGORY = 'read category',
-  UPDATE_CATEGORY = 'update category',
-  DELETE_CATEGORY = 'delete category',
+enum CategoryPermissionEnums {
+  CREATE = 'create category',
+  READ = 'read category',
+  UPDATE = 'update category',
+  DELETE = 'delete category',
 }
 
-export enum DashboardPermissionEnums {
-  READ_DASHBOARD = 'read dashboard',
+enum DashboardPermissionEnums {
+  READ = 'read dashboard',
 }
 
-export enum RolePermissionEnums {
-  CREATE_ROLE = 'create role',
-  READ_ROLE = 'read role',
-  UPDATE_ROLE = 'update role',
-  DELETE_ROLE = 'delete role',
+enum RolePermissionEnums {
+  CREATE = 'create role',
+  READ = 'read role',
+  UPDATE = 'update role',
+  DELETE = 'delete role',
+}
+
+export const PERMISSIONENUMS = {
+  CATEGORY: CategoryPermissionEnums,
+  DASHBOARD: DashboardPermissionEnums,
+  ROLE: RolePermissionEnums,
 }

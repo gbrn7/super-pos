@@ -53,7 +53,7 @@ import { IconChevronLeft, IconChevronRight, IconChevronsLeft, IconChevronsRight 
 import { ExportDropdownMenu } from './export-data-menu/export-dropdown-menu';
 import { TableIcon } from 'lucide-react';
 import { Can } from '@/components/auth/can';
-import { CategoryPermissionEnums } from '@/support/enums/PermissionEnums';
+import { PERMISSIONENUMS } from '@/support/enums/PermissionEnums';
 
 interface DataTableProps<TData, TValue> {
     columns:
@@ -183,12 +183,14 @@ export function DataTable<TData, TValue>({
                 </div>
 
                 <div className="second-row overflow-auto flex justify-start sm:justify-end gap-2 mt-2 lg:mt-0">
-                    <Can permission={CategoryPermissionEnums.CREATE_CATEGORY}>
+                    <Can permission={PERMISSIONENUMS.CATEGORY.CREATE}>
                         <ImportExcelDialog onSuccess={onRefresh} />
                     </Can>
-                    <ExportDropdownMenu data={data} />
+                    <Can permission={PERMISSIONENUMS.CATEGORY.READ}>
+                        <ExportDropdownMenu data={data} />
+                    </Can>
                     <Can
-                        permission={CategoryPermissionEnums.DELETE_CATEGORY}
+                        permission={PERMISSIONENUMS.CATEGORY.DELETE}
                     >
                         <BulkDeleteDialog isDisabled={!(Object.keys(rowSelection).length > 0) && true}
                             selectedLength={table.getSelectedRowModel().rows.length}
@@ -233,7 +235,7 @@ export function DataTable<TData, TValue>({
                         </DropdownMenuContent>
                     </DropdownMenu>
                     <Can
-                        permission={CategoryPermissionEnums.CREATE_CATEGORY}
+                        permission={PERMISSIONENUMS.CATEGORY.CREATE}
                     >
                         <CreateDialog onSuccess={onRefresh} />
                     </Can>

@@ -28,6 +28,7 @@ return [
     'name' => 'Name',
     'desc' => 'Description',
     'age' => 'Age',
+    'permissions' => 'Permissions'
   ],
 
 ];

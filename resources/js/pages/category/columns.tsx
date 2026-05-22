@@ -14,7 +14,7 @@ import type { Category } from '@/support/models/category';
 import { useTranslation } from 'react-i18next';
 import { formatDate } from '@/lib/formatdate';
 import { Can } from '@/components/auth/can';
-import { CategoryPermissionEnums } from '@/support/enums/PermissionEnums';
+import { PERMISSIONENUMS } from '@/support/enums/PermissionEnums';
 
 interface ColumnsProps {
     onDetailClick: (category: Category) => void;
@@ -97,7 +97,7 @@ export const columns = (props?: ColumnsProps): ColumnDef<Category>[] => {
                             <FileText className="mr-0.5 h-4 w-4" />
                             {t("component.data_table.action_menu.detail_data_btn", "Detail data")}
                         </DropdownMenuItem>
-                        <Can permission={CategoryPermissionEnums.UPDATE_CATEGORY}>
+                        <Can permission={PERMISSIONENUMS.CATEGORY.UPDATE}>
                             <DropdownMenuItem
                                 onClick={() => props?.onEditClick(row.original)}
                             >
@@ -105,7 +105,7 @@ export const columns = (props?: ColumnsProps): ColumnDef<Category>[] => {
                                 {t("component.data_table.action_menu.edit_data_btn", "Edit data")}
                             </DropdownMenuItem>
                         </Can>
-                        <Can permission={CategoryPermissionEnums.DELETE_CATEGORY}>
+                        <Can permission={PERMISSIONENUMS.CATEGORY.DELETE}>
                             <DropdownMenuItem
                                 onClick={() => props?.onDeleteClick(row.original)}
                                 variant="destructive"

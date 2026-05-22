@@ -7,11 +7,14 @@ use App\Support\Enums\RoleEnums;
 use App\Support\Interfaces\Repositories\RoleRepositoryInterface;
 use App\Support\Interfaces\Services\RoleServiceInterface;
 use App\Support\Models\Role\GetRoleReqModel;
+use App\Support\Models\Role\StoreRoleReqModel;
 use App\Support\Utils\CheckException;
 use Exception;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Http\Response;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class RoleService implements RoleServiceInterface
 {
@@ -44,8 +47,18 @@ class RoleService implements RoleServiceInterface
                 throw new Exception(trans('message.error.data_already_exists'), Response::HTTP_UNPROCESSABLE_ENTITY);
             }
 
-            return $this->roleRepository->create($data);
+            DB::beginTransaction();
+
+            $role =  $this->roleRepository->create($data);
+
+            $role->givePermissionTo($data['permissions']);
+
+            DB::commit();
+
+            return $role;
         } catch (\Throwable $th) {
+            DB::rollBack();
+
             throw CheckException::Check($th);
         }
     }
@@ -69,14 +82,22 @@ class RoleService implements RoleServiceInterface
                 throw new Exception(trans('message.error.super_admin_cannot_be_updated'), Response::HTTP_UNPROCESSABLE_ENTITY);
             }
 
+            DB::beginTransaction();
+
             $isSuccess = $this->roleRepository->update($role, $data);
+
+            $role->syncPermissions($data['permissions']);
 
             if (! $isSuccess) {
                 throw new Exception(trans('message.error.internal_server_error'), Response::HTTP_INTERNAL_SERVER_ERROR);
             }
 
+            DB::commit();
+
             return $role;
         } catch (\Throwable $th) {
+            DB::rollBack();
+
             throw CheckException::Check($th);
         }
     }

@@ -27,6 +27,7 @@ return [
     'name' => 'Nama',
     'desc' => 'Deskripsi',
     'age' => 'Umur',
+    'permissions' => 'Hak akses'
   ],
 
 ];

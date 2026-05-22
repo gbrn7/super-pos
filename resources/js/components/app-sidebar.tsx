@@ -18,7 +18,7 @@ import { index as categories } from '@/routes/categories';
 import { index as roles } from '@/routes/roles';
 import type { NavItem } from '@/types';
 import { useTranslation } from 'react-i18next';
-import { CategoryPermissionEnums, DashboardPermissionEnums, RolePermissionEnums } from '@/support/enums/PermissionEnums';
+import { PERMISSIONENUMS } from '@/support/enums/PermissionEnums';
 import { IconUserKey } from '@tabler/icons-react';
 
 
@@ -44,28 +44,28 @@ export function AppSidebar() {
                 title: t("component.sidebar.dashboard_menu_label", "Dasbor"),
                 href: dashboard(),
                 icon: LayoutGrid,
-                permission: DashboardPermissionEnums.READ_DASHBOARD,
+                permission: PERMISSIONENUMS.DASHBOARD.READ,
                 role: []
             },
             {
                 title: 'Example',
                 href: '/example',
                 icon: Book,
-                permission: [DashboardPermissionEnums.READ_DASHBOARD],
+                permission: PERMISSIONENUMS.DASHBOARD.READ,
                 role: []
             },
             {
                 title: t("component.sidebar.category_menu_label", "Kategori"),
                 href: categories(),
                 icon: Tags,
-                permission: CategoryPermissionEnums.READ_CATEGORY,
+                permission: PERMISSIONENUMS.CATEGORY.READ,
                 role: []
             },
             {
                 title: t("component.sidebar.role_menu_label", "Peran"),
                 href: roles(),
                 icon: IconUserKey,
-                permission: RolePermissionEnums.READ_ROLE,
+                permission: PERMISSIONENUMS.ROLE.READ,
                 role: []
             },
         ];

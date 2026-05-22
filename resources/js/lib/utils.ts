@@ -60,21 +60,27 @@ export function showValidationErrors(
 }
 
 export function showToast(message: string) {
-    toast(message, { position: toastPosition })
+    toast(capitalizeFirstLetter(message), { position: toastPosition })
 }
 
 export function showInfoToast(message: string) {
-    toast.info(message, { position: toastPosition })
+    toast.info(capitalizeFirstLetter(message), { position: toastPosition })
 }
 
 export function showErrorToast(message: string) {
-    toast.error(message, { position: toastPosition })
+    toast.error(capitalizeFirstLetter(message), { position: toastPosition })
 }
 
 export function showWarningToast(message: string) {
-    toast.warning(message, { position: toastPosition })
+    toast.warning(capitalizeFirstLetter(message), { position: toastPosition })
 }
 
 export function showSuccessToast(message: string) {
-    toast.success(message, { position: toastPosition })
+    toast.success(capitalizeFirstLetter(message), { position: toastPosition })
+}
+
+function capitalizeFirstLetter(text: string) {
+    if (!text) return text;
+
+    return text.charAt(0).toUpperCase() + text.slice(1);
 }

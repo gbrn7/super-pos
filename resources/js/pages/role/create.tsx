@@ -1,4 +1,4 @@
-import { Head, Link } from "@inertiajs/react"
+import { Head, Link, router } from "@inertiajs/react"
 import i18next from "i18next";
 import { useTranslation } from "react-i18next"
 import { create as createRoute, index as indexRoute } from '@/routes/roles'
@@ -17,6 +17,8 @@ import ErrorFormInfo from "@/components/errorFormInfo";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import HeaderContent from '@/components/header-content';
+import { Button } from "@/components/ui/button";
+import { Spinner } from "@/components/ui/spinner";
 
 
 const PERMISSIONS = {
@@ -98,7 +100,8 @@ export default function create() {
     });
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e: React.SubmitEvent) => {
+    e.preventDefault();
 
     const resultValidation = roleSchema.safeParse(formData);
 
@@ -112,6 +115,7 @@ export default function create() {
 
         fieldErrors[fieldName] = error.message;
       });
+
 
       setErrorForm(fieldErrors);
 
@@ -131,7 +135,7 @@ export default function create() {
 
       showSuccessToast(res.data.message)
       setFormData({ name: '' });
-      // onSuccess();
+      router.visit(index().url, { method: index().method });
     } catch (error) {
       console.error('Error creating role:', error);
       handleApiError(error)
@@ -148,9 +152,14 @@ export default function create() {
         <HeaderContent>
           {t("page.role.page_name", "Peran")}
         </HeaderContent>
-
         <div className="form-container">
           <form onSubmit={handleSubmit} className="space-y-4 border p-3 rounded-2xl">
+            <div className="justify-end confirm-btn-wrapper flex gap-2">
+              <Link href={index().url}>
+                <Button type="button" variant="outline">Batal</Button>
+              </Link>
+              <Button disabled={loading} type="submit" className="btn-outlie"> {loading ? <Spinner /> : "Tambah Peran"}</Button>
+            </div>
             <Field>
               <label htmlFor="name" className="text-sm">
                 {t("page.role.dialog_modal.create_dialog.name_input_label", "Nama")}
