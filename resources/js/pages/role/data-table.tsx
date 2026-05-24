@@ -50,9 +50,9 @@ import { DeleteDialog } from './dialog-modal/delete-dialog';
 import { IconChevronLeft, IconChevronRight, IconChevronsLeft, IconChevronsRight } from '@tabler/icons-react';
 import { PlusCircle, TableIcon } from 'lucide-react';
 import { Can } from '@/components/auth/can';
-import { PERMISSIONS } from '@/support/enums/PermissionEnums';
 import { Link } from '@inertiajs/react';
 import { create } from '@/routes/roles';
+import { PERMISSIONENUMS } from '@/support/enums/PermissionEnums';
 
 interface DataTableProps<TData, TValue> {
     columns:
@@ -123,8 +123,6 @@ export function DataTable<TData, TValue>({
 
     const [searchColumn, setSearchColumn] = React.useState<string>('name');
 
-    const PERMISSIONSLIST = PERMISSIONS();
-
     const table = useReactTable({
         data,
         columns,
@@ -183,7 +181,7 @@ export function DataTable<TData, TValue>({
 
                 <div className="second-row overflow-auto flex justify-start sm:justify-end gap-2 mt-2 lg:mt-0">
                     <Can
-                        permission={PERMISSIONSLIST.ROLE.ACCESS.DELETE.VALUE}
+                        permission={PERMISSIONENUMS.ROLE.DELETE}
                     >
                         <BulkDeleteDialog isDisabled={!(Object.keys(rowSelection).length > 0) && true}
                             selectedLength={table.getSelectedRowModel().rows.length}
@@ -228,7 +226,7 @@ export function DataTable<TData, TValue>({
                         </DropdownMenuContent>
                     </DropdownMenu>
                     <Can
-                        permission={PERMISSIONSLIST.ROLE.ACCESS.CREATE.VALUE}
+                        permission={PERMISSIONENUMS.ROLE.CREATE}
                     >
                         <Link href={create().url}>
                             <Button variant="outline">

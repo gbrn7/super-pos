@@ -14,7 +14,7 @@ import type { Role } from '@/support/models/role';
 import { useTranslation } from 'react-i18next';
 import { formatDate } from '@/lib/formatdate';
 import { Can } from '@/components/auth/can';
-import { PERMISSIONS } from '@/support/enums/PermissionEnums';
+import { PERMISSIONENUMS } from '@/support/enums/PermissionEnums';
 
 
 interface ColumnsProps {
@@ -25,8 +25,6 @@ interface ColumnsProps {
 
 export const columns = (props?: ColumnsProps): ColumnDef<Role>[] => {
     const { t } = useTranslation()
-
-    const PERMISSIONSLIST = PERMISSIONS();
 
     return [
         {
@@ -105,7 +103,7 @@ export const columns = (props?: ColumnsProps): ColumnDef<Role>[] => {
                             <FileText className="mr-0.5 h-4 w-4" />
                             {t("component.data_table.action_menu.detail_data_btn", "Detail data")}
                         </DropdownMenuItem>
-                        <Can permission={PERMISSIONSLIST.ROLE.ACCESS.UPDATE.VALUE}>
+                        <Can permission={PERMISSIONENUMS.ROLE.UPDATE}>
                             <DropdownMenuItem
                                 onClick={() => props?.onEditClick(row.original)}
                             >
@@ -113,7 +111,7 @@ export const columns = (props?: ColumnsProps): ColumnDef<Role>[] => {
                                 {t("component.data_table.action_menu.edit_data_btn", "Edit data")}
                             </DropdownMenuItem>
                         </Can>
-                        <Can permission={PERMISSIONSLIST.ROLE.ACCESS.DELETE.VALUE}>
+                        <Can permission={PERMISSIONENUMS.ROLE.DELETE}>
                             <DropdownMenuItem
                                 onClick={() => props?.onDeleteClick(row.original)}
                                 variant="destructive"
