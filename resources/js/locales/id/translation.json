@@ -7,6 +7,26 @@
       }
     }
   },
+  "permission_label":{
+    "category":{
+      "permission":"Akses Kategori",
+      "create":"Buat Kategori",
+      "read":"Baca Kategori",
+      "update":"Edit Kategori",
+      "delete":"hapus Kategori"
+    },
+    "role":{
+      "permission":"Akses Peran",
+      "create":"Buat Peran",
+      "read":"Baca Peran",
+      "update":"Edit Peran",
+      "delete":"hapus Peran"
+    },
+    "dashboard":{
+      "permission":"Akses Dasbor",
+      "read":"Baca Dasbor"
+    }
+  },
   "component":{
     "sidebar":{
       "dashboard_menu_label":"Dasbor",
@@ -137,10 +157,12 @@
     "page_name":"Kategori",
     "data_table":{
       "columns":{
+        "select_column_label":"Pilih",
         "name_column_label":"Nama",
         "desc_column_label":"Deskripsi",
         "created_at_column_label":"Tanggal Dibuat",
-        "updated_at_column_label":"Tanggal Diperbarui"
+        "updated_at_column_label":"Tanggal Diperbarui",
+        "actions_at_column_label":"Aksi"
       }
     },
     "dialog_modal":{
@@ -203,10 +225,12 @@
     "page_name":"Peran",
     "data_table":{
       "columns":{
+        "select_column_label":"Pilih",
         "name_column_label":"Nama",
         "guard_name_column_label":"Nama Garda",
         "created_at_column_label":"Tanggal Dibuat",
-        "updated_at_column_label":"Tanggal Diperbarui"
+        "updated_at_column_label":"Tanggal Diperbarui",
+        "actions_at_column_label":"Aksi"
       }
     },
     "create":{
@@ -280,7 +304,11 @@
     "language":{
       "label":"Bahasa",
       "title":"Pengaturan Bahasa",
-      "description":"Perbarui pengaturan bahasa Anda"
+      "description":"Perbarui pengaturan bahasa Anda",
+      "language_options":{
+        "Indonesia":"Indonesia",
+        "English":"Inggris"
+      }
     },
     "profile":{
       "label":"Profil",

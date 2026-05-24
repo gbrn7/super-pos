@@ -7,6 +7,23 @@
       }
     }
   },
+  "permission_label":{
+    "category":{
+      "create":"Create Category",
+      "read":"Read Category",
+      "update":"Edit Category",
+      "delete":"Delete Category"
+    },
+    "role":{
+      "create":"Create Role",
+      "read":"Read Role",
+      "update":"Edit Role",
+      "delete":"Delete Role"
+    },
+    "dashboard":{
+      "read":"Read Dasbor"
+    }
+  },
   "component": {
     "sidebar": {
       "dashboard_menu_label": "Dashboard",
@@ -137,10 +154,12 @@
       "page_name": "Category",
       "data_table": {
         "columns": {
+          "select_column_label": "Select",
           "name_column_label": "Name",
           "desc_column_label": "Description",
           "created_at_column_label": "Created At",
-          "updated_at_column_label": "Updated At"
+          "updated_at_column_label": "Updated At",
+          "actions_column_label": "Actions"
         }
       },
       "dialog_modal": {
@@ -203,10 +222,12 @@
       "page_name": "Role",
       "data_table": {
         "columns": {
+          "select_column_label": "Select",
           "name_column_label": "Name",
           "guard_name_column_label":"Guard Name",
           "created_at_column_label": "Created At",
-          "updated_at_column_label": "Updated At"
+          "updated_at_column_label": "Updated At",
+          "actions_column_label": "Actions"
         }
       },
       "create":{
@@ -280,7 +301,11 @@
       "language":{
         "label":"Language",
         "title":"Language settings",
-        "description":"Update your language settings"
+        "description":"Update your language settings",
+        "language_options":{
+        "Indonesia":"Indonesia",
+        "English":"English"
+      }
       },
       "profile": {
         "label": "Profile",
@@ -332,7 +357,7 @@
       }
     }
   },
-      "error":{
+  "error":{
     "default":"Internal server error"
   }
 }

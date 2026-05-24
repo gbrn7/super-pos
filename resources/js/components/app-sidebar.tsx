@@ -18,7 +18,7 @@ import { index as categories } from '@/routes/categories';
 import { index as roles } from '@/routes/roles';
 import type { NavItem } from '@/types';
 import { useTranslation } from 'react-i18next';
-import { PERMISSIONENUMS } from '@/support/enums/PermissionEnums';
+import { PERMISSIONS } from '@/support/enums/PermissionEnums';
 import { IconUserKey } from '@tabler/icons-react';
 
 
@@ -36,36 +36,38 @@ const footerNavItems: NavItem[] = [
 ];
 
 export function AppSidebar() {
-
     const { t } = useTranslation()
+
+    const PERMISSIONSLIST = PERMISSIONS()
+
     const mainNavItems: NavItem[] =
         [
             {
                 title: t("component.sidebar.dashboard_menu_label", "Dasbor"),
                 href: dashboard(),
                 icon: LayoutGrid,
-                permission: PERMISSIONENUMS.DASHBOARD.READ,
+                permission: PERMISSIONSLIST.DASHBOARD.ACCESS.READ.VALUE,
                 role: []
             },
             {
                 title: 'Example',
                 href: '/example',
                 icon: Book,
-                permission: PERMISSIONENUMS.DASHBOARD.READ,
+                permission: PERMISSIONSLIST.DASHBOARD.ACCESS.READ.VALUE,
                 role: []
             },
             {
                 title: t("component.sidebar.category_menu_label", "Kategori"),
                 href: categories(),
                 icon: Tags,
-                permission: PERMISSIONENUMS.CATEGORY.READ,
+                permission: PERMISSIONSLIST.CATEGORY.ACCESS.READ.VALUE,
                 role: []
             },
             {
                 title: t("component.sidebar.role_menu_label", "Peran"),
                 href: roles(),
                 icon: IconUserKey,
-                permission: PERMISSIONENUMS.ROLE.READ,
+                permission: PERMISSIONSLIST.ROLE.ACCESS.READ.VALUE,
                 role: []
             },
         ];

@@ -14,7 +14,8 @@ import type { Role } from '@/support/models/role';
 import { useTranslation } from 'react-i18next';
 import { formatDate } from '@/lib/formatdate';
 import { Can } from '@/components/auth/can';
-import { PERMISSIONENUMS } from '@/support/enums/PermissionEnums';
+import { PERMISSIONS } from '@/support/enums/PermissionEnums';
+
 
 interface ColumnsProps {
     onDetailClick: (role: Role) => void;
@@ -24,9 +25,12 @@ interface ColumnsProps {
 
 export const columns = (props?: ColumnsProps): ColumnDef<Role>[] => {
     const { t } = useTranslation()
+
+    const PERMISSIONSLIST = PERMISSIONS();
+
     return [
         {
-            id: 'select',
+            id: t("page.role.data_table.columns.select_column_label", "Pilih"),
             header: ({ table }) => (
                 <Checkbox
                     checked={
@@ -50,6 +54,7 @@ export const columns = (props?: ColumnsProps): ColumnDef<Role>[] => {
             enableHiding: false,
         },
         {
+            id: t("page.role.data_table.columns.name_column_label", "Nama"),
             accessorKey: 'name',
             header: ({ column }) => (
                 <DataTableHeader column={column} title={t("page.role.data_table.columns.name_column_label", "Nama")} />
@@ -57,6 +62,7 @@ export const columns = (props?: ColumnsProps): ColumnDef<Role>[] => {
             enableSorting: true,
         },
         {
+            id: t("page.role.data_table.columns.guard_name_column_label", "Nama Garda"),
             accessorKey: 'guard_name',
             header: ({ column }) => (
                 <DataTableHeader column={column} title={t("page.role.data_table.columns.guard_name_column_label", "Nama Garda")} />
@@ -64,6 +70,7 @@ export const columns = (props?: ColumnsProps): ColumnDef<Role>[] => {
             enableSorting: true,
         },
         {
+            id: t("page.role.data_table.columns.created_at_column_label", "Tanggal Dibuat"),
             accessorKey: 'created_at',
             header: ({ column }) => (
                 <DataTableHeader column={column} title={t("page.role.data_table.columns.created_at_column_label", "Tanggal Dibuat")} />
@@ -72,6 +79,7 @@ export const columns = (props?: ColumnsProps): ColumnDef<Role>[] => {
             cell: ({ row }) => formatDate(row.original.created_at),
         },
         {
+            id: t("page.role.data_table.columns.updated_at_column_label", "Tanggal Diperbarui"),
             accessorKey: 'updated_at',
             header: ({ column }) => (
                 <DataTableHeader column={column} title={t("page.role.data_table.columns.updated_at_column_label", "Tanggal Diperbarui")} />
@@ -80,7 +88,7 @@ export const columns = (props?: ColumnsProps): ColumnDef<Role>[] => {
             cell: ({ row }) => formatDate(row.original.updated_at),
         },
         {
-            id: 'actions',
+            id: t("page.role.data_table.columns.actions_column_label", "Aksi"),
             cell: ({ row }) => (
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
@@ -97,7 +105,7 @@ export const columns = (props?: ColumnsProps): ColumnDef<Role>[] => {
                             <FileText className="mr-0.5 h-4 w-4" />
                             {t("component.data_table.action_menu.detail_data_btn", "Detail data")}
                         </DropdownMenuItem>
-                        <Can permission={PERMISSIONENUMS.ROLE.UPDATE}>
+                        <Can permission={PERMISSIONSLIST.ROLE.ACCESS.UPDATE.VALUE}>
                             <DropdownMenuItem
                                 onClick={() => props?.onEditClick(row.original)}
                             >
@@ -105,7 +113,7 @@ export const columns = (props?: ColumnsProps): ColumnDef<Role>[] => {
                                 {t("component.data_table.action_menu.edit_data_btn", "Edit data")}
                             </DropdownMenuItem>
                         </Can>
-                        <Can permission={PERMISSIONENUMS.ROLE.DELETE}>
+                        <Can permission={PERMISSIONSLIST.ROLE.ACCESS.DELETE.VALUE}>
                             <DropdownMenuItem
                                 onClick={() => props?.onDeleteClick(row.original)}
                                 variant="destructive"

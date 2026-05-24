@@ -40,7 +40,6 @@ import {
     TableHeader,
     TableRow,
 } from '@/components/ui/table';
-import { CreateDialog } from './dialog-modal/create-dialog';
 import { BulkDeleteDialog } from './dialog-modal/bulk-delete-dialog';
 import type { Role } from '@/support/models/role';
 import { useTranslation } from 'react-i18next';
@@ -51,7 +50,7 @@ import { DeleteDialog } from './dialog-modal/delete-dialog';
 import { IconChevronLeft, IconChevronRight, IconChevronsLeft, IconChevronsRight } from '@tabler/icons-react';
 import { PlusCircle, TableIcon } from 'lucide-react';
 import { Can } from '@/components/auth/can';
-import { PERMISSIONENUMS } from '@/support/enums/PermissionEnums';
+import { PERMISSIONS } from '@/support/enums/PermissionEnums';
 import { Link } from '@inertiajs/react';
 import { create } from '@/routes/roles';
 
@@ -124,7 +123,7 @@ export function DataTable<TData, TValue>({
 
     const [searchColumn, setSearchColumn] = React.useState<string>('name');
 
-
+    const PERMISSIONSLIST = PERMISSIONS();
 
     const table = useReactTable({
         data,
@@ -184,7 +183,7 @@ export function DataTable<TData, TValue>({
 
                 <div className="second-row overflow-auto flex justify-start sm:justify-end gap-2 mt-2 lg:mt-0">
                     <Can
-                        permission={PERMISSIONENUMS.ROLE.DELETE}
+                        permission={PERMISSIONSLIST.ROLE.ACCESS.DELETE.VALUE}
                     >
                         <BulkDeleteDialog isDisabled={!(Object.keys(rowSelection).length > 0) && true}
                             selectedLength={table.getSelectedRowModel().rows.length}
@@ -229,11 +228,8 @@ export function DataTable<TData, TValue>({
                         </DropdownMenuContent>
                     </DropdownMenu>
                     <Can
-                        permission={PERMISSIONENUMS.ROLE.CREATE}
+                        permission={PERMISSIONSLIST.ROLE.ACCESS.CREATE.VALUE}
                     >
-                        {/* <CreateDialog onSuccess={() => {
-                            onRefresh()
-                        }} /> */}
                         <Link href={create().url}>
                             <Button variant="outline">
                                 <PlusCircle className="h-4" />

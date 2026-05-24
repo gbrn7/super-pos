@@ -12,15 +12,15 @@ interface languageSwitcher {
   label: string
 }
 
-const languages: languageSwitcher[] = [
-  { value: "id", label: "Indonesia" },
-  { value: "en", label: "English" },
-]
-
 export default function Language() {
   const lang = localStorage.getItem(localStorageKey.LanguageKey) || languageCode.DefaultLanguageCode;
-
   const { i18n, t } = useTranslation();
+
+  const languages: languageSwitcher[] = [
+    { value: "id", label: t("page.settings.language.language_options.Indonesia") },
+    { value: "en", label: t("page.settings.language.language_options.English") },
+  ]
+
 
   const defaultLang = languages.find(l => l.value === lang) || languages[0];
 
