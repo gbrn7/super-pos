@@ -2,11 +2,20 @@
   "validation":{
     "category":{
       "required": {
-        "name":"Name field required",
-        "file":"Excel file import required"
+        "name":"Name cannot be empty",
+        "file":"Excel file import cannot be empty"
       }
-    }
-  },
+    },
+    "role":{
+      "required": {
+        "name":"Name cannot be empty",
+        "permissions":"At least one permission must be selected"
+      },
+      "array":{
+        "permissions":"Permissions must be an array"
+      }
+  }
+},
   "permission_label":{
     "category":{
       "create":"Create Category",
@@ -231,7 +240,16 @@
         }
       },
       "create":{
-        "page_name": "Add Role"
+        "page_name": "Add Role",
+        "form":{
+        "name_input_label":"Name",
+        "name_input_placeholder":"Enter role name",
+        "permissions_input_label":"Permissions",
+        "cancel_button":"Cancel",
+        "confirm_button":"Add Role",
+        "check_all_permissions":"Select all permissions",
+        "check_all_permissions_desc":"Select all available permissions for this role"
+      }
       },
       "dialog_modal": {
         "create_dialog": {

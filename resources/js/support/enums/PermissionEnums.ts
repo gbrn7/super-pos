@@ -1,5 +1,4 @@
 import { useTranslation } from "react-i18next"
-import { PermissionList } from "../interfaces/permission/permission"
 
 enum CategoryPermissionEnums {
   CREATE = 'create-category',
@@ -25,13 +24,13 @@ export const PERMISSIONENUMS = {
   ROLE: RolePermissionEnums,
 }
 
-export const PERMISSIONList = (): PermissionList => {
+export const PERMISSIONLIST = (): Permission[] => {
   const { t } = useTranslation()
 
-  return {
-    CATEGORY: {
+  return [
+    {
       LABEL: t("permission_label.category.permission", "Kategori"),
-      ACCESS: [
+      ACCESSLIST: [
         {
           LABEL: t("permission_label.category.create", "Buat Kategori"),
           VALUE: CategoryPermissionEnums.CREATE,
@@ -50,9 +49,9 @@ export const PERMISSIONList = (): PermissionList => {
         }
       ],
     },
-    ROLE: {
+    {
       LABEL: t("permission_label.role.permission", "Peran"),
-      ACCESS: [
+      ACCESSLIST: [
         {
           LABEL: t("permission_label.role.create", "Buat Peran"),
           VALUE: RolePermissionEnums.CREATE,
@@ -71,14 +70,14 @@ export const PERMISSIONList = (): PermissionList => {
         }
       ]
     },
-    DASHBOARD: {
+    {
       LABEL: t("permission_label.dashboard.permission", "Dasbor"),
-      ACCESS: [
+      ACCESSLIST: [
         {
           LABEL: t("permission_label.dashboard.read", "Baca Dasbor"),
           VALUE: DashboardPermissionEnums.READ,
         }
       ]
-    }
-  }
+    },
+  ]
 }

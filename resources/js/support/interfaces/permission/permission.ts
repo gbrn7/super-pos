@@ -1,13 +1,7 @@
 interface Permission {
   LABEL: string
-  ACCESS: {
+  ACCESSLIST: {
     LABEL: string
     VALUE: string
   }[]
-}
-
-export interface PermissionList {
-  CATEGORY: Permission
-  ROLE: Permission
-  DASHBOARD: Permission
 }

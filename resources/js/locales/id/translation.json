@@ -5,15 +5,24 @@
         "name":"Nama tidak boleh kosong",
         "file":"File impor excel tidak boleh kosong"
       }
-    }
-  },
+    },
+    "role":{
+      "required": {
+        "name":"Nama tidak boleh kosong",
+        "permissions":"Minimal satu perizinan harus dipilih"
+      },
+      "array":{
+        "permissions":"Perizinan harus berupa array"
+      }
+  }
+},
   "permission_label":{
     "category":{
       "permission":"Akses Kategori",
       "create":"Buat Kategori",
       "read":"Baca Kategori",
       "update":"Edit Kategori",
-      "delete":"hapus Kategori"
+      "delete":"Hapus Kategori"
     },
     "role":{
       "permission":"Akses Peran",
@@ -234,7 +243,16 @@
       }
     },
     "create":{
-      "page_name": "Tambah Peran"
+      "page_name": "Tambah Peran",
+      "form":{
+        "name_input_label":"Nama",
+        "name_input_placeholder":"Masukkan nama peran",
+        "permissions_input_label":"Perizinan",
+        "cancel_button":"Batal",
+        "confirm_button":"Tambah Peran",
+        "check_all_permissions":"Pilih semua perizinan",
+        "check_all_permissions_desc":"Pilih semua perizinan yang tersedia sekalig untuk peran ini"
+      }
     },
     "dialog_modal":{
       "create_dialog": {
