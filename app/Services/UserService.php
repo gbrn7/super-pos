@@ -2,11 +2,11 @@
 
 namespace App\Services;
 
-use App\Models\Role;
+use App\Models\User;
 use App\Support\Enums\RoleEnums;
-use App\Support\Interfaces\Repositories\RoleRepositoryInterface;
-use App\Support\Interfaces\Services\RoleServiceInterface;
-use App\Support\Models\Role\GetRoleReqModel;
+use App\Support\Interfaces\Repositories\UserRepositoryInterface;
+use App\Support\Interfaces\Services\UserServiceInterface;
+use App\Support\Models\User\GetUserReqModel;
 use App\Support\Utils\CheckException;
 use Exception;
 use Illuminate\Contracts\Pagination\Paginator;
@@ -14,46 +14,42 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
-class RoleService implements RoleServiceInterface
+class UserService implements UserServiceInterface
 {
-    public function __construct(protected RoleRepositoryInterface $roleRepository) {}
+    public function __construct(protected UserRepositoryInterface $userRepository) {}
 
-    public function getAllByIndex(GetRoleReqModel $request): Paginator|Collection
+    public function getAllByIndex(GetUserReqModel $request): Paginator|Collection
     {
         try {
-            return $this->roleRepository->getAllByIndex($request);
+            return $this->userRepository->getAllByIndex($request);
         } catch (\Throwable $th) {
             throw CheckException::Check($th);
         }
     }
 
-    public function getById(int $id): ?Role
+    public function getById(int $id): ?User
     {
         try {
-            return $this->roleRepository->getById($id);
+            $user = $this->userRepository->getById($id);
         } catch (\Throwable $th) {
             throw CheckException::Check($th);
         }
+
+        return $user;
     }
 
-    public function create(array $data): Role
+    public function create(array $data): User
     {
         try {
-            $isRoleExist = $this->roleRepository->getByName($data['name']);
-
-            if (isset($isRoleExist)) {
-                throw new Exception(trans('message.error.data_already_exists'), Response::HTTP_UNPROCESSABLE_ENTITY);
-            }
-
             DB::beginTransaction();
 
-            $role =  $this->roleRepository->create($data);
+            $user =  $this->userRepository->create($data);
 
-            $role->givePermissionTo($data['permissions']);
+            $user->assignRole($data['role']);
 
             DB::commit();
 
-            return $role;
+            return $user;
         } catch (\Throwable $th) {
             DB::rollBack();
 
@@ -61,38 +57,32 @@ class RoleService implements RoleServiceInterface
         }
     }
 
-    public function update(int $id, array $data): ?Role
+    public function update(int $id, array $data): ?User
     {
         try {
-            $role = $this->roleRepository->getById($id);
+            $user = $this->userRepository->getById($id);
 
-            if (!isset($role)) {
+            if (!isset($user)) {
                 throw new Exception(trans("message.error.data_not_found"), Response::HTTP_NOT_FOUND);
-            }
-
-            $isRoleExist = $this->roleRepository->getByNameExceptID($data['name'], $id);
-
-            if (isset($isRoleExist)) {
-                throw new Exception(trans('message.error.data_already_exists'), Response::HTTP_UNPROCESSABLE_ENTITY);
-            }
-
-            if ($role->name === RoleEnums::SUPER_ADMIN->value) {
-                throw new Exception(trans('message.error.super_admin_cannot_be_updated'), Response::HTTP_UNPROCESSABLE_ENTITY);
             }
 
             DB::beginTransaction();
 
-            $isSuccess = $this->roleRepository->update($role, $data);
+            $isSuccess = $this->userRepository->update($user, $data);
 
             if (! $isSuccess) {
                 throw new Exception(trans('message.error.internal_server_error'), Response::HTTP_INTERNAL_SERVER_ERROR);
             }
 
-            $role->syncPermissions($data['permissions']);
+            if ($user->hasRole(RoleEnums::SUPER_ADMIN->value)) {
+                throw new Exception(trans('message.error.super_admin_cannot_be_updated'), Response::HTTP_UNPROCESSABLE_ENTITY);
+            }
+
+            $user->syncRoles($data['role']);
 
             DB::commit();
 
-            return $role;
+            return $user;
         } catch (\Throwable $th) {
             DB::rollBack();
 
@@ -103,26 +93,22 @@ class RoleService implements RoleServiceInterface
     public function delete(int $id): bool
     {
         try {
-            $role = $this->roleRepository->getById($id);
+            $user = $this->userRepository->getById($id);
 
-            if (!isset($role)) {
+            if (!isset($user)) {
                 throw new Exception(trans("message.error.data_not_found"), Response::HTTP_NOT_FOUND);
             }
 
-            if ($role->name === RoleEnums::SUPER_ADMIN->value) {
+            if ($user->hasRole(RoleEnums::SUPER_ADMIN->value)) {
                 throw new Exception(trans('message.error.super_admin_cannot_be_deleted'), Response::HTTP_UNPROCESSABLE_ENTITY);
             }
 
-            $count = $role->users()->count();
-            if ($count > 0) {
-                throw new Exception(trans('message.error.role_data_used_by_user'), Response::HTTP_UNPROCESSABLE_ENTITY);
-            }
-
-            $isSuccess = $this->roleRepository->delete($role);
+            $isSuccess = $this->userRepository->delete($user);
 
             if (! $isSuccess) {
                 throw new Exception(trans('message.error.internal_server_error'), Response::HTTP_INTERNAL_SERVER_ERROR);
             }
+
 
             return true;
         } catch (\Throwable $th) {
@@ -134,25 +120,21 @@ class RoleService implements RoleServiceInterface
     {
         try {
             $deletedCount = 0;
+
             DB::beginTransaction();
 
             foreach ($ids as $id) {
-                $role = $this->roleRepository->getById($id);
+                $user = $this->userRepository->getById($id);
 
-                if (!isset($role)) {
+                if (!isset($user)) {
                     throw new Exception(trans("message.error.data_not_found"), Response::HTTP_NOT_FOUND);
                 }
 
-                if ($role->name === RoleEnums::SUPER_ADMIN->value) {
+                if ($user->hasRole(RoleEnums::SUPER_ADMIN->value)) {
                     throw new Exception(trans('message.error.super_admin_cannot_be_deleted'), Response::HTTP_UNPROCESSABLE_ENTITY);
                 }
 
-                $count = $role->users()->count();
-                if ($count > 0) {
-                    throw new Exception(trans('message.error.role_data_used_by_user'), Response::HTTP_UNPROCESSABLE_ENTITY);
-                }
-
-                $isSuccess = $this->roleRepository->delete($role);
+                $isSuccess = $this->userRepository->delete($user);
 
                 if (! $isSuccess) {
                     throw new Exception(trans('message.error.internal_server_error'), Response::HTTP_INTERNAL_SERVER_ERROR);

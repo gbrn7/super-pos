@@ -14,7 +14,15 @@ class RoleController extends Controller implements HasMiddleware
         return [
             new Middleware(
                 'permission:' . RolePermissionEnums::READ_ROLE->value,
-                only: ['index']
+                only: ['index', 'show']
+            ),
+            new Middleware(
+                'permission:' . RolePermissionEnums::CREATE_ROLE->value,
+                only: ['create']
+            ),
+            new Middleware(
+                'permission:' . RolePermissionEnums::UPDATE_ROLE->value,
+                only: ['edit']
             ),
         ];
     }

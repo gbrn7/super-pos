@@ -3,58 +3,59 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Role\BulkDeleteRoleRequest;
-use App\Http\Requests\Role\StoreRoleRequest;
-use App\Http\Requests\Role\UpdateRoleRequest;
-use App\Http\Resources\RoleResource;
-use App\Support\Enums\RolePermissionEnums;
-use App\Support\Interfaces\Services\RoleServiceInterface;
-use App\Support\Models\Role\GetRoleReqModel;
+use App\Http\Requests\User\BulkDeleteUserRequest;
+use App\Http\Requests\User\StoreUserRequest;
+use App\Http\Requests\User\UpdateUserRequest;
+use App\Http\Resources\UserResource;
+use App\Support\Enums\UserPermissionEnums;
+use App\Support\Interfaces\Services\UserServiceInterface;
+use App\Support\Models\User\GetUserReqModel;
 use App\Support\Utils\ResponseApi;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
-use Symfony\Component\HttpFoundation\Response;
 
-class ApiRoleController extends Controller implements HasMiddleware
+class ApiUserController extends Controller implements HasMiddleware
 {
-    public function __construct(protected RoleServiceInterface $roleService) {}
+
+    public function __construct(protected UserServiceInterface $userService) {}
+
 
     public static function middleware(): array
     {
         return [
             new Middleware(
-                'permission:' . RolePermissionEnums::READ_ROLE->value,
+                'permission:' . UserPermissionEnums::READ_USER->value,
                 only: ['index', 'show']
             ),
 
             new Middleware(
-                'permission:' . RolePermissionEnums::CREATE_ROLE->value,
-                only: ['store', 'getRoleImportTemplate', 'importRoleExcelData']
+                'permission:' . UserPermissionEnums::CREATE_USER->value,
+                only: ['store', 'getUserImportTemplate', 'importUserExcelData']
             ),
 
             new Middleware(
-                'permission:' . RolePermissionEnums::UPDATE_ROLE->value,
+                'permission:' . UserPermissionEnums::UPDATE_USER->value,
                 only: ['update']
             ),
 
             new Middleware(
-                'permission:' . RolePermissionEnums::DELETE_ROLE->value,
+                'permission:' . UserPermissionEnums::DELETE_USER->value,
                 only: ['destroy', 'bulkDelete']
             ),
         ];
     }
-
     /**
      * Display a listing of the resource.
      */
     public function index(Request $request)
     {
         try {
-            $roles = $this->roleService->getAllByIndex(new GetRoleReqModel($request));
+            $users = $this->userService->getAllByIndex(new GetUserReqModel($request));
 
-            $data = RoleResource::collection($roles);
+            $data = UserResource::collection($users);
 
             return ResponseApi::make(true, trans('message.success.success'), $data);
         } catch (\Throwable $th) {
@@ -62,16 +63,15 @@ class ApiRoleController extends Controller implements HasMiddleware
         }
     }
 
-
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreRoleRequest $request)
+    public function store(StoreUserRequest $request)
     {
         try {
-            $role = $this->roleService->create($request->validated());
+            $user = $this->userService->create($request->validated());
 
-            $data = RoleResource::make($role);
+            $data = UserResource::make($user);
 
             return ResponseApi::make(true, trans('message.success.created'), $data, Response::HTTP_CREATED);
         } catch (\Throwable $th) {
@@ -85,9 +85,9 @@ class ApiRoleController extends Controller implements HasMiddleware
     public function show(string $id)
     {
         try {
-            $data = $this->roleService->getById($id);
+            $data = $this->userService->getById($id);
 
-            $data = RoleResource::make($data);
+            $data = UserResource::make($data);
 
             return ResponseApi::make(true, trans('message.success.success'), $data);
         } catch (\Throwable $th) {
@@ -98,12 +98,12 @@ class ApiRoleController extends Controller implements HasMiddleware
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateRoleRequest $request, string $id)
+    public function update(UpdateUserRequest $request, string $id)
     {
         try {
-            $role = $this->roleService->update($id, $request->validated());
+            $user = $this->userService->update($id, $request->validated());
 
-            $data = RoleResource::make($role);
+            $data = UserResource::make($user);
 
             return ResponseApi::make(true, trans('message.success.updated'), $data);
         } catch (\Throwable $th) {
@@ -117,7 +117,7 @@ class ApiRoleController extends Controller implements HasMiddleware
     public function destroy(string $id)
     {
         try {
-            $isSuccessDelete = $this->roleService->delete($id);
+            $isSuccessDelete = $this->userService->delete($id);
 
             if (!$isSuccessDelete) throw new Exception(trans('message.error.internal_server_error'), Response::HTTP_INTERNAL_SERVER_ERROR);
 
@@ -127,29 +127,18 @@ class ApiRoleController extends Controller implements HasMiddleware
         }
     }
 
+
     /**
      * Bulk delete resources.
      */
-    public function bulkDelete(BulkDeleteRoleRequest $request)
+    public function bulkDelete(BulkDeleteUserRequest $request)
     {
         try {
-            $deletedCount = $this->roleService->bulkDelete($request->validated('ids'));
+            $deletedCount = $this->userService->bulkDelete($request->validated('ids'));
 
             return ResponseApi::make(true, trans('message.success.bulk_deleted', ['count' => $deletedCount]), null, Response::HTTP_OK);
         } catch (\Throwable $th) {
             return ResponseApi::make(false, $th->getMessage(), null, $th->getcode());
         }
-    }
-
-    public function getRoleImportTemplate()
-    {
-        $fileName = 'import-role-template.xlsx';
-        $publiFilePath = 'template/' . $fileName;
-
-        if (!file_exists($publiFilePath)) {
-            return ResponseApi::make(false, trans('message.error.not_found', ['resource' => 'file']), null, Response::HTTP_INTERNAL_SERVER_ERROR);
-        }
-
-        return ResponseApi::download($fileName, $publiFilePath);
     }
 }

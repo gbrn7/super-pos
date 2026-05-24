@@ -113,7 +113,7 @@ class ApiCategoryController extends Controller implements HasMiddleware
         try {
             $isSuccessDelete = $this->categoryService->delete($id);
 
-            if (!$isSuccessDelete) throw new Exception();
+            if (!$isSuccessDelete) throw new Exception(trans('message.error.internal_server_error'), Response::HTTP_INTERNAL_SERVER_ERROR);
 
             return ResponseApi::make(true, trans('message.success.deleted'), null, Response::HTTP_OK);
         } catch (\Throwable $th) {

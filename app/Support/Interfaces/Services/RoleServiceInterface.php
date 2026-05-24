@@ -10,7 +10,7 @@ use Illuminate\Support\Collection;
 interface RoleServiceInterface
 {
     /**
-     * Get all categories.
+     * Get all Roles.
      */
     public function getAllByIndex(GetRoleReqModel $request): Paginator|Collection;
 
@@ -35,7 +35,7 @@ interface RoleServiceInterface
     public function delete(int $id): bool;
 
     /**
-     * Bulk delete a categories by ids.
+     * Bulk delete a Roles by ids.
      */
     public function bulkDelete(array $ids): int;
 }

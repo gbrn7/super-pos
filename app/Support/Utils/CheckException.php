@@ -24,7 +24,6 @@ class CheckException
       $code < 100 ||
       $code > 599
     ) {
-      dd(trans('message.error.internal_server_error'));
       return new Exception(
         trans('message.error.internal_server_error'),
         Response::HTTP_INTERNAL_SERVER_ERROR
