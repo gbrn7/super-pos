@@ -32,10 +32,12 @@ class RoleService implements RoleServiceInterface
     public function getById(int $id): ?Role
     {
         try {
-            return $this->roleRepository->getById($id);
+            $role = $this->roleRepository->getById($id);
         } catch (\Throwable $th) {
             throw CheckException::Check($th);
         }
+
+        return $role;
     }
 
     public function create(array $data): Role

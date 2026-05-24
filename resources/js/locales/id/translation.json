@@ -251,6 +251,18 @@
         "cancel_button":"Batal",
         "confirm_button":"Tambah Peran",
         "check_all_permissions":"Pilih semua perizinan",
+        "check_all_permissions_desc":"Pilih semua perizinan yang tersedia sekaligus untuk peran ini"
+      }
+    },
+    "edit":{
+      "page_name": "Edit Peran",
+      "form":{
+        "name_input_label":"Nama",
+        "name_input_placeholder":"Masukkan nama peran",
+        "permissions_input_label":"Perizinan",
+        "cancel_button":"Batal",
+        "confirm_button":"Edit Peran",
+        "check_all_permissions":"Pilih semua perizinan",
         "check_all_permissions_desc":"Pilih semua perizinan yang tersedia sekalig untuk peran ini"
       }
     },

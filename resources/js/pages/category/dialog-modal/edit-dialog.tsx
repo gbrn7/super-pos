@@ -20,7 +20,7 @@ import { Spinner } from '@/components/ui/spinner';
 import axiosInstance from '@/lib/axios';
 import { ResponseApi } from '@/support/interfaces/response/Response';
 import { handleApiError, showSuccessToast, showWarningToast } from '@/lib/utils';
-import { CategoryForm } from '@/support/interfaces/request/createCategory';
+import { CategoryForm } from '@/support/interfaces/request/category';
 import z from 'zod';
 import ErrorFormInfo from '@/components/errorFormInfo';
 

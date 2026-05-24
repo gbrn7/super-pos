@@ -71,7 +71,9 @@ class ApiRoleController extends Controller implements HasMiddleware
         try {
             $role = $this->roleService->create($request->validated());
 
-            return ResponseApi::make(true, trans('message.success.created'), $role, Response::HTTP_CREATED);
+            $data = RoleResource::make($role);
+
+            return ResponseApi::make(true, trans('message.success.created'), $data, Response::HTTP_CREATED);
         } catch (\Throwable $th) {
             return ResponseApi::make(false, $th->getMessage(), null, $th->getcode());
         }
@@ -84,6 +86,8 @@ class ApiRoleController extends Controller implements HasMiddleware
     {
         try {
             $data = $this->roleService->getById($id);
+
+            $data = RoleResource::make($data);
 
             return ResponseApi::make(true, trans('message.success.success'), $data);
         } catch (\Throwable $th) {
@@ -99,7 +103,9 @@ class ApiRoleController extends Controller implements HasMiddleware
         try {
             $role = $this->roleService->update($id, $request->validated());
 
-            return ResponseApi::make(true, trans('message.success.updated'), $role);
+            $data = RoleResource::make($role);
+
+            return ResponseApi::make(true, trans('message.success.updated'), $data);
         } catch (\Throwable $th) {
             return ResponseApi::make(false, $th->getMessage(), null, $th->getcode());
         }

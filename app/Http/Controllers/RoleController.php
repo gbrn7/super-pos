@@ -28,4 +28,9 @@ class RoleController extends Controller implements HasMiddleware
     {
         return inertia('role/create');
     }
+
+    public function edit(string $id)
+    {
+        return inertia('role/edit', ['id' => $id]);
+    }
 }

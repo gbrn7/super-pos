@@ -249,8 +249,20 @@
         "confirm_button":"Add Role",
         "check_all_permissions":"Select all permissions",
         "check_all_permissions_desc":"Select all available permissions for this role"
-      }
+       }
       },
+      "edit":{
+      "page_name": "Edit Role",
+      "form":{
+        "name_input_label":"Name",
+        "name_input_placeholder":"Enter role name",
+        "permissions_input_label":"Permissions",
+        "cancel_button":"Cancel",
+        "confirm_button":"Edit Role",
+        "check_all_permissions":"Select all permissions",
+        "check_all_permissions_desc":"Select all available permissions for this role"
+      }
+    },
       "dialog_modal": {
         "create_dialog": {
           "dialog_button": "Add Data",

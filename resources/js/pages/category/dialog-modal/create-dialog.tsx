@@ -14,7 +14,7 @@ import { Field, FieldGroup } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { store as storeCategory } from '@/routes/apiCategories';
-import type { CategoryForm } from '@/support/interfaces/request/createCategory';
+import type { CategoryForm } from '@/support/interfaces/request/category';
 import { useTranslation } from 'react-i18next';
 import { Spinner } from '@/components/ui/spinner';
 import axiosInstance from '@/lib/axios';

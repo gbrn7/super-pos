@@ -13,7 +13,7 @@ import {
 import { Field, FieldGroup } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 import { store as storeRole } from '@/routes/apiRoles';
-import type { RoleForm } from '@/support/interfaces/request/createRole';
+import type { RoleForm } from '@/support/interfaces/request/role';
 import { useTranslation } from 'react-i18next';
 import { Spinner } from '@/components/ui/spinner';
 import axiosInstance from '@/lib/axios';
