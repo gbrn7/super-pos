@@ -18,7 +18,9 @@ class UserRepository implements UserRepositoryInterface
       ->with('roles')
       ->orderBy('id', 'desc')
       ->when($request->name, fn($query) => $query->where('name', 'like', "%{$request->name}%"))
-      ->doesntHave(RoleEnums::SUPER_ADMIN->value);
+      ->whereDoesntHave('roles', function ($query) {
+        $query->where('name', RoleEnums::SUPER_ADMIN->value);
+      });
 
     if ($request->limit === null) {
       return $query->get();

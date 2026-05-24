@@ -2,9 +2,11 @@
 
 use App\Http\Controllers\Api\ApiCategoryController;
 use App\Http\Controllers\Api\ApiRoleController;
+use App\Http\Controllers\Api\ApiUserController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ExampleController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
 
@@ -20,6 +22,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('categories', CategoryController::class)->only('index');
 
     Route::resource('roles', RoleController::class)->only(['index', 'create', 'edit', 'show']);
+
+    Route::resource('users', UserController::class)->only('index');
 
     Route::resource('example', ExampleController::class);
 
@@ -41,6 +45,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
         Route::group(['prefix' => 'roles'], function () {
             Route::post('/bulk-delete', [ApiRoleController::class, 'bulkDelete'])->name('apiRoles.bulkDelete');
+        });
+
+        //user
+        Route::resource('user', ApiUserController::class)->names('apiUsers')->only(['index', 'store', 'show', 'update', 'destroy']);
+
+        Route::group(['prefix' => 'user'], function () {
+            Route::post('/bulk-delete', [ApiUserController::class, 'bulkDelete'])->name('apiUsers.bulkDelete');
         });
     });
 });

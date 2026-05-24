@@ -33,7 +33,7 @@ class ApiUserController extends Controller implements HasMiddleware
 
             new Middleware(
                 'permission:' . UserPermissionEnums::CREATE_USER->value,
-                only: ['store', 'getUserImportTemplate', 'importUserExcelData']
+                only: ['store']
             ),
 
             new Middleware(
@@ -53,6 +53,7 @@ class ApiUserController extends Controller implements HasMiddleware
     public function index(Request $request)
     {
         try {
+
             $users = $this->userService->getAllByIndex(new GetUserReqModel($request));
 
             $data = UserResource::collection($users);

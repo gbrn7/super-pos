@@ -5,23 +5,23 @@ import {
     DialogTitle,
 } from '@/components/ui/dialog';
 import { formatDate } from '@/lib/formatdate';
-import type { Category } from '@/support/models/category';
+import type { User } from '@/support/models/user';
 import { useTranslation } from 'react-i18next';
 
 interface DetailSheetProps {
     isOpen: boolean;
-    category: Category | null;
+    user: User | null;
     onOpenChange: (open: boolean) => void;
 }
 
 export function DetailDialog({
     isOpen,
-    category,
+    user,
     onOpenChange,
 }: DetailSheetProps) {
     const { t } = useTranslation();
 
-    if (!category) {
+    if (!user) {
         return null;
     }
 
@@ -29,49 +29,54 @@ export function DetailDialog({
         <Dialog open={isOpen} onOpenChange={onOpenChange}>
             <DialogContent showCloseButton={true}>
                 <DialogHeader>
-                    <DialogTitle>{t("page.category.dialog_modal.detail_dialog.dialog_title", "Detail Kategori")}</DialogTitle>
+                    <DialogTitle>{t("page.user.dialog_modal.detail_dialog.dialog_title", "Detail Kategori")}</DialogTitle>
                     <DialogContent>
                         <div>
                             <p className="text-sm font-medium text-muted-foreground">
-                                {t("page.category.dialog_modal.detail_dialog.name_label", "Nama")}
+                                {t("page.user.dialog_modal.detail_dialog.name_label", "Nama")}
                             </p>
-                            <p className="mt-1 text-base">{category.name}</p>
+                            <p className="mt-1 text-base">{user.name}</p>
                         </div>
 
                         <div>
                             <p className="text-sm font-medium text-muted-foreground">
-                                {t("page.category.dialog_modal.detail_dialog.desc_label", "Nama")}
+                                {t("page.user.dialog_modal.detail_dialog.email_label", "Email")}
                             </p>
                             <p className="mt-1 text-base">
-                                {category.desc || '-'}
+                                {user.email}
                             </p>
                         </div>
 
+                        <div>
+                            <p className="text-sm font-medium text-muted-foreground">
+                                {t("page.user.dialog_modal.detail_dialog.role_label", "Peran")}
+                            </p>
+                            <p className="mt-1 text-base">
+                                {user.role}
+                            </p>
+                        </div>
 
                         <div>
                             <p className="text-sm font-medium text-muted-foreground">
-                                {t("page.category.dialog_modal.detail_dialog.created_at_label", "Tanggal Dibuat")}
+                                {t("page.user.dialog_modal.detail_dialog.created_at_label", "Tanggal Dibuat")}
                             </p>
                             <p className="mt-1 text-base">
                                 {
-                                    formatDate(category.created_at)
+                                    formatDate(user.created_at)
                                 }
                             </p>
                         </div>
 
-
-
                         <div>
                             <p className="text-sm font-medium text-muted-foreground">
-                                {t("page.category.dialog_modal.detail_dialog.updated_at_label", "Tanggal Diperbarui")}
+                                {t("page.user.dialog_modal.detail_dialog.updated_at_label", "Tanggal Diperbarui")}
                             </p>
                             <p className="mt-1 text-base">
                                 {
-                                    formatDate(category.updated_at)
+                                    formatDate(user.updated_at)
                                 }
                             </p>
                         </div>
-
                     </DialogContent>
                 </DialogHeader>
             </DialogContent>

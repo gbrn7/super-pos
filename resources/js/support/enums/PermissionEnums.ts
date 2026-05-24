@@ -18,10 +18,18 @@ enum RolePermissionEnums {
   DELETE = 'delete-role',
 }
 
+enum UserPermissionEnums {
+  CREATE = 'create-user',
+  READ = 'read-user',
+  UPDATE = 'update-user',
+  DELETE = 'delete-user',
+}
+
 export const PERMISSIONENUMS = {
   CATEGORY: CategoryPermissionEnums,
   DASHBOARD: DashboardPermissionEnums,
   ROLE: RolePermissionEnums,
+  USER: UserPermissionEnums,
 }
 
 export const PERMISSIONLIST = (): Permission[] => {
@@ -79,5 +87,26 @@ export const PERMISSIONLIST = (): Permission[] => {
         }
       ]
     },
+    {
+      LABEL: t("permission_label.user.permission", "Pengguna"),
+      ACCESSLIST: [
+        {
+          LABEL: t("permission_label.user.create", "Buat Pengguna"),
+          VALUE: UserPermissionEnums.CREATE,
+        },
+        {
+          LABEL: t("permission_label.user.read", "Baca Pengguna"),
+          VALUE: UserPermissionEnums.READ,
+        },
+        {
+          LABEL: t("permission_label.user.update", "Update Pengguna"),
+          VALUE: UserPermissionEnums.UPDATE,
+        },
+        {
+          LABEL: t("permission_label.user.delete", "Hapus Pengguna"),
+          VALUE: UserPermissionEnums.DELETE,
+        }
+      ]
+    }
   ]
 }

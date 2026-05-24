@@ -1,5 +1,5 @@
 import { Link } from '@inertiajs/react';
-import { Book, LayoutGrid, Tags } from 'lucide-react';
+import { Book, LayoutGrid, Tags, User } from 'lucide-react';
 import AppLogo from '@/components/app-logo';
 import { NavFooter } from '@/components/nav-footer';
 import { NavMain } from '@/components/nav-main';
@@ -16,6 +16,7 @@ import {
 import { dashboard } from '@/routes';
 import { index as categories } from '@/routes/categories';
 import { index as roles } from '@/routes/roles';
+import { index as users } from '@/routes/users';
 import type { NavItem } from '@/types';
 import { useTranslation } from 'react-i18next';
 import { IconUserKey } from '@tabler/icons-react';
@@ -66,6 +67,13 @@ export function AppSidebar() {
                 href: roles(),
                 icon: IconUserKey,
                 permission: PERMISSIONENUMS.ROLE.READ,
+                role: []
+            },
+            {
+                title: t("component.sidebar.user_menu_label", "Pengguna"),
+                href: users(),
+                icon: User,
+                permission: PERMISSIONENUMS.USER.READ,
                 role: []
             },
         ];

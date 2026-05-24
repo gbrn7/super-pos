@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Database\Factories\UserFactory;
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -18,6 +19,15 @@ class User extends Authenticatable
 {
     /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable, TwoFactorAuthenticatable, HasRoles;
+
+    //format date using unix/epoch time
+    protected $dateFormat = 'U';
+
+    //overide default iso datetime format from model
+    protected function serializeDate(DateTimeInterface $date): int
+    {
+        return $date->getTimestamp();
+    }
 
     /**
      * Get the attributes that should be cast.

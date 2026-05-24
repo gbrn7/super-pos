@@ -14,7 +14,19 @@
       "array":{
         "permissions":"Perizinan harus berupa array"
       }
-  }
+    },
+    "user":{
+      "required": {
+        "name":"Nama tidak boleh kosong",
+        "email":"Email tidak boleh kosong",
+        "password":"Password tidak boleh kosong",
+        "password_confirmation":"Konfirmasi Password tidak boleh kosong",
+        "role":"Peran tidak boleh kosong"
+      },
+      "email":{
+        "invalid":"Email tidak valid"
+      }
+    }
 },
   "permission_label":{
     "category":{
@@ -41,7 +53,8 @@
       "dashboard_menu_label":"Dasbor",
       "example_menu_label":"Example",
       "category_menu_label":"Kategori",
-      "role_menu_label":"Peran"
+      "role_menu_label":"Peran",
+      "user_menu_label":"Pengguna"
     },
     "data_table": {
       "search_component":{
@@ -203,7 +216,8 @@
         "dialog_desc": "Detail data kategori",
         "name_label":"Nama",
         "desc_label":"Deskripsi",
-        "created_at_label":"Tanggal Dibuat"
+        "created_at_label":"Tanggal Dibuat",
+        "updated_at_label": "Tanggal Diperbarui"
       }, 
       "delete_dialog": {
         "dialog_button": "Hapus Data",
@@ -281,8 +295,6 @@
         "dialog_desc": "Tambahkan peran baru toko anda",
         "name_input_label":"Nama",
         "name_input_placeholder":"Masukkan nama peran",
-        "desc_input_label":"Deskripsi",
-        "desc_input_placeholder":"Masukkan deskripsi peran (Opsional)",
         "cancel_button":"Batal",
         "confirm_button":"Tambah Peran"
       },
@@ -292,8 +304,6 @@
         "dialog_desc": "Edit data peran",
         "name_input_label":"Nama",
         "name_input_placeholder":"Masukkan nama peran",
-        "desc_input_label":"Deskripsi",
-        "desc_input_placeholder":"Masukkan deskripsi peran (Opsional)",
         "cancel_button":"Batal",
         "confirm_button":"Edit Peran"
       },
@@ -302,7 +312,6 @@
         "dialog_title": "Detail Peran",
         "dialog_desc": "Detail data peran",
         "name_label":"Nama",
-        "desc_label":"Deskripsi",
         "created_at_label":"Tanggal Dibuat"
       }, 
       "delete_dialog": {
@@ -318,15 +327,79 @@
         "dialog_desc": "Apakah anda yakin akan menghapus %d peran ?",
         "cancel_button":"Batal",
         "confirm_button":"Hapus Peran"
-      }, 
-      "import_excel_dialog": {
-        "dialog_button": "Impor Excel",
-        "dialog_title": "Impor Excel",
-        "dialog_desc": "Impor data peran dari file Excel",
-        "template_label":"Templat",
-        "file_excel_label":"File Excel",
+      }
+    }
+  },
+  "user":{
+    "page_name":"Pengguna",
+    "data_table":{
+      "columns":{
+        "select_column_label":"Pilih",
+        "name_column_label":"Nama",
+        "email_column_label":"Email",
+        "role_column_label":"Peran",
+        "created_at_column_label":"Tanggal Dibuat",
+        "updated_at_column_label":"Tanggal Diperbarui",
+        "actions_at_column_label":"Aksi"
+      }
+    },
+    "dialog_modal":{
+      "create_dialog": {
+        "dialog_button": "Tambah Data",
+        "dialog_title": "Tambah Pengguna",
+        "dialog_desc": "Tambahkan pengguna baru produk anda",
+        "name_input_label":"Nama",
+        "name_input_placeholder":"Masukkan nama pengguna",
+        "email_input_label":"Email",
+        "email_input_placeholder":"Masukkan email pengguna",
+        "password_input_label":"Kata sandi",
+        "password_input_placeholder":"Masukkan kata sandi pengguna",
+        "password_confirm_input_label":"Konfirmasi Kata sandi",
+        "password_confirm_input_placeholder":"Masukkan kembali kata sandi pengguna",
+        "role_input_label":"Peran",
+        "role_input_placeholder":"Masukkan peran pengguna",
         "cancel_button":"Batal",
-        "confirm_button":"Impor"
+        "confirm_button":"Tambah Pengguna"
+      },
+      "edit_dialog": {
+        "dialog_button": "Edit Data",
+        "dialog_title": "Edit Pengguna",
+        "dialog_desc": "Edit data pengguna",
+        "name_input_label":"Nama",
+        "name_input_placeholder":"Masukkan nama pengguna",
+        "email_input_label":"Email",
+        "email_input_placeholder":"Masukkan email pengguna",
+        "password_input_label":"Kata sandi",
+        "password_input_placeholder":"Masukkan kata sandi pengguna",
+        "password_confirm_input_label":"Konfirmasi Kata sandi",
+        "password_confirm_input_placeholder":"Masukkan kembali kata sandi pengguna",
+        "role_input_label":"Peran",
+        "role_input_placeholder":"Pilih peran pengguna",
+        "cancel_button":"Batal",
+        "confirm_button":"Edit Pengguna"
+      },
+      "detail_dialog": {
+        "dialog_button": "Detail Data",
+        "dialog_title": "Detail Pengguna",
+        "dialog_desc": "Detail data pengguna",
+        "name_label":"Nama",
+        "email_label":"Email",
+        "role_label":"Peran",
+        "created_at_label":"Tanggal Dibuat"
+      }, 
+      "delete_dialog": {
+        "dialog_button": "Hapus Data",
+        "dialog_title": "Hapus Pengguna",
+        "dialog_desc": "Apakah anda yakin akan menghapus data ini ?",
+        "cancel_button":"Batal",
+        "confirm_button":"Hapus Pengguna"
+      }, 
+      "bulk_delete_dialog": {
+        "dialog_button": "Hapus",
+        "dialog_title": "Hapus %d pengguna",
+        "dialog_desc": "Apakah anda yakin akan menghapus %d pengguna ?",
+        "cancel_button":"Batal",
+        "confirm_button":"Hapus Pengguna"
       }
     }
   },

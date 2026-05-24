@@ -38,7 +38,8 @@
       "dashboard_menu_label": "Dashboard",
       "example_menu_label": "Example",
       "category_menu_label": "Category",
-      "role_menu_label":"Role"
+      "role_menu_label":"Role",
+      "user_menu_label":"User"
     },
     "data_table": {
       "search_component": {
@@ -200,7 +201,8 @@
           "dialog_desc": "Category detail data",
           "name_label": "Name",
           "desc_label": "Description",
-          "created_at_label": "Created Date"
+          "created_at_label": "Created Date",
+          "updated_at_label": "Updated Date"
         },
         "delete_dialog": {
           "dialog_button": "Delete Data",
@@ -278,8 +280,6 @@
         "dialog_desc": "Add a new role for your merchant",
         "name_input_label": "Name",
         "name_input_placeholder": "Enter role name",
-        "desc_input_label": "Description",
-        "desc_input_placeholder": "Enter role description (Optional)",
         "cancel_button": "Cancel",
         "confirm_button": "Add Role"
       },
@@ -289,8 +289,6 @@
         "dialog_desc": "Edit role data",
         "name_input_label": "Name",
         "name_input_placeholder": "Enter role name",
-        "desc_input_label": "Description",
-        "desc_input_placeholder": "Enter role description (Optional)",
         "cancel_button": "Cancel",
         "confirm_button": "Edit Role"
       },
@@ -315,18 +313,82 @@
         "dialog_desc": "Are you sure you want to delete %d categories?",
         "cancel_button": "Cancel",
         "confirm_button": "Delete Role"
-      },
-      "import_excel_dialog": {
-        "dialog_button": "Import Excel",
-        "dialog_title": "Import Excel",
-        "dialog_desc": "Import role data from Excel file",
-        "template_label": "Template",
-        "file_excel_label": "Excel File",
-        "cancel_button": "Cancel",
-        "confirm_button": "Import"
       }
       }
     },
+    "user":{
+    "page_name":"User",
+    "data_table":{
+      "columns":{
+        "select_column_label":"Choose",
+        "name_column_label":"Name",
+        "email_column_label":"Email",
+        "role_column_label":"Role",
+        "created_at_column_label":"Created At",
+        "updated_at_column_label":"Updated At",
+        "actions_at_column_label":"Actions"
+      }
+    },
+    "dialog_modal":{
+      "create_dialog": {
+        "dialog_button": "Add Data",
+        "dialog_title": "Add User",
+        "dialog_desc": "Add a new user to your store",
+        "name_input_label":"Name",
+        "name_input_placeholder":"Enter user name",
+        "email_input_label":"Email",
+        "email_input_placeholder":"Enter email address",
+        "password_input_label":"Password",
+        "password_input_placeholder":"Enter password",
+        "password_confirm_input_label":"Confirm Password",
+        "password_confirm_input_placeholder":"Confirm password",
+        "role_input_label":"Role",
+        "role_input_placeholder":"Enter user role",
+        "cancel_button":"Cancel",
+        "confirm_button":"Add User"
+      },
+      "edit_dialog": {
+        "dialog_button": "Edit Data",
+        "dialog_title": "Edit User",
+        "dialog_desc": "Edit user data",
+        "name_input_label":"Name",
+        "name_input_placeholder":"Enter user name",
+        "email_input_label":"Email",
+        "email_input_placeholder":"Enter email address",
+        "password_input_label":"Password",
+        "password_input_placeholder":"Enter password",
+        "password_confirm_input_label":"Confirm Password",
+        "password_confirm_input_placeholder":"Confirm password",
+        "role_input_label":"Role",
+        "role_input_placeholder":"Enter user role",
+        "cancel_button":"Cancel",
+        "confirm_button":"Edit User"
+      },
+      "detail_dialog": {
+        "dialog_button": "Detail Data",
+        "dialog_title": "User Detail",
+        "dialog_desc": "User detail data",
+        "name_label":"Name",
+        "email_label":"Email",
+        "role_label":"Role",
+        "created_at_label":"Created Date"
+      }, 
+      "delete_dialog": {
+        "dialog_button": "Delete Data",
+        "dialog_title": "Delete User",
+        "dialog_desc": "Are you sure you want to delete this user?",
+        "cancel_button":"Cancel",
+        "confirm_button":"Delete User"
+      }, 
+      "bulk_delete_dialog": {
+        "dialog_button": "Delete",
+        "dialog_title": "Delete %d users",
+        "dialog_desc": "Are you sure you want to delete %d users?",
+        "cancel_button":"Cancel",
+        "confirm_button":"Delete Users"
+      }
+    }
+  },
     "settings": {
       "title": "Settings",
        "log_out_menu":"Log out",

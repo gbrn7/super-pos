@@ -42,7 +42,7 @@ import {
 } from '@/components/ui/table';
 import { CreateDialog } from './dialog-modal/create-dialog';
 import { BulkDeleteDialog } from './dialog-modal/bulk-delete-dialog';
-import type { Category } from '@/support/models/category';
+import type { User } from '@/support/models/user';
 import { ImportExcelDialog } from './dialog-modal/import-excel-dialog';
 import { useTranslation } from 'react-i18next';
 import { sprintf } from 'sprintf-js';
@@ -50,7 +50,6 @@ import { DetailDialog } from './dialog-modal/detail-dialog';
 import { EditDialog } from './dialog-modal/edit-dialog';
 import { DeleteDialog } from './dialog-modal/delete-dialog';
 import { IconChevronLeft, IconChevronRight, IconChevronsLeft, IconChevronsRight } from '@tabler/icons-react';
-import { ExportDropdownMenu } from './export-data-menu/export-dropdown-menu';
 import { TableIcon } from 'lucide-react';
 import { Can } from '@/components/auth/can';
 import { PERMISSIONENUMS } from '@/support/enums/PermissionEnums';
@@ -75,8 +74,8 @@ interface DataTableProps<TData, TValue> {
     onBulkDeleteClick?: (data: TData[]) => void;
     isBulkDeleteDialogOpen: boolean;
     setOpenBulkDeleteDialogOpen: (open: boolean) => void;
-    selectedBulkCategories: Category[]
-    selectedCategory: Category | null
+    selectedBulkUsers: User[]
+    selectedUser: User | null
 }
 export function DataTable<TData, TValue>({
     columns: columnsOrFn,
@@ -96,8 +95,8 @@ export function DataTable<TData, TValue>({
     onBulkDeleteClick,
     isBulkDeleteDialogOpen,
     setOpenBulkDeleteDialogOpen,
-    selectedBulkCategories,
-    selectedCategory
+    selectedBulkUsers,
+    selectedUser
 }: DataTableProps<TData, TValue>) {
     const { t } = useTranslation();
 
@@ -122,7 +121,7 @@ export function DataTable<TData, TValue>({
         pageSize: 10,
     });
 
-    const [searchColumn, setSearchColumn] = React.useState<string>(t("page.category.data_table.columns.name_column_label", "Nama"));
+    const [searchColumn, setSearchColumn] = React.useState<string>(t("page.user.data_table.columns.name_column_label", "Nama"));
 
     const table = useReactTable({
         data,
@@ -159,11 +158,14 @@ export function DataTable<TData, TValue>({
                         <SelectContent>
                             <SelectGroup>
                                 <SelectLabel>{t("component.data_table.search_component.search_by", "Pencarian berdasarkan")}</SelectLabel>
-                                <SelectItem value={t("page.category.data_table.columns.name_column_label", "Nama")}>
+                                <SelectItem value={t("page.user.data_table.columns.name_column_label", "Nama")}>
                                     {t("component.data_table.search_component.name", "Nama")}
                                 </SelectItem>
-                                <SelectItem value={t("page.category.data_table.columns.description_column_label", "Deskripsi")}>
-                                    {t("component.data_table.search_component.description", "Deskripsi")}
+                                <SelectItem value={t("page.user.data_table.columns.email_column_label", "Email")}>
+                                    {t("component.data_table.search_component.email", "Email")}
+                                </SelectItem>
+                                <SelectItem value={t("page.user.data_table.columns.role_column_label", "Peran")}>
+                                    {t("component.data_table.search_component.role", "Peran")}
                                 </SelectItem>
                             </SelectGroup>
                         </SelectContent>
@@ -185,14 +187,8 @@ export function DataTable<TData, TValue>({
                 </div>
 
                 <div className="second-row overflow-auto flex justify-start sm:justify-end gap-2 mt-2 lg:mt-0">
-                    <Can permission={PERMISSIONENUMS.CATEGORY.CREATE}>
-                        <ImportExcelDialog onSuccess={onRefresh} />
-                    </Can>
-                    <Can permission={PERMISSIONENUMS.CATEGORY.READ}>
-                        <ExportDropdownMenu data={data} />
-                    </Can>
                     <Can
-                        permission={PERMISSIONENUMS.CATEGORY.DELETE}
+                        permission={PERMISSIONENUMS.USER.DELETE}
                     >
                         <BulkDeleteDialog isDisabled={!(Object.keys(rowSelection).length > 0) && true}
                             selectedLength={table.getSelectedRowModel().rows.length}
@@ -202,7 +198,7 @@ export function DataTable<TData, TValue>({
                                 table.resetRowSelection()
                             }}
                             setOpen={setOpenBulkDeleteDialogOpen}
-                            categories={selectedBulkCategories}
+                            users={selectedBulkUsers}
                             onBulkDeleteClick={() => {
                                 const selectedRows = table.getSelectedRowModel().rows.map((row) => row.original);
                                 onBulkDeleteClick?.(selectedRows);
@@ -237,7 +233,7 @@ export function DataTable<TData, TValue>({
                         </DropdownMenuContent>
                     </DropdownMenu>
                     <Can
-                        permission={PERMISSIONENUMS.CATEGORY.CREATE}
+                        permission={PERMISSIONENUMS.USER.CREATE}
                     >
                         <CreateDialog onSuccess={onRefresh} />
                     </Can>
@@ -315,7 +311,7 @@ export function DataTable<TData, TValue>({
                 </Table>
                 <DetailDialog
                     isOpen={detailDataOpen}
-                    category={selectedCategory}
+                    user={selectedUser}
                     onOpenChange={setDetailOpen}
                 />
 
@@ -323,15 +319,15 @@ export function DataTable<TData, TValue>({
                     isOpen={editOpen}
                     onSuccess={onRefresh}
                     setOpen={setEditOpen}
-                    category={selectedCategory}
-                    key={selectedCategory?.id}
+                    user={selectedUser}
+                    key={selectedUser?.id}
                 />
 
                 <DeleteDialog
                     isOpen={deleteOpen}
                     onSuccess={onRefresh}
                     setOpen={setDeleteOpen}
-                    category={selectedCategory}
+                    user={selectedUser}
                 />
             </div>
             <div className="flex items-center justify-end space-x-4 overflow-auto py-4">

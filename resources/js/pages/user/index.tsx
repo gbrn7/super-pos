@@ -1,8 +1,8 @@
 import { Head } from '@inertiajs/react';
 import { useState, useEffect } from 'react';
-import { index as apiGetRoles } from '@/routes/apiRoles';
-import { index as roles } from '@/routes/roles';
-import type { Role } from '@/support/models/role';
+import { index as apiGetUsers } from '@/routes/apiUsers';
+import { index as users } from '@/routes/users';
+import type { User } from '@/support/models/user';
 import { columns } from './columns';
 import { DataTable } from './data-table';
 import { useTranslation } from 'react-i18next';
@@ -12,82 +12,88 @@ import { ResponseApi } from '@/support/interfaces/response/Response';
 import { handleApiError, showWarningToast } from '@/lib/utils';
 import HeaderContent from '@/components/header-content';
 
-const { url } = roles();
+const { url } = users();
 
 
-export default function index() {
-    const { url: apiUrl } = apiGetRoles();
+export default function Index() {
+
+
+    const { url: apiUrl } = apiGetUsers();
     const { t } = useTranslation()
 
 
-    const [allRoles, setAllRoles] = useState<Role[]>([]);
+    const [allUsers, setAllUsers] = useState<User[]>([]);
     const [processing, setProcessing] = useState(false);
     const [detailOpen, setDetailOpen] = useState(false);
     const [editOpen, setEditOpen] = useState(false);
     const [deleteOpen, setDeleteOpen] = useState(false);
     const [bulkDeleteOpen, setBulkDeleteOpen] = useState(false);
-    const [selectedRole, setSelectedRole] = useState<Role | null>(
+    const [selectedUser, setSelectedUser] = useState<User | null>(
         null,
     );
-    const [selectedRoles, setSelectedRoles] = useState<Role[]>([]);
+    const [selectedUsers, setSelectedUsers] = useState<User[]>([]);
 
-    const fetchAllRoles = async () => {
+    const fetchAllUsers = async () => {
         try {
             setProcessing(true);
-            const res = await axiosInstance.get<ResponseApi<Role[]>>(apiUrl);
+            const res = await axiosInstance.get<ResponseApi<User[]>>(apiUrl);
             if (!res.data.success) {
                 showWarningToast(res.data.message)
                 return
             }
-            setAllRoles(res.data.data);
+            setAllUsers(res.data.data);
         } catch (error) {
             handleApiError(error)
         } finally {
             setProcessing(false);
-            setSelectedRoles([])
+            setSelectedUsers([])
         }
     };
 
-    const handleDetailClick = (role: Role) => {
-        setSelectedRole(role);
+    const handleDetailClick = (user: User) => {
+        setSelectedUser(user);
         setDetailOpen(true);
     };
 
-    const handleEditClick = (role: Role) => {
-        setSelectedRole(role);
+    const handleEditClick = (user: User) => {
+        setSelectedUser(user);
         setEditOpen(true);
     };
 
-    const handleDeleteClick = (role: Role) => {
-        setSelectedRole(role);
+    const handleDeleteClick = (user: User) => {
+        setSelectedUser(user);
         setDeleteOpen(true);
     };
 
-    const handleBulkDeleteClick = (roles: Role[]) => {
-        setSelectedRoles(roles);
+    const handleBulkDeleteClick = (users: User[]) => {
+        setSelectedUsers(users);
         setBulkDeleteOpen(true);
     };
 
     useEffect(() => {
-        const fetchRoles = async () => fetchAllRoles();
+        const fetchUsers = async () => fetchAllUsers();
 
-        fetchRoles();
+        fetchUsers();
     }, []);
 
     return (
         <>
-            <Head title={t("page.role.page_name", "Peran")} />
+            <Head title={t("page.user.page_name", "Kategori")} />
             <div className="mb-16 flex h-full flex-1 flex-col overflow-x-auto rounded-xl p-4">
                 <HeaderContent>
-                    {t("page.role.page_name", "Peran")}
+                    {t("page.user.page_name", "Kategori")}
                 </HeaderContent>
                 <DataTable
                     columns={columns}
                     processing={processing}
-                    data={allRoles}
+                    data={allUsers}
                     limitOptions={[10, 20, 50, 100]}
-                    onRefresh={fetchAllRoles}
+                    onRefresh={fetchAllUsers}
+                    detailDataOpen={detailOpen}
+                    editOpen={editOpen}
                     deleteOpen={deleteOpen}
+                    setDetailOpen={setDetailOpen}
+                    setEditOpen={setEditOpen}
                     setDeleteOpen={setDeleteOpen}
                     onDetailClick={handleDetailClick}
                     onEditClick={handleEditClick}
@@ -95,18 +101,18 @@ export default function index() {
                     onBulkDeleteClick={handleBulkDeleteClick}
                     isBulkDeleteDialogOpen={bulkDeleteOpen}
                     setOpenBulkDeleteDialogOpen={setBulkDeleteOpen}
-                    selectedBulkRoles={selectedRoles}
-                    selectedRole={selectedRole}
+                    selectedBulkUsers={selectedUsers}
+                    selectedUser={selectedUser}
                 />
             </div>
         </>
     );
 }
 
-index.layout = {
+Index.layout = {
     breadcrumbs: [
         {
-            title: i18next.t("page.role.page_name", "Peran"),
+            title: i18next.t("page.user.page_name", "Kategori"),
             href: url,
         },
     ],

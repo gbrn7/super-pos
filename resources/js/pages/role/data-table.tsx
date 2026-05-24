@@ -60,11 +60,7 @@ interface DataTableProps<TData, TValue> {
     processing?: boolean;
     limitOptions?: number[];
     onRefresh: () => void;
-    detailDataOpen: boolean;
-    editOpen: boolean;
     deleteOpen: boolean;
-    setDetailOpen: (open: boolean) => void;
-    setEditOpen: (open: boolean) => void;
     setDeleteOpen: (open: boolean) => void;
     onDetailClick: (data: TData) => void;
     onEditClick: (data: TData) => void;
@@ -81,11 +77,7 @@ export function DataTable<TData, TValue>({
     processing,
     limitOptions = [10, 20, 50, 100],
     onRefresh,
-    detailDataOpen,
-    editOpen,
     deleteOpen,
-    setDetailOpen,
-    setEditOpen,
     setDeleteOpen,
     onDetailClick,
     onEditClick,
@@ -119,7 +111,7 @@ export function DataTable<TData, TValue>({
         pageSize: 10,
     });
 
-    const [searchColumn, setSearchColumn] = React.useState<string>('name');
+    const [searchColumn, setSearchColumn] = React.useState<string>(t("page.role.data_table.columns.name_column_label", "Nama"));
 
     const table = useReactTable({
         data,
@@ -155,9 +147,15 @@ export function DataTable<TData, TValue>({
                         </SelectTrigger>
                         <SelectContent>
                             <SelectGroup>
-                                <SelectLabel>{t("component.data_table.search_component.search_by", "Pencarian berdasarkan")}</SelectLabel>
-                                <SelectItem value="name">{t("component.data_table.search_component.name", "Nama")}</SelectItem>
-                                <SelectItem value="desc">{t("component.data_table.search_component.guard_name", "Nama Garda")}</SelectItem>
+                                <SelectLabel>
+                                    {t("component.data_table.search_component.search_by", "Pencarian berdasarkan")}
+                                </SelectLabel>
+                                <SelectItem value={t("page.role.data_table.columns.name_column_label", "Nama")}>
+                                    {t("component.data_table.search_component.name", "Nama")}
+                                </SelectItem>
+                                <SelectItem value={t("page.role.data_table.columns.guard_name_column_label", "Nama Garda")}>
+                                    {t("component.data_table.search_component.guard_name", "Nama Garda")}
+                                </SelectItem>
                             </SelectGroup>
                         </SelectContent>
                     </Select>
