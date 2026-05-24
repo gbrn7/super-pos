@@ -266,6 +266,14 @@
         "check_all_permissions_desc":"Pilih semua perizinan yang tersedia sekalig untuk peran ini"
       }
     },
+    "show":{
+      "page_name": "Detail Peran",
+      "form":{
+        "name_input_label":"Nama",
+        "permissions_input_label":"Perizinan",
+        "cancel_button":"Kembali"
+      }
+    },
     "dialog_modal":{
       "create_dialog": {
         "dialog_button": "Tambah Data",

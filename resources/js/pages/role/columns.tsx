@@ -15,8 +15,8 @@ import { useTranslation } from 'react-i18next';
 import { formatDate } from '@/lib/formatdate';
 import { Can } from '@/components/auth/can';
 import { PERMISSIONENUMS } from '@/support/enums/PermissionEnums';
-import { edit, edit as editRole } from '@/routes/roles';
-import { Link, router } from '@inertiajs/react';
+import { edit as editRole, show as detailRoute } from '@/routes/roles';
+import { Link } from '@inertiajs/react';
 
 
 interface ColumnsProps {
@@ -99,12 +99,12 @@ export const columns = (props?: ColumnsProps): ColumnDef<Role>[] => {
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
                         <DropdownMenuLabel>{t("component.data_table.action_menu.label", "Aksi")}</DropdownMenuLabel>
-                        <DropdownMenuItem
-                            onClick={() => props?.onDetailClick(row.original)}
-                        >
-                            <FileText className="mr-0.5 h-4 w-4" />
-                            {t("component.data_table.action_menu.detail_data_btn", "Detail data")}
-                        </DropdownMenuItem>
+                        <Link href={detailRoute(row.original.id).url}>
+                            <DropdownMenuItem>
+                                <FileText className="mr-0.5 h-4 w-4" />
+                                {t("component.data_table.action_menu.detail_data_btn", "Detail data")}
+                            </DropdownMenuItem>
+                        </Link>
                         <Can permission={PERMISSIONENUMS.ROLE.UPDATE}>
                             <Link href={editRole(row.original.id).url}>
                                 <DropdownMenuItem                            >

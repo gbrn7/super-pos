@@ -44,7 +44,6 @@ import { BulkDeleteDialog } from './dialog-modal/bulk-delete-dialog';
 import type { Role } from '@/support/models/role';
 import { useTranslation } from 'react-i18next';
 import { sprintf } from 'sprintf-js';
-import { DetailDialog } from './dialog-modal/detail-dialog';
 import { DeleteDialog } from './dialog-modal/delete-dialog';
 import { IconChevronLeft, IconChevronRight, IconChevronsLeft, IconChevronsRight } from '@tabler/icons-react';
 import { PlusCircle, TableIcon } from 'lucide-react';
@@ -306,11 +305,6 @@ export function DataTable<TData, TValue>({
                         )}
                     </TableBody>
                 </Table>
-                <DetailDialog
-                    isOpen={detailDataOpen}
-                    role={selectedRole}
-                    onOpenChange={setDetailOpen}
-                />
 
                 <DeleteDialog
                     isOpen={deleteOpen}

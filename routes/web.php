@@ -19,7 +19,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::resource('categories', CategoryController::class)->only('index');
 
-    Route::resource('roles', RoleController::class)->only(['index', 'create', 'edit']);
+    Route::resource('roles', RoleController::class)->only(['index', 'create', 'edit', 'show']);
 
     Route::resource('example', ExampleController::class);
 
