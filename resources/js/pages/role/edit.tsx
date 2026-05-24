@@ -21,6 +21,7 @@ import HeaderContent from '@/components/header-content';
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
 import { PERMISSIONLIST } from "@/support/enums/PermissionEnums";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function edit() {
   const { t } = useTranslation()
@@ -185,120 +186,146 @@ export default function edit() {
         </HeaderContent>
         <div className="form-container">
           <form onSubmit={handleSubmit} className="space-y-4 border p-3 rounded-2xl">
-            <div className="justify-end confirm-btn-wrapper flex gap-2">
-              <Link href={index().url}>
-                <Button type="button" variant="outline">{t("page.role.edit.form.cancel_button", "Batal")}</Button>
-              </Link>
-              <Button disabled={loading} type="submit" className="btn-outlie"> {loading ? <Spinner /> : t("page.role.edit.form.confirm_button", "Simpan Perubahan")}</Button>
-            </div>
-            <Field>
-              <label htmlFor="name" className="text-sm">
-                {t("page.role.edit.form.name_input_label", "Nama")}
-              </label>
-              <Input
-                id="name"
-                name="name"
-                placeholder={t("page.role.edit.form.name_input_placeholder", "Masukkan nama peran")}
-                value={formData.name}
-                onChange={handleChange}
-                disabled={loading}
-                className={`${errorForm.name && 'border-red-500'}`}
-              />
-              {errorForm.name && (
-                <ErrorFormInfo message={errorForm.name} />
-              )}
-            </Field>
+            {
+              loading ? (
+                <Skeleton className="h-6 w-full" />
+              ) : (
+                <div className="justify-end confirm-btn-wrapper flex gap-2">
+                  <Link href={index().url}>
+                    <Button type="button" variant="outline">{t("page.role.edit.form.cancel_button", "Batal")}</Button>
+                  </Link>
+                  <Button disabled={loading} type="submit" className="btn-outlie"> {loading ? <Spinner /> : t("page.role.edit.form.confirm_button", "Simpan Perubahan")}</Button>
+                </div>
+              )
+            }
+
+            {
+              loading ? (
+                <Skeleton className="h-10" />
+              ) : (
+                <Field>
+                  <label htmlFor="name" className="text-sm">
+                    {t("page.role.edit.form.name_input_label", "Nama")}
+                  </label>
+                  <Input
+                    id="name"
+                    name="name"
+                    placeholder={t("page.role.edit.form.name_input_placeholder", "Masukkan nama peran")}
+                    value={formData.name}
+                    onChange={handleChange}
+                    disabled={loading}
+                    className={`${errorForm.name && 'border-red-500'}`}
+                  />
+                  {errorForm.name && (
+                    <ErrorFormInfo message={errorForm.name} />
+                  )}
+                </Field>
+              )
+            }
 
             {/* Permissions Section */}
-            <div className="space-y-4">
-              <div className="flex items-center justify-between">
-                <div>
-                  <Label className=" text-sm">{t("page.role.edit.form.permissions_input_label", "Izin")}</Label>
+            {
+              loading ? (
+                <div className="space-y-2">
+                  <Skeleton className="h-20" />
+                  <Skeleton className="h-20" />
+                  <Skeleton className="h-20" />
+                  <Skeleton className="h-20" />
+                  <Skeleton className="h-20" />
                 </div>
-              </div>
-
-              {/* Check All Permissions */}
-              <div className={`Permission-Wrapper space-y-2 border p-3 rounded-2xl ${errorForm.permissions && 'border-red-500'}`}>
-                <div
-                  className={`flex items-center gap-3 p-4 rounded-lg border-2 transition-all cursor-pointer}`}
-                >
-                  <Checkbox
-                    id="check-all"
-                    checked={formData.permissions.length === PERMISSIONS.flatMap((permission) => permission.ACCESSLIST.map((access) => access.VALUE)).length}
-                    onCheckedChange={(isChecked) => handleCheckAllPermissions(isChecked as boolean)}
-                  />
-                  <div className="flex-1">
-                    <label htmlFor="check-all" className=" font-semibold cursor-pointer capitalize">
-                      {t("page.role.edit.form.check_all_permissions", "Pilih semua perizinan")}
-                    </label>
-                    <p className="text-slate-400 text-sm mt-0.5">
-                      {t("page.role.edit.form.check_all_permissions_desc", "Pilih semua perizinan yang tersedia sekalig untuk peran ini")}
-                    </p>
+              ) : (
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <Label className=" text-sm">{t("page.role.edit.form.permissions_input_label", "Izin")}</Label>
+                    </div>
                   </div>
-                </div>
 
-                <div className="permission-container grid grid-cols-1 md:grid-cols-2 gap-4">
-
-                  {PERMISSIONS.map((permission) => (
-                    <div className="space-y-3 border p-3 rounded-xl" key={permission.LABEL}>
-                      <div className="flex items-center justify-between pb-2 border-b border-secondary">
-                        <div className="flex items-center">
-                          <h3 className=" font-semibold">{permission.LABEL}</h3>
-                        </div>
-                        <div
-                          className={`flex items-center gap-2 px-3 py-1.5 rounded cursor-pointer transition-all 
-                    }`}
-                        >
-                          <Checkbox
-                            id={`check-all-${permission.LABEL}`}
-                            checked={permission.ACCESSLIST.every((access) =>
-                              formData.permissions.includes(access.VALUE)
-                            )}
-                            onCheckedChange={(isChecked) =>
-                              handleCheckGroupPermissions(permission, isChecked as boolean)
-                            }
-                          />
-                          <label
-                            htmlFor={`check-all-${permission.LABEL}`}
-                            className="text-slate-300 text-xs font-medium cursor-pointer"
-                          >
-                            {t("page.role.edit.form.check_all_permissions", "Pilih semua perizinan")}
-                          </label>
-                        </div>
+                  {/* Check All Permissions */}
+                  <div className={`Permission-Wrapper space-y-2 border p-3 rounded-2xl ${errorForm.permissions && 'border-red-500'}`}>
+                    <div
+                      className={`flex items-center gap-3 p-4 rounded-lg border-2 transition-all cursor-pointer}`}
+                    >
+                      <Checkbox
+                        id="check-all"
+                        checked={formData.permissions.length === PERMISSIONS.flatMap((permission) => permission.ACCESSLIST.map((access) => access.VALUE)).length}
+                        onCheckedChange={(isChecked) => handleCheckAllPermissions(isChecked as boolean)}
+                      />
+                      <div className="flex-1">
+                        <label htmlFor="check-all" className=" font-semibold cursor-pointer capitalize">
+                          {t("page.role.edit.form.check_all_permissions", "Pilih semua perizinan")}
+                        </label>
+                        <p className="text-slate-400 text-sm mt-0.5">
+                          {t("page.role.edit.form.check_all_permissions_desc", "Pilih semua perizinan yang tersedia sekalig untuk peran ini")}
+                        </p>
                       </div>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                        {permission.ACCESSLIST.map((access) => (
-                          <div
-                            key={access.VALUE}
-                            className={`flex items-center gap-3 p-4 rounded-lg border-2 transition-all cursor-pointer`}
-                          >
-                            <Checkbox
-                              id={access.VALUE}
-                              value={access.VALUE}
-                              checked={formData.permissions.includes(access.VALUE)}
-                              onCheckedChange={(isChecked) =>
-                                handlePermissionChange(access.VALUE, isChecked as boolean)
-                              }
-                            />
-                            <div className="flex-1 min-w-0">
+                    </div>
+
+                    <div className="permission-container grid grid-cols-1 md:grid-cols-2 gap-4">
+
+                      {PERMISSIONS.map((permission) => (
+                        <div className="space-y-3 border p-3 rounded-xl" key={permission.LABEL}>
+                          <div className="flex items-center justify-between pb-2 border-b border-secondary">
+                            <div className="flex items-center">
+                              <h3 className=" font-semibold">{permission.LABEL}</h3>
+                            </div>
+                            <div
+                              className={`flex items-center gap-2 px-3 py-1.5 rounded cursor-pointer transition-all 
+                    }`}
+                            >
+                              <Checkbox
+                                id={`check-all-${permission.LABEL}`}
+                                checked={permission.ACCESSLIST.every((access) =>
+                                  formData.permissions.includes(access.VALUE)
+                                )}
+                                onCheckedChange={(isChecked) =>
+                                  handleCheckGroupPermissions(permission, isChecked as boolean)
+                                }
+                              />
                               <label
-                                htmlFor={access.VALUE}
-                                className=" font-medium cursor-pointer block capitalize"
+                                htmlFor={`check-all-${permission.LABEL}`}
+                                className="text-slate-300 text-xs font-medium cursor-pointer"
                               >
-                                {access.LABEL}
+                                {t("page.role.edit.form.check_all_permissions", "Pilih semua perizinan")}
                               </label>
                             </div>
                           </div>
-                        ))}
-                      </div>
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            {permission.ACCESSLIST.map((access) => (
+                              <div
+                                key={access.VALUE}
+                                className={`flex items-center gap-3 p-4 rounded-lg border-2 transition-all cursor-pointer`}
+                              >
+                                <Checkbox
+                                  id={access.VALUE}
+                                  value={access.VALUE}
+                                  checked={formData.permissions.includes(access.VALUE)}
+                                  onCheckedChange={(isChecked) =>
+                                    handlePermissionChange(access.VALUE, isChecked as boolean)
+                                  }
+                                />
+                                <div className="flex-1 min-w-0">
+                                  <label
+                                    htmlFor={access.VALUE}
+                                    className=" font-medium cursor-pointer block capitalize"
+                                  >
+                                    {access.LABEL}
+                                  </label>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      ))}
                     </div>
-                  ))}
+                    {errorForm.permissions && (
+                      <ErrorFormInfo message={errorForm.permissions} />
+                    )}
+                  </div>
                 </div>
-                {errorForm.permissions && (
-                  <ErrorFormInfo message={errorForm.permissions} />
-                )}
-              </div>
-            </div>
+              )
+            }
+
           </form>
         </div >
       </div >
