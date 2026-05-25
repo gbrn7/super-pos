@@ -9,6 +9,7 @@ use App\Support\Enums\RolePermissionEnums;
 use Illuminate\Database\Seeder;
 use App\Models\Permission;
 use App\Models\Role;
+use App\Support\Enums\UnitPermissionEnums;
 
 class PermissionSeeder extends Seeder
 {
@@ -35,6 +36,13 @@ class PermissionSeeder extends Seeder
             ]);
         }
 
+        foreach (UnitPermissionEnums::cases() as $permission) {
+            Permission::firstOrCreate([
+                'name' => $permission->value,
+            ]);
+        }
+
+
         //super admin already have access, the setup gate on appServiceProvider
 
         $admin = Role::findByName(RoleEnums::ADMIN->value);
@@ -48,6 +56,10 @@ class PermissionSeeder extends Seeder
             // CategoryPermissionEnums::DELETE_CATEGORY->value,
 
             RolePermissionEnums::READ_ROLE->value,
+            UnitPermissionEnums::CREATE_UNIT->value,
+            UnitPermissionEnums::READ_UNIT->value,
+            UnitPermissionEnums::UPDATE_UNIT->value,
+            UnitPermissionEnums::DELETE_UNIT->value,
         ]);
 
         $user = Role::findByName(RoleEnums::USER->value);
@@ -55,6 +67,7 @@ class PermissionSeeder extends Seeder
         $user->givePermissionTo([
             DashboardPermissionEnums::READ_DASHBOARD->value,
             CategoryPermissionEnums::READ_CATEGORY->value,
+            UnitPermissionEnums::READ_UNIT->value,
         ]);
     }
 }

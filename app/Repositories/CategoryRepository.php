@@ -43,7 +43,6 @@ class CategoryRepository implements CategoryRepositoryInterface
         return $category->delete();
     }
 
-
     public function deleteMany(array $ids): int
     {
         return Category::destroy($ids);
