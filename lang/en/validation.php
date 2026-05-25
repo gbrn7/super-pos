@@ -10,8 +10,9 @@ return [
 
   'array' => 'The :attribute field must be a array.',
 
-
   'unique' => 'The :attribute already exists',
+
+  'confirmed' => 'The :attribute confirmation does not match',
 
   'min' => [
     'string' => 'The :attribute field must be at least :min characters.',
@@ -28,7 +29,11 @@ return [
     'name' => 'Name',
     'desc' => 'Description',
     'age' => 'Age',
-    'permissions' => 'Permissions'
+    'permissions' => 'Permissions',
+    'role' => 'Role',
+    'password' => 'Password',
+    'password_confirmation' => 'Password Confirmation'
+
   ],
 
 ];

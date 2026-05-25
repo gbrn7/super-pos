@@ -102,7 +102,12 @@ class ApiUserController extends Controller implements HasMiddleware
     public function update(UpdateUserRequest $request, string $id)
     {
         try {
-            $user = $this->userService->update($id, $request->validated());
+            $data = $request->validated();
+            if (empty($data['password'])) {
+                unset($data['password']);
+            }
+
+            $user = $this->userService->update($id, $data);
 
             $data = UserResource::make($user);
 

@@ -98,13 +98,13 @@ export function CreateDialog({ onSuccess }: CreateDialogProps) {
 
             showSuccessToast(res.data.message)
             setFormData({ name: '', desc: '' });
+            setOpen(false);
             onSuccess();
         } catch (error) {
             console.error('Error creating category:', error);
             handleApiError(error)
         } finally {
             setLoading(false);
-            setOpen(false);
         }
     };
 

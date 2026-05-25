@@ -43,7 +43,6 @@ import {
 import { CreateDialog } from './dialog-modal/create-dialog';
 import { BulkDeleteDialog } from './dialog-modal/bulk-delete-dialog';
 import type { User } from '@/support/models/user';
-import { ImportExcelDialog } from './dialog-modal/import-excel-dialog';
 import { useTranslation } from 'react-i18next';
 import { sprintf } from 'sprintf-js';
 import { DetailDialog } from './dialog-modal/detail-dialog';
@@ -53,6 +52,7 @@ import { IconChevronLeft, IconChevronRight, IconChevronsLeft, IconChevronsRight 
 import { TableIcon } from 'lucide-react';
 import { Can } from '@/components/auth/can';
 import { PERMISSIONENUMS } from '@/support/enums/PermissionEnums';
+import { Role } from '@/support/models/role';
 
 interface DataTableProps<TData, TValue> {
     columns:
@@ -76,6 +76,7 @@ interface DataTableProps<TData, TValue> {
     setOpenBulkDeleteDialogOpen: (open: boolean) => void;
     selectedBulkUsers: User[]
     selectedUser: User | null
+    roles: Role[]
 }
 export function DataTable<TData, TValue>({
     columns: columnsOrFn,
@@ -96,7 +97,8 @@ export function DataTable<TData, TValue>({
     isBulkDeleteDialogOpen,
     setOpenBulkDeleteDialogOpen,
     selectedBulkUsers,
-    selectedUser
+    selectedUser,
+    roles
 }: DataTableProps<TData, TValue>) {
     const { t } = useTranslation();
 
@@ -143,6 +145,7 @@ export function DataTable<TData, TValue>({
             pagination,
         },
     });
+
 
     return (
         <div className='p-3 border rounded-2xl'>
@@ -235,7 +238,7 @@ export function DataTable<TData, TValue>({
                     <Can
                         permission={PERMISSIONENUMS.USER.CREATE}
                     >
-                        <CreateDialog onSuccess={onRefresh} />
+                        <CreateDialog onSuccess={onRefresh} roles={roles} />
                     </Can>
                 </div>
 
@@ -321,6 +324,7 @@ export function DataTable<TData, TValue>({
                     setOpen={setEditOpen}
                     user={selectedUser}
                     key={selectedUser?.id}
+                    roles={roles}
                 />
 
                 <DeleteDialog

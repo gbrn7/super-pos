@@ -69,7 +69,7 @@ export const columns = (props?: ColumnsProps): ColumnDef<User>[] => {
         },
         {
             id: t("page.user.data_table.columns.role_column_label", "Role"),
-            accessorKey: 'role.name',
+            accessorKey: 'role',
             header: ({ column }) => (
                 <DataTableHeader column={column} title={t("page.user.data_table.columns.role_column_label", "Role")} />
             ),

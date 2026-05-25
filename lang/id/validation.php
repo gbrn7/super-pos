@@ -12,6 +12,8 @@ return [
 
   'unique' => ':attribute sudah ada',
 
+  'confirmed' => ':attribute konfirmasi tidak cocok',
+
   'min' => [
     'string' => ':attribute minimal :min karakter.',
     'numeric' => ':attribute minimal :min.',
@@ -27,7 +29,10 @@ return [
     'name' => 'Nama',
     'desc' => 'Deskripsi',
     'age' => 'Umur',
-    'permissions' => 'Hak akses'
+    'permissions' => 'Hak akses',
+    'role' => 'Peran',
+    'password' => 'Kata sandi',
+    'password_confirmation' => 'Konfirmasi kata sandi'
   ],
 
 ];

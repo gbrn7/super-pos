@@ -1,6 +1,7 @@
 import { Head } from '@inertiajs/react';
 import { useState, useEffect } from 'react';
 import { index as apiGetUsers } from '@/routes/apiUsers';
+import { index as apiGetRoles } from '@/routes/apiRoles';
 import { index as users } from '@/routes/users';
 import type { User } from '@/support/models/user';
 import { columns } from './columns';
@@ -11,6 +12,7 @@ import axiosInstance from '@/lib/axios';
 import { ResponseApi } from '@/support/interfaces/response/Response';
 import { handleApiError, showWarningToast } from '@/lib/utils';
 import HeaderContent from '@/components/header-content';
+import { Role } from '@/support/models/role';
 
 const { url } = users();
 
@@ -23,6 +25,7 @@ export default function Index() {
 
 
     const [allUsers, setAllUsers] = useState<User[]>([]);
+    const [roles, setRoles] = useState<Role[]>([]);
     const [processing, setProcessing] = useState(false);
     const [detailOpen, setDetailOpen] = useState(false);
     const [editOpen, setEditOpen] = useState(false);
@@ -37,11 +40,30 @@ export default function Index() {
         try {
             setProcessing(true);
             const res = await axiosInstance.get<ResponseApi<User[]>>(apiUrl);
+
             if (!res.data.success) {
                 showWarningToast(res.data.message)
                 return
             }
             setAllUsers(res.data.data);
+        } catch (error) {
+            handleApiError(error)
+        } finally {
+            setProcessing(false);
+            setSelectedUsers([])
+        }
+    };
+
+    const fetchRoles = async () => {
+        try {
+            const res = await axiosInstance.get<ResponseApi<Role[]>>(apiGetRoles().url);
+
+            if (!res.data.success) {
+                showWarningToast(res.data.message)
+                return
+            }
+
+            setRoles(res.data.data);
         } catch (error) {
             handleApiError(error)
         } finally {
@@ -72,8 +94,10 @@ export default function Index() {
 
     useEffect(() => {
         const fetchUsers = async () => fetchAllUsers();
+        const fetchUserRoles = async () => fetchRoles();
 
         fetchUsers();
+        fetchUserRoles();
     }, []);
 
     return (
@@ -84,6 +108,7 @@ export default function Index() {
                     {t("page.user.page_name", "Kategori")}
                 </HeaderContent>
                 <DataTable
+                    roles={roles}
                     columns={columns}
                     processing={processing}
                     data={allUsers}
