@@ -25,11 +25,19 @@ enum UserPermissionEnums {
   DELETE = 'delete-user',
 }
 
+enum UnitPermissionEnums {
+  CREATE = 'create-unit',
+  READ = 'read-unit',
+  UPDATE = 'update-unit',
+  DELETE = 'delete-unit',
+}
+
 export const PERMISSIONENUMS = {
   CATEGORY: CategoryPermissionEnums,
   DASHBOARD: DashboardPermissionEnums,
   ROLE: RolePermissionEnums,
   USER: UserPermissionEnums,
+  UNIT: UnitPermissionEnums,
 }
 
 export const PERMISSIONLIST = (): Permission[] => {
@@ -107,6 +115,27 @@ export const PERMISSIONLIST = (): Permission[] => {
           VALUE: UserPermissionEnums.DELETE,
         }
       ]
-    }
+    },
+    {
+      LABEL: t("permission_label.unit.permission", "Satuan"),
+      ACCESSLIST: [
+        {
+          LABEL: t("permission_label.unit.create", "Buat Satuan"),
+          VALUE: UnitPermissionEnums.CREATE,
+        },
+        {
+          LABEL: t("permission_label.unit.read", "Baca Satuan"),
+          VALUE: UnitPermissionEnums.READ,
+        },
+        {
+          LABEL: t("permission_label.unit.update", "Update Satuan"),
+          VALUE: UnitPermissionEnums.UPDATE,
+        },
+        {
+          LABEL: t("permission_label.unit.delete", "Hapus Satuan"),
+          VALUE: UnitPermissionEnums.DELETE,
+        }
+      ]
+    },
   ]
 }

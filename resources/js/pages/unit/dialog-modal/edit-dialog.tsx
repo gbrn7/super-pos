@@ -8,40 +8,48 @@ import {
     DialogFooter,
     DialogHeader,
     DialogTitle,
-    DialogTrigger,
 } from '@/components/ui/dialog';
 import { Field, FieldGroup } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
-import { store as storeRole } from '@/routes/apiRoles';
-import type { RoleForm } from '@/support/interfaces/request/role';
+import { Textarea } from '@/components/ui/textarea';
+import { update as updateUnit } from '@/routes/apiUnits';
+import type { Unit } from '@/support/models/unit';
 import { useTranslation } from 'react-i18next';
 import { Spinner } from '@/components/ui/spinner';
 import axiosInstance from '@/lib/axios';
 import { ResponseApi } from '@/support/interfaces/response/Response';
-import { Role } from '@/support/models/role';
 import { handleApiError, showSuccessToast, showWarningToast } from '@/lib/utils';
-import { PlusCircle } from 'lucide-react';
+import { UnitForm } from '@/support/interfaces/request/unit';
 import z from 'zod';
 import ErrorFormInfo from '@/components/errorFormInfo';
 
-interface CreateDialogProps {
+interface EditDialogProps {
+    isOpen: boolean;
     onSuccess: () => void;
+    unit: Unit | null;
+    setOpen: (open: boolean) => void;
 }
 
-export function CreateDialog({ onSuccess }: CreateDialogProps) {
+export function EditDialog({
+    isOpen,
+    onSuccess,
+    unit,
+    setOpen,
+}: EditDialogProps) {
     const { t } = useTranslation();
-    const [open, setOpen] = useState(false);
+
     const [loading, setLoading] = useState<boolean>(false);
-    const [formData, setFormData] = useState<RoleForm>({
-        name: ''
+
+    const [formData, setFormData] = useState({
+        name: unit?.name ?? ''
     });
 
-    const [errorForm, setErrorForm] = useState<RoleForm>({
+    const [errorForm, setErrorForm] = useState<UnitForm>({
         name: ""
     });
 
-    const roleSchema = z.object({
-        name: z.string().trim().min(1, t("validation.role.required.name", "Nama tidak boleh kosong")),
+    const unitSchema = z.object({
+        name: z.string().trim().min(1, t("validation.unit.required.name", "Nama tidak boleh kosong"))
     });
 
     const handleChange = (
@@ -62,15 +70,15 @@ export function CreateDialog({ onSuccess }: CreateDialogProps) {
     const handleSubmit = async (e: React.SubmitEvent) => {
         e.preventDefault();
 
-        const resultValidation = roleSchema.safeParse(formData);
+        const resultValidation = unitSchema.safeParse(formData);
 
         if (!resultValidation.success) {
-            const fieldErrors: RoleForm = {
+            const fieldErrors: UnitForm = {
                 name: ""
             };
 
             resultValidation.error.issues.forEach((error) => {
-                const fieldName = error.path[0] as keyof RoleForm;
+                const fieldName = error.path[0] as keyof UnitForm;
 
                 fieldErrors[fieldName] = error.message;
             });
@@ -80,11 +88,12 @@ export function CreateDialog({ onSuccess }: CreateDialogProps) {
             return;
         }
 
+
         try {
             setLoading(true);
 
-            const res = await axiosInstance.post<ResponseApi<Role>>(storeRole().url, formData);
 
+            const res = await axiosInstance.put<ResponseApi<Unit>>(updateUnit(unit?.id || '').url, formData);
 
             if (!res.data.success) {
                 showWarningToast(res.data.message)
@@ -92,10 +101,9 @@ export function CreateDialog({ onSuccess }: CreateDialogProps) {
             }
 
             showSuccessToast(res.data.message)
-            setFormData({ name: '' });
             onSuccess();
         } catch (error) {
-            console.error('Error creating role:', error);
+            console.error('Error updating unit:', error);
             handleApiError(error)
         } finally {
             setLoading(false);
@@ -104,37 +112,30 @@ export function CreateDialog({ onSuccess }: CreateDialogProps) {
     };
 
     return (
-        <Dialog open={open} onOpenChange={setOpen}>
-            <DialogTrigger asChild>
-                <Button variant="outline">
-                    <PlusCircle className="h-4" />
-                    {t("page.role.dialog_modal.create_dialog.dialog_button", "Tambah Peran")}
-                </Button>
-            </DialogTrigger>
-            <DialogContent>
+        <Dialog open={isOpen} onOpenChange={setOpen}>
+            <DialogContent onOpenAutoFocus={(e) => e.preventDefault()}>
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <DialogHeader>
-                        <DialogTitle>{t("page.role.dialog_modal.create_dialog.dialog_title", "Tambah Peran")}</DialogTitle>
+                        <DialogTitle>{t("page.unit.dialog_modal.edit_dialog.dialog_title", "Edit Unit")}</DialogTitle>
                         <DialogDescription>
-                            {t("page.role.dialog_modal.create_dialog.dialog_desc", "Tambahkan peran baru toko anda")}
+                            {t("page.unit.dialog_modal.edit_dialog.dialog_desc", "Edit data unit")}
                         </DialogDescription>
                     </DialogHeader>
                     <FieldGroup>
                         <Field>
                             <label htmlFor="name" className="text-sm">
-                                {t("page.role.dialog_modal.create_dialog.name_input_label", "Nama")}
+                                {t("page.unit.dialog_modal.edit_dialog.name_input_label", "Nama")}
                             </label>
                             <Input
                                 id="name"
                                 name="name"
-                                placeholder={t("page.role.dialog_modal.create_dialog.name_input_placeholder", "Masukkan nama peran")}
+                                placeholder={t("page.unit.dialog_modal.edit_dialog.name_input_placeholder", "Masukkan nama unit")}
                                 value={formData.name}
                                 onChange={handleChange}
                                 disabled={loading}
                             />
                             {errorForm.name && (
                                 <ErrorFormInfo message={errorForm.name} />
-
                             )}
                         </Field>
                     </FieldGroup>
@@ -146,11 +147,11 @@ export function CreateDialog({ onSuccess }: CreateDialogProps) {
                                 onClick={() => setOpen(false)}
                                 disabled={loading}
                             >
-                                {t("page.role.dialog_modal.create_dialog.cancel_button", "Batal")}
+                                {t("page.unit.dialog_modal.edit_dialog.cancel_button", "Batal")}
                             </Button>
                         </DialogClose>
                         <Button type="submit" disabled={loading}>
-                            {loading ? <Spinner /> : t("page.role.dialog_modal.create_dialog.confirm_button", "Tambah")}
+                            {loading ? <Spinner /> : t("page.unit.dialog_modal.edit_dialog.confirm_button", "Edit Unit")}
                         </Button>
                     </DialogFooter>
                 </form>

@@ -12,8 +12,8 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
-import { bulkDelete } from '@/routes/apiRoles';
-import type { Role } from '@/support/models/role';
+import { bulkDelete } from '@/routes/apiUnits';
+import type { Unit } from '@/support/models/unit';
 import { Button } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
 import { t } from 'i18next';
@@ -27,7 +27,7 @@ interface BulkDeleteDialogProps {
   selectedLength: number,
   isOpen: boolean;
   onSuccess: () => void;
-  roles: Role[];
+  units: Unit[];
   setOpen: (open: boolean) => void;
   onBulkDeleteClick: () => void;
 }
@@ -37,7 +37,7 @@ export function BulkDeleteDialog({
   selectedLength,
   isOpen,
   onSuccess,
-  roles,
+  units,
   setOpen,
   onBulkDeleteClick
 }: BulkDeleteDialogProps) {
@@ -47,7 +47,7 @@ export function BulkDeleteDialog({
     try {
       setLoading(true);
 
-      const ids = roles.map((cat) => cat.id);
+      const ids = units.map((cat) => cat.id);
       const res = await axiosInstance.post<ResponseApi<boolean>>(bulkDelete().url, { ids });
 
       if (!res.data.success) {
@@ -58,7 +58,7 @@ export function BulkDeleteDialog({
       showSuccessToast(res.data.message)
       onSuccess();
     } catch (error) {
-      console.error('Error deleting roles:', error);
+      console.error('Error deleting units:', error);
       handleApiError(error)
     } finally {
       setLoading(false);
@@ -74,7 +74,7 @@ export function BulkDeleteDialog({
           <Trash2Icon className="h-4" />
           {sprintf
             (
-              t("page.role.dialog_modal.bulk_delete_dialog.dialog_button", "Hapus"),
+              t("page.unit.dialog_modal.bulk_delete_dialog.dialog_button", "Hapus"),
               selectedLength)
           }
         </Button>
@@ -90,12 +90,12 @@ export function BulkDeleteDialog({
           <AlertDialogTitle>
             {sprintf
               (
-                t("page.role.dialog_modal.bulk_delete_dialog.dialog_title", "Hapus %d Peran"),
+                t("page.unit.dialog_modal.bulk_delete_dialog.dialog_title", "Hapus %d satuan"),
                 selectedLength)
             }
           </AlertDialogTitle>
           <AlertDialogDescription>
-            {sprintf(t("page.role.dialog_modal.bulk_delete_dialog.dialog_desc", "Apakah anda yakin akan menghapus %d peran ?"), selectedLength)}
+            {sprintf(t("page.unit.dialog_modal.bulk_delete_dialog.dialog_desc", "Apakah anda yakin akan menghapus %d satuan ?"), selectedLength)}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
@@ -110,7 +110,7 @@ export function BulkDeleteDialog({
             variant="destructive"
             disabled={loading}
           >
-            {loading ? <Spinner /> : t("page.role.dialog_modal.bulk_delete_dialog.confirm_button", "Hapus Peran")}
+            {loading ? <Spinner /> : t("page.unit.dialog_modal.bulk_delete_dialog.confirm_button", "Hapus Satuan")}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

@@ -46,6 +46,13 @@
     "dashboard":{
       "permission":"Akses Dasbor",
       "read":"Baca Dasbor"
+    },
+    "unit":{
+      "permission":"Akses Satuan",
+      "create":"Buat Satuan",
+      "read":"Baca Satuan",
+      "update":"Edit Satuan",
+      "delete":"Hapus Satuan"
     }
   },
   "component":{
@@ -54,7 +61,8 @@
       "example_menu_label":"Example",
       "category_menu_label":"Kategori",
       "role_menu_label":"Peran",
-      "user_menu_label":"Pengguna"
+      "user_menu_label":"Pengguna",
+      "unit_menu_label":"Satuan"
     },
     "data_table": {
       "search_component":{
@@ -175,6 +183,60 @@
   "dashboard":{
     "title":"Dasbor"
   },
+  "unit":{
+    "page_name":"Satuan",
+    "data_table":{
+      "columns":{
+        "select_column_label":"Pilih",
+        "name_column_label":"Nama",
+        "created_at_column_label":"Tanggal Dibuat",
+        "updated_at_column_label":"Tanggal Diperbarui",
+        "actions_column_label":"Aksi"
+      }
+    },
+    "dialog_modal":{
+      "create_dialog": {
+        "dialog_button": "Tambah Data",
+        "dialog_title": "Tambah Satuan",
+        "dialog_desc": "Tambahkan satuan baru produk anda",
+        "name_input_label":"Nama",
+        "name_input_placeholder":"Masukkan nama satuan",
+        "cancel_button":"Batal",
+        "confirm_button":"Tambah Satuan"
+      },
+      "edit_dialog": {
+        "dialog_button": "Edit Data",
+        "dialog_title": "Edit Satuan",
+        "dialog_desc": "Edit data satuan",
+        "name_input_label":"Nama",
+        "name_input_placeholder":"Masukkan nama satuan",
+        "cancel_button":"Batal",
+        "confirm_button":"Edit Satuan"
+      },
+      "detail_dialog": {
+        "dialog_button": "Detail Data",
+        "dialog_title": "Detail Satuan",
+        "dialog_desc": "Detail data satuan",
+        "name_label":"Nama",
+        "created_at_label":"Tanggal Dibuat",
+        "updated_at_label": "Tanggal Diperbarui"
+      }, 
+      "delete_dialog": {
+        "dialog_button": "Hapus Data",
+        "dialog_title": "Hapus Satuan",
+        "dialog_desc": "Apakah anda yakin akan menghapus data ini ?",
+        "cancel_button":"Batal",
+        "confirm_button":"Hapus Satuan"
+      }, 
+      "bulk_delete_dialog": {
+        "dialog_button": "Hapus",
+        "dialog_title": "Hapus %d satuan",
+        "dialog_desc": "Apakah anda yakin akan menghapus %d satuan ?",
+        "cancel_button":"Batal",
+        "confirm_button":"Hapus Satuan"
+      }
+    }
+  },
   "category":{
     "page_name":"Kategori",
     "data_table":{
@@ -184,7 +246,7 @@
         "desc_column_label":"Deskripsi",
         "created_at_column_label":"Tanggal Dibuat",
         "updated_at_column_label":"Tanggal Diperbarui",
-        "actions_at_column_label":"Aksi"
+        "actions_column_label":"Aksi"
       }
     },
     "dialog_modal":{
@@ -253,7 +315,7 @@
         "guard_name_column_label":"Nama Garda",
         "created_at_column_label":"Tanggal Dibuat",
         "updated_at_column_label":"Tanggal Diperbarui",
-        "actions_at_column_label":"Aksi"
+        "actions_column_label":"Aksi"
       }
     },
     "create":{
@@ -340,7 +402,7 @@
         "role_column_label":"Peran",
         "created_at_column_label":"Tanggal Dibuat",
         "updated_at_column_label":"Tanggal Diperbarui",
-        "actions_at_column_label":"Aksi"
+        "actions_column_label":"Aksi"
       }
     },
     "dialog_modal":{

@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { Trash2Icon } from 'lucide-react';
 import { useState } from 'react';
 import {

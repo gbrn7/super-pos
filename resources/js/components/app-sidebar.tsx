@@ -1,5 +1,5 @@
 import { Link } from '@inertiajs/react';
-import { Book, LayoutGrid, Tags, User } from 'lucide-react';
+import { Book, LayoutGrid, Tags, User, Weight } from 'lucide-react';
 import AppLogo from '@/components/app-logo';
 import { NavFooter } from '@/components/nav-footer';
 import { NavMain } from '@/components/nav-main';
@@ -17,6 +17,7 @@ import { dashboard } from '@/routes';
 import { index as categories } from '@/routes/categories';
 import { index as roles } from '@/routes/roles';
 import { index as users } from '@/routes/users';
+import { index as units } from '@/routes/units';
 import type { NavItem } from '@/types';
 import { useTranslation } from 'react-i18next';
 import { IconUserKey } from '@tabler/icons-react';
@@ -56,6 +57,13 @@ export function AppSidebar() {
                 role: []
             },
             {
+                title: t("component.sidebar.unit_menu_label", "Satuan"),
+                href: units(),
+                icon: Weight,
+                permission: PERMISSIONENUMS.UNIT.READ,
+                role: []
+            },
+            {
                 title: t("component.sidebar.category_menu_label", "Kategori"),
                 href: categories(),
                 icon: Tags,
@@ -75,7 +83,7 @@ export function AppSidebar() {
                 icon: User,
                 permission: PERMISSIONENUMS.USER.READ,
                 role: []
-            },
+            }
         ];
 
     return (

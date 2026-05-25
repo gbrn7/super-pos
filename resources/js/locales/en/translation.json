@@ -18,19 +18,29 @@
 },
   "permission_label":{
     "category":{
+      "permission":"Access Category",
       "create":"Create Category",
       "read":"Read Category",
       "update":"Edit Category",
       "delete":"Delete Category"
     },
     "role":{
+      "permission":"Access Role",
       "create":"Create Role",
       "read":"Read Role",
       "update":"Edit Role",
       "delete":"Delete Role"
     },
     "dashboard":{
-      "read":"Read Dasbor"
+      "permission":"Access Dashboard",
+      "read":"Read Dashboard"
+    },
+    "unit":{
+      "permission":"Access Unit",
+      "create":"Create Unit",
+      "read":"Read Unit",
+      "update":"Update Unit",
+      "delete":"Delete Unit"
     }
   },
   "component": {
@@ -39,7 +49,8 @@
       "example_menu_label": "Example",
       "category_menu_label": "Category",
       "role_menu_label":"Role",
-      "user_menu_label":"User"
+      "user_menu_label":"User",
+      "unit_menu_label":"Unit"
     },
     "data_table": {
       "search_component": {
@@ -160,6 +171,60 @@
     "dashboard": {
       "title": "Dashboard"
     },
+    "unit":{
+     "page_name":"Unit",
+     "data_table":{
+      "columns":{
+        "select_column_label":"Select",
+        "name_column_label":"Name",
+        "created_at_column_label":"Created At",
+        "updated_at_column_label":"Updated At",
+        "actions_column_label":"Actions"
+      }
+    },
+     "dialog_modal":{
+      "create_dialog": {
+        "dialog_button": "Add Data",
+        "dialog_title": "Add Unit",
+        "dialog_desc": "Add a new unit for your product",
+        "name_input_label":"Name",
+        "name_input_placeholder":"Enter unit name",
+        "cancel_button":"Cancel",
+        "confirm_button":"Add Unit"
+      },
+      "edit_dialog": {
+        "dialog_button": "Edit Data",
+        "dialog_title": "Edit Unit",
+        "dialog_desc": "Edit unit data",
+        "name_input_label":"Name",
+        "name_input_placeholder":"Enter unit name",
+        "cancel_button":"Cancel",
+        "confirm_button":"Edit Unit"
+      },
+      "detail_dialog": {
+        "dialog_button": "Detail Data",
+        "dialog_title": "Detail Unit",
+        "dialog_desc": "Detail unit data",
+        "name_label":"Name",
+        "created_at_label":"Created At",
+        "updated_at_label": "Updated At"
+      }, 
+      "delete_dialog": {
+        "dialog_button": "Delete Data",
+        "dialog_title": "Delete Unit",
+        "dialog_desc": "Are you sure you want to delete this data?",
+        "cancel_button":"Cancel",
+        "confirm_button":"Delete Unit"
+      }, 
+      "bulk_delete_dialog": {
+        "dialog_button": "Delete",
+        "dialog_title": "Delete %d units",
+        "dialog_desc": "Are you sure you want to delete %d units?",
+        "cancel_button":"Cancel",
+        "confirm_button":"Delete Units"
+      }
+    }
+  },
     "category": {
       "page_name": "Category",
       "data_table": {
@@ -326,7 +391,7 @@
         "role_column_label":"Role",
         "created_at_column_label":"Created At",
         "updated_at_column_label":"Updated At",
-        "actions_at_column_label":"Actions"
+        "actions_column_label":"Actions"
       }
     },
     "dialog_modal":{
