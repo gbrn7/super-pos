@@ -14,7 +14,29 @@
       "array":{
         "permissions":"Permissions must be an array"
       }
-  }
+    },
+    "user":{
+      "required": {
+        "name":"Name cannot be empty",
+        "email":"Email cannot be empty",
+        "password":"Password cannot be empty",
+        "password_confirmation":"Password confirmation cannot be empty",
+        "role":"Role cannot be empty"
+      },
+      "email":{
+        "invalid":"Email not valid"
+      }
+    },
+    "unit":{
+      "required": {
+        "name":"Name cannot be empty"
+      }
+    },
+    "payment_method":{
+      "required": {
+        "name":"Name cannot be empty"
+      }
+    }
 },
   "permission_label":{
     "category":{
@@ -48,6 +70,7 @@
       "dashboard_menu_label": "Dashboard",
       "example_menu_label": "Example",
       "category_menu_label": "Category",
+      "payment_method_menu_label":"Payment Method",
       "role_menu_label":"Role",
       "user_menu_label":"User",
       "unit_menu_label":"Unit"
@@ -224,7 +247,7 @@
         "confirm_button":"Delete Units"
       }
     }
-  },
+    },
     "category": {
       "page_name": "Category",
       "data_table": {
@@ -293,6 +316,71 @@
           "confirm_button": "Import"
         }
       }
+    },
+    "payment_method": {
+    "page_name": "Payment Methods",
+    "data_table": {
+      "columns": {
+        "select_column_label": "Select",
+        "name_column_label": "Name",
+        "desc_column_label": "Description",
+        "created_at_column_label": "Created At",
+        "updated_at_column_label": "Updated At",
+        "actions_column_label": "Actions"
+      }
+    },
+    "dialog_modal": {
+      "create_dialog": {
+        "dialog_button": "Add Data",
+        "dialog_title": "Add Payment Method",
+        "dialog_desc": "Add a new payment method for your product",
+        "name_input_label": "Name",
+        "name_input_placeholder": "Enter payment method name",
+        "desc_input_label":"Description",
+        "desc_input_placeholder":"Enter payment method description",
+        "image_input_label":"Gambar",
+        "image_input_placeholder":"Enter payment method image",
+        "cancel_button": "Cancel",
+        "confirm_button": "Add Payment Method"
+      },
+      "edit_dialog": {
+        "dialog_button": "Edit Data",
+        "dialog_title": "Edit Payment Method",
+        "dialog_desc": "Edit payment method data",
+        "name_input_label": "Name",
+        "name_input_placeholder": "Enter payment method name",
+        "desc_input_label":"Description",
+        "desc_input_placeholder":"Enter payment method description",
+        "image_input_label":"Gambar",
+        "image_input_placeholder":"Enter payment method image",
+        "cancel_button": "Cancel",
+        "confirm_button": "Update Payment Method"
+      },
+      "detail_dialog": {
+        "dialog_button": "View Details",
+        "dialog_title": "Payment Method Details",
+        "dialog_desc": "Payment method details",
+        "name_label": "Name",
+        "desc_label": "Description",
+        "image_label": "Image",
+        "created_at_label": "Created At",
+        "updated_at_label": "Updated At"
+      },
+      "delete_dialog": {
+        "dialog_button": "Delete Data",
+        "dialog_title": "Delete Payment Method",
+        "dialog_desc": "Are you sure you want to delete this data?",
+        "cancel_button": "Cancel",
+        "confirm_button": "Delete Method"
+      },
+      "bulk_delete_dialog": {
+        "dialog_button": "Delete",
+        "dialog_title": "Delete %d Payment Methods",
+        "dialog_desc": "Are you sure you want to delete %d payment methods?",
+        "cancel_button": "Cancel",
+        "confirm_button": "Delete Methods"
+      }
+    }
     },
     "role": {
       "page_name": "Role",

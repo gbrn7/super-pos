@@ -10,7 +10,7 @@ use Illuminate\Support\Collection;
 interface RoleRepositoryInterface
 {
   /**
-   * Get all categories.
+   * Get all roles.
    * @param GetRoleReqModel $request
    * @return Paginator|Collection
    */
@@ -50,7 +50,7 @@ interface RoleRepositoryInterface
   public function delete(Role $role): bool;
 
   /**
-   * Delete a categories by its Ids.
+   * Delete a roles by its Ids.
    *
    * @param array $ids
    * @return int
@@ -59,7 +59,7 @@ interface RoleRepositoryInterface
 
 
   /**
-   * Insert new categories.
+   * Insert new roles.
    *
    * @param array $data
    * @return bool

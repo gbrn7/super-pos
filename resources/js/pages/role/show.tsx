@@ -31,7 +31,6 @@ export default function show() {
   });
 
   useEffect(() => {
-    console.log("first")
     const fetchRole = async () => {
       try {
         setLoading(true);

@@ -10,7 +10,7 @@ use Illuminate\Support\Collection;
 interface UserRepositoryInterface
 {
   /**
-   * Get all categories.
+   * Get all users.
    * @param GetUserReqModel $request
    * @return Paginator|Collection
    */
@@ -50,7 +50,7 @@ interface UserRepositoryInterface
   public function delete(User $user): bool;
 
   /**
-   * Delete a categories by its Ids.
+   * Delete a users by its Ids.
    *
    * @param array $ids
    * @return int
@@ -59,7 +59,7 @@ interface UserRepositoryInterface
 
 
   /**
-   * Insert new categories.
+   * Insert new users.
    *
    * @param array $data
    * @return bool

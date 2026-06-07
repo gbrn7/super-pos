@@ -26,6 +26,16 @@
       "email":{
         "invalid":"Email tidak valid"
       }
+    },
+    "unit":{
+      "required": {
+        "name":"Nama tidak boleh kosong"
+      }
+    },
+    "payment_method":{
+      "required": {
+        "name":"Nama tidak boleh kosong"
+      }
     }
 },
   "permission_label":{
@@ -60,6 +70,7 @@
       "dashboard_menu_label":"Dasbor",
       "example_menu_label":"Example",
       "category_menu_label":"Kategori",
+      "payment_method_menu_label":"Metode Pembayaran",
       "role_menu_label":"Peran",
       "user_menu_label":"Pengguna",
       "unit_menu_label":"Satuan"
@@ -303,6 +314,71 @@
         "file_excel_label":"File Excel",
         "cancel_button":"Batal",
         "confirm_button":"Impor"
+      }
+    }
+  },
+    "payment_method":{
+    "page_name":"Metode Pembayaran",
+    "data_table":{
+      "columns":{
+        "select_column_label":"Pilih",
+        "name_column_label":"Nama",
+        "desc_column_label":"Deskripsi",
+        "created_at_column_label":"Tanggal Dibuat",
+        "updated_at_column_label":"Tanggal Diperbarui",
+        "actions_column_label":"Aksi"
+      }
+    },
+    "dialog_modal":{
+      "create_dialog": {
+        "dialog_button": "Tambah Data",
+        "dialog_title": "Tambah Metode Pembayaran",
+        "dialog_desc": "Tambahkan metode pembayaran baru produk anda",
+        "name_input_label":"Nama",
+        "name_input_placeholder":"Masukkan nama metode pembayaran",
+        "desc_input_label":"Deskripsi",
+        "desc_input_placeholder":"Masukkan deskripsi metode pembayaran",
+        "image_input_label":"Gambar",
+        "image_input_placeholder":"Masukkan gambar metode pembayaran",
+        "cancel_button":"Batal",
+        "confirm_button":"Tambah Metode Pembayaran"
+      },
+      "edit_dialog": {
+        "dialog_button": "Edit Data",
+        "dialog_title": "Edit Metode Pembayaran",
+        "dialog_desc": "Edit data metode pembayaran",
+        "name_input_label":"Nama",
+        "name_input_placeholder":"Masukkan nama metode Pembayaran",
+        "desc_input_label":"Deskripsi",
+        "desc_input_placeholder":"Masukkan deskripsi metode pembayaran",
+        "image_input_label":"Gambar",
+        "image_input_placeholder":"Masukkan gambar metode pembayaran",
+        "cancel_button":"Batal",
+        "confirm_button":"Edit Metode Pembayaran"
+      },
+      "detail_dialog": {
+        "dialog_button": "Detail Data",
+        "dialog_title": "Detail Metode Pembayaran",
+        "dialog_desc": "Detail data metode pembayaran",
+        "name_label":"Nama",
+        "desc_label":"Deskripsi",
+        "image_label":"Gambar",
+        "created_at_label":"Tanggal Dibuat",
+        "updated_at_label": "Tanggal Diperbarui"
+      }, 
+      "delete_dialog": {
+        "dialog_button": "Hapus Data",
+        "dialog_title": "Hapus Metode Pembayaran",
+        "dialog_desc": "Apakah anda yakin akan menghapus data ini ?",
+        "cancel_button":"Batal",
+        "confirm_button":"Hapus Metode"
+      }, 
+      "bulk_delete_dialog": {
+        "dialog_button": "Hapus",
+        "dialog_title": "Hapus %d metode pembayaran",
+        "dialog_desc": "Apakah anda yakin akan menghapus %d metode pembayaran ?",
+        "cancel_button":"Batal",
+        "confirm_button":"Hapus Metode"
       }
     }
   },

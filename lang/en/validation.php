@@ -14,6 +14,8 @@ return [
 
   'confirmed' => 'The :attribute confirmation does not match',
 
+  'mimes' => 'the type of :attribute must on of :values',
+
   'min' => [
     'string' => 'The :attribute field must be at least :min characters.',
     'numeric' => 'The :attribute field must be at least :min.',
@@ -21,6 +23,7 @@ return [
   ],
 
   'max' => [
+    'file' => 'The :attribute sized not to greater than :max Kb',
     'string' => 'The :attribute field must not be greater than :max characters.',
     'numeric' => 'The :attribute field must not be greater than :max.',
   ],
@@ -32,8 +35,8 @@ return [
     'permissions' => 'Permissions',
     'role' => 'Role',
     'password' => 'Password',
-    'password_confirmation' => 'Password Confirmation'
-
+    'password_confirmation' => 'Password Confirmation',
+    'image' => 'Image'
   ],
 
 ];

@@ -11,7 +11,7 @@ import {
     AlertDialogMedia,
     AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
-import { update as deleteCategory } from '@/routes/apiCategories';
+import { destroy as deleteCategory } from '@/routes/apiCategories';
 import type { Category } from '@/support/models/category';
 import { Spinner } from '@/components/ui/spinner';
 import { t } from 'i18next';

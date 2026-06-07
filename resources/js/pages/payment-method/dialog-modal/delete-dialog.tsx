@@ -11,8 +11,8 @@ import {
     AlertDialogMedia,
     AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
-import { destroy as deleteRole } from '@/routes/apiRoles';
-import type { Role } from '@/support/models/role';
+import { update as deletePaymentMethod } from '@/routes/apiPaymentMethods';
+import type { PaymentMethod } from '@/support/models/paymentMethod';
 import { Spinner } from '@/components/ui/spinner';
 import { t } from 'i18next';
 import { handleApiError, showSuccessToast, showWarningToast } from '@/lib/utils';
@@ -22,14 +22,14 @@ import axiosInstance from '@/lib/axios';
 interface DeleteDialogProps {
     isOpen: boolean;
     onSuccess: () => void;
-    role: Role | null;
+    paymentMethod: PaymentMethod | null;
     setOpen: (open: boolean) => void;
 }
 
 export function DeleteDialog({
     isOpen,
     onSuccess,
-    role,
+    paymentMethod,
     setOpen,
 }: DeleteDialogProps) {
     const [loading, setLoading] = useState<boolean>(false);
@@ -38,7 +38,7 @@ export function DeleteDialog({
         try {
             setLoading(true);
 
-            const res = await axiosInstance.delete<ResponseApi<boolean>>(deleteRole(role?.id || '').url);
+            const res = await axiosInstance.delete<ResponseApi<boolean>>(deletePaymentMethod(paymentMethod?.id || '').url);
 
             if (!res.data.success) {
                 showWarningToast(res.data.message)
@@ -48,7 +48,7 @@ export function DeleteDialog({
             onSuccess();
             showSuccessToast(res.data.message)
         } catch (error) {
-            console.error('Error deleting role:', error);
+            console.error('Error deleting paymentMethod:', error);
             handleApiError(error)
         } finally {
             setLoading(false);
@@ -66,9 +66,9 @@ export function DeleteDialog({
                     <AlertDialogMedia className="bg-destructive/10 text-destructive dark:bg-destructive/20 dark:text-destructive">
                         <Trash2Icon />
                     </AlertDialogMedia>
-                    <AlertDialogTitle>{t("page.role.dialog_modal.delete_dialog.dialog_title", "Hapus Data")}</AlertDialogTitle>
+                    <AlertDialogTitle>{t("page.payment_method.dialog_modal.delete_dialog.dialog_title", "Hapus Data")}</AlertDialogTitle>
                     <AlertDialogDescription>
-                        {t("page.role.dialog_modal.delete_dialog.dialog_desc", "Apakah anda yakin akan menghapus data ini ?")}
+                        {t("page.payment_method.dialog_modal.delete_dialog.dialog_desc", "Apakah anda yakin akan menghapus data ini ?")}
                     </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
@@ -76,14 +76,15 @@ export function DeleteDialog({
                         variant={'outline'}
                         onClick={() => setOpen(false)}
                     >
-                        {t("page.role.dialog_modal.delete_dialog.cancel_button", "Batal")}
+                        {t("page.payment_method.dialog_modal.delete_dialog.cancel_button", "Batal")}
                     </AlertDialogCancel>
                     <AlertDialogAction
                         onClick={handleDelete}
                         variant="destructive"
                         disabled={loading}
+                        className='w-full'
                     >
-                        {loading ? <Spinner /> : t("page.role.dialog_modal.delete_dialog.confirm_button", "Hapus Peran")}
+                        {loading ? <Spinner /> : t("page.payment_method.dialog_modal.delete_dialog.confirm_button", "Hapus Metode Pembayaran")}
                     </AlertDialogAction>
                 </AlertDialogFooter>
             </AlertDialogContent>

@@ -1,11 +1,13 @@
 <?php
 
 use App\Http\Controllers\Api\ApiCategoryController;
+use App\Http\Controllers\Api\ApiPaymentMethodController;
 use App\Http\Controllers\Api\ApiRoleController;
 use App\Http\Controllers\Api\ApiUnitController;
 use App\Http\Controllers\Api\ApiUserController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ExampleController;
+use App\Http\Controllers\PaymentMethodController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UnitController;
 use App\Http\Controllers\UserController;
@@ -28,6 +30,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('users', UserController::class)->only('index');
 
     Route::resource('units', UnitController::class)->only('index');
+
+    Route::resource('payment-methods', PaymentMethodController::class)->only('index');
 
     Route::resource('example', ExampleController::class);
 
@@ -64,6 +68,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
         Route::group(['prefix' => 'unit'], function () {
             Route::post('/bulk-delete', [ApiUnitController::class, 'bulkDelete'])->name('apiUnits.bulkDelete');
+        });
+
+        //paymentMethod
+        Route::resource('paymentMethod', ApiPaymentMethodController::class)->names('apiPaymentMethods')->only(['index', 'store', 'show', 'update', 'destroy']);
+
+        Route::group(['prefix' => 'paymentMethod'], function () {
+            Route::post('/bulk-delete', [ApiPaymentMethodController::class, 'bulkDelete'])->name('apiPaymentMethods.bulkDelete');
         });
     });
 });

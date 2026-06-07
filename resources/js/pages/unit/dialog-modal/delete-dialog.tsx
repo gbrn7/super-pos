@@ -11,7 +11,7 @@ import {
     AlertDialogMedia,
     AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
-import { update as deleteUnit } from '@/routes/apiUnits';
+import { destroy as deleteUnit } from '@/routes/apiUnits';
 import type { Unit } from '@/support/models/unit';
 import { Spinner } from '@/components/ui/spinner';
 import { t } from 'i18next';

@@ -11,7 +11,7 @@ import {
     AlertDialogMedia,
     AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
-import { update as deleteUser } from '@/routes/apiUsers';
+import { destroy as deleteUser } from '@/routes/apiUsers';
 import type { User } from '@/support/models/user';
 import { Spinner } from '@/components/ui/spinner';
 import { t } from 'i18next';

@@ -14,6 +14,8 @@ return [
 
   'confirmed' => ':attribute konfirmasi tidak cocok',
 
+  'mimes' => ':attribute harus bertipe :values',
+
   'min' => [
     'string' => ':attribute minimal :min karakter.',
     'numeric' => ':attribute minimal :min.',
@@ -21,6 +23,7 @@ return [
   ],
 
   'max' => [
+    'file' => ':attribute maksimal :max Kb',
     'string' => ':attribute maksimal :max karakter.',
     'numeric' => ':attribute maksimal :max.',
   ],
@@ -32,7 +35,8 @@ return [
     'permissions' => 'Hak akses',
     'role' => 'Peran',
     'password' => 'Kata sandi',
-    'password_confirmation' => 'Konfirmasi kata sandi'
+    'password_confirmation' => 'Konfirmasi kata sandi',
+    'image' => 'Gambar'
   ],
 
 ];

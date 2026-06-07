@@ -17,14 +17,14 @@ class PaymentMethodSeeder extends Seeder
             [
                 "name" => "Cash",
                 "desc" => "Pembayaran dengan uang tunai",
-                'created_at' => now(),
-                'updated_at' => now(),
+                'created_at' => now()->unix(),
+                'updated_at' => now()->unix(),
             ],
             [
                 "name" => "Qris",
                 "desc" => "Pembayaran dengan QRIS",
-                'created_at' => now(),
-                'updated_at' => now(),
+                'created_at' => now()->unix(),
+                'updated_at' => now()->unix(),
             ]
         ]);
     }

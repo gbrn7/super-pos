@@ -3,19 +3,23 @@
 namespace App\Providers;
 
 use App\Repositories\CategoryRepository;
+use App\Repositories\PaymentMethodRepository;
 use App\Repositories\RoleRepository;
 use App\Repositories\UnitRepository;
 use App\Repositories\UserRepository;
 use App\Services\CategoryService;
+use App\Services\PaymentMethodService;
 use App\Services\RoleService;
 use App\Services\UnitService;
 use App\Services\UserService;
 use App\Support\Enums\RoleEnums;
 use App\Support\Interfaces\Repositories\CategoryRepositoryInterface;
+use App\Support\Interfaces\Repositories\PaymentMethodRepositoryInterface;
 use App\Support\Interfaces\Repositories\RoleRepositoryInterface;
 use App\Support\Interfaces\Repositories\UnitRepositoryInterface;
 use App\Support\Interfaces\Repositories\UserRepositoryInterface;
 use App\Support\Interfaces\Services\CategoryServiceInterface;
+use App\Support\Interfaces\Services\PaymentMethodServiceInterface;
 use App\Support\Interfaces\Services\RoleServiceInterface;
 use App\Support\Interfaces\Services\UnitServiceInterface;
 use App\Support\Interfaces\Services\UserServiceInterface;
@@ -48,6 +52,10 @@ class AppServiceProvider extends ServiceProvider
         //unit service
         $this->app->bind(UnitRepositoryInterface::class, UnitRepository::class);
         $this->app->bind(UnitServiceInterface::class, UnitService::class);
+
+        //Payment method service
+        $this->app->bind(PaymentMethodRepositoryInterface::class, PaymentMethodRepository::class);
+        $this->app->bind(PaymentMethodServiceInterface::class, PaymentMethodService::class);
     }
 
     /**
