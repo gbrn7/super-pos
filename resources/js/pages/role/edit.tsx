@@ -206,6 +206,7 @@ export default function edit() {
                 <Field>
                   <label htmlFor="name" className="text-sm">
                     {t("page.role.edit.form.name_input_label", "Nama")}
+                    <span className="text-red-500"> *</span>
                   </label>
                   <Input
                     id="name"
@@ -237,7 +238,7 @@ export default function edit() {
                 <div className="space-y-4">
                   <div className="flex items-center justify-between">
                     <div>
-                      <Label className=" text-sm">{t("page.role.edit.form.permissions_input_label", "Izin")}</Label>
+                      <Label className=" text-sm">{t("page.role.edit.form.permissions_input_label", "Izin")}<span className="text-red-500"> *</span></Label>
                     </div>
                   </div>
 
@@ -294,7 +295,7 @@ export default function edit() {
                             {permission.ACCESSLIST.map((access) => (
                               <div
                                 key={access.VALUE}
-                                className={`flex items-center gap-3 p-4 rounded-lg border-2 transition-all cursor-pointer`}
+                                className={`flex items-center gap-3 p-3 rounded-lg border transition-all cursor-pointer`}
                               >
                                 <Checkbox
                                   id={access.VALUE}

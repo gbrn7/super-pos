@@ -156,6 +156,7 @@ export function EditDialog({
                         <Field>
                             <label htmlFor="name" className="text-sm">
                                 {t("page.payment_method.dialog_modal.edit_dialog.name_input_label", "Nama")}
+                                <span className="text-red-500"> *</span>
                             </label>
                             <Input
                                 id="name"

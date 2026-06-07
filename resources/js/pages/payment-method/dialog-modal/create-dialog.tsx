@@ -158,6 +158,7 @@ export function CreateDialog({ onSuccess }: CreateDialogProps) {
                         <Field>
                             <label htmlFor="name" className="text-sm">
                                 {t("page.payment_method.dialog_modal.create_dialog.name_input_label", "Nama")}
+                                <span className="text-red-500"> *</span>
                             </label>
                             <Input
                                 id="name"

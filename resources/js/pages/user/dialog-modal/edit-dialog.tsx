@@ -145,6 +145,7 @@ export function EditDialog({
                         <Field>
                             <label htmlFor="name" className="text-sm">
                                 {t("page.user.dialog_modal.edit_dialog.name_input_label", "Nama")}
+                                <span className="text-red-500"> *</span>
                             </label>
                             <Input
                                 id="name"
@@ -162,6 +163,7 @@ export function EditDialog({
                         <Field>
                             <label htmlFor="email" className="text-sm">
                                 {t("page.user.dialog_modal.edit_dialog.email_input_label", "Email")}
+                                <span className="text-red-500"> *</span>
                             </label>
                             <Input
                                 id="email"
@@ -214,6 +216,7 @@ export function EditDialog({
                         <Field>
                             <label htmlFor="role" className="text-sm">
                                 {t("page.user.dialog_modal.edit_dialog.role_input_label", "Role")}
+                                <span className="text-red-500"> *</span>
                             </label>
                             <Select
                                 onValueChange={(value) => setFormData((prev) => ({ ...prev, role: value }))}

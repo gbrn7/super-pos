@@ -144,6 +144,7 @@ export function CreateDialog({ onSuccess, roles }: CreateDialogProps) {
                         <Field>
                             <label htmlFor="name" className="text-sm">
                                 {t("page.user.dialog_modal.create_dialog.name_input_label", "Nama")}
+                                <span className="text-red-500"> *</span>
                             </label>
                             <Input
                                 id="name"
@@ -161,6 +162,7 @@ export function CreateDialog({ onSuccess, roles }: CreateDialogProps) {
                         <Field>
                             <label htmlFor="email" className="text-sm">
                                 {t("page.user.dialog_modal.create_dialog.email_input_label", "Email")}
+                                <span className="text-red-500"> *</span>
                             </label>
                             <Input
                                 id="email"
@@ -178,6 +180,7 @@ export function CreateDialog({ onSuccess, roles }: CreateDialogProps) {
                         <Field>
                             <label htmlFor="password" className="text-sm">
                                 {t("page.user.dialog_modal.create_dialog.password_input_label", "Password")}
+                                <span className="text-red-500"> *</span>
                             </label>
                             <Input
                                 id="password"
@@ -196,6 +199,7 @@ export function CreateDialog({ onSuccess, roles }: CreateDialogProps) {
                         <Field>
                             <label htmlFor="password_confirmation" className="text-sm">
                                 {t("page.user.dialog_modal.create_dialog.password_confirmation_input_label", "Password_confirmation")}
+                                <span className="text-red-500"> *</span>
                             </label>
                             <Input
                                 id="password_confirmation"
@@ -213,6 +217,7 @@ export function CreateDialog({ onSuccess, roles }: CreateDialogProps) {
                         <Field>
                             <label htmlFor="role" className="text-sm">
                                 {t("page.user.dialog_modal.create_dialog.role_input_label", "Peran")}
+                                <span className="text-red-500"> *</span>
                             </label>
                             <Select
                                 onValueChange={(value) => setFormData((prev) => ({ ...prev, role: value }))}
