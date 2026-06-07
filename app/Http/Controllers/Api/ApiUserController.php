@@ -19,34 +19,33 @@ use Illuminate\Routing\Controllers\Middleware;
 
 class ApiUserController extends Controller implements HasMiddleware
 {
-
     public function __construct(protected UserServiceInterface $userService) {}
-
 
     public static function middleware(): array
     {
         return [
             new Middleware(
-                'permission:' . UserPermissionEnums::READ_USER->value,
+                'permission:'.UserPermissionEnums::READ_USER->value,
                 only: ['index', 'show']
             ),
 
             new Middleware(
-                'permission:' . UserPermissionEnums::CREATE_USER->value,
+                'permission:'.UserPermissionEnums::CREATE_USER->value,
                 only: ['store']
             ),
 
             new Middleware(
-                'permission:' . UserPermissionEnums::UPDATE_USER->value,
+                'permission:'.UserPermissionEnums::UPDATE_USER->value,
                 only: ['update']
             ),
 
             new Middleware(
-                'permission:' . UserPermissionEnums::DELETE_USER->value,
+                'permission:'.UserPermissionEnums::DELETE_USER->value,
                 only: ['destroy', 'bulkDelete']
             ),
         ];
     }
+
     /**
      * Display a listing of the resource.
      */
@@ -125,14 +124,15 @@ class ApiUserController extends Controller implements HasMiddleware
         try {
             $isSuccessDelete = $this->userService->delete($id);
 
-            if (!$isSuccessDelete) throw new Exception(trans('message.error.internal_server_error'), Response::HTTP_INTERNAL_SERVER_ERROR);
+            if (! $isSuccessDelete) {
+                throw new Exception(trans('message.error.internal_server_error'), Response::HTTP_INTERNAL_SERVER_ERROR);
+            }
 
             return ResponseApi::make(true, trans('message.success.deleted'), null, Response::HTTP_OK);
         } catch (\Throwable $th) {
             return ResponseApi::make(false, $th->getMessage(), null, $th->getcode());
         }
     }
-
 
     /**
      * Bulk delete resources.

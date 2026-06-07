@@ -49,9 +49,9 @@ class PaymentMethodService implements PaymentMethodServiceInterface
             }
 
             if (isset($data['image']) && $data['image'] instanceof UploadedFile) {
-                $fileName = Str::random(10) . $data['image']->getClientOriginalName();
+                $fileName = Str::random(10).$data['image']->getClientOriginalName();
                 $data['image']->storeAs(Constants::PAYMENT_METHOD_PUBLIC_PATH, $fileName, 'public');
-                $data['image'] = Constants::PAYMENT_METHOD_PUBLIC_PATH . $fileName;
+                $data['image'] = Constants::PAYMENT_METHOD_PUBLIC_PATH.$fileName;
             }
 
             return $this->paymentMethodRepository->create($data);
@@ -65,8 +65,8 @@ class PaymentMethodService implements PaymentMethodServiceInterface
         try {
             $paymentMethod = $this->paymentMethodRepository->getById($id);
 
-            if (!isset($paymentMethod)) {
-                throw new Exception(trans("message.error.data_not_found"), Response::HTTP_NOT_FOUND);
+            if (! isset($paymentMethod)) {
+                throw new Exception(trans('message.error.data_not_found'), Response::HTTP_NOT_FOUND);
             }
 
             $isPaymentMethodExist = $this->paymentMethodRepository->getByNameExceptID($data['name'], $id);
@@ -80,9 +80,9 @@ class PaymentMethodService implements PaymentMethodServiceInterface
                     Storage::disk('public')->delete($paymentMethod->image);
                 }
 
-                $fileName = Str::random(10) . $data['image']->getClientOriginalName();
+                $fileName = Str::random(10).$data['image']->getClientOriginalName();
                 $data['image']->storeAs(Constants::PAYMENT_METHOD_PUBLIC_PATH, $fileName, 'public');
-                $data['image'] = Constants::PAYMENT_METHOD_PUBLIC_PATH . $fileName;
+                $data['image'] = Constants::PAYMENT_METHOD_PUBLIC_PATH.$fileName;
             }
 
             $isSuccess = $this->paymentMethodRepository->update($paymentMethod, $data);
@@ -102,8 +102,8 @@ class PaymentMethodService implements PaymentMethodServiceInterface
         try {
             $paymentMethod = $this->paymentMethodRepository->getById($id);
 
-            if (!isset($paymentMethod)) {
-                throw new Exception(trans("message.error.data_not_found"), Response::HTTP_NOT_FOUND);
+            if (! isset($paymentMethod)) {
+                throw new Exception(trans('message.error.data_not_found'), Response::HTTP_NOT_FOUND);
             }
 
             if ($paymentMethod->image && Storage::disk('public')->exists($paymentMethod->image)) {
@@ -134,7 +134,7 @@ class PaymentMethodService implements PaymentMethodServiceInterface
             if ($deletedCount == $ids->count()) {
                 foreach ($paymentMethods as $paymentMethod) {
                     if ($paymentMethod->image && Storage::disk('public')->exists($paymentMethod->image)) {
-                        Storage::delete('public/' . $paymentMethod->image);
+                        Storage::delete('public/'.$paymentMethod->image);
                     }
                 }
             }

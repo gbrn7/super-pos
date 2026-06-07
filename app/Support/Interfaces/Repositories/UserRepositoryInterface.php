@@ -9,78 +9,48 @@ use Illuminate\Support\Collection;
 
 interface UserRepositoryInterface
 {
-  /**
-   * Get all users.
-   * @param GetUserReqModel $request
-   * @return Paginator|Collection
-   */
-  public function getAllByIndex(GetUserReqModel $request): Paginator|Collection;
+    /**
+     * Get all users.
+     */
+    public function getAllByIndex(GetUserReqModel $request): Paginator|Collection;
 
-  /**
-   * Get a user by its ID.
-   *
-   * @param int $id
-   * @return User|null
-   */
-  public function getById(int $id): ?User;
+    /**
+     * Get a user by its ID.
+     */
+    public function getById(int $id): ?User;
 
-  /**
-   * Create a new user.
-   *
-   * @param array $data
-   * @return User
-   */
-  public function create(array $data): User;
+    /**
+     * Create a new user.
+     */
+    public function create(array $data): User;
 
-  /**
-   * Update an existing user.
-   *
-   * @param User $user
-   * @param array $data
-   * @return bool
-   */
-  public function update(User $user, array $data): bool;
+    /**
+     * Update an existing user.
+     */
+    public function update(User $user, array $data): bool;
 
-  /**
-   * Delete a user by its ID.
-   *
-   * @param User $user
-   * @return bool
-   */
-  public function delete(User $user): bool;
+    /**
+     * Delete a user by its ID.
+     */
+    public function delete(User $user): bool;
 
-  /**
-   * Delete a users by its Ids.
-   *
-   * @param array $ids
-   * @return int
-   */
-  public function deleteMany(array $ids): int;
+    /**
+     * Delete a users by its Ids.
+     */
+    public function deleteMany(array $ids): int;
 
+    /**
+     * Insert new users.
+     */
+    public function insert(array $data): bool;
 
-  /**
-   * Insert new users.
-   *
-   * @param array $data
-   * @return bool
-   */
-  public function insert(array $data): bool;
+    /**
+     * Get a user by its name.
+     */
+    public function getByName(string $name): ?User;
 
-  /**
-   * Get a user by its name.
-   *
-   * @param string $name
-   * @return User|null
-   */
-  public function getByName(string $name): ?User;
-
-
-  /**
-   * Get a user by its email except id.
-   *
-   * @param string $email
-   * @param int $id
-   * @return User|null
-   */
-  public function getByEmailExceptID(string $email, int $id): ?User;
+    /**
+     * Get a user by its email except id.
+     */
+    public function getByEmailExceptID(string $email, int $id): ?User;
 }

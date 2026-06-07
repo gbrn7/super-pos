@@ -25,22 +25,22 @@ class ApiUnitController extends Controller implements HasMiddleware
     {
         return [
             new Middleware(
-                'permission:' . UnitPermissionEnums::READ_UNIT->value,
+                'permission:'.UnitPermissionEnums::READ_UNIT->value,
                 only: ['index', 'show']
             ),
 
             new Middleware(
-                'permission:' . UnitPermissionEnums::CREATE_UNIT->value,
+                'permission:'.UnitPermissionEnums::CREATE_UNIT->value,
                 only: ['store']
             ),
 
             new Middleware(
-                'permission:' . UnitPermissionEnums::UPDATE_UNIT->value,
+                'permission:'.UnitPermissionEnums::UPDATE_UNIT->value,
                 only: ['update']
             ),
 
             new Middleware(
-                'permission:' . UnitPermissionEnums::DELETE_UNIT->value,
+                'permission:'.UnitPermissionEnums::DELETE_UNIT->value,
                 only: ['destroy', 'bulkDelete']
             ),
         ];
@@ -112,7 +112,9 @@ class ApiUnitController extends Controller implements HasMiddleware
         try {
             $isSuccessDelete = $this->unitService->delete($id);
 
-            if (!$isSuccessDelete) throw new Exception(trans('message.error.internal_server_error'), Response::HTTP_INTERNAL_SERVER_ERROR);
+            if (! $isSuccessDelete) {
+                throw new Exception(trans('message.error.internal_server_error'), Response::HTTP_INTERNAL_SERVER_ERROR);
+            }
 
             return ResponseApi::make(true, trans('message.success.deleted'), null, Response::HTTP_OK);
         } catch (\Throwable $th) {

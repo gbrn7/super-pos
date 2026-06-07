@@ -18,12 +18,12 @@ use Spatie\Permission\Traits\HasRoles;
 class User extends Authenticatable
 {
     /** @use HasFactory<UserFactory> */
-    use HasFactory, Notifiable, TwoFactorAuthenticatable, HasRoles;
+    use HasFactory, HasRoles, Notifiable, TwoFactorAuthenticatable;
 
-    //format date using unix/epoch time
+    // format date using unix/epoch time
     protected $dateFormat = 'U';
 
-    //overide default iso datetime format from model
+    // overide default iso datetime format from model
     protected function serializeDate(DateTimeInterface $date): int
     {
         return $date->getTimestamp();

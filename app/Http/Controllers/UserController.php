@@ -9,16 +9,16 @@ use Illuminate\Routing\Controllers\Middleware;
 
 class UserController extends Controller implements HasMiddleware
 {
-
     public static function middleware(): array
     {
         return [
             new Middleware(
-                'permission:' . UserPermissionEnums::READ_USER->value,
+                'permission:'.UserPermissionEnums::READ_USER->value,
                 only: ['index']
-            )
+            ),
         ];
     }
+
     /**
      * Display a listing of the resource.
      */

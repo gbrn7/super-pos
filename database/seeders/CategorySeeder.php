@@ -16,10 +16,10 @@ class CategorySeeder extends Seeder
         for ($index = 0; $index < 100; $index++) {
             Category::create(
                 [
-                    "name" => fake()->unique()->name(),
-                    "desc" => fake()->sentence(),
-                    "created_at" => Carbon::now()->unix(),
-                    "updated_at" => Carbon::now()->unix(),
+                    'name' => fake()->unique()->name(),
+                    'desc' => fake()->sentence(),
+                    'created_at' => Carbon::now()->unix(),
+                    'updated_at' => Carbon::now()->unix(),
                 ]
             );
         }

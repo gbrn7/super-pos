@@ -26,22 +26,22 @@ class ApiCategoryController extends Controller implements HasMiddleware
     {
         return [
             new Middleware(
-                'permission:' . CategoryPermissionEnums::READ_CATEGORY->value,
+                'permission:'.CategoryPermissionEnums::READ_CATEGORY->value,
                 only: ['index', 'show']
             ),
 
             new Middleware(
-                'permission:' . CategoryPermissionEnums::CREATE_CATEGORY->value,
+                'permission:'.CategoryPermissionEnums::CREATE_CATEGORY->value,
                 only: ['store', 'getCategoryImportTemplate', 'importCategoryExcelData']
             ),
 
             new Middleware(
-                'permission:' . CategoryPermissionEnums::UPDATE_CATEGORY->value,
+                'permission:'.CategoryPermissionEnums::UPDATE_CATEGORY->value,
                 only: ['update']
             ),
 
             new Middleware(
-                'permission:' . CategoryPermissionEnums::DELETE_CATEGORY->value,
+                'permission:'.CategoryPermissionEnums::DELETE_CATEGORY->value,
                 only: ['destroy', 'bulkDelete']
             ),
         ];
@@ -113,7 +113,9 @@ class ApiCategoryController extends Controller implements HasMiddleware
         try {
             $isSuccessDelete = $this->categoryService->delete($id);
 
-            if (!$isSuccessDelete) throw new Exception(trans('message.error.internal_server_error'), Response::HTTP_INTERNAL_SERVER_ERROR);
+            if (! $isSuccessDelete) {
+                throw new Exception(trans('message.error.internal_server_error'), Response::HTTP_INTERNAL_SERVER_ERROR);
+            }
 
             return ResponseApi::make(true, trans('message.success.deleted'), null, Response::HTTP_OK);
         } catch (\Throwable $th) {
@@ -138,9 +140,9 @@ class ApiCategoryController extends Controller implements HasMiddleware
     public function getCategoryImportTemplate()
     {
         $fileName = 'import-category-template.xlsx';
-        $publiFilePath = 'template/' . $fileName;
+        $publiFilePath = 'template/'.$fileName;
 
-        if (!file_exists($publiFilePath)) {
+        if (! file_exists($publiFilePath)) {
             return ResponseApi::make(false, trans('message.error.not_found', ['resource' => 'file']), null, Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
@@ -154,7 +156,7 @@ class ApiCategoryController extends Controller implements HasMiddleware
 
             $createdCount = $this->categoryService->importExcel($file);
 
-            return ResponseApi::make(true, trans('message.success.bulk_created', ["count" => $createdCount]), null, Response::HTTP_CREATED);
+            return ResponseApi::make(true, trans('message.success.bulk_created', ['count' => $createdCount]), null, Response::HTTP_CREATED);
         } catch (\Throwable $th) {
             return ResponseApi::make(false, $th->getMessage(), null, $th->getcode());
         }

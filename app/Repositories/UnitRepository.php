@@ -14,7 +14,7 @@ class UnitRepository implements UnitRepositoryInterface
     {
         $query = Unit::query()
             ->orderBy('id', 'desc')
-            ->when($request->name, fn($query) => $query->where('name', 'like', "%{$request->name}%"));
+            ->when($request->name, fn ($query) => $query->where('name', 'like', "%{$request->name}%"));
 
         if ($request->limit === null) {
             return $query->get();
@@ -60,6 +60,6 @@ class UnitRepository implements UnitRepositoryInterface
 
     public function getByNameExceptID(string $name, int $id): ?Unit
     {
-        return Unit::where('name', $name)->where('id', "!=", $id)->first();
+        return Unit::where('name', $name)->where('id', '!=', $id)->first();
     }
 }

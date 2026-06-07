@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\PaymentMethod;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class PaymentMethodSeeder extends Seeder
@@ -15,17 +14,17 @@ class PaymentMethodSeeder extends Seeder
     {
         PaymentMethod::insert([
             [
-                "name" => "Cash",
-                "desc" => "Pembayaran dengan uang tunai",
+                'name' => 'Cash',
+                'desc' => 'Pembayaran dengan uang tunai',
                 'created_at' => now()->unix(),
                 'updated_at' => now()->unix(),
             ],
             [
-                "name" => "Qris",
-                "desc" => "Pembayaran dengan QRIS",
+                'name' => 'Qris',
+                'desc' => 'Pembayaran dengan QRIS',
                 'created_at' => now()->unix(),
                 'updated_at' => now()->unix(),
-            ]
+            ],
         ]);
     }
 }

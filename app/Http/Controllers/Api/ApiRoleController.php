@@ -25,22 +25,22 @@ class ApiRoleController extends Controller implements HasMiddleware
     {
         return [
             new Middleware(
-                'permission:' . RolePermissionEnums::READ_ROLE->value,
+                'permission:'.RolePermissionEnums::READ_ROLE->value,
                 only: ['index', 'show']
             ),
 
             new Middleware(
-                'permission:' . RolePermissionEnums::CREATE_ROLE->value,
+                'permission:'.RolePermissionEnums::CREATE_ROLE->value,
                 only: ['store', 'getRoleImportTemplate', 'importRoleExcelData']
             ),
 
             new Middleware(
-                'permission:' . RolePermissionEnums::UPDATE_ROLE->value,
+                'permission:'.RolePermissionEnums::UPDATE_ROLE->value,
                 only: ['update']
             ),
 
             new Middleware(
-                'permission:' . RolePermissionEnums::DELETE_ROLE->value,
+                'permission:'.RolePermissionEnums::DELETE_ROLE->value,
                 only: ['destroy', 'bulkDelete']
             ),
         ];
@@ -61,7 +61,6 @@ class ApiRoleController extends Controller implements HasMiddleware
             return ResponseApi::make(false, $th->getMessage(), null, $th->getcode());
         }
     }
-
 
     /**
      * Store a newly created resource in storage.
@@ -119,7 +118,9 @@ class ApiRoleController extends Controller implements HasMiddleware
         try {
             $isSuccessDelete = $this->roleService->delete($id);
 
-            if (!$isSuccessDelete) throw new Exception(trans('message.error.internal_server_error'), Response::HTTP_INTERNAL_SERVER_ERROR);
+            if (! $isSuccessDelete) {
+                throw new Exception(trans('message.error.internal_server_error'), Response::HTTP_INTERNAL_SERVER_ERROR);
+            }
 
             return ResponseApi::make(true, trans('message.success.deleted'), null, Response::HTTP_OK);
         } catch (\Throwable $th) {
@@ -144,9 +145,9 @@ class ApiRoleController extends Controller implements HasMiddleware
     public function getRoleImportTemplate()
     {
         $fileName = 'import-role-template.xlsx';
-        $publiFilePath = 'template/' . $fileName;
+        $publiFilePath = 'template/'.$fileName;
 
-        if (!file_exists($publiFilePath)) {
+        if (! file_exists($publiFilePath)) {
             return ResponseApi::make(false, trans('message.error.not_found', ['resource' => 'file']), null, Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 

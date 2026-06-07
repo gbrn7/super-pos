@@ -2,15 +2,15 @@
 
 namespace Database\Seeders;
 
-use App\Support\Enums\CategoryPermissionEnums;
-use App\Support\Enums\DashboardPermissionEnums;
-use App\Support\Enums\RoleEnums;
-use App\Support\Enums\RolePermissionEnums;
-use Illuminate\Database\Seeder;
 use App\Models\Permission;
 use App\Models\Role;
+use App\Support\Enums\CategoryPermissionEnums;
+use App\Support\Enums\DashboardPermissionEnums;
 use App\Support\Enums\PaymentMethodPermissionEnums;
+use App\Support\Enums\RoleEnums;
+use App\Support\Enums\RolePermissionEnums;
 use App\Support\Enums\UnitPermissionEnums;
+use Illuminate\Database\Seeder;
 
 class PermissionSeeder extends Seeder
 {
@@ -49,8 +49,7 @@ class PermissionSeeder extends Seeder
             ]);
         }
 
-
-        //super admin already have access, the setup gate on appServiceProvider
+        // super admin already have access, the setup gate on appServiceProvider
 
         $admin = Role::findByName(RoleEnums::ADMIN->value);
 

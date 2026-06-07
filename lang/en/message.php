@@ -1,30 +1,29 @@
 <?php
 
 return [
-  'success' => [
-    'success' => 'Sukses',
-    'created' => 'Data successfully created',
-    'bulk_created' => ':count data successfully created',
-    'updated' => 'Data successfully updated',
-    'bulk_updated' => ':count data successfully updated',
-    'deleted' => 'Data successfully deleted',
-    'bulk_deleted' => ':count data successfully deleted',
-    'profile_updated' => 'Profil updated',
-    'password_updated' => 'Password updated',
-  ],
+    'success' => [
+        'success' => 'Sukses',
+        'created' => 'Data successfully created',
+        'bulk_created' => ':count data successfully created',
+        'updated' => 'Data successfully updated',
+        'bulk_updated' => ':count data successfully updated',
+        'deleted' => 'Data successfully deleted',
+        'bulk_deleted' => ':count data successfully deleted',
+        'profile_updated' => 'Profil updated',
+        'password_updated' => 'Password updated',
+    ],
 
-
-  'error' => [
-    'data_not_found' => 'Data not found',
-    'data_already_exists' => 'Data already exist',
-    'super_admin_cannot_be_updated' => 'Super admin data cannot be deleted',
-    'super_admin_cannot_be_deleted' => 'Super admin data cannot be deleted',
-    'role_data_used_by_user' => 'Role data is still used by users',
-    'internal_server_error' => 'Internal server error',
-    'duplicate_data_error_import' => 'There is duplicate data',
-    'something_went_wrong' => 'Something went wrong',
-    'unauthorized' => 'Unauthorized access',
-    'validation' => 'Validation failed',
-  ],
+    'error' => [
+        'data_not_found' => 'Data not found',
+        'data_already_exists' => 'Data already exist',
+        'super_admin_cannot_be_updated' => 'Super admin data cannot be deleted',
+        'super_admin_cannot_be_deleted' => 'Super admin data cannot be deleted',
+        'role_data_used_by_user' => 'Role data is still used by users',
+        'internal_server_error' => 'Internal server error',
+        'duplicate_data_error_import' => 'There is duplicate data',
+        'something_went_wrong' => 'Something went wrong',
+        'unauthorized' => 'Unauthorized access',
+        'validation' => 'Validation failed',
+    ],
 
 ];

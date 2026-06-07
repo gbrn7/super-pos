@@ -54,8 +54,8 @@ class UnitService implements UnitServiceInterface
         try {
             $unit = $this->unitRepository->getById($id);
 
-            if (!isset($unit)) {
-                throw new Exception(trans("message.error.data_not_found"), Response::HTTP_NOT_FOUND);
+            if (! isset($unit)) {
+                throw new Exception(trans('message.error.data_not_found'), Response::HTTP_NOT_FOUND);
             }
 
             $isUnitExist = $this->unitRepository->getByNameExceptID($data['name'], $id);
@@ -81,8 +81,8 @@ class UnitService implements UnitServiceInterface
         try {
             $unit = $this->unitRepository->getById($id);
 
-            if (!isset($unit)) {
-                throw new Exception(trans("message.error.data_not_found"), Response::HTTP_NOT_FOUND);
+            if (! isset($unit)) {
+                throw new Exception(trans('message.error.data_not_found'), Response::HTTP_NOT_FOUND);
             }
 
             $isSuccess = $this->unitRepository->delete($unit);

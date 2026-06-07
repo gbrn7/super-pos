@@ -3,12 +3,10 @@
 use App\Models\Category;
 use App\Models\User;
 
-
 function getUser()
 {
     return User::factory()->create();
 }
-
 
 test('category page is displayed', function () {
 
@@ -55,7 +53,7 @@ test('create category with duplicate name', function () {
         ]);
 
     $response
-        ->assertUnprocessable() //422 http code validation
+        ->assertUnprocessable() // 422 http code validation
         ->assertJsonValidationErrors([
             'name',
         ]);
@@ -87,8 +85,7 @@ test('update category with duplicate name', function () {
             'desc' => $category2->desc,
         ]);
 
-
-    $response->assertUnprocessable(); //422 http code validation
+    $response->assertUnprocessable(); // 422 http code validation
 });
 
 test('delete category', function () {

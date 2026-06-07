@@ -5,7 +5,6 @@ namespace App\Support\Interfaces\Services;
 use App\Models\Unit;
 use App\Support\Models\Unit\GetUnitReqModel;
 use Illuminate\Contracts\Pagination\Paginator;
-use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Collection;
 
 interface UnitServiceInterface

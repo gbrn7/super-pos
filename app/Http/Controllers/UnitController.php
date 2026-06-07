@@ -15,7 +15,7 @@ class UnitController extends Controller implements HasMiddleware
     {
         return [
             new Middleware(
-                'permission:' . UnitPermissionEnums::READ_UNIT->value,
+                'permission:'.UnitPermissionEnums::READ_UNIT->value,
                 only: ['index']
             ),
         ];

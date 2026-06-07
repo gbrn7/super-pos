@@ -30,12 +30,12 @@ class Permission extends Model implements PermissionContract
     use HasRoles;
     use RefreshesPermissionCache;
 
-    //format date using unix/epoch time
+    // format date using unix/epoch time
     protected $dateFormat = 'U';
 
     protected $guarded = [];
 
-    //overide default iso datetime format from model
+    // overide default iso datetime format from model
     protected function serializeDate(DateTimeInterface $date): int
     {
         return $date->getTimestamp();

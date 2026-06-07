@@ -3,8 +3,8 @@
 namespace Database\Seeders;
 
 use App\Models\Product;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
 
 class ProductSeeder extends Seeder
 {
@@ -15,15 +15,18 @@ class ProductSeeder extends Seeder
     {
         Product::insert([
             [
-                "category_id" => 1,
-                "unit_id" => 1,
-                "is_active" => 1,
-                "name" => "Beras",
-                "stock" => 100,
-                "price" => 10000,
-                "cost_price" => 7000,
-                'created_at' => now(),
-                'updated_at' => now(),
+                'category_id' => 1,
+                'unit_id' => 1,
+                'is_active' => 1,
+                'name' => 'Beras Rojo Lele',
+                'stock' => 100,
+                'sku' => Str::of('Beras Rojo Lele')
+                    ->headline()
+                    ->replaceMatches('/[^A-Z]/', '').'-'.strtoupper(Str::random(8)),
+                'price' => 10000,
+                'cost_price' => 7000,
+                'created_at' => now()->unix(),
+                'updated_at' => now()->unix(),
             ],
         ]);
     }

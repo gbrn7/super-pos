@@ -43,7 +43,7 @@ class UserService implements UserServiceInterface
         try {
             DB::beginTransaction();
 
-            $user =  $this->userRepository->create($data);
+            $user = $this->userRepository->create($data);
 
             $user->assignRole($data['role']);
 
@@ -62,8 +62,8 @@ class UserService implements UserServiceInterface
         try {
             $user = $this->userRepository->getById($id);
 
-            if (!isset($user)) {
-                throw new Exception(trans("message.error.data_not_found"), Response::HTTP_NOT_FOUND);
+            if (! isset($user)) {
+                throw new Exception(trans('message.error.data_not_found'), Response::HTTP_NOT_FOUND);
             }
 
             DB::beginTransaction();
@@ -95,8 +95,8 @@ class UserService implements UserServiceInterface
         try {
             $user = $this->userRepository->getById($id);
 
-            if (!isset($user)) {
-                throw new Exception(trans("message.error.data_not_found"), Response::HTTP_NOT_FOUND);
+            if (! isset($user)) {
+                throw new Exception(trans('message.error.data_not_found'), Response::HTTP_NOT_FOUND);
             }
 
             if ($user->hasRole(RoleEnums::SUPER_ADMIN->value)) {
@@ -108,7 +108,6 @@ class UserService implements UserServiceInterface
             if (! $isSuccess) {
                 throw new Exception(trans('message.error.internal_server_error'), Response::HTTP_INTERNAL_SERVER_ERROR);
             }
-
 
             return true;
         } catch (\Throwable $th) {
@@ -126,8 +125,8 @@ class UserService implements UserServiceInterface
             foreach ($ids as $id) {
                 $user = $this->userRepository->getById($id);
 
-                if (!isset($user)) {
-                    throw new Exception(trans("message.error.data_not_found"), Response::HTTP_NOT_FOUND);
+                if (! isset($user)) {
+                    throw new Exception(trans('message.error.data_not_found'), Response::HTTP_NOT_FOUND);
                 }
 
                 if ($user->hasRole(RoleEnums::SUPER_ADMIN->value)) {

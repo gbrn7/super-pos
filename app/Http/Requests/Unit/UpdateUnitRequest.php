@@ -26,8 +26,8 @@ class UpdateUnitRequest extends FormRequest
             'name' => [
                 'string',
                 'required',
-                'max:255'
-            ]
+                'max:255',
+            ],
         ];
     }
 }

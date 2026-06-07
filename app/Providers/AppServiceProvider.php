@@ -4,22 +4,26 @@ namespace App\Providers;
 
 use App\Repositories\CategoryRepository;
 use App\Repositories\PaymentMethodRepository;
+use App\Repositories\ProductRepository;
 use App\Repositories\RoleRepository;
 use App\Repositories\UnitRepository;
 use App\Repositories\UserRepository;
 use App\Services\CategoryService;
 use App\Services\PaymentMethodService;
+use App\Services\ProductService;
 use App\Services\RoleService;
 use App\Services\UnitService;
 use App\Services\UserService;
 use App\Support\Enums\RoleEnums;
 use App\Support\Interfaces\Repositories\CategoryRepositoryInterface;
 use App\Support\Interfaces\Repositories\PaymentMethodRepositoryInterface;
+use App\Support\Interfaces\Repositories\ProductRepositoryInterface;
 use App\Support\Interfaces\Repositories\RoleRepositoryInterface;
 use App\Support\Interfaces\Repositories\UnitRepositoryInterface;
 use App\Support\Interfaces\Repositories\UserRepositoryInterface;
 use App\Support\Interfaces\Services\CategoryServiceInterface;
 use App\Support\Interfaces\Services\PaymentMethodServiceInterface;
+use App\Support\Interfaces\Services\ProductServiceInterface;
 use App\Support\Interfaces\Services\RoleServiceInterface;
 use App\Support\Interfaces\Services\UnitServiceInterface;
 use App\Support\Interfaces\Services\UserServiceInterface;
@@ -37,25 +41,29 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //Category service
+        // Category service
         $this->app->bind(CategoryRepositoryInterface::class, CategoryRepository::class);
         $this->app->bind(CategoryServiceInterface::class, CategoryService::class);
 
-        //Role service
+        // Role service
         $this->app->bind(RoleRepositoryInterface::class, RoleRepository::class);
         $this->app->bind(RoleServiceInterface::class, RoleService::class);
 
-        //User service
+        // User service
         $this->app->bind(UserRepositoryInterface::class, UserRepository::class);
         $this->app->bind(UserServiceInterface::class, UserService::class);
 
-        //unit service
+        // unit service
         $this->app->bind(UnitRepositoryInterface::class, UnitRepository::class);
         $this->app->bind(UnitServiceInterface::class, UnitService::class);
 
-        //Payment method service
+        // Payment method service
         $this->app->bind(PaymentMethodRepositoryInterface::class, PaymentMethodRepository::class);
         $this->app->bind(PaymentMethodServiceInterface::class, PaymentMethodService::class);
+
+        // Product service
+        $this->app->bind(ProductRepositoryInterface::class, ProductRepository::class);
+        $this->app->bind(ProductServiceInterface::class, ProductService::class);
     }
 
     /**
@@ -82,13 +90,13 @@ class AppServiceProvider extends ServiceProvider
         );
 
         Password::defaults(
-            fn(): ?Password => app()->isProduction()
+            fn (): ?Password => app()->isProduction()
                 ? Password::min(12)
-                ->mixedCase()
-                ->letters()
-                ->numbers()
-                ->symbols()
-                ->uncompromised()
+                    ->mixedCase()
+                    ->letters()
+                    ->numbers()
+                    ->symbols()
+                    ->uncompromised()
                 : null,
         );
     }

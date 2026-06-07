@@ -12,7 +12,7 @@ class PaymentMethodController extends Controller implements HasMiddleware
     {
         return [
             new Middleware(
-                'permission:' . PaymentMethodPermissionEnums::READ_PAYMENT_METHOD->value,
+                'permission:'.PaymentMethodPermissionEnums::READ_PAYMENT_METHOD->value,
                 only: ['index']
             ),
         ];

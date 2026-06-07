@@ -47,7 +47,7 @@ class RoleService implements RoleServiceInterface
 
             DB::beginTransaction();
 
-            $role =  $this->roleRepository->create($data);
+            $role = $this->roleRepository->create($data);
 
             $role->givePermissionTo($data['permissions']);
 
@@ -66,8 +66,8 @@ class RoleService implements RoleServiceInterface
         try {
             $role = $this->roleRepository->getById($id);
 
-            if (!isset($role)) {
-                throw new Exception(trans("message.error.data_not_found"), Response::HTTP_NOT_FOUND);
+            if (! isset($role)) {
+                throw new Exception(trans('message.error.data_not_found'), Response::HTTP_NOT_FOUND);
             }
 
             $isRoleExist = $this->roleRepository->getByNameExceptID($data['name'], $id);
@@ -105,8 +105,8 @@ class RoleService implements RoleServiceInterface
         try {
             $role = $this->roleRepository->getById($id);
 
-            if (!isset($role)) {
-                throw new Exception(trans("message.error.data_not_found"), Response::HTTP_NOT_FOUND);
+            if (! isset($role)) {
+                throw new Exception(trans('message.error.data_not_found'), Response::HTTP_NOT_FOUND);
             }
 
             if ($role->name === RoleEnums::SUPER_ADMIN->value) {
@@ -139,8 +139,8 @@ class RoleService implements RoleServiceInterface
             foreach ($ids as $id) {
                 $role = $this->roleRepository->getById($id);
 
-                if (!isset($role)) {
-                    throw new Exception(trans("message.error.data_not_found"), Response::HTTP_NOT_FOUND);
+                if (! isset($role)) {
+                    throw new Exception(trans('message.error.data_not_found'), Response::HTTP_NOT_FOUND);
                 }
 
                 if ($role->name === RoleEnums::SUPER_ADMIN->value) {

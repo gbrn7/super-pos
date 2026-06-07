@@ -59,8 +59,8 @@ class CategoryService implements CategoryServiceInterface
         try {
             $category = $this->categoryRepository->getById($id);
 
-            if (!isset($category)) {
-                throw new Exception(trans("message.error.data_not_found"), Response::HTTP_NOT_FOUND);
+            if (! isset($category)) {
+                throw new Exception(trans('message.error.data_not_found'), Response::HTTP_NOT_FOUND);
             }
 
             $isCategoryExist = $this->categoryRepository->getByNameExceptID($data['name'], $id);
@@ -86,8 +86,8 @@ class CategoryService implements CategoryServiceInterface
         try {
             $category = $this->categoryRepository->getById($id);
 
-            if (!isset($category)) {
-                throw new Exception(trans("message.error.data_not_found"), Response::HTTP_NOT_FOUND);
+            if (! isset($category)) {
+                throw new Exception(trans('message.error.data_not_found'), Response::HTTP_NOT_FOUND);
             }
 
             $isSuccess = $this->categoryRepository->delete($category);
@@ -116,7 +116,7 @@ class CategoryService implements CategoryServiceInterface
     public function importExcel(UploadedFile $file): int
     {
         try {
-            $raws = Excel::toArray(new CategoryImport(), $file);
+            $raws = Excel::toArray(new CategoryImport, $file);
 
             $newData = Collection::make();
 
@@ -135,7 +135,7 @@ class CategoryService implements CategoryServiceInterface
             }
 
             $isSuccess = $this->categoryRepository->insert($newData->toArray());
-            if (!$isSuccess) {
+            if (! $isSuccess) {
                 throw new Exception(trans('message.error.internal_server_error'), Response::HTTP_INTERNAL_SERVER_ERROR);
             }
 
@@ -143,7 +143,7 @@ class CategoryService implements CategoryServiceInterface
         } catch (\Throwable $th) {
 
             if ($th->getCode() === ErrorCode::SQL_UNIQUE_VIOLATION) {
-                $th = new Exception(trans('message.error.duplicate_data_error_import'), RESPONSE::HTTP_INTERNAL_SERVER_ERROR);
+                $th = new Exception(trans('message.error.duplicate_data_error_import'), Response::HTTP_INTERNAL_SERVER_ERROR);
             }
 
             throw CheckException::Check($th);

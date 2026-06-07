@@ -25,22 +25,22 @@ class ApiPaymentMethodController extends Controller implements HasMiddleware
     {
         return [
             new Middleware(
-                'permission:' . PaymentMethodPermissionEnums::READ_PAYMENT_METHOD->value,
+                'permission:'.PaymentMethodPermissionEnums::READ_PAYMENT_METHOD->value,
                 only: ['index', 'show']
             ),
 
             new Middleware(
-                'permission:' . PaymentMethodPermissionEnums::CREATE_PAYMENT_METHOD->value,
+                'permission:'.PaymentMethodPermissionEnums::CREATE_PAYMENT_METHOD->value,
                 only: ['store']
             ),
 
             new Middleware(
-                'permission:' . PaymentMethodPermissionEnums::UPDATE_PAYMENT_METHOD->value,
+                'permission:'.PaymentMethodPermissionEnums::UPDATE_PAYMENT_METHOD->value,
                 only: ['update']
             ),
 
             new Middleware(
-                'permission:' . PaymentMethodPermissionEnums::DELETE_PAYMENT_METHOD->value,
+                'permission:'.PaymentMethodPermissionEnums::DELETE_PAYMENT_METHOD->value,
                 only: ['destroy', 'bulkDelete']
             ),
         ];
@@ -59,6 +59,7 @@ class ApiPaymentMethodController extends Controller implements HasMiddleware
             return ResponseApi::make(true, trans('message.success.success'), $data);
         } catch (\Throwable $th) {
             dd($th->getMessage());
+
             return ResponseApi::make(false, $th->getMessage(), null, $th->getcode());
         }
     }
@@ -113,7 +114,9 @@ class ApiPaymentMethodController extends Controller implements HasMiddleware
         try {
             $isSuccessDelete = $this->paymentMethodService->delete($id);
 
-            if (!$isSuccessDelete) throw new Exception(trans('message.error.internal_server_error'), Response::HTTP_INTERNAL_SERVER_ERROR);
+            if (! $isSuccessDelete) {
+                throw new Exception(trans('message.error.internal_server_error'), Response::HTTP_INTERNAL_SERVER_ERROR);
+            }
 
             return ResponseApi::make(true, trans('message.success.deleted'), null, Response::HTTP_OK);
         } catch (\Throwable $th) {

@@ -15,7 +15,7 @@ class CategoryController extends Controller implements HasMiddleware
     {
         return [
             new Middleware(
-                'permission:' . CategoryPermissionEnums::READ_CATEGORY->value,
+                'permission:'.CategoryPermissionEnums::READ_CATEGORY->value,
                 only: ['index']
             ),
         ];

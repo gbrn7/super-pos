@@ -8,8 +8,5 @@ use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
 class CategoryImport implements ToCollection, WithHeadingRow
 {
-    /**
-     * @param Collection $collection
-     */
     public function collection(Collection $collection) {}
 }

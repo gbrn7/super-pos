@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Unit;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class UnitSeeder extends Seeder
@@ -15,17 +14,17 @@ class UnitSeeder extends Seeder
     {
         Unit::insert([
             [
-                "name" => "Kilogram",
+                'name' => 'Kilogram',
                 'created_at' => now()->unix(),
                 'updated_at' => now()->unix(),
             ],
             [
-                "name" => "Liter",
+                'name' => 'Liter',
                 'created_at' => now()->unix(),
                 'updated_at' => now()->unix(),
             ],
             [
-                "name" => "Pcs",
+                'name' => 'Pcs',
                 'created_at' => now()->unix(),
                 'updated_at' => now()->unix(),
             ],

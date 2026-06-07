@@ -35,12 +35,12 @@ class Role extends Model implements RoleContract
     use HasPermissions;
     use RefreshesPermissionCache;
 
-    //format date using unix/epoch time
+    // format date using unix/epoch time
     protected $dateFormat = 'U';
 
     protected $guarded = [];
 
-    //overide default iso datetime format from model
+    // overide default iso datetime format from model
     protected function serializeDate(DateTimeInterface $date): int
     {
         return $date->getTimestamp();
@@ -194,7 +194,7 @@ class Role extends Model implements RoleContract
             $teamsKey = $registrar->teamsKey;
 
             $query->where(
-                fn($q) => $q->whereNull($teamsKey)
+                fn ($q) => $q->whereNull($teamsKey)
                     ->orWhere($teamsKey, $params[$teamsKey] ?? getPermissionsTeamId())
             );
             unset($params[$teamsKey]);

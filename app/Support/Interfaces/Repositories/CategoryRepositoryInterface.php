@@ -9,78 +9,48 @@ use Illuminate\Support\Collection;
 
 interface CategoryRepositoryInterface
 {
-  /**
-   * Get all categories.
-   * @param GetCategoryReqModel $request
-   * @return Paginator|Collection
-   */
-  public function getAllByIndex(GetCategoryReqModel $request): Paginator|Collection;
+    /**
+     * Get all categories.
+     */
+    public function getAllByIndex(GetCategoryReqModel $request): Paginator|Collection;
 
-  /**
-   * Get a category by its ID.
-   *
-   * @param int $id
-   * @return Category|null
-   */
-  public function getById(int $id): ?Category;
+    /**
+     * Get a category by its ID.
+     */
+    public function getById(int $id): ?Category;
 
-  /**
-   * Create a new category.
-   *
-   * @param array $data
-   * @return Category
-   */
-  public function create(array $data): Category;
+    /**
+     * Create a new category.
+     */
+    public function create(array $data): Category;
 
-  /**
-   * Update an existing category.
-   *
-   * @param Category $category
-   * @param array $data
-   * @return bool
-   */
-  public function update(Category $category, array $data): bool;
+    /**
+     * Update an existing category.
+     */
+    public function update(Category $category, array $data): bool;
 
-  /**
-   * Delete a category by its ID.
-   *
-   * @param Category $category
-   * @return bool
-   */
-  public function delete(Category $category): bool;
+    /**
+     * Delete a category by its ID.
+     */
+    public function delete(Category $category): bool;
 
-  /**
-   * Delete a categories by its Ids.
-   *
-   * @param array $ids
-   * @return int
-   */
-  public function deleteMany(array $ids): int;
+    /**
+     * Delete a categories by its Ids.
+     */
+    public function deleteMany(array $ids): int;
 
+    /**
+     * Insert new categories.
+     */
+    public function insert(array $data): bool;
 
-  /**
-   * Insert new categories.
-   *
-   * @param array $data
-   * @return bool
-   */
-  public function insert(array $data): bool;
+    /**
+     * Get a category by its name.
+     */
+    public function getByName(string $name): ?Category;
 
-  /**
-   * Get a category by its name.
-   *
-   * @param string $name
-   * @return Category|null
-   */
-  public function getByName(string $name): ?Category;
-
-
-  /**
-   * Get a category by its name except id.
-   *
-   * @param string $name
-   * @param int $id
-   * @return Category|null
-   */
-  public function getByNameExceptID(string $name, int $id): ?Category;
+    /**
+     * Get a category by its name except id.
+     */
+    public function getByNameExceptID(string $name, int $id): ?Category;
 }

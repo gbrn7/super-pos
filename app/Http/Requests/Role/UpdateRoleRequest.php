@@ -26,7 +26,7 @@ class UpdateRoleRequest extends FormRequest
             'name' => [
                 'string',
                 'required',
-                'max:255'
+                'max:255',
             ],
             'guardName' => ['nullable', 'string', 'max:255'],
             'permissions' => ['nullable', 'array'],
