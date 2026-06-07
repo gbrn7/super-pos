@@ -245,7 +245,7 @@ export default function edit() {
                   {/* Check All Permissions */}
                   <div className={`Permission-Wrapper space-y-2 border p-3 rounded-2xl ${errorForm.permissions && 'border-red-500'}`}>
                     <div
-                      className={`flex items-center gap-3 p-4 rounded-lg border-2 transition-all cursor-pointer}`}
+                      className={`flex items-center gap-3 p-4 rounded-lg border transition-all cursor-pointer}`}
                     >
                       <Checkbox
                         id="check-all"
