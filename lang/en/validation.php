@@ -45,6 +45,7 @@ return [
         'price' => 'Price',
         'cost_price' => 'Cost Price',
         'is_active' => 'Active Status',
+        'is_unlimited' => 'Status Stok',
     ],
 
 ];

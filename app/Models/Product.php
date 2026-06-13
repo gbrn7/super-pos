@@ -4,6 +4,7 @@ namespace App\Models;
 
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Product extends Model
 {
@@ -13,6 +14,8 @@ class Product extends Model
         'sku',
         'name',
         'is_active',
+        'is_unlimited',
+        'desc',
         'stock',
         'image',
         'price',
@@ -28,8 +31,13 @@ class Product extends Model
         return $date->getTimestamp();
     }
 
-    public function category()
+    public function category(): BelongsTo
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsTo(Category::class, 'category_id', 'id');
+    }
+
+    public function unit(): BelongsTo
+    {
+        return $this->belongsTo(Unit::class, 'unit_id', 'id');
     }
 }

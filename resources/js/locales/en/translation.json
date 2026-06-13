@@ -36,33 +36,59 @@
       "required": {
         "name":"Name cannot be empty"
       }
+    },
+    "product": {
+      "required": {
+        "name": "Name is required",
+        "category_id": "Category is required",
+        "unit_id": "Unit is required",
+        "is_active": "Status is required",
+        "is_unlimited": "Stok status is required",
+        "stock": "Stock is required",
+        "price": "Price is required",
+        "cost_price": "Cost price is required"
+      }
     }
 },
   "permission_label":{
     "category":{
-      "permission":"Access Category",
+      "permission":"Access Category Feature",
       "create":"Create Category",
       "read":"Read Category",
       "update":"Edit Category",
       "delete":"Delete Category"
     },
     "role":{
-      "permission":"Access Role",
+      "permission":"Access Role Feature",
       "create":"Create Role",
       "read":"Read Role",
       "update":"Edit Role",
       "delete":"Delete Role"
     },
     "dashboard":{
-      "permission":"Access Dashboard",
+      "permission":"Access Dashboard Feature",
       "read":"Read Dashboard"
     },
     "unit":{
-      "permission":"Access Unit",
+      "permission":"Access Unit Feature",
       "create":"Create Unit",
       "read":"Read Unit",
       "update":"Update Unit",
       "delete":"Delete Unit"
+    },
+    "payment_method":{
+      "permission":"Access Payment Feature Method",
+      "create":"Create Payment Method",
+      "read":"Read Payment Method",
+      "update":"Update Payment Method",
+      "delete":"Delete Payment Method"
+    },
+    "product":{
+      "permission":"Access Product Feature",
+      "create":"Create Product",
+      "read":"Read Product",
+      "update":"Update Product",
+      "delete":"Delete Product"
     }
   },
   "component": {
@@ -70,6 +96,7 @@
       "dashboard_menu_label": "Dashboard",
       "example_menu_label": "Example",
       "category_menu_label": "Category",
+      "product_menu_label":"Product",
       "payment_method_menu_label":"Payment Method",
       "role_menu_label":"Role",
       "user_menu_label":"User",
@@ -317,6 +344,112 @@
         }
       }
     },
+    "product": {
+      "page_name": "Product",
+      "data_table": {
+        "columns": {
+          "select_column_label": "Select",
+          "name_column_label": "Name",
+          "category_column_label": "Category",
+          "unit_column_label": "Unit",
+          "stock_column_label": "Stock",
+          "price_column_label": "Price",
+          "cost_price_column_label": "Cost Price",
+          "status_column_label": "Status",
+          "created_at_column_label": "Created At",
+          "updated_at_column_label": "Updated At",
+          "actions_column_label": "Actions"
+        }
+      },
+      "status": {
+        "active": "Active",
+        "inactive": "Inactive"
+      },
+      "dialog_modal": {
+        "create_dialog": {
+          "dialog_button": "Add Data",
+          "dialog_title": "Add Product",
+          "dialog_desc": "Add a new product",
+          "name_input_label": "Name",
+          "name_input_placeholder": "Enter product name",
+          "image_input_label": "Image",
+          "image_input_placeholder": "Upload product image",
+          "unit_id_input_label": "Unit",
+          "unit_id_input_placeholder": "Select product unit",
+          "category_id_input_label": "Category",
+          "category_id_input_placeholder": "Select product category",
+          "stock_input_label": "Stock",
+          "stock_input_placeholder": "Enter product stock",
+          "cost_price_input_label": "Cost Price",
+          "cost_price_input_placeholder": "Enter product cost price",
+          "price_input_label": "Price",
+          "price_input_placeholder": "Enter product price",
+          "is_active_input_label": "Status",
+          "is_active_input_placeholder": "Select product status",
+          "is_unlimited_input_label": "Stock Status",
+          "is_unlimited_input_placeholder": "Select stock status",
+          "cancel_button": "Cancel",
+          "confirm_button": "Add Product"
+        },
+        "edit_dialog": {
+          "dialog_button": "Edit Data",
+          "dialog_title": "Edit Product",
+          "dialog_desc": "Edit product data",
+          "name_input_label": "Name",
+          "name_input_placeholder": "Enter product name",
+          "image_input_label": "Image",
+          "image_input_placeholder": "Upload product image",
+          "unit_id_input_label": "Unit",
+          "unit_id_input_placeholder": "Select product unit",
+          "category_id_input_label": "Category",
+          "category_id_input_placeholder": "Select product category",
+          "stock_input_label": "Stock",
+          "stock_input_placeholder": "Enter product stock",
+          "cost_price_input_label": "Cost Price",
+          "cost_price_input_placeholder": "Enter product cost price",
+          "price_input_label": "Price",
+          "price_input_placeholder": "Enter product price",
+          "is_active_input_label": "Status",
+          "is_active_input_placeholder": "Select product status",
+          "is_unlimited_input_label": "Stock Status",
+          "is_unlimited_input_placeholder": "Select stock status",
+          "cancel_button": "Cancel",
+          "confirm_button": "Update Product"
+        },
+        "detail_dialog": {
+          "dialog_button": "View Details",
+          "dialog_title": "Product Details",
+          "dialog_desc": "Product information",
+          "name_label": "Name",
+          "desc_label": "Description",
+          "created_at_label": "Created At",
+          "updated_at_label": "Updated At"
+        },
+        "delete_dialog": {
+          "dialog_button": "Delete Data",
+          "dialog_title": "Delete Product",
+          "dialog_desc": "Are you sure you want to delete this product?",
+          "cancel_button": "Cancel",
+          "confirm_button": "Delete Product"
+        },
+        "bulk_delete_dialog": {
+          "dialog_button": "Delete",
+          "dialog_title": "Delete %d Products",
+          "dialog_desc": "Are you sure you want to delete %d products?",
+          "cancel_button": "Cancel",
+          "confirm_button": "Delete Products"
+        },
+        "import_excel_dialog": {
+          "dialog_button": "Import Excel",
+          "dialog_title": "Import Excel",
+          "dialog_desc": "Import product data from an Excel file",
+          "template_label": "Template",
+          "file_excel_label": "Excel File",
+          "cancel_button": "Cancel",
+          "confirm_button": "Import"
+        }
+      }
+    },
     "payment_method": {
     "page_name": "Payment Methods",
     "data_table": {
@@ -338,7 +471,7 @@
         "name_input_placeholder": "Enter payment method name",
         "desc_input_label":"Description",
         "desc_input_placeholder":"Enter payment method description",
-        "image_input_label":"Gambar",
+        "image_input_label":"Image",
         "image_input_placeholder":"Enter payment method image",
         "cancel_button": "Cancel",
         "confirm_button": "Add Payment Method"
@@ -470,8 +603,8 @@
       }
     },
     "user":{
-    "page_name":"User",
-    "data_table":{
+     "page_name":"User",
+     "data_table":{
       "columns":{
         "select_column_label":"Choose",
         "name_column_label":"Name",
@@ -481,8 +614,8 @@
         "updated_at_column_label":"Updated At",
         "actions_column_label":"Actions"
       }
-    },
-    "dialog_modal":{
+     },
+     "dialog_modal":{
       "create_dialog": {
         "dialog_button": "Add Data",
         "dialog_title": "Add User",
@@ -540,8 +673,8 @@
         "cancel_button":"Cancel",
         "confirm_button":"Delete Users"
       }
-    }
-  },
+      }
+    },
     "settings": {
       "title": "Settings",
        "log_out_menu":"Log out",

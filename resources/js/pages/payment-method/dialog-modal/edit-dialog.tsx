@@ -20,7 +20,7 @@ import { Spinner } from '@/components/ui/spinner';
 import axiosInstance from '@/lib/axios';
 import { ResponseApi } from '@/support/interfaces/response/Response';
 import { handleApiError, showSuccessToast, showWarningToast } from '@/lib/utils';
-import { PaymentMethodForm } from '@/support/interfaces/request/paymentMethod';
+import { PaymentMethodErrorForm, PaymentMethodForm } from '@/support/interfaces/request/paymentMethod';
 import z from 'zod';
 import ErrorFormInfo from '@/components/errorFormInfo';
 
@@ -48,7 +48,7 @@ export function EditDialog({
         desc: paymentMethod?.desc ?? '',
     });
 
-    const [errorForm, setErrorForm] = useState<PaymentMethodForm>({
+    const [errorForm, setErrorForm] = useState<PaymentMethodErrorForm>({
         name: "",
         image: "",
         desc: ""
@@ -92,7 +92,7 @@ export function EditDialog({
         const resultValidation = paymentMethodSchema.safeParse(formData);
 
         if (!resultValidation.success) {
-            const fieldErrors: PaymentMethodForm = {
+            const fieldErrors: PaymentMethodErrorForm = {
                 name: "",
                 image: "",
                 desc: ""

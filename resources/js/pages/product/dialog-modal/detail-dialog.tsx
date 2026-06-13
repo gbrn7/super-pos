@@ -5,23 +5,23 @@ import {
     DialogTitle,
 } from '@/components/ui/dialog';
 import { formatDate } from '@/lib/format-date';
-import type { PaymentMethod } from '@/support/models/paymentMethod';
+import type { Product } from '@/support/models/product';
 import { useTranslation } from 'react-i18next';
 
 interface DetailSheetProps {
     isOpen: boolean;
-    paymentMethod: PaymentMethod | null;
+    product: Product | null;
     onOpenChange: (open: boolean) => void;
 }
 
 export function DetailDialog({
     isOpen,
-    paymentMethod,
+    product,
     onOpenChange,
 }: DetailSheetProps) {
     const { t } = useTranslation();
 
-    if (!paymentMethod) {
+    if (!product) {
         return null;
     }
 
@@ -29,43 +29,33 @@ export function DetailDialog({
         <Dialog open={isOpen} onOpenChange={onOpenChange}>
             <DialogContent showCloseButton={true}>
                 <DialogHeader>
-                    <DialogTitle>{t("page.payment_method.dialog_modal.detail_dialog.dialog_title", "Detail Metode Pembayaran")}</DialogTitle>
+                    <DialogTitle>{t("page.product.dialog_modal.detail_dialog.dialog_title", "Detail Produk")}</DialogTitle>
                     <DialogContent>
                         <div>
                             <p className="text-sm font-medium text-muted-foreground">
-                                {t("page.payment_method.dialog_modal.detail_dialog.name_label", "Nama")}
+                                {t("page.product.dialog_modal.detail_dialog.name_label", "Nama")}
                             </p>
-                            <p className="mt-1 text-base">{paymentMethod.name}</p>
+                            <p className="mt-1 text-base">{product.name}</p>
                         </div>
 
                         <div>
                             <p className="text-sm font-medium text-muted-foreground">
-                                {t("page.payment_method.dialog_modal.detail_dialog.image_label", "Gambar")}
+                                {t("page.product.dialog_modal.detail_dialog.image_label", "Gambar")}
                             </p>
                             <div className="mt-2">
-                                {paymentMethod.image ? (
-                                    <img src={paymentMethod.image} alt={paymentMethod.name} className="h-32 w-32 object-cover rounded" />
+                                {product.image ? (
+                                    <img src={product.image} alt={product.name} className="h-32 w-32 object-cover rounded" />
                                 ) : <p className="text-sm font-medium text-muted-foreground">-</p>}
                             </div>
                         </div>
 
                         <div>
                             <p className="text-sm font-medium text-muted-foreground">
-                                {t("page.payment_method.dialog_modal.detail_dialog.desc_label", "Nama")}
-                            </p>
-                            <p className="mt-1 text-base">
-                                {paymentMethod.desc || '-'}
-                            </p>
-                        </div>
-
-
-                        <div>
-                            <p className="text-sm font-medium text-muted-foreground">
-                                {t("page.payment_method.dialog_modal.detail_dialog.created_at_label", "Tanggal Dibuat")}
+                                {t("page.product.dialog_modal.detail_dialog.created_at_label", "Tanggal Dibuat")}
                             </p>
                             <p className="mt-1 text-base">
                                 {
-                                    formatDate(paymentMethod.created_at)
+                                    formatDate(product.created_at)
                                 }
                             </p>
                         </div>
@@ -74,11 +64,11 @@ export function DetailDialog({
 
                         <div>
                             <p className="text-sm font-medium text-muted-foreground">
-                                {t("page.payment_method.dialog_modal.detail_dialog.updated_at_label", "Tanggal Diperbarui")}
+                                {t("page.product.dialog_modal.detail_dialog.updated_at_label", "Tanggal Diperbarui")}
                             </p>
                             <p className="mt-1 text-base">
                                 {
-                                    formatDate(paymentMethod.updated_at)
+                                    formatDate(product.updated_at)
                                 }
                             </p>
                         </div>

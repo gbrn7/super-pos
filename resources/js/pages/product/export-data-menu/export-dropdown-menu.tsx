@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import * as XLSX from 'xlsx';
 import { jsPDF } from 'jspdf';
 import { formatDate } from "@/lib/format-date";
-import { Download, DownloadCloud } from "lucide-react";
+import { DownloadCloud } from "lucide-react";
 
 
 interface ExportDropdownMenuProps<TData> {
@@ -18,10 +18,9 @@ export function ExportDropdownMenu<TData>({
   const { t } = useTranslation()
 
   const exportcolumns = [
-    t("page.payment_method.data_table.columns.name_column_label", "Nama"),
-    t("page.payment_method.data_table.columns.desc_column_label", "Deskripsi"),
-    t("page.payment_method.data_table.columns.created_at_column_label", "Tanggal dibuat"),
-    t("page.payment_method.data_table.columns.updated_at_column_label", "Tanggal diperbarui"),
+    t("page.product.data_table.columns.name_column_label", "Nama"),
+    t("page.product.data_table.columns.created_at_column_label", "Tanggal dibuat"),
+    t("page.product.data_table.columns.updated_at_column_label", "Tanggal diperbarui"),
   ];
 
 
@@ -30,7 +29,6 @@ export function ExportDropdownMenu<TData>({
     // Prepare data for export
     const exportData = data.map((row: any) => ({
       name: row.name || '',
-      desc: row.desc || '',
       created_at: formatDate(row.created_at) || '',
       updated_at: formatDate(row.updated_at) || '',
     }));
@@ -46,7 +44,7 @@ export function ExportDropdownMenu<TData>({
     );
 
     const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, t("page.payment_method.page_name", "Metode Pembayaran"));
+    XLSX.utils.book_append_sheet(workbook, worksheet, t("page.product.page_name", "Produk"));
 
     // Set column widths
     worksheet['!cols'] = [
@@ -56,7 +54,7 @@ export function ExportDropdownMenu<TData>({
     ];
 
     // Generate file name with current timestamp
-    const fileName = `${t("page.payment_method.page_name", "Metode Pembayaran")}_${new Date().toISOString().split('T')[0]}.xlsx`;
+    const fileName = `${t("page.product.page_name", "Produk")}_${new Date().toISOString().split('T')[0]}.xlsx`;
 
     // Write the file
     XLSX.writeFile(workbook, fileName);
@@ -71,7 +69,7 @@ export function ExportDropdownMenu<TData>({
 
     // Add title
     doc.setFontSize(16);
-    doc.text(t("page.payment_method.page_name", "Metode Pembayaran"), pageWidth / 2, yPosition, { align: 'center' });
+    doc.text(t("page.product.page_name", "Produk"), pageWidth / 2, yPosition, { align: 'center' });
     yPosition += 15;
 
     // Add metadata
@@ -114,7 +112,6 @@ export function ExportDropdownMenu<TData>({
       xPosition = 10;
       const rowData = [
         row.name || '',
-        row.desc || '',
         row.created_at ? formatDate(row.created_at) : '',
         row.updated_at ? formatDate(row.updated_at) : '',
       ];
@@ -129,7 +126,7 @@ export function ExportDropdownMenu<TData>({
     });
 
     // Generate file name with current timestamp
-    const fileName = `${t("page.payment_method.page_name", "Metode Pembayaran")}_${new Date().toISOString().split('T')[0]}.pdf`;
+    const fileName = `${t("page.product.page_name", "Produk")}_${new Date().toISOString().split('T')[0]}.pdf`;
 
     // Save the document
     doc.save(fileName);

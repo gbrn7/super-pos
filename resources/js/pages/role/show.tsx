@@ -6,7 +6,7 @@ import { show as getRoleRoute } from '@/routes/apiRoles'
 import { useEffect, useState } from "react";
 import { RoleForm } from "@/support/interfaces/request/role";
 import axiosInstance from "@/lib/axios";
-import { ResponseApi } from "@/support/interfaces/response/Response";
+import { ResponseApi } from '@/support/interfaces/response/Response';
 import { RoleWithPermissions } from "@/support/models/role";
 import { index } from '@/routes/roles';
 import { handleApiError, showWarningToast } from "@/lib/utils";

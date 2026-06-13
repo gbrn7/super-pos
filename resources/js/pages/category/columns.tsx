@@ -12,7 +12,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import type { Category } from '@/support/models/category';
 import { useTranslation } from 'react-i18next';
-import { formatDate } from '@/lib/formatdate';
+import { formatDate } from '@/lib/format-date';
 import { Can } from '@/components/auth/can';
 import { PERMISSIONENUMS } from '@/support/enums/PermissionEnums';
 

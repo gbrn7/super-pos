@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('name')->index();
             $table->tinyText('sku')->index()->unique();
             $table->boolean('is_active')->default(true);
+            $table->boolean('is_unlimited')->default(false);
+            $table->text('desc')->nullable();
             $table->integer('stock');
             $table->string('image')->nullable();
             $table->decimal('price', 10, 2);

@@ -4,7 +4,7 @@ import {
     DialogHeader,
     DialogTitle,
 } from '@/components/ui/dialog';
-import { formatDate } from '@/lib/formatdate';
+import { formatDate } from '@/lib/format-date';
 import type { Unit } from '@/support/models/unit';
 import { useTranslation } from 'react-i18next';
 

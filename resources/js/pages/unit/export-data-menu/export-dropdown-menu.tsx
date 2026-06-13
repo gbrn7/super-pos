@@ -3,8 +3,8 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem,
 import { useTranslation } from "react-i18next";
 import * as XLSX from 'xlsx';
 import { jsPDF } from 'jspdf';
-import { formatDate } from "@/lib/formatdate";
-import { Download, DownloadCloud } from "lucide-react";
+import { formatDate } from "@/lib/format-date";
+import { DownloadCloud } from "lucide-react";
 
 
 interface ExportDropdownMenuProps<TData> {
@@ -126,7 +126,7 @@ export function ExportDropdownMenu<TData>({
     });
 
     // Generate file name with current timestamp
-    const fileName = `Units_${new Date().toISOString().split('T')[0]}.pdf`;
+    const fileName = `${t("page.unit.page_name", "Satuan")}_${new Date().toISOString().split('T')[0]}.pdf`;
 
     // Save the document
     doc.save(fileName);

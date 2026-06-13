@@ -16,14 +16,17 @@ class ProductResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'category_id' => $this->category_id,
-            'unit_id' => $this->unit_id,
             'name' => $this->name,
+            'sku' => $this->sku,
+            'category_id' => $this->category_id,
+            'category_name' => $this->category->name,
+            'unit_id' => $this->unit_id,
+            'unit_name' => $this->unit->name,
             'is_active' => $this->is_active,
             'stock' => $this->stock,
             'price' => $this->price,
             'cost_price' => $this->cost_price,
-            'image' => isset($this->image) ? asset('storage/'.$this->image) : null,
+            'image' => isset($this->image) ? asset('storage/' . $this->image) : null,
             'created_at' => $this->getRawOriginal('created_at'),
             'updated_at' => $this->getRawOriginal('updated_at'),
         ];

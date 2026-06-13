@@ -14,7 +14,7 @@ import { Field, FieldGroup } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { store as storePaymentMethod } from '@/routes/apiPaymentMethods';
-import type { PaymentMethodForm } from '@/support/interfaces/request/paymentMethod';
+import type { PaymentMethodErrorForm, PaymentMethodForm } from '@/support/interfaces/request/paymentMethod';
 import { useTranslation } from 'react-i18next';
 import { Spinner } from '@/components/ui/spinner';
 import axiosInstance from '@/lib/axios';
@@ -33,23 +33,23 @@ export function CreateDialog({ onSuccess }: CreateDialogProps) {
     const { t } = useTranslation();
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState<boolean>(false);
-    const [imageFile, setImageFile] = useState<File | null>(null);
     const [imagePreview, setImagePreview] = useState<string>('');
     const [formData, setFormData] = useState<PaymentMethodForm>({
         name: '',
-        image: '',
+        image: null,
         desc: '',
     });
 
-    const [errorForm, setErrorForm] = useState<PaymentMethodForm>({
+    const [errorForm, setErrorForm] = useState<PaymentMethodErrorForm>({
         name: "",
-        image: '',
+        image: "",
         desc: ""
     });
 
     const paymentMethodSchema = z.object({
         name: z.string().trim().min(1, t("validation.paymentMethod.required.name", "Nama tidak boleh kosong")),
-        desc: z.string().trim(),
+        desc: z.string().trim().nullable(),
+        image: z.file().nullable(),
     });
 
     const handleChange = (
@@ -70,7 +70,12 @@ export function CreateDialog({ onSuccess }: CreateDialogProps) {
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files.length > 0) {
             const file = e.target.files[0];
-            setImageFile(file);
+            setFormData(
+                (prev) => ({
+                    ...prev,
+                    image: file
+                })
+            )
             const reader = new FileReader();
             reader.onloadend = () => {
                 setImagePreview(reader.result as string);
@@ -85,9 +90,9 @@ export function CreateDialog({ onSuccess }: CreateDialogProps) {
         const resultValidation = paymentMethodSchema.safeParse(formData);
 
         if (!resultValidation.success) {
-            const fieldErrors: PaymentMethodForm = {
+            const fieldErrors: PaymentMethodErrorForm = {
                 name: "",
-                image: '',
+                image: "",
                 desc: ""
             };
 
@@ -105,14 +110,7 @@ export function CreateDialog({ onSuccess }: CreateDialogProps) {
         try {
             setLoading(true);
 
-            const submitData = new FormData();
-            submitData.append('name', formData.name);
-            submitData.append('desc', formData.desc);
-            if (imageFile) {
-                submitData.append('image', imageFile);
-            }
-
-            const res = await axiosInstance.post<ResponseApi<PaymentMethod>>(storePaymentMethod().url, submitData, {
+            const res = await axiosInstance.post<ResponseApi<PaymentMethod>>(storePaymentMethod().url, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
@@ -125,8 +123,7 @@ export function CreateDialog({ onSuccess }: CreateDialogProps) {
             }
 
             showSuccessToast(res.data.message)
-            setFormData({ name: '', image: '', desc: '' });
-            setImageFile(null);
+            setFormData({ name: '', image: null, desc: '' });
             setImagePreview('');
             setOpen(false);
             onSuccess();

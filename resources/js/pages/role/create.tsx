@@ -6,7 +6,7 @@ import { useState } from "react";
 import { RoleForm, RoleFormError } from "@/support/interfaces/request/role";
 import z from "zod";
 import axiosInstance from "@/lib/axios";
-import { ResponseApi } from "@/support/interfaces/response/Response";
+import { ResponseApi } from '@/support/interfaces/response/Response';
 import { Role } from "@/support/models/role";
 import { store as storeRole } from '@/routes/apiRoles';
 import { index } from '@/routes/roles';

@@ -1,5 +1,5 @@
 import { Link } from '@inertiajs/react';
-import { Banknote, Book, LayoutGrid, Tags, User, Weight } from 'lucide-react';
+import { Banknote, Book, LayoutGrid, Package, Tags, User, Weight } from 'lucide-react';
 import AppLogo from '@/components/app-logo';
 import { NavFooter } from '@/components/nav-footer';
 import { NavMain } from '@/components/nav-main';
@@ -15,6 +15,7 @@ import {
 } from '@/components/ui/sidebar';
 import { dashboard } from '@/routes';
 import { index as categories } from '@/routes/categories';
+import { index as products } from '@/routes/products';
 import { index as paymentMethods } from '@/routes/payment-methods';
 import { index as roles } from '@/routes/roles';
 import { index as users } from '@/routes/users';
@@ -69,6 +70,13 @@ export function AppSidebar() {
                 href: categories(),
                 icon: Tags,
                 permission: PERMISSIONENUMS.CATEGORY.READ,
+                role: []
+            },
+            {
+                title: t("component.sidebar.product_menu_label", "Produk"),
+                href: products(),
+                icon: Package,
+                permission: PERMISSIONENUMS.PRODUCT.READ,
                 role: []
             },
             {

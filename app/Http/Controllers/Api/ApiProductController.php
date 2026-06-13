@@ -25,22 +25,22 @@ class ApiProductController extends Controller implements HasMiddleware
     {
         return [
             new Middleware(
-                'permission:'.ProductPermissionEnums::READ_PRODUCT->value,
+                'permission:' . ProductPermissionEnums::READ_PRODUCT->value,
                 only: ['index', 'show']
             ),
 
             new Middleware(
-                'permission:'.ProductPermissionEnums::CREATE_PRODUCT->value,
+                'permission:' . ProductPermissionEnums::CREATE_PRODUCT->value,
                 only: ['store']
             ),
 
             new Middleware(
-                'permission:'.ProductPermissionEnums::UPDATE_PRODUCT->value,
+                'permission:' . ProductPermissionEnums::UPDATE_PRODUCT->value,
                 only: ['update']
             ),
 
             new Middleware(
-                'permission:'.ProductPermissionEnums::DELETE_PRODUCT->value,
+                'permission:' . ProductPermissionEnums::DELETE_PRODUCT->value,
                 only: ['destroy', 'bulkDelete']
             ),
         ];
@@ -58,6 +58,7 @@ class ApiProductController extends Controller implements HasMiddleware
 
             return ResponseApi::make(true, trans('message.success.success'), $data);
         } catch (\Throwable $th) {
+            dd($th->getMessage());
             return ResponseApi::make(false, $th->getMessage(), null, $th->getcode());
         }
     }

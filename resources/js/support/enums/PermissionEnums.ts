@@ -39,6 +39,13 @@ enum PaymentMethodPermissionEnums {
   DELETE = 'delete-payment-method',
 }
 
+enum ProductdPermissionEnums {
+  CREATE = 'create-product',
+  READ = 'read-product',
+  UPDATE = 'update-product',
+  DELETE = 'delete-product',
+}
+
 export const PERMISSIONENUMS = {
   CATEGORY: CategoryPermissionEnums,
   DASHBOARD: DashboardPermissionEnums,
@@ -46,6 +53,7 @@ export const PERMISSIONENUMS = {
   USER: UserPermissionEnums,
   UNIT: UnitPermissionEnums,
   PAYMENT_METHOD: PaymentMethodPermissionEnums,
+  PRODUCT: ProductdPermissionEnums,
 }
 
 export const PERMISSIONLIST = (): Permission[] => {
@@ -165,6 +173,27 @@ export const PERMISSIONLIST = (): Permission[] => {
           VALUE: PaymentMethodPermissionEnums.DELETE,
         }
       ]
-    }
+    },
+    {
+      LABEL: t("permission_label.product.permission", "Produk"),
+      ACCESSLIST: [
+        {
+          LABEL: t("permission_label.product.create", "Buat Produk"),
+          VALUE: PaymentMethodPermissionEnums.CREATE,
+        },
+        {
+          LABEL: t("permission_label.product.read", "Baca Produk"),
+          VALUE: PaymentMethodPermissionEnums.READ,
+        },
+        {
+          LABEL: t("permission_label.product.update", "Update Produk"),
+          VALUE: PaymentMethodPermissionEnums.UPDATE,
+        },
+        {
+          LABEL: t("permission_label.product.delete", "Hapus Produk"),
+          VALUE: PaymentMethodPermissionEnums.DELETE,
+        }
+      ]
+    },
   ]
 }

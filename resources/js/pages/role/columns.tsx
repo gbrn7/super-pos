@@ -12,7 +12,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import type { Role } from '@/support/models/role';
 import { useTranslation } from 'react-i18next';
-import { formatDate } from '@/lib/formatdate';
+import { formatDate } from '@/lib/format-date';
 import { Can } from '@/components/auth/can';
 import { PERMISSIONENUMS } from '@/support/enums/PermissionEnums';
 import { edit as editRole, show as detailRoute } from '@/routes/roles';

@@ -36,33 +36,58 @@
       "required": {
         "name":"Nama tidak boleh kosong"
       }
+    },
+    "product":{
+      "required": {
+        "name":"Nama tidak boleh kosong",
+        "category_id": "Kategori tidak boleh kosong",
+        "unit_id": "Satuan tidak boleh kosong",
+        "is_active": "Status tidak boleh kosong",
+        "stock": "Stok tidak boleh kosong",
+        "price": "Harga tidak boleh kosong",
+        "cost_price": "Harga modal tidak boleh kosong"
+      }
     }
 },
   "permission_label":{
     "category":{
-      "permission":"Akses Kategori",
+      "permission":"Akses Fitur Kategori",
       "create":"Buat Kategori",
       "read":"Baca Kategori",
       "update":"Edit Kategori",
       "delete":"Hapus Kategori"
     },
     "role":{
-      "permission":"Akses Peran",
+      "permission":"Akses Fitur Peran",
       "create":"Buat Peran",
       "read":"Baca Peran",
       "update":"Edit Peran",
       "delete":"hapus Peran"
     },
     "dashboard":{
-      "permission":"Akses Dasbor",
+      "permission":"Akses Fitur Dasbor",
       "read":"Baca Dasbor"
     },
     "unit":{
-      "permission":"Akses Satuan",
+      "permission":"Akses Fitur Satuan",
       "create":"Buat Satuan",
       "read":"Baca Satuan",
       "update":"Edit Satuan",
       "delete":"Hapus Satuan"
+    },
+    "payment_method":{
+      "permission":"Akses Fitur Metode Pembayaran",
+      "create":"Buat Metode Pembayaran",
+      "read":"Baca Metode Pembayaran",
+      "update":"Edit Metode Pembayaran",
+      "delete":"Hapus Metode Pembayaran"
+    },
+    "product":{
+      "permission":"Akses Fitur Produk",
+      "create":"Buat Produk",
+      "read":"Baca Produk",
+      "update":"Edit Produk",
+      "delete":"Hapus Produk"
     }
   },
   "component":{
@@ -70,6 +95,7 @@
       "dashboard_menu_label":"Dasbor",
       "example_menu_label":"Example",
       "category_menu_label":"Kategori",
+      "product_menu_label":"Produk",
       "payment_method_menu_label":"Metode Pembayaran",
       "role_menu_label":"Peran",
       "user_menu_label":"Pengguna",
@@ -317,7 +343,126 @@
       }
     }
   },
-    "payment_method":{
+  "product":{
+    "page_name":"Produk",
+    "data_table":{
+      "columns":{
+        "select_column_label":"Pilih",
+        "name_column_label":"Nama",
+        "category_column_label":"Kategori",
+        "unit_column_label":"Satuan",
+        "stock_column_label":"Stok",
+        "price_column_label":"Harga",
+        "cost_price_column_label":"Harga Modal",
+        "is_active_column_label":"Status",
+        "is_unlimited_column_label":"Status Tdk Terbatas",
+        "created_at_column_label":"Tanggal Dibuat",
+        "updated_at_column_label":"Tanggal Diperbarui",
+        "actions_column_label":"Aksi"
+      }
+    },
+    "status":{
+      "active": "Aktif",
+      "inactive":"Tidak Aktif"
+    },
+    "dialog_modal":{
+      "create_dialog": {
+        "dialog_button": "Tambah Data",
+        "dialog_title": "Tambah Produk",
+        "dialog_desc": "Tambahkan produk baru produk anda",
+        "name_input_label":"Nama",
+        "name_input_placeholder":"Masukkan nama produk",
+        "image_input_label":"Gambar",
+        "image_input_placeholder":"Masukkan gambar produk",
+        "unit_id_input_label":"Satuan",
+        "unit_id_input_placeholder":"Pilih satuan produk",
+        "category_id_input_label":"Kategori",
+        "category_id_input_placeholder":"Pilih kategori produk",
+        "stock_input_label":"Stok",
+        "stock_input_placeholder":"Masukkan stok produk",
+        "cost_price_input_label":"Harga Modal",
+        "cost_price_input_placeholder":"Masukkan harga modal produk",
+        "price_input_label":"Harga",
+        "price_input_placeholder":"Masukkan harga produk",
+        "is_active_input_label":"Status",
+        "is_active_input_placeholder":"Pilih status produk",
+        "is_unlimited_input_label":"Status Stok",
+        "is_unlimited_input_placeholder":"Pilih status Stok produk",
+        "desc_input_label":"Deskripsi",
+        "desc_input_placeholder":"Masukkan Deskripsi Produk",
+        "cancel_button":"Batal",
+        "confirm_button":"Tambah Produk"
+      },
+      "edit_dialog": {
+        "dialog_button": "Edit Data",
+        "dialog_title": "Edit Produk",
+        "dialog_desc": "Edit data produk",
+        "name_input_label":"Nama",
+        "name_input_placeholder":"Masukkan nama produk",
+        "image_input_label":"Gambar",
+        "image_input_placeholder":"Masukkan gambar produk",
+        "unit_id_input_label":"Satuan",
+        "unit_id_input_placeholder":"Pilih satuan produk",
+        "category_id_input_label":"Kategori",
+        "category_id_input_placeholder":"Pilih kategori produk",
+        "stock_input_label":"Stok",
+        "stock_input_placeholder":"Masukkan stok produk",
+        "cost_price_input_label":"Harga Modal",
+        "cost_price_input_placeholder":"Masukkan harga modal produk",
+        "price_input_label":"Harga",
+        "price_input_placeholder":"Masukkan harga produk",
+        "is_active_input_label":"Status",
+        "is_active_input_placeholder":"Pilih status produk",
+        "is_unlimited_input_label":"Status Stok",
+        "is_unlimited_input_placeholder":"Pilih status Stok produk",
+        "desc_input_label":"Deskripsi",
+        "desc_input_placeholder":"Masukkan Deskripsi Produk",
+        "cancel_button":"Batal",
+        "confirm_button":"Edit Produk"
+      },
+      "detail_dialog": {
+        "dialog_button": "Detail Data",
+        "dialog_title": "Detail Produk",
+        "dialog_desc": "Detail data produk",
+        "name_label":"Nama",
+        "image_label":"Gambar",
+        "unit_label":"Satuan",
+        "category_label":"Kategori",
+        "stock_label":"Stok",
+        "cost_price_label":"Harga Modal",
+        "price_label":"Harga",
+        "is_active_label":"Status",
+        "is_unlimited_label":"Status Stok",
+        "desc_label":"Deskripsi",
+        "created_at_label":"Tanggal Dibuat",
+        "updated_at_label": "Tanggal Diperbarui"
+      }, 
+      "delete_dialog": {
+        "dialog_button": "Hapus Data",
+        "dialog_title": "Hapus Produk",
+        "dialog_desc": "Apakah anda yakin akan menghapus data ini ?",
+        "cancel_button":"Batal",
+        "confirm_button":"Hapus Produk"
+      }, 
+      "bulk_delete_dialog": {
+        "dialog_button": "Hapus",
+        "dialog_title": "Hapus %d produk",
+        "dialog_desc": "Apakah anda yakin akan menghapus %d produk ?",
+        "cancel_button":"Batal",
+        "confirm_button":"Hapus Produk"
+      }, 
+      "import_excel_dialog": {
+        "dialog_button": "Impor Excel",
+        "dialog_title": "Impor Excel",
+        "dialog_desc": "Impor data produk dari file Excel",
+        "template_label":"Templat",
+        "file_excel_label":"File Excel",
+        "cancel_button":"Batal",
+        "confirm_button":"Impor"
+      }
+    }
+  },
+  "payment_method":{
     "page_name":"Metode Pembayaran",
     "data_table":{
       "columns":{

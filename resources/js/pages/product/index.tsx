@@ -1,9 +1,8 @@
 import { Head } from '@inertiajs/react';
 import { useState, useEffect } from 'react';
-import { index as apiGetUsers } from '@/routes/apiUsers';
-import { index as apiGetRoles } from '@/routes/apiRoles';
-import { index as users } from '@/routes/users';
-import type { User } from '@/support/models/user';
+import { index as apiGetProducts } from '@/routes/apiProducts';
+import { index as products } from '@/routes/payment-methods';
+import type { Product } from '@/support/models/product';
 import { columns } from './columns';
 import { DataTable } from './data-table';
 import { useTranslation } from 'react-i18next';
@@ -12,58 +11,61 @@ import axiosInstance from '@/lib/axios';
 import { ResponseApi } from '@/support/interfaces/response/Response';
 import { handleApiError, showWarningToast } from '@/lib/utils';
 import HeaderContent from '@/components/header-content';
-import { Role } from '@/support/models/role';
+import { Unit } from '@/support/models/unit';
+import { index as apiGetUnits } from '@/routes/apiUnits';
+import { index as apiGetCategories } from '@/routes/apiCategories';
+import { Category } from '@/support/models/category';
 
-const { url } = users();
+const { url } = products();
 
 
 export default function Index() {
 
 
-    const { url: apiUrl } = apiGetUsers();
+    const { url: apiUrl } = apiGetProducts();
     const { t } = useTranslation()
 
 
-    const [allUsers, setAllUsers] = useState<User[]>([]);
-    const [roles, setRoles] = useState<Role[]>([]);
+    const [allProducts, setAllProducts] = useState<Product[]>([]);
     const [processing, setProcessing] = useState(false);
     const [detailOpen, setDetailOpen] = useState(false);
+    const [units, setUnits] = useState<Unit[]>([]);
+    const [categories, setCategories] = useState<Category[]>([]);
     const [editOpen, setEditOpen] = useState(false);
     const [deleteOpen, setDeleteOpen] = useState(false);
     const [bulkDeleteOpen, setBulkDeleteOpen] = useState(false);
-    const [selectedUser, setSelectedUser] = useState<User | null>(
+    const [selectedProduct, setSelectedProduct] = useState<Product | null>(
         null,
     );
-    const [selectedUsers, setSelectedUsers] = useState<User[]>([]);
+    const [selectedProducts, setSelectedProducts] = useState<Product[]>([]);
 
-    const fetchAllUsers = async () => {
+    const fetchAllProducts = async () => {
         try {
             setProcessing(true);
-            const res = await axiosInstance.get<ResponseApi<User[]>>(apiUrl);
-
+            const res = await axiosInstance.get<ResponseApi<Product[]>>(apiUrl);
             if (!res.data.success) {
                 showWarningToast(res.data.message)
                 return
             }
-            setAllUsers(res.data.data);
+            setAllProducts(res.data.data);
         } catch (error) {
             handleApiError(error)
         } finally {
             setProcessing(false);
-            setSelectedUsers([])
+            setSelectedProducts([])
         }
     };
 
-    const fetchRoles = async () => {
+    const fetchUnits = async () => {
         try {
-            const res = await axiosInstance.get<ResponseApi<Role[]>>(apiGetRoles().url);
+            const res = await axiosInstance.get<ResponseApi<Unit[]>>(apiGetUnits().url);
 
             if (!res.data.success) {
                 showWarningToast(res.data.message)
                 return
             }
 
-            setRoles(res.data.data);
+            setUnits(res.data.data);
         } catch (error) {
             handleApiError(error)
         } finally {
@@ -71,48 +73,66 @@ export default function Index() {
         }
     };
 
-    const handleDetailClick = (user: User) => {
-        setSelectedUser(user);
+    const fetchCategories = async () => {
+        try {
+            const res = await axiosInstance.get<ResponseApi<Category[]>>(apiGetCategories().url);
+
+            if (!res.data.success) {
+                showWarningToast(res.data.message)
+                return
+            }
+
+            setCategories(res.data.data);
+        } catch (error) {
+            handleApiError(error)
+        } finally {
+            setProcessing(false);
+        }
+    };
+
+    const handleDetailClick = (product: Product) => {
+        setSelectedProduct(product);
         setDetailOpen(true);
     };
 
-    const handleEditClick = (user: User) => {
-        setSelectedUser(user);
+    const handleEditClick = (product: Product) => {
+        setSelectedProduct(product);
         setEditOpen(true);
     };
 
-    const handleDeleteClick = (user: User) => {
-        setSelectedUser(user);
+    const handleDeleteClick = (product: Product) => {
+        setSelectedProduct(product);
         setDeleteOpen(true);
     };
 
-    const handleBulkDeleteClick = (users: User[]) => {
-        setSelectedUsers(users);
+    const handleBulkDeleteClick = (products: Product[]) => {
+        setSelectedProducts(products);
         setBulkDeleteOpen(true);
     };
 
     useEffect(() => {
-        // const fetchUsers = async () => fetchAllUsers();
-        // const fetchUserRoles = async () => fetchRoles();
+        // const fetchProducts = async () => fetchAllProducts();
 
-        fetchAllUsers();
-        fetchRoles();
+        fetchAllProducts();
+        fetchUnits();
+        fetchCategories();
     }, []);
 
     return (
         <>
-            <Head title={t("page.user.page_name", "Kategori")} />
+            <Head title={t("page.product.page_name", "Produk")} />
             <div className="mb-16 flex h-full flex-1 flex-col overflow-x-auto rounded-xl p-4">
                 <HeaderContent>
-                    {t("page.user.page_name", "Kategori")}
+                    {t("page.product.page_name", "Produk")}
                 </HeaderContent>
                 <DataTable
-                    roles={roles}
                     columns={columns}
+                    categories={categories}
+                    units={units}
                     processing={processing}
-                    data={allUsers}
+                    data={allProducts}
                     limitOptions={[10, 20, 50, 100]}
-                    onRefresh={fetchAllUsers}
+                    onRefresh={fetchAllProducts}
                     detailDataOpen={detailOpen}
                     editOpen={editOpen}
                     deleteOpen={deleteOpen}
@@ -125,8 +145,8 @@ export default function Index() {
                     onBulkDeleteClick={handleBulkDeleteClick}
                     isBulkDeleteDialogOpen={bulkDeleteOpen}
                     setOpenBulkDeleteDialogOpen={setBulkDeleteOpen}
-                    selectedBulkUsers={selectedUsers}
-                    selectedUser={selectedUser}
+                    selectedBulkProducts={selectedProducts}
+                    selectedProduct={selectedProduct}
                 />
             </div>
         </>
@@ -136,7 +156,7 @@ export default function Index() {
 Index.layout = {
     breadcrumbs: [
         {
-            title: i18next.t("page.user.page_name", "Kategori"),
+            title: i18next.t("page.product.page_name", "Produk"),
             href: url,
         },
     ],

@@ -12,6 +12,10 @@ class GetProductReqModel
 
     public ?int $unit_id;
 
+    public ?int $price;
+
+    public ?int $cost_price;
+
     public ?int $sku;
 
     public ?int $page;
@@ -22,9 +26,15 @@ class GetProductReqModel
 
     public ?int $limit;
 
+    public ?bool $is_active;
+
+    public ?bool $is_unlimited;
+
     public function __construct(Request $request)
     {
         $this->name = $request->query('name');
+        $this->price = $request->query('price');
+        $this->cost_price = $request->query('cost_price');
         $this->category_id = $request->query('category_id');
         $this->sku = $request->query('sku');
         $this->unit_id = $request->query('unit_id');
@@ -32,5 +42,7 @@ class GetProductReqModel
         $this->limit = $request->query('limit');
         $this->order_by = $request->query('order_by');
         $this->order = $request->query('order');
+        $this->is_active = $request->query('is_active');
+        $this->is_unlimited = $request->query('is_unlimited');
     }
 }

@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { RoleForm, RoleFormError } from "@/support/interfaces/request/role";
 import z from "zod";
 import axiosInstance from "@/lib/axios";
-import { ResponseApi } from "@/support/interfaces/response/Response";
+import { ResponseApi } from '@/support/interfaces/response/Response';
 import { RoleWithPermissions } from "@/support/models/role";
 import { update as updateRole } from '@/routes/apiRoles';
 import { index } from '@/routes/roles';

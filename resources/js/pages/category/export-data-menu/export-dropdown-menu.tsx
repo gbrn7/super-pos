@@ -3,7 +3,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem,
 import { useTranslation } from "react-i18next";
 import * as XLSX from 'xlsx';
 import { jsPDF } from 'jspdf';
-import { formatDate } from "@/lib/formatdate";
+import { formatDate } from "@/lib/format-date";
 import { Download, DownloadCloud } from "lucide-react";
 
 

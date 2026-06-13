@@ -10,25 +10,27 @@ import {
     DropdownMenuLabel,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import type { User } from '@/support/models/user';
+import type { Product } from '@/support/models/product';
 import { useTranslation } from 'react-i18next';
 import { formatDate } from '@/lib/format-date';
 import { Can } from '@/components/auth/can';
 import { PERMISSIONENUMS } from '@/support/enums/PermissionEnums';
+import { Badge } from '@/components/ui/badge';
+import { formatRupiah } from '@/lib/format-money';
 
 
 interface ColumnsProps {
-    onDetailClick: (user: User) => void;
-    onEditClick: (user: User) => void;
-    onDeleteClick: (user: User) => void;
+    onDetailClick: (product: Product) => void;
+    onEditClick: (product: Product) => void;
+    onDeleteClick: (product: Product) => void;
 }
 
-export const columns = (props?: ColumnsProps): ColumnDef<User>[] => {
+export const columns = (props?: ColumnsProps): ColumnDef<Product>[] => {
     const { t } = useTranslation()
 
     return [
         {
-            id: t("page.user.data_table.columns.select_column_label", "Pilih"),
+            id: t("page.product.data_table.columns.select_column_label", "Pilih"),
             header: ({ table }) => (
                 <Checkbox
                     checked={
@@ -52,49 +54,95 @@ export const columns = (props?: ColumnsProps): ColumnDef<User>[] => {
             enableHiding: false,
         },
         {
-            id: t("page.user.data_table.columns.name_column_label", "Nama"),
+            id: t("page.product.data_table.columns.name_column_label", "Nama"),
             accessorKey: 'name',
             header: ({ column }) => (
-                <DataTableHeader column={column} title={t("page.user.data_table.columns.name_column_label", "Nama")} />
+                <DataTableHeader column={column} title={t("page.product.data_table.columns.name_column_label", "Nama")} />
             ),
             enableSorting: true,
         },
         {
-            id: t("page.user.data_table.columns.email_column_label", "Email"),
-            accessorKey: 'email',
+            id: t("page.product.data_table.columns.category_column_label", "Kategori"),
+            accessorKey: 'category_name',
             header: ({ column }) => (
-                <DataTableHeader column={column} title={t("page.user.data_table.columns.email_column_label", "Email")} />
+                <DataTableHeader column={column} title={t("page.product.data_table.columns.category_column_label", "Kategori")} />
             ),
             enableSorting: true,
         },
         {
-            id: t("page.user.data_table.columns.role_column_label", "Role"),
-            accessorKey: 'role',
+            id: t("page.product.data_table.columns.unit_column_label", "Satuan"),
+            accessorKey: 'unit_name',
             header: ({ column }) => (
-                <DataTableHeader column={column} title={t("page.user.data_table.columns.role_column_label", "Role")} />
+                <DataTableHeader column={column} title={t("page.product.data_table.columns.unit_column_label", "Satuan")} />
             ),
             enableSorting: true,
         },
         {
-            id: t("page.user.data_table.columns.created_at_column_label", "Tanggal Dibuat"),
+            id: t("page.product.data_table.columns.stock_column_label", "Stok"),
+            accessorKey: 'stock',
+            header: ({ column }) => (
+                <DataTableHeader column={column} title={t("page.product.data_table.columns.stock_column_label", "Stok")} />
+            ),
+            enableSorting: true,
+        },
+        {
+            id: t("page.product.data_table.columns.price_column_label", "Harga"),
+            accessorKey: 'price',
+            header: ({ column }) => (
+                <DataTableHeader column={column} title={t("page.product.data_table.columns.price_column_label", "Harga")} />
+            ),
+            enableSorting: true,
+            cell: ({ row }) => (formatRupiah(row.original.price))
+        },
+        {
+            id: t("page.product.data_table.columns.cost_price_column_label", "Harga Modal"),
+            accessorKey: 'cost_price',
+            header: ({ column }) => (
+                <DataTableHeader column={column} title={t("page.product.data_table.columns.cost_price_column_label", "Harga Modal")} />
+            ),
+            enableSorting: true,
+            cell: ({ row }) => (formatRupiah(row.original.cost_price))
+        },
+        {
+            id: t("page.product.data_table.columns.status_column_label", "Status"),
+            accessorKey: 'status',
+            header: ({ column }) => (
+                <DataTableHeader column={column} title={t("page.product.data_table.columns.status_column_label", "Status")} />
+            ),
+            enableSorting: true,
+            cell: ({ row }) => (
+                row ? (<Badge className="bg-green-50 text-green-700 dark:bg-green-950 dark:text-green-300">
+                    {
+                        t("page.product.status.active", "Aktif")
+                    }
+                </Badge>) :
+                    (<Badge className="bg-red-50 text-red-700 dark:bg-red-950 dark:text-red-300">
+                        {
+                            t("page.product.status.inactive", "Tidak Aktif")
+                        }
+                    </Badge>)
+            ),
+        },
+        {
+            id: t("page.product.data_table.columns.created_at_column_label", "Tanggal Dibuat"),
             accessorKey: 'created_at',
             header: ({ column }) => (
-                <DataTableHeader column={column} title={t("page.user.data_table.columns.created_at_column_label", "Tanggal Dibuat")} />
+                <DataTableHeader column={column} title={t("page.product.data_table.columns.created_at_column_label", "Tanggal Dibuat")} />
             ),
             enableSorting: true,
             cell: ({ row }) => formatDate(row.original.created_at),
         },
         {
-            id: t("page.user.data_table.columns.updated_at_column_label", "Tanggal Diperbarui"),
+            id: t("page.product.data_table.columns.updated_at_column_label", "Tanggal Diperbarui"),
             accessorKey: 'updated_at',
             header: ({ column }) => (
-                <DataTableHeader column={column} title={t("page.user.data_table.columns.updated_at_column_label", "Tanggal Diperbarui")} />
+                <DataTableHeader column={column} title={t("page.product.data_table.columns.updated_at_column_label", "Tanggal Diperbarui")} />
             ),
             enableSorting: true,
             cell: ({ row }) => formatDate(row.original.updated_at),
         },
         {
-            id: t("page.user.data_table.columns.actions_column_label", "Aksi"),
+            id: t("page.product.data_table.columns.actions_column_label", "Aksi"),
             cell: ({ row }) => (
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
@@ -111,7 +159,7 @@ export const columns = (props?: ColumnsProps): ColumnDef<User>[] => {
                             <FileText className="mr-0.5 h-4 w-4" />
                             {t("component.data_table.action_menu.detail_data_btn", "Detail data")}
                         </DropdownMenuItem>
-                        <Can permission={PERMISSIONENUMS.USER.UPDATE}>
+                        <Can permission={PERMISSIONENUMS.PRODUCT.UPDATE}>
                             <DropdownMenuItem
                                 onClick={() => props?.onEditClick(row.original)}
                             >
@@ -119,7 +167,7 @@ export const columns = (props?: ColumnsProps): ColumnDef<User>[] => {
                                 {t("component.data_table.action_menu.edit_data_btn", "Edit data")}
                             </DropdownMenuItem>
                         </Can>
-                        <Can permission={PERMISSIONENUMS.USER.DELETE}>
+                        <Can permission={PERMISSIONENUMS.PRODUCT.DELETE}>
                             <DropdownMenuItem
                                 onClick={() => props?.onDeleteClick(row.original)}
                                 variant="destructive"

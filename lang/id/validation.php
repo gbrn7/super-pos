@@ -45,6 +45,7 @@ return [
         'price' => 'Harga',
         'cost_price' => 'Harga Pokok',
         'is_active' => 'Status Aktif',
+        'is_unlimited' => 'Status Stok',
     ],
 
 ];

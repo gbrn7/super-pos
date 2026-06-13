@@ -17,14 +17,16 @@ class ProductSeeder extends Seeder
             [
                 'category_id' => 1,
                 'unit_id' => 1,
-                'is_active' => 1,
                 'name' => 'Beras Rojo Lele',
                 'stock' => 100,
                 'sku' => Str::of('Beras Rojo Lele')
                     ->headline()
-                    ->replaceMatches('/[^A-Z]/', '').'-'.strtoupper(Str::random(8)),
+                    ->replaceMatches('/[^A-Z]/', '') . '-' . strtoupper(Str::random(8)),
                 'price' => 10000,
                 'cost_price' => 7000,
+                'is_active' => true,
+                'is_unlimited' => false,
+                'desc' => "Test Desc",
                 'created_at' => now()->unix(),
                 'updated_at' => now()->unix(),
             ],
