@@ -13,6 +13,14 @@ class CategorySeeder extends Seeder
      */
     public function run(): void
     {
+        Category::create(
+            [
+                'name' => "Sembako",
+                'desc' => fake()->sentence(),
+                'created_at' => Carbon::now()->unix(),
+                'updated_at' => Carbon::now()->unix(),
+            ]
+        );
         for ($index = 0; $index < 100; $index++) {
             Category::create(
                 [

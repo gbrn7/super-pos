@@ -141,6 +141,7 @@ export function DataTable<TData, TValue>({
         onColumnVisibilityChange: setColumnVisibility,
         onRowSelectionChange: setRowSelection,
         onPaginationChange: setPagination,
+        columnResizeMode: "onChange",
         state: {
             sorting,
             columnFilters,
@@ -246,14 +247,18 @@ export function DataTable<TData, TValue>({
                 </div>
 
             </div>
-            <div className="overflow-hidden rounded-md border">
+            <div className="overflow-x-auto rounded-md border">
                 <Table>
                     <TableHeader>
                         {table.getHeaderGroups().map((headerGroup) => (
                             <TableRow key={headerGroup.id}>
                                 {headerGroup.headers.map((header) => {
                                     return (
-                                        <TableHead key={header.id}>
+                                        <TableHead key={header.id}
+                                            style={{
+                                                width: `${header.getSize()}px`,
+                                            }}
+                                        >
                                             {header.isPlaceholder ? null : (
                                                 <div
                                                     onClick={header.column.getToggleSortingHandler()}

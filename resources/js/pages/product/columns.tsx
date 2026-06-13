@@ -60,6 +60,16 @@ export const columns = (props?: ColumnsProps): ColumnDef<Product>[] => {
                 <DataTableHeader column={column} title={t("page.product.data_table.columns.name_column_label", "Nama")} />
             ),
             enableSorting: true,
+            size: 300,
+        },
+        {
+            id: t("page.product.data_table.columns.sku_column_label", "SKU"),
+            accessorKey: 'sku',
+            header: ({ column }) => (
+                <DataTableHeader column={column} title={t("page.product.data_table.columns.sku_column_label", "SKU")} />
+            ),
+            enableSorting: true,
+            size: 300,
         },
         {
             id: t("page.product.data_table.columns.category_column_label", "Kategori"),
@@ -104,42 +114,49 @@ export const columns = (props?: ColumnsProps): ColumnDef<Product>[] => {
             cell: ({ row }) => (formatRupiah(row.original.cost_price))
         },
         {
-            id: t("page.product.data_table.columns.status_column_label", "Status"),
+            id: t("page.product.data_table.columns.is_active_column_label", "Status"),
             accessorKey: 'status',
             header: ({ column }) => (
-                <DataTableHeader column={column} title={t("page.product.data_table.columns.status_column_label", "Status")} />
+                <DataTableHeader column={column} title={t("page.product.data_table.columns.is_active_column_label", "Status")} />
             ),
             enableSorting: true,
             cell: ({ row }) => (
-                row ? (<Badge className="bg-green-50 text-green-700 dark:bg-green-950 dark:text-green-300">
+                row.original.is_active ? (<Badge className="bg-green-50 text-green-700 dark:bg-green-950 dark:text-green-300">
                     {
-                        t("page.product.status.active", "Aktif")
+                        t("page.product.is_active.active", "Aktif")
                     }
                 </Badge>) :
                     (<Badge className="bg-red-50 text-red-700 dark:bg-red-950 dark:text-red-300">
                         {
-                            t("page.product.status.inactive", "Tidak Aktif")
+                            t("page.product.is_active.inactive", "Tidak Aktif")
                         }
                     </Badge>)
             ),
         },
         {
-            id: t("page.product.data_table.columns.created_at_column_label", "Tanggal Dibuat"),
-            accessorKey: 'created_at',
+            id: t("page.product.data_table.columns.is_unlimited_column_label", "Status Stok"),
+            accessorKey: 'status_stok',
             header: ({ column }) => (
-                <DataTableHeader column={column} title={t("page.product.data_table.columns.created_at_column_label", "Tanggal Dibuat")} />
+                <DataTableHeader column={column} title={t("page.product.data_table.columns.is_unlimited_column_label", "Status Stok")} />
             ),
             enableSorting: true,
-            cell: ({ row }) => formatDate(row.original.created_at),
-        },
-        {
-            id: t("page.product.data_table.columns.updated_at_column_label", "Tanggal Diperbarui"),
-            accessorKey: 'updated_at',
-            header: ({ column }) => (
-                <DataTableHeader column={column} title={t("page.product.data_table.columns.updated_at_column_label", "Tanggal Diperbarui")} />
+            cell: ({ row }) => (
+                row.original.is_unlimited ? (
+                    <Badge className="bg-purple-50 text-purple-700 dark:bg-purple-950 dark:text-purple-300">
+                        {
+                            t("page.product.is_unlimited.unlimited", "Tidak Terbatas")
+                        }
+                    </Badge>
+                )
+                    :
+                    (
+                        <Badge className="bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300">
+                            {
+                                t("page.product.is_unlimited.limited", "Terbatas")
+                            }
+                        </Badge>
+                    )
             ),
-            enableSorting: true,
-            cell: ({ row }) => formatDate(row.original.updated_at),
         },
         {
             id: t("page.product.data_table.columns.actions_column_label", "Aksi"),

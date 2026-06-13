@@ -349,6 +349,7 @@
       "columns":{
         "select_column_label":"Pilih",
         "name_column_label":"Nama",
+        "sku_column_label":"SKU",
         "category_column_label":"Kategori",
         "unit_column_label":"Satuan",
         "stock_column_label":"Stok",
@@ -361,9 +362,13 @@
         "actions_column_label":"Aksi"
       }
     },
-    "status":{
+    "is_active":{
       "active": "Aktif",
       "inactive":"Tidak Aktif"
+    },
+    "is_unlimited":{
+      "Limited": "Terbatas",
+      "Unlimited":"Tidak Terbatas"
     },
     "dialog_modal":{
       "create_dialog": {
