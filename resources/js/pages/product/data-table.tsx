@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from 'react';
+import { IconChevronLeft, IconChevronRight, IconChevronsLeft, IconChevronsRight } from '@tabler/icons-react';
 import {
     flexRender,
     getCoreRowModel,
@@ -12,7 +12,11 @@ import type {
     ColumnFiltersState,
     VisibilityState,
 } from '@tanstack/react-table';
+import { TableIcon } from 'lucide-react';
 import * as React from 'react';
+import { useTranslation } from 'react-i18next';
+import { sprintf } from 'sprintf-js';
+import { Can } from '@/components/auth/can';
 import { Button } from '@/components/ui/button';
 import {
     DropdownMenu,
@@ -39,23 +43,21 @@ import {
     TableHeader,
     TableRow,
 } from '@/components/ui/table';
-import { CreateDialog } from './dialog-modal/create-dialog';
-import { BulkDeleteDialog } from './dialog-modal/bulk-delete-dialog';
+import { PERMISSIONENUMS } from '@/support/enums/PermissionEnums';
+import type { ProductQueryParam } from '@/support/interfaces/request/product';
+import type { Pagination } from '@/support/interfaces/resource/pagination';
+import type { Category } from '@/support/models/category';
 import type { Product } from '@/support/models/product';
-import { useTranslation } from 'react-i18next';
-import { sprintf } from 'sprintf-js';
+import type { Unit } from '@/support/models/unit';
+import { BulkDeleteDialog } from './dialog-modal/bulk-delete-dialog';
+import { CreateDialog } from './dialog-modal/create-dialog';
+import { DeleteDialog } from './dialog-modal/delete-dialog';
 import { DetailDialog } from './dialog-modal/detail-dialog';
 import { EditDialog } from './dialog-modal/edit-dialog';
-import { DeleteDialog } from './dialog-modal/delete-dialog';
-import { IconChevronLeft, IconChevronRight, IconChevronsLeft, IconChevronsRight } from '@tabler/icons-react';
 import { ExportDropdownMenu } from './export-data-menu/export-dropdown-menu';
-import { TableIcon } from 'lucide-react';
-import { Can } from '@/components/auth/can';
-import { PERMISSIONENUMS } from '@/support/enums/PermissionEnums';
-import { Unit } from '@/support/models/unit';
-import { Category } from '@/support/models/category';
-import { ProductQueryParam } from '@/support/interfaces/request/product';
-import { Pagination } from '@/support/interfaces/resource/pagination';
+import { getNullableNumberFilterValue, getNumberFilterValue } from '@/lib/utils';
+import { FILTER_DEFAULT_VALUE } from '@/constants/Index';
+
 
 interface DataTableProps<TData, TValue> {
     columns:
@@ -85,8 +87,9 @@ interface DataTableProps<TData, TValue> {
     pagination: Pagination,
     onChangePaginationPage: (page: number) => void,
     onChangePaginationLimit: (limit: number) => void,
-    onChangeField: (field: string) => void
-    onChangeKeyword: (keyword: string) => void
+    onChangeField: (field: string) => void,
+    onChangeKeyword: (keyword: string) => void,
+    setQueryParam: React.Dispatch<React.SetStateAction<ProductQueryParam>>;
 }
 export function DataTable<TData, TValue>({
     columns: columnsOrFn,
@@ -115,7 +118,8 @@ export function DataTable<TData, TValue>({
     onChangePaginationPage,
     onChangePaginationLimit,
     onChangeField,
-    onChangeKeyword
+    onChangeKeyword,
+    setQueryParam
 }: DataTableProps<TData, TValue>) {
     const { t } = useTranslation();
 
@@ -134,6 +138,17 @@ export function DataTable<TData, TValue>({
         React.useState<VisibilityState>({});
 
     const [rowSelection, setRowSelection] = React.useState({});
+
+    const updateQueryParam = <TField extends keyof ProductQueryParam>(
+        field: TField,
+        value: ProductQueryParam[TField],
+    ) => {
+        setQueryParam((prev) => ({
+            ...prev,
+            [field]: value,
+            page: 1,
+        }));
+    };
 
 
 
@@ -159,48 +174,172 @@ export function DataTable<TData, TValue>({
 
     return (
         <div className='p-3 border rounded-2xl'>
-            <div className="flex:col lg:flex justify-between items-center pb-4">
-                <div className="first-row flex gap-2">
+            <div className="flex flex-col gap-3 justify-between pb-4">
+                <div className="first-row  flex flex-col lg:flex-row gap-2">
+                    <div className="keyword-filter flex gap-1">
+                        <Select
+                            value={queryParam.field}
+                            onValueChange={(value) => onChangeField(value)}
+                        >
+                            <SelectTrigger className="w-full lg:w-24 xl:w-56">
+                                <SelectValue />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectGroup>
+                                    <SelectLabel>{t("component.data_table.search_component.search_by", "Pencarian berdasarkan")}</SelectLabel>
+                                    <SelectItem value="default">
+                                        {t("component.data_table.search_component.default", "Bawaan")}
+                                    </SelectItem>
+                                    <SelectItem value="name">
+                                        {t("component.data_table.search_component.name", "Nama")}
+                                    </SelectItem>
+                                    <SelectItem value="sku">
+                                        {t("component.data_table.search_component.sku", "SKU")}
+                                    </SelectItem>
+                                    <SelectItem value="desc">
+                                        {t("component.data_table.search_component.desc", "Deskripsi")}
+                                    </SelectItem>
+                                    <SelectItem value="category">
+                                        {t("component.data_table.search_component.category", "Kategori")}
+                                    </SelectItem>
+                                    <SelectItem value="unit">
+                                        {t("component.data_table.search_component.unit", "Satuan")}
+                                    </SelectItem>
+                                </SelectGroup>
+                            </SelectContent>
+                        </Select>
+                        <Input
+                            placeholder={t("component.data_table.search_component.placeholder", "Telusuri")}
+                            value={queryParam.keyword}
+                            onChange={(event) => onChangeKeyword(event.target.value)}
+                            className="max-w-sm"
+                        />
+                    </div>
                     <Select
-                        value={queryParam.field}
-                        onValueChange={(value) => onChangeField(value)}
+                        value={getNumberFilterValue(queryParam.category_id)}
+                        onValueChange={(value) => updateQueryParam('category_id', getNullableNumberFilterValue(value))}
                     >
-                        <SelectTrigger className="w-full lg:w-24 xl:w-56">
-                            <SelectValue />
+                        <SelectTrigger className="w-full">
+                            <SelectValue placeholder={t("component.data_table.filter.category_placeholder", "Pilih Kategori")} />
                         </SelectTrigger>
                         <SelectContent>
                             <SelectGroup>
-                                <SelectLabel>{t("component.data_table.search_component.search_by", "Pencarian berdasarkan")}</SelectLabel>
-                                <SelectItem value="default">
-                                    {t("component.data_table.search_component.default", "Bawaan")}
+                                <SelectLabel> {t("component.data_table.filter.category_label", "Kategori")}</SelectLabel>
+                                <SelectItem value={FILTER_DEFAULT_VALUE}>
+                                    {t("component.data_table.filter.all_categories", "Semua Kategori")}
                                 </SelectItem>
-                                <SelectItem value="name">
-                                    {t("component.data_table.search_component.name", "Nama")}
+                                {categories.map((item) => (
+                                    <SelectItem key={item.id} value={item.id.toString()}>{item.name}</SelectItem>
+                                ))}
+                            </SelectGroup>
+                        </SelectContent>
+                    </Select>
+                    <Select
+                        value={getNumberFilterValue(queryParam.unit_id)}
+                        onValueChange={(value) => updateQueryParam('unit_id', getNullableNumberFilterValue(value))}
+                    >
+                        <SelectTrigger className="w-full">
+                            <SelectValue placeholder={t("component.data_table.filter.unit_placeholder", "Pilih Satuan")} />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectGroup>
+                                <SelectLabel> {t("component.data_table.filter.unit_label", "Satuan")}</SelectLabel>
+                                <SelectItem value={FILTER_DEFAULT_VALUE}>
+                                    {t("component.data_table.filter.all_units", "Semua Satuan")}
                                 </SelectItem>
-                                <SelectItem value="sku">
-                                    {t("component.data_table.search_component.sku", "SKU")}
+                                {units.map((item) => (
+                                    <SelectItem key={item.id} value={item.id.toString()}>{item.name}</SelectItem>
+                                ))}
+                            </SelectGroup>
+                        </SelectContent>
+                    </Select>
+                    <Select
+                        value={getNumberFilterValue(queryParam.is_stock_available)}
+                        onValueChange={(value) => updateQueryParam('is_stock_available', getNullableNumberFilterValue(value))}
+                    >
+                        <SelectTrigger className="w-full">
+                            <SelectValue placeholder={t("component.data_table.filter.is_available_stock_placholder", "Pilih Status Stok")} />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectGroup>
+                                <SelectLabel>
+                                    {t("component.data_table.filter.is_available_stock_label", "Status Stok")}
+                                </SelectLabel>
+                                <SelectItem value={FILTER_DEFAULT_VALUE}>
+                                    {t("component.data_table.filter.all_stock_availability", "Semua Status Stok")}
                                 </SelectItem>
-                                <SelectItem value="desc">
-                                    {t("component.data_table.search_component.desc", "Deskripsi")}
+                                <SelectItem
+                                    value={"0"}
+                                >
+                                    {t("component.data_table.filter.unavailable_stock_label", "Tidak Tersedia")}
                                 </SelectItem>
-                                <SelectItem value="category">
-                                    {t("component.data_table.search_component.category", "Kategori")}
-                                </SelectItem>
-                                <SelectItem value="unit">
-                                    {t("component.data_table.search_component.unit", "Satuan")}
+                                <SelectItem
+                                    value={"1"}
+                                >
+                                    {t("component.data_table.filter.available_stock_label", "Tersedia")}
                                 </SelectItem>
                             </SelectGroup>
                         </SelectContent>
                     </Select>
-                    <Input
-                        placeholder={t("component.data_table.search_component.placeholder", "Telusuri")}
-                        value={queryParam.keyword}
-                        onChange={(event) => onChangeKeyword(event.target.value)}
-                        className="max-w-sm"
-                    />
+                    <Select
+                        value={getNumberFilterValue(queryParam.is_active)}
+                        onValueChange={(value) => updateQueryParam('is_active', getNullableNumberFilterValue(value))}
+                    >
+                        <SelectTrigger className="w-full">
+                            <SelectValue placeholder={t("component.data_table.filter.status_placeholder", "Pilih Status")} />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectGroup>
+                                <SelectLabel>
+                                    {t("component.data_table.filter.status_label", "Status")}
+                                </SelectLabel>
+                                <SelectItem value={FILTER_DEFAULT_VALUE}>
+                                    {t("component.data_table.filter.all_statuses", "Semua Status")}
+                                </SelectItem>
+                                <SelectItem
+                                    value={"0"}
+                                >
+                                    {t("component.data_table.filter.status_inactive_label", "Tidak Aktif")}
+                                </SelectItem>
+                                <SelectItem
+                                    value={"1"}
+                                >
+                                    {t("component.data_table.filter.status_active_label", "Aktif")}
+                                </SelectItem>
+                            </SelectGroup>
+                        </SelectContent>
+                    </Select>
+                    <Select
+                        value={getNumberFilterValue(queryParam.is_unlimited)}
+                        onValueChange={(value) => updateQueryParam('is_unlimited', getNullableNumberFilterValue(value))}
+                    >
+                        <SelectTrigger className="w-full">
+                            <SelectValue placeholder={t("component.data_table.filter.stock_type_placeholder", "Pilih Tipe Stok")} />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectGroup>
+                                <SelectLabel>
+                                    {t("component.data_table.filter.stock_label", "Tipe Stok")}
+                                </SelectLabel>
+                                <SelectItem value={FILTER_DEFAULT_VALUE}>
+                                    {t("component.data_table.filter.all_stock_types", "Semua Tipe Stok")}
+                                </SelectItem>
+                                <SelectItem
+                                    value={"0"}
+                                >
+                                    {t("component.data_table.filter.limitted_stock_label", "Terbatas")}
+                                </SelectItem>
+                                <SelectItem
+                                    value={"1"}
+                                >
+                                    {t("component.data_table.filter.unlimited_stock_label", "Tidak Terbatas")}
+                                </SelectItem>
+                            </SelectGroup>
+                        </SelectContent>
+                    </Select>
                 </div>
 
-                <div className="second-row overflow-auto flex justify-start sm:justify-end gap-2 mt-2 lg:mt-0">
+                <div className="second-row overflow-auto flex justify-start sm:justify-end gap-2 lg:mt-0">
                     <Can permission={PERMISSIONENUMS.PRODUCT.READ}>
                         <ExportDropdownMenu data={data} />
                     </Can>
@@ -245,7 +384,7 @@ export function DataTable<TData, TValue>({
                                         >
                                             {column.id}
                                         </DropdownMenuCheckboxItem>
-                                    ); 0
+                                    );
                                 })}
                         </DropdownMenuContent>
                     </DropdownMenu>
@@ -404,7 +543,9 @@ export function DataTable<TData, TValue>({
                             className="size-8"
                             size="icon"
                             onClick={() => {
-                                (pagination.current_page - 1) > 0 && onChangePaginationPage((pagination.current_page - 1))
+                                if ((pagination.current_page - 1) > 0) {
+                                    onChangePaginationPage((pagination.current_page - 1))
+                                }
                             }}
                             disabled={pagination.current_page == 1 || processing}
                         >
@@ -416,7 +557,9 @@ export function DataTable<TData, TValue>({
                             className="size-8"
                             size="icon"
                             onClick={() => {
-                                pagination.current_page != pagination.last_page && onChangePaginationPage((pagination.current_page + 1))
+                                if (pagination.current_page != pagination.last_page) {
+                                    onChangePaginationPage((pagination.current_page + 1))
+                                }
                             }}
                             disabled={pagination.current_page == pagination.last_page || processing}
                         >

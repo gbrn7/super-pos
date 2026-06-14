@@ -1,24 +1,24 @@
 import { Head } from '@inertiajs/react';
-import { useState, useEffect } from 'react';
+import i18next from 'i18next';
+import { useState, useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
+import HeaderContent from '@/components/header-content';
+import { DEBOUNCEDEFAULTDURATION, PAGINATIONLIMITDEFAULT, PAGINATIONLIMITOPTIONDEFAULT } from '@/constants/Index';
+import axiosInstance from '@/lib/axios';
+import { handleApiError, showWarningToast } from '@/lib/utils';
+import { index as apiGetCategories } from '@/routes/apiCategories';
 import { index as apiGetProducts } from '@/routes/apiProducts';
+import { index as apiGetUnits } from '@/routes/apiUnits';
 import { index as products } from '@/routes/payment-methods';
+import type { ProductQueryParam } from '@/support/interfaces/request/product';
+import type { Pagination } from '@/support/interfaces/resource/pagination';
+import type { PaginationResponse } from '@/support/interfaces/resource/resource-response';
+import type { ResponseApi } from '@/support/interfaces/response/Response';
+import type { Category } from '@/support/models/category';
 import type { Product } from '@/support/models/product';
+import type { Unit } from '@/support/models/unit';
 import { columns } from './columns';
 import { DataTable } from './data-table';
-import { useTranslation } from 'react-i18next';
-import i18next from 'i18next';
-import axiosInstance from '@/lib/axios';
-import { ResponseApi } from '@/support/interfaces/response/Response';
-import { handleApiError, showWarningToast } from '@/lib/utils';
-import HeaderContent from '@/components/header-content';
-import { Unit } from '@/support/models/unit';
-import { index as apiGetUnits } from '@/routes/apiUnits';
-import { index as apiGetCategories } from '@/routes/apiCategories';
-import { Category } from '@/support/models/category';
-import { ProductQueryParam } from '@/support/interfaces/request/product';
-import { PaginationResponse } from '@/support/interfaces/resource/resource-response';
-import { Pagination } from '@/support/interfaces/resource/pagination';
-import { DEBOUNCEDEFAULTDURATION, PAGINATIONLIMITDEFAULT, PAGINATIONLIMITOPTIONDEFAULT } from '@/constants/Index';
 
 
 const { url } = products();
@@ -54,6 +54,7 @@ export default function Index() {
         null,
     );
     const [selectedProducts, setSelectedProducts] = useState<Product[]>([]);
+    const hasMountedQueryEffect = useRef(false);
 
 
     const [queryParam, setQueryParam] = useState<ProductQueryParam>({
@@ -61,16 +62,24 @@ export default function Index() {
         page: 1,
         field: "default",
         keyword: "",
+        category_id: null,
+        unit_id: null,
+        is_active: null,
+        is_unlimited: null,
+        is_stock_available: null
     })
 
     const fetchAllProducts = async () => {
         try {
             setProcessing(true);
             const res = await axiosInstance.get<ResponseApi<PaginationResponse<Product>>>(apiUrl, { params: queryParam });
+
             if (!res.data.success) {
                 showWarningToast(res.data.message)
+
                 return
             }
+
             setAllProducts(res.data.data.items);
             setPagination(res.data.data.pagination);
         } catch (error) {
@@ -87,6 +96,7 @@ export default function Index() {
 
             if (!res.data.success) {
                 showWarningToast(res.data.message)
+
                 return
             }
 
@@ -104,6 +114,7 @@ export default function Index() {
 
             if (!res.data.success) {
                 showWarningToast(res.data.message)
+
                 return
             }
 
@@ -164,13 +175,28 @@ export default function Index() {
     };
 
     useEffect(() => {
-        fetchUnits();
-        fetchCategories();
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+        void Promise.all([fetchUnits(), fetchCategories()]);
     }, []);
 
     useEffect(() => {
-        if (queryParam.keyword != '') fetchAllProducts();
-    }, [queryParam.page, queryParam.limit, queryParam.field])
+        if (!hasMountedQueryEffect.current) {
+            hasMountedQueryEffect.current = true;
+
+            return;
+        }
+
+        fetchAllProducts();
+    }, [
+        queryParam.page,
+        queryParam.limit,
+        queryParam.field,
+        queryParam.category_id,
+        queryParam.unit_id,
+        queryParam.is_active,
+        queryParam.is_unlimited,
+        queryParam.is_stock_available,
+    ])
 
     useEffect(() => {
         const timeout = setTimeout(() => {
@@ -215,6 +241,7 @@ export default function Index() {
                     onChangePaginationPage={handleChangePaginationPage}
                     onChangeField={handleChangeField}
                     onChangeKeyword={handleChangeKeyword}
+                    setQueryParam={setQueryParam}
                 />
             </div>
         </>

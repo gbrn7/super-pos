@@ -113,6 +113,26 @@
         "guard_name":"Nama Garda",
         "placeholder":"Telusuri"
       },
+      "filter":{
+        "category_placeholder":"Pilih Kategori",
+        "category_label":"Kategori",
+        "product_placeholder":"Pilih Produk",
+        "product_label":"Produk",
+        "unit_placeholder":"Pilih Satuan",
+        "unit_label":"Satuan",
+        "status_placeholder":"Pilih Status",
+        "status_label":"Status",
+        "status_active_label":"Aktif",
+        "status_inactive_label":"Tidak Aktif",
+        "stock_type_placeholder":"Pilih Tipe Stok",
+        "stock_label":"Tipe Stok",
+        "limitted_stock_label":"Terbatas",
+        "unlimited_stock_label":"Tidak Terbatas",
+        "is_available_stock_placholder":"Pilih Status Stok",
+        "is_available_stock_label":"Status Stok",
+        "available_stock_label":"Tersedia",
+        "unavailable_stock_label":"Tidak Tersedia"
+      },
       "export":{
         "label":"Ekspor",
         "export_excel_btn":"Ekspor Excel",
@@ -360,7 +380,7 @@
         "price_column_label":"Harga",
         "cost_price_column_label":"Harga Modal",
         "is_active_column_label":"Status",
-        "is_unlimited_column_label":"Status Tdk Terbatas",
+        "is_unlimited_column_label":"Tipe Stok",
         "created_at_column_label":"Tanggal Dibuat",
         "updated_at_column_label":"Tanggal Diperbarui",
         "actions_column_label":"Aksi"

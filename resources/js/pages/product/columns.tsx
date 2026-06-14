@@ -93,6 +93,18 @@ export const columns = (props?: ColumnsProps): ColumnDef<Product>[] => {
                 <DataTableHeader column={column} title={t("page.product.data_table.columns.stock_column_label", "Stok")} />
             ),
             enableSorting: true,
+            cell: ({ row }) => (
+                row.original.stock > 0 ? (<Badge className="bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300">
+                    {
+                        row.original.stock
+                    }
+                </Badge>) :
+                    (<Badge className="bg-rose-100 text-rose-800 dark:bg-rose-950 dark:text-rose-300">
+                        {
+                            row.original.stock
+                        }
+                    </Badge>)
+            ),
         },
         {
             id: t("page.product.data_table.columns.price_column_label", "Harga"),
@@ -136,7 +148,7 @@ export const columns = (props?: ColumnsProps): ColumnDef<Product>[] => {
             id: t("page.product.data_table.columns.is_unlimited_column_label", "Status Stok"),
             accessorKey: 'status_stok',
             header: ({ column }) => (
-                <DataTableHeader column={column} title={t("page.product.data_table.columns.is_unlimited_column_label", "Status Stok")} />
+                <DataTableHeader column={column} title={t("page.product.data_table.columns.is_unlimited_column_label", "Tipe Stok")} />
             ),
             enableSorting: true,
             cell: ({ row }) => (

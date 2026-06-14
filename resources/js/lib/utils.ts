@@ -1,4 +1,4 @@
-import { TOASTPOSITIONDEFAULT } from '@/constants/Index';
+import { FILTER_DEFAULT_VALUE, TOASTPOSITIONDEFAULT } from '@/constants/Index';
 import { ResponseErrorApi } from '@/support/interfaces/response/ResponseError';
 import type { InertiaLinkProps } from '@inertiajs/react';
 import axios from 'axios';
@@ -78,3 +78,12 @@ export function showWarningToast(message: string) {
 export function showSuccessToast(message: string) {
     toast.success(message, { position: TOASTPOSITIONDEFAULT, className: 'capitalize' })
 }
+
+export const getNumberFilterValue = (value: number | null) => (
+    value == null ? FILTER_DEFAULT_VALUE : value.toString()
+);
+
+
+export const getNullableNumberFilterValue = (value: string) => (
+    value === FILTER_DEFAULT_VALUE ? null : Number(value)
+);

@@ -41,11 +41,30 @@ class ProductRepository implements ProductRepositoryInterface
                 }
             })
             ->when($request->sku, fn($query) => $query->where('sku', 'ilike', "%{$request->sku}%"))
-            ->when($request->is_active, fn($query) => $query->where('is_active', $request->is_active))
-            ->when($request->is_unlimited, fn($query) => $query->where('is_unlimited', $request->is_unlimited))
             ->when($request->category_id, fn($query) => $query->where('category_id', $request->category_id))
             ->when($request->unit_id, fn($query) => $query->where('unit_id', $request->unit_id))
             ->when($request->price, fn($query) => $query->where('price', $request->price))
+            ->when(isset($request->is_stock_available), function ($query) use ($request) {
+                if ($request->is_stock_available) {
+                    $query->where('stock', '>', 0);
+                } else {
+                    $query->where('stock',  0);
+                }
+            })
+            ->when(isset($request->is_active), function ($query) use ($request) {
+                if ($request->is_active) {
+                    $query->where('is_active', true);
+                } else {
+                    $query->where('is_active',  false);
+                }
+            })
+            ->when(isset($request->is_unlimited), function ($query) use ($request) {
+                if ($request->is_unlimited) {
+                    $query->where('is_unlimited', true);
+                } else {
+                    $query->where('is_unlimited',  false);
+                }
+            })
             ->when($request->cost_price, fn($query) => $query->where('cost_price', $request->cost_price));
 
         if ($request->limit === null) {

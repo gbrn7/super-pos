@@ -1,6 +1,11 @@
 export interface ProductQueryParam {
   field: string;
   keyword: string;
+  category_id: number | null;
+  unit_id: number | null;
+  is_active: number | null;
+  is_unlimited: number | null;
+  is_stock_available: number | null;
   page: number;
   limit: number;
 }

@@ -30,6 +30,8 @@ class GetProductReqModel
 
     public ?bool $is_unlimited;
 
+    public ?bool $is_stock_available;
+
     public ?string $field;
 
     public ?string $keyword;
@@ -50,5 +52,6 @@ class GetProductReqModel
         $this->is_unlimited = $request->query('is_unlimited');
         $this->field = $request->query('field');
         $this->keyword = $request->query('keyword');
+        $this->is_stock_available = $request->query('is_stock_available');
     }
 }
