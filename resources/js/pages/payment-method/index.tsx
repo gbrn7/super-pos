@@ -11,6 +11,7 @@ import axiosInstance from '@/lib/axios';
 import { ResponseApi } from '@/support/interfaces/response/Response';
 import { handleApiError, showWarningToast } from '@/lib/utils';
 import HeaderContent from '@/components/header-content';
+import { PAGINATIONLIMITOPTIONDEFAULT } from '@/constants/Index';
 
 const { url } = paymentMethods();
 
@@ -87,7 +88,7 @@ export default function Index() {
                     columns={columns}
                     processing={processing}
                     data={allPaymentMethods}
-                    limitOptions={[10, 20, 50, 100]}
+                    limitOptions={PAGINATIONLIMITOPTIONDEFAULT}
                     onRefresh={fetchAllPaymentMethods}
                     detailDataOpen={detailOpen}
                     editOpen={editOpen}

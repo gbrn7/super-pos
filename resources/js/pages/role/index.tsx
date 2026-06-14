@@ -11,6 +11,7 @@ import axiosInstance from '@/lib/axios';
 import { ResponseApi } from '@/support/interfaces/response/Response';
 import { handleApiError, showWarningToast } from '@/lib/utils';
 import HeaderContent from '@/components/header-content';
+import { PAGINATIONLIMITOPTIONDEFAULT } from '@/constants/Index';
 
 const { url } = roles();
 
@@ -85,7 +86,7 @@ export default function index() {
                     columns={columns}
                     processing={processing}
                     data={allRoles}
-                    limitOptions={[10, 20, 50, 100]}
+                    limitOptions={PAGINATIONLIMITOPTIONDEFAULT}
                     onRefresh={fetchAllRoles}
                     deleteOpen={deleteOpen}
                     setDeleteOpen={setDeleteOpen}

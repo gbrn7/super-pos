@@ -22,6 +22,10 @@ export const LanguageSystem = typeof localStorage !== "undefined"
     ? localStorage.getItem(localStorageKey.LanguageKey) || languageCode.DefaultLanguageCode
     : languageCode.DefaultLanguageCode
 
-export const toastPosition = "top-center"
+export const TOASTPOSITIONDEFAULT = "top-center"
 
-export const PAGINATIONLIMITDEFAULT = 10 
+export const PAGINATIONLIMITDEFAULT = 10
+
+export const PAGINATIONLIMITOPTIONDEFAULT = [10, 20, 50, 100]
+
+export const DEBOUNCEDEFAULTDURATION = 200

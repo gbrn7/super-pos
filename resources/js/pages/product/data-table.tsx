@@ -2,7 +2,6 @@ import { Dispatch, SetStateAction } from 'react';
 import {
     flexRender,
     getCoreRowModel,
-    getPaginationRowModel,
     getFilteredRowModel,
     getSortedRowModel,
     useReactTable,
@@ -12,7 +11,6 @@ import type {
     SortingState,
     ColumnFiltersState,
     VisibilityState,
-    PaginationState,
 } from '@tanstack/react-table';
 import * as React from 'react';
 import { Button } from '@/components/ui/button';
@@ -86,7 +84,9 @@ interface DataTableProps<TData, TValue> {
     queryParam: ProductQueryParam,
     pagination: Pagination,
     onChangePaginationPage: (page: number) => void,
-    onChangePaginationLimit: (limit: number) => void
+    onChangePaginationLimit: (limit: number) => void,
+    onChangeField: (field: string) => void
+    onChangeKeyword: (keyword: string) => void
 }
 export function DataTable<TData, TValue>({
     columns: columnsOrFn,
@@ -114,6 +114,8 @@ export function DataTable<TData, TValue>({
     pagination,
     onChangePaginationPage,
     onChangePaginationLimit,
+    onChangeField,
+    onChangeKeyword
 }: DataTableProps<TData, TValue>) {
     const { t } = useTranslation();
 
@@ -135,7 +137,6 @@ export function DataTable<TData, TValue>({
 
 
 
-    const [searchColumn, setSearchColumn] = React.useState<string>(t("page.product.data_table.columns.name_column_label", "Nama"));
 
     const table = useReactTable({
         data,
@@ -143,7 +144,6 @@ export function DataTable<TData, TValue>({
         getCoreRowModel: getCoreRowModel(),
         getFilteredRowModel: getFilteredRowModel(),
         getSortedRowModel: getSortedRowModel(),
-        getPaginationRowModel: getPaginationRowModel(),
         onSortingChange: setSorting,
         onColumnFiltersChange: setColumnFilters,
         onColumnVisibilityChange: setColumnVisibility,
@@ -162,8 +162,8 @@ export function DataTable<TData, TValue>({
             <div className="flex:col lg:flex justify-between items-center pb-4">
                 <div className="first-row flex gap-2">
                     <Select
-                        value={searchColumn}
-                        onValueChange={setSearchColumn}
+                        value={queryParam.field}
+                        onValueChange={(value) => onChangeField(value)}
                     >
                         <SelectTrigger className="w-full lg:w-24 xl:w-56">
                             <SelectValue />
@@ -171,27 +171,31 @@ export function DataTable<TData, TValue>({
                         <SelectContent>
                             <SelectGroup>
                                 <SelectLabel>{t("component.data_table.search_component.search_by", "Pencarian berdasarkan")}</SelectLabel>
-                                <SelectItem value={t("page.product.data_table.columns.name_column_label", "Nama")}>
+                                <SelectItem value="default">
+                                    {t("component.data_table.search_component.default", "Bawaan")}
+                                </SelectItem>
+                                <SelectItem value="name">
                                     {t("component.data_table.search_component.name", "Nama")}
                                 </SelectItem>
-                                <SelectItem value={t("page.product.data_table.columns.description_column_label", "Deskripsi")}>
-                                    {t("component.data_table.search_component.description", "Deskripsi")}
+                                <SelectItem value="sku">
+                                    {t("component.data_table.search_component.sku", "SKU")}
+                                </SelectItem>
+                                <SelectItem value="desc">
+                                    {t("component.data_table.search_component.desc", "Deskripsi")}
+                                </SelectItem>
+                                <SelectItem value="category">
+                                    {t("component.data_table.search_component.category", "Kategori")}
+                                </SelectItem>
+                                <SelectItem value="unit">
+                                    {t("component.data_table.search_component.unit", "Satuan")}
                                 </SelectItem>
                             </SelectGroup>
                         </SelectContent>
                     </Select>
                     <Input
                         placeholder={t("component.data_table.search_component.placeholder", "Telusuri")}
-                        value={
-                            (table
-                                .getColumn(searchColumn)
-                                ?.getFilterValue() as string) ?? ''
-                        }
-                        onChange={(event) => {
-                            table
-                                .getColumn(searchColumn)
-                                ?.setFilterValue(event.target.value);
-                        }}
+                        value={queryParam.keyword}
+                        onChange={(event) => onChangeKeyword(event.target.value)}
                         className="max-w-sm"
                     />
                 </div>

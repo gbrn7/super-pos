@@ -18,7 +18,7 @@ class ProductSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
                 'name' => 'Gulaku 1KG',
-                'stock' => 100,
+                'stock' => 10,
                 'sku' => Str::of('Gulaku 1KG')
                     ->headline()
                     ->replaceMatches('/[^A-Z]/', '') . '-' . strtoupper(Str::random(8)),
@@ -33,9 +33,9 @@ class ProductSeeder extends Seeder
             ],
             [
                 'category_id' => 1,
-                'unit_id' => 1,
+                'unit_id' => 2,
                 'name' => 'Minyak Kita',
-                'stock' => 100,
+                'stock' => 12,
                 'sku' => Str::of('Minyak Kita')
                     ->headline()
                     ->replaceMatches('/[^A-Z]/', '') . '-' . strtoupper(Str::random(8)),
@@ -52,12 +52,29 @@ class ProductSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
                 'name' => 'Beras Rojo Lele',
-                'stock' => 100,
+                'stock' => 20,
                 'image' => 'product/test4.jpg',
                 'sku' => Str::of('Beras Rojo Lele')
                     ->headline()
                     ->replaceMatches('/[^A-Z]/', '') . '-' . strtoupper(Str::random(8)),
                 'price' => 10000,
+                'cost_price' => 7000,
+                'is_active' => true,
+                'is_unlimited' => false,
+                'desc' => "Test Desc",
+                'created_at' => now()->unix(),
+                'updated_at' => now()->unix(),
+            ],
+            [
+                'category_id' => 2,
+                'unit_id' => 2,
+                'name' => 'Teh Pucuk Harum 1 Liter',
+                'stock' => 6,
+                'sku' => Str::of('Teh Pucuk Harum 1 Liter')
+                    ->headline()
+                    ->replaceMatches('/[^A-Z]/', '') . '-' . strtoupper(Str::random(8)),
+                'price' => 9000,
+                'image' => 'product/test4.jpg',
                 'cost_price' => 7000,
                 'is_active' => true,
                 'is_unlimited' => false,

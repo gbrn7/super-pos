@@ -18,7 +18,7 @@ import { Category } from '@/support/models/category';
 import { ProductQueryParam } from '@/support/interfaces/request/product';
 import { PaginationResponse } from '@/support/interfaces/resource/resource-response';
 import { Pagination } from '@/support/interfaces/resource/pagination';
-import { PAGINATIONLIMITDEFAULT } from '@/constants/Index';
+import { DEBOUNCEDEFAULTDURATION, PAGINATIONLIMITDEFAULT, PAGINATIONLIMITOPTIONDEFAULT } from '@/constants/Index';
 
 
 const { url } = products();
@@ -59,7 +59,7 @@ export default function Index() {
     const [queryParam, setQueryParam] = useState<ProductQueryParam>({
         limit: PAGINATIONLIMITDEFAULT,
         page: 1,
-        query: "",
+        field: "default",
         keyword: "",
     })
 
@@ -149,14 +149,36 @@ export default function Index() {
         }));
     };
 
+    const handleChangeField = (field: string) => {
+        setQueryParam((prev) => ({
+            ...prev,
+            field: field
+        }));
+    };
+
+    const handleChangeKeyword = (keyword: string) => {
+        setQueryParam((prev) => ({
+            ...prev,
+            keyword: keyword
+        }));
+    };
+
     useEffect(() => {
         fetchUnits();
         fetchCategories();
     }, []);
 
     useEffect(() => {
-        fetchAllProducts();
-    }, [queryParam])
+        if (queryParam.keyword != '') fetchAllProducts();
+    }, [queryParam.page, queryParam.limit, queryParam.field])
+
+    useEffect(() => {
+        const timeout = setTimeout(() => {
+            fetchAllProducts();
+        }, DEBOUNCEDEFAULTDURATION);
+
+        return () => clearTimeout(timeout);
+    }, [queryParam.keyword])
 
     return (
         <>
@@ -171,7 +193,7 @@ export default function Index() {
                     units={units}
                     processing={processing}
                     data={allProducts}
-                    limitOptions={[10, 20, 50, 100]}
+                    limitOptions={PAGINATIONLIMITOPTIONDEFAULT}
                     onRefresh={fetchAllProducts}
                     detailDataOpen={detailOpen}
                     editOpen={editOpen}
@@ -191,6 +213,8 @@ export default function Index() {
                     pagination={pagination}
                     onChangePaginationLimit={handleChangePaginationLimit}
                     onChangePaginationPage={handleChangePaginationPage}
+                    onChangeField={handleChangeField}
+                    onChangeKeyword={handleChangeKeyword}
                 />
             </div>
         </>

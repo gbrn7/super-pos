@@ -65,13 +65,13 @@ $feature->comments->each->setRelation('feature', $feature);
 Incorrect (correlated EXISTS re-executes per row):
 
 ```php
-$query->whereHas('company', fn ($q) => $q->where('name', 'like', $term));
+$query->whereHas('company', fn ($q) => $q->where('name', 'ilike', $term));
 ```
 
 Correct (index-friendly subquery, no PHP memory overhead):
 
 ```php
-$query->whereIn('company_id', Company::where('name', 'like', $term)->select('id'));
+$query->whereIn('company_id', Company::where('name', 'ilike', $term)->select('id'));
 ```
 
 ## Sometimes Two Simple Queries Beat One Complex Query

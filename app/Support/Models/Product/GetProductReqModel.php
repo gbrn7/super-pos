@@ -30,6 +30,10 @@ class GetProductReqModel
 
     public ?bool $is_unlimited;
 
+    public ?string $field;
+
+    public ?string $keyword;
+
     public function __construct(Request $request)
     {
         $this->name = $request->query('name');
@@ -44,5 +48,7 @@ class GetProductReqModel
         $this->order = $request->query('order');
         $this->is_active = $request->query('is_active');
         $this->is_unlimited = $request->query('is_unlimited');
+        $this->field = $request->query('field');
+        $this->keyword = $request->query('keyword');
     }
 }

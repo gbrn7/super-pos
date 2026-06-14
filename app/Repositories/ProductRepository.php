@@ -15,8 +15,32 @@ class ProductRepository implements ProductRepositoryInterface
         $query = Product::query()
             ->with(['category', 'unit'])
             ->orderBy($request->order_by != '' ? $request->order_by : 'id', $request->order_by != '' ? $request->order_by : 'desc')
-            ->when($request->name, fn($query) => $query->where('name', 'like', "%{$request->name}%"))
-            ->when($request->sku, fn($query) => $query->where('sku', 'like', "%{$request->sku}%"))
+            ->when($request->name, fn($query) => $query->where('name', 'ilike', "%{$request->name}%"))
+            ->when($request->keyword, function ($query) use ($request) {
+                if ($request->field === 'category') {
+                    $query->whereHas('category', function ($query) use ($request) {
+                        $query->where('name', 'ilike', "%{$request->keyword}%");
+                    });
+                } else if ($request->field === 'unit') {
+                    $query->whereHas('unit', function ($query) use ($request) {
+                        $query->where('name', 'ilike', "%{$request->keyword}%");
+                    });
+                } else if (isset($request->field) && $request->field != 'default') {
+                    $query->where($request->field, 'ilike', "%{$request->keyword}%");
+                } else {
+                    $query
+                        ->where('name', 'ilike', "%{$request->keyword}%")
+                        ->orWhere('sku', 'ilike', "%{$request->keyword}%")
+                        ->orWhere('desc', 'ilike', "%{$request->keyword}%")
+                        ->orWhereHas('category', function ($query) use ($request) {
+                            $query->where('name', 'ilike', "%{$request->keyword}%");
+                        })
+                        ->orWhereHas('unit', function ($query) use ($request) {
+                            $query->where('name', 'ilike', "%{$request->keyword}%");
+                        });
+                }
+            })
+            ->when($request->sku, fn($query) => $query->where('sku', 'ilike', "%{$request->sku}%"))
             ->when($request->is_active, fn($query) => $query->where('is_active', $request->is_active))
             ->when($request->is_unlimited, fn($query) => $query->where('is_unlimited', $request->is_unlimited))
             ->when($request->category_id, fn($query) => $query->where('category_id', $request->category_id))

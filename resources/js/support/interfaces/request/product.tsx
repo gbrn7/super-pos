@@ -1,5 +1,5 @@
 export interface ProductQueryParam {
-  query: string;
+  field: string;
   keyword: string;
   page: number;
   limit: number;

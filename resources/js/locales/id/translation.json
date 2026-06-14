@@ -104,7 +104,11 @@
     "data_table": {
       "search_component":{
         "search_by": "Pencarian Berdasarkan",
+        "default":"Bawaan",
         "name":"Nama",
+        "sku":"SKU",
+        "category":"Kategori",
+        "unit":"Satuan",
         "description":"Deskripsi",
         "guard_name":"Nama Garda",
         "placeholder":"Telusuri"

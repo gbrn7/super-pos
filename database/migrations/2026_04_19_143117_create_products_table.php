@@ -26,6 +26,7 @@ return new class extends Migration
             $table->decimal('cost_price', 10, 2);
             $table->unsignedBigInteger('created_at');
             $table->unsignedBigInteger('updated_at');
+            $table->softDeletes();
         });
     }
 

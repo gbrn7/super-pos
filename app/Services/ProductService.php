@@ -22,6 +22,8 @@ use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Support\Collection;
 
+use function Illuminate\Log\log;
+
 class ProductService implements ProductServiceInterface
 {
   public function __construct(protected ProductRepositoryInterface $productRepository) {}
@@ -31,6 +33,8 @@ class ProductService implements ProductServiceInterface
     try {
       return $this->productRepository->getAllByIndex($request);
     } catch (\Throwable $th) {
+      dd($th->getMessage());
+      log($th->getMessage());
       throw CheckException::Check($th);
     }
   }

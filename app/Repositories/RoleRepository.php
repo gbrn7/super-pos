@@ -15,7 +15,7 @@ class RoleRepository implements RoleRepositoryInterface
     {
         $query = Role::query()
             ->orderBy('id', 'desc')
-            ->when($request->name, fn ($query) => $query->where('name', 'like', "%{$request->name}%"))
+            ->when($request->name, fn($query) => $query->where('name', 'ilike', "%{$request->name}%"))
             ->where('name', '!=', RoleEnums::SUPER_ADMIN->value);
 
         if ($request->limit === null) {

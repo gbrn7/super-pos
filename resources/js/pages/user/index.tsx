@@ -13,6 +13,7 @@ import { ResponseApi } from '@/support/interfaces/response/Response';
 import { handleApiError, showWarningToast } from '@/lib/utils';
 import HeaderContent from '@/components/header-content';
 import { Role } from '@/support/models/role';
+import { PAGINATIONLIMITOPTIONDEFAULT } from '@/constants/Index';
 
 const { url } = users();
 
@@ -111,7 +112,7 @@ export default function Index() {
                     columns={columns}
                     processing={processing}
                     data={allUsers}
-                    limitOptions={[10, 20, 50, 100]}
+                    limitOptions={PAGINATIONLIMITOPTIONDEFAULT}
                     onRefresh={fetchAllUsers}
                     detailDataOpen={detailOpen}
                     editOpen={editOpen}

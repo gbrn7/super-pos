@@ -16,7 +16,7 @@ class UserRepository implements UserRepositoryInterface
         $query = User::query()
             ->with('roles')
             ->orderBy('id', 'desc')
-            ->when($request->name, fn ($query) => $query->where('name', 'like', "%{$request->name}%"))
+            ->when($request->name, fn($query) => $query->where('name', 'ilike', "%{$request->name}%"))
             ->whereDoesntHave('roles', function ($query) {
                 $query->where('name', RoleEnums::SUPER_ADMIN->value);
             });

@@ -14,7 +14,7 @@ class UnitRepository implements UnitRepositoryInterface
     {
         $query = Unit::query()
             ->orderBy('id', 'desc')
-            ->when($request->name, fn ($query) => $query->where('name', 'like', "%{$request->name}%"));
+            ->when($request->name, fn($query) => $query->where('name', 'ilike', "%{$request->name}%"));
 
         if ($request->limit === null) {
             return $query->get();

@@ -1,4 +1,4 @@
-import { toastPosition } from '@/constants/Index';
+import { TOASTPOSITIONDEFAULT } from '@/constants/Index';
 import { ResponseErrorApi } from '@/support/interfaces/response/ResponseError';
 import type { InertiaLinkProps } from '@inertiajs/react';
 import axios from 'axios';
@@ -60,21 +60,21 @@ export function showValidationErrors(
 }
 
 export function showToast(message: string) {
-    toast(message, { position: toastPosition, className: 'capitalize' })
+    toast(message, { position: TOASTPOSITIONDEFAULT, className: 'capitalize' })
 }
 
 export function showInfoToast(message: string) {
-    toast.info(message, { position: toastPosition, className: 'capitalize' })
+    toast.info(message, { position: TOASTPOSITIONDEFAULT, className: 'capitalize' })
 }
 
 export function showErrorToast(message: string) {
-    toast.error(message, { position: toastPosition, className: 'capitalize' })
+    toast.error(message, { position: TOASTPOSITIONDEFAULT, className: 'capitalize' })
 }
 
 export function showWarningToast(message: string) {
-    toast.warning(message, { position: toastPosition, className: 'capitalize' })
+    toast.warning(message, { position: TOASTPOSITIONDEFAULT, className: 'capitalize' })
 }
 
 export function showSuccessToast(message: string) {
-    toast.success(message, { position: toastPosition, className: 'capitalize' })
+    toast.success(message, { position: TOASTPOSITIONDEFAULT, className: 'capitalize' })
 }
