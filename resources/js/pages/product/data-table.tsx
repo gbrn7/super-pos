@@ -1,3 +1,4 @@
+import { Dispatch, SetStateAction } from 'react';
 import {
     flexRender,
     getCoreRowModel,
@@ -55,6 +56,8 @@ import { Can } from '@/components/auth/can';
 import { PERMISSIONENUMS } from '@/support/enums/PermissionEnums';
 import { Unit } from '@/support/models/unit';
 import { Category } from '@/support/models/category';
+import { ProductQueryParam } from '@/support/interfaces/request/product';
+import { Pagination } from '@/support/interfaces/resource/pagination';
 
 interface DataTableProps<TData, TValue> {
     columns:
@@ -79,7 +82,11 @@ interface DataTableProps<TData, TValue> {
     selectedBulkProducts: Product[];
     selectedProduct: Product | null;
     units: Unit[],
-    categories: Category[]
+    categories: Category[],
+    queryParam: ProductQueryParam,
+    pagination: Pagination,
+    onChangePaginationPage: (page: number) => void,
+    onChangePaginationLimit: (limit: number) => void
 }
 export function DataTable<TData, TValue>({
     columns: columnsOrFn,
@@ -102,7 +109,11 @@ export function DataTable<TData, TValue>({
     selectedBulkProducts,
     selectedProduct,
     units,
-    categories
+    categories,
+    queryParam,
+    pagination,
+    onChangePaginationPage,
+    onChangePaginationLimit,
 }: DataTableProps<TData, TValue>) {
     const { t } = useTranslation();
 
@@ -122,10 +133,7 @@ export function DataTable<TData, TValue>({
 
     const [rowSelection, setRowSelection] = React.useState({});
 
-    const [pagination, setPagination] = React.useState<PaginationState>({
-        pageIndex: 0,
-        pageSize: 10,
-    });
+
 
     const [searchColumn, setSearchColumn] = React.useState<string>(t("page.product.data_table.columns.name_column_label", "Nama"));
 
@@ -140,14 +148,12 @@ export function DataTable<TData, TValue>({
         onColumnFiltersChange: setColumnFilters,
         onColumnVisibilityChange: setColumnVisibility,
         onRowSelectionChange: setRowSelection,
-        onPaginationChange: setPagination,
         columnResizeMode: "onChange",
         state: {
             sorting,
             columnFilters,
             columnVisibility,
             rowSelection,
-            pagination,
         },
     });
 
@@ -279,7 +285,7 @@ export function DataTable<TData, TValue>({
                     </TableHeader>
                     <TableBody>
                         {processing ? (
-                            Array.from({ length: pagination.pageSize }).map(
+                            Array.from({ length: queryParam.limit }).map(
                                 (_, index) => (
                                     <TableRow key={index}>
                                         {table.getAllColumns().map((column) => (
@@ -353,10 +359,8 @@ export function DataTable<TData, TValue>({
                 </div>
                 <div className="flex w-full items-center gap-8 lg:w-fit">
                     <Select
-                        value={pagination.pageSize.toString()}
-                        onValueChange={(value) => {
-                            table.setPageSize(Number(value));
-                        }}
+                        value={queryParam.limit.toString()}
+                        onValueChange={(value) => onChangePaginationLimit(Number(value))}
                     >
                         <SelectTrigger className="w-20">
                             <SelectValue />
@@ -378,15 +382,15 @@ export function DataTable<TData, TValue>({
                     <div className="text-sm text-muted-foreground">
                         {sprintf
                             (
-                                t("component.data_table.pagination_info", "Halaman %d dari %d"), (table.getState().pagination.pageIndex + 1), table.getPageCount())
+                                t("component.data_table.pagination_info", "Halaman %d dari %d"), pagination.current_page, pagination.last_page)
                         }
                     </div>
                     <div className="ml-auto flex items-center gap-2 lg:ml-0">
                         <Button
                             variant="outline"
                             className="hidden h-8 w-8 p-0 lg:flex"
-                            onClick={() => table.setPageIndex(0)}
-                            disabled={!table.getCanPreviousPage()}
+                            onClick={() => onChangePaginationPage(1)}
+                            disabled={pagination.current_page == 1 || processing}
                         >
                             <span className="sr-only">Go to first page</span>
                             <IconChevronsLeft />
@@ -395,8 +399,10 @@ export function DataTable<TData, TValue>({
                             variant="outline"
                             className="size-8"
                             size="icon"
-                            onClick={() => table.previousPage()}
-                            disabled={!table.getCanPreviousPage()}
+                            onClick={() => {
+                                (pagination.current_page - 1) > 0 && onChangePaginationPage((pagination.current_page - 1))
+                            }}
+                            disabled={pagination.current_page == 1 || processing}
                         >
                             <span className="sr-only">Go to previous page</span>
                             <IconChevronLeft />
@@ -405,8 +411,10 @@ export function DataTable<TData, TValue>({
                             variant="outline"
                             className="size-8"
                             size="icon"
-                            onClick={() => table.nextPage()}
-                            disabled={!table.getCanNextPage()}
+                            onClick={() => {
+                                pagination.current_page != pagination.last_page && onChangePaginationPage((pagination.current_page + 1))
+                            }}
+                            disabled={pagination.current_page == pagination.last_page || processing}
                         >
                             <span className="sr-only">Go to next page</span>
                             <IconChevronRight />
@@ -415,8 +423,8 @@ export function DataTable<TData, TValue>({
                             variant="outline"
                             className="hidden size-8 lg:flex"
                             size="icon"
-                            onClick={() => table.setPageIndex(table.getPageCount() - 1)}
-                            disabled={!table.getCanNextPage()}
+                            onClick={() => onChangePaginationPage(pagination.last_page)}
+                            disabled={pagination.current_page == pagination.last_page || processing}
                         >
                             <span className="sr-only">Go to last page</span>
                             <IconChevronsRight />

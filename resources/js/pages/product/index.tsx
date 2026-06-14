@@ -15,6 +15,11 @@ import { Unit } from '@/support/models/unit';
 import { index as apiGetUnits } from '@/routes/apiUnits';
 import { index as apiGetCategories } from '@/routes/apiCategories';
 import { Category } from '@/support/models/category';
+import { ProductQueryParam } from '@/support/interfaces/request/product';
+import { PaginationResponse } from '@/support/interfaces/resource/resource-response';
+import { Pagination } from '@/support/interfaces/resource/pagination';
+import { PAGINATIONLIMITDEFAULT } from '@/constants/Index';
+
 
 const { url } = products();
 
@@ -27,6 +32,17 @@ export default function Index() {
 
 
     const [allProducts, setAllProducts] = useState<Product[]>([]);
+    const [pagination, setPagination] = useState<Pagination>({
+        current_page: 1,
+        last_page: 1,
+        per_page: PAGINATIONLIMITDEFAULT,
+        total: 0,
+        from: 0,
+        to: 0,
+        links: [],
+        prev_page_url: "",
+        next_page_url: "",
+    });
     const [processing, setProcessing] = useState(false);
     const [detailOpen, setDetailOpen] = useState(false);
     const [units, setUnits] = useState<Unit[]>([]);
@@ -39,15 +55,24 @@ export default function Index() {
     );
     const [selectedProducts, setSelectedProducts] = useState<Product[]>([]);
 
+
+    const [queryParam, setQueryParam] = useState<ProductQueryParam>({
+        limit: PAGINATIONLIMITDEFAULT,
+        page: 1,
+        query: "",
+        keyword: "",
+    })
+
     const fetchAllProducts = async () => {
         try {
             setProcessing(true);
-            const res = await axiosInstance.get<ResponseApi<Product[]>>(apiUrl);
+            const res = await axiosInstance.get<ResponseApi<PaginationResponse<Product>>>(apiUrl, { params: queryParam });
             if (!res.data.success) {
                 showWarningToast(res.data.message)
                 return
             }
-            setAllProducts(res.data.data);
+            setAllProducts(res.data.data.items);
+            setPagination(res.data.data.pagination);
         } catch (error) {
             handleApiError(error)
         } finally {
@@ -110,13 +135,28 @@ export default function Index() {
         setBulkDeleteOpen(true);
     };
 
-    useEffect(() => {
-        // const fetchProducts = async () => fetchAllProducts();
+    const handleChangePaginationPage = (page: number) => {
+        setQueryParam((prev) => ({
+            ...prev,
+            page: page
+        }));
+    };
 
-        fetchAllProducts();
+    const handleChangePaginationLimit = (limit: number) => {
+        setQueryParam((prev) => ({
+            ...prev,
+            limit: limit
+        }));
+    };
+
+    useEffect(() => {
         fetchUnits();
         fetchCategories();
     }, []);
+
+    useEffect(() => {
+        fetchAllProducts();
+    }, [queryParam])
 
     return (
         <>
@@ -147,6 +187,10 @@ export default function Index() {
                     setOpenBulkDeleteDialogOpen={setBulkDeleteOpen}
                     selectedBulkProducts={selectedProducts}
                     selectedProduct={selectedProduct}
+                    queryParam={queryParam}
+                    pagination={pagination}
+                    onChangePaginationLimit={handleChangePaginationLimit}
+                    onChangePaginationPage={handleChangePaginationPage}
                 />
             </div>
         </>

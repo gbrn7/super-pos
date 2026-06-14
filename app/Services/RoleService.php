@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Http\Resources\RoleResource;
 use App\Models\Role;
 use App\Support\Enums\RoleEnums;
 use App\Support\Interfaces\Repositories\RoleRepositoryInterface;
@@ -9,19 +10,20 @@ use App\Support\Interfaces\Services\RoleServiceInterface;
 use App\Support\Models\Role\GetRoleReqModel;
 use App\Support\Utils\CheckException;
 use Exception;
-use Illuminate\Contracts\Pagination\Paginator;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
 class RoleService implements RoleServiceInterface
 {
     public function __construct(protected RoleRepositoryInterface $roleRepository) {}
 
-    public function getAllByIndex(GetRoleReqModel $request): Paginator|Collection
+    public function getAllByIndex(GetRoleReqModel $request): AnonymousResourceCollection
     {
         try {
-            return $this->roleRepository->getAllByIndex($request);
+            $roles = $this->roleRepository->getAllByIndex($request);
+
+            return RoleResource::collection($roles);
         } catch (\Throwable $th) {
             throw CheckException::Check($th);
         }

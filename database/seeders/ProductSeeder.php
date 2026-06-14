@@ -25,6 +25,7 @@ class ProductSeeder extends Seeder
                 'price' => 17000,
                 'cost_price' => 12000,
                 'is_active' => true,
+                'image' => 'product/test.jpg',
                 'is_unlimited' => true,
                 'desc' => "Test Desc",
                 'created_at' => now()->unix(),
@@ -39,6 +40,7 @@ class ProductSeeder extends Seeder
                     ->headline()
                     ->replaceMatches('/[^A-Z]/', '') . '-' . strtoupper(Str::random(8)),
                 'price' => 14000,
+                'image' => 'product/test2.jpg',
                 'cost_price' => 11000,
                 'is_active' => true,
                 'is_unlimited' => false,
@@ -51,6 +53,7 @@ class ProductSeeder extends Seeder
                 'unit_id' => 1,
                 'name' => 'Beras Rojo Lele',
                 'stock' => 100,
+                'image' => 'product/test4.jpg',
                 'sku' => Str::of('Beras Rojo Lele')
                     ->headline()
                     ->replaceMatches('/[^A-Z]/', '') . '-' . strtoupper(Str::random(8)),

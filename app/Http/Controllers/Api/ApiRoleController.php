@@ -25,22 +25,22 @@ class ApiRoleController extends Controller implements HasMiddleware
     {
         return [
             new Middleware(
-                'permission:'.RolePermissionEnums::READ_ROLE->value,
+                'permission:' . RolePermissionEnums::READ_ROLE->value,
                 only: ['index', 'show']
             ),
 
             new Middleware(
-                'permission:'.RolePermissionEnums::CREATE_ROLE->value,
+                'permission:' . RolePermissionEnums::CREATE_ROLE->value,
                 only: ['store', 'getRoleImportTemplate', 'importRoleExcelData']
             ),
 
             new Middleware(
-                'permission:'.RolePermissionEnums::UPDATE_ROLE->value,
+                'permission:' . RolePermissionEnums::UPDATE_ROLE->value,
                 only: ['update']
             ),
 
             new Middleware(
-                'permission:'.RolePermissionEnums::DELETE_ROLE->value,
+                'permission:' . RolePermissionEnums::DELETE_ROLE->value,
                 only: ['destroy', 'bulkDelete']
             ),
         ];
@@ -52,9 +52,8 @@ class ApiRoleController extends Controller implements HasMiddleware
     public function index(Request $request)
     {
         try {
-            $roles = $this->roleService->getAllByIndex(new GetRoleReqModel($request));
+            $data = $this->roleService->getAllByIndex(new GetRoleReqModel($request));
 
-            $data = RoleResource::collection($roles);
 
             return ResponseApi::make(true, trans('message.success.success'), $data);
         } catch (\Throwable $th) {
@@ -145,7 +144,7 @@ class ApiRoleController extends Controller implements HasMiddleware
     public function getRoleImportTemplate()
     {
         $fileName = 'import-role-template.xlsx';
-        $publiFilePath = 'template/'.$fileName;
+        $publiFilePath = 'template/' . $fileName;
 
         if (! file_exists($publiFilePath)) {
             return ResponseApi::make(false, trans('message.error.not_found', ['resource' => 'file']), null, Response::HTTP_INTERNAL_SERVER_ERROR);

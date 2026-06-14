@@ -25,22 +25,22 @@ class ApiPaymentMethodController extends Controller implements HasMiddleware
     {
         return [
             new Middleware(
-                'permission:'.PaymentMethodPermissionEnums::READ_PAYMENT_METHOD->value,
+                'permission:' . PaymentMethodPermissionEnums::READ_PAYMENT_METHOD->value,
                 only: ['index', 'show']
             ),
 
             new Middleware(
-                'permission:'.PaymentMethodPermissionEnums::CREATE_PAYMENT_METHOD->value,
+                'permission:' . PaymentMethodPermissionEnums::CREATE_PAYMENT_METHOD->value,
                 only: ['store']
             ),
 
             new Middleware(
-                'permission:'.PaymentMethodPermissionEnums::UPDATE_PAYMENT_METHOD->value,
+                'permission:' . PaymentMethodPermissionEnums::UPDATE_PAYMENT_METHOD->value,
                 only: ['update']
             ),
 
             new Middleware(
-                'permission:'.PaymentMethodPermissionEnums::DELETE_PAYMENT_METHOD->value,
+                'permission:' . PaymentMethodPermissionEnums::DELETE_PAYMENT_METHOD->value,
                 only: ['destroy', 'bulkDelete']
             ),
         ];
@@ -58,7 +58,6 @@ class ApiPaymentMethodController extends Controller implements HasMiddleware
 
             return ResponseApi::make(true, trans('message.success.success'), $data);
         } catch (\Throwable $th) {
-            dd($th->getMessage());
 
             return ResponseApi::make(false, $th->getMessage(), null, $th->getcode());
         }

@@ -10,6 +10,7 @@ use App\Http\Resources\ProductResource;
 use App\Support\Enums\ProductPermissionEnums;
 use App\Support\Interfaces\Services\ProductServiceInterface;
 use App\Support\Models\Product\GetProductReqModel;
+use App\Support\Utils\PaginationResource;
 use App\Support\Utils\ResponseApi;
 use Exception;
 use Illuminate\Http\Request;
@@ -54,11 +55,12 @@ class ApiProductController extends Controller implements HasMiddleware
         try {
             $products = $this->productService->getAllByIndex(new GetProductReqModel($request));
 
-            $data = ProductResource::collection($products);
+            $items = ProductResource::collection($products->items());
+
+            $data = PaginationResource::make($items, $products);
 
             return ResponseApi::make(true, trans('message.success.success'), $data);
         } catch (\Throwable $th) {
-            dd($th->getMessage());
             return ResponseApi::make(false, $th->getMessage(), null, $th->getcode());
         }
     }

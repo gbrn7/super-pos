@@ -19,7 +19,6 @@ class MessageResponse
         if ($message === $key) {
             $message = trans($key, $replace, Header::X_LANGUAGE_DEFAULT_VALUE);
 
-            dd($message);
 
             if ($message === $key && isset($fallbackMessage)) {
                 return $fallbackMessage;

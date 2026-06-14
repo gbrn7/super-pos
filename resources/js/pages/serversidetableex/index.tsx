@@ -5,7 +5,7 @@ import { Category } from "@/support/models/category";
 import { useState, useEffect } from "react";
 import { index as apiGetCategories } from '@/routes/apiCategories';
 import { index as categories } from "@/routes/categories";
-import { ResourceResponse } from "@/support/interfaces/resource/resourceResponse";
+import { ResourceResponse } from "@/support/interfaces/resource/resource-response";
 import { QueryParam } from "@/support/interfaces/resource/queryParam";
 
 const { url } = categories();

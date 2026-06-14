@@ -23,3 +23,5 @@ export const LanguageSystem = typeof localStorage !== "undefined"
     : languageCode.DefaultLanguageCode
 
 export const toastPosition = "top-center"
+
+export const PAGINATIONLIMITDEFAULT = 10 

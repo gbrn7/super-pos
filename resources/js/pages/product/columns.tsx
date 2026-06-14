@@ -12,7 +12,6 @@ import {
 } from '@/components/ui/dropdown-menu';
 import type { Product } from '@/support/models/product';
 import { useTranslation } from 'react-i18next';
-import { formatDate } from '@/lib/format-date';
 import { Can } from '@/components/auth/can';
 import { PERMISSIONENUMS } from '@/support/enums/PermissionEnums';
 import { Badge } from '@/components/ui/badge';

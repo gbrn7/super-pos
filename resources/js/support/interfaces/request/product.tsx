@@ -1,3 +1,10 @@
+export interface ProductQueryParam {
+  query: string;
+  keyword: string;
+  page: number;
+  limit: number;
+}
+
 export interface ProductForm {
   category_id: number;
   unit_id: number;

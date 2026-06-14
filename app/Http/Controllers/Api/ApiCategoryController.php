@@ -26,22 +26,22 @@ class ApiCategoryController extends Controller implements HasMiddleware
     {
         return [
             new Middleware(
-                'permission:'.CategoryPermissionEnums::READ_CATEGORY->value,
+                'permission:' . CategoryPermissionEnums::READ_CATEGORY->value,
                 only: ['index', 'show']
             ),
 
             new Middleware(
-                'permission:'.CategoryPermissionEnums::CREATE_CATEGORY->value,
+                'permission:' . CategoryPermissionEnums::CREATE_CATEGORY->value,
                 only: ['store', 'getCategoryImportTemplate', 'importCategoryExcelData']
             ),
 
             new Middleware(
-                'permission:'.CategoryPermissionEnums::UPDATE_CATEGORY->value,
+                'permission:' . CategoryPermissionEnums::UPDATE_CATEGORY->value,
                 only: ['update']
             ),
 
             new Middleware(
-                'permission:'.CategoryPermissionEnums::DELETE_CATEGORY->value,
+                'permission:' . CategoryPermissionEnums::DELETE_CATEGORY->value,
                 only: ['destroy', 'bulkDelete']
             ),
         ];
@@ -140,7 +140,7 @@ class ApiCategoryController extends Controller implements HasMiddleware
     public function getCategoryImportTemplate()
     {
         $fileName = 'import-category-template.xlsx';
-        $publiFilePath = 'template/'.$fileName;
+        $publiFilePath = 'template/' . $fileName;
 
         if (! file_exists($publiFilePath)) {
             return ResponseApi::make(false, trans('message.error.not_found', ['resource' => 'file']), null, Response::HTTP_INTERNAL_SERVER_ERROR);

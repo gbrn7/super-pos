@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Http\Resources\ProductResource;
 use App\Imports\ProductImport;
 use App\Models\Product;
 use App\Support\Constants\Constants;
@@ -10,15 +11,16 @@ use App\Support\Interfaces\Repositories\ProductRepositoryInterface;
 use App\Support\Interfaces\Services\ProductServiceInterface;
 use App\Support\Models\Product\GetProductReqModel;
 use App\Support\Utils\CheckException;
+use App\Support\Utils\PaginationResource;
 use Carbon\Carbon;
 use Exception;
-use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Http\Response;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Contracts\Pagination\Paginator;
+use Illuminate\Support\Collection;
 
 class ProductService implements ProductServiceInterface
 {
