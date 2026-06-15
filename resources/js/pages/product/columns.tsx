@@ -49,7 +49,6 @@ export const columns = (props?: ColumnsProps): ColumnDef<Product>[] => {
                     aria-label="Select row"
                 />
             ),
-            enableSorting: false,
             enableHiding: false,
         },
         {
@@ -58,7 +57,6 @@ export const columns = (props?: ColumnsProps): ColumnDef<Product>[] => {
             header: ({ column }) => (
                 <DataTableHeader column={column} title={t("page.product.data_table.columns.name_column_label", "Nama")} />
             ),
-            enableSorting: true,
             size: 300,
         },
         {
@@ -67,7 +65,6 @@ export const columns = (props?: ColumnsProps): ColumnDef<Product>[] => {
             header: ({ column }) => (
                 <DataTableHeader column={column} title={t("page.product.data_table.columns.sku_column_label", "SKU")} />
             ),
-            enableSorting: true,
             size: 300,
         },
         {
@@ -76,7 +73,6 @@ export const columns = (props?: ColumnsProps): ColumnDef<Product>[] => {
             header: ({ column }) => (
                 <DataTableHeader column={column} title={t("page.product.data_table.columns.category_column_label", "Kategori")} />
             ),
-            enableSorting: true,
         },
         {
             id: t("page.product.data_table.columns.unit_column_label", "Satuan"),
@@ -84,7 +80,6 @@ export const columns = (props?: ColumnsProps): ColumnDef<Product>[] => {
             header: ({ column }) => (
                 <DataTableHeader column={column} title={t("page.product.data_table.columns.unit_column_label", "Satuan")} />
             ),
-            enableSorting: true,
         },
         {
             id: t("page.product.data_table.columns.stock_column_label", "Stok"),
@@ -92,7 +87,6 @@ export const columns = (props?: ColumnsProps): ColumnDef<Product>[] => {
             header: ({ column }) => (
                 <DataTableHeader column={column} title={t("page.product.data_table.columns.stock_column_label", "Stok")} />
             ),
-            enableSorting: true,
             cell: ({ row }) => (
                 row.original.stock > 0 ? (<Badge className="bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300">
                     {
@@ -112,7 +106,6 @@ export const columns = (props?: ColumnsProps): ColumnDef<Product>[] => {
             header: ({ column }) => (
                 <DataTableHeader column={column} title={t("page.product.data_table.columns.price_column_label", "Harga")} />
             ),
-            enableSorting: true,
             cell: ({ row }) => (formatRupiah(row.original.price))
         },
         {
@@ -121,7 +114,6 @@ export const columns = (props?: ColumnsProps): ColumnDef<Product>[] => {
             header: ({ column }) => (
                 <DataTableHeader column={column} title={t("page.product.data_table.columns.cost_price_column_label", "Harga Modal")} />
             ),
-            enableSorting: true,
             cell: ({ row }) => (formatRupiah(row.original.cost_price))
         },
         {
@@ -130,7 +122,6 @@ export const columns = (props?: ColumnsProps): ColumnDef<Product>[] => {
             header: ({ column }) => (
                 <DataTableHeader column={column} title={t("page.product.data_table.columns.is_active_column_label", "Status")} />
             ),
-            enableSorting: true,
             cell: ({ row }) => (
                 row.original.is_active ? (<Badge className="bg-green-50 text-green-700 dark:bg-green-950 dark:text-green-300">
                     {
@@ -150,7 +141,6 @@ export const columns = (props?: ColumnsProps): ColumnDef<Product>[] => {
             header: ({ column }) => (
                 <DataTableHeader column={column} title={t("page.product.data_table.columns.is_unlimited_column_label", "Tipe Stok")} />
             ),
-            enableSorting: true,
             cell: ({ row }) => (
                 row.original.is_unlimited ? (
                     <Badge className="bg-purple-50 text-purple-700 dark:bg-purple-950 dark:text-purple-300">

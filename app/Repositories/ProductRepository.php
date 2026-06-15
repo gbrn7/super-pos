@@ -14,7 +14,7 @@ class ProductRepository implements ProductRepositoryInterface
     {
         $query = Product::query()
             ->with(['category', 'unit'])
-            ->orderBy($request->order_by != '' ? $request->order_by : 'id', $request->order_by != '' ? $request->order_by : 'desc')
+            ->orderBy($request->order_by != '' ? $request->order_by : 'id', $request->order != '' ? $request->order : 'desc')
             ->when($request->name, fn($query) => $query->where('name', 'ilike', "%{$request->name}%"))
             ->when($request->keyword, function ($query) use ($request) {
                 if ($request->field === 'category') {
@@ -29,7 +29,7 @@ class ProductRepository implements ProductRepositoryInterface
                     $query->where($request->field, 'ilike', "%{$request->keyword}%");
                 } else {
                     $query
-                        ->where('name', 'ilike', "%{$request->keyword}%")
+                        ->orwhere('name', 'ilike', "%{$request->keyword}%")
                         ->orWhere('sku', 'ilike', "%{$request->keyword}%")
                         ->orWhere('desc', 'ilike', "%{$request->keyword}%")
                         ->orWhereHas('category', function ($query) use ($request) {

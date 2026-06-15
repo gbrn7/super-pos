@@ -27,17 +27,35 @@ class CategorySeeder extends Seeder
                     'created_at' => Carbon::now()->unix(),
                     'updated_at' => Carbon::now()->unix(),
                 ],
-            ]
-        );
-        for ($index = 0; $index < 100; $index++) {
-            Category::create(
                 [
-                    'name' => fake()->unique()->name(),
+                    'name' => "Snack",
                     'desc' => fake()->sentence(),
                     'created_at' => Carbon::now()->unix(),
                     'updated_at' => Carbon::now()->unix(),
-                ]
-            );
-        }
+                ],
+                [
+                    'name' => "Obat Obatan",
+                    'desc' => fake()->sentence(),
+                    'created_at' => Carbon::now()->unix(),
+                    'updated_at' => Carbon::now()->unix(),
+                ],
+                [
+                    'name' => "Gas",
+                    'desc' => fake()->sentence(),
+                    'created_at' => Carbon::now()->unix(),
+                    'updated_at' => Carbon::now()->unix(),
+                ],
+            ]
+        );
+        // for ($index = 0; $index < 100; $index++) {
+        //     Category::create(
+        //         [
+        //             'name' => fake()->unique()->name(),
+        //             'desc' => fake()->sentence(),
+        //             'created_at' => Carbon::now()->unix(),
+        //             'updated_at' => Carbon::now()->unix(),
+        //         ]
+        //     );
+        // }
     }
 }

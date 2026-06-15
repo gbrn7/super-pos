@@ -28,6 +28,16 @@ class UnitSeeder extends Seeder
                 'created_at' => now()->unix(),
                 'updated_at' => now()->unix(),
             ],
+            [
+                'name' => 'Box',
+                'created_at' => now()->unix(),
+                'updated_at' => now()->unix(),
+            ],
+            [
+                'name' => 'Lusin',
+                'created_at' => now()->unix(),
+                'updated_at' => now()->unix(),
+            ],
         ]);
     }
 }

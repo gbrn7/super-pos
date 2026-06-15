@@ -175,7 +175,7 @@ export function DataTable<TData, TValue>({
     return (
         <div className='p-3 border rounded-2xl'>
             <div className="flex flex-col gap-3 justify-between pb-4">
-                <div className="first-row  flex flex-col lg:flex-row gap-2">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
                     <div className="keyword-filter flex gap-1">
                         <Select
                             value={queryParam.field}
@@ -338,7 +338,6 @@ export function DataTable<TData, TValue>({
                         </SelectContent>
                     </Select>
                 </div>
-
                 <div className="second-row overflow-auto flex justify-start sm:justify-end gap-2 lg:mt-0">
                     <Can permission={PERMISSIONENUMS.PRODUCT.READ}>
                         <ExportDropdownMenu data={data} />
