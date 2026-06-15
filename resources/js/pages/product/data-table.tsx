@@ -43,6 +43,8 @@ import {
     TableHeader,
     TableRow,
 } from '@/components/ui/table';
+import { FILTER_DEFAULT_VALUE } from '@/constants/Index';
+import { getNullableNumberFilterValue, getNumberFilterValue } from '@/lib/utils';
 import { PERMISSIONENUMS } from '@/support/enums/PermissionEnums';
 import type { ProductQueryParam } from '@/support/interfaces/request/product';
 import type { Pagination } from '@/support/interfaces/resource/pagination';
@@ -55,8 +57,6 @@ import { DeleteDialog } from './dialog-modal/delete-dialog';
 import { DetailDialog } from './dialog-modal/detail-dialog';
 import { EditDialog } from './dialog-modal/edit-dialog';
 import { ExportDropdownMenu } from './export-data-menu/export-dropdown-menu';
-import { getNullableNumberFilterValue, getNumberFilterValue } from '@/lib/utils';
-import { FILTER_DEFAULT_VALUE } from '@/constants/Index';
 
 
 interface DataTableProps<TData, TValue> {
@@ -126,7 +126,21 @@ export function DataTable<TData, TValue>({
 
     const columns =
         typeof columnsOrFn === 'function'
-            ? columnsOrFn({ onDetailClick, onEditClick, onDeleteClick })
+            ? columnsOrFn({
+                onDetailClick,
+                onEditClick,
+                onDeleteClick,
+                onSortChange: (orderBy: string | null, order: string | null) => {
+                    setQueryParam((prev) => ({
+                        ...prev,
+                        order_by: orderBy,
+                        order,
+                        page: 1,
+                    }));
+                },
+                order: queryParam.order,
+                orderBy: queryParam.order_by,
+            })
             : columnsOrFn;
 
     const [sorting, setSorting] = React.useState<SortingState>([]);
@@ -325,14 +339,14 @@ export function DataTable<TData, TValue>({
                                     {t("component.data_table.filter.all_stock_types", "Semua Tipe Stok")}
                                 </SelectItem>
                                 <SelectItem
-                                    value={"0"}
-                                >
-                                    {t("component.data_table.filter.limitted_stock_label", "Terbatas")}
-                                </SelectItem>
-                                <SelectItem
                                     value={"1"}
                                 >
                                     {t("component.data_table.filter.unlimited_stock_label", "Tidak Terbatas")}
+                                </SelectItem>
+                                <SelectItem
+                                    value={"0"}
+                                >
+                                    {t("component.data_table.filter.limitted_stock_label", "Terbatas")}
                                 </SelectItem>
                             </SelectGroup>
                         </SelectContent>
@@ -409,7 +423,6 @@ export function DataTable<TData, TValue>({
                                         >
                                             {header.isPlaceholder ? null : (
                                                 <div
-                                                    onClick={header.column.getToggleSortingHandler()}
                                                     className="flex cursor-pointer items-center gap-2 select-none hover:text-foreground"
                                                 >
                                                     {flexRender(

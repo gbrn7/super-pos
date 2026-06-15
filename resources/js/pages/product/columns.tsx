@@ -1,6 +1,9 @@
 import type { ColumnDef } from '@tanstack/react-table';
 import { FileText, MoreHorizontal, Pencil, Trash } from 'lucide-react';
-import { DataTableHeader } from '@/components/data-table-header';
+import { useTranslation } from 'react-i18next';
+import { Can } from '@/components/auth/can';
+import { ServerSideDataTableHeader } from '@/components/server-side-data-table-header';
+import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import {
@@ -10,21 +13,23 @@ import {
     DropdownMenuLabel,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import type { Product } from '@/support/models/product';
-import { useTranslation } from 'react-i18next';
-import { Can } from '@/components/auth/can';
-import { PERMISSIONENUMS } from '@/support/enums/PermissionEnums';
-import { Badge } from '@/components/ui/badge';
+import { STOCK_THRESHOLD } from '@/constants/Index';
 import { formatRupiah } from '@/lib/format-money';
+import { PERMISSIONENUMS } from '@/support/enums/PermissionEnums';
+import type { Product } from '@/support/models/product';
 
 
 interface ColumnsProps {
     onDetailClick: (product: Product) => void;
     onEditClick: (product: Product) => void;
     onDeleteClick: (product: Product) => void;
+    onSortChange: (orderBy: string | null, order: string | null) => void;
+    orderBy: string | null;
+    order: string | null;
 }
 
 export const columns = (props?: ColumnsProps): ColumnDef<Product>[] => {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     const { t } = useTranslation()
 
     return [
@@ -49,13 +54,14 @@ export const columns = (props?: ColumnsProps): ColumnDef<Product>[] => {
                     aria-label="Select row"
                 />
             ),
+            enableSorting: false,
             enableHiding: false,
         },
         {
             id: t("page.product.data_table.columns.name_column_label", "Nama"),
             accessorKey: 'name',
             header: ({ column }) => (
-                <DataTableHeader column={column} title={t("page.product.data_table.columns.name_column_label", "Nama")} />
+                <ServerSideDataTableHeader column={column} title={t("page.product.data_table.columns.name_column_label", "Nama")} sortKey="name" orderBy={props?.orderBy} order={props?.order} onSortChange={props?.onSortChange} />
             ),
             size: 300,
         },
@@ -63,7 +69,7 @@ export const columns = (props?: ColumnsProps): ColumnDef<Product>[] => {
             id: t("page.product.data_table.columns.sku_column_label", "SKU"),
             accessorKey: 'sku',
             header: ({ column }) => (
-                <DataTableHeader column={column} title={t("page.product.data_table.columns.sku_column_label", "SKU")} />
+                <ServerSideDataTableHeader column={column} title={t("page.product.data_table.columns.sku_column_label", "SKU")} sortKey="sku" orderBy={props?.orderBy} order={props?.order} onSortChange={props?.onSortChange} />
             ),
             size: 300,
         },
@@ -71,28 +77,41 @@ export const columns = (props?: ColumnsProps): ColumnDef<Product>[] => {
             id: t("page.product.data_table.columns.category_column_label", "Kategori"),
             accessorKey: 'category_name',
             header: ({ column }) => (
-                <DataTableHeader column={column} title={t("page.product.data_table.columns.category_column_label", "Kategori")} />
+                <ServerSideDataTableHeader column={column} title={t("page.product.data_table.columns.category_column_label", "Kategori")} sortKey="category_id" orderBy={props?.orderBy} order={props?.order} onSortChange={props?.onSortChange} />
             ),
         },
         {
             id: t("page.product.data_table.columns.unit_column_label", "Satuan"),
             accessorKey: 'unit_name',
             header: ({ column }) => (
-                <DataTableHeader column={column} title={t("page.product.data_table.columns.unit_column_label", "Satuan")} />
+                <ServerSideDataTableHeader column={column} title={t("page.product.data_table.columns.unit_column_label", "Satuan")} sortKey="unit_id" orderBy={props?.orderBy} order={props?.order} onSortChange={props?.onSortChange} />
             ),
         },
         {
             id: t("page.product.data_table.columns.stock_column_label", "Stok"),
             accessorKey: 'stock',
             header: ({ column }) => (
-                <DataTableHeader column={column} title={t("page.product.data_table.columns.stock_column_label", "Stok")} />
+                <ServerSideDataTableHeader column={column} title={t("page.product.data_table.columns.stock_column_label", "Stok")} sortKey="stock" orderBy={props?.orderBy} order={props?.order} onSortChange={props?.onSortChange} />
             ),
             cell: ({ row }) => (
-                row.original.stock > 0 ? (<Badge className="bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300">
-                    {
-                        row.original.stock
-                    }
-                </Badge>) :
+                row.original.stock > 0 ?
+                    (
+                        row.original.stock > STOCK_THRESHOLD ?
+                            (
+                                <Badge className="bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300">
+                                    {
+                                        row.original.stock
+                                    }
+                                </Badge>
+                            )
+                            :
+                            (<Badge className="bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300">
+                                {
+                                    row.original.stock
+                                }
+                            </Badge>)
+                    )
+                    :
                     (<Badge className="bg-rose-100 text-rose-800 dark:bg-rose-950 dark:text-rose-300">
                         {
                             row.original.stock
@@ -104,7 +123,7 @@ export const columns = (props?: ColumnsProps): ColumnDef<Product>[] => {
             id: t("page.product.data_table.columns.price_column_label", "Harga"),
             accessorKey: 'price',
             header: ({ column }) => (
-                <DataTableHeader column={column} title={t("page.product.data_table.columns.price_column_label", "Harga")} />
+                <ServerSideDataTableHeader column={column} title={t("page.product.data_table.columns.price_column_label", "Harga")} sortKey="price" orderBy={props?.orderBy} order={props?.order} onSortChange={props?.onSortChange} />
             ),
             cell: ({ row }) => (formatRupiah(row.original.price))
         },
@@ -112,7 +131,7 @@ export const columns = (props?: ColumnsProps): ColumnDef<Product>[] => {
             id: t("page.product.data_table.columns.cost_price_column_label", "Harga Modal"),
             accessorKey: 'cost_price',
             header: ({ column }) => (
-                <DataTableHeader column={column} title={t("page.product.data_table.columns.cost_price_column_label", "Harga Modal")} />
+                <ServerSideDataTableHeader column={column} title={t("page.product.data_table.columns.cost_price_column_label", "Harga Modal")} sortKey="cost_price" orderBy={props?.orderBy} order={props?.order} onSortChange={props?.onSortChange} />
             ),
             cell: ({ row }) => (formatRupiah(row.original.cost_price))
         },
@@ -120,7 +139,7 @@ export const columns = (props?: ColumnsProps): ColumnDef<Product>[] => {
             id: t("page.product.data_table.columns.is_active_column_label", "Status"),
             accessorKey: 'status',
             header: ({ column }) => (
-                <DataTableHeader column={column} title={t("page.product.data_table.columns.is_active_column_label", "Status")} />
+                <ServerSideDataTableHeader column={column} title={t("page.product.data_table.columns.is_active_column_label", "Status")} sortKey="is_active" orderBy={props?.orderBy} order={props?.order} onSortChange={props?.onSortChange} />
             ),
             cell: ({ row }) => (
                 row.original.is_active ? (<Badge className="bg-green-50 text-green-700 dark:bg-green-950 dark:text-green-300">
@@ -136,10 +155,10 @@ export const columns = (props?: ColumnsProps): ColumnDef<Product>[] => {
             ),
         },
         {
-            id: t("page.product.data_table.columns.is_unlimited_column_label", "Status Stok"),
+            id: t("page.product.data_table.columns.is_unlimited_column_label", "Tipe Stok"),
             accessorKey: 'status_stok',
             header: ({ column }) => (
-                <DataTableHeader column={column} title={t("page.product.data_table.columns.is_unlimited_column_label", "Tipe Stok")} />
+                <ServerSideDataTableHeader column={column} title={t("page.product.data_table.columns.is_unlimited_column_label", "Tipe Stok")} sortKey="is_unlimited" orderBy={props?.orderBy} order={props?.order} onSortChange={props?.onSortChange} />
             ),
             cell: ({ row }) => (
                 row.original.is_unlimited ? (
@@ -161,6 +180,7 @@ export const columns = (props?: ColumnsProps): ColumnDef<Product>[] => {
         },
         {
             id: t("page.product.data_table.columns.actions_column_label", "Aksi"),
+            enableSorting: false,
             cell: ({ row }) => (
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>

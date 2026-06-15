@@ -66,7 +66,9 @@ export default function Index() {
         unit_id: null,
         is_active: null,
         is_unlimited: null,
-        is_stock_available: null
+        is_stock_available: null,
+        order_by: null,
+        order: null,
     })
 
     const fetchAllProducts = async () => {
@@ -86,13 +88,13 @@ export default function Index() {
             handleApiError(error)
         } finally {
             setProcessing(false);
-            setSelectedProducts([])
+            setSelectedProducts([]);
         }
     };
 
     const fetchUnits = async () => {
         try {
-            const res = await axiosInstance.get<ResponseApi<Unit[]>>(apiGetUnits().url);
+            const res = await axiosInstance.get<ResponseApi<Unit[]>>(apiGetUnits().url, { params: { order_by: 'name', order: 'asc' } });
 
             if (!res.data.success) {
                 showWarningToast(res.data.message)
@@ -110,7 +112,8 @@ export default function Index() {
 
     const fetchCategories = async () => {
         try {
-            const res = await axiosInstance.get<ResponseApi<Category[]>>(apiGetCategories().url);
+            const res = await axiosInstance.get<ResponseApi<Category[]>>(apiGetCategories().url,
+                { params: { order_by: 'name', order: 'asc' } });
 
             if (!res.data.success) {
                 showWarningToast(res.data.message)
@@ -196,6 +199,8 @@ export default function Index() {
         queryParam.is_active,
         queryParam.is_unlimited,
         queryParam.is_stock_available,
+        queryParam.order_by,
+        queryParam.order,
     ])
 
     useEffect(() => {

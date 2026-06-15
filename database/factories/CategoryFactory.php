@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Category;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Carbon;
 
 /**
  * @extends Factory<Category>
@@ -20,6 +21,8 @@ class CategoryFactory extends Factory
         return [
             'name' => fake()->unique()->name(),
             'desc' => fake()->randomAscii(),
+            'created_at' => Carbon::now()->unix(),
+            'updated_at' => Carbon::now()->unix(),
         ];
     }
 }

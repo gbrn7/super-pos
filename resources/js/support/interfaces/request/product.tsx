@@ -8,6 +8,8 @@ export interface ProductQueryParam {
   is_stock_available: number | null;
   page: number;
   limit: number;
+  order_by: string | null;
+  order: string | null;
 }
 
 export interface ProductForm {
