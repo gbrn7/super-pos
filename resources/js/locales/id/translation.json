@@ -374,6 +374,7 @@
         "select_column_label":"Pilih",
         "name_column_label":"Nama",
         "sku_column_label":"SKU",
+        "barcode_column_label":"Barcode",
         "category_column_label":"Kategori",
         "unit_column_label":"Satuan",
         "stock_column_label":"Stok",
@@ -419,6 +420,8 @@
         "is_unlimited_input_placeholder":"Pilih status Stok produk",
         "desc_input_label":"Deskripsi",
         "desc_input_placeholder":"Masukkan Deskripsi Produk",
+        "barcode_input_label":"Barcode",
+        "barcode_input_placeholder":"Masukkan Barcode Produk (Opsional)",
         "cancel_button":"Batal",
         "confirm_button":"Tambah Produk"
       },

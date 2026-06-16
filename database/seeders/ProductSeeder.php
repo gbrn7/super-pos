@@ -44,6 +44,7 @@ class ProductSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
                 'name' => 'Gulaku 1KG',
+                'barcode' => fake()->ean13(),
                 'stock' => 0,
                 'sku' => Str::of('Gulaku 1KG')
                     ->headline()
@@ -61,6 +62,7 @@ class ProductSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 2,
                 'name' => 'Minyak Kita',
+                'barcode' => fake()->ean13(),
                 'stock' => 12,
                 'sku' => Str::of('Minyak Kita')
                     ->headline()
@@ -78,6 +80,7 @@ class ProductSeeder extends Seeder
                 'category_id' => 1,
                 'unit_id' => 1,
                 'name' => 'Beras Rojo Lele',
+                'barcode' => fake()->ean13(),
                 'stock' => 20,
                 'image' => 'product/test4.jpg',
                 'sku' => Str::of('Beras Rojo Lele')
@@ -95,6 +98,7 @@ class ProductSeeder extends Seeder
                 'category_id' => 2,
                 'unit_id' => 2,
                 'name' => 'Teh Pucuk Harum 1 Liter',
+                'barcode' => fake()->ean13(),
                 'stock' => 6,
                 'sku' => Str::of('Teh Pucuk Harum 1 Liter')
                     ->headline()

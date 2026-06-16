@@ -2,6 +2,7 @@ export interface ProductQueryParam {
   field: string;
   keyword: string;
   category_id: number | null;
+  barcode: string | null;
   unit_id: number | null;
   is_active: number | null;
   is_unlimited: number | null;
@@ -16,6 +17,7 @@ export interface ProductForm {
   category_id: number;
   unit_id: number;
   name: string;
+  barcode: string;
   is_active: boolean;
   is_unlimited: boolean;
   desc: string;
@@ -29,6 +31,7 @@ export interface ProductErrorForm {
   category_id: string;
   unit_id: string;
   name: string;
+  barcode: string;
   is_active: string;
   is_unlimited: string;
   stock: string;

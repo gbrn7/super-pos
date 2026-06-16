@@ -24,6 +24,7 @@ class ProductFactory extends Factory
             'category_id' => fake()->numberBetween(1, 5),
             'unit_id' => fake()->numberBetween(1, 5),
             'name' => $productName,
+            'barcode' => fake()->ean13(),
             'stock' => fake()->numberBetween(0, 100),
             'sku' => Str::of($productName)
                 ->headline()

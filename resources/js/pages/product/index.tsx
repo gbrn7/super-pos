@@ -69,6 +69,7 @@ export default function Index() {
         is_stock_available: null,
         order_by: null,
         order: null,
+        barcode: null,
     })
 
     const fetchAllProducts = async () => {

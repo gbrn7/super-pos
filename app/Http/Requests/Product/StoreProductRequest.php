@@ -35,6 +35,7 @@ class StoreProductRequest extends FormRequest
       'cost_price' => ['required', 'numeric', 'min:0'],
       'image' => ['nullable', 'mimes:jpg,png,jpeg,gif,svg', 'max:1024'],
       'desc' => ['nullable', 'string'],
+      'barcode' => ['nullable', 'string'],
     ];
   }
 

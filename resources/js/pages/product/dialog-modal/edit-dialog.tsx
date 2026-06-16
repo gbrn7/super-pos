@@ -70,7 +70,10 @@ export function EditDialog({
         stock: '',
         price: '',
         cost_price: '',
-        image: ''
+        image: '',
+        barcode: '',
+        desc: '',
+        is_unlimited: ''
     });
 
     const productSchema = z.object({
@@ -82,6 +85,8 @@ export function EditDialog({
         price: z.coerce.number().min(0, t("validation.product.required.price", "Harga tidak boleh kosong")),
         cost_price: z.coerce.number().min(0, t("validation.product.required.cost_price", "Harga modal tidak boleh kosong")),
         image: z.file().nullable(),
+        barcode: z.string().nullable(),
+        desc: z.string().nullable(),
     });
 
     const handleChange = (
@@ -125,7 +130,10 @@ export function EditDialog({
                 stock: '',
                 price: '',
                 cost_price: '',
-                image: ''
+                image: '',
+                barcode: '',
+                desc: '',
+                is_unlimited: ''
             };
 
             resultValidation.error.issues.forEach((error) => {

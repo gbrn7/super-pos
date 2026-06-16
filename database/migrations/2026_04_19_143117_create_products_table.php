@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('unit_id')->constrained();
             $table->string('name')->index();
             $table->tinyText('sku')->index()->unique();
+            $table->string('barcode')->index()->unique()->nullable();
             $table->boolean('is_active')->default(true);
             $table->boolean('is_unlimited')->default(false);
             $table->text('desc')->nullable();

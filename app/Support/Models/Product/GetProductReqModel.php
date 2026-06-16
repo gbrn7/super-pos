@@ -8,6 +8,8 @@ class GetProductReqModel
 {
     public ?string $name;
 
+    public ?string $barcode;
+
     public ?int $category_id;
 
     public ?int $unit_id;
@@ -39,6 +41,7 @@ class GetProductReqModel
     public function __construct(Request $request)
     {
         $this->name = $request->query('name');
+        $this->barcode = $request->query('barcode');
         $this->price = $request->query('price');
         $this->cost_price = $request->query('cost_price');
         $this->category_id = $request->query('category_id');

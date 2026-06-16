@@ -25,12 +25,14 @@ class ProductRepository implements ProductRepositoryInterface
                 } else {
                     $query
                         ->orwhere('products.name', 'ilike', "%{$request->keyword}%")
+                        ->orwhere('products.barcode', 'ilike', "%{$request->keyword}%")
                         ->orWhere('products.sku', 'ilike', "%{$request->keyword}%")
                         ->orWhere('categories.name', 'ilike', "%{$request->keyword}%")
                         ->orWhere('units.name', 'ilike', "%{$request->keyword}%");
                 }
             })
             ->when($request->name, fn($query) => $query->where('products.name', 'ilike', "%{$request->name}%"))
+            ->when($request->barcode, fn($query) => $query->where('products.barcode', 'ilike', "%{$request->barcode}%"))
             ->when($request->sku, fn($query) => $query->where('products.sku', 'ilike', "%{$request->sku}%"))
             ->when($request->category_id, fn($query) => $query->where('products.category_id', $request->category_id))
             ->when($request->unit_id, fn($query) => $query->where('products.unit_id', $request->unit_id))

@@ -1,5 +1,5 @@
 import type { ColumnDef } from '@tanstack/react-table';
-import { FileText, MoreHorizontal, Pencil, Trash } from 'lucide-react';
+import { Check, Circle, CircleDot, FileText, Infinity, MoreHorizontal, Pencil, Trash, X } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Can } from '@/components/auth/can';
 import { ServerSideDataTableHeader } from '@/components/server-side-data-table-header';
@@ -66,6 +66,13 @@ export const columns = (props?: ColumnsProps): ColumnDef<Product>[] => {
             size: 300,
         },
         {
+            id: t("page.product.data_table.columns.barcode_column_label", "Barcode"),
+            accessorKey: 'barcode',
+            header: ({ column }) => (
+                <ServerSideDataTableHeader column={column} title={t("page.product.data_table.columns.barcode_column_label", "Barcode")} sortKey="barcode" orderBy={props?.orderBy} order={props?.order} onSortChange={props?.onSortChange} />
+            ),
+        },
+        {
             id: t("page.product.data_table.columns.sku_column_label", "SKU"),
             accessorKey: 'sku',
             header: ({ column }) => (
@@ -98,7 +105,7 @@ export const columns = (props?: ColumnsProps): ColumnDef<Product>[] => {
                     (
                         row.original.stock > STOCK_THRESHOLD ?
                             (
-                                <Badge className="bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300">
+                                <Badge className="bg-green-50 text-green-700 dark:bg-green-950 dark:text-green-300">
                                     {
                                         row.original.stock
                                     }
@@ -112,7 +119,7 @@ export const columns = (props?: ColumnsProps): ColumnDef<Product>[] => {
                             </Badge>)
                     )
                     :
-                    (<Badge className="bg-rose-100 text-rose-800 dark:bg-rose-950 dark:text-rose-300">
+                    (<Badge className="bg-red-50 text-red-700 dark:bg-red-950 dark:text-red-300">
                         {
                             row.original.stock
                         }
@@ -142,12 +149,14 @@ export const columns = (props?: ColumnsProps): ColumnDef<Product>[] => {
                 <ServerSideDataTableHeader column={column} title={t("page.product.data_table.columns.is_active_column_label", "Status")} sortKey="is_active" orderBy={props?.orderBy} order={props?.order} onSortChange={props?.onSortChange} />
             ),
             cell: ({ row }) => (
-                row.original.is_active ? (<Badge className="bg-green-50 text-green-700 dark:bg-green-950 dark:text-green-300">
+                row.original.is_active ? (<Badge className="bg-cyan-50 text-cyan-700 dark:bg-cyan-950 dark:text-cyan-300">
+                    <Check size={184} strokeWidth={2.25} />
                     {
                         t("page.product.is_active.active", "Aktif")
                     }
                 </Badge>) :
-                    (<Badge className="bg-red-50 text-red-700 dark:bg-red-950 dark:text-red-300">
+                    (<Badge className="bg-slate-200 text-slate-800 dark:bg-slate-800 dark:text-slate-300">
+                        <X size={184} strokeWidth={2.25} />
                         {
                             t("page.product.is_active.inactive", "Tidak Aktif")
                         }
@@ -163,6 +172,7 @@ export const columns = (props?: ColumnsProps): ColumnDef<Product>[] => {
             cell: ({ row }) => (
                 row.original.is_unlimited ? (
                     <Badge className="bg-purple-50 text-purple-700 dark:bg-purple-950 dark:text-purple-300">
+                        <Infinity size={184} strokeWidth={2.25} />
                         {
                             t("page.product.is_unlimited.unlimited", "Tidak Terbatas")
                         }
@@ -171,6 +181,7 @@ export const columns = (props?: ColumnsProps): ColumnDef<Product>[] => {
                     :
                     (
                         <Badge className="bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300">
+                            <Circle size={184} strokeWidth={2.25} />
                             {
                                 t("page.product.is_unlimited.limited", "Terbatas")
                             }

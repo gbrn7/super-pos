@@ -26,6 +26,7 @@ import ErrorFormInfo from '@/components/errorFormInfo';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Unit } from '@/support/models/unit';
 import { Category } from '@/support/models/category';
+import { Textarea } from '@/components/ui/textarea';
 
 interface CreateDialogProps {
     onSuccess: () => void;
@@ -49,7 +50,8 @@ export function CreateDialog({ onSuccess, units, categories }: CreateDialogProps
         price: 0,
         cost_price: 0,
         image: '',
-        desc: ''
+        desc: '',
+        barcode: ''
     });
 
     const [errorForm, setErrorForm] = useState<ProductErrorForm>({
@@ -62,7 +64,8 @@ export function CreateDialog({ onSuccess, units, categories }: CreateDialogProps
         price: '',
         cost_price: '',
         image: '',
-        desc: ''
+        desc: '',
+        barcode: ''
     });
 
     const productSchema = z.object({
@@ -75,6 +78,8 @@ export function CreateDialog({ onSuccess, units, categories }: CreateDialogProps
         price: z.number().min(0, t("validation.product.required.price", "Harga tidak boleh kosong")),
         cost_price: z.number().min(0, t("validation.product.required.cost_price", "Harga modal tidak boleh kosong")),
         image: z.file().nullable(),
+        barcode: z.string().nullable(),
+        desc: z.string().nullable(),
     });
 
     const handleChange = (
@@ -120,7 +125,8 @@ export function CreateDialog({ onSuccess, units, categories }: CreateDialogProps
                 price: '',
                 cost_price: '',
                 image: '',
-                desc: ''
+                desc: '',
+                barcode: ''
             };
 
             resultValidation.error.issues.forEach((error) => {
@@ -166,7 +172,8 @@ export function CreateDialog({ onSuccess, units, categories }: CreateDialogProps
                 price: 0,
                 cost_price: 0,
                 image: '',
-                desc: ''
+                desc: '',
+                barcode: ''
             });
             setImageFile(null);
             setImagePreview('');
@@ -259,6 +266,22 @@ export function CreateDialog({ onSuccess, units, categories }: CreateDialogProps
                             </Select>
                             {errorForm.unit_id && (
                                 <ErrorFormInfo message={errorForm.unit_id} />
+                            )}
+                        </Field>
+                        <Field>
+                            <label htmlFor="barcode" className="text-sm">
+                                {t("page.product.dialog_modal.create_dialog.barcode_input_label", "Nama")}
+                            </label>
+                            <Input
+                                id="barcode"
+                                name="barcode"
+                                placeholder={t("page.product.dialog_modal.create_dialog.barcode_input_placeholder", "Masukkan barcode produk (Opsional)")}
+                                value={formData.barcode}
+                                onChange={handleChange}
+                                disabled={loading}
+                            />
+                            {errorForm.barcode && (
+                                <ErrorFormInfo message={errorForm.barcode} />
                             )}
                         </Field>
                         <Field>
@@ -424,6 +447,24 @@ export function CreateDialog({ onSuccess, units, categories }: CreateDialogProps
                             </Select>
                             {errorForm.is_unlimited && (
                                 <ErrorFormInfo message={errorForm.is_unlimited} />
+                            )}
+                        </Field>
+                        <Field>
+                            <label htmlFor="desc" className="text-sm">
+                                {t("page.product.dialog_modal.create_dialog.desc_input_label", "Deskripsi")}
+                            </label>
+                            <Textarea
+                                id="desc"
+                                name="desc"
+                                placeholder={t("page.product.dialog_modal.create_dialog.desc_input_placeholder", "Masukkan deskripsi produk (Opsional)")}
+                                value={formData.desc}
+                                onChange={handleChange}
+                                disabled={loading}
+                                rows={4}
+                            />
+                            {errorForm.desc && (
+                                <ErrorFormInfo message={errorForm.desc} />
+
                             )}
                         </Field>
                     </FieldGroup>

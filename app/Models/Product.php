@@ -16,6 +16,7 @@ class Product extends Model
         'unit_id',
         'sku',
         'name',
+        'barcode',
         'is_active',
         'is_unlimited',
         'desc',

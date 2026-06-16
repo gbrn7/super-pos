@@ -190,12 +190,12 @@ export function DataTable<TData, TValue>({
         <div className='p-3 border rounded-2xl'>
             <div className="flex flex-col gap-3 justify-between pb-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
-                    <div className="keyword-filter flex gap-1">
+                    <div className="keyword-filter flex gap-1 w-full">
                         <Select
                             value={queryParam.field}
                             onValueChange={(value) => onChangeField(value)}
                         >
-                            <SelectTrigger className="w-full lg:w-24 xl:w-56">
+                            <SelectTrigger className="w-full">
                                 <SelectValue />
                             </SelectTrigger>
                             <SelectContent>
@@ -223,7 +223,7 @@ export function DataTable<TData, TValue>({
                             placeholder={t("component.data_table.search_component.placeholder", "Telusuri")}
                             value={queryParam.keyword}
                             onChange={(event) => onChangeKeyword(event.target.value)}
-                            className="max-w-sm"
+                            className="w-full"
                         />
                     </div>
                     <Select
