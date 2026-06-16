@@ -127,7 +127,7 @@
       },
       "no_result": "No results found",
       "row_per_page": "Rows per page",
-      "selected_row": "%d of %d row(s) selected",
+    "selected_row": "%d of %d row(s) selected",
       "pagination_info": "Page %d of %d"
     }
   },

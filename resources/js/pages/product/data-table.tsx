@@ -504,9 +504,9 @@ export function DataTable<TData, TValue>({
             <div className="flex items-center justify-end space-x-4 overflow-auto py-4">
                 <div className="hidden flex-1 text-sm text-muted-foreground lg:flex">
                     {sprintf(
-                        t("component.data_table.selected_row", "%d dari %d baris terpilih."),
+                        t("component.data_table.selected_row", "%d dari %d baris terpilih"),
                         table.getFilteredSelectedRowModel().rows.length,
-                        table.getFilteredRowModel().rows.length
+                        pagination.total
                     )}
                 </div>
                 <div className="flex w-full items-center gap-8 lg:w-fit">
