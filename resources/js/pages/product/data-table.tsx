@@ -210,9 +210,6 @@ export function DataTable<TData, TValue>({
                                     <SelectItem value="sku">
                                         {t("component.data_table.search_component.sku", "SKU")}
                                     </SelectItem>
-                                    <SelectItem value="desc">
-                                        {t("component.data_table.search_component.desc", "Deskripsi")}
-                                    </SelectItem>
                                     <SelectItem value="category">
                                         {t("component.data_table.search_component.category", "Kategori")}
                                     </SelectItem>

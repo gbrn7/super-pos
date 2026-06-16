@@ -33,6 +33,7 @@ class ProductService implements ProductServiceInterface
     try {
       return $this->productRepository->getAllByIndex($request);
     } catch (\Throwable $th) {
+      dd($th->getMessage());
       log($th->getMessage());
       throw CheckException::Check($th);
     }

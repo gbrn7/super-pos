@@ -77,14 +77,14 @@ export const columns = (props?: ColumnsProps): ColumnDef<Product>[] => {
             id: t("page.product.data_table.columns.category_column_label", "Kategori"),
             accessorKey: 'category_name',
             header: ({ column }) => (
-                <ServerSideDataTableHeader column={column} title={t("page.product.data_table.columns.category_column_label", "Kategori")} sortKey="category_id" orderBy={props?.orderBy} order={props?.order} onSortChange={props?.onSortChange} />
+                <ServerSideDataTableHeader column={column} title={t("page.product.data_table.columns.category_column_label", "Kategori")} sortKey="category" orderBy={props?.orderBy} order={props?.order} onSortChange={props?.onSortChange} />
             ),
         },
         {
             id: t("page.product.data_table.columns.unit_column_label", "Satuan"),
             accessorKey: 'unit_name',
             header: ({ column }) => (
-                <ServerSideDataTableHeader column={column} title={t("page.product.data_table.columns.unit_column_label", "Satuan")} sortKey="unit_id" orderBy={props?.orderBy} order={props?.order} onSortChange={props?.onSortChange} />
+                <ServerSideDataTableHeader column={column} title={t("page.product.data_table.columns.unit_column_label", "Satuan")} sortKey="unit" orderBy={props?.orderBy} order={props?.order} onSortChange={props?.onSortChange} />
             ),
         },
         {

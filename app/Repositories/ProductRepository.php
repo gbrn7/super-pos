@@ -13,59 +13,63 @@ class ProductRepository implements ProductRepositoryInterface
     public function getAllByIndex(GetProductReqModel $request): Paginator|Collection
     {
         $query = Product::query()
-            ->with(['category', 'unit'])
-            ->orderBy($request->order_by != '' ? $request->order_by : 'id', $request->order != '' ? $request->order : 'desc')
-            ->when($request->name, fn($query) => $query->where('name', 'ilike', "%{$request->name}%"))
+            ->join('categories', 'products.category_id', '=', 'categories.id')
+            ->join('units', 'products.unit_id', '=', 'units.id')
             ->when($request->keyword, function ($query) use ($request) {
                 if ($request->field === 'category') {
-                    $query->whereHas('category', function ($query) use ($request) {
-                        $query->where('name', 'ilike', "%{$request->keyword}%");
-                    });
+                    $query->where('categories.name', 'ilike', "%{$request->keyword}%");
                 } else if ($request->field === 'unit') {
-                    $query->whereHas('unit', function ($query) use ($request) {
-                        $query->where('name', 'ilike', "%{$request->keyword}%");
-                    });
+                    $query->where('units.name', 'ilike', "%{$request->keyword}%");
                 } else if (isset($request->field) && $request->field != 'default') {
-                    $query->where($request->field, 'ilike', "%{$request->keyword}%");
+                    $query->where('products.' . $request->field, 'ilike', "%{$request->keyword}%");
                 } else {
                     $query
-                        ->orwhere('name', 'ilike', "%{$request->keyword}%")
-                        ->orWhere('sku', 'ilike', "%{$request->keyword}%")
-                        ->orWhere('desc', 'ilike', "%{$request->keyword}%")
-                        ->orWhereHas('category', function ($query) use ($request) {
-                            $query->where('name', 'ilike', "%{$request->keyword}%");
-                        })
-                        ->orWhereHas('unit', function ($query) use ($request) {
-                            $query->where('name', 'ilike', "%{$request->keyword}%");
-                        });
+                        ->orwhere('products.name', 'ilike', "%{$request->keyword}%")
+                        ->orWhere('products.sku', 'ilike', "%{$request->keyword}%")
+                        ->orWhere('categories.name', 'ilike', "%{$request->keyword}%")
+                        ->orWhere('units.name', 'ilike', "%{$request->keyword}%");
                 }
             })
-            ->when($request->sku, fn($query) => $query->where('sku', 'ilike', "%{$request->sku}%"))
-            ->when($request->category_id, fn($query) => $query->where('category_id', $request->category_id))
-            ->when($request->unit_id, fn($query) => $query->where('unit_id', $request->unit_id))
-            ->when($request->price, fn($query) => $query->where('price', $request->price))
+            ->when($request->name, fn($query) => $query->where('products.name', 'ilike', "%{$request->name}%"))
+            ->when($request->sku, fn($query) => $query->where('products.sku', 'ilike', "%{$request->sku}%"))
+            ->when($request->category_id, fn($query) => $query->where('products.category_id', $request->category_id))
+            ->when($request->unit_id, fn($query) => $query->where('products.unit_id', $request->unit_id))
+            ->when($request->price, fn($query) => $query->where('products.price', $request->price))
             ->when(isset($request->is_stock_available), function ($query) use ($request) {
                 if ($request->is_stock_available) {
-                    $query->where('stock', '>', 0);
+                    $query->where('products.stock', '>', 0);
                 } else {
-                    $query->where('stock',  0);
+                    $query->where('products.stock',  0);
                 }
             })
             ->when(isset($request->is_active), function ($query) use ($request) {
                 if ($request->is_active) {
-                    $query->where('is_active', true);
+                    $query->where('products.is_active', true);
                 } else {
-                    $query->where('is_active',  false);
+                    $query->where('products.is_active',  false);
                 }
             })
             ->when(isset($request->is_unlimited), function ($query) use ($request) {
                 if ($request->is_unlimited) {
-                    $query->where('is_unlimited', true);
+                    $query->where('products.is_unlimited', true);
                 } else {
-                    $query->where('is_unlimited',  false);
+                    $query->where('products.is_unlimited',  false);
                 }
             })
-            ->when($request->cost_price, fn($query) => $query->where('cost_price', $request->cost_price));
+            ->when($request->cost_price, fn($query) => $query->where('products.cost_price', $request->cost_price))
+            ->select('products.*');
+
+        if (isset($request->order_by) && isset($request->order)) {
+            if ($request->order_by == 'category') {
+                $query->orderBy('categories.name', $request->order);
+            } else if ($request->order_by == 'unit') {
+                $query->orderBy('units.name', $request->order);
+            } else {
+                $query->orderBy('products.' . $request->order_by, $request->order);
+            }
+        } else {
+            $query->orderBy('products.id', 'desc');
+        }
 
         if ($request->limit === null) {
             return $query->get();
