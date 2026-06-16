@@ -134,6 +134,7 @@ export function EditDialog({
                                 value={formData.name}
                                 onChange={handleChange}
                                 disabled={loading}
+                                className={`${errorForm.name && 'border-red-500'}`}
                             />
                             {errorForm.name && (
                                 <ErrorFormInfo message={errorForm.name} />

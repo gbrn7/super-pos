@@ -202,6 +202,7 @@ export function EditDialog({
                                 value={formData.name}
                                 onChange={handleChange}
                                 disabled={loading}
+                                className={`${errorForm.name && 'border-red-500'}`}
                             />
                             {errorForm.name && (
                                 <ErrorFormInfo message={errorForm.name} />
@@ -218,6 +219,7 @@ export function EditDialog({
                                 accept="image/*"
                                 onChange={handleImageChange}
                                 disabled={loading}
+                                className={`${errorForm.image && 'border-red-500'}`}
                             />
                             {imagePreview && (
                                 <div className="mt-2">
@@ -238,7 +240,7 @@ export function EditDialog({
                                 disabled={loading}
                                 value={formData.unit_id?.toString() || ''}
                             >
-                                <SelectTrigger className="w-full">
+                                <SelectTrigger className={`${errorForm.unit_id && 'border-red-500'}`}>
                                     <SelectValue placeholder={t("page.product.dialog_modal.create_dialog.unit_id_input_placeholder", "Pilih satuan user")} />
                                 </SelectTrigger>
                                 <SelectContent>
@@ -264,7 +266,7 @@ export function EditDialog({
                                 disabled={loading}
                                 value={formData.category_id.toString()}
                             >
-                                <SelectTrigger className="w-full">
+                                <SelectTrigger className={`${errorForm.category_id && 'border-red-500'}`}>
                                     <SelectValue placeholder={t("page.product.dialog_modal.create_dialog.category_id_input_placeholder", "Pilih kategori user")} />
                                 </SelectTrigger>
                                 <SelectContent>
@@ -293,6 +295,7 @@ export function EditDialog({
                                 value={formData.stock}
                                 onChange={handleChange}
                                 disabled={loading}
+                                className={`${errorForm.stock && 'border-red-500'}`}
                             />
                             {errorForm.stock && (
                                 <ErrorFormInfo message={errorForm.stock} />
@@ -310,6 +313,7 @@ export function EditDialog({
                                 value={formData.cost_price}
                                 onChange={handleChange}
                                 disabled={loading}
+                                className={`${errorForm.cost_price && 'border-red-500'}`}
                             />
                             {errorForm.cost_price && (
                                 <ErrorFormInfo message={errorForm.cost_price} />
@@ -327,23 +331,7 @@ export function EditDialog({
                                 value={formData.price}
                                 onChange={handleChange}
                                 disabled={loading}
-                            />
-                            {errorForm.price && (
-                                <ErrorFormInfo message={errorForm.price} />
-                            )}
-                        </Field>
-                        <Field>
-                            <label htmlFor="price" className="text-sm">
-                                {t("page.product.dialog_modal.create_dialog.price_input_label", "Harga Jual")}
-                                <span className="text-red-500"> *</span>
-                            </label>
-                            <Input
-                                id="price"
-                                name="price"
-                                placeholder={t("page.product.dialog_modal.create_dialog.price_input_placeholder", "Masukkan harga jual produk")}
-                                value={formData.price}
-                                onChange={handleChange}
-                                disabled={loading}
+                                className={`${errorForm.price && 'border-red-500'}`}
                             />
                             {errorForm.price && (
                                 <ErrorFormInfo message={errorForm.price} />
@@ -359,7 +347,7 @@ export function EditDialog({
                                 disabled={loading}
                                 value={formData.is_active.toString()}
                             >
-                                <SelectTrigger className="w-full">
+                                <SelectTrigger className={`${errorForm.is_active && 'border-red-500'}`}>
                                     <SelectValue placeholder={t("page.product.dialog_modal.create_dialog.is_active_input_placeholder", "Pilih Status")} />
                                 </SelectTrigger>
                                 <SelectContent>

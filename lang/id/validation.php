@@ -4,11 +4,11 @@ return [
 
     'required' => ':attribute wajib diisi.',
 
-    'string' => ':attribute harus berupa teks.',
+    'string' => ':attribute harus berupa teks',
 
-    'array' => ':attribute harus berupa array.',
+    'array' => ':attribute harus berupa array',
 
-    'numeric' => ':attribute harus berupa angka.',
+    'numeric' => ':attribute harus berupa angka',
 
     'unique' => ':attribute sudah ada',
 
@@ -16,12 +16,14 @@ return [
 
     'mimes' => ':attribute harus bertipe :values',
 
-    'exists' => ':attribute yang dipilih tidak valid.',
+    'exists' => ':attribute yang dipilih tidak valid',
+
+    'boolean' => ':attribute harus bertipe boolean',
 
     'min' => [
-        'string' => ':attribute minimal :min karakter.',
-        'numeric' => ':attribute minimal :min.',
-        'array' => ':attribute minimal memiliki :min item.',
+        'string' => ':attribute minimal :min karakter',
+        'numeric' => ':attribute minimal :min',
+        'array' => ':attribute minimal memiliki :min item',
     ],
 
     'max' => [
@@ -45,7 +47,7 @@ return [
         'price' => 'Harga',
         'cost_price' => 'Harga Pokok',
         'is_active' => 'Status Aktif',
-        'is_unlimited' => 'Status Stok',
+        'is_unlimited' => 'Tipe Stok',
     ],
 
 ];

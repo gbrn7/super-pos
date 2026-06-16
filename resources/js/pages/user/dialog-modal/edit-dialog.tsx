@@ -154,6 +154,7 @@ export function EditDialog({
                                 value={formData.name}
                                 onChange={handleChange}
                                 disabled={loading}
+                                className={`${errorForm.name && 'border-red-500'}`}
                             />
                             {errorForm.name && (
                                 <ErrorFormInfo message={errorForm.name} />
@@ -172,6 +173,7 @@ export function EditDialog({
                                 value={formData.email}
                                 onChange={handleChange}
                                 disabled={loading}
+                                className={`${errorForm.email && 'border-red-500'}`}
                             />
                             {errorForm.email && (
                                 <ErrorFormInfo message={errorForm.email} />
@@ -190,6 +192,7 @@ export function EditDialog({
                                 value={formData.password}
                                 onChange={handleChange}
                                 disabled={loading}
+                                className={`${errorForm.password && 'border-red-500'}`}
                             />
                             {errorForm.password && (
                                 <ErrorFormInfo message={errorForm.password} />
@@ -208,6 +211,7 @@ export function EditDialog({
                                 value={formData.password_confirmation}
                                 onChange={handleChange}
                                 disabled={loading}
+                                className={`${errorForm.password_confirmation && 'border-red-500'}`}
                             />
                             {errorForm.password_confirmation && (
                                 <ErrorFormInfo message={errorForm.password_confirmation} />
@@ -223,7 +227,7 @@ export function EditDialog({
                                 disabled={loading}
                                 value={formData.role}
                             >
-                                <SelectTrigger className="w-full">
+                                <SelectTrigger className={`${errorForm.role && 'border-red-500'}`}>
                                     <SelectValue placeholder={t("page.user.dialog_modal.edit_dialog.role_input_placeholder", "Pilih peran user")} />
                                 </SelectTrigger>
                                 <SelectContent>

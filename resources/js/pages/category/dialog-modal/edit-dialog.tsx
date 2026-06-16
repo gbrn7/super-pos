@@ -139,6 +139,7 @@ export function EditDialog({
                                 value={formData.name}
                                 onChange={handleChange}
                                 disabled={loading}
+                                className={`${errorForm.name && 'border-red-500'}`}
                             />
                             {errorForm.name && (
                                 <ErrorFormInfo message={errorForm.name} />
@@ -156,6 +157,7 @@ export function EditDialog({
                                 onChange={handleChange}
                                 disabled={loading}
                                 rows={4}
+                                className={`${errorForm.desc && 'border-red-500'}`}
                             />
                             {errorForm.desc && (
                                 <ErrorFormInfo message={errorForm.desc} />

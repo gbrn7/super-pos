@@ -27,6 +27,9 @@ import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrig
 import { Unit } from '@/support/models/unit';
 import { Category } from '@/support/models/category';
 import { Textarea } from '@/components/ui/textarea';
+import { Switch } from '@/components/ui/switch';
+import { NumericFormat } from "react-number-format";
+import { Combobox, ComboboxContent, ComboboxEmpty, ComboboxInput, ComboboxItem, ComboboxList } from '@/components/ui/combobox';
 
 interface CreateDialogProps {
     onSuccess: () => void;
@@ -41,15 +44,15 @@ export function CreateDialog({ onSuccess, units, categories }: CreateDialogProps
     const [imageFile, setImageFile] = useState<File | null>(null);
     const [imagePreview, setImagePreview] = useState<string>('');
     const [formData, setFormData] = useState<ProductForm>({
-        category_id: 0,
-        unit_id: 0,
+        category_id: null,
+        unit_id: null,
         name: '',
         is_active: true,
         is_unlimited: false,
-        stock: 0,
-        price: 0,
-        cost_price: 0,
-        image: '',
+        stock: null,
+        price: null,
+        cost_price: null,
+        image: null,
         desc: '',
         barcode: ''
     });
@@ -69,14 +72,14 @@ export function CreateDialog({ onSuccess, units, categories }: CreateDialogProps
     });
 
     const productSchema = z.object({
-        category_id: z.number().min(1, t("validation.product.required.category_id", "Kategori tidak boleh kosong")),
-        unit_id: z.number().min(1, t("validation.product.required.unit_id", "Satuan tidak boleh kosong")),
+        category_id: z.number(t("validation.product.required.category_id", "Kategori tidak boleh kosong")),
+        unit_id: z.number(t("validation.product.required.unit_id", "Satuan tidak boleh kosong")),
         name: z.string().trim().min(1, t("validation.product.required.name", "Nama tidak boleh kosong")),
         is_active: z.boolean(),
         is_unlimited: z.boolean(),
-        stock: z.number().min(0),
-        price: z.number().min(0, t("validation.product.required.price", "Harga tidak boleh kosong")),
-        cost_price: z.number().min(0, t("validation.product.required.cost_price", "Harga modal tidak boleh kosong")),
+        stock: z.number(t("validation.product.required.stock", "Stok tidak boleh kosong")).min(0, t("validation.product.required.min_stock", "Minimal stok 0")),
+        cost_price: z.number(t("validation.product.required.cost_price", "Harga modal tidak boleh kosong")).min(0, t("validation.product.required.min_price", "Minimal harga jual Rp 0")),
+        price: z.number(t("validation.product.required.price", "Harga jual tidak boleh kosong")).min(0, t("validation.product.required.min_cost_price", "Minimal harga jual Rp 0")),
         image: z.file().nullable(),
         barcode: z.string().nullable(),
         desc: z.string().nullable(),
@@ -110,6 +113,7 @@ export function CreateDialog({ onSuccess, units, categories }: CreateDialogProps
     };
 
     const handleSubmit = async (e: React.SubmitEvent) => {
+
         e.preventDefault();
 
         const resultValidation = productSchema.safeParse(formData);
@@ -143,17 +147,8 @@ export function CreateDialog({ onSuccess, units, categories }: CreateDialogProps
         try {
             setLoading(true);
 
-            const submitData = new FormData();
 
-            if (imageFile) {
-                submitData.append('image', imageFile);
-            }
-
-            const res = await axiosInstance.post<ResponseApi<Product>>(storeProduct().url, submitData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                },
-            });
+            const res = await axiosInstance.post<ResponseApi<Product>>(storeProduct().url, formData);
 
 
             if (!res.data.success) {
@@ -163,15 +158,15 @@ export function CreateDialog({ onSuccess, units, categories }: CreateDialogProps
 
             showSuccessToast(res.data.message)
             setFormData({
-                category_id: 0,
-                unit_id: 0,
+                category_id: null,
+                unit_id: null,
                 name: '',
                 is_active: true,
-                is_unlimited: true,
-                stock: 0,
-                price: 0,
-                cost_price: 0,
-                image: '',
+                is_unlimited: false,
+                stock: null,
+                price: null,
+                cost_price: null,
+                image: null,
                 desc: '',
                 barcode: ''
             });
@@ -188,14 +183,14 @@ export function CreateDialog({ onSuccess, units, categories }: CreateDialogProps
     };
 
     return (
-        <Dialog open={open} onOpenChange={setOpen}>
+        <Dialog open={open} onOpenChange={setOpen} >
             <DialogTrigger asChild>
                 <Button variant="outline">
                     <PlusCircle className="h-4" />
                     {t("page.product.dialog_modal.create_dialog.dialog_button", "Tambah Produk")}
                 </Button>
             </DialogTrigger>
-            <DialogContent>
+            <DialogContent className="max-w-250! max-h-[90vh] overflow-y-auto">
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <DialogHeader>
                         <DialogTitle>{t("page.product.dialog_modal.create_dialog.dialog_title", "Tambah Produk")}</DialogTitle>
@@ -203,7 +198,7 @@ export function CreateDialog({ onSuccess, units, categories }: CreateDialogProps
                             {t("page.product.dialog_modal.create_dialog.dialog_desc", "Tambahkan produk baru produk anda")}
                         </DialogDescription>
                     </DialogHeader>
-                    <FieldGroup className="grid grid-cols-2 gap-3">
+                    <FieldGroup className="grid grid-cols-1 md:grid-cols-2 gap-3">
                         <Field>
                             <label htmlFor="name" className="text-sm">
                                 {t("page.product.dialog_modal.create_dialog.name_input_label", "Nama")}
@@ -216,30 +211,10 @@ export function CreateDialog({ onSuccess, units, categories }: CreateDialogProps
                                 value={formData.name}
                                 onChange={handleChange}
                                 disabled={loading}
+                                className={`${errorForm.name && 'border-red-500'}`}
                             />
                             {errorForm.name && (
                                 <ErrorFormInfo message={errorForm.name} />
-                            )}
-                        </Field>
-                        <Field>
-                            <label htmlFor="image" className="text-sm">
-                                {t("page.product.dialog_modal.create_dialog.image_input_label", "Gambar")}
-                            </label>
-                            <Input
-                                id="image"
-                                name="image"
-                                type="file"
-                                accept="image/*"
-                                onChange={handleImageChange}
-                                disabled={loading}
-                            />
-                            {imagePreview && (
-                                <div className="mt-2">
-                                    <img src={imagePreview} alt="Preview" className="h-32 w-32 object-cover rounded" />
-                                </div>
-                            )}
-                            {errorForm.image && (
-                                <ErrorFormInfo message={errorForm.image} />
                             )}
                         </Field>
                         <Field>
@@ -252,8 +227,9 @@ export function CreateDialog({ onSuccess, units, categories }: CreateDialogProps
                                 disabled={loading}
                                 value={formData.unit_id?.toString() || ''}
                             >
-                                <SelectTrigger className="w-full">
-                                    <SelectValue placeholder={t("page.product.dialog_modal.create_dialog.unit_id_input_placeholder", "Pilih satuan produk")} />
+                                <SelectTrigger className={`${errorForm.unit_id && 'border-red-500'}`}>
+                                    <SelectValue
+                                        placeholder={t("page.product.dialog_modal.create_dialog.unit_id_input_placeholder", "Pilih satuan produk")} />
                                 </SelectTrigger>
                                 <SelectContent>
                                     <SelectGroup>
@@ -279,6 +255,7 @@ export function CreateDialog({ onSuccess, units, categories }: CreateDialogProps
                                 value={formData.barcode}
                                 onChange={handleChange}
                                 disabled={loading}
+                                className={`${errorForm.barcode && 'border-red-500'}`}
                             />
                             {errorForm.barcode && (
                                 <ErrorFormInfo message={errorForm.barcode} />
@@ -292,9 +269,9 @@ export function CreateDialog({ onSuccess, units, categories }: CreateDialogProps
                             <Select
                                 onValueChange={(value) => setFormData((prev) => ({ ...prev, category_id: Number(value) }))}
                                 disabled={loading}
-                                value={formData.category_id.toString()}
+                                value={formData.category_id?.toString()}
                             >
-                                <SelectTrigger className="w-full">
+                                <SelectTrigger className={`${errorForm.category_id && 'border-red-500'}`}>
                                     <SelectValue placeholder={t("page.product.dialog_modal.create_dialog.category_id_input_placeholder", "Pilih kategori Produk")} />
                                 </SelectTrigger>
                                 <SelectContent>
@@ -311,35 +288,27 @@ export function CreateDialog({ onSuccess, units, categories }: CreateDialogProps
                             )}
                         </Field>
                         <Field>
-                            <label htmlFor="stock" className="text-sm">
-                                {t("page.product.dialog_modal.create_dialog.stock_input_label", "Stok")}
-                                <span className="text-red-500"> *</span>
-                            </label>
-                            <Input
-                                id="stock"
-                                name="stock"
-                                placeholder={t("page.product.dialog_modal.create_dialog.stock_input_placeholder", "Masukkan stok produk")}
-                                type='number'
-                                value={formData.stock}
-                                onChange={handleChange}
-                                disabled={loading}
-                            />
-                            {errorForm.stock && (
-                                <ErrorFormInfo message={errorForm.stock} />
-                            )}
-                        </Field>
-                        <Field>
                             <label htmlFor="cost_price" className="text-sm">
                                 {t("page.product.dialog_modal.create_dialog.cost_price_input_label", "Harga Modal")}
                                 <span className="text-red-500"> *</span>
                             </label>
-                            <Input
+                            <NumericFormat
                                 id="cost_price"
                                 name="cost_price"
+                                customInput={Input}
+                                thousandSeparator="."
+                                decimalSeparator=","
+                                prefix="Rp "
                                 placeholder={t("page.product.dialog_modal.create_dialog.cost_price_input_placeholder", "Masukkan harga modal produk")}
                                 value={formData.cost_price}
-                                onChange={handleChange}
                                 disabled={loading}
+                                onValueChange={(values) => {
+                                    setFormData((prev) => ({
+                                        ...prev,
+                                        cost_price: values.floatValue ?? 0,
+                                    }));
+                                }}
+                                className={`${errorForm.cost_price && 'border-red-500'}`}
                             />
                             {errorForm.cost_price && (
                                 <ErrorFormInfo message={errorForm.cost_price} />
@@ -350,30 +319,23 @@ export function CreateDialog({ onSuccess, units, categories }: CreateDialogProps
                                 {t("page.product.dialog_modal.create_dialog.price_input_label", "Harga Jual")}
                                 <span className="text-red-500"> *</span>
                             </label>
-                            <Input
+                            <NumericFormat
                                 id="price"
                                 name="price"
+                                customInput={Input}
+                                thousandSeparator="."
+                                decimalSeparator=","
+                                prefix="Rp "
                                 placeholder={t("page.product.dialog_modal.create_dialog.price_input_placeholder", "Masukkan harga jual produk")}
                                 value={formData.price}
-                                onChange={handleChange}
                                 disabled={loading}
-                            />
-                            {errorForm.price && (
-                                <ErrorFormInfo message={errorForm.price} />
-                            )}
-                        </Field>
-                        <Field>
-                            <label htmlFor="price" className="text-sm">
-                                {t("page.product.dialog_modal.create_dialog.price_input_label", "Harga Jual")}
-                                <span className="text-red-500"> *</span>
-                            </label>
-                            <Input
-                                id="price"
-                                name="price"
-                                placeholder={t("page.product.dialog_modal.create_dialog.price_input_placeholder", "Masukkan harga jual produk")}
-                                value={formData.price}
-                                onChange={handleChange}
-                                disabled={loading}
+                                onValueChange={(values) => {
+                                    setFormData((prev) => ({
+                                        ...prev,
+                                        price: values.floatValue ?? 0,
+                                    }));
+                                }}
+                                className={`${errorForm.price && 'border-red-500'}`}
                             />
                             {errorForm.price && (
                                 <ErrorFormInfo message={errorForm.price} />
@@ -381,72 +343,80 @@ export function CreateDialog({ onSuccess, units, categories }: CreateDialogProps
                         </Field>
                         <Field>
                             <label htmlFor="is_active" className="text-sm">
-                                {t("page.product.dialog_modal.create_dialog.is_active_input_label", "Peran")}
+                                {t("page.product.dialog_modal.create_dialog.is_active_input_label", "Status")}
                                 <span className="text-red-500"> *</span>
                             </label>
-                            <Select
-                                onValueChange={(value) => setFormData((prev) => ({ ...prev, is_active: value === 'true' }))}
-                                disabled={loading}
-                                value={formData.is_active.toString()}
-                            >
-                                <SelectTrigger className="w-full">
-                                    <SelectValue placeholder={t("page.product.dialog_modal.create_dialog.is_active_input_placeholder", "Pilih Status")} />
-                                </SelectTrigger>
-                                <SelectContent>
-                                    <SelectGroup>
-                                        <SelectLabel>
-                                            {t("page.product.dialog_modal.create_dialog.is_active_input_label", "Peran")}
-                                        </SelectLabel>
-                                        <SelectItem
-                                            value={"true"}
-                                        >
-                                            {t("page.product.dialog_modal.create_dialog.status.active", "Aktif")}
-                                        </SelectItem>
-                                        <SelectItem
-                                            value={"false"}
-                                        >
-                                            {t("page.product.dialog_modal.create_dialog.status.inactive", "Tidak Aktif")}
-                                        </SelectItem>
-                                    </SelectGroup>
-                                </SelectContent>
-                            </Select>
+                            <Switch
+                                checked={formData.is_active}
+                                id="is_active_input_label"
+                                name="is_active"
+                                onCheckedChange={(value) => setFormData((prev) => ({ ...prev, is_active: value }))}
+                                className={`${errorForm.is_active && 'border-red-500'}`}
+                            />
                             {errorForm.is_active && (
                                 <ErrorFormInfo message={errorForm.is_active} />
                             )}
                         </Field>
                         <Field>
-                            <label htmlFor="is_unlimited" className="text-sm">
-                                {t("page.product.dialog_modal.create_dialog.is_unlimited_input_label", "Peran")}
+                            <label htmlFor="stock" className="text-sm">
+                                {t("page.product.dialog_modal.create_dialog.stock_input_label", "Stok")}
                                 <span className="text-red-500"> *</span>
                             </label>
-                            <Select
-                                onValueChange={(value) => setFormData((prev) => ({ ...prev, is_unlimited: value === 'true' }))}
+                            <NumericFormat
+                                id="stock"
+                                name="stock"
+                                customInput={Input}
+                                placeholder={t("page.product.dialog_modal.create_dialog.stock_input_placeholder", "Masukkan stok produk")}
+                                value={formData.stock}
                                 disabled={loading}
-                                value={formData.is_unlimited.toString()}
-                            >
-                                <SelectTrigger className="w-full">
-                                    <SelectValue placeholder={t("page.product.dialog_modal.create_dialog.is_unlimited_input_placeholder", "Pilih Status")} />
-                                </SelectTrigger>
-                                <SelectContent>
-                                    <SelectGroup>
-                                        <SelectLabel>
-                                            {t("page.product.dialog_modal.create_dialog.is_unlimited_input_label", "Peran")}
-                                        </SelectLabel>
-                                        <SelectItem
-                                            value={"true"}
-                                        >
-                                            {t("page.product.dialog_modal.create_dialog.status.active", "Aktif")}
-                                        </SelectItem>
-                                        <SelectItem
-                                            value={"false"}
-                                        >
-                                            {t("page.product.dialog_modal.create_dialog.status.inactive", "Tidak Aktif")}
-                                        </SelectItem>
-                                    </SelectGroup>
-                                </SelectContent>
-                            </Select>
+                                onValueChange={(values) => {
+                                    setFormData((prev) => ({
+                                        ...prev,
+                                        stock: values.floatValue ?? 0,
+                                    }));
+                                }}
+                                className={`${errorForm.price && 'border-red-500'}`}
+                            />
+                            {errorForm.stock && (
+                                <ErrorFormInfo message={errorForm.stock} />
+                            )}
+                        </Field>
+                        <Field>
+                            <label htmlFor="is_unlimited" className="text-sm">
+                                {t("page.product.dialog_modal.create_dialog.is_unlimited_input_label", "Stok Tidak Terbatas")}
+                                <span className="text-red-500"> *</span>
+                            </label>
+                            <Switch
+                                checked={formData.is_unlimited}
+                                id="is_unlimited_input_label"
+                                name="is_unlimited"
+                                onCheckedChange={(value) => setFormData((prev) => ({ ...prev, is_unlimited: value }))}
+                                className={`${errorForm.is_unlimited && 'border-red-500'}`}
+                            />
                             {errorForm.is_unlimited && (
                                 <ErrorFormInfo message={errorForm.is_unlimited} />
+                            )}
+                        </Field>
+                        <Field>
+                            <label htmlFor="image" className="text-sm">
+                                {t("page.product.dialog_modal.create_dialog.image_input_label", "Gambar")}
+                            </label>
+                            <Input
+                                id="image"
+                                name="image"
+                                type="file"
+                                accept="image/*"
+                                onChange={handleImageChange}
+                                disabled={loading}
+                                className={`${errorForm.image && 'border-red-500'}`}
+                            />
+                            {imagePreview && (
+                                <div className="mt-2">
+                                    <img src={imagePreview} alt="Preview" className="h-32 w-32 object-cover rounded" />
+                                </div>
+                            )}
+                            {errorForm.image && (
+                                <ErrorFormInfo message={errorForm.image} />
                             )}
                         </Field>
                         <Field>
@@ -485,6 +455,6 @@ export function CreateDialog({ onSuccess, units, categories }: CreateDialogProps
                     </DialogFooter>
                 </form>
             </DialogContent>
-        </Dialog>
+        </ Dialog>
     );
 }

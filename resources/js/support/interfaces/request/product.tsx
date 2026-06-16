@@ -14,17 +14,17 @@ export interface ProductQueryParam {
 }
 
 export interface ProductForm {
-  category_id: number;
-  unit_id: number;
+  category_id: number | null;
+  unit_id: number | null;
   name: string;
   barcode: string;
   is_active: boolean;
   is_unlimited: boolean;
   desc: string;
-  stock: number;
-  price: number;
-  cost_price: number;
-  image: string;
+  stock: number | null;
+  price: number | null;
+  cost_price: number | null;
+  image: File | null;
 }
 
 export interface ProductErrorForm {

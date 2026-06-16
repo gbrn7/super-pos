@@ -165,6 +165,7 @@ export function EditDialog({
                                 value={formData.name}
                                 onChange={handleChange}
                                 disabled={loading}
+                                className={`${errorForm.name && 'border-red-500'}`}
                             />
                             {errorForm.name && (
                                 <ErrorFormInfo message={errorForm.name} />
@@ -181,6 +182,7 @@ export function EditDialog({
                                 accept="image/*"
                                 onChange={handleImageChange}
                                 disabled={loading}
+                                className={`${errorForm.image && 'border-red-500'}`}
                             />
                             {imagePreview != '' && (
                                 <div className="mt-2">

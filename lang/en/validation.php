@@ -14,6 +14,8 @@ return [
 
     'confirmed' => 'The :attribute confirmation does not match',
 
+    'boolean' => ':attribute field must be a boolean',
+
     'mimes' => 'the type of :attribute must on of :values',
 
     'exists' => 'The selected :attribute is invalid.',
@@ -45,7 +47,7 @@ return [
         'price' => 'Price',
         'cost_price' => 'Cost Price',
         'is_active' => 'Active Status',
-        'is_unlimited' => 'Status Stok',
+        'is_unlimited' => 'Tipe Stok',
     ],
 
 ];

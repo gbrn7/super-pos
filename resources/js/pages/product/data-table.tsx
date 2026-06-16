@@ -1,4 +1,9 @@
-import { IconChevronLeft, IconChevronRight, IconChevronsLeft, IconChevronsRight } from '@tabler/icons-react';
+import {
+    IconChevronLeft,
+    IconChevronRight,
+    IconChevronsLeft,
+    IconChevronsRight,
+} from '@tabler/icons-react';
 import {
     flexRender,
     getCoreRowModel,
@@ -25,6 +30,7 @@ import {
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import {
     Select,
     SelectContent,
@@ -44,7 +50,10 @@ import {
     TableRow,
 } from '@/components/ui/table';
 import { FILTER_DEFAULT_VALUE } from '@/constants/Index';
-import { getNullableNumberFilterValue, getNumberFilterValue } from '@/lib/utils';
+import {
+    getNullableNumberFilterValue,
+    getNumberFilterValue,
+} from '@/lib/utils';
 import { PERMISSIONENUMS } from '@/support/enums/PermissionEnums';
 import type { ProductQueryParam } from '@/support/interfaces/request/product';
 import type { Pagination } from '@/support/interfaces/resource/pagination';
@@ -57,7 +66,6 @@ import { DeleteDialog } from './dialog-modal/delete-dialog';
 import { DetailDialog } from './dialog-modal/detail-dialog';
 import { EditDialog } from './dialog-modal/edit-dialog';
 import { ExportDropdownMenu } from './export-data-menu/export-dropdown-menu';
-
 
 interface DataTableProps<TData, TValue> {
     columns:
@@ -81,14 +89,14 @@ interface DataTableProps<TData, TValue> {
     setOpenBulkDeleteDialogOpen: (open: boolean) => void;
     selectedBulkProducts: Product[];
     selectedProduct: Product | null;
-    units: Unit[],
-    categories: Category[],
-    queryParam: ProductQueryParam,
-    pagination: Pagination,
-    onChangePaginationPage: (page: number) => void,
-    onChangePaginationLimit: (limit: number) => void,
-    onChangeField: (field: string) => void,
-    onChangeKeyword: (keyword: string) => void,
+    units: Unit[];
+    categories: Category[];
+    queryParam: ProductQueryParam;
+    pagination: Pagination;
+    onChangePaginationPage: (page: number) => void;
+    onChangePaginationLimit: (limit: number) => void;
+    onChangeField: (field: string) => void;
+    onChangeKeyword: (keyword: string) => void;
     setQueryParam: React.Dispatch<React.SetStateAction<ProductQueryParam>>;
 }
 export function DataTable<TData, TValue>({
@@ -119,10 +127,9 @@ export function DataTable<TData, TValue>({
     onChangePaginationLimit,
     onChangeField,
     onChangeKeyword,
-    setQueryParam
+    setQueryParam,
 }: DataTableProps<TData, TValue>) {
     const { t } = useTranslation();
-
 
     const columns =
         typeof columnsOrFn === 'function'
@@ -130,7 +137,10 @@ export function DataTable<TData, TValue>({
                 onDetailClick,
                 onEditClick,
                 onDeleteClick,
-                onSortChange: (orderBy: string | null, order: string | null) => {
+                onSortChange: (
+                    orderBy: string | null,
+                    order: string | null,
+                ) => {
                     setQueryParam((prev) => ({
                         ...prev,
                         order_by: orderBy,
@@ -164,9 +174,6 @@ export function DataTable<TData, TValue>({
         }));
     };
 
-
-
-
     const table = useReactTable({
         data,
         columns,
@@ -177,7 +184,7 @@ export function DataTable<TData, TValue>({
         onColumnFiltersChange: setColumnFilters,
         onColumnVisibilityChange: setColumnVisibility,
         onRowSelectionChange: setRowSelection,
-        columnResizeMode: "onChange",
+        columnResizeMode: 'onChange',
         state: {
             sorting,
             columnFilters,
@@ -187,186 +194,31 @@ export function DataTable<TData, TValue>({
     });
 
     return (
-        <div className='p-3 border rounded-2xl'>
-            <div className="flex flex-col gap-3 justify-between pb-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
-                    <div className="keyword-filter flex gap-1 w-full">
-                        <Select
-                            value={queryParam.field}
-                            onValueChange={(value) => onChangeField(value)}
-                        >
-                            <SelectTrigger className="w-full">
-                                <SelectValue />
-                            </SelectTrigger>
-                            <SelectContent>
-                                <SelectGroup>
-                                    <SelectLabel>{t("component.data_table.search_component.search_by", "Pencarian berdasarkan")}</SelectLabel>
-                                    <SelectItem value="default">
-                                        {t("component.data_table.search_component.default", "Bawaan")}
-                                    </SelectItem>
-                                    <SelectItem value="name">
-                                        {t("component.data_table.search_component.name", "Nama")}
-                                    </SelectItem>
-                                    <SelectItem value="sku">
-                                        {t("component.data_table.search_component.sku", "SKU")}
-                                    </SelectItem>
-                                    <SelectItem value="category">
-                                        {t("component.data_table.search_component.category", "Kategori")}
-                                    </SelectItem>
-                                    <SelectItem value="unit">
-                                        {t("component.data_table.search_component.unit", "Satuan")}
-                                    </SelectItem>
-                                </SelectGroup>
-                            </SelectContent>
-                        </Select>
-                        <Input
-                            placeholder={t("component.data_table.search_component.placeholder", "Telusuri")}
-                            value={queryParam.keyword}
-                            onChange={(event) => onChangeKeyword(event.target.value)}
-                            className="w-full"
-                        />
-                    </div>
-                    <Select
-                        value={getNumberFilterValue(queryParam.category_id)}
-                        onValueChange={(value) => updateQueryParam('category_id', getNullableNumberFilterValue(value))}
-                    >
-                        <SelectTrigger className="w-full">
-                            <SelectValue placeholder={t("component.data_table.filter.category_placeholder", "Pilih Kategori")} />
-                        </SelectTrigger>
-                        <SelectContent>
-                            <SelectGroup>
-                                <SelectLabel> {t("component.data_table.filter.category_label", "Kategori")}</SelectLabel>
-                                <SelectItem value={FILTER_DEFAULT_VALUE}>
-                                    {t("component.data_table.filter.all_categories", "Semua Kategori")}
-                                </SelectItem>
-                                {categories.map((item) => (
-                                    <SelectItem key={item.id} value={item.id.toString()}>{item.name}</SelectItem>
-                                ))}
-                            </SelectGroup>
-                        </SelectContent>
-                    </Select>
-                    <Select
-                        value={getNumberFilterValue(queryParam.unit_id)}
-                        onValueChange={(value) => updateQueryParam('unit_id', getNullableNumberFilterValue(value))}
-                    >
-                        <SelectTrigger className="w-full">
-                            <SelectValue placeholder={t("component.data_table.filter.unit_placeholder", "Pilih Satuan")} />
-                        </SelectTrigger>
-                        <SelectContent>
-                            <SelectGroup>
-                                <SelectLabel> {t("component.data_table.filter.unit_label", "Satuan")}</SelectLabel>
-                                <SelectItem value={FILTER_DEFAULT_VALUE}>
-                                    {t("component.data_table.filter.all_units", "Semua Satuan")}
-                                </SelectItem>
-                                {units.map((item) => (
-                                    <SelectItem key={item.id} value={item.id.toString()}>{item.name}</SelectItem>
-                                ))}
-                            </SelectGroup>
-                        </SelectContent>
-                    </Select>
-                    <Select
-                        value={getNumberFilterValue(queryParam.is_stock_available)}
-                        onValueChange={(value) => updateQueryParam('is_stock_available', getNullableNumberFilterValue(value))}
-                    >
-                        <SelectTrigger className="w-full">
-                            <SelectValue placeholder={t("component.data_table.filter.is_available_stock_placholder", "Pilih Status Stok")} />
-                        </SelectTrigger>
-                        <SelectContent>
-                            <SelectGroup>
-                                <SelectLabel>
-                                    {t("component.data_table.filter.is_available_stock_label", "Status Stok")}
-                                </SelectLabel>
-                                <SelectItem value={FILTER_DEFAULT_VALUE}>
-                                    {t("component.data_table.filter.all_stock_availability", "Semua Status Stok")}
-                                </SelectItem>
-                                <SelectItem
-                                    value={"0"}
-                                >
-                                    {t("component.data_table.filter.unavailable_stock_label", "Tidak Tersedia")}
-                                </SelectItem>
-                                <SelectItem
-                                    value={"1"}
-                                >
-                                    {t("component.data_table.filter.available_stock_label", "Tersedia")}
-                                </SelectItem>
-                            </SelectGroup>
-                        </SelectContent>
-                    </Select>
-                    <Select
-                        value={getNumberFilterValue(queryParam.is_active)}
-                        onValueChange={(value) => updateQueryParam('is_active', getNullableNumberFilterValue(value))}
-                    >
-                        <SelectTrigger className="w-full">
-                            <SelectValue placeholder={t("component.data_table.filter.status_placeholder", "Pilih Status")} />
-                        </SelectTrigger>
-                        <SelectContent>
-                            <SelectGroup>
-                                <SelectLabel>
-                                    {t("component.data_table.filter.status_label", "Status")}
-                                </SelectLabel>
-                                <SelectItem value={FILTER_DEFAULT_VALUE}>
-                                    {t("component.data_table.filter.all_statuses", "Semua Status")}
-                                </SelectItem>
-                                <SelectItem
-                                    value={"0"}
-                                >
-                                    {t("component.data_table.filter.status_inactive_label", "Tidak Aktif")}
-                                </SelectItem>
-                                <SelectItem
-                                    value={"1"}
-                                >
-                                    {t("component.data_table.filter.status_active_label", "Aktif")}
-                                </SelectItem>
-                            </SelectGroup>
-                        </SelectContent>
-                    </Select>
-                    <Select
-                        value={getNumberFilterValue(queryParam.is_unlimited)}
-                        onValueChange={(value) => updateQueryParam('is_unlimited', getNullableNumberFilterValue(value))}
-                    >
-                        <SelectTrigger className="w-full">
-                            <SelectValue placeholder={t("component.data_table.filter.stock_type_placeholder", "Pilih Tipe Stok")} />
-                        </SelectTrigger>
-                        <SelectContent>
-                            <SelectGroup>
-                                <SelectLabel>
-                                    {t("component.data_table.filter.stock_label", "Tipe Stok")}
-                                </SelectLabel>
-                                <SelectItem value={FILTER_DEFAULT_VALUE}>
-                                    {t("component.data_table.filter.all_stock_types", "Semua Tipe Stok")}
-                                </SelectItem>
-                                <SelectItem
-                                    value={"1"}
-                                >
-                                    {t("component.data_table.filter.unlimited_stock_label", "Tidak Terbatas")}
-                                </SelectItem>
-                                <SelectItem
-                                    value={"0"}
-                                >
-                                    {t("component.data_table.filter.limitted_stock_label", "Terbatas")}
-                                </SelectItem>
-                            </SelectGroup>
-                        </SelectContent>
-                    </Select>
-                </div>
-                <div className="second-row overflow-auto flex justify-start sm:justify-end gap-2 lg:mt-0">
+        <div className="rounded-2xl border p-3">
+            <div className="flex flex-col justify-between gap-3 pb-4">
+                <div className="flex justify-start gap-2 overflow-auto sm:justify-end lg:mt-0">
                     <Can permission={PERMISSIONENUMS.PRODUCT.READ}>
                         <ExportDropdownMenu data={data} />
                     </Can>
-                    <Can
-                        permission={PERMISSIONENUMS.PRODUCT.DELETE}
-                    >
-                        <BulkDeleteDialog isDisabled={!(Object.keys(rowSelection).length > 0) && true}
-                            selectedLength={table.getSelectedRowModel().rows.length}
+                    <Can permission={PERMISSIONENUMS.PRODUCT.DELETE}>
+                        <BulkDeleteDialog
+                            isDisabled={
+                                !(Object.keys(rowSelection).length > 0) && true
+                            }
+                            selectedLength={
+                                table.getSelectedRowModel().rows.length
+                            }
                             isOpen={isBulkDeleteDialogOpen}
                             onSuccess={() => {
-                                onRefresh()
-                                table.resetRowSelection()
+                                onRefresh();
+                                table.resetRowSelection();
                             }}
                             setOpen={setOpenBulkDeleteDialogOpen}
                             products={selectedBulkProducts}
                             onBulkDeleteClick={() => {
-                                const selectedRows = table.getSelectedRowModel().rows.map((row) => row.original);
+                                const selectedRows = table
+                                    .getSelectedRowModel()
+                                    .rows.map((row) => row.original);
                                 onBulkDeleteClick?.(selectedRows);
                             }}
                         />
@@ -374,8 +226,11 @@ export function DataTable<TData, TValue>({
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                             <Button variant="outline">
-                                <TableIcon className='h-4' />
-                                {t("component.data_table.columns.label", "Kolom")}
+                                <TableIcon className="h-4" />
+                                {t(
+                                    'component.data_table.columns.label',
+                                    'Kolom',
+                                )}
                             </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
@@ -398,13 +253,353 @@ export function DataTable<TData, TValue>({
                                 })}
                         </DropdownMenuContent>
                     </DropdownMenu>
-                    <Can
-                        permission={PERMISSIONENUMS.PRODUCT.CREATE}
-                    >
-                        <CreateDialog onSuccess={onRefresh} categories={categories} units={units} />
+                    <Can permission={PERMISSIONENUMS.PRODUCT.CREATE}>
+                        <CreateDialog
+                            onSuccess={onRefresh}
+                            categories={categories}
+                            units={units}
+                        />
                     </Can>
                 </div>
-
+                <div className="second-row grid grid-cols-1 gap-2 gap-y-3 md:grid-cols-2 lg:grid-cols-3 border p-3 rounded-md">
+                    <div className="space-y-1.5">
+                        <Label className="text-xs font-medium text-muted-foreground">
+                            {t(
+                                'component.data_table.search_component.search_label',
+                                'Pencarian',
+                            )}
+                        </Label>
+                        <div className="keyword-filter flex w-full gap-1">
+                            <Select
+                                value={queryParam.field}
+                                onValueChange={(value) => onChangeField(value)}
+                            >
+                                <SelectTrigger className="w-full">
+                                    <SelectValue />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectGroup>
+                                        <SelectLabel>
+                                            {t(
+                                                'component.data_table.search_component.search_by',
+                                                'Pencarian berdasarkan',
+                                            )}
+                                        </SelectLabel>
+                                        <SelectItem value="default">
+                                            {t(
+                                                'component.data_table.search_component.default',
+                                                'Bawaan',
+                                            )}
+                                        </SelectItem>
+                                        <SelectItem value="name">
+                                            {t(
+                                                'component.data_table.search_component.name',
+                                                'Nama',
+                                            )}
+                                        </SelectItem>
+                                        <SelectItem value="sku">
+                                            {t(
+                                                'component.data_table.search_component.sku',
+                                                'SKU',
+                                            )}
+                                        </SelectItem>
+                                        <SelectItem value="category">
+                                            {t(
+                                                'component.data_table.search_component.category',
+                                                'Kategori',
+                                            )}
+                                        </SelectItem>
+                                        <SelectItem value="unit">
+                                            {t(
+                                                'component.data_table.search_component.unit',
+                                                'Satuan',
+                                            )}
+                                        </SelectItem>
+                                    </SelectGroup>
+                                </SelectContent>
+                            </Select>
+                            <Input
+                                placeholder={t(
+                                    'component.data_table.search_component.placeholder',
+                                    'Telusuri',
+                                )}
+                                value={queryParam.keyword}
+                                onChange={(event) =>
+                                    onChangeKeyword(event.target.value)
+                                }
+                                className="w-full"
+                            />
+                        </div>
+                    </div>
+                    <div className="space-y-1.5">
+                        <Label className="text-xs font-medium text-muted-foreground">
+                            {t(
+                                'component.data_table.filter.category_label',
+                                'Kategori',
+                            )}
+                        </Label>
+                        <Select
+                            value={getNumberFilterValue(queryParam.category_id)}
+                            onValueChange={(value) =>
+                                updateQueryParam(
+                                    'category_id',
+                                    getNullableNumberFilterValue(value),
+                                )
+                            }
+                        >
+                            <SelectTrigger className="w-full">
+                                <SelectValue
+                                    placeholder={t(
+                                        'component.data_table.filter.category_placeholder',
+                                        'Pilih Kategori',
+                                    )}
+                                />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectGroup>
+                                    <SelectLabel>
+                                        {' '}
+                                        {t(
+                                            'component.data_table.filter.category_label',
+                                            'Kategori',
+                                        )}
+                                    </SelectLabel>
+                                    <SelectItem value={FILTER_DEFAULT_VALUE}>
+                                        {t(
+                                            'component.data_table.filter.all_categories',
+                                            'Semua Kategori',
+                                        )}
+                                    </SelectItem>
+                                    {categories.map((item) => (
+                                        <SelectItem
+                                            key={item.id}
+                                            value={item.id.toString()}
+                                        >
+                                            {item.name}
+                                        </SelectItem>
+                                    ))}
+                                </SelectGroup>
+                            </SelectContent>
+                        </Select>
+                    </div>
+                    <div className="space-y-1.5">
+                        <Label className="text-xs font-medium text-muted-foreground">
+                            {t(
+                                'component.data_table.filter.unit_label',
+                                'Satuan',
+                            )}
+                        </Label>
+                        <Select
+                            value={getNumberFilterValue(queryParam.unit_id)}
+                            onValueChange={(value) =>
+                                updateQueryParam(
+                                    'unit_id',
+                                    getNullableNumberFilterValue(value),
+                                )
+                            }
+                        >
+                            <SelectTrigger className="w-full">
+                                <SelectValue
+                                    placeholder={t(
+                                        'component.data_table.filter.unit_placeholder',
+                                        'Pilih Satuan',
+                                    )}
+                                />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectGroup>
+                                    <SelectLabel>
+                                        {' '}
+                                        {t(
+                                            'component.data_table.filter.unit_label',
+                                            'Satuan',
+                                        )}
+                                    </SelectLabel>
+                                    <SelectItem value={FILTER_DEFAULT_VALUE}>
+                                        {t(
+                                            'component.data_table.filter.all_units',
+                                            'Semua Satuan',
+                                        )}
+                                    </SelectItem>
+                                    {units.map((item) => (
+                                        <SelectItem
+                                            key={item.id}
+                                            value={item.id.toString()}
+                                        >
+                                            {item.name}
+                                        </SelectItem>
+                                    ))}
+                                </SelectGroup>
+                            </SelectContent>
+                        </Select>
+                    </div>
+                    <div className="space-y-1.5">
+                        <Label className="text-xs font-medium text-muted-foreground">
+                            {t(
+                                'component.data_table.filter.is_available_stock_label',
+                                'Status Stok',
+                            )}
+                        </Label>
+                        <Select
+                            value={getNumberFilterValue(
+                                queryParam.is_stock_available,
+                            )}
+                            onValueChange={(value) =>
+                                updateQueryParam(
+                                    'is_stock_available',
+                                    getNullableNumberFilterValue(value),
+                                )
+                            }
+                        >
+                            <SelectTrigger className="w-full">
+                                <SelectValue
+                                    placeholder={t(
+                                        'component.data_table.filter.is_available_stock_placholder',
+                                        'Pilih Status Stok',
+                                    )}
+                                />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectGroup>
+                                    <SelectLabel>
+                                        {t(
+                                            'component.data_table.filter.is_available_stock_label',
+                                            'Status Stok',
+                                        )}
+                                    </SelectLabel>
+                                    <SelectItem value={FILTER_DEFAULT_VALUE}>
+                                        {t(
+                                            'component.data_table.filter.all_stock_availability',
+                                            'Semua Status Stok',
+                                        )}
+                                    </SelectItem>
+                                    <SelectItem value={'0'}>
+                                        {t(
+                                            'component.data_table.filter.unavailable_stock_label',
+                                            'Tidak Tersedia',
+                                        )}
+                                    </SelectItem>
+                                    <SelectItem value={'1'}>
+                                        {t(
+                                            'component.data_table.filter.available_stock_label',
+                                            'Tersedia',
+                                        )}
+                                    </SelectItem>
+                                </SelectGroup>
+                            </SelectContent>
+                        </Select>
+                    </div>
+                    <div className="space-y-1.5">
+                        <Label className="text-xs font-medium text-muted-foreground">
+                            {t(
+                                'component.data_table.filter.status_label',
+                                'Status',
+                            )}
+                        </Label>
+                        <Select
+                            value={getNumberFilterValue(queryParam.is_active)}
+                            onValueChange={(value) =>
+                                updateQueryParam(
+                                    'is_active',
+                                    getNullableNumberFilterValue(value),
+                                )
+                            }
+                        >
+                            <SelectTrigger className="w-full">
+                                <SelectValue
+                                    placeholder={t(
+                                        'component.data_table.filter.status_placeholder',
+                                        'Pilih Status',
+                                    )}
+                                />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectGroup>
+                                    <SelectLabel>
+                                        {t(
+                                            'component.data_table.filter.status_label',
+                                            'Status',
+                                        )}
+                                    </SelectLabel>
+                                    <SelectItem value={FILTER_DEFAULT_VALUE}>
+                                        {t(
+                                            'component.data_table.filter.all_statuses',
+                                            'Semua Status',
+                                        )}
+                                    </SelectItem>
+                                    <SelectItem value={'0'}>
+                                        {t(
+                                            'component.data_table.filter.status_inactive_label',
+                                            'Tidak Aktif',
+                                        )}
+                                    </SelectItem>
+                                    <SelectItem value={'1'}>
+                                        {t(
+                                            'component.data_table.filter.status_active_label',
+                                            'Aktif',
+                                        )}
+                                    </SelectItem>
+                                </SelectGroup>
+                            </SelectContent>
+                        </Select>
+                    </div>
+                    <div className="space-y-1.5">
+                        <Label className="text-xs font-medium text-muted-foreground">
+                            {t(
+                                'component.data_table.filter.stock_label',
+                                'Tipe Stok',
+                            )}
+                        </Label>
+                        <Select
+                            value={getNumberFilterValue(
+                                queryParam.is_unlimited,
+                            )}
+                            onValueChange={(value) =>
+                                updateQueryParam(
+                                    'is_unlimited',
+                                    getNullableNumberFilterValue(value),
+                                )
+                            }
+                        >
+                            <SelectTrigger className="w-full">
+                                <SelectValue
+                                    placeholder={t(
+                                        'component.data_table.filter.stock_type_placeholder',
+                                        'Pilih Tipe Stok',
+                                    )}
+                                />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectGroup>
+                                    <SelectLabel>
+                                        {t(
+                                            'component.data_table.filter.stock_label',
+                                            'Tipe Stok',
+                                        )}
+                                    </SelectLabel>
+                                    <SelectItem value={FILTER_DEFAULT_VALUE}>
+                                        {t(
+                                            'component.data_table.filter.all_stock_types',
+                                            'Semua Tipe Stok',
+                                        )}
+                                    </SelectItem>
+                                    <SelectItem value={'1'}>
+                                        {t(
+                                            'component.data_table.filter.unlimited_stock_label',
+                                            'Tidak Terbatas',
+                                        )}
+                                    </SelectItem>
+                                    <SelectItem value={'0'}>
+                                        {t(
+                                            'component.data_table.filter.limitted_stock_label',
+                                            'Terbatas',
+                                        )}
+                                    </SelectItem>
+                                </SelectGroup>
+                            </SelectContent>
+                        </Select>
+                    </div>
+                </div>
             </div>
             <div className="overflow-x-auto rounded-md border">
                 <Table>
@@ -413,15 +608,14 @@ export function DataTable<TData, TValue>({
                             <TableRow key={headerGroup.id}>
                                 {headerGroup.headers.map((header) => {
                                     return (
-                                        <TableHead key={header.id}
+                                        <TableHead
+                                            key={header.id}
                                             style={{
                                                 width: `${header.getSize()}px`,
                                             }}
                                         >
                                             {header.isPlaceholder ? null : (
-                                                <div
-                                                    className="flex cursor-pointer items-center gap-2 select-none hover:text-foreground"
-                                                >
+                                                <div className="flex cursor-pointer items-center gap-2 select-none hover:text-foreground">
                                                     {flexRender(
                                                         header.column.columnDef
                                                             .header,
@@ -472,7 +666,10 @@ export function DataTable<TData, TValue>({
                                     colSpan={columns.length}
                                     className="h-24 text-center"
                                 >
-                                    {t("component.data_table.no_result", "Tidak ada hasil")}
+                                    {t(
+                                        'component.data_table.no_result',
+                                        'Tidak ada hasil',
+                                    )}
                                 </TableCell>
                             </TableRow>
                         )}
@@ -504,22 +701,32 @@ export function DataTable<TData, TValue>({
             <div className="flex items-center justify-end space-x-4 overflow-auto py-4">
                 <div className="hidden flex-1 text-sm text-muted-foreground lg:flex">
                     {sprintf(
-                        t("component.data_table.selected_row", "%d dari %d baris terpilih"),
+                        t(
+                            'component.data_table.selected_row',
+                            '%d dari %d baris terpilih',
+                        ),
                         table.getFilteredSelectedRowModel().rows.length,
-                        pagination.total
+                        pagination.total,
                     )}
                 </div>
                 <div className="flex w-full items-center gap-8 lg:w-fit">
                     <Select
                         value={queryParam.limit.toString()}
-                        onValueChange={(value) => onChangePaginationLimit(Number(value))}
+                        onValueChange={(value) =>
+                            onChangePaginationLimit(Number(value))
+                        }
                     >
                         <SelectTrigger className="w-20">
                             <SelectValue />
                         </SelectTrigger>
                         <SelectContent>
                             <SelectGroup>
-                                <SelectLabel>{t("component.data_table.row_per_page", "Baris per halaman")}</SelectLabel>
+                                <SelectLabel>
+                                    {t(
+                                        'component.data_table.row_per_page',
+                                        'Baris per halaman',
+                                    )}
+                                </SelectLabel>
                                 {limitOptions.map((option) => (
                                     <SelectItem
                                         key={option}
@@ -532,17 +739,23 @@ export function DataTable<TData, TValue>({
                         </SelectContent>
                     </Select>
                     <div className="text-sm text-muted-foreground">
-                        {sprintf
-                            (
-                                t("component.data_table.pagination_info", "Halaman %d dari %d"), pagination.current_page, pagination.last_page)
-                        }
+                        {sprintf(
+                            t(
+                                'component.data_table.pagination_info',
+                                'Halaman %d dari %d',
+                            ),
+                            pagination.current_page,
+                            pagination.last_page,
+                        )}
                     </div>
                     <div className="ml-auto flex items-center gap-2 lg:ml-0">
                         <Button
                             variant="outline"
                             className="hidden h-8 w-8 p-0 lg:flex"
                             onClick={() => onChangePaginationPage(1)}
-                            disabled={pagination.current_page == 1 || processing}
+                            disabled={
+                                pagination.current_page == 1 || processing
+                            }
                         >
                             <span className="sr-only">Go to first page</span>
                             <IconChevronsLeft />
@@ -552,11 +765,15 @@ export function DataTable<TData, TValue>({
                             className="size-8"
                             size="icon"
                             onClick={() => {
-                                if ((pagination.current_page - 1) > 0) {
-                                    onChangePaginationPage((pagination.current_page - 1))
+                                if (pagination.current_page - 1 > 0) {
+                                    onChangePaginationPage(
+                                        pagination.current_page - 1,
+                                    );
                                 }
                             }}
-                            disabled={pagination.current_page == 1 || processing}
+                            disabled={
+                                pagination.current_page == 1 || processing
+                            }
                         >
                             <span className="sr-only">Go to previous page</span>
                             <IconChevronLeft />
@@ -566,11 +783,19 @@ export function DataTable<TData, TValue>({
                             className="size-8"
                             size="icon"
                             onClick={() => {
-                                if (pagination.current_page != pagination.last_page) {
-                                    onChangePaginationPage((pagination.current_page + 1))
+                                if (
+                                    pagination.current_page !=
+                                    pagination.last_page
+                                ) {
+                                    onChangePaginationPage(
+                                        pagination.current_page + 1,
+                                    );
                                 }
                             }}
-                            disabled={pagination.current_page == pagination.last_page || processing}
+                            disabled={
+                                pagination.current_page ==
+                                pagination.last_page || processing
+                            }
                         >
                             <span className="sr-only">Go to next page</span>
                             <IconChevronRight />
@@ -579,15 +804,19 @@ export function DataTable<TData, TValue>({
                             variant="outline"
                             className="hidden size-8 lg:flex"
                             size="icon"
-                            onClick={() => onChangePaginationPage(pagination.last_page)}
-                            disabled={pagination.current_page == pagination.last_page || processing}
+                            onClick={() =>
+                                onChangePaginationPage(pagination.last_page)
+                            }
+                            disabled={
+                                pagination.current_page ==
+                                pagination.last_page || processing
+                            }
                         >
                             <span className="sr-only">Go to last page</span>
                             <IconChevronsRight />
                         </Button>
                     </div>
                 </div>
-
             </div>
         </div>
     );
