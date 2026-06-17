@@ -29,42 +29,39 @@ export function DetailDialog({
         <Dialog open={isOpen} onOpenChange={onOpenChange}>
             <DialogContent showCloseButton={true}>
                 <DialogHeader>
-                    <DialogTitle>{t("page.unit.dialog_modal.detail_dialog.dialog_title", "Detail Satuan")}</DialogTitle>
-                    <DialogContent>
-                        <div>
-                            <p className="text-sm font-medium text-muted-foreground">
-                                {t("page.unit.dialog_modal.detail_dialog.name_label", "Nama")}
-                            </p>
-                            <p className="mt-1 text-base">{unit.name}</p>
-                        </div>
-
-
-                        <div>
-                            <p className="text-sm font-medium text-muted-foreground">
-                                {t("page.unit.dialog_modal.detail_dialog.created_at_label", "Tanggal Dibuat")}
-                            </p>
-                            <p className="mt-1 text-base">
-                                {
-                                    formatDate(unit.created_at)
-                                }
-                            </p>
-                        </div>
-
-
-
-                        <div>
-                            <p className="text-sm font-medium text-muted-foreground">
-                                {t("page.unit.dialog_modal.detail_dialog.updated_at_label", "Tanggal Diperbarui")}
-                            </p>
-                            <p className="mt-1 text-base">
-                                {
-                                    formatDate(unit.updated_at)
-                                }
-                            </p>
-                        </div>
-
-                    </DialogContent>
+                    <DialogTitle>
+                        {t("page.unit.dialog_modal.detail_dialog.dialog_title", "Detail Satuan")}
+                    </DialogTitle>
                 </DialogHeader>
+                <div className='dialog-body grid center grid-cols-1 md:grid-cols-2'>
+                    <div>
+                        <p className="text-sm font-medium text-muted-foreground">
+                            {t("page.unit.dialog_modal.detail_dialog.name_label", "Nama")}
+                        </p>
+                        <p className="mt-1 text-base">{unit.name}</p>
+                    </div>
+                    <div>
+                        <p className="text-sm font-medium text-muted-foreground">
+                            {t("page.unit.dialog_modal.detail_dialog.created_at_label", "Tanggal Dibuat")}
+                        </p>
+                        <p className="mt-1 text-base">
+                            {
+                                formatDate(unit.created_at)
+                            }
+                        </p>
+                    </div>
+                    <div>
+                        <p className="text-sm font-medium text-muted-foreground">
+                            {t("page.unit.dialog_modal.detail_dialog.updated_at_label", "Tanggal Diperbarui")}
+                        </p>
+                        <p className="mt-1 text-base">
+                            {
+                                formatDate(unit.updated_at)
+                            }
+                        </p>
+                    </div>
+
+                </div>
             </DialogContent>
         </Dialog>
     );

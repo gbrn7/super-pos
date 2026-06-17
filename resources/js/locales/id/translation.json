@@ -458,14 +458,16 @@
         "dialog_title": "Detail Produk",
         "dialog_desc": "Detail data produk",
         "name_label":"Nama",
-        "image_label":"Gambar",
+        "barcode_label":"Barcode",
+        "sku_label":"SKU",
+        "category_name_label":"Kategori",
         "unit_label":"Satuan",
-        "category_label":"Kategori",
         "stock_label":"Stok",
         "cost_price_label":"Harga Modal",
-        "price_label":"Harga",
+        "price_label":"Harga Jual",
+        "image_label":"Gambar",
         "is_active_label":"Status",
-        "is_unlimited_label":"Status Stok",
+        "is_unlimited_label":"Tipe Stok",
         "desc_label":"Deskripsi",
         "created_at_label":"Tanggal Dibuat",
         "updated_at_label": "Tanggal Diperbarui"
@@ -628,7 +630,9 @@
         "dialog_title": "Detail Peran",
         "dialog_desc": "Detail data peran",
         "name_label":"Nama",
-        "created_at_label":"Tanggal Dibuat"
+        "guard_name":"Nama Garda",
+        "created_at_label":"Tanggal Dibuat",
+        "updated_at_label":"Tanggal Diperbarui"
       }, 
       "delete_dialog": {
         "dialog_button": "Hapus Data",

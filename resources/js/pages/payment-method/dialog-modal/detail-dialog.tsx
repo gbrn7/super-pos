@@ -29,62 +29,63 @@ export function DetailDialog({
         <Dialog open={isOpen} onOpenChange={onOpenChange}>
             <DialogContent showCloseButton={true}>
                 <DialogHeader>
-                    <DialogTitle>{t("page.payment_method.dialog_modal.detail_dialog.dialog_title", "Detail Metode Pembayaran")}</DialogTitle>
-                    <DialogContent>
-                        <div>
-                            <p className="text-sm font-medium text-muted-foreground">
-                                {t("page.payment_method.dialog_modal.detail_dialog.name_label", "Nama")}
-                            </p>
-                            <p className="mt-1 text-base">{paymentMethod.name}</p>
-                        </div>
-
-                        <div>
-                            <p className="text-sm font-medium text-muted-foreground">
-                                {t("page.payment_method.dialog_modal.detail_dialog.image_label", "Gambar")}
-                            </p>
-                            <div className="mt-2">
-                                {paymentMethod.image ? (
-                                    <img src={paymentMethod.image} alt={paymentMethod.name} className="h-32 w-32 object-cover rounded" />
-                                ) : <p className="text-sm font-medium text-muted-foreground">-</p>}
-                            </div>
-                        </div>
-
-                        <div>
-                            <p className="text-sm font-medium text-muted-foreground">
-                                {t("page.payment_method.dialog_modal.detail_dialog.desc_label", "Nama")}
-                            </p>
-                            <p className="mt-1 text-base">
-                                {paymentMethod.desc || '-'}
-                            </p>
-                        </div>
-
-
-                        <div>
-                            <p className="text-sm font-medium text-muted-foreground">
-                                {t("page.payment_method.dialog_modal.detail_dialog.created_at_label", "Tanggal Dibuat")}
-                            </p>
-                            <p className="mt-1 text-base">
-                                {
-                                    formatDate(paymentMethod.created_at)
-                                }
-                            </p>
-                        </div>
-
-
-
-                        <div>
-                            <p className="text-sm font-medium text-muted-foreground">
-                                {t("page.payment_method.dialog_modal.detail_dialog.updated_at_label", "Tanggal Diperbarui")}
-                            </p>
-                            <p className="mt-1 text-base">
-                                {
-                                    formatDate(paymentMethod.updated_at)
-                                }
-                            </p>
-                        </div>
-
-                    </DialogContent>
+                    <DialogTitle>{t("page.payment_method.dialog_modal.detail_dialog.dialog_title", "Detail Metode Pembayaran")}
+                    </DialogTitle>
                 </DialogHeader>
+                <div className='dialog-body grid center grid-cols-1 md:grid-cols-2'>
+                    <div>
+                        <p className="text-sm font-medium text-muted-foreground">
+                            {t("page.payment_method.dialog_modal.detail_dialog.name_label", "Nama")}
+                        </p>
+                        <p className="mt-1 text-base">{paymentMethod.name}</p>
+                    </div>
+
+
+                    <div>
+                        <p className="text-sm font-medium text-muted-foreground">
+                            {t("page.payment_method.dialog_modal.detail_dialog.desc_label", "Nama")}
+                        </p>
+                        <p className="mt-1 text-base">
+                            {paymentMethod.desc || '-'}
+                        </p>
+                    </div>
+
+
+                    <div>
+                        <p className="text-sm font-medium text-muted-foreground">
+                            {t("page.payment_method.dialog_modal.detail_dialog.created_at_label", "Tanggal Dibuat")}
+                        </p>
+                        <p className="mt-1 text-base">
+                            {
+                                formatDate(paymentMethod.created_at)
+                            }
+                        </p>
+                    </div>
+
+
+
+                    <div>
+                        <p className="text-sm font-medium text-muted-foreground">
+                            {t("page.payment_method.dialog_modal.detail_dialog.updated_at_label", "Tanggal Diperbarui")}
+                        </p>
+                        <p className="mt-1 text-base">
+                            {
+                                formatDate(paymentMethod.updated_at)
+                            }
+                        </p>
+                    </div>
+
+                    <div>
+                        <p className="text-sm font-medium text-muted-foreground">
+                            {t("page.payment_method.dialog_modal.detail_dialog.image_label", "Gambar")}
+                        </p>
+                        <div className="mt-2">
+                            {paymentMethod.image ? (
+                                <img src={paymentMethod.image} alt={paymentMethod.name} className="h-32 w-32 object-cover rounded" />
+                            ) : <p className="text-sm font-medium text-muted-foreground">-</p>}
+                        </div>
+                    </div>
+                </div>
             </DialogContent>
         </Dialog>
     );
