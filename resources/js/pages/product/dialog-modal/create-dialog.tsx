@@ -13,7 +13,7 @@ import {
 import { Field, FieldGroup } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 import { store as storeProduct } from '@/routes/apiProducts';
-import type { ProductForm, ProductErrorForm } from '@/support/interfaces/request/product';
+import { type ProductForm, type ProductErrorForm, ProductSchema } from '@/support/interfaces/request/product';
 import { useTranslation } from 'react-i18next';
 import { Spinner } from '@/components/ui/spinner';
 import axiosInstance from '@/lib/axios';
@@ -29,7 +29,6 @@ import { Category } from '@/support/models/category';
 import { Textarea } from '@/components/ui/textarea';
 import { Switch } from '@/components/ui/switch';
 import { NumericFormat } from "react-number-format";
-import { Combobox, ComboboxContent, ComboboxEmpty, ComboboxInput, ComboboxItem, ComboboxList } from '@/components/ui/combobox';
 
 interface CreateDialogProps {
     onSuccess: () => void;
@@ -37,13 +36,15 @@ interface CreateDialogProps {
     categories: Category[];
 }
 
+
+
 export function CreateDialog({ onSuccess, units, categories }: CreateDialogProps) {
     const { t } = useTranslation();
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState<boolean>(false);
-    const [imageFile, setImageFile] = useState<File | null>(null);
     const [imagePreview, setImagePreview] = useState<string>('');
-    const [formData, setFormData] = useState<ProductForm>({
+
+    const defaultFormData: ProductForm = {
         category_id: null,
         unit_id: null,
         name: '',
@@ -55,9 +56,9 @@ export function CreateDialog({ onSuccess, units, categories }: CreateDialogProps
         image: null,
         desc: '',
         barcode: ''
-    });
+    }
 
-    const [errorForm, setErrorForm] = useState<ProductErrorForm>({
+    const defaultErrorForm: ProductErrorForm = {
         category_id: '',
         unit_id: '',
         name: '',
@@ -69,21 +70,12 @@ export function CreateDialog({ onSuccess, units, categories }: CreateDialogProps
         image: '',
         desc: '',
         barcode: ''
-    });
+    }
+    const [formData, setFormData] = useState<ProductForm>(defaultFormData);
 
-    const productSchema = z.object({
-        category_id: z.number(t("validation.product.required.category_id", "Kategori tidak boleh kosong")),
-        unit_id: z.number(t("validation.product.required.unit_id", "Satuan tidak boleh kosong")),
-        name: z.string().trim().min(1, t("validation.product.required.name", "Nama tidak boleh kosong")),
-        is_active: z.boolean(),
-        is_unlimited: z.boolean(),
-        stock: z.number(t("validation.product.required.stock", "Stok tidak boleh kosong")).min(0, t("validation.product.required.min_stock", "Minimal stok 0")),
-        cost_price: z.number(t("validation.product.required.cost_price", "Harga modal tidak boleh kosong")).min(0, t("validation.product.required.min_price", "Minimal harga jual Rp 0")),
-        price: z.number(t("validation.product.required.price", "Harga jual tidak boleh kosong")).min(0, t("validation.product.required.min_cost_price", "Minimal harga jual Rp 0")),
-        image: z.file().nullable(),
-        barcode: z.string().nullable(),
-        desc: z.string().nullable(),
-    });
+    const [errorForm, setErrorForm] = useState<ProductErrorForm>(defaultErrorForm);
+
+
 
     const handleChange = (
         e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -103,7 +95,12 @@ export function CreateDialog({ onSuccess, units, categories }: CreateDialogProps
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files.length > 0) {
             const file = e.target.files[0];
-            setImageFile(file);
+            setFormData(
+                (prev) => ({
+                    ...prev,
+                    image: file
+                })
+            );
             const reader = new FileReader();
             reader.onloadend = () => {
                 setImagePreview(reader.result as string);
@@ -116,22 +113,10 @@ export function CreateDialog({ onSuccess, units, categories }: CreateDialogProps
 
         e.preventDefault();
 
-        const resultValidation = productSchema.safeParse(formData);
+        const resultValidation = ProductSchema.safeParse(formData);
 
         if (!resultValidation.success) {
-            const fieldErrors: ProductErrorForm = {
-                category_id: '',
-                unit_id: '',
-                name: '',
-                is_active: '',
-                is_unlimited: '',
-                stock: '',
-                price: '',
-                cost_price: '',
-                image: '',
-                desc: '',
-                barcode: ''
-            };
+            const fieldErrors: ProductErrorForm = defaultErrorForm;
 
             resultValidation.error.issues.forEach((error) => {
                 const fieldName = error.path[0] as keyof ProductForm;
@@ -148,7 +133,27 @@ export function CreateDialog({ onSuccess, units, categories }: CreateDialogProps
             setLoading(true);
 
 
-            const res = await axiosInstance.post<ResponseApi<Product>>(storeProduct().url, formData);
+            const res = await axiosInstance.post<ResponseApi<Product>>(
+                storeProduct().url,
+                {
+                    category_id: formData.category_id,
+                    unit_id: formData.unit_id,
+                    name: formData.name,
+                    is_active: formData.is_active ? "1" : "0",
+                    is_unlimited: formData.is_unlimited ? "1" : "0",
+                    stock: formData.stock,
+                    price: formData.price,
+                    cost_price: formData.cost_price,
+                    image: formData.image,
+                    desc: formData.desc,
+                    barcode: formData.barcode
+                },
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    },
+                }
+            );
 
 
             if (!res.data.success) {
@@ -157,20 +162,7 @@ export function CreateDialog({ onSuccess, units, categories }: CreateDialogProps
             }
 
             showSuccessToast(res.data.message)
-            setFormData({
-                category_id: null,
-                unit_id: null,
-                name: '',
-                is_active: true,
-                is_unlimited: false,
-                stock: null,
-                price: null,
-                cost_price: null,
-                image: null,
-                desc: '',
-                barcode: ''
-            });
-            setImageFile(null);
+            setFormData(defaultFormData);
             setImagePreview('');
             setOpen(false);
             onSuccess();
@@ -179,8 +171,10 @@ export function CreateDialog({ onSuccess, units, categories }: CreateDialogProps
             handleApiError(error)
         } finally {
             setLoading(false);
+            setErrorForm(defaultErrorForm);
         }
     };
+
 
     return (
         <Dialog open={open} onOpenChange={setOpen} >
@@ -245,20 +239,27 @@ export function CreateDialog({ onSuccess, units, categories }: CreateDialogProps
                             )}
                         </Field>
                         <Field>
-                            <label htmlFor="barcode" className="text-sm">
-                                {t("page.product.dialog_modal.create_dialog.barcode_input_label", "Nama")}
+                            <label htmlFor="stock" className="text-sm">
+                                {t("page.product.dialog_modal.create_dialog.stock_input_label", "Stok")}
+                                <span className="text-red-500"> *</span>
                             </label>
-                            <Input
-                                id="barcode"
-                                name="barcode"
-                                placeholder={t("page.product.dialog_modal.create_dialog.barcode_input_placeholder", "Masukkan barcode produk (Opsional)")}
-                                value={formData.barcode}
-                                onChange={handleChange}
+                            <NumericFormat
+                                id="stock"
+                                name="stock"
+                                customInput={Input}
+                                placeholder={t("page.product.dialog_modal.create_dialog.stock_input_placeholder", "Masukkan stok produk")}
+                                value={formData.stock}
                                 disabled={loading}
-                                className={`${errorForm.barcode && 'border-red-500'}`}
+                                onValueChange={(values) => {
+                                    setFormData((prev) => ({
+                                        ...prev,
+                                        stock: values.floatValue ?? 0,
+                                    }));
+                                }}
+                                className={`${errorForm.stock && 'border-red-500'}`}
                             />
-                            {errorForm.barcode && (
-                                <ErrorFormInfo message={errorForm.barcode} />
+                            {errorForm.stock && (
+                                <ErrorFormInfo message={errorForm.stock} />
                             )}
                         </Field>
                         <Field>
@@ -358,30 +359,6 @@ export function CreateDialog({ onSuccess, units, categories }: CreateDialogProps
                             )}
                         </Field>
                         <Field>
-                            <label htmlFor="stock" className="text-sm">
-                                {t("page.product.dialog_modal.create_dialog.stock_input_label", "Stok")}
-                                <span className="text-red-500"> *</span>
-                            </label>
-                            <NumericFormat
-                                id="stock"
-                                name="stock"
-                                customInput={Input}
-                                placeholder={t("page.product.dialog_modal.create_dialog.stock_input_placeholder", "Masukkan stok produk")}
-                                value={formData.stock}
-                                disabled={loading}
-                                onValueChange={(values) => {
-                                    setFormData((prev) => ({
-                                        ...prev,
-                                        stock: values.floatValue ?? 0,
-                                    }));
-                                }}
-                                className={`${errorForm.price && 'border-red-500'}`}
-                            />
-                            {errorForm.stock && (
-                                <ErrorFormInfo message={errorForm.stock} />
-                            )}
-                        </Field>
-                        <Field>
                             <label htmlFor="is_unlimited" className="text-sm">
                                 {t("page.product.dialog_modal.create_dialog.is_unlimited_input_label", "Stok Tidak Terbatas")}
                                 <span className="text-red-500"> *</span>
@@ -395,6 +372,23 @@ export function CreateDialog({ onSuccess, units, categories }: CreateDialogProps
                             />
                             {errorForm.is_unlimited && (
                                 <ErrorFormInfo message={errorForm.is_unlimited} />
+                            )}
+                        </Field>
+                        <Field>
+                            <label htmlFor="barcode" className="text-sm">
+                                {t("page.product.dialog_modal.create_dialog.barcode_input_label", "Nama")}
+                            </label>
+                            <Input
+                                id="barcode"
+                                name="barcode"
+                                placeholder={t("page.product.dialog_modal.create_dialog.barcode_input_placeholder", "Masukkan barcode produk (Opsional)")}
+                                value={formData.barcode}
+                                onChange={handleChange}
+                                disabled={loading}
+                                className={`${errorForm.barcode && 'border-red-500'}`}
+                            />
+                            {errorForm.barcode && (
+                                <ErrorFormInfo message={errorForm.barcode} />
                             )}
                         </Field>
                         <Field>

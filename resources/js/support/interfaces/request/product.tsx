@@ -1,3 +1,6 @@
+import { t } from "i18next";
+import z from "zod";
+
 export interface ProductQueryParam {
   field: string;
   keyword: string;
@@ -40,3 +43,18 @@ export interface ProductErrorForm {
   desc: string;
   image: string;
 }
+
+export const ProductSchema = z.object({
+  category_id: z.number(t("validation.product.required.category_id", "Kategori tidak boleh kosong")),
+  unit_id: z.number(t("validation.product.required.unit_id", "Satuan tidak boleh kosong")),
+  name: z.string().trim().min(1, t("validation.product.required.name", "Nama tidak boleh kosong")),
+  is_active: z.boolean(),
+  is_unlimited: z.boolean(),
+  stock: z.number(t("validation.product.required.stock", "Stok tidak boleh kosong")).min(0, t("validation.product.required.min_stock", "Minimal stok 0")),
+  cost_price: z.number(t("validation.product.required.cost_price", "Harga modal tidak boleh kosong")).min(0, t("validation.product.required.min_price", "Minimal harga jual Rp 0")),
+  price: z.number(t("validation.product.required.price", "Harga jual tidak boleh kosong")).min(0, t("validation.product.required.min_cost_price", "Minimal harga jual Rp 0")),
+  image: z.file().nullable(),
+  barcode: z.string().nullable(),
+  desc: z.string().nullable(),
+});
+
