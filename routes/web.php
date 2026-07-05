@@ -85,9 +85,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
             Route::get('/download/productImportTemplate', [ApiProductController::class, 'getProductImportTemplate'])->name('apiProducts.getProductImportTemplate');
 
+            Route::get('/download/export-products', [ApiProductController::class, 'exportProductExcelData'])->name('apiProducts.exportProductsExcelData');
+
+            Route::get('/download/export-products-pdf', [ApiProductController::class, 'exportProductPdfData'])->name('apiProducts.exportProductsPdfData');
+
             Route::post('/import-products', [ApiProductController::class, 'importProductExcelData'])->name('apiProducts.importProductsExcelData');
         });
     });
 });
 
-require __DIR__ . '/settings.php';
+require __DIR__.'/settings.php';

@@ -2,7 +2,6 @@
 
 namespace App\Services;
 
-use App\Http\Resources\ProductResource;
 use App\Imports\ProductImport;
 use App\Models\Product;
 use App\Support\Constants\Constants;
@@ -15,21 +14,21 @@ use App\Support\Models\Category\GetCategoryReqModel;
 use App\Support\Models\Product\GetProductReqModel;
 use App\Support\Models\Unit\GetUnitReqModel;
 use App\Support\Utils\CheckException;
-use App\Support\Utils\PaginationResource;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Exception;
+use Illuminate\Contracts\Pagination\Paginator;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Maatwebsite\Excel\Facades\Excel;
-use Illuminate\Contracts\Pagination\Paginator;
-use Illuminate\Http\Request;
-use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\DB;
-use PhpOffice\PhpSpreadsheet\Reader\BaseReader;
-
-use function Illuminate\Log\log;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class ProductService implements ProductServiceInterface
 {
@@ -66,7 +65,6 @@ class ProductService implements ProductServiceInterface
           Response::HTTP_INTERNAL_SERVER_ERROR
         );
       }
-
 
       // Generate SKU from product name
       $data['sku'] = Str::of($data['name'])
@@ -199,7 +197,7 @@ class ProductService implements ProductServiceInterface
           if ($row['nama'] == null) {
             break;
           }
-          //setup category
+          // setup category
           $categoryName = $row['kategori'];
           if ($categoryName == Constants::EMPTY_STRING_VALUE) {
             throw new Exception(
@@ -207,11 +205,11 @@ class ProductService implements ProductServiceInterface
               Response::HTTP_UNPROCESSABLE_ENTITY
             );
           }
-          //check with case insensitive if category already exists
+          // check with case insensitive if category already exists
           $category = $categories->first(function ($item) use ($categoryName) {
             return strcasecmp($item->name, $categoryName) === 0;
           });
-          if (!$category) {
+          if (! $category) {
             $newCategory = $this->categoryRepository->create([
               'name' => $categoryName,
             ]);
@@ -221,7 +219,7 @@ class ProductService implements ProductServiceInterface
             $categoryId = $category->id;
           }
 
-          //setup unit
+          // setup unit
           $unitName = $row['satuan'];
           if ($unitName == Constants::EMPTY_STRING_VALUE) {
             throw new Exception(
@@ -229,11 +227,11 @@ class ProductService implements ProductServiceInterface
               Response::HTTP_UNPROCESSABLE_ENTITY
             );
           }
-          //check with case insensitive if unit already exists
+          // check with case insensitive if unit already exists
           $unit = $units->first(function ($item) use ($unitName) {
             return strcasecmp($item->name, $unitName) === 0;
           });
-          if (!$unit) {
+          if (! $unit) {
             $newUnit = $this->unitRepository->create([
               'name' => $unitName,
             ]);
@@ -245,10 +243,10 @@ class ProductService implements ProductServiceInterface
 
           $isActive = $row['status'];
           switch ($isActive) {
-            case constants::ACTIVE_PRODUCT_TEMPLATE_VALUE:
+            case Constants::ACTIVE_PRODUCT_TEMPLATE_VALUE:
               $isActive = Constants::TRUE_VALUE;
               break;
-            case constants::INACTIVE_PRODUCT_TEMPLATE_VALUE:
+            case Constants::INACTIVE_PRODUCT_TEMPLATE_VALUE:
               $isActive = Constants::FALSE_VALUE;
               break;
             default:
@@ -257,10 +255,10 @@ class ProductService implements ProductServiceInterface
 
           $is_unlimited = $row['tipe_stok'];
           switch ($is_unlimited) {
-            case constants::UNLIMITED_TYPE_PRODUCT_TEMPLATE_VALUE:
+            case Constants::UNLIMITED_TYPE_PRODUCT_TEMPLATE_VALUE:
               $is_unlimited = Constants::TRUE_VALUE;
               break;
-            case constants::LIMITED_TYPE_PRODUCT_TEMPLATE_VALUE:
+            case Constants::LIMITED_TYPE_PRODUCT_TEMPLATE_VALUE:
               $is_unlimited = Constants::FALSE_VALUE;
               break;
             default:
@@ -282,7 +280,7 @@ class ProductService implements ProductServiceInterface
             'updated_at' => $unixTime,
           ];
 
-          if ($newProduct['name'] == constants::EMPTY_STRING_VALUE) {
+          if ($newProduct['name'] == Constants::EMPTY_STRING_VALUE) {
             throw new Exception(
               trans('message.error.blank_name_template_validation'),
               Response::HTTP_UNPROCESSABLE_ENTITY
@@ -301,7 +299,6 @@ class ProductService implements ProductServiceInterface
             ->headline()
             ->replaceMatches('/[^A-Z]/', '') . '-' . strtoupper(Str::random(8));
 
-
           $newData->push($newProduct);
         }
       }
@@ -319,6 +316,66 @@ class ProductService implements ProductServiceInterface
         $th = new Exception(trans('message.error.duplicate_data_error_import'), Response::HTTP_INTERNAL_SERVER_ERROR);
       }
 
+      throw CheckException::Check($th);
+    }
+  }
+
+  public function exportExcel(): BinaryFileResponse
+  {
+    try {
+      $request = new GetProductReqModel(new Request(['limit' => null]));
+      $products = $this->productRepository->getAllByIndex($request);
+
+      $spreadsheet = new Spreadsheet;
+      $sheet = $spreadsheet->getActiveSheet();
+
+      $sheet->fromArray([
+        ['Nama', 'SKU', 'Barcode', 'Kategori', 'Satuan', 'Stok', 'Harga Jual', 'Harga Modal', 'Status', 'Tipe Stok', 'Deskripsi'],
+      ], null, 'A1');
+
+      $rows = [];
+      foreach ($products as $product) {
+        $rows[] = [
+          $product->name,
+          $product->sku,
+          $product->barcode,
+          $product->category?->name ?? Constants::EMPTY_STRING_VALUE,
+          $product->unit?->name ?? Constants::EMPTY_STRING_VALUE,
+          $product->stock,
+          $product->price,
+          $product->cost_price,
+          $product->is_active ? 'Aktif' : 'Tidak Aktif',
+          $product->is_unlimited ? 'Tidak Terbatas' : 'Terbatas',
+          $product->desc,
+        ];
+      }
+
+      $sheet->fromArray($rows, null, 'A2');
+
+      $temporaryFilePath = tempnam(sys_get_temp_dir(), 'products-export-') . '.xlsx';
+      $writer = new Xlsx($spreadsheet);
+      $writer->save($temporaryFilePath);
+
+      return response()->download($temporaryFilePath, 'products-export.xlsx')->deleteFileAfterSend(true);
+    } catch (\Throwable $th) {
+      throw CheckException::Check($th);
+    }
+  }
+
+  public function exportPdf(): BinaryFileResponse
+  {
+    try {
+      $request = new GetProductReqModel(new Request(['limit' => null]));
+      $products = $this->productRepository->getAllByIndex($request);
+
+      $temporaryFilePath = tempnam(sys_get_temp_dir(), 'products-export-') . '.pdf';
+
+      Pdf::loadView('exports.products-pdf', ['products' => $products])
+        ->setPaper('a4', 'landscape')
+        ->save($temporaryFilePath);
+
+      return response()->download($temporaryFilePath, 'products-export.pdf')->deleteFileAfterSend(true);
+    } catch (\Throwable $th) {
       throw CheckException::Check($th);
     }
   }

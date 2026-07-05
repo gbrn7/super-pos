@@ -27,22 +27,22 @@ class ApiProductController extends Controller implements HasMiddleware
     {
         return [
             new Middleware(
-                'permission:' . ProductPermissionEnums::READ_PRODUCT->value,
-                only: ['index', 'show']
+                'permission:'.ProductPermissionEnums::READ_PRODUCT->value,
+                only: ['index', 'show', 'exportProductExcelData', 'exportProductPdfData']
             ),
 
             new Middleware(
-                'permission:' . ProductPermissionEnums::CREATE_PRODUCT->value,
-                only: ['store']
+                'permission:'.ProductPermissionEnums::CREATE_PRODUCT->value,
+                only: ['store', 'getProductImportTemplate', 'importProductExcelData']
             ),
 
             new Middleware(
-                'permission:' . ProductPermissionEnums::UPDATE_PRODUCT->value,
+                'permission:'.ProductPermissionEnums::UPDATE_PRODUCT->value,
                 only: ['update']
             ),
 
             new Middleware(
-                'permission:' . ProductPermissionEnums::DELETE_PRODUCT->value,
+                'permission:'.ProductPermissionEnums::DELETE_PRODUCT->value,
                 only: ['destroy', 'bulkDelete']
             ),
         ];
@@ -143,7 +143,7 @@ class ApiProductController extends Controller implements HasMiddleware
     public function getProductImportTemplate()
     {
         $fileName = 'import-products-template.xlsx';
-        $publiFilePath = 'template/' . $fileName;
+        $publiFilePath = 'template/'.$fileName;
 
         if (! file_exists($publiFilePath)) {
             return ResponseApi::make(false, trans('message.error.not_found', ['resource' => 'file']), null, Response::HTTP_INTERNAL_SERVER_ERROR);
@@ -160,6 +160,24 @@ class ApiProductController extends Controller implements HasMiddleware
             $createdCount = $this->productService->importExcel($file);
 
             return ResponseApi::make(true, trans('message.success.bulk_created', ['count' => $createdCount]), null, Response::HTTP_CREATED);
+        } catch (\Throwable $th) {
+            return ResponseApi::make(false, $th->getMessage(), null, $th->getcode());
+        }
+    }
+
+    public function exportProductExcelData()
+    {
+        try {
+            return $this->productService->exportExcel();
+        } catch (\Throwable $th) {
+            return ResponseApi::make(false, $th->getMessage(), null, $th->getcode());
+        }
+    }
+
+    public function exportProductPdfData()
+    {
+        try {
+            return $this->productService->exportPdf();
         } catch (\Throwable $th) {
             return ResponseApi::make(false, $th->getMessage(), null, $th->getcode());
         }

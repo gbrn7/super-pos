@@ -7,6 +7,7 @@ use App\Support\Models\Product\GetProductReqModel;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Collection;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 interface ProductServiceInterface
 {
@@ -44,4 +45,14 @@ interface ProductServiceInterface
      * Import products by excel file.
      */
     public function importExcel(UploadedFile $file): int;
+
+    /**
+     * Export products to excel file.
+     */
+    public function exportExcel(): BinaryFileResponse;
+
+    /**
+     * Export products to pdf file.
+     */
+    public function exportPdf(): BinaryFileResponse;
 }
