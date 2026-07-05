@@ -139,7 +139,7 @@ class ApiCategoryController extends Controller implements HasMiddleware
 
     public function getCategoryImportTemplate()
     {
-        $fileName = 'import-category-template.xlsx';
+        $fileName = 'import-categories-template.xlsx';
         $publiFilePath = 'template/' . $fileName;
 
         if (! file_exists($publiFilePath)) {

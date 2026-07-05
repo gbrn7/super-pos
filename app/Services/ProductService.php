@@ -7,9 +7,13 @@ use App\Imports\ProductImport;
 use App\Models\Product;
 use App\Support\Constants\Constants;
 use App\Support\Constants\ErrorCode;
+use App\Support\Interfaces\Repositories\CategoryRepositoryInterface;
 use App\Support\Interfaces\Repositories\ProductRepositoryInterface;
+use App\Support\Interfaces\Repositories\UnitRepositoryInterface;
 use App\Support\Interfaces\Services\ProductServiceInterface;
+use App\Support\Models\Category\GetCategoryReqModel;
 use App\Support\Models\Product\GetProductReqModel;
+use App\Support\Models\Unit\GetUnitReqModel;
 use App\Support\Utils\CheckException;
 use App\Support\Utils\PaginationResource;
 use Carbon\Carbon;
@@ -20,21 +24,26 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Contracts\Pagination\Paginator;
+use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
+use PhpOffice\PhpSpreadsheet\Reader\BaseReader;
 
 use function Illuminate\Log\log;
 
 class ProductService implements ProductServiceInterface
 {
-  public function __construct(protected ProductRepositoryInterface $productRepository) {}
+  public function __construct(
+    protected ProductRepositoryInterface $productRepository,
+    protected CategoryRepositoryInterface $categoryRepository,
+    protected UnitRepositoryInterface $unitRepository
+  ) {}
 
   public function getAllByIndex(GetProductReqModel $request): Paginator|Collection
   {
     try {
       return $this->productRepository->getAllByIndex($request);
     } catch (\Throwable $th) {
-      dd($th->getMessage());
-      log($th->getMessage());
       throw CheckException::Check($th);
     }
   }
@@ -51,11 +60,13 @@ class ProductService implements ProductServiceInterface
   public function create(array $data): Product
   {
     try {
-      $isProductExist = $this->productRepository->getByName($data['name']);
-
-      if (isset($isProductExist)) {
-        throw new Exception(trans('message.error.data_already_exists'), Response::HTTP_UNPROCESSABLE_ENTITY);
+      if ($data['cost_price'] > $data['price']) {
+        throw new Exception(
+          trans('message.error.cost_price_greater_than_price_template_validaion'),
+          Response::HTTP_INTERNAL_SERVER_ERROR
+        );
       }
+
 
       // Generate SKU from product name
       $data['sku'] = Str::of($data['name'])
@@ -81,6 +92,13 @@ class ProductService implements ProductServiceInterface
 
       if (! isset($product)) {
         throw new Exception(trans('message.error.data_not_found'), Response::HTTP_NOT_FOUND);
+      }
+
+      if ($data['cost_price'] > $data['price']) {
+        throw new Exception(
+          trans('message.error.cost_price_greater_than_price_template_validaion'),
+          Response::HTTP_INTERNAL_SERVER_ERROR
+        );
       }
 
       // Generate new SKU if product name changed
@@ -140,7 +158,7 @@ class ProductService implements ProductServiceInterface
   public function bulkDelete(array $ids): int
   {
     try {
-      $products = Product::whereIn('id', $ids)->get();
+      $products = $this->productRepository->getByIds($ids);
 
       $ids = Collection::make($ids);
 
@@ -169,20 +187,122 @@ class ProductService implements ProductServiceInterface
 
       $unixTime = Carbon::now()->unix();
 
+      $getCategoryReqModel = new GetCategoryReqModel(new Request(['limit' => null]));
+      $getUnitReqModel = new GetUnitReqModel(new Request(['limit' => null]));
+
+      $categories = $this->categoryRepository->getAllByIndex($getCategoryReqModel);
+      $units = $this->unitRepository->getAllByIndex($getUnitReqModel);
+
+      DB::beginTransaction();
       foreach ($raws as $raw) {
         foreach ($raw as $row) {
+          if ($row['nama'] == null) {
+            break;
+          }
+          //setup category
+          $categoryName = $row['kategori'];
+          if ($categoryName == Constants::EMPTY_STRING_VALUE) {
+            throw new Exception(
+              trans('message.error.blank_category_template_validation'),
+              Response::HTTP_UNPROCESSABLE_ENTITY
+            );
+          }
+          //check with case insensitive if category already exists
+          $category = $categories->first(function ($item) use ($categoryName) {
+            return strcasecmp($item->name, $categoryName) === 0;
+          });
+          if (!$category) {
+            $newCategory = $this->categoryRepository->create([
+              'name' => $categoryName,
+            ]);
+            $categoryId = $newCategory->id;
+            $categories->push($newCategory);
+          } else {
+            $categoryId = $category->id;
+          }
 
-          $newData->push([
-            'category_id' => $row['category_id'],
-            'unit_id' => $row['unit_id'],
-            'name' => $row['name'],
-            'is_active' => $row['is_active'] ?? 1,
-            'stock' => $row['stock'] ?? 0,
-            'price' => $row['price'],
-            'cost_price' => $row['cost_price'],
+          //setup unit
+          $unitName = $row['satuan'];
+          if ($unitName == Constants::EMPTY_STRING_VALUE) {
+            throw new Exception(
+              trans('message.error.blank_unit_template_validation'),
+              Response::HTTP_UNPROCESSABLE_ENTITY
+            );
+          }
+          //check with case insensitive if unit already exists
+          $unit = $units->first(function ($item) use ($unitName) {
+            return strcasecmp($item->name, $unitName) === 0;
+          });
+          if (!$unit) {
+            $newUnit = $this->unitRepository->create([
+              'name' => $unitName,
+            ]);
+            $unitId = $newUnit->id;
+            $units->push($newUnit);
+          } else {
+            $unitId = $unit->id;
+          }
+
+          $isActive = $row['status'];
+          switch ($isActive) {
+            case constants::ACTIVE_PRODUCT_TEMPLATE_VALUE:
+              $isActive = Constants::TRUE_VALUE;
+              break;
+            case constants::INACTIVE_PRODUCT_TEMPLATE_VALUE:
+              $isActive = Constants::FALSE_VALUE;
+              break;
+            default:
+              $isActive = Constants::TRUE_VALUE;
+          }
+
+          $is_unlimited = $row['tipe_stok'];
+          switch ($is_unlimited) {
+            case constants::UNLIMITED_TYPE_PRODUCT_TEMPLATE_VALUE:
+              $is_unlimited = Constants::TRUE_VALUE;
+              break;
+            case constants::LIMITED_TYPE_PRODUCT_TEMPLATE_VALUE:
+              $is_unlimited = Constants::FALSE_VALUE;
+              break;
+            default:
+              $is_unlimited = Constants::FALSE_VALUE;
+          }
+
+          $newProduct = [
+            'name' => $row['nama'],
+            'category_id' => $categoryId,
+            'unit_id' => $unitId,
+            'barcode' => $row['barcode_opsional'],
+            'stock' => $row['stok'] ?? Constants::EMPTY_NUMBER_VALUE,
+            'price' => $row['harga_jual'] ?? Constants::EMPTY_NUMBER_VALUE,
+            'cost_price' => $row['harga_modal'] ?? Constants::EMPTY_NUMBER_VALUE,
+            'is_active' => $isActive,
+            'is_unlimited' => $is_unlimited,
+            'desc' => $row['deskripsi_opsional'] ?? Constants::EMPTY_STRING_VALUE,
             'created_at' => $unixTime,
             'updated_at' => $unixTime,
-          ]);
+          ];
+
+          if ($newProduct['name'] == constants::EMPTY_STRING_VALUE) {
+            throw new Exception(
+              trans('message.error.blank_name_template_validation'),
+              Response::HTTP_UNPROCESSABLE_ENTITY
+            );
+          }
+
+          if ($newProduct['cost_price'] > $newProduct['price']) {
+            throw new Exception(
+              sprintf(trans('message.error.cost_price_greater_than_price_template_validaion'), $newProduct['name']),
+              Response::HTTP_UNPROCESSABLE_ENTITY
+            );
+          }
+
+          // Generate SKU from product name
+          $newProduct['sku'] = Str::of($newProduct['name'])
+            ->headline()
+            ->replaceMatches('/[^A-Z]/', '') . '-' . strtoupper(Str::random(8));
+
+
+          $newData->push($newProduct);
         }
       }
 
@@ -190,10 +310,11 @@ class ProductService implements ProductServiceInterface
       if (! $isSuccess) {
         throw new Exception(trans('message.error.internal_server_error'), Response::HTTP_INTERNAL_SERVER_ERROR);
       }
+      DB::commit();
 
       return $newData->count();
     } catch (\Throwable $th) {
-
+      DB::rollback();
       if ($th->getCode() === ErrorCode::SQL_UNIQUE_VIOLATION) {
         $th = new Exception(trans('message.error.duplicate_data_error_import'), Response::HTTP_INTERNAL_SERVER_ERROR);
       }

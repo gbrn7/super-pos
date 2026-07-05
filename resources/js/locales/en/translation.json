@@ -353,7 +353,7 @@
           "category_column_label": "Category",
           "unit_column_label": "Unit",
           "stock_column_label": "Stock",
-          "price_column_label": "Price",
+          "price_column_label": "SellingPrice",
           "cost_price_column_label": "Cost Price",
           "status_column_label": "Status",
           "created_at_column_label": "Created At",

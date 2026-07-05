@@ -24,6 +24,10 @@ return [
         'something_went_wrong' => 'Something went wrong',
         'unauthorized' => 'Unauthorized access',
         'validation' => 'Validation failed',
+        'cost_price_greater_than_price_template_validaion' => 'Cost price of %s product cannot be greater than selling price, please check your template.',
+        'blank_name_template_validation' => 'There are blank names in the template, please check your template.',
+        'blank_category_template_validation' => 'There are blank categories in the template, please check your template.',
+        'blank_unit_template_validation' => 'There are blank units in the template, please check your template.',
     ],
 
 ];

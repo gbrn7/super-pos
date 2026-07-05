@@ -16,7 +16,7 @@ import { Label } from "@/components/ui/label"
 import { Spinner } from "@/components/ui/spinner"
 import axiosInstance from "@/lib/axios"
 import { handleApiError, showSuccessToast } from "@/lib/utils"
-import { getCategoryImportTemplate, importCategoriesExcelData } from '@/routes/apiCategories';
+import { getProductImportTemplate, importProductsExcelData } from '@/routes/apiProducts';
 import { ResponseApi } from '@/support/interfaces/response/Response'
 import { UploadCloud } from "lucide-react"
 import { useState } from 'react';
@@ -44,7 +44,7 @@ export function ImportExcelDialog({ onSuccess }: ImportExcelDialogProps) {
     e.preventDefault();
 
     if (!file) {
-      setErrorForm({ file: t("validation.category.required.file", "File impor tidak boleh kosong") })
+      setErrorForm({ file: t("validation.product.required.file", "File impor tidak boleh kosong") })
       return
     }
 
@@ -54,7 +54,7 @@ export function ImportExcelDialog({ onSuccess }: ImportExcelDialogProps) {
       const formData = new FormData();
       formData.append('file_import', file);
 
-      const res = await axiosInstance.post<ResponseApi<Number>>(importCategoriesExcelData().url, formData, {
+      const res = await axiosInstance.post<ResponseApi<Number>>(importProductsExcelData().url, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -65,7 +65,7 @@ export function ImportExcelDialog({ onSuccess }: ImportExcelDialogProps) {
       setFile(null);
       onSuccess?.();
     } catch (error) {
-      console.error('Error importing categories:', error);
+      console.error('Error importing products:', error);
       handleApiError(error);
     } finally {
       setIsLoading(false);
@@ -77,23 +77,23 @@ export function ImportExcelDialog({ onSuccess }: ImportExcelDialogProps) {
       <DialogTrigger asChild>
         <Button variant="outline">
           <UploadCloud className="h-4" />
-          {t("page.category.dialog_modal.import_excel_dialog.dialog_button", "Impor Excel")}
+          {t("page.product.dialog_modal.import_excel_dialog.dialog_button", "Impor Excel")}
         </Button>
       </DialogTrigger>
       <DialogContent className="sm">
         <DialogHeader>
-          <DialogTitle>{t("page.category.dialog_modal.import_excel_dialog.dialog_title", "Impor Excel")}</DialogTitle>
+          <DialogTitle>{t("page.product.dialog_modal.import_excel_dialog.dialog_title", "Impor Excel")}</DialogTitle>
           <DialogDescription>
-            {t("page.category.dialog_modal.import_excel_dialog.dialog_desc", "Import Excel")}
+            {t("page.product.dialog_modal.import_excel_dialog.dialog_desc", "Import Excel")}
           </DialogDescription>
         </DialogHeader>
         <FieldGroup>
           <Field>
-            <Label htmlFor="file-import">{t("page.category.dialog_modal.import_excel_dialog.template_label", "Templat")}</Label>
-            <p className="text-blue-500"><a href={getCategoryImportTemplate().url}>{t("page.category.dialog_modal.import_excel_dialog.category_template_file", "File templat impor data kategori")}</a></p>
+            <Label htmlFor="file-import">{t("page.product.dialog_modal.import_excel_dialog.template_label", "Templat")}</Label>
+            <p className="text-blue-500"><a href={getProductImportTemplate().url}>{t("page.product.dialog_modal.import_excel_dialog.product_template_file", "File templat impor data produk")}</a></p>
           </Field>
           <Field>
-            <Label htmlFor="file_import">{t("page.category.dialog_modal.import_excel_dialog.file_excel_label", "File Excel")}</Label>
+            <Label htmlFor="file_import">{t("page.product.dialog_modal.import_excel_dialog.file_excel_label", "File Excel")}</Label>
             <Input
               type="file"
               id="file_import"
@@ -109,10 +109,10 @@ export function ImportExcelDialog({ onSuccess }: ImportExcelDialogProps) {
         </FieldGroup>
         <DialogFooter >
           <DialogClose asChild>
-            <Button variant="outline" disabled={isLoading}>{t("page.category.dialog_modal.import_excel_dialog.cancel_button", "Batal")}</Button>
+            <Button variant="outline" disabled={isLoading}>{t("page.product.dialog_modal.import_excel_dialog.cancel_button", "Batal")}</Button>
           </DialogClose>
           <Button onClick={handleSubmit} disabled={isLoading}>
-            {isLoading ? <Spinner /> : t("page.category.dialog_modal.import_excel_dialog.confirm_button", "Impor")}
+            {isLoading ? <Spinner /> : t("page.product.dialog_modal.import_excel_dialog.confirm_button", "Impor")}
           </Button>
         </DialogFooter>
       </DialogContent>

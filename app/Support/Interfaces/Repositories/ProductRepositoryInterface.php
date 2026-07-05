@@ -45,7 +45,12 @@ interface ProductRepositoryInterface
     public function insert(array $data): bool;
 
     /**
-     * Get a product by its name.
+     * Get  product by its name.
      */
     public function getByName(string $name): ?Product;
+
+    /**
+     * Get  product by its ID.
+     */
+    public function getByIds(array $ids): ?Collection;
 }

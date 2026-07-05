@@ -114,4 +114,9 @@ class ProductRepository implements ProductRepositoryInterface
     {
         return Product::where('name', $name)->first();
     }
+
+    public function getByIds(array $ids): ?Collection
+    {
+        return Product::whereIn('id', $ids)->get();
+    }
 }

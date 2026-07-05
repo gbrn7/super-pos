@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Product\BulkDeleteProductRequest;
+use App\Http\Requests\Product\ImportProductRequest;
 use App\Http\Requests\Product\StoreProductRequest;
 use App\Http\Requests\Product\UpdateProductRequest;
 use App\Http\Resources\ProductResource;
@@ -134,6 +135,31 @@ class ApiProductController extends Controller implements HasMiddleware
             $deletedCount = $this->productService->bulkDelete($request->validated('ids'));
 
             return ResponseApi::make(true, trans('message.success.bulk_deleted', ['count' => $deletedCount]), null, Response::HTTP_OK);
+        } catch (\Throwable $th) {
+            return ResponseApi::make(false, $th->getMessage(), null, $th->getcode());
+        }
+    }
+
+    public function getProductImportTemplate()
+    {
+        $fileName = 'import-products-template.xlsx';
+        $publiFilePath = 'template/' . $fileName;
+
+        if (! file_exists($publiFilePath)) {
+            return ResponseApi::make(false, trans('message.error.not_found', ['resource' => 'file']), null, Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+
+        return ResponseApi::download($fileName, $publiFilePath);
+    }
+
+    public function importProductExcelData(ImportProductRequest $request)
+    {
+        try {
+            $file = $request->validated('file_import');
+
+            $createdCount = $this->productService->importExcel($file);
+
+            return ResponseApi::make(true, trans('message.success.bulk_created', ['count' => $createdCount]), null, Response::HTTP_CREATED);
         } catch (\Throwable $th) {
             return ResponseApi::make(false, $th->getMessage(), null, $th->getcode());
         }

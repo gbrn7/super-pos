@@ -66,6 +66,7 @@ import { DeleteDialog } from './dialog-modal/delete-dialog';
 import { DetailDialog } from './dialog-modal/detail-dialog';
 import { EditDialog } from './dialog-modal/edit-dialog';
 import { ExportDropdownMenu } from './export-data-menu/export-dropdown-menu';
+import { ImportExcelDialog } from './dialog-modal/import-excel-dialog';
 
 interface DataTableProps<TData, TValue> {
     columns:
@@ -197,6 +198,9 @@ export function DataTable<TData, TValue>({
         <div className="rounded-2xl border p-3">
             <div className="flex flex-col justify-between gap-3 pb-4">
                 <div className="flex justify-start gap-2 overflow-auto sm:justify-end lg:mt-0">
+                    <Can permission={PERMISSIONENUMS.CATEGORY.CREATE}>
+                        <ImportExcelDialog onSuccess={onRefresh} />
+                    </Can>
                     <Can permission={PERMISSIONENUMS.PRODUCT.READ}>
                         <ExportDropdownMenu data={data} />
                     </Can>

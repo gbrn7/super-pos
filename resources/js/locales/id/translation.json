@@ -364,6 +364,7 @@
         "dialog_title": "Impor Excel",
         "dialog_desc": "Impor data kategori dari file Excel",
         "template_label":"Templat",
+        "category_template_file":"File templat impor data kategori",
         "file_excel_label":"File Excel",
         "cancel_button":"Batal",
         "confirm_button":"Impor"
@@ -381,7 +382,7 @@
         "category_column_label":"Kategori",
         "unit_column_label":"Satuan",
         "stock_column_label":"Stok",
-        "price_column_label":"Harga",
+        "price_column_label":"Harga Jual",
         "cost_price_column_label":"Harga Modal",
         "is_active_column_label":"Status",
         "is_unlimited_column_label":"Tipe Stok",
@@ -491,6 +492,7 @@
         "dialog_title": "Impor Excel",
         "dialog_desc": "Impor data produk dari file Excel",
         "template_label":"Templat",
+        "product_template_file":"File templat impor data produk",
         "file_excel_label":"File Excel",
         "cancel_button":"Batal",
         "confirm_button":"Impor"

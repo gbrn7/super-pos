@@ -23,5 +23,9 @@ return [
         'not_found' => ':resource tidak ditemukan',
         'unauthorized' => 'Anda tidak memiliki izin',
         'validation' => 'Validasi gagal',
+        'cost_price_greater_than_price_template_validaion' => 'Harga modal produk %s tidak boleh lebih besar dari harga jual, silakan periksa kembali templat Anda.',
+        'blank_name_template_validation' => 'Terdapat nama kosong pada templat, silakan periksa kembali templat Anda.',
+        'blank_category_template_validation' => 'Terdapat kategori kosong pada templat, silakan periksa kembali templat Anda.',
+        'blank_unit_template_validation' => 'Terdapat unit kosong pada templat, silakan periksa kembali templat Anda.'
     ],
 ];

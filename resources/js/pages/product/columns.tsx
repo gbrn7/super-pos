@@ -127,20 +127,20 @@ export const columns = (props?: ColumnsProps): ColumnDef<Product>[] => {
             ),
         },
         {
-            id: t("page.product.data_table.columns.price_column_label", "Harga"),
-            accessorKey: 'price',
-            header: ({ column }) => (
-                <ServerSideDataTableHeader column={column} title={t("page.product.data_table.columns.price_column_label", "Harga")} sortKey="price" orderBy={props?.orderBy} order={props?.order} onSortChange={props?.onSortChange} />
-            ),
-            cell: ({ row }) => (formatRupiah(row.original.price))
-        },
-        {
             id: t("page.product.data_table.columns.cost_price_column_label", "Harga Modal"),
             accessorKey: 'cost_price',
             header: ({ column }) => (
                 <ServerSideDataTableHeader column={column} title={t("page.product.data_table.columns.cost_price_column_label", "Harga Modal")} sortKey="cost_price" orderBy={props?.orderBy} order={props?.order} onSortChange={props?.onSortChange} />
             ),
             cell: ({ row }) => (formatRupiah(row.original.cost_price))
+        },
+        {
+            id: t("page.product.data_table.columns.price_column_label", "Harga Jual"),
+            accessorKey: 'price',
+            header: ({ column }) => (
+                <ServerSideDataTableHeader column={column} title={t("page.product.data_table.columns.price_column_label", "Harga Jual")} sortKey="price" orderBy={props?.orderBy} order={props?.order} onSortChange={props?.onSortChange} />
+            ),
+            cell: ({ row }) => (formatRupiah(row.original.price))
         },
         {
             id: t("page.product.data_table.columns.is_active_column_label", "Status"),
