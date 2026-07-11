@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\ApiCategoryController;
+use App\Http\Controllers\Api\ApiMasterProductController;
 use App\Http\Controllers\Api\ApiPaymentMethodController;
 use App\Http\Controllers\Api\ApiProductController;
 use App\Http\Controllers\Api\ApiRoleController;
@@ -8,6 +9,7 @@ use App\Http\Controllers\Api\ApiUnitController;
 use App\Http\Controllers\Api\ApiUserController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ExampleController;
+use App\Http\Controllers\MasterProductController;
 use App\Http\Controllers\PaymentMethodController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RoleController;
@@ -34,6 +36,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('payment-methods', PaymentMethodController::class)->only('index');
 
     Route::resource('products', ProductController::class)->only('index');
+
+    Route::resource('master-products', MasterProductController::class)->only('index');
 
     Route::resource('example', ExampleController::class);
 
@@ -83,15 +87,30 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::group(['prefix' => 'product'], function () {
             Route::post('/bulk-delete', [ApiProductController::class, 'bulkDelete'])->name('apiProducts.bulkDelete');
 
-            Route::get('/download/productImportTemplate', [ApiProductController::class, 'getProductImportTemplate'])->name('apiProducts.getProductImportTemplate');
+            Route::get('/download/import-template', [ApiProductController::class, 'getProductImportTemplate'])->name('apiProducts.getProductImportTemplate');
 
-            Route::get('/download/export-products', [ApiProductController::class, 'exportProductExcelData'])->name('apiProducts.exportProductsExcelData');
+            Route::get('/download/export-excel', [ApiProductController::class, 'exportProductExcelData'])->name('apiProducts.exportProductsExcelData');
 
-            Route::get('/download/export-products-pdf', [ApiProductController::class, 'exportProductPdfData'])->name('apiProducts.exportProductsPdfData');
+            Route::get('/download/export-pdf', [ApiProductController::class, 'exportProductPdfData'])->name('apiProducts.exportProductsPdfData');
 
-            Route::post('/import-products', [ApiProductController::class, 'importProductExcelData'])->name('apiProducts.importProductsExcelData');
+            Route::post('/import', [ApiProductController::class, 'importProductExcelData'])->name('apiProducts.importProductsExcelData');
+        });
+
+        // Masterproduct
+        Route::resource('master-product', ApiMasterProductController::class)->names('apiMasterProducts')->only(['index', 'store', 'show', 'update', 'destroy']);
+
+        Route::group(['prefix' => 'master-product'], function () {
+            Route::post('/bulk-delete', [ApiMasterProductController::class, 'bulkDelete'])->name('apiMasterProducts.bulkDelete');
+
+            Route::get('/download/import-template', [ApiMasterProductController::class, 'getMasterProductImportTemplate'])->name('apiMasterProducts.getMasterProductImportTemplate');
+
+            Route::get('/download/export-excel', [ApiMasterProductController::class, 'exportMasterProductExcelData'])->name('apiMasterProducts.exportMasterProductsExcelData');
+
+            Route::get('/download/export-pdf', [ApiMasterProductController::class, 'exportMasterProductPdfData'])->name('apiMasterProducts.exportMasterProductsPdfData');
+
+            Route::post('/import', [ApiMasterProductController::class, 'importMasterProductExcelData'])->name('apiMasterProducts.importProductsExcelData');
         });
     });
 });
 
-require __DIR__.'/settings.php';
+require __DIR__ . '/settings.php';

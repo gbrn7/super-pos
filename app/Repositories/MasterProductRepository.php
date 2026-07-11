@@ -1,0 +1,82 @@
+<?php
+
+namespace App\Repositories;
+
+use App\Models\MasterProduct;
+use App\Support\Interfaces\Repositories\MasterProductRepositoryInterface;
+use App\Support\Models\MasterProduct\GetMasterProductReqModel;
+use Illuminate\Contracts\Pagination\Paginator;
+use Illuminate\Support\Collection;
+
+class MasterProductRepository implements MasterProductRepositoryInterface
+{
+    public function getAllByIndex(GetMasterProductReqModel $request): Paginator|Collection
+    {
+        $query = MasterProduct::query()
+            ->when($request->keyword, function ($query) use ($request) {
+                $query
+                    ->orwhere('name', 'ilike', "%{$request->keyword}%")
+                    ->orwhere('category_name', 'ilike', "%{$request->keyword}%")
+                    ->orwhere('unit_name', 'ilike', "%{$request->keyword}%")
+                    ->orwhere('barcode', 'ilike', "%{$request->keyword}%")
+                    ->orwhere('desc', 'ilike', "%{$request->keyword}%");
+            })
+            ->when($request->name, fn($query) => $query->where('name', 'ilike', "%{$request->name}%"))
+            ->when($request->barcode, fn($query) => $query->where('barcode', 'ilike', "%{$request->barcode}%"))
+            ->when($request->price, fn($query) => $query->where('price', $request->price))
+            ->when($request->cost_price, fn($query) => $query->where('cost_price', $request->cost_price))
+            ->select('*');
+
+        if (isset($request->order_by) && isset($request->order)) {
+            $query->orderBy('' . $request->order_by, $request->order);
+        } else {
+            $query->orderBy('id', 'desc');
+        }
+
+        if ($request->limit === null) {
+            return $query->get();
+        }
+
+        return $query->paginate($request->limit)->onEachSide(1);
+    }
+
+    public function getById(int $id): ?MasterProduct
+    {
+        return MasterProduct::find($id);
+    }
+
+    public function create(array $data): MasterProduct
+    {
+        return MasterProduct::create($data);
+    }
+
+    public function update(MasterProduct $MasterProduct, array $data): bool
+    {
+        return $MasterProduct->update($data);
+    }
+
+    public function delete(MasterProduct $MasterProduct): bool
+    {
+        return $MasterProduct->delete();
+    }
+
+    public function deleteMany(array $ids): int
+    {
+        return MasterProduct::destroy($ids);
+    }
+
+    public function insert(array $data): bool
+    {
+        return MasterProduct::insert($data);
+    }
+
+    public function getByName(string $name): ?MasterProduct
+    {
+        return MasterProduct::where('name', $name)->first();
+    }
+
+    public function getByIds(array $ids): ?Collection
+    {
+        return MasterProduct::whereIn('id', $ids)->get();
+    }
+}

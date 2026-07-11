@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string('name')->index();
             $table->string('barcode')->index()->unique()->nullable();
             $table->text('desc')->nullable();
-            $table->integer('stock')->default(0);
             $table->decimal('price', 10, 2)->default(0);
             $table->decimal('cost_price', 10, 2)->default(0);
             $table->unsignedBigInteger('created_at');

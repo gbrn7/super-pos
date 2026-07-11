@@ -1,0 +1,252 @@
+<?php
+
+namespace App\Services;
+
+use App\Imports\MasterProductImport;
+use App\Models\MasterProduct;
+use App\Support\Constants\Constants;
+use App\Support\Constants\ErrorCode;
+use App\Support\Interfaces\Repositories\CategoryRepositoryInterface;
+use App\Support\Interfaces\Repositories\MasterProductRepositoryInterface;
+use App\Support\Interfaces\Repositories\UnitRepositoryInterface;
+use App\Support\Interfaces\Services\MasterProductServiceInterface;
+use App\Support\Models\Category\GetCategoryReqModel;
+use App\Support\Models\MasterProduct\GetMasterProductReqModel;
+use App\Support\Models\Unit\GetUnitReqModel;
+use App\Support\Utils\CheckException;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Carbon\Carbon;
+use Exception;
+use Illuminate\Contracts\Pagination\Paginator;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+use Maatwebsite\Excel\Facades\Excel;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
+
+class MasterProductService implements MasterProductServiceInterface
+{
+  public function __construct(
+    protected MasterProductRepositoryInterface $MasterproductRepository,
+  ) {}
+
+  public function getAllByIndex(GetMasterProductReqModel $request): Paginator|Collection
+  {
+    try {
+      return $this->MasterproductRepository->getAllByIndex($request);
+    } catch (\Throwable $th) {
+      throw CheckException::Check($th);
+    }
+  }
+
+  public function getById(int $id): ?MasterProduct
+  {
+    try {
+      return $this->MasterproductRepository->getById($id);
+    } catch (\Throwable $th) {
+      throw CheckException::Check($th);
+    }
+  }
+
+  public function create(array $data): MasterProduct
+  {
+    try {
+      if ($data['cost_price'] > $data['price']) {
+        throw new Exception(
+          trans('message.error.cost_price_greater_than_price_template_validaion'),
+          Response::HTTP_INTERNAL_SERVER_ERROR
+        );
+      }
+
+      return $this->MasterproductRepository->create($data);
+    } catch (\Throwable $th) {
+      throw CheckException::Check($th);
+    }
+  }
+
+  public function update(int $id, array $data): ?MasterProduct
+  {
+    try {
+      $Masterproduct = $this->MasterproductRepository->getById($id);
+
+      if (! isset($Masterproduct)) {
+        throw new Exception(trans('message.error.data_not_found'), Response::HTTP_NOT_FOUND);
+      }
+
+      if ($data['cost_price'] > $data['price']) {
+        throw new Exception(
+          trans('message.error.cost_price_greater_than_price_template_validaion'),
+          Response::HTTP_INTERNAL_SERVER_ERROR
+        );
+      }
+
+
+      $isSuccess = $this->MasterproductRepository->update($Masterproduct, $data);
+
+      if (! $isSuccess) {
+        throw new Exception(trans('message.error.internal_server_error'), Response::HTTP_INTERNAL_SERVER_ERROR);
+      }
+
+      return $Masterproduct;
+    } catch (\Throwable $th) {
+      throw CheckException::Check($th);
+    }
+  }
+
+  public function delete(int $id): bool
+  {
+    try {
+      $Masterproduct = $this->MasterproductRepository->getById($id);
+
+      if (! isset($Masterproduct)) {
+        throw new Exception(trans('message.error.data_not_found'), Response::HTTP_NOT_FOUND);
+      }
+
+      $isSuccess = $this->MasterproductRepository->delete($Masterproduct);
+
+      if (! $isSuccess) {
+        throw new Exception(trans('message.error.internal_server_error'), Response::HTTP_INTERNAL_SERVER_ERROR);
+      }
+
+      return true;
+    } catch (\Throwable $th) {
+      throw CheckException::Check($th);
+    }
+  }
+
+  public function bulkDelete(array $ids): int
+  {
+    try {
+      $ids = Collection::make($ids);
+
+      $deletedCount = $this->MasterproductRepository->deleteMany($ids->toArray());
+
+      return $deletedCount;
+    } catch (\Throwable $th) {
+      throw CheckException::Check($th);
+    }
+  }
+
+  public function importExcel(UploadedFile $file): int
+  {
+    try {
+      $raws = Excel::toArray(new MasterProductImport, $file);
+
+      $newData = Collection::make();
+
+      $unixTime = Carbon::now()->unix();
+
+
+      DB::beginTransaction();
+      foreach ($raws as $raw) {
+        foreach ($raw as $row) {
+          $newMasterProduct = [
+            'name' => $row['nama'],
+            'category_name' => $row['kategori'],
+            'unit_name' => $row['unit'],
+            'barcode' => $row['barcode_opsional'],
+            'price' => $row['harga_jual'] ?? Constants::EMPTY_NUMBER_VALUE,
+            'cost_price' => $row['harga_modal'] ?? Constants::EMPTY_NUMBER_VALUE,
+            'desc' => $row['deskripsi_opsional'] ?? Constants::EMPTY_STRING_VALUE,
+            'created_at' => $unixTime,
+            'updated_at' => $unixTime,
+          ];
+
+          if ($newMasterProduct['name'] == Constants::EMPTY_STRING_VALUE) {
+            throw new Exception(
+              trans('message.error.blank_name_template_validation'),
+              Response::HTTP_UNPROCESSABLE_ENTITY
+            );
+          }
+
+          if ($newMasterProduct['cost_price'] > $newMasterProduct['price']) {
+            throw new Exception(
+              sprintf(trans('message.error.cost_price_greater_than_price_template_validaion'), $newMasterProduct['name']),
+              Response::HTTP_UNPROCESSABLE_ENTITY
+            );
+          }
+
+
+          $newData->push($newMasterProduct);
+        }
+      }
+
+      $isSuccess = $this->MasterproductRepository->insert($newData->toArray());
+      if (! $isSuccess) {
+        throw new Exception(trans('message.error.internal_server_error'), Response::HTTP_INTERNAL_SERVER_ERROR);
+      }
+      DB::commit();
+
+      return $newData->count();
+    } catch (\Throwable $th) {
+      DB::rollback();
+      if ($th->getCode() === ErrorCode::SQL_UNIQUE_VIOLATION) {
+        $th = new Exception(trans('message.error.duplicate_data_error_import'), Response::HTTP_INTERNAL_SERVER_ERROR);
+      }
+
+      throw CheckException::Check($th);
+    }
+  }
+
+  public function exportExcel(): BinaryFileResponse
+  {
+    try {
+      $request = new GetMasterProductReqModel(new Request(['limit' => null]));
+      $Masterproducts = $this->MasterproductRepository->getAllByIndex($request);
+
+      $spreadsheet = new Spreadsheet;
+      $sheet = $spreadsheet->getActiveSheet();
+
+      $sheet->fromArray([
+        ['Nama',  'Barcode', 'Kategori', 'Satuan', 'Stok', 'Harga Jual', 'Harga Modal', 'Deskripsi'],
+      ], null, 'A1');
+
+      $rows = [];
+      foreach ($Masterproducts as $Masterproduct) {
+        $rows[] = [
+          $Masterproduct->name,
+          $Masterproduct->barcode,
+          $Masterproduct->category_name ?? Constants::EMPTY_STRING_VALUE,
+          $Masterproduct->unit_name ?? Constants::EMPTY_STRING_VALUE,
+          $Masterproduct->price,
+          $Masterproduct->cost_price,
+          $Masterproduct->desc,
+        ];
+      }
+
+      $sheet->fromArray($rows, null, 'A2');
+
+      $temporaryFilePath = tempnam(sys_get_temp_dir(), 'Masterproducts-export-') . '.xlsx';
+      $writer = new Xlsx($spreadsheet);
+      $writer->save($temporaryFilePath);
+
+      return response()->download($temporaryFilePath, 'Masterproducts-export.xlsx')->deleteFileAfterSend(true);
+    } catch (\Throwable $th) {
+      throw CheckException::Check($th);
+    }
+  }
+
+  public function exportPdf(): BinaryFileResponse
+  {
+    try {
+      $request = new GetMasterProductReqModel(new Request(['limit' => null]));
+      $Masterproducts = $this->MasterproductRepository->getAllByIndex($request);
+
+      $temporaryFilePath = tempnam(sys_get_temp_dir(), 'MasterProducts-export-') . '.pdf';
+
+      Pdf::loadView('exports.Masterproducts-pdf', ['Masterproducts' => $Masterproducts])
+        ->setPaper('a4', 'landscape')
+        ->save($temporaryFilePath);
+
+      return response()->download($temporaryFilePath, 'Masterproducts-export.pdf')->deleteFileAfterSend(true);
+    } catch (\Throwable $th) {
+      throw CheckException::Check($th);
+    }
+  }
+}

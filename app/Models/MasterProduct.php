@@ -16,7 +16,6 @@ class MasterProduct extends Model
         'name',
         'barcode',
         'desc',
-        'stock',
         'price',
         'cost_price',
     ];

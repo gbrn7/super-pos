@@ -3,12 +3,14 @@
 namespace App\Providers;
 
 use App\Repositories\CategoryRepository;
+use App\Repositories\MasterProductRepository;
 use App\Repositories\PaymentMethodRepository;
 use App\Repositories\ProductRepository;
 use App\Repositories\RoleRepository;
 use App\Repositories\UnitRepository;
 use App\Repositories\UserRepository;
 use App\Services\CategoryService;
+use App\Services\MasterProductService;
 use App\Services\PaymentMethodService;
 use App\Services\ProductService;
 use App\Services\RoleService;
@@ -16,12 +18,14 @@ use App\Services\UnitService;
 use App\Services\UserService;
 use App\Support\Enums\RoleEnums;
 use App\Support\Interfaces\Repositories\CategoryRepositoryInterface;
+use App\Support\Interfaces\Repositories\MasterProductRepositoryInterface;
 use App\Support\Interfaces\Repositories\PaymentMethodRepositoryInterface;
 use App\Support\Interfaces\Repositories\ProductRepositoryInterface;
 use App\Support\Interfaces\Repositories\RoleRepositoryInterface;
 use App\Support\Interfaces\Repositories\UnitRepositoryInterface;
 use App\Support\Interfaces\Repositories\UserRepositoryInterface;
 use App\Support\Interfaces\Services\CategoryServiceInterface;
+use App\Support\Interfaces\Services\MasterProductServiceInterface;
 use App\Support\Interfaces\Services\PaymentMethodServiceInterface;
 use App\Support\Interfaces\Services\ProductServiceInterface;
 use App\Support\Interfaces\Services\RoleServiceInterface;
@@ -64,6 +68,10 @@ class AppServiceProvider extends ServiceProvider
         // Product service
         $this->app->bind(ProductRepositoryInterface::class, ProductRepository::class);
         $this->app->bind(ProductServiceInterface::class, ProductService::class);
+
+        // Master Product service
+        $this->app->bind(MasterProductRepositoryInterface::class, MasterProductRepository::class);
+        $this->app->bind(MasterProductServiceInterface::class, MasterProductService::class);
     }
 
     /**
@@ -90,13 +98,13 @@ class AppServiceProvider extends ServiceProvider
         );
 
         Password::defaults(
-            fn (): ?Password => app()->isProduction()
+            fn(): ?Password => app()->isProduction()
                 ? Password::min(12)
-                    ->mixedCase()
-                    ->letters()
-                    ->numbers()
-                    ->symbols()
-                    ->uncompromised()
+                ->mixedCase()
+                ->letters()
+                ->numbers()
+                ->symbols()
+                ->uncompromised()
                 : null,
         );
     }

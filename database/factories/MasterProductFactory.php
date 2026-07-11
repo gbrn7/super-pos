@@ -25,7 +25,6 @@ class MasterProductFactory extends Factory
             'name' => fake()->word(),
             'barcode' => fake()->ean13(),
             'desc' => fake()->sentence(),
-            'stock' => fake()->numberBetween(0, 100),
             'price' => $price,
             'cost_price' => (80 / 100) * $price,
             'created_at' => now()->unix(),
