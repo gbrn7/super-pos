@@ -6,32 +6,28 @@ import HeaderContent from '@/components/header-content';
 import { DEBOUNCEDEFAULTDURATION, DEFAULT_FILTER_VALUE, PAGINATIONLIMITDEFAULT, PAGINATIONLIMITOPTIONDEFAULT } from '@/constants/Index';
 import axiosInstance from '@/lib/axios';
 import { handleApiError, showWarningToast } from '@/lib/utils';
-import { index as apiGetCategories } from '@/routes/apiCategories';
-import { index as apiGetProducts } from '@/routes/apiProducts';
-import { index as apiGetUnits } from '@/routes/apiUnits';
-import { index as products } from '@/routes/products';
-import type { ProductQueryParam } from '@/support/interfaces/request/product';
+import { index as apiGetMasterProducts } from '@/routes/apiMasterProducts';
+import { index as masterproducts } from '@/routes/payment-methods';
+import type { MasterProductQueryParam } from '@/support/interfaces/request/master-product';
 import type { Pagination } from '@/support/interfaces/resource/pagination';
 import type { PaginationResponse } from '@/support/interfaces/resource/resource-response';
 import type { ResponseApi } from '@/support/interfaces/response/Response';
-import type { Category } from '@/support/models/category';
-import type { Product } from '@/support/models/product';
-import type { Unit } from '@/support/models/unit';
+import type { MasterProduct } from '@/support/models/masterProduct';
 import { columns } from './columns';
 import { DataTable } from './data-table';
 
 
-const { url } = products();
+const { url } = masterproducts();
 
 
 export default function Index() {
 
 
-    const { url: apiUrl } = apiGetProducts();
+    const { url: apiUrl } = apiGetMasterProducts();
     const { t } = useTranslation()
 
 
-    const [allProducts, setAllProducts] = useState<Product[]>([]);
+    const [allMasterProducts, setAllMasterProducts] = useState<MasterProduct[]>([]);
     const [pagination, setPagination] = useState<Pagination>({
         current_page: 1,
         last_page: 1,
@@ -45,37 +41,32 @@ export default function Index() {
     });
     const [processing, setProcessing] = useState(false);
     const [detailOpen, setDetailOpen] = useState(false);
-    const [units, setUnits] = useState<Unit[]>([]);
-    const [categories, setCategories] = useState<Category[]>([]);
     const [editOpen, setEditOpen] = useState(false);
     const [deleteOpen, setDeleteOpen] = useState(false);
     const [bulkDeleteOpen, setBulkDeleteOpen] = useState(false);
-    const [selectedProduct, setSelectedProduct] = useState<Product | null>(
+    const [selectedMasterProduct, setSelectedMasterProduct] = useState<MasterProduct | null>(
         null,
     );
-    const [selectedProducts, setSelectedProducts] = useState<Product[]>([]);
+    const [selectedMasterProducts, setSelectedMasterProducts] = useState<MasterProduct[]>([]);
     const hasMountedQueryEffect = useRef(false);
 
 
-    const [queryParam, setQueryParam] = useState<ProductQueryParam>({
+    const [queryParam, setQueryParam] = useState<MasterProductQueryParam>({
         limit: PAGINATIONLIMITDEFAULT,
         page: 1,
         field: DEFAULT_FILTER_VALUE,
         keyword: "",
-        category_id: null,
-        unit_id: null,
-        is_active: null,
-        is_unlimited: null,
-        is_stock_available: null,
+        category_name: null,
+        unit_name: null,
         order_by: null,
         order: null,
         barcode: null,
     })
 
-    const fetchAllProducts = async () => {
+    const fetchAllMasterProducts = async () => {
         try {
             setProcessing(true);
-            const res = await axiosInstance.get<ResponseApi<PaginationResponse<Product>>>(apiUrl, { params: queryParam });
+            const res = await axiosInstance.get<ResponseApi<PaginationResponse<MasterProduct>>>(apiUrl, { params: queryParam });
 
             if (!res.data.success) {
                 showWarningToast(res.data.message)
@@ -83,70 +74,33 @@ export default function Index() {
                 return
             }
 
-            setAllProducts(res.data.data.items);
+            setAllMasterProducts(res.data.data.items);
             setPagination(res.data.data.pagination);
         } catch (error) {
             handleApiError(error)
         } finally {
             setProcessing(false);
-            setSelectedProducts([]);
+            setSelectedMasterProducts([]);
         }
     };
 
-    const fetchUnits = async () => {
-        try {
-            const res = await axiosInstance.get<ResponseApi<Unit[]>>(apiGetUnits().url, { params: { order_by: 'name', order: 'asc' } });
-
-            if (!res.data.success) {
-                showWarningToast(res.data.message)
-
-                return
-            }
-
-            setUnits(res.data.data);
-        } catch (error) {
-            handleApiError(error)
-        } finally {
-            setProcessing(false);
-        }
-    };
-
-    const fetchCategories = async () => {
-        try {
-            const res = await axiosInstance.get<ResponseApi<Category[]>>(apiGetCategories().url,
-                { params: { order_by: 'name', order: 'asc' } });
-
-            if (!res.data.success) {
-                showWarningToast(res.data.message)
-
-                return
-            }
-
-            setCategories(res.data.data);
-        } catch (error) {
-            handleApiError(error)
-        } finally {
-            setProcessing(false);
-        }
-    };
-
-    const handleDetailClick = (product: Product) => {
-        setSelectedProduct(product);
+    const handleDetailClick = (masterproduct: MasterProduct) => {
+        setSelectedMasterProduct(masterproduct);
         setDetailOpen(true);
     };
 
-    const handleEditClick = (product: Product) => {
-        setSelectedProduct(product);
+    const handleEditClick = (masterproduct: MasterProduct) => {
+        setSelectedMasterProduct(masterproduct);
         setEditOpen(true);
     };
 
-    const handleDeleteClick = (product: Product) => {
-        setSelectedProduct(product);
+    const handleDeleteClick = (masterproduct: MasterProduct) => {
+        setSelectedMasterProduct(masterproduct);
         setDeleteOpen(true);
     };
 
-    const handleBulkDeleteClick = (products: Product[]) => {
-        setSelectedProducts(products);
+    const handleBulkDeleteClick = (Masterproducts: MasterProduct[]) => {
+        setSelectedMasterProducts(Masterproducts);
         setBulkDeleteOpen(true);
     };
 
@@ -178,10 +132,6 @@ export default function Index() {
         }));
     };
 
-    useEffect(() => {
-        // eslint-disable-next-line react-hooks/set-state-in-effect
-        void Promise.all([fetchUnits(), fetchCategories()]);
-    }, []);
 
     useEffect(() => {
         if (!hasMountedQueryEffect.current) {
@@ -190,23 +140,20 @@ export default function Index() {
             return;
         }
 
-        fetchAllProducts();
+        fetchAllMasterProducts();
     }, [
         queryParam.page,
         queryParam.limit,
         queryParam.field,
-        queryParam.category_id,
-        queryParam.unit_id,
-        queryParam.is_active,
-        queryParam.is_unlimited,
-        queryParam.is_stock_available,
+        queryParam.category_name,
+        queryParam.unit_name,
         queryParam.order_by,
         queryParam.order,
     ])
 
     useEffect(() => {
         const timeout = setTimeout(() => {
-            fetchAllProducts();
+            fetchAllMasterProducts();
         }, DEBOUNCEDEFAULTDURATION);
 
         return () => clearTimeout(timeout);
@@ -214,19 +161,17 @@ export default function Index() {
 
     return (
         <>
-            <Head title={t("page.product.page_name", "Produk")} />
+            <Head title={t("page.masterproduct.page_name", "Produk")} />
             <div className="mb-16 flex h-full flex-1 flex-col overflow-x-auto rounded-xl p-4">
                 <HeaderContent>
-                    {t("page.product.page_name", "Produk")}
+                    {t("page.masterproduct.page_name", "Produk")}
                 </HeaderContent>
                 <DataTable
                     columns={columns}
-                    categories={categories}
-                    units={units}
                     processing={processing}
-                    data={allProducts}
+                    data={allMasterProducts}
                     limitOptions={PAGINATIONLIMITOPTIONDEFAULT}
-                    onRefresh={fetchAllProducts}
+                    onRefresh={fetchAllMasterProducts}
                     detailDataOpen={detailOpen}
                     editOpen={editOpen}
                     deleteOpen={deleteOpen}
@@ -239,8 +184,8 @@ export default function Index() {
                     onBulkDeleteClick={handleBulkDeleteClick}
                     isBulkDeleteDialogOpen={bulkDeleteOpen}
                     setOpenBulkDeleteDialogOpen={setBulkDeleteOpen}
-                    selectedBulkProducts={selectedProducts}
-                    selectedProduct={selectedProduct}
+                    selectedBulkMasterProducts={selectedMasterProducts}
+                    selectedMasterProduct={selectedMasterProduct}
                     queryParam={queryParam}
                     pagination={pagination}
                     onChangePaginationLimit={handleChangePaginationLimit}
@@ -257,7 +202,7 @@ export default function Index() {
 Index.layout = {
     breadcrumbs: [
         {
-            title: i18next.t("page.product.page_name", "Produk"),
+            title: i18next.t("page.master_product.page_name", "Master Produk"),
             href: url,
         },
     ],

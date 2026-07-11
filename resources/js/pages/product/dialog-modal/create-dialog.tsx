@@ -188,7 +188,7 @@ export function CreateDialog({ onSuccess, units, categories }: CreateDialogProps
                     <DialogHeader>
                         <DialogTitle>{t("page.product.dialog_modal.create_dialog.dialog_title", "Tambah Produk")}</DialogTitle>
                         <DialogDescription>
-                            {t("page.product.dialog_modal.create_dialog.dialog_desc", "Tambahkan produk baru produk anda")}
+                            {t("page.product.dialog_modal.create_dialog.dialog_desc", "Tambahkan produk baru anda")}
                         </DialogDescription>
                     </DialogHeader>
                     <FieldGroup className="grid grid-cols-1 md:grid-cols-2 gap-3">

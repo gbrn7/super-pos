@@ -12,8 +12,8 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
-import { bulkDelete } from '@/routes/apiProducts';
-import type { Product } from '@/support/models/product';
+import { bulkDelete } from '@/routes/apiMasterProducts';
+import type { MasterProduct } from '@/support/models/masterProduct';
 import { Button } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
 import { t } from 'i18next';
@@ -27,7 +27,7 @@ interface BulkDeleteDialogProps {
   selectedLength: number,
   isOpen: boolean;
   onSuccess: () => void;
-  products: Product[];
+  masterProducts: MasterProduct[];
   setOpen: (open: boolean) => void;
   onBulkDeleteClick: () => void;
 }
@@ -37,7 +37,7 @@ export function BulkDeleteDialog({
   selectedLength,
   isOpen,
   onSuccess,
-  products,
+  masterProducts,
   setOpen,
   onBulkDeleteClick
 }: BulkDeleteDialogProps) {
@@ -47,7 +47,7 @@ export function BulkDeleteDialog({
     try {
       setLoading(true);
 
-      const ids = products.map((cat) => cat.id);
+      const ids = masterProducts.map((cat) => cat.id);
       const res = await axiosInstance.post<ResponseApi<boolean>>(bulkDelete().url, { ids });
 
       if (!res.data.success) {
@@ -58,7 +58,7 @@ export function BulkDeleteDialog({
       showSuccessToast(res.data.message)
       onSuccess();
     } catch (error) {
-      console.error('Error deleting products:', error);
+      console.error('Error deleting masterProducts:', error);
       handleApiError(error)
     } finally {
       setLoading(false);
@@ -74,7 +74,7 @@ export function BulkDeleteDialog({
           <Trash2Icon className="h-4" />
           {sprintf
             (
-              t("page.product.dialog_modal.bulk_delete_dialog.dialog_button", "Hapus"),
+              t("page.master_product.dialog_modal.bulk_delete_dialog.dialog_button", "Hapus"),
               selectedLength)
           }
         </Button>
@@ -90,12 +90,12 @@ export function BulkDeleteDialog({
           <AlertDialogTitle>
             {sprintf
               (
-                t("page.product.dialog_modal.bulk_delete_dialog.dialog_title", "Hapus %d Produk"),
+                t("page.master_product.dialog_modal.bulk_delete_dialog.dialog_title", "Hapus %d Master Produk"),
                 selectedLength)
             }
           </AlertDialogTitle>
           <AlertDialogDescription>
-            {sprintf(t("page.product.dialog_modal.bulk_delete_dialog.dialog_desc", "Apakah anda yakin akan menghapus %d Produk ?"), selectedLength)}
+            {sprintf(t("page.master_product.dialog_modal.bulk_delete_dialog.dialog_desc", "Apakah anda yakin akan menghapus %d Master Produk ?"), selectedLength)}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
@@ -110,7 +110,7 @@ export function BulkDeleteDialog({
             variant="destructive"
             disabled={loading}
           >
-            {loading ? <Spinner /> : t("page.product.dialog_modal.bulk_delete_dialog.confirm_button", "Hapus Produk")}
+            {loading ? <Spinner /> : t("page.master_product.dialog_modal.bulk_delete_dialog.confirm_button", "Hapus Master Produk")}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

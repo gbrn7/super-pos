@@ -116,7 +116,7 @@ export function CreateDialog({ onSuccess }: CreateDialogProps) {
                     <DialogHeader>
                         <DialogTitle>{t("page.unit.dialog_modal.create_dialog.dialog_title", "Tambah Satuan")}</DialogTitle>
                         <DialogDescription>
-                            {t("page.unit.dialog_modal.create_dialog.dialog_desc", "Tambahkan satuan baru produk anda")}
+                            {t("page.unit.dialog_modal.create_dialog.dialog_desc", "Tambahkan satuan baru anda")}
                         </DialogDescription>
                     </DialogHeader>
                     <FieldGroup>

@@ -39,11 +39,18 @@ enum PaymentMethodPermissionEnums {
   DELETE = 'delete-payment-method',
 }
 
-enum ProductdPermissionEnums {
+enum ProductPermissionEnums {
   CREATE = 'create-product',
   READ = 'read-product',
   UPDATE = 'update-product',
   DELETE = 'delete-product',
+}
+
+enum MasterProductPermissionEnums {
+  CREATE = 'create-master-product',
+  READ = 'read-master-product',
+  UPDATE = 'update-master-product',
+  DELETE = 'delete-master-product',
 }
 
 export const PERMISSIONENUMS = {
@@ -53,7 +60,8 @@ export const PERMISSIONENUMS = {
   USER: UserPermissionEnums,
   UNIT: UnitPermissionEnums,
   PAYMENT_METHOD: PaymentMethodPermissionEnums,
-  PRODUCT: ProductdPermissionEnums,
+  PRODUCT: ProductPermissionEnums,
+  MASTER_PRODUCT: MasterProductPermissionEnums,
 }
 
 export const PERMISSIONLIST = (): Permission[] => {
@@ -179,19 +187,40 @@ export const PERMISSIONLIST = (): Permission[] => {
       ACCESSLIST: [
         {
           LABEL: t("permission_label.product.create", "Buat Produk"),
-          VALUE: PaymentMethodPermissionEnums.CREATE,
+          VALUE: ProductPermissionEnums.CREATE,
         },
         {
           LABEL: t("permission_label.product.read", "Baca Produk"),
-          VALUE: PaymentMethodPermissionEnums.READ,
+          VALUE: ProductPermissionEnums.READ,
         },
         {
           LABEL: t("permission_label.product.update", "Update Produk"),
-          VALUE: PaymentMethodPermissionEnums.UPDATE,
+          VALUE: ProductPermissionEnums.UPDATE,
         },
         {
           LABEL: t("permission_label.product.delete", "Hapus Produk"),
-          VALUE: PaymentMethodPermissionEnums.DELETE,
+          VALUE: ProductPermissionEnums.DELETE,
+        }
+      ]
+    },
+    {
+      LABEL: t("permission_label.master_product.permission", "Produk"),
+      ACCESSLIST: [
+        {
+          LABEL: t("permission_label.master_product.create", "Buat Master Produk"),
+          VALUE: MasterProductPermissionEnums.CREATE,
+        },
+        {
+          LABEL: t("permission_label.master_product.read", "Baca Master Produk"),
+          VALUE: MasterProductPermissionEnums.READ,
+        },
+        {
+          LABEL: t("permission_label.master_product.update", "Update Master Produk"),
+          VALUE: MasterProductPermissionEnums.UPDATE,
+        },
+        {
+          LABEL: t("permission_label.master_product.delete", "Hapus Master Produk"),
+          VALUE: MasterProductPermissionEnums.DELETE,
         }
       ]
     },

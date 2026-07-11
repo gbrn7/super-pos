@@ -148,7 +148,7 @@ export function CreateDialog({ onSuccess }: CreateDialogProps) {
                     <DialogHeader>
                         <DialogTitle>{t("page.payment_method.dialog_modal.create_dialog.dialog_title", "Tambah Metode Pembayaran")}</DialogTitle>
                         <DialogDescription>
-                            {t("page.payment_method.dialog_modal.create_dialog.dialog_desc", "Tambahkan metode pembayaran baru produk anda")}
+                            {t("page.payment_method.dialog_modal.create_dialog.dialog_desc", "Tambahkan metode pembayaran baru anda")}
                         </DialogDescription>
                     </DialogHeader>
                     <FieldGroup>

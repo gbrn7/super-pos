@@ -50,6 +50,13 @@
         "cost_price": "Harga modal tidak boleh kosong",
         "min_cost_price": "Harga modal minimal Rp 0"
       }
+    },
+    "master_product":{
+      "required": {
+        "name":"Nama tidak boleh kosong",
+        "min_price": "Harga jual minimal Rp 0",
+        "min_cost_price": "Harga modal minimal Rp 0"
+      }
     }
 },
   "permission_label":{
@@ -91,6 +98,13 @@
       "read":"Baca Produk",
       "update":"Edit Produk",
       "delete":"Hapus Produk"
+    },
+    "master_product":{
+      "permission":"Akses Fitur Master Produk",
+      "create":"Buat Master Produk",
+      "read":"Baca Master Produk",
+      "update":"Edit Master Produk",
+      "delete":"Hapus Master Produk"
     }
   },
   "component":{
@@ -99,6 +113,7 @@
       "example_menu_label":"Example",
       "category_menu_label":"Kategori",
       "product_menu_label":"Produk",
+      "master_product_menu_label":"Master Produk",
       "payment_method_menu_label":"Metode Pembayaran",
       "role_menu_label":"Peran",
       "user_menu_label":"Pengguna",
@@ -262,7 +277,7 @@
       "create_dialog": {
         "dialog_button": "Tambah Data",
         "dialog_title": "Tambah Satuan",
-        "dialog_desc": "Tambahkan satuan baru produk anda",
+        "dialog_desc": "Tambahkan satuan baru anda",
         "name_input_label":"Nama",
         "name_input_placeholder":"Masukkan nama satuan",
         "cancel_button":"Batal",
@@ -403,7 +418,7 @@
       "create_dialog": {
         "dialog_button": "Tambah Data",
         "dialog_title": "Tambah Produk",
-        "dialog_desc": "Tambahkan produk baru produk anda",
+        "dialog_desc": "Tambahkan produk baru anda",
         "name_input_label":"Nama",
         "name_input_placeholder":"Masukkan nama produk",
         "image_input_label":"Gambar",
@@ -499,6 +514,105 @@
       }
     }
   },
+  "master_product":{
+    "page_name":"Master Produk",
+    "data_table":{
+      "columns":{
+        "select_column_label":"Pilih",
+        "name_column_label":"Nama",
+        "barcode_column_label":"Barcode",
+        "category_column_label":"Kategori",
+        "unit_column_label":"Satuan",
+        "price_column_label":"Harga Jual",
+        "cost_price_column_label":"Harga Modal",
+        "created_at_column_label":"Tanggal Dibuat",
+        "updated_at_column_label":"Tanggal Diperbarui",
+        "actions_column_label":"Aksi"
+      }
+    },
+    "dialog_modal":{
+      "create_dialog": {
+        "dialog_button": "Tambah Data",
+        "dialog_title": "Tambah Master Produk",
+        "dialog_desc": "Tambahkan master produk baru anda",
+        "name_input_label":"Nama",
+        "name_input_placeholder":"Masukkan nama master produk",
+        "unit_name_input_label":"Satuan",
+        "unit_name_input_placeholder":"Masukkan satuan master produk",
+        "category_name_input_label":"Kategori",
+        "category_name_input_placeholder":"Masukkan kategori master produk",
+        "cost_price_input_label":"Harga Modal",
+        "cost_price_input_placeholder":"Masukkan harga modal master produk",
+        "price_input_label":"Harga Jual",
+        "price_input_placeholder":"Masukkan harga jual master produk",
+        "desc_input_label":"Deskripsi",
+        "desc_input_placeholder":"Masukkan deskripsi master produk",
+        "barcode_input_label":"Barcode",
+        "barcode_input_placeholder":"Masukkan barcode master produk",
+        "cancel_button":"Batal",
+        "confirm_button":"Tambah Master Produk"
+      },
+      "edit_dialog": {
+        "dialog_button": "Edit Data",
+        "dialog_title": "Edit Master Produk",
+        "dialog_desc": "Edit master produk",
+        "name_input_label":"Nama",
+        "name_input_placeholder":"Masukkan nama master produk",
+        "unit_name_input_label":"Satuan",
+        "unit_name_input_placeholder":"Masukkan satuan master produk",
+        "category_name_input_label":"Kategori",
+        "category_name_input_placeholder":"Masukkan kategori master produk",
+        "cost_price_input_label":"Harga Modal",
+        "cost_price_input_placeholder":"Masukkan harga modal master produk",
+        "price_input_label":"Harga Jual",
+        "price_input_placeholder":"Masukkan harga jual master produk",
+        "desc_input_label":"Deskripsi",
+        "desc_input_placeholder":"Masukkan deskripsi master produk",
+        "barcode_input_label":"Barcode",
+        "barcode_input_placeholder":"Masukkan barcode master produk",
+        "cancel_button":"Batal",
+        "confirm_button":"Edit Master Produk"
+      },
+      "detail_dialog": {
+        "dialog_button": "Detail Data",
+        "dialog_title": "Detail Master Produk",
+        "dialog_desc": "Detail data master produk",
+        "name_label":"Nama",
+        "barcode_label":"Barcode",
+        "category_name_label":"Kategori",
+        "unit_label":"Satuan",
+        "cost_price_label":"Harga Modal",
+        "price_label":"Harga Jual",
+        "desc_label":"Deskripsi",
+        "created_at_label":"Tanggal Dibuat",
+        "updated_at_label": "Tanggal Diperbarui"
+      }, 
+      "delete_dialog": {
+        "dialog_button": "Hapus Data",
+        "dialog_title": "Hapus Master Produk",
+        "dialog_desc": "Apakah anda yakin akan menghapus data ini ?",
+        "cancel_button":"Batal",
+        "confirm_button":"Hapus Master Produk"
+      }, 
+      "bulk_delete_dialog": {
+        "dialog_button": "Hapus",
+        "dialog_title": "Hapus %d master produk",
+        "dialog_desc": "Apakah anda yakin akan menghapus %d master produk ?",
+        "cancel_button":"Batal",
+        "confirm_button":"Hapus Master Produk"
+      }, 
+      "import_excel_dialog": {
+        "dialog_button": "Impor Excel",
+        "dialog_title": "Impor Excel",
+        "dialog_desc": "Impor data master produk dari file Excel",
+        "template_label":"Templat",
+        "product_template_file":"File templat impor data master produk",
+        "file_excel_label":"File Excel",
+        "cancel_button":"Batal",
+        "confirm_button":"Impor"
+      }
+    }
+  },
   "payment_method":{
     "page_name":"Metode Pembayaran",
     "data_table":{
@@ -515,7 +629,7 @@
       "create_dialog": {
         "dialog_button": "Tambah Data",
         "dialog_title": "Tambah Metode Pembayaran",
-        "dialog_desc": "Tambahkan metode pembayaran baru produk anda",
+        "dialog_desc": "Tambahkan metode pembayaran baru anda",
         "name_input_label":"Nama",
         "name_input_placeholder":"Masukkan nama metode pembayaran",
         "desc_input_label":"Deskripsi",
@@ -669,7 +783,7 @@
       "create_dialog": {
         "dialog_button": "Tambah Data",
         "dialog_title": "Tambah Pengguna",
-        "dialog_desc": "Tambahkan pengguna baru produk anda",
+        "dialog_desc": "Tambahkan pengguna baru anda",
         "name_input_label":"Nama",
         "name_input_placeholder":"Masukkan nama pengguna",
         "email_input_label":"Email",

@@ -1,0 +1,145 @@
+import type { ColumnDef } from '@tanstack/react-table';
+import { Check, Circle, FileText, Infinity, MoreHorizontal, Pencil, Trash, X } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
+import { Can } from '@/components/auth/can';
+import { ServerSideDataTableHeader } from '@/components/server-side-data-table-header';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import { formatRupiah } from '@/lib/format-money';
+import { PERMISSIONENUMS } from '@/support/enums/PermissionEnums';
+import type { MasterProduct } from '@/support/models/masterProduct';
+
+
+interface ColumnsProps {
+    onDetailClick: (masterProduct: MasterProduct) => void;
+    onEditClick: (masterProduct: MasterProduct) => void;
+    onDeleteClick: (masterProduct: MasterProduct) => void;
+    onSortChange: (orderBy: string | null, order: string | null) => void;
+    orderBy: string | null;
+    order: string | null;
+}
+
+export const columns = (props?: ColumnsProps): ColumnDef<MasterProduct>[] => {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const { t } = useTranslation()
+
+    return [
+        {
+            id: t("page.master_product.data_table.columns.select_column_label", "Pilih"),
+            header: ({ table }) => (
+                <Checkbox
+                    checked={
+                        table.getIsAllPageRowsSelected() ||
+                        (table.getIsSomePageRowsSelected() && 'indeterminate')
+                    }
+                    onCheckedChange={(value) =>
+                        table.toggleAllPageRowsSelected(!!value)
+                    }
+                    aria-label="Select all"
+                />
+            ),
+            cell: ({ row }) => (
+                <Checkbox
+                    checked={row.getIsSelected()}
+                    onCheckedChange={(value) => row.toggleSelected(!!value)}
+                    aria-label="Select row"
+                />
+            ),
+            enableSorting: false,
+            enableHiding: false,
+        },
+        {
+            id: t("page.master_product.data_table.columns.name_column_label", "Nama"),
+            accessorKey: 'name',
+            header: ({ column }) => (
+                <ServerSideDataTableHeader column={column} title={t("page.master_product.data_table.columns.name_column_label", "Nama")} sortKey="name" orderBy={props?.orderBy} order={props?.order} onSortChange={props?.onSortChange} />
+            ),
+            size: 300,
+        },
+        {
+            id: t("page.master_product.data_table.columns.barcode_column_label", "Barcode"),
+            accessorKey: 'barcode',
+            header: ({ column }) => (
+                <ServerSideDataTableHeader column={column} title={t("page.master_product.data_table.columns.barcode_column_label", "Barcode")} sortKey="barcode" orderBy={props?.orderBy} order={props?.order} onSortChange={props?.onSortChange} />
+            ),
+        },
+        {
+            id: t("page.master_product.data_table.columns.category_column_label", "Kategori"),
+            accessorKey: 'category_name',
+            header: ({ column }) => (
+                <ServerSideDataTableHeader column={column} title={t("page.master_product.data_table.columns.category_column_label", "Kategori")} sortKey="category" orderBy={props?.orderBy} order={props?.order} onSortChange={props?.onSortChange} />
+            ),
+        },
+        {
+            id: t("page.master_product.data_table.columns.unit_column_label", "Satuan"),
+            accessorKey: 'unit_name',
+            header: ({ column }) => (
+                <ServerSideDataTableHeader column={column} title={t("page.master_product.data_table.columns.unit_column_label", "Satuan")} sortKey="unit" orderBy={props?.orderBy} order={props?.order} onSortChange={props?.onSortChange} />
+            ),
+        },
+        {
+            id: t("page.master_product.data_table.columns.cost_price_column_label", "Harga Modal"),
+            accessorKey: 'cost_price',
+            header: ({ column }) => (
+                <ServerSideDataTableHeader column={column} title={t("page.master_product.data_table.columns.cost_price_column_label", "Harga Modal")} sortKey="cost_price" orderBy={props?.orderBy} order={props?.order} onSortChange={props?.onSortChange} />
+            ),
+            cell: ({ row }) => (formatRupiah(row.original.cost_price))
+        },
+        {
+            id: t("page.master_product.data_table.columns.price_column_label", "Harga Jual"),
+            accessorKey: 'price',
+            header: ({ column }) => (
+                <ServerSideDataTableHeader column={column} title={t("page.master_product.data_table.columns.price_column_label", "Harga Jual")} sortKey="price" orderBy={props?.orderBy} order={props?.order} onSortChange={props?.onSortChange} />
+            ),
+            cell: ({ row }) => (formatRupiah(row.original.price))
+        },
+        {
+            id: t("page.master_product.data_table.columns.actions_column_label", "Aksi"),
+            enableSorting: false,
+            cell: ({ row }) => (
+                <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                        <Button variant="ghost" className="h-8 w-8 p-0">
+                            <span className="sr-only">{t("component.data_table.action_menu.trigger_btn_label", "Buka Menu")}</span>
+                            <MoreHorizontal className="h-4 w-4" />
+                        </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end">
+                        <DropdownMenuLabel>{t("component.data_table.action_menu.label", "Aksi")}</DropdownMenuLabel>
+                        <DropdownMenuItem
+                            onClick={() => props?.onDetailClick(row.original)}
+                        >
+                            <FileText className="mr-0.5 h-4 w-4" />
+                            {t("component.data_table.action_menu.detail_data_btn", "Detail data")}
+                        </DropdownMenuItem>
+                        <Can permission={PERMISSIONENUMS.MASTER_PRODUCT.UPDATE}>
+                            <DropdownMenuItem
+                                onClick={() => props?.onEditClick(row.original)}
+                            >
+                                <Pencil className="mr-0.5 h-4 w-4" />
+                                {t("component.data_table.action_menu.edit_data_btn", "Edit data")}
+                            </DropdownMenuItem>
+                        </Can>
+                        <Can permission={PERMISSIONENUMS.MASTER_PRODUCT.DELETE}>
+                            <DropdownMenuItem
+                                onClick={() => props?.onDeleteClick(row.original)}
+                                variant="destructive"
+                            >
+                                <Trash className="mr-0.5 h-4 w-4" />
+                                {t("component.data_table.action_menu.delete_data_btn", "Hapus data")}
+                            </DropdownMenuItem>
+                        </Can>
+                    </DropdownMenuContent>
+                </DropdownMenu>
+            ),
+        },
+    ]
+};

@@ -33,3 +33,5 @@ export const DEBOUNCEDEFAULTDURATION = 200
 export const FILTER_DEFAULT_VALUE = 'default';
 
 export const STOCK_THRESHOLD = 5;
+
+export const DEFAULT_FILTER_VALUE = 'default'

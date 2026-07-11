@@ -76,7 +76,7 @@ export function DetailDialog({
                         </div>
                         <div>
                             <p className="text-sm font-medium text-muted-foreground">
-                                {t("page.product.dialog_modal.detail_dialog.is_unlimited_label", "Nama")}
+                                {t("page.product.dialog_modal.detail_dialog.is_unlimited_label", "Tipe Stok")}
                             </p>
                             {product.is_unlimited ? (
                                 (<Badge className="bg-purple-50 text-purple-700 dark:bg-purple-950 dark:text-purple-300">
