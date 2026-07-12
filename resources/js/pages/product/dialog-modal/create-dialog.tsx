@@ -50,8 +50,8 @@ export function CreateDialog({ onSuccess, units, categories }: CreateDialogProps
         is_active: true,
         is_unlimited: false,
         stock: null,
-        price: null,
-        cost_price: null,
+        price: 0,
+        cost_price: 0,
         image: null,
         desc: '',
         barcode: ''

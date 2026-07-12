@@ -128,7 +128,8 @@ export default function Index() {
     const handleChangeKeyword = (keyword: string) => {
         setQueryParam((prev) => ({
             ...prev,
-            keyword: keyword
+            page: 1,
+            keyword: keyword,
         }));
     };
 
@@ -161,10 +162,10 @@ export default function Index() {
 
     return (
         <>
-            <Head title={t("page.masterproduct.page_name", "Produk")} />
+            <Head title={t("page.master_product.page_name", "Produk")} />
             <div className="mb-16 flex h-full flex-1 flex-col overflow-x-auto rounded-xl p-4">
                 <HeaderContent>
-                    {t("page.masterproduct.page_name", "Produk")}
+                    {t("page.master_product.page_name", "Master Produk")}
                 </HeaderContent>
                 <DataTable
                     columns={columns}

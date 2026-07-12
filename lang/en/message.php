@@ -5,6 +5,7 @@ return [
         'success' => 'Sukses',
         'created' => 'Data successfully created',
         'bulk_created' => ':count data successfully created',
+        'import_processing' => 'Import is processing',
         'updated' => 'Data successfully updated',
         'bulk_updated' => ':count data successfully updated',
         'deleted' => 'Data successfully deleted',

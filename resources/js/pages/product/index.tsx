@@ -174,6 +174,7 @@ export default function Index() {
     const handleChangeKeyword = (keyword: string) => {
         setQueryParam((prev) => ({
             ...prev,
+            page: 1,
             keyword: keyword
         }));
     };

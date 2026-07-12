@@ -5,6 +5,7 @@ return [
         'success' => 'Sukses',
         'created' => 'Data berhasil dibuat',
         'bulk_created' => ':count data berhasil dibuat',
+        'import_processing' => 'Impor sedang diproses',
         'updated' => 'Data berhasil diperbarui',
         'bulk_updated' => ':count data berhasil diperbarui',
         'deleted' => 'Data berhasil dihapus',

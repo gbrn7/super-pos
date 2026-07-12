@@ -12,7 +12,7 @@ import {
 } from '@/components/ui/dialog';
 import { Field, FieldGroup } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
-import { store as storeProduct } from '@/routes/apiMasterProducts';
+import { store as storeMasterProduct } from '@/routes/apiMasterProducts';
 
 import { useTranslation } from 'react-i18next';
 import { Spinner } from '@/components/ui/spinner';
@@ -36,14 +36,13 @@ export function CreateDialog({ onSuccess }: CreateDialogProps) {
     const { t } = useTranslation();
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState<boolean>(false);
-    const [imagePreview, setImagePreview] = useState<string>('');
 
     const defaultFormData: MasterProductForm = {
         category_name: '',
         unit_name: '',
         name: '',
-        price: null,
-        cost_price: null,
+        price: 0,
+        cost_price: 0,
         desc: '',
         barcode: ''
     }
@@ -78,22 +77,7 @@ export function CreateDialog({ onSuccess }: CreateDialogProps) {
         });
     };
 
-    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files && e.target.files.length > 0) {
-            const file = e.target.files[0];
-            setFormData(
-                (prev) => ({
-                    ...prev,
-                    image: file
-                })
-            );
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                setImagePreview(reader.result as string);
-            };
-            reader.readAsDataURL(file);
-        }
-    };
+
 
     const handleSubmit = async (e: React.SubmitEvent) => {
 
@@ -120,10 +104,10 @@ export function CreateDialog({ onSuccess }: CreateDialogProps) {
 
 
             const res = await axiosInstance.post<ResponseApi<MasterProduct>>(
-                storeProduct().url,
+                storeMasterProduct().url,
                 {
-                    category_id: formData.category_name,
-                    unit_id: formData.unit_name,
+                    category_name: formData.category_name,
+                    unit_name: formData.unit_name,
                     name: formData.name,
                     price: formData.price,
                     cost_price: formData.cost_price,
@@ -145,7 +129,6 @@ export function CreateDialog({ onSuccess }: CreateDialogProps) {
 
             showSuccessToast(res.data.message)
             setFormData(defaultFormData);
-            setImagePreview('');
             setOpen(false);
             onSuccess();
         } catch (error) {
@@ -194,14 +177,13 @@ export function CreateDialog({ onSuccess }: CreateDialogProps) {
                             )}
                         </Field>
                         <Field>
-                            <label htmlFor="name" className="text-sm">
-                                {t("page.master_product.dialog_modal.create_dialog.name_input_label", "Nama")}
-                                <span className="text-red-500"> *</span>
+                            <label htmlFor="category_name" className="text-sm">
+                                {t("page.master_product.dialog_modal.create_dialog.category_name_input_label", "Kategori")}
                             </label>
                             <Input
                                 id="category_name"
-                                name="name"
-                                placeholder={t("page.master_product.dialog_modal.create_dialog.name_input_placeholder", "Masukkan nama master produk")}
+                                name="category_name"
+                                placeholder={t("page.master_product.dialog_modal.create_dialog.category_name_input_placeholder", "Masukkan nama kategori master produk")}
                                 value={formData.category_name}
                                 onChange={handleChange}
                                 disabled={loading}
@@ -212,21 +194,20 @@ export function CreateDialog({ onSuccess }: CreateDialogProps) {
                             )}
                         </Field>
                         <Field>
-                            <label htmlFor="name" className="text-sm">
-                                {t("page.master_product.dialog_modal.create_dialog.name_input_label", "Nama")}
-                                <span className="text-red-500"> *</span>
+                            <label htmlFor="unit_name" className="text-sm">
+                                {t("page.master_product.dialog_modal.create_dialog.unit_name_input_label", "Satuan")}
                             </label>
                             <Input
-                                id="name"
-                                name="name"
-                                placeholder={t("page.master_product.dialog_modal.create_dialog.name_input_placeholder", "Masukkan nama master produk")}
-                                value={formData.name}
+                                id="unit_name"
+                                name="unit_name"
+                                placeholder={t("page.master_product.dialog_modal.create_dialog.unit_name_input_placeholder", "Masukkan satuan master produk")}
+                                value={formData.unit_name}
                                 onChange={handleChange}
                                 disabled={loading}
-                                className={`${errorForm.name && 'border-red-500'}`}
+                                className={`${errorForm.unit_name && 'border-red-500'}`}
                             />
-                            {errorForm.name && (
-                                <ErrorFormInfo message={errorForm.name} />
+                            {errorForm.unit_name && (
+                                <ErrorFormInfo message={errorForm.unit_name} />
                             )}
                         </Field>
                         <Field>

@@ -66,32 +66,28 @@
                 <th style="width: 32px;">No</th>
                 <th>Nama</th>
                 <th>Barcode</th>
-                <th>Sku</th>
                 <th>Kategori</th>
                 <th>Unit</th>
-                <th>Stok</th>
                 <th>Harga Modal</th>
                 <th>Harga</th>
                 <th>Deskripsi</th>
             </tr>
         </thead>
         <tbody>
-            @forelse ($products as $product)
+            @forelse ($masterproducts as $product)
             <tr>
                 <td>{{ $loop->iteration }}</td>
                 <td>{{ $product->name }}</td>
                 <td>{{ $product->barcode }}</td>
-                <td>{{ $product->sku }}</td>
-                <td>{{ $product->category?->name ?? '-' }}</td>
-                <td>{{ $product->unit?->name ?? '-' }}</td>
-                <td>{{ $product->stock }}</td>
+                <td>{{ $product->category_name ?? '-' }}</td>
+                <td>{{ $product->unit_name ?? '-' }}</td>
                 <td>Rp {{ number_format((float) $product->cost_price, 0, ',', '.') }}</td>
                 <td>Rp {{ number_format((float) $product->price, 0, ',', '.') }}</td>
                 <td>{{ $product->desc }}</td>
             </tr>
             @empty
             <tr>
-                <td class="empty" colspan="7">Tidak ada produk.</td>
+                <td class="empty" colspan="7">Tidak ada master produk.</td>
             </tr>
             @endforelse
         </tbody>

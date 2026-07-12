@@ -301,6 +301,12 @@ export function DataTable<TData, TValue>({
                                                 'Nama',
                                             )}
                                         </SelectItem>
+                                        <SelectItem value="barcode">
+                                            {t(
+                                                'component.data_table.search_component.barcode',
+                                                'Barcode',
+                                            )}
+                                        </SelectItem>
                                         <SelectItem value="sku">
                                             {t(
                                                 'component.data_table.search_component.sku',

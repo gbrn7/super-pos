@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import {
@@ -20,7 +19,6 @@ import axiosInstance from '@/lib/axios';
 import { ResponseApi } from '@/support/interfaces/response/Response';
 import { handleApiError, showSuccessToast, showWarningToast } from '@/lib/utils';
 import { ProductErrorForm, ProductForm, ProductSchema } from '@/support/interfaces/request/product';
-import z from 'zod';
 import ErrorFormInfo from '@/components/errorFormInfo';
 import { SelectLabel } from '@radix-ui/react-select';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';

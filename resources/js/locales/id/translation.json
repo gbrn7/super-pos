@@ -127,6 +127,7 @@
         "sku":"SKU",
         "category":"Kategori",
         "unit":"Satuan",
+        "barcode":"Barcode",
         "description":"Deskripsi",
         "guard_name":"Nama Garda",
         "placeholder":"Telusuri"

@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { useTranslation } from "react-i18next";
 import { DownloadCloud } from "lucide-react";
-import apiProducts from "@/routes/apiProducts";
+import apiMasterProducts from "@/routes/apiMasterProducts";
 
 interface ExportDropdownMenuProps<TData> {
   data: TData[];
@@ -24,11 +24,11 @@ export function ExportDropdownMenu<TData>({
       <DropdownMenuContent>
         <DropdownMenuGroup>
           <DropdownMenuItem>
-            <a href={apiProducts.exportProductsExcelData().url}>{t("component.data_table.export.export_excel_btn", "Ekspor Excel")}
+            <a href={apiMasterProducts.exportMasterProductsExcelData().url}>{t("component.data_table.export.export_excel_btn", "Ekspor Excel")}
             </a >
           </DropdownMenuItem>
           <DropdownMenuItem>
-            <a href={apiProducts.exportProductsPdfData().url}>{t("component.data_table.export.export_pdf_btn", "Ekspor Pdf")}
+            <a href={apiMasterProducts.exportMasterProductsPdfData().url}>{t("component.data_table.export.export_pdf_btn", "Ekspor Pdf")}
             </a>
           </DropdownMenuItem>
         </DropdownMenuGroup>

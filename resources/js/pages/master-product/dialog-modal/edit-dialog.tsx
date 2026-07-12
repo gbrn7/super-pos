@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import {
@@ -21,8 +20,6 @@ import { ResponseApi } from '@/support/interfaces/response/Response';
 import { handleApiError, showSuccessToast, showWarningToast } from '@/lib/utils';
 import { MasterProductErrorForm, MasterProductForm, MasterProductSchema } from '@/support/interfaces/request/master-product';
 import ErrorFormInfo from '@/components/errorFormInfo';
-import { Unit } from '@/support/models/unit';
-import { Category } from '@/support/models/category';
 import { NumericFormat } from 'react-number-format';
 import { Textarea } from '@/components/ui/textarea';
 
@@ -169,6 +166,40 @@ export function EditDialog({
                             />
                             {errorForm.name && (
                                 <ErrorFormInfo message={errorForm.name} />
+                            )}
+                        </Field>
+                        <Field>
+                            <label htmlFor="category_name" className="text-sm">
+                                {t("page.master_product.dialog_modal.create_dialog.category_name_input_label", "Kategori")}
+                            </label>
+                            <Input
+                                id="category_name"
+                                name="category_name"
+                                placeholder={t("page.master_product.dialog_modal.create_dialog.category_name_input_placeholder", "Masukkan nama kategori master produk")}
+                                value={formData.category_name}
+                                onChange={handleChange}
+                                disabled={loading}
+                                className={`${errorForm.category_name && 'border-red-500'}`}
+                            />
+                            {errorForm.category_name && (
+                                <ErrorFormInfo message={errorForm.category_name} />
+                            )}
+                        </Field>
+                        <Field>
+                            <label htmlFor="unit_name" className="text-sm">
+                                {t("page.master_product.dialog_modal.create_dialog.unit_name_input_label", "Satuan")}
+                            </label>
+                            <Input
+                                id="unit_name"
+                                name="unit_name"
+                                placeholder={t("page.master_product.dialog_modal.create_dialog.unit_name_input_placeholder", "Masukkan satuan master produk")}
+                                value={formData.unit_name}
+                                onChange={handleChange}
+                                disabled={loading}
+                                className={`${errorForm.unit_name && 'border-red-500'}`}
+                            />
+                            {errorForm.unit_name && (
+                                <ErrorFormInfo message={errorForm.unit_name} />
                             )}
                         </Field>
                         <Field>

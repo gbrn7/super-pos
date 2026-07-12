@@ -142,7 +142,7 @@ class ApiMasterProductController extends Controller implements HasMiddleware
 
     public function getMasterProductImportTemplate()
     {
-        $fileName = 'import-Master-Products-template.xlsx';
+        $fileName = 'import-master-products-template.xlsx';
         $publiFilePath = 'template/' . $fileName;
 
         if (! file_exists($publiFilePath)) {

@@ -8,6 +8,8 @@ class Constants
 
     public const PRODUCT_PUBLIC_PATH = 'products/';
 
+    public const IMPORT_QUEUE_PUBLIC_PATH = 'imports/';
+
     public const EMPTY_STRING_VALUE = '';
 
     public const EMPTY_NUMBER_VALUE = 0;

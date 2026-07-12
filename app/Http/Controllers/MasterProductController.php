@@ -12,7 +12,7 @@ class MasterProductController extends Controller implements HasMiddleware
     {
         return [
             new Middleware(
-                'permission:' . MasterProductPermissionEnums::READ_MASTER_PRODUCT->value,
+                'permission:'.MasterProductPermissionEnums::READ_MASTER_PRODUCT->value,
                 only: ['index']
             ),
         ];
@@ -20,6 +20,6 @@ class MasterProductController extends Controller implements HasMiddleware
 
     public function index()
     {
-        return inertia('MasterProduct/index');
+        return inertia('master-product/index');
     }
 }

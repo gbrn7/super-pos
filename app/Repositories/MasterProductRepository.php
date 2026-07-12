@@ -12,23 +12,30 @@ class MasterProductRepository implements MasterProductRepositoryInterface
 {
     public function getAllByIndex(GetMasterProductReqModel $request): Paginator|Collection
     {
+        // dd($request);
         $query = MasterProduct::query()
             ->when($request->keyword, function ($query) use ($request) {
-                $query
-                    ->orwhere('name', 'ilike', "%{$request->keyword}%")
-                    ->orwhere('category_name', 'ilike', "%{$request->keyword}%")
-                    ->orwhere('unit_name', 'ilike', "%{$request->keyword}%")
-                    ->orwhere('barcode', 'ilike', "%{$request->keyword}%")
-                    ->orwhere('desc', 'ilike', "%{$request->keyword}%");
+                if ($request->field && $request->field != 'default') {
+                    $query->where($request->field, 'ilike', "%{$request->keyword}%");
+                } else {
+                    $query
+                        ->orwhere('name', 'ilike', "%{$request->keyword}%")
+                        ->orwhere('category_name', 'ilike', "%{$request->keyword}%")
+                        ->orwhere('unit_name', 'ilike', "%{$request->keyword}%")
+                        ->orwhere('barcode', 'ilike', "%{$request->keyword}%")
+                        ->orwhere('desc', 'ilike', "%{$request->keyword}%");
+                }
             })
             ->when($request->name, fn($query) => $query->where('name', 'ilike', "%{$request->name}%"))
             ->when($request->barcode, fn($query) => $query->where('barcode', 'ilike', "%{$request->barcode}%"))
+            ->when($request->category_name, fn($query) => $query->where('category_name', 'ilike', "%{$request->category_name}%"))
+            ->when($request->unit_name, fn($query) => $query->where('unit_name', 'ilike', "%{$request->unit_name}%"))
             ->when($request->price, fn($query) => $query->where('price', $request->price))
             ->when($request->cost_price, fn($query) => $query->where('cost_price', $request->cost_price))
             ->select('*');
 
         if (isset($request->order_by) && isset($request->order)) {
-            $query->orderBy('' . $request->order_by, $request->order);
+            $query->orderBy($request->order_by, $request->order);
         } else {
             $query->orderBy('id', 'desc');
         }
