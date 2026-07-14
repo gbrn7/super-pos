@@ -16,12 +16,14 @@ import {
 import { formatRupiah } from '@/lib/format-money';
 import { PERMISSIONENUMS } from '@/support/enums/PermissionEnums';
 import type { MasterProduct } from '@/support/models/masterProduct';
+import { Plus } from 'lucide-react';
 
 
 interface ColumnsProps {
     onDetailClick: (masterProduct: MasterProduct) => void;
     onEditClick: (masterProduct: MasterProduct) => void;
     onDeleteClick: (masterProduct: MasterProduct) => void;
+    onAddProductsClick: (masterProduct: MasterProduct) => void;
     onSortChange: (orderBy: string | null, order: string | null) => void;
     orderBy: string | null;
     order: string | null;
@@ -119,6 +121,12 @@ export const columns = (props?: ColumnsProps): ColumnDef<MasterProduct>[] => {
                         >
                             <FileText className="mr-0.5 h-4 w-4" />
                             {t("component.data_table.action_menu.detail_data_btn", "Detail data")}
+                        </DropdownMenuItem>
+                        <DropdownMenuItem
+                            onClick={() => props?.onAddProductsClick(row.original)}
+                        >
+                            <Plus className="mr-0.5 h-4 w-4" />
+                            {t("page.master_product.dialog_modal.action_menu.add_products_btn", "Tambah Produk")}
                         </DropdownMenuItem>
                         <Can permission={PERMISSIONENUMS.MASTER_PRODUCT.UPDATE}>
                             <DropdownMenuItem

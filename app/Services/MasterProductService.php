@@ -54,7 +54,7 @@ class MasterProductService implements MasterProductServiceInterface
         try {
             if ($data['cost_price'] > $data['price']) {
                 throw new Exception(
-                    trans('message.error.cost_price_greater_than_price_template_validaion'),
+                    trans('message.error.cost_price_greater_than_price_validation'),
                     Response::HTTP_INTERNAL_SERVER_ERROR
                 );
             }
@@ -76,7 +76,7 @@ class MasterProductService implements MasterProductServiceInterface
 
             if ($data['cost_price'] > $data['price']) {
                 throw new Exception(
-                    trans('message.error.cost_price_greater_than_price_template_validaion'),
+                    trans('message.error.cost_price_greater_than_price_validation'),
                     Response::HTTP_INTERNAL_SERVER_ERROR
                 );
             }

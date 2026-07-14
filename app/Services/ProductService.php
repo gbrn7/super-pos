@@ -61,7 +61,7 @@ class ProductService implements ProductServiceInterface
         try {
             if ($data['cost_price'] > $data['price']) {
                 throw new Exception(
-                    trans('message.error.cost_price_greater_than_price_template_validaion'),
+                    trans('message.error.cost_price_greater_than_price_validation'),
                     Response::HTTP_INTERNAL_SERVER_ERROR
                 );
             }
@@ -69,12 +69,21 @@ class ProductService implements ProductServiceInterface
             // Generate SKU from product name
             $data['sku'] = Str::of($data['name'])
                 ->headline()
-                ->replaceMatches('/[^A-Z]/', '').'-'.strtoupper(Str::random(8));
+                ->replaceMatches('/[^A-Z]/', '') . '-' . strtoupper(Str::random(8));
+
+            $product = $this->productRepository->getByBarcode($data['barcode']);
+
+            if (! isset($product)) {
+                throw new Exception(
+                    sprintf(trans('message.error.product_with_barcode_exist'), $data['barcode']),
+                    Response::HTTP_UNPROCESSABLE_ENTITY
+                );
+            }
 
             if (isset($data['image']) && $data['image'] instanceof UploadedFile) {
-                $fileName = Str::random(10).$data['image']->getClientOriginalName();
+                $fileName = Str::random(10) . $data['image']->getClientOriginalName();
                 $data['image']->storeAs(Constants::PRODUCT_PUBLIC_PATH, $fileName, 'public');
-                $data['image'] = Constants::PRODUCT_PUBLIC_PATH.$fileName;
+                $data['image'] = Constants::PRODUCT_PUBLIC_PATH . $fileName;
             }
 
             return $this->productRepository->create($data);
@@ -94,7 +103,7 @@ class ProductService implements ProductServiceInterface
 
             if ($data['cost_price'] > $data['price']) {
                 throw new Exception(
-                    trans('message.error.cost_price_greater_than_price_template_validaion'),
+                    trans('message.error.cost_price_greater_than_price_validation'),
                     Response::HTTP_INTERNAL_SERVER_ERROR
                 );
             }
@@ -103,7 +112,7 @@ class ProductService implements ProductServiceInterface
             if ($data['name'] !== $product->name) {
                 $data['sku'] = Str::of($data['name'])
                     ->headline()
-                    ->replaceMatches('/[^A-Z]/', '').'-'.strtoupper(Str::random(8));
+                    ->replaceMatches('/[^A-Z]/', '') . '-' . strtoupper(Str::random(8));
             }
 
             if (isset($data['image']) && $data['image'] instanceof UploadedFile) {
@@ -111,9 +120,9 @@ class ProductService implements ProductServiceInterface
                     Storage::disk('public')->delete($product->image);
                 }
 
-                $fileName = Str::random(10).$data['image']->getClientOriginalName();
+                $fileName = Str::random(10) . $data['image']->getClientOriginalName();
                 $data['image']->storeAs(Constants::PRODUCT_PUBLIC_PATH, $fileName, 'public');
-                $data['image'] = Constants::PRODUCT_PUBLIC_PATH.$fileName;
+                $data['image'] = Constants::PRODUCT_PUBLIC_PATH . $fileName;
             }
 
             $isSuccess = $this->productRepository->update($product, $data);
@@ -297,7 +306,7 @@ class ProductService implements ProductServiceInterface
                     // Generate SKU from product name
                     $newProduct['sku'] = Str::of($newProduct['name'])
                         ->headline()
-                        ->replaceMatches('/[^A-Z]/', '').'-'.strtoupper(Str::random(8));
+                        ->replaceMatches('/[^A-Z]/', '') . '-' . strtoupper(Str::random(8));
 
                     $newData->push($newProduct);
                 }
@@ -352,7 +361,7 @@ class ProductService implements ProductServiceInterface
 
             $sheet->fromArray($rows, null, 'A2');
 
-            $temporaryFilePath = tempnam(sys_get_temp_dir(), 'products-export-').'.xlsx';
+            $temporaryFilePath = tempnam(sys_get_temp_dir(), 'products-export-') . '.xlsx';
             $writer = new Xlsx($spreadsheet);
             $writer->save($temporaryFilePath);
 
@@ -368,7 +377,7 @@ class ProductService implements ProductServiceInterface
             $request = new GetProductReqModel(new Request(['limit' => null]));
             $products = $this->productRepository->getAllByIndex($request);
 
-            $temporaryFilePath = tempnam(sys_get_temp_dir(), 'products-export-').'.pdf';
+            $temporaryFilePath = tempnam(sys_get_temp_dir(), 'products-export-') . '.pdf';
 
             Pdf::loadView('exports.products-pdf', ['products' => $products])
                 ->setPaper('a4', 'landscape')

@@ -53,4 +53,10 @@ interface ProductRepositoryInterface
      * Get  product by its ID.
      */
     public function getByIds(array $ids): ?Collection;
+
+
+    /**
+     * Get  product by its Barcode.
+     */
+    public function getByBarcode(string $barcode): ?Product;
 }

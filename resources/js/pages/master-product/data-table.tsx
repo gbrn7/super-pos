@@ -59,7 +59,10 @@ import { DetailDialog } from './dialog-modal/detail-dialog';
 import { EditDialog } from './dialog-modal/edit-dialog';
 import { ExportDropdownMenu } from './export-data-menu/export-dropdown-menu';
 import { ImportExcelDialog } from './dialog-modal/import-excel-dialog';
+import { AddProductsDialog } from './dialog-modal/add-products-dialog';
 import { MasterProduct } from '@/support/models/masterProduct';
+import { Unit } from '@/support/models/unit';
+import { Category } from '@/support/models/category';
 
 interface DataTableProps<TData, TValue> {
     columns:
@@ -78,6 +81,9 @@ interface DataTableProps<TData, TValue> {
     onDetailClick: (data: TData) => void;
     onEditClick: (data: TData) => void;
     onDeleteClick: (data: TData) => void;
+    onAddProductsClick: (data: TData) => void;
+    addProductsOpen: boolean;
+    setAddProductsOpen: (open: boolean) => void;
     onBulkDeleteClick?: (data: TData[]) => void;
     isBulkDeleteDialogOpen: boolean;
     setOpenBulkDeleteDialogOpen: (open: boolean) => void;
@@ -90,6 +96,8 @@ interface DataTableProps<TData, TValue> {
     onChangeField: (field: string) => void;
     onChangeKeyword: (keyword: string) => void;
     setQueryParam: React.Dispatch<React.SetStateAction<MasterProductQueryParam>>;
+    units: Unit[];
+    categories: Category[];
 }
 export function DataTable<TData, TValue>({
     columns: columnsOrFn,
@@ -106,6 +114,9 @@ export function DataTable<TData, TValue>({
     onDetailClick,
     onEditClick,
     onDeleteClick,
+    onAddProductsClick,
+    addProductsOpen,
+    setAddProductsOpen,
     onBulkDeleteClick,
     isBulkDeleteDialogOpen,
     setOpenBulkDeleteDialogOpen,
@@ -118,6 +129,8 @@ export function DataTable<TData, TValue>({
     onChangeField,
     onChangeKeyword,
     setQueryParam,
+    categories,
+    units
 }: DataTableProps<TData, TValue>) {
     const { t } = useTranslation();
 
@@ -127,6 +140,7 @@ export function DataTable<TData, TValue>({
                 onDetailClick,
                 onEditClick,
                 onDeleteClick,
+                onAddProductsClick,
                 onSortChange: (
                     orderBy: string | null,
                     order: string | null,
@@ -153,16 +167,6 @@ export function DataTable<TData, TValue>({
 
     const [rowSelection, setRowSelection] = React.useState({});
 
-    const updateQueryParam = <TField extends keyof MasterProductQueryParam>(
-        field: TField,
-        value: MasterProductQueryParam[TField],
-    ) => {
-        setQueryParam((prev) => ({
-            ...prev,
-            [field]: value,
-            page: 1,
-        }));
-    };
 
     const table = useReactTable({
         data,
@@ -182,6 +186,13 @@ export function DataTable<TData, TValue>({
             rowSelection,
         },
     });
+
+    React.useEffect(() => {
+        console.log("------")
+        console.log("categories-dt", categories)
+        console.log("units-dt", units)
+        console.log("------")
+    }, [])
 
     return (
         <div className="rounded-2xl border p-3">
@@ -402,6 +413,15 @@ export function DataTable<TData, TValue>({
                     isOpen={detailDataOpen}
                     masterProduct={selectedMasterProduct}
                     onOpenChange={setDetailOpen}
+                />
+
+                <AddProductsDialog
+                    open={addProductsOpen}
+                    onOpenChange={setAddProductsOpen}
+                    masterProduct={selectedMasterProduct}
+                    onSuccess={onRefresh}
+                    categories={categories}
+                    units={units}
                 />
 
                 <EditDialog

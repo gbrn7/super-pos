@@ -17,6 +17,7 @@ return [
     'error' => [
         'data_not_found' => 'Data not found',
         'data_already_exists' => 'Data already exist',
+        'product_with_barcode_exist' => 'Product with barcode %s has been added',
         'super_admin_cannot_be_updated' => 'Super admin data cannot be deleted',
         'super_admin_cannot_be_deleted' => 'Super admin data cannot be deleted',
         'role_data_used_by_user' => 'Role data is still used by users',
@@ -25,7 +26,8 @@ return [
         'something_went_wrong' => 'Something went wrong',
         'unauthorized' => 'Unauthorized access',
         'validation' => 'Validation failed',
-        'cost_price_greater_than_price_template_validaion' => 'Cost price of %s product cannot be greater than selling price, please check your template.',
+        'cost_price_greater_than_price_validation' => 'Cost price of product cannot be greater than selling price.',
+        'cost_price_greater_than_price_template_validation' => 'Cost price of %s product cannot be greater than selling price, please check your template.',
         'blank_name_template_validation' => 'There are blank names in the template, please check your template.',
         'blank_category_template_validation' => 'There are blank categories in the template, please check your template.',
         'blank_unit_template_validation' => 'There are blank units in the template, please check your template.',

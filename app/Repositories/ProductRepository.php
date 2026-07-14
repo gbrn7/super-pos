@@ -119,4 +119,9 @@ class ProductRepository implements ProductRepositoryInterface
     {
         return Product::whereIn('id', $ids)->get();
     }
+
+    public function getByBarcode(string $barcode): ?Product
+    {
+        return Product::where('name', $barcode)->first();
+    }
 }

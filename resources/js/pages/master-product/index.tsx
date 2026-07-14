@@ -7,12 +7,16 @@ import { DEBOUNCEDEFAULTDURATION, DEFAULT_FILTER_VALUE, PAGINATIONLIMITDEFAULT, 
 import axiosInstance from '@/lib/axios';
 import { handleApiError, showWarningToast } from '@/lib/utils';
 import { index as apiGetMasterProducts } from '@/routes/apiMasterProducts';
+import { index as apiGetCategories } from '@/routes/apiCategories';
+import { index as apiGetUnits } from '@/routes/apiUnits';
 import { index as masterproducts } from '@/routes/payment-methods';
 import type { MasterProductQueryParam } from '@/support/interfaces/request/master-product';
 import type { Pagination } from '@/support/interfaces/resource/pagination';
 import type { PaginationResponse } from '@/support/interfaces/resource/resource-response';
 import type { ResponseApi } from '@/support/interfaces/response/Response';
 import type { MasterProduct } from '@/support/models/masterProduct';
+import type { Category } from '@/support/models/category';
+import type { Unit } from '@/support/models/unit';
 import { columns } from './columns';
 import { DataTable } from './data-table';
 
@@ -28,6 +32,8 @@ export default function Index() {
 
 
     const [allMasterProducts, setAllMasterProducts] = useState<MasterProduct[]>([]);
+    const [categories, setCategories] = useState<Category[]>([]);
+    const [units, setUnits] = useState<Unit[]>([]);
     const [pagination, setPagination] = useState<Pagination>({
         current_page: 1,
         last_page: 1,
@@ -44,6 +50,7 @@ export default function Index() {
     const [editOpen, setEditOpen] = useState(false);
     const [deleteOpen, setDeleteOpen] = useState(false);
     const [bulkDeleteOpen, setBulkDeleteOpen] = useState(false);
+    const [addProductsOpen, setAddProductsOpen] = useState(false);
     const [selectedMasterProduct, setSelectedMasterProduct] = useState<MasterProduct | null>(
         null,
     );
@@ -84,6 +91,28 @@ export default function Index() {
         }
     };
 
+    const fetchCategoriesAndUnits = async () => {
+        try {
+            const [categoriesRes, unitsRes] = await Promise.all([
+                axiosInstance.get<ResponseApi<Category[]>>(apiGetCategories().url),
+                axiosInstance.get<ResponseApi<Unit[]>>(apiGetUnits().url),
+            ]);
+
+            console.log(categoriesRes.data.data)
+            console.log(unitsRes.data.data)
+
+            if (categoriesRes.data.data) {
+                setCategories(categoriesRes.data.data);
+            }
+            if (unitsRes.data.data) {
+                setUnits(unitsRes.data.data);
+            }
+        } catch (error) {
+            console.error('Error fetching categories and units:', error);
+            handleApiError(error);
+        }
+    };
+
     const handleDetailClick = (masterproduct: MasterProduct) => {
         setSelectedMasterProduct(masterproduct);
         setDetailOpen(true);
@@ -97,6 +126,11 @@ export default function Index() {
     const handleDeleteClick = (masterproduct: MasterProduct) => {
         setSelectedMasterProduct(masterproduct);
         setDeleteOpen(true);
+    };
+
+    const handleAddProductsClick = (masterproduct: MasterProduct) => {
+        setSelectedMasterProduct(masterproduct);
+        setAddProductsOpen(true);
     };
 
     const handleBulkDeleteClick = (Masterproducts: MasterProduct[]) => {
@@ -133,6 +167,10 @@ export default function Index() {
         }));
     };
 
+    // Fetch categories and units on mount
+    useEffect(() => {
+        fetchCategoriesAndUnits();
+    }, []);
 
     useEffect(() => {
         if (!hasMountedQueryEffect.current) {
@@ -182,6 +220,9 @@ export default function Index() {
                     onDetailClick={handleDetailClick}
                     onEditClick={handleEditClick}
                     onDeleteClick={handleDeleteClick}
+                    onAddProductsClick={handleAddProductsClick}
+                    addProductsOpen={addProductsOpen}
+                    setAddProductsOpen={setAddProductsOpen}
                     onBulkDeleteClick={handleBulkDeleteClick}
                     isBulkDeleteDialogOpen={bulkDeleteOpen}
                     setOpenBulkDeleteDialogOpen={setBulkDeleteOpen}
@@ -194,6 +235,8 @@ export default function Index() {
                     onChangeField={handleChangeField}
                     onChangeKeyword={handleChangeKeyword}
                     setQueryParam={setQueryParam}
+                    categories={categories}
+                    units={units}
                 />
             </div>
         </>
