@@ -12,6 +12,7 @@ import type {
     ColumnFiltersState,
     VisibilityState,
     PaginationState,
+    RowSelectionState,
 } from '@tanstack/react-table';
 import * as React from 'react';
 import { Button } from '@/components/ui/button';
@@ -70,6 +71,8 @@ interface DataTableProps<TData, TValue> {
     setOpenBulkDeleteDialogOpen: (open: boolean) => void;
     selectedBulkRoles: Role[]
     selectedRole: Role | null
+    rowSelection: RowSelectionState;
+    setRowSelection: React.Dispatch<React.SetStateAction<RowSelectionState>>;
 }
 export function DataTable<TData, TValue>({
     columns: columnsOrFn,
@@ -86,7 +89,9 @@ export function DataTable<TData, TValue>({
     isBulkDeleteDialogOpen,
     setOpenBulkDeleteDialogOpen,
     selectedBulkRoles,
-    selectedRole
+    selectedRole,
+    rowSelection,
+    setRowSelection,
 }: DataTableProps<TData, TValue>) {
     const { t } = useTranslation();
 
@@ -104,8 +109,6 @@ export function DataTable<TData, TValue>({
     const [columnVisibility, setColumnVisibility] =
         React.useState<VisibilityState>({});
 
-    const [rowSelection, setRowSelection] = React.useState({});
-
     const [pagination, setPagination] = React.useState<PaginationState>({
         pageIndex: 0,
         pageSize: 10,
@@ -116,6 +119,7 @@ export function DataTable<TData, TValue>({
     const table = useReactTable({
         data,
         columns,
+        getRowId: (row: any) => row.id,
         getCoreRowModel: getCoreRowModel(),
         getFilteredRowModel: getFilteredRowModel(),
         getSortedRowModel: getSortedRowModel(),
@@ -179,18 +183,18 @@ export function DataTable<TData, TValue>({
                     <Can
                         permission={PERMISSIONENUMS.ROLE.DELETE}
                     >
-                        <BulkDeleteDialog isDisabled={!(Object.keys(rowSelection).length > 0) && true}
-                            selectedLength={table.getSelectedRowModel().rows.length}
+                        <BulkDeleteDialog isDisabled={!(Object.keys(rowSelection).length > 0)}
+                            selectedLength={Object.keys(rowSelection).length}
                             isOpen={isBulkDeleteDialogOpen}
                             onSuccess={() => {
                                 onRefresh()
-                                table.resetRowSelection()
+                                setRowSelection({})
                             }}
                             setOpen={setOpenBulkDeleteDialogOpen}
-                            roles={selectedBulkRoles}
+                            roles={Object.keys(rowSelection).map(id => ({ id: Number(id) } as Role))}
                             onBulkDeleteClick={() => {
-                                const selectedRows = table.getSelectedRowModel().rows.map((row) => row.original);
-                                onBulkDeleteClick?.(selectedRows);
+                                const selectedRows = Object.keys(rowSelection).map(id => ({ id: Number(id) } as Role));
+                                onBulkDeleteClick?.(selectedRows as any);
                             }}
                         />
                     </Can>

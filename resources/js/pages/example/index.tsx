@@ -10,6 +10,8 @@ import {
 import { Card, CardContent } from "@/components/ui/card";
 import { columns, Payment } from "./columns"
 import { DataTable } from "./data-table"
+import type { RowSelectionState } from "@tanstack/react-table"
+import { useState } from "react"
 
 async function getData(): Promise<Payment[]> {
   // Fetch data from your API here.
@@ -48,13 +50,15 @@ export default function index() {
     },
   ]
 
+  const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
+
   return (
     <>
       <Head title="Kategori" />
       <div className="flex h-full flex-1 flex-col overflow-x-auto rounded-xl p-4">
         <div className="grid grid-cols-3 gap-4">
         </div>
-        <DataTable columns={columns} data={data} />
+        <DataTable columns={columns} data={data} rowSelection={rowSelection} setRowSelection={setRowSelection} />
       </div>
 
     </>

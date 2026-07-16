@@ -10,6 +10,7 @@ import {
   SortingState,
   ColumnFiltersState,
   VisibilityState,
+  RowSelectionState,
 } from "@tanstack/react-table"
 
 
@@ -28,11 +29,15 @@ import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMe
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
+  rowSelection: RowSelectionState;
+  setRowSelection: React.Dispatch<React.SetStateAction<RowSelectionState>>;
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
+  rowSelection,
+  setRowSelection,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([])
 
@@ -43,11 +48,10 @@ export function DataTable<TData, TValue>({
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({})
 
-  const [rowSelection, setRowSelection] = React.useState({})
-
   const table = useReactTable({
     data,
     columns,
+    getRowId: (row: any) => row.id,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     onSortingChange: setSorting,

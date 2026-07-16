@@ -12,6 +12,7 @@ import { ResponseApi } from '@/support/interfaces/response/Response';
 import { handleApiError, showWarningToast } from '@/lib/utils';
 import HeaderContent from '@/components/header-content';
 import { PAGINATIONLIMITOPTIONDEFAULT } from '@/constants/Index';
+import type { RowSelectionState } from '@tanstack/react-table';
 
 const { url } = units();
 
@@ -33,6 +34,7 @@ export default function Index() {
         null,
     );
     const [selectedUnits, setSelectedUnits] = useState<Unit[]>([]);
+    const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
 
     const fetchAllUnits = async () => {
         try {
@@ -104,6 +106,8 @@ export default function Index() {
                     setOpenBulkDeleteDialogOpen={setBulkDeleteOpen}
                     selectedBulkUnits={selectedUnits}
                     selectedUnit={selectedUnit}
+                    rowSelection={rowSelection}
+                    setRowSelection={setRowSelection}
                 />
             </div>
         </>

@@ -14,6 +14,7 @@ import { handleApiError, showWarningToast } from '@/lib/utils';
 import HeaderContent from '@/components/header-content';
 import { Role } from '@/support/models/role';
 import { PAGINATIONLIMITOPTIONDEFAULT } from '@/constants/Index';
+import type { RowSelectionState } from '@tanstack/react-table';
 
 const { url } = users();
 
@@ -36,6 +37,7 @@ export default function Index() {
         null,
     );
     const [selectedUsers, setSelectedUsers] = useState<User[]>([]);
+    const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
 
     const fetchAllUsers = async () => {
         try {
@@ -128,6 +130,8 @@ export default function Index() {
                     setOpenBulkDeleteDialogOpen={setBulkDeleteOpen}
                     selectedBulkUsers={selectedUsers}
                     selectedUser={selectedUser}
+                    rowSelection={rowSelection}
+                    setRowSelection={setRowSelection}
                 />
             </div>
         </>

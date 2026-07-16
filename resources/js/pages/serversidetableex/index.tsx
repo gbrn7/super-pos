@@ -7,6 +7,7 @@ import { index as apiGetCategories } from '@/routes/apiCategories';
 import { index as categories } from "@/routes/categories";
 import { ResourceResponse } from "@/support/interfaces/resource/resource-response";
 import { QueryParam } from "@/support/interfaces/resource/queryParam";
+import type { RowSelectionState } from "@tanstack/react-table";
 
 const { url } = categories();
 
@@ -17,6 +18,7 @@ export default function index() {
   const LimitOptions = [10, 20, 50, 100]
 
   const [categoriesRes, setCategoriesRes] = useState<ResourceResponse<Category>>()
+  const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
 
   const { data, setData, get, processing } = useHttp<QueryParam>({
     query: '',
@@ -68,6 +70,8 @@ export default function index() {
           handlePageChange={handlePageChange}
           limitOptions={LimitOptions}
           queryParam={data}
+          rowSelection={rowSelection}
+          setRowSelection={setRowSelection}
         />
       </div>
     </>

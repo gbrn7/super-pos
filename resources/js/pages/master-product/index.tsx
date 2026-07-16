@@ -14,6 +14,7 @@ import type { MasterProductQueryParam } from '@/support/interfaces/request/maste
 import type { Pagination } from '@/support/interfaces/resource/pagination';
 import type { PaginationResponse } from '@/support/interfaces/resource/resource-response';
 import type { ResponseApi } from '@/support/interfaces/response/Response';
+import type { RowSelectionState } from '@tanstack/react-table';
 import type { MasterProduct } from '@/support/models/masterProduct';
 import type { Category } from '@/support/models/category';
 import type { Unit } from '@/support/models/unit';
@@ -56,7 +57,7 @@ export default function Index() {
     );
     const [selectedMasterProducts, setSelectedMasterProducts] = useState<MasterProduct[]>([]);
     const hasMountedQueryEffect = useRef(false);
-
+    const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
 
     const [queryParam, setQueryParam] = useState<MasterProductQueryParam>({
         limit: PAGINATIONLIMITDEFAULT,
@@ -237,6 +238,8 @@ export default function Index() {
                     setQueryParam={setQueryParam}
                     categories={categories}
                     units={units}
+                    rowSelection={rowSelection}
+                    setRowSelection={setRowSelection}
                 />
             </div>
         </>

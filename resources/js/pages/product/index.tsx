@@ -14,6 +14,7 @@ import type { ProductQueryParam } from '@/support/interfaces/request/product';
 import type { Pagination } from '@/support/interfaces/resource/pagination';
 import type { PaginationResponse } from '@/support/interfaces/resource/resource-response';
 import type { ResponseApi } from '@/support/interfaces/response/Response';
+import type { RowSelectionState } from '@tanstack/react-table';
 import type { Category } from '@/support/models/category';
 import type { Product } from '@/support/models/product';
 import type { Unit } from '@/support/models/unit';
@@ -55,7 +56,7 @@ export default function Index() {
     );
     const [selectedProducts, setSelectedProducts] = useState<Product[]>([]);
     const hasMountedQueryEffect = useRef(false);
-
+    const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
 
     const [queryParam, setQueryParam] = useState<ProductQueryParam>({
         limit: PAGINATIONLIMITDEFAULT,
@@ -249,6 +250,8 @@ export default function Index() {
                     onChangeField={handleChangeField}
                     onChangeKeyword={handleChangeKeyword}
                     setQueryParam={setQueryParam}
+                    rowSelection={rowSelection}
+                    setRowSelection={setRowSelection}
                 />
             </div>
         </>

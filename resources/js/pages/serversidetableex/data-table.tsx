@@ -10,6 +10,7 @@ import {
   SortingState,
   ColumnFiltersState,
   VisibilityState,
+  RowSelectionState,
 } from "@tanstack/react-table"
 
 
@@ -43,6 +44,8 @@ interface DataTableProps<TData, TValue> {
   handlePageChange: (page: number) => void,
   limitOptions: number[],
   queryParam: QueryParam,
+  rowSelection: RowSelectionState,
+  setRowSelection: React.Dispatch<React.SetStateAction<RowSelectionState>>,
 }
 export function DataTable<TData, TValue>({
   columns,
@@ -52,8 +55,9 @@ export function DataTable<TData, TValue>({
   handleLimitChange,
   handlePageChange,
   limitOptions,
-  queryParam
-
+  queryParam,
+  rowSelection,
+  setRowSelection
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([])
 
@@ -64,11 +68,10 @@ export function DataTable<TData, TValue>({
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({})
 
-  const [rowSelection, setRowSelection] = React.useState({})
-
   const table = useReactTable({
     data,
     columns,
+    getRowId: (row: any) => row.id,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     onSortingChange: setSorting,

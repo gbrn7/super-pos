@@ -16,6 +16,7 @@ import type {
     SortingState,
     ColumnFiltersState,
     VisibilityState,
+    RowSelectionState,
 } from '@tanstack/react-table';
 import { TableIcon } from 'lucide-react';
 import * as React from 'react';
@@ -98,6 +99,8 @@ interface DataTableProps<TData, TValue> {
     setQueryParam: React.Dispatch<React.SetStateAction<MasterProductQueryParam>>;
     units: Unit[];
     categories: Category[];
+    rowSelection: RowSelectionState;
+    setRowSelection: React.Dispatch<React.SetStateAction<RowSelectionState>>;
 }
 export function DataTable<TData, TValue>({
     columns: columnsOrFn,
@@ -130,7 +133,9 @@ export function DataTable<TData, TValue>({
     onChangeKeyword,
     setQueryParam,
     categories,
-    units
+    units,
+    rowSelection,
+    setRowSelection,
 }: DataTableProps<TData, TValue>) {
     const { t } = useTranslation();
 
@@ -165,12 +170,10 @@ export function DataTable<TData, TValue>({
     const [columnVisibility, setColumnVisibility] =
         React.useState<VisibilityState>({});
 
-    const [rowSelection, setRowSelection] = React.useState({});
-
-
     const table = useReactTable({
         data,
         columns,
+        getRowId: (row: any) => row.id,
         getCoreRowModel: getCoreRowModel(),
         getFilteredRowModel: getFilteredRowModel(),
         getSortedRowModel: getSortedRowModel(),
@@ -207,23 +210,21 @@ export function DataTable<TData, TValue>({
                     <Can permission={PERMISSIONENUMS.MASTER_PRODUCT.DELETE}>
                         <BulkDeleteDialog
                             isDisabled={
-                                !(Object.keys(rowSelection).length > 0) && true
+                                !(Object.keys(rowSelection).length > 0)
                             }
                             selectedLength={
-                                table.getSelectedRowModel().rows.length
+                                Object.keys(rowSelection).length
                             }
                             isOpen={isBulkDeleteDialogOpen}
                             onSuccess={() => {
                                 onRefresh();
-                                table.resetRowSelection();
+                                setRowSelection({});
                             }}
                             setOpen={setOpenBulkDeleteDialogOpen}
-                            masterProducts={selectedBulkMasterProducts}
+                            masterProducts={Object.keys(rowSelection).map(id => ({ id: Number(id) } as MasterProduct))}
                             onBulkDeleteClick={() => {
-                                const selectedRows = table
-                                    .getSelectedRowModel()
-                                    .rows.map((row) => row.original);
-                                onBulkDeleteClick?.(selectedRows);
+                                const selectedRows = Object.keys(rowSelection).map(id => ({ id: Number(id) } as MasterProduct));
+                                onBulkDeleteClick?.(selectedRows as any);
                             }}
                         />
                     </Can>

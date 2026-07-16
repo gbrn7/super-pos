@@ -12,6 +12,7 @@ import { ResponseApi } from '@/support/interfaces/response/Response';
 import { handleApiError, showWarningToast } from '@/lib/utils';
 import HeaderContent from '@/components/header-content';
 import { PAGINATIONLIMITOPTIONDEFAULT } from '@/constants/Index';
+import type { RowSelectionState } from '@tanstack/react-table';
 
 const { url } = paymentMethods();
 
@@ -33,6 +34,7 @@ export default function Index() {
         null,
     );
     const [selectedPaymentMethods, setSelectedPaymentMethods] = useState<PaymentMethod[]>([]);
+    const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
 
     const fetchAllPaymentMethods = async () => {
         try {
@@ -104,6 +106,8 @@ export default function Index() {
                     setOpenBulkDeleteDialogOpen={setBulkDeleteOpen}
                     selectedBulkPaymentMethods={selectedPaymentMethods}
                     selectedPaymentMethod={selectedPaymentMethod}
+                    rowSelection={rowSelection}
+                    setRowSelection={setRowSelection}
                 />
             </div>
         </>

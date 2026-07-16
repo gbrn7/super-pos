@@ -12,6 +12,7 @@ import { ResponseApi } from '@/support/interfaces/response/Response';
 import { handleApiError, showWarningToast } from '@/lib/utils';
 import HeaderContent from '@/components/header-content';
 import { PAGINATIONLIMITOPTIONDEFAULT } from '@/constants/Index';
+import type { RowSelectionState } from '@tanstack/react-table';
 
 const { url } = roles();
 
@@ -31,6 +32,7 @@ export default function index() {
         null,
     );
     const [selectedRoles, setSelectedRoles] = useState<Role[]>([]);
+    const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
 
     const fetchAllRoles = async () => {
         try {
@@ -98,6 +100,8 @@ export default function index() {
                     setOpenBulkDeleteDialogOpen={setBulkDeleteOpen}
                     selectedBulkRoles={selectedRoles}
                     selectedRole={selectedRole}
+                    rowSelection={rowSelection}
+                    setRowSelection={setRowSelection}
                 />
             </div>
         </>
