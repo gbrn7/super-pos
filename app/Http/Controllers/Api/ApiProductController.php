@@ -29,7 +29,7 @@ class ApiProductController extends Controller implements HasMiddleware
         return [
             new Middleware(
                 'permission:'.ProductPermissionEnums::READ_PRODUCT->value,
-                only: ['index', 'show', 'exportProductExcelData', 'exportProductPdfData']
+                only: ['index', 'show', 'getByBarcode', 'exportProductExcelData', 'exportProductPdfData']
             ),
 
             new Middleware(
@@ -102,6 +102,22 @@ class ApiProductController extends Controller implements HasMiddleware
     {
         try {
             $data = $this->productService->getById($id);
+
+            return ResponseApi::make(true, trans('message.success.success'), $data);
+        } catch (\Throwable $th) {
+            return ResponseApi::make(false, $th->getMessage(), null, $th->getcode());
+        }
+    }
+
+    /**
+     * Display the specified resource by barcode.
+     */
+    public function getByBarcode(string $barcode)
+    {
+        try {
+            $product = $this->productService->getByBarcode($barcode);
+
+            $data = new ProductResource($product);
 
             return ResponseApi::make(true, trans('message.success.success'), $data);
         } catch (\Throwable $th) {

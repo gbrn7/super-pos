@@ -56,6 +56,21 @@ class ProductService implements ProductServiceInterface
         }
     }
 
+    public function getByBarcode(string $barcode): ?Product
+    {
+        try {
+            $product = $this->productRepository->getByBarcode($barcode);
+
+            if (! isset($product)) {
+                throw new Exception(trans('message.error.data_not_found'), Response::HTTP_NOT_FOUND);
+            }
+
+            return $product;
+        } catch (\Throwable $th) {
+            throw CheckException::Check($th);
+        }
+    }
+
     public function create(array $data): Product
     {
         try {

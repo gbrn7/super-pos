@@ -256,7 +256,6 @@ export default function Index() {
                     onBulkAddProductsClick={handleBulkAddProductsClick}
                     isBulkAddProductsDialogOpen={bulkAddProductsOpen}
                     setOpenBulkAddProductsDialogOpen={setBulkAddProductsOpen}
-                    selectedBulkMasterProducts={Object.values(selectedMasterProductsMap)}
                     selectedMasterProductsMap={selectedMasterProductsMap}
                     selectedMasterProduct={selectedMasterProduct}
                     queryParam={queryParam}

@@ -89,6 +89,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
             Route::post('/bulk-delete', [ApiProductController::class, 'bulkDelete'])->name('apiProducts.bulkDelete');
 
+            Route::get('/barcode/{barcode}', [ApiProductController::class, 'getByBarcode'])->name('apiProducts.getByBarcode');
+
             Route::get('/download/import-template', [ApiProductController::class, 'getProductImportTemplate'])->name('apiProducts.getProductImportTemplate');
 
             Route::get('/download/export-excel', [ApiProductController::class, 'exportProductExcelData'])->name('apiProducts.exportProductsExcelData');

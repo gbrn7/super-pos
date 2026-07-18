@@ -22,6 +22,11 @@ interface ProductServiceInterface
     public function getById(int $id): ?Product;
 
     /**
+     * Get a product by its barcode.
+     */
+    public function getByBarcode(string $barcode): ?Product;
+
+    /**
      * Create a new product.
      */
     public function create(array $data): Product;
