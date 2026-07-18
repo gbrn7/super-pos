@@ -51,11 +51,13 @@ export default function Index() {
     const [editOpen, setEditOpen] = useState(false);
     const [deleteOpen, setDeleteOpen] = useState(false);
     const [bulkDeleteOpen, setBulkDeleteOpen] = useState(false);
+    const [bulkAddProductsOpen, setBulkAddProductsOpen] = useState(false);
     const [addProductsOpen, setAddProductsOpen] = useState(false);
     const [selectedMasterProduct, setSelectedMasterProduct] = useState<MasterProduct | null>(
         null,
     );
     const [selectedMasterProducts, setSelectedMasterProducts] = useState<MasterProduct[]>([]);
+    const [selectedMasterProductsMap, setSelectedMasterProductsMap] = useState<Record<string | number, MasterProduct>>({});
     const hasMountedQueryEffect = useRef(false);
     const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
 
@@ -88,7 +90,6 @@ export default function Index() {
             handleApiError(error)
         } finally {
             setProcessing(false);
-            setSelectedMasterProducts([]);
         }
     };
 
@@ -135,6 +136,11 @@ export default function Index() {
     const handleBulkDeleteClick = (Masterproducts: MasterProduct[]) => {
         setSelectedMasterProducts(Masterproducts);
         setBulkDeleteOpen(true);
+    };
+
+    const handleBulkAddProductsClick = (Masterproducts: MasterProduct[]) => {
+        setSelectedMasterProducts(Masterproducts);
+        setBulkAddProductsOpen(true);
     };
 
     const handleChangePaginationPage = (page: number) => {
@@ -197,6 +203,28 @@ export default function Index() {
         return () => clearTimeout(timeout);
     }, [queryParam.keyword])
 
+    useEffect(() => {
+        if (Object.keys(rowSelection).length === 0) {
+            setSelectedMasterProductsMap({});
+            return;
+        }
+
+        setSelectedMasterProductsMap((prev) => {
+            const updated = { ...prev };
+            allMasterProducts.forEach((item) => {
+                if (rowSelection[item.id]) {
+                    updated[item.id] = item;
+                }
+            });
+            Object.keys(updated).forEach((key) => {
+                if (!rowSelection[key]) {
+                    delete updated[key];
+                }
+            });
+            return updated;
+        });
+    }, [rowSelection, allMasterProducts]);
+
     return (
         <>
             <Head title={t("page.master_product.page_name", "Produk")} />
@@ -225,7 +253,11 @@ export default function Index() {
                     onBulkDeleteClick={handleBulkDeleteClick}
                     isBulkDeleteDialogOpen={bulkDeleteOpen}
                     setOpenBulkDeleteDialogOpen={setBulkDeleteOpen}
-                    selectedBulkMasterProducts={selectedMasterProducts}
+                    onBulkAddProductsClick={handleBulkAddProductsClick}
+                    isBulkAddProductsDialogOpen={bulkAddProductsOpen}
+                    setOpenBulkAddProductsDialogOpen={setBulkAddProductsOpen}
+                    selectedBulkMasterProducts={Object.values(selectedMasterProductsMap)}
+                    selectedMasterProductsMap={selectedMasterProductsMap}
                     selectedMasterProduct={selectedMasterProduct}
                     queryParam={queryParam}
                     pagination={pagination}

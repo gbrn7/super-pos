@@ -53,17 +53,18 @@ import {
 import { PERMISSIONENUMS } from '@/support/enums/PermissionEnums';
 import type { MasterProductQueryParam } from '@/support/interfaces/request/master-product';
 import type { Pagination } from '@/support/interfaces/resource/pagination';
+import type { Category } from '@/support/models/category';
+import type { MasterProduct } from '@/support/models/masterProduct';
+import type { Unit } from '@/support/models/unit';
+import { AddProductsDialog } from './dialog-modal/add-products-dialog';
+import { BulkAddProductsDialog } from './dialog-modal/bulk-add-products-dialog';
 import { BulkDeleteDialog } from './dialog-modal/bulk-delete-dialog';
 import { CreateDialog } from './dialog-modal/create-dialog';
 import { DeleteDialog } from './dialog-modal/delete-dialog';
 import { DetailDialog } from './dialog-modal/detail-dialog';
 import { EditDialog } from './dialog-modal/edit-dialog';
-import { ExportDropdownMenu } from './export-data-menu/export-dropdown-menu';
 import { ImportExcelDialog } from './dialog-modal/import-excel-dialog';
-import { AddProductsDialog } from './dialog-modal/add-products-dialog';
-import { MasterProduct } from '@/support/models/masterProduct';
-import { Unit } from '@/support/models/unit';
-import { Category } from '@/support/models/category';
+import { ExportDropdownMenu } from './export-data-menu/export-dropdown-menu';
 
 interface DataTableProps<TData, TValue> {
     columns:
@@ -88,7 +89,10 @@ interface DataTableProps<TData, TValue> {
     onBulkDeleteClick?: (data: TData[]) => void;
     isBulkDeleteDialogOpen: boolean;
     setOpenBulkDeleteDialogOpen: (open: boolean) => void;
-    selectedBulkMasterProducts: MasterProduct[];
+    onBulkAddProductsClick?: (data: TData[]) => void;
+    isBulkAddProductsDialogOpen?: boolean;
+    setOpenBulkAddProductsDialogOpen: (open: boolean) => void;
+    selectedMasterProductsMap?: Record<string | number, MasterProduct>;
     selectedMasterProduct: MasterProduct | null;
     queryParam: MasterProductQueryParam;
     pagination: Pagination;
@@ -123,7 +127,10 @@ export function DataTable<TData, TValue>({
     onBulkDeleteClick,
     isBulkDeleteDialogOpen,
     setOpenBulkDeleteDialogOpen,
-    selectedBulkMasterProducts,
+    onBulkAddProductsClick,
+    isBulkAddProductsDialogOpen = false,
+    setOpenBulkAddProductsDialogOpen,
+    selectedMasterProductsMap = {},
     selectedMasterProduct,
     queryParam,
     pagination,
@@ -191,15 +198,43 @@ export function DataTable<TData, TValue>({
     });
 
 
+    const handleBulkAddClick = React.useCallback(() => {
+        onBulkAddProductsClick?.(Object.values(selectedMasterProductsMap) as TData[]);
+    }, [onBulkAddProductsClick, selectedMasterProductsMap]);
+
+    const handleBulkDeleteClickAction = React.useCallback(() => {
+        onBulkDeleteClick?.(Object.values(selectedMasterProductsMap) as TData[]);
+    }, [onBulkDeleteClick, selectedMasterProductsMap]);
+
     return (
         <div className="rounded-2xl border p-3">
-            <div className="flex flex-col justify-between gap-3 pb-4">
+            <div className="flex flex-col justify-between gap-3 pb-4 bulk-action-btn">
                 <div className="flex justify-start gap-2 overflow-auto sm:justify-end lg:mt-0">
                     <Can permission={PERMISSIONENUMS.CATEGORY.CREATE}>
                         <ImportExcelDialog onSuccess={onRefresh} />
                     </Can>
                     <Can permission={PERMISSIONENUMS.MASTER_PRODUCT.READ}>
                         <ExportDropdownMenu data={data} />
+                    </Can>
+                    <Can permission={PERMISSIONENUMS.PRODUCT.CREATE}>
+                        <BulkAddProductsDialog
+                            isDisabled={
+                                !(Object.keys(rowSelection).length > 0)
+                            }
+                            selectedLength={
+                                Object.keys(rowSelection).length
+                            }
+                            isOpen={isBulkAddProductsDialogOpen}
+                            onSuccess={() => {
+                                onRefresh();
+                                setRowSelection({});
+                            }}
+                            setOpen={setOpenBulkAddProductsDialogOpen}
+                            masterProducts={Object.values(selectedMasterProductsMap)}
+                            categories={categories}
+                            units={units}
+                            onBulkAddClick={handleBulkAddClick}
+                        />
                     </Can>
                     <Can permission={PERMISSIONENUMS.MASTER_PRODUCT.DELETE}>
                         <BulkDeleteDialog
@@ -215,11 +250,8 @@ export function DataTable<TData, TValue>({
                                 setRowSelection({});
                             }}
                             setOpen={setOpenBulkDeleteDialogOpen}
-                            masterProducts={Object.keys(rowSelection).map(id => ({ id: Number(id) } as MasterProduct))}
-                            onBulkDeleteClick={() => {
-                                const selectedRows = Object.keys(rowSelection).map(id => ({ id: Number(id) } as MasterProduct));
-                                onBulkDeleteClick?.(selectedRows as any);
-                            }}
+                            masterProducts={Object.values(selectedMasterProductsMap)}
+                            onBulkDeleteClick={handleBulkDeleteClickAction}
                         />
                     </Can>
                     <DropdownMenu>

@@ -642,6 +642,19 @@
         "is_unlimited_label": "Stok Tidak Terbatas",
         "desc_label": "Deskripsi",
         "desc_placeholder": "Masukkan deskripsi produk"
+      },
+      "bulk_add_products_dialog":{
+        "dialog_button": "Tambah Produk (%d)",
+        "dialog_title": "Tambah %d Produk Sekaligus",
+        "dialog_desc": "Konfirmasi dan kustomisasi detail produk master yang dipilih sebelum ditambahkan ke toko.",
+        "already_added_warning": "%d dari %d master produk terpilih sudah pernah ditambahkan dan akan dilewati.",
+        "batch_apply_title": "Atur Sekaligus (Batch Apply)",
+        "batch_category_placeholder": "Pilih Kategori Semua",
+        "batch_unit_placeholder": "Pilih Satuan Semua",
+        "batch_stock_placeholder": "Stok Semua",
+        "no_valid_items": "Tidak ada produk yang dapat ditambahkan (semua sudah pernah ditambahkan).",
+        "validation_error": "Mohon periksa dan lengkapi data produk yang belum valid.",
+        "confirm_button": "Simpan %d Produk"
       }
     }
   },

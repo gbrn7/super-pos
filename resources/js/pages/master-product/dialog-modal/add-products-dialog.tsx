@@ -46,7 +46,7 @@ export function AddProductsDialog({ open, onOpenChange, masterProduct, onSuccess
     name: '',
     is_active: true,
     is_unlimited: false,
-    stock: 0,
+    stock: '' as any,
     price: null,
     cost_price: null,
     image: null,
@@ -317,7 +317,7 @@ export function AddProductsDialog({ open, onOpenChange, masterProduct, onSuccess
                   name="stock"
                   type="number"
                   placeholder={t("page.master_product.dialog_modal.add_products_dialog.stock_placeholder", "Masukkan stok produk")}
-                  value={formData.stock ?? 0}
+                  value={formData.stock ?? ''}
                   onChange={(e) => {
                     setFormData((prev) => ({
                       ...prev,
