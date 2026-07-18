@@ -105,6 +105,13 @@
       "read":"Baca Master Produk",
       "update":"Edit Master Produk",
       "delete":"Hapus Master Produk"
+    },
+    "transaction":{
+      "permission":"Akses Fitur Transaksi",
+      "create":"Buat Transaksi",
+      "read":"Baca Transaksi",
+      "update":"Edit Transaksi",
+      "delete":"Hapus Transaksi"
     }
   },
   "component":{
@@ -117,7 +124,8 @@
       "payment_method_menu_label":"Metode Pembayaran",
       "role_menu_label":"Peran",
       "user_menu_label":"Pengguna",
-      "unit_menu_label":"Satuan"
+      "unit_menu_label":"Satuan",
+      "transaction_menu_label":"Transaksi"
     },
     "data_table": {
       "search_component":{
@@ -881,6 +889,32 @@
         "dialog_desc": "Apakah anda yakin akan menghapus %d pengguna ?",
         "cancel_button":"Batal",
         "confirm_button":"Hapus Pengguna"
+      }
+    },
+    "transaction":{
+      "page_name":"Transaksi",
+      "data_table":{
+        "columns":{
+          "select_column_label":"Pilih",
+          "invoice_number_column_label":"No. Invoice",
+          "user_name_column_label":"Kasir / Petugas",
+          "payment_method_column_label":"Metode Pembayaran",
+          "total_amount_column_label":"Total Transaksi",
+          "payment_amount_column_label":"Bayar",
+          "change_amount_column_label":"Kembali",
+          "created_at_column_label":"Tanggal & Waktu",
+          "actions_column_label":"Aksi"
+        }
+      },
+      "dialog_modal":{
+        "detail_dialog":{
+          "dialog_title":"Detail Transaksi",
+          "print_btn":"Cetak Nota",
+          "cashier_label":"Kasir / Petugas",
+          "payment_method_label":"Metode Pembayaran",
+          "date_label":"Waktu Transaksi",
+          "items_title":"Rincian Produk"
+        }
       }
     }
   },

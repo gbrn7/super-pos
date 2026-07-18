@@ -1,5 +1,5 @@
 import { Link } from '@inertiajs/react';
-import { Banknote, Book, LayoutGrid, Package, PackageSearch, Tags, User, Weight } from 'lucide-react';
+import { Banknote, Book, LayoutGrid, Package, PackageSearch, Receipt, Tags, User, Weight } from 'lucide-react';
 import AppLogo from '@/components/app-logo';
 import { NavFooter } from '@/components/nav-footer';
 import { NavMain } from '@/components/nav-main';
@@ -21,6 +21,7 @@ import { index as paymentMethods } from '@/routes/payment-methods';
 import { index as roles } from '@/routes/roles';
 import { index as users } from '@/routes/users';
 import { index as units } from '@/routes/units';
+import { index as transactions } from '@/routes/transactions';
 import type { NavItem } from '@/types';
 import { useTranslation } from 'react-i18next';
 import { IconUserKey } from '@tabler/icons-react';
@@ -106,6 +107,13 @@ export function AppSidebar() {
                 href: users(),
                 icon: User,
                 permission: PERMISSIONENUMS.USER.READ,
+                role: []
+            },
+            {
+                title: t("component.sidebar.transaction_menu_label", "Transaksi"),
+                href: transactions(),
+                icon: Receipt,
+                permission: PERMISSIONENUMS.TRANSACTION.READ,
                 role: []
             }
         ];

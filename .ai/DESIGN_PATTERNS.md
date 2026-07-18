@@ -1212,3 +1212,128 @@ Use this checklist every time you create a new entity/feature:
 - **Code Style**: Laravel Pint
 - **Auth**: Laravel Fortify
 - **Permissions**: spatie/laravel-permission (via `Role` and `Permission` models)
+
+---
+
+## 9. Frontend Architecture & Development Patterns
+
+### 9.1 Directory Structure (`resources/js`)
+
+```
+resources/js/
+├── actions/                  # Wayfinder auto-generated typed functions for controllers
+├── components/               # Reusable UI & App components
+│   ├── auth/                 # Permission guards (e.g. Can.tsx)
+│   ├── ui/                   # Shadcn / Radix primitives (Button, Input, Dialog, etc.)
+│   ├── app-sidebar.tsx       # Sidebar navigation
+│   └── server-side-data-table-header.tsx  # Table header with sorting
+├── constants/                # Global constants (e.g. PAGINATIONLIMITOPTIONDEFAULT)
+├── hooks/                    # Custom React hooks
+├── layouts/                  # Inertia layout components
+├── lib/                      # Utilities (axios instance, formatters, helpers)
+├── locales/                  # i18next JSON translation files
+│   ├── en/translation.json   # English translations
+│   └── id/translation.json   # Indonesian translations
+├── pages/                    # Inertia page components
+│   └── {feature_name}/       # Feature module directory (e.g. transaction/, product/)
+│       ├── index.tsx         # Main page entry point
+│       ├── columns.tsx       # TanStack Table column definitions
+│       ├── data-table.tsx    # Server-Side or Client-Side DataTable component
+│       └── dialog-modal/     # Feature dialogs (detail, create, edit, delete)
+├── routes/                   # Wayfinder auto-generated typed route helpers
+└── support/                  # Frontend types, interfaces, enums
+    ├── enums/                # PermissionEnums.ts, etc.
+    ├── interfaces/           # Request, Resource, and Response interfaces
+    └── models/               # TypeScript entity models (transaction.ts, etc.)
+```
+
+### 9.2 Route & API Integration (Laravel Wayfinder)
+
+Always use auto-generated Wayfinder typed route functions instead of hardcoded URLs:
+
+```ts
+import { index as apiGetTransactions } from '@/routes/apiTransactions';
+import { index as transactions } from '@/routes/transactions';
+
+// Web route for breadcrumbs
+const { url } = transactions();
+
+// API route call with query parameters
+const apiUrl = apiGetTransactions({
+    query: { page: 1, limit: 10, keyword: 'INV-123' }
+}).url;
+
+const res = await axiosInstance.get(apiUrl);
+```
+
+### 9.3 DataTable Patterns (Client-Side vs Server-Side)
+
+#### 9.3.1 Client-Side DataTable Pattern (Example: `resources/js/pages/unit`)
+
+Used when fetching all records at once from the API and allowing TanStack Table to handle sorting, filtering, and pagination entirely in the browser:
+
+1. **Data Fetching**: Fetch full array of items into React state (`allUnits`) via `axiosInstance.get(apiUrl)` on mount.
+2. **TanStack Table Models**:
+   - `getCoreRowModel()`
+   - `getFilteredRowModel()`
+   - `getSortedRowModel()`
+   - `getPaginationRowModel()`
+3. **State Management**: Uses TanStack Table's internal `pagination` (`pageIndex`, `pageSize`), `columnFilters`, `sorting`, `rowSelection`, and `columnVisibility`.
+4. **Browser Filtering**: Filter rows instantly using `table.getColumn(columnId)?.setFilterValue(value)`.
+5. **Column Header Sorting**: Standard column sorting using `column.getCanSort()` and `column.toggleSorting()`.
+
+#### 9.3.2 Server-Side DataTable Pattern (Example: `resources/js/pages/transaction`, `resources/js/pages/product`)
+
+Used when datasets are large and require backend-driven filtering, ordering, and pagination:
+
+1. **State Management**: Maintain explicit state for `queryParam` (`page`, `limit`, `keyword`, `field`, `start_date`, `end_date`, `order_by`, `order`) and `pagination` (`current_page`, `last_page`, `total`, etc.).
+2. **Debounced Fetch**: Debounce search keyword changes before calling API to avoid excessive backend queries.
+3. **Sorting**: Use `ServerSideDataTableHeader` in column definitions to handle column sort toggling (`sortKey`, `orderBy`, `order`, `onSortChange`).
+4. **Skeleton Loading**: Render skeleton rows while `processing` state is `true`.
+5. **Pagination & Limit**: Provide limit options (10, 20, 50, 100) and custom page navigation buttons (first, prev, next, last).
+
+### 9.4 Internationalization (i18n) Rules
+
+- **ALWAYS add new text keys to BOTH `resources/js/locales/id/translation.json` AND `resources/js/locales/en/translation.json`**.
+- Use `useTranslation()` inside React components: `const { t } = useTranslation()`.
+- Use fallback values when calling `t()`: `t('page.transaction.page_name', 'Transaksi')`.
+- **Key naming conventions**:
+  - Permission Labels: `permission_label.{entity}.{action}` (e.g. `permission_label.transaction.read`)
+  - Sidebar Menu: `component.sidebar.{entity}_menu_label` (e.g. `component.sidebar.transaction_menu_label`)
+  - Page Titles & Columns: `page.{entity}.page_name`, `page.{entity}.data_table.columns.{column_key}_column_label`
+  - Dialog Titles & Text: `page.{entity}.dialog_modal.{dialog_type}.*`
+
+### 9.5 Permissions & Authorization Guard
+
+Protect UI elements and action buttons using the `<Can>` component and `PERMISSIONENUMS`:
+
+```tsx
+import { Can } from '@/components/auth/can';
+import { PERMISSIONENUMS } from '@/support/enums/PermissionEnums';
+
+<Can permission={PERMISSIONENUMS.TRANSACTION.DELETE}>
+    <DropdownMenuItem onClick={handleDelete}>
+        Hapus Data
+    </DropdownMenuItem>
+</Can>
+```
+
+### 9.6 Modals & Dialogs Separation
+
+Keep page modules clean by splitting dialogs into `dialog-modal/`:
+- `detail-dialog.tsx`: View entity details.
+- `create-dialog.tsx`: Form modal for creating new record.
+- `edit-dialog.tsx`: Form modal for editing existing record.
+- `delete-dialog.tsx`: Confirmation alert dialog for deletion.
+- `bulk-delete-dialog.tsx`: Confirmation alert dialog for multi-row deletion.
+
+### 9.7 Frontend Code Quality Checklist
+
+- [ ] Add entity model to `resources/js/support/models/{entity}.ts`
+- [ ] Add query param interface to `resources/js/support/interfaces/request/{entity}.ts`
+- [ ] Register permissions in `resources/js/support/enums/PermissionEnums.ts`
+- [ ] Add menu item to `resources/js/components/app-sidebar.tsx`
+- [ ] Add translation keys to BOTH `id/translation.json` AND `en/translation.json`
+- [ ] Implement `columns.tsx`, `data-table.tsx`, and `index.tsx` inside `resources/js/pages/{entity}/`
+- [ ] Run `npm run build` or `npx tsc --noEmit` to verify type safety
+

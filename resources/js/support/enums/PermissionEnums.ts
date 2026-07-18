@@ -53,6 +53,13 @@ enum MasterProductPermissionEnums {
   DELETE = 'delete-master-product',
 }
 
+enum TransactionPermissionEnums {
+  CREATE = 'create-transaction',
+  READ = 'read-transaction',
+  UPDATE = 'update-transaction',
+  DELETE = 'delete-transaction',
+}
+
 export const PERMISSIONENUMS = {
   CATEGORY: CategoryPermissionEnums,
   DASHBOARD: DashboardPermissionEnums,
@@ -62,6 +69,7 @@ export const PERMISSIONENUMS = {
   PAYMENT_METHOD: PaymentMethodPermissionEnums,
   PRODUCT: ProductPermissionEnums,
   MASTER_PRODUCT: MasterProductPermissionEnums,
+  TRANSACTION: TransactionPermissionEnums,
 }
 
 export const PERMISSIONLIST = (): Permission[] => {
@@ -221,6 +229,27 @@ export const PERMISSIONLIST = (): Permission[] => {
         {
           LABEL: t("permission_label.master_product.delete", "Hapus Master Produk"),
           VALUE: MasterProductPermissionEnums.DELETE,
+        }
+      ]
+    },
+    {
+      LABEL: t("permission_label.transaction.permission", "Transaksi"),
+      ACCESSLIST: [
+        {
+          LABEL: t("permission_label.transaction.create", "Buat Transaksi"),
+          VALUE: TransactionPermissionEnums.CREATE,
+        },
+        {
+          LABEL: t("permission_label.transaction.read", "Baca Transaksi"),
+          VALUE: TransactionPermissionEnums.READ,
+        },
+        {
+          LABEL: t("permission_label.transaction.update", "Update Transaksi"),
+          VALUE: TransactionPermissionEnums.UPDATE,
+        },
+        {
+          LABEL: t("permission_label.transaction.delete", "Hapus Transaksi"),
+          VALUE: TransactionPermissionEnums.DELETE,
         }
       ]
     },

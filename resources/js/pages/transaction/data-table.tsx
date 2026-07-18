@@ -1,0 +1,431 @@
+import {
+    IconChevronLeft,
+    IconChevronRight,
+    IconChevronsLeft,
+    IconChevronsRight,
+} from '@tabler/icons-react';
+import {
+    flexRender,
+    getCoreRowModel,
+    getFilteredRowModel,
+    getSortedRowModel,
+    useReactTable,
+} from '@tanstack/react-table';
+import type {
+    ColumnDef,
+    SortingState,
+    ColumnFiltersState,
+    VisibilityState,
+    RowSelectionState,
+} from '@tanstack/react-table';
+import { TableIcon, Calendar } from 'lucide-react';
+import * as React from 'react';
+import { useTranslation } from 'react-i18next';
+import { sprintf } from 'sprintf-js';
+import { Button } from '@/components/ui/button';
+import {
+    DropdownMenu,
+    DropdownMenuCheckboxItem,
+    DropdownMenuContent,
+    DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import {
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectLabel,
+    SelectTrigger,
+    SelectValue,
+} from '@/components/ui/select';
+import { Skeleton } from '@/components/ui/skeleton';
+import {
+    Table,
+    TableBody,
+    TableCell,
+    TableHead,
+    TableHeader,
+    TableRow,
+} from '@/components/ui/table';
+import type { TransactionQueryParam } from '@/support/interfaces/request/transaction';
+import type { Pagination } from '@/support/interfaces/resource/pagination';
+import type { Transaction } from '@/support/models/transaction';
+import { DetailDialog } from './dialog-modal/detail-dialog';
+
+interface DataTableProps<TData, TValue> {
+    columns:
+        | ColumnDef<TData, TValue>[]
+        | ((props: any) => ColumnDef<TData, TValue>[]);
+    data: TData[];
+    processing?: boolean;
+    limitOptions?: number[];
+    onRefresh: () => void;
+    detailDataOpen: boolean;
+    setDetailOpen: (open: boolean) => void;
+    onDetailClick: (data: TData) => void;
+    selectedTransaction: Transaction | null;
+    queryParam: TransactionQueryParam;
+    pagination: Pagination;
+    onChangePaginationPage: (page: number) => void;
+    onChangePaginationLimit: (limit: number) => void;
+    onChangeField: (field: string) => void;
+    onChangeKeyword: (keyword: string) => void;
+    onChangeStartDate: (date: string) => void;
+    onChangeEndDate: (date: string) => void;
+    setQueryParam: React.Dispatch<React.SetStateAction<TransactionQueryParam>>;
+    rowSelection: RowSelectionState;
+    setRowSelection: React.Dispatch<React.SetStateAction<RowSelectionState>>;
+}
+
+export function DataTable<TData, TValue>({
+    columns: columnsOrFn,
+    data,
+    processing,
+    limitOptions = [10, 20, 50, 100],
+    onRefresh,
+    detailDataOpen,
+    setDetailOpen,
+    onDetailClick,
+    selectedTransaction,
+    queryParam,
+    pagination,
+    onChangePaginationPage,
+    onChangePaginationLimit,
+    onChangeField,
+    onChangeKeyword,
+    onChangeStartDate,
+    onChangeEndDate,
+    setQueryParam,
+    rowSelection,
+    setRowSelection,
+}: DataTableProps<TData, TValue>) {
+    const { t } = useTranslation();
+
+    const columns =
+        typeof columnsOrFn === 'function'
+            ? columnsOrFn({
+                  onDetailClick,
+                  onSortChange: (
+                      orderBy: string | null,
+                      order: string | null,
+                  ) => {
+                      setQueryParam((prev) => ({
+                          ...prev,
+                          order_by: orderBy,
+                          order: order as 'asc' | 'desc' | null,
+                          page: 1,
+                      }));
+                  },
+                  order: queryParam.order,
+                  orderBy: queryParam.order_by,
+              })
+            : columnsOrFn;
+
+    const [sorting, setSorting] = React.useState<SortingState>([]);
+    const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
+    const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
+
+    const table = useReactTable({
+        data,
+        columns,
+        getRowId: (row: any) => row.id,
+        getCoreRowModel: getCoreRowModel(),
+        getFilteredRowModel: getFilteredRowModel(),
+        getSortedRowModel: getSortedRowModel(),
+        onSortingChange: setSorting,
+        onColumnFiltersChange: setColumnFilters,
+        onColumnVisibilityChange: setColumnVisibility,
+        onRowSelectionChange: setRowSelection,
+        columnResizeMode: 'onChange',
+        state: {
+            sorting,
+            columnFilters,
+            columnVisibility,
+            rowSelection,
+        },
+    });
+
+    return (
+        <div className="rounded-2xl border p-3 bg-card">
+            <div className="flex flex-col justify-between gap-3 pb-4">
+                <div className="flex justify-end gap-2 overflow-auto">
+                    <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                            <Button variant="outline">
+                                <TableIcon className="h-4 w-4 mr-1.5" />
+                                {t('component.data_table.columns.label', 'Kolom')}
+                            </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end">
+                            {table
+                                .getAllColumns()
+                                .filter((column) => column.getCanHide())
+                                .map((column) => {
+                                    return (
+                                        <DropdownMenuCheckboxItem
+                                            key={column.id}
+                                            className="capitalize"
+                                            checked={column.getIsVisible()}
+                                            onCheckedChange={(value) =>
+                                                column.toggleVisibility(!!value)
+                                            }
+                                        >
+                                            {column.id}
+                                        </DropdownMenuCheckboxItem>
+                                    );
+                                })}
+                        </DropdownMenuContent>
+                    </DropdownMenu>
+                </div>
+
+                {/* Filter and Search Section */}
+                <div className="second-row grid grid-cols-1 gap-3 border p-3 rounded-xl bg-muted/20 md:grid-cols-2 lg:grid-cols-3">
+                    {/* Keyword Filter */}
+                    <div className="space-y-1.5">
+                        <Label className="text-xs font-medium text-muted-foreground">
+                            {t('component.data_table.search_component.search_label', 'Pencarian')}
+                        </Label>
+                        <div className="keyword-filter flex w-full gap-1">
+                            <Select
+                                value={queryParam.field}
+                                onValueChange={(value) => onChangeField(value)}
+                            >
+                                <SelectTrigger className="w-[140px]">
+                                    <SelectValue />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectGroup>
+                                        <SelectLabel>
+                                            {t('component.data_table.search_component.search_by', 'Pencarian berdasarkan')}
+                                        </SelectLabel>
+                                        <SelectItem value="default">
+                                            {t('component.data_table.search_component.default', 'Bawaan')}
+                                        </SelectItem>
+                                        <SelectItem value="invoice_number">
+                                            No. Invoice
+                                        </SelectItem>
+                                        <SelectItem value="payment_method_name">
+                                            Metode Pembayaran
+                                        </SelectItem>
+                                    </SelectGroup>
+                                </SelectContent>
+                            </Select>
+                            <Input
+                                placeholder={t('component.data_table.search_component.placeholder', 'Telusuri...')}
+                                value={queryParam.keyword}
+                                onChange={(event) => onChangeKeyword(event.target.value)}
+                                className="w-full"
+                            />
+                        </div>
+                    </div>
+
+                    {/* Start Date Filter */}
+                    <div className="space-y-1.5">
+                        <Label className="text-xs font-medium text-muted-foreground flex items-center gap-1">
+                            <Calendar className="h-3.5 w-3.5" />
+                            Tanggal Mulai
+                        </Label>
+                        <Input
+                            type="date"
+                            value={queryParam.start_date || ''}
+                            onChange={(e) => onChangeStartDate(e.target.value)}
+                            className="w-full"
+                        />
+                    </div>
+
+                    {/* End Date Filter */}
+                    <div className="space-y-1.5">
+                        <Label className="text-xs font-medium text-muted-foreground flex items-center gap-1">
+                            <Calendar className="h-3.5 w-3.5" />
+                            Tanggal Akhir
+                        </Label>
+                        <Input
+                            type="date"
+                            value={queryParam.end_date || ''}
+                            onChange={(e) => onChangeEndDate(e.target.value)}
+                            className="w-full"
+                        />
+                    </div>
+                </div>
+            </div>
+
+            {/* Main Table */}
+            <div className="overflow-x-auto rounded-md border">
+                <Table>
+                    <TableHeader>
+                        {table.getHeaderGroups().map((headerGroup) => (
+                            <TableRow key={headerGroup.id}>
+                                {headerGroup.headers.map((header) => {
+                                    return (
+                                        <TableHead
+                                            key={header.id}
+                                            style={{
+                                                width: `${header.getSize()}px`,
+                                            }}
+                                        >
+                                            {header.isPlaceholder ? null : (
+                                                <div className="flex cursor-pointer items-center gap-2 select-none hover:text-foreground">
+                                                    {flexRender(
+                                                        header.column.columnDef.header,
+                                                        header.getContext(),
+                                                    )}
+                                                </div>
+                                            )}
+                                        </TableHead>
+                                    );
+                                })}
+                            </TableRow>
+                        ))}
+                    </TableHeader>
+                    <TableBody>
+                        {processing ? (
+                            Array.from({ length: queryParam.limit || 10 }).map((_, index) => (
+                                <TableRow key={index}>
+                                    {table.getAllColumns().map((column) => (
+                                        <TableCell key={column.id}>
+                                            <Skeleton className="h-6 w-full" />
+                                        </TableCell>
+                                    ))}
+                                </TableRow>
+                            ))
+                        ) : table.getRowModel().rows?.length ? (
+                            table.getRowModel().rows.map((row) => (
+                                <TableRow
+                                    key={row.id}
+                                    data-state={row.getIsSelected() && 'selected'}
+                                >
+                                    {row.getVisibleCells().map((cell) => (
+                                        <TableCell key={cell.id}>
+                                            {flexRender(
+                                                cell.column.columnDef.cell,
+                                                cell.getContext(),
+                                            )}
+                                        </TableCell>
+                                    ))}
+                                </TableRow>
+                            ))
+                        ) : (
+                            <TableRow>
+                                <TableCell
+                                    colSpan={columns.length}
+                                    className="h-28 text-center text-muted-foreground"
+                                >
+                                    {t('component.data_table.no_result', 'Tidak ada data transaksi.')}
+                                </TableCell>
+                            </TableRow>
+                        )}
+                    </TableBody>
+                </Table>
+
+                {/* Detail Modal */}
+                <DetailDialog
+                    isOpen={detailDataOpen}
+                    transaction={selectedTransaction}
+                    onOpenChange={setDetailOpen}
+                />
+            </div>
+
+            {/* Pagination Controls */}
+            <div className="flex items-center justify-end space-x-4 overflow-auto py-4">
+                <div className="hidden flex-1 text-sm text-muted-foreground lg:flex">
+                    {sprintf(
+                        t(
+                            'component.data_table.selected_row',
+                            '%d dari %d baris terpilih',
+                        ),
+                        table.getFilteredSelectedRowModel().rows.length,
+                        pagination.total || 0,
+                    )}
+                </div>
+                <div className="flex w-full items-center gap-6 lg:w-fit">
+                    <Select
+                        value={queryParam.limit.toString()}
+                        onValueChange={(value) =>
+                            onChangePaginationLimit(Number(value))
+                        }
+                    >
+                        <SelectTrigger className="w-20">
+                            <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectGroup>
+                                <SelectLabel>
+                                    {t('component.data_table.row_per_page', 'Baris per halaman')}
+                                </SelectLabel>
+                                {limitOptions.map((option) => (
+                                    <SelectItem
+                                        key={option}
+                                        value={option.toString()}
+                                    >
+                                        {option}
+                                    </SelectItem>
+                                ))}
+                            </SelectGroup>
+                        </SelectContent>
+                    </Select>
+                    <div className="text-sm text-muted-foreground whitespace-nowrap">
+                        {sprintf(
+                            t(
+                                'component.data_table.pagination_info',
+                                'Halaman %d dari %d',
+                            ),
+                            pagination.current_page || 1,
+                            pagination.last_page || 1,
+                        )}
+                    </div>
+                    <div className="ml-auto flex items-center gap-2 lg:ml-0">
+                        <Button
+                            variant="outline"
+                            className="hidden h-8 w-8 p-0 lg:flex"
+                            onClick={() => onChangePaginationPage(1)}
+                            disabled={pagination.current_page <= 1 || processing}
+                        >
+                            <span className="sr-only">Halaman Pertama</span>
+                            <IconChevronsLeft className="h-4 w-4" />
+                        </Button>
+                        <Button
+                            variant="outline"
+                            className="size-8"
+                            size="icon"
+                            onClick={() => {
+                                if (pagination.current_page - 1 > 0) {
+                                    onChangePaginationPage(pagination.current_page - 1);
+                                }
+                            }}
+                            disabled={pagination.current_page <= 1 || processing}
+                        >
+                            <span className="sr-only">Halaman Sebelumnya</span>
+                            <IconChevronLeft className="h-4 w-4" />
+                        </Button>
+                        <Button
+                            variant="outline"
+                            className="size-8"
+                            size="icon"
+                            onClick={() => {
+                                if (pagination.current_page < pagination.last_page) {
+                                    onChangePaginationPage(pagination.current_page + 1);
+                                }
+                            }}
+                            disabled={pagination.current_page >= pagination.last_page || processing}
+                        >
+                            <span className="sr-only">Halaman Selanjutnya</span>
+                            <IconChevronRight className="h-4 w-4" />
+                        </Button>
+                        <Button
+                            variant="outline"
+                            className="hidden size-8 lg:flex"
+                            size="icon"
+                            onClick={() => onChangePaginationPage(pagination.last_page)}
+                            disabled={pagination.current_page >= pagination.last_page || processing}
+                        >
+                            <span className="sr-only">Halaman Terakhir</span>
+                            <IconChevronsRight className="h-4 w-4" />
+                        </Button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+}

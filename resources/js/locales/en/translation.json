@@ -105,6 +105,13 @@
       "read": "Read Master Product",
       "update": "Edit Master Product",
       "delete": "Delete Master Product"
+    },
+    "transaction": {
+      "permission": "Access Transaction Feature",
+      "create": "Create Transaction",
+      "read": "Read Transaction",
+      "update": "Edit Transaction",
+      "delete": "Delete Transaction"
     }
   },
   "component": {
@@ -117,7 +124,8 @@
       "payment_method_menu_label": "Payment Method",
       "role_menu_label": "Role",
       "user_menu_label": "User",
-      "unit_menu_label": "Unit"
+      "unit_menu_label": "Unit",
+      "transaction_menu_label": "Transaction"
     },
     "data_table": {
       "search_component": {
@@ -881,6 +889,32 @@
           "dialog_desc": "Are you sure you want to delete %d users?",
           "cancel_button": "Cancel",
           "confirm_button": "Delete Users"
+        }
+      }
+    },
+    "transaction": {
+      "page_name": "Transaction",
+      "data_table": {
+        "columns": {
+          "select_column_label": "Select",
+          "invoice_number_column_label": "Invoice No.",
+          "user_name_column_label": "Cashier / Staff",
+          "payment_method_column_label": "Payment Method",
+          "total_amount_column_label": "Total Transaction",
+          "payment_amount_column_label": "Paid Amount",
+          "change_amount_column_label": "Change",
+          "created_at_column_label": "Date & Time",
+          "actions_column_label": "Actions"
+        }
+      },
+      "dialog_modal": {
+        "detail_dialog": {
+          "dialog_title": "Transaction Details",
+          "print_btn": "Print Receipt",
+          "cashier_label": "Cashier / Staff",
+          "payment_method_label": "Payment Method",
+          "date_label": "Transaction Time",
+          "items_title": "Product Details"
         }
       }
     },
