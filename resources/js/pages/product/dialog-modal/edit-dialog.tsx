@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { Button } from '@/components/ui/button';
 import {
     Dialog,
@@ -20,8 +20,7 @@ import { ResponseApi } from '@/support/interfaces/response/Response';
 import { handleApiError, showSuccessToast, showWarningToast } from '@/lib/utils';
 import { ProductErrorForm, ProductForm, ProductSchema } from '@/support/interfaces/request/product';
 import ErrorFormInfo from '@/components/errorFormInfo';
-import { SelectLabel } from '@radix-ui/react-select';
-import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { SearchableSelect } from '@/components/ui/searchable-select';
 import { Unit } from '@/support/models/unit';
 import { Category } from '@/support/models/category';
 import { Switch } from '@/components/ui/switch';
@@ -79,6 +78,22 @@ export function EditDialog({
     });
 
     const [errorForm, setErrorForm] = useState<ProductErrorForm>(defaultErrorForm);
+
+    const categoryOptions = useMemo(() =>
+        categories.map((item) => ({
+            label: item.name,
+            value: item.id.toString(),
+        })),
+        [categories]
+    );
+
+    const unitOptions = useMemo(() =>
+        units.map((item) => ({
+            label: item.name,
+            value: item.id.toString(),
+        })),
+        [units]
+    );
 
     const handleChange = (
         e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -211,24 +226,16 @@ export function EditDialog({
                                 {t("page.product.dialog_modal.edit_dialog.unit_id_input_label", "Satuan")}
                                 <span className="text-red-500"> *</span>
                             </label>
-                            <Select
-                                onValueChange={(value) => setFormData((prev) => ({ ...prev, unit_id: Number(value) }))}
-                                disabled={loading}
+                            <SearchableSelect
+                                options={unitOptions}
                                 value={formData.unit_id?.toString() || ''}
-                            >
-                                <SelectTrigger className={`${errorForm.unit_id && 'border-red-500'}`}>
-                                    <SelectValue
-                                        placeholder={t("page.product.dialog_modal.edit_dialog.unit_id_input_placeholder", "Pilih satuan produk")} />
-                                </SelectTrigger>
-                                <SelectContent>
-                                    <SelectGroup>
-                                        <SelectLabel> {t("page.product.dialog_modal.edit_dialog.unit_id_input_label", "Satuan")}</SelectLabel>
-                                        {units.map((item) => (
-                                            <SelectItem key={item.id} value={item.id.toString()}>{item.name}</SelectItem>
-                                        ))}
-                                    </SelectGroup>
-                                </SelectContent>
-                            </Select>
+                                onValueChange={(value) => setFormData((prev) => ({ ...prev, unit_id: Number(value) }))}
+                                placeholder={t("page.product.dialog_modal.edit_dialog.unit_id_input_placeholder", "Pilih satuan produk")}
+                                searchPlaceholder={t("page.product.dialog_modal.edit_dialog.search_unit_placeholder", "Cari satuan...")}
+                                emptyMessage={t("page.product.dialog_modal.edit_dialog.no_unit_found", "Satuan tidak ditemukan.")}
+                                disabled={loading}
+                                className={`${errorForm.unit_id && 'border-red-500'}`}
+                            />
                             {errorForm.unit_id && (
                                 <ErrorFormInfo message={errorForm.unit_id} />
                             )}
@@ -262,23 +269,16 @@ export function EditDialog({
                                 {t("page.product.dialog_modal.edit_dialog.category_id_input_label", "Kategori")}
                                 <span className="text-red-500"> *</span>
                             </label>
-                            <Select
+                            <SearchableSelect
+                                options={categoryOptions}
+                                value={formData.category_id?.toString() || ''}
                                 onValueChange={(value) => setFormData((prev) => ({ ...prev, category_id: Number(value) }))}
+                                placeholder={t("page.product.dialog_modal.edit_dialog.category_id_input_placeholder", "Pilih kategori Produk")}
+                                searchPlaceholder={t("page.product.dialog_modal.edit_dialog.search_category_placeholder", "Cari kategori...")}
+                                emptyMessage={t("page.product.dialog_modal.edit_dialog.no_category_found", "Kategori tidak ditemukan.")}
                                 disabled={loading}
-                                value={formData.category_id?.toString()}
-                            >
-                                <SelectTrigger className={`${errorForm.category_id && 'border-red-500'}`}>
-                                    <SelectValue placeholder={t("page.product.dialog_modal.edit_dialog.category_id_input_placeholder", "Pilih kategori Produk")} />
-                                </SelectTrigger>
-                                <SelectContent>
-                                    <SelectGroup>
-                                        <SelectLabel> {t("page.product.dialog_modal.edit_dialog.category_id_input_label", "Kategori")}</SelectLabel>
-                                        {categories.map((item) => (
-                                            <SelectItem key={item.id} value={item.id.toString()}>{item.name}</SelectItem>
-                                        ))}
-                                    </SelectGroup>
-                                </SelectContent>
-                            </Select>
+                                className={`${errorForm.category_id && 'border-red-500'}`}
+                            />
                             {errorForm.category_id && (
                                 <ErrorFormInfo message={errorForm.category_id} />
                             )}
@@ -296,13 +296,15 @@ export function EditDialog({
                                 decimalSeparator=","
                                 prefix="Rp "
                                 placeholder={t("page.product.dialog_modal.edit_dialog.cost_price_input_placeholder", "Masukkan harga modal produk")}
-                                value={formData.cost_price}
+                                value={formData.cost_price ?? ''}
+                                onFocus={(e) => e.target.select()}
                                 disabled={loading}
                                 onValueChange={(values) => {
                                     setFormData((prev) => ({
                                         ...prev,
-                                        cost_price: values.floatValue ?? 0,
+                                        cost_price: values.floatValue ?? null,
                                     }));
+                                    setErrorForm((prev) => ({ ...prev, cost_price: '' }));
                                 }}
                                 className={`${errorForm.cost_price && 'border-red-500'}`}
                             />
@@ -323,13 +325,15 @@ export function EditDialog({
                                 decimalSeparator=","
                                 prefix="Rp "
                                 placeholder={t("page.product.dialog_modal.edit_dialog.price_input_placeholder", "Masukkan harga jual produk")}
-                                value={formData.price}
+                                value={formData.price ?? ''}
+                                onFocus={(e) => e.target.select()}
                                 disabled={loading}
                                 onValueChange={(values) => {
                                     setFormData((prev) => ({
                                         ...prev,
-                                        price: values.floatValue ?? 0,
+                                        price: values.floatValue ?? null,
                                     }));
+                                    setErrorForm((prev) => ({ ...prev, price: '' }));
                                 }}
                                 className={`${errorForm.price && 'border-red-500'}`}
                             />

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -18,7 +18,7 @@ import { ResponseApi } from '@/support/interfaces/response/Response';
 import { Product } from '@/support/models/product';
 import { handleApiError, showSuccessToast, showWarningToast } from '@/lib/utils';
 import ErrorFormInfo from '@/components/errorFormInfo';
-import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { SearchableSelect } from '@/components/ui/searchable-select';
 import { Unit } from '@/support/models/unit';
 import { Category } from '@/support/models/category';
 import { Textarea } from '@/components/ui/textarea';
@@ -47,8 +47,8 @@ export function AddProductsDialog({ open, onOpenChange, masterProduct, onSuccess
     is_active: true,
     is_unlimited: false,
     stock: 0,
-    price: 0,
-    cost_price: 0,
+    price: null,
+    cost_price: null,
     image: null,
     desc: '',
     barcode: ''
@@ -71,16 +71,31 @@ export function AddProductsDialog({ open, onOpenChange, masterProduct, onSuccess
   const [formData, setFormData] = useState<ProductForm>(defaultFormData);
   const [errorForm, setErrorForm] = useState<ProductErrorForm>(defaultErrorForm);
 
+  const categoryOptions = useMemo(() =>
+    categories.map((category) => ({
+      label: category.name,
+      value: category.id.toString(),
+    })),
+    [categories]
+  );
 
-  // Pre-fill form when masterProduct changes
+  const unitOptions = useMemo(() =>
+    units.map((unit) => ({
+      label: unit.name,
+      value: unit.id.toString(),
+    })),
+    [units]
+  );
+
+
   useEffect(() => {
     if (masterProduct && open) {
       setFormData(prev => ({
         ...prev,
         name: masterProduct.name,
         barcode: masterProduct.barcode,
-        price: masterProduct.price,
-        cost_price: masterProduct.cost_price,
+        price: masterProduct.price != null && Number(masterProduct.price) !== 0 ? Number(masterProduct.price) : null,
+        cost_price: masterProduct.cost_price != null && Number(masterProduct.cost_price) !== 0 ? Number(masterProduct.cost_price) : null,
         desc: masterProduct.desc,
       }));
     }
@@ -257,25 +272,16 @@ export function AddProductsDialog({ open, onOpenChange, masterProduct, onSuccess
                   {t("page.master_product.dialog_modal.add_products_dialog.category_label", "Kategori")}
                   <span className="text-red-500"> *</span>
                 </label>
-                <Select
+                <SearchableSelect
+                  options={categoryOptions}
                   value={formData.category_id?.toString() ?? ''}
                   onValueChange={(value) => handleSelectChange('category_id', value)}
+                  placeholder={t("page.master_product.dialog_modal.add_products_dialog.category_placeholder", "Pilih kategori")}
+                  searchPlaceholder={t("page.master_product.dialog_modal.add_products_dialog.search_category_placeholder", "Cari kategori...")}
+                  emptyMessage={t("page.master_product.dialog_modal.add_products_dialog.no_categories_found", "Kategori tidak ditemukan.")}
                   disabled={loading}
-                >
-                  <SelectTrigger className={`${errorForm.category_id && 'border-red-500'}`}>
-                    <SelectValue placeholder={t("page.master_product.dialog_modal.add_products_dialog.category_placeholder", "Pilih kategori")} />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectGroup>
-                      <SelectLabel>{t("page.master_product.dialog_modal.add_products_dialog.categories_label", "Kategori")}</SelectLabel>
-                      {categories.map((category) => (
-                        <SelectItem key={category.id} value={category.id.toString()}>
-                          {category.name}
-                        </SelectItem>
-                      ))}
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
+                  className={`${errorForm.category_id && 'border-red-500'}`}
+                />
                 {errorForm.category_id && (
                   <ErrorFormInfo message={errorForm.category_id} />
                 )}
@@ -286,25 +292,16 @@ export function AddProductsDialog({ open, onOpenChange, masterProduct, onSuccess
                   {t("page.master_product.dialog_modal.add_products_dialog.unit_label", "Satuan")}
                   <span className="text-red-500"> *</span>
                 </label>
-                <Select
+                <SearchableSelect
+                  options={unitOptions}
                   value={formData.unit_id?.toString() ?? ''}
                   onValueChange={(value) => handleSelectChange('unit_id', value)}
+                  placeholder={t("page.master_product.dialog_modal.add_products_dialog.unit_placeholder", "Pilih satuan")}
+                  searchPlaceholder={t("page.master_product.dialog_modal.add_products_dialog.search_unit_placeholder", "Cari satuan...")}
+                  emptyMessage={t("page.master_product.dialog_modal.add_products_dialog.no_units_found", "Satuan tidak ditemukan.")}
                   disabled={loading}
-                >
-                  <SelectTrigger className={`${errorForm.unit_id && 'border-red-500'}`}>
-                    <SelectValue placeholder={t("page.master_product.dialog_modal.add_products_dialog.unit_placeholder", "Pilih satuan")} />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectGroup>
-                      <SelectLabel>{t("page.master_product.dialog_modal.add_products_dialog.units_label", "Satuan")}</SelectLabel>
-                      {units.map((unit) => (
-                        <SelectItem key={unit.id} value={unit.id.toString()}>
-                          {unit.name}
-                        </SelectItem>
-                      ))}
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
+                  className={`${errorForm.unit_id && 'border-red-500'}`}
+                />
                 {errorForm.unit_id && (
                   <ErrorFormInfo message={errorForm.unit_id} />
                 )}
@@ -349,13 +346,14 @@ export function AddProductsDialog({ open, onOpenChange, masterProduct, onSuccess
                   decimalSeparator=","
                   prefix="Rp "
                   placeholder={t("page.master_product.dialog_modal.add_products_dialog.cost_price_placeholder", "Masukkan harga modal")}
-                  value={formData.cost_price}
+                  value={formData.cost_price ?? ''}
+                  onFocus={(e) => e.target.select()}
                   onValueChange={(values) => {
                     setFormData((prev) => ({
                       ...prev,
-                      cost_price: values.floatValue ?? 0,
+                      cost_price: values.floatValue ?? null,
                     }));
-                    setErrorForm({ ...errorForm, cost_price: '' });
+                    setErrorForm((prev) => ({ ...prev, cost_price: '' }));
                   }}
                   disabled={loading}
                   className={`${errorForm.cost_price && 'border-red-500'}`}
@@ -378,13 +376,14 @@ export function AddProductsDialog({ open, onOpenChange, masterProduct, onSuccess
                   decimalSeparator=","
                   prefix="Rp "
                   placeholder={t("page.master_product.dialog_modal.add_products_dialog.price_placeholder", "Masukkan harga jual")}
-                  value={formData.price}
+                  value={formData.price ?? ''}
+                  onFocus={(e) => e.target.select()}
                   onValueChange={(values) => {
                     setFormData((prev) => ({
                       ...prev,
-                      price: values.floatValue ?? 0,
+                      price: values.floatValue ?? null,
                     }));
-                    setErrorForm({ ...errorForm, price: '' });
+                    setErrorForm((prev) => ({ ...prev, price: '' }));
                   }}
                   disabled={loading}
                   className={`${errorForm.price && 'border-red-500'}`}

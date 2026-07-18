@@ -85,7 +85,7 @@ export function SearchableSelect({
         </Button>
       </PopoverTrigger>
 
-      <PopoverContent className="w-full p-0" align="start">
+      <PopoverContent className="w-[var(--radix-popover-trigger-width)] p-0" align="start">
         <Command
           /**
            * Custom filter: match against the item's label (stored in keywords[0])

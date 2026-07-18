@@ -41,6 +41,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@/components/ui/select';
+import { SearchableSelect } from '@/components/ui/searchable-select';
 import { Skeleton } from '@/components/ui/skeleton';
 import {
     Table,
@@ -177,6 +178,28 @@ export function DataTable<TData, TValue>({
             page: 1,
         }));
     };
+
+    const categoryFilterOptions = React.useMemo(() => [
+        {
+            label: t('component.data_table.filter.all_categories', 'Semua Kategori'),
+            value: FILTER_DEFAULT_VALUE,
+        },
+        ...categories.map((item) => ({
+            label: item.name,
+            value: item.id.toString(),
+        })),
+    ], [categories, t]);
+
+    const unitFilterOptions = React.useMemo(() => [
+        {
+            label: t('component.data_table.filter.all_units', 'Semua Satuan'),
+            value: FILTER_DEFAULT_VALUE,
+        },
+        ...units.map((item) => ({
+            label: item.name,
+            value: item.id.toString(),
+        })),
+    ], [units, t]);
 
     const table = useReactTable({
         data,
@@ -350,7 +373,8 @@ export function DataTable<TData, TValue>({
                                 'Kategori',
                             )}
                         </Label>
-                        <Select
+                        <SearchableSelect
+                            options={categoryFilterOptions}
                             value={getNumberFilterValue(queryParam.category_id)}
                             onValueChange={(value) =>
                                 updateQueryParam(
@@ -358,41 +382,19 @@ export function DataTable<TData, TValue>({
                                     getNullableNumberFilterValue(value),
                                 )
                             }
-                        >
-                            <SelectTrigger className="w-full">
-                                <SelectValue
-                                    placeholder={t(
-                                        'component.data_table.filter.category_placeholder',
-                                        'Pilih Kategori',
-                                    )}
-                                />
-                            </SelectTrigger>
-                            <SelectContent>
-                                <SelectGroup>
-                                    <SelectLabel>
-                                        {' '}
-                                        {t(
-                                            'component.data_table.filter.category_label',
-                                            'Kategori',
-                                        )}
-                                    </SelectLabel>
-                                    <SelectItem value={FILTER_DEFAULT_VALUE}>
-                                        {t(
-                                            'component.data_table.filter.all_categories',
-                                            'Semua Kategori',
-                                        )}
-                                    </SelectItem>
-                                    {categories.map((item) => (
-                                        <SelectItem
-                                            key={item.id}
-                                            value={item.id.toString()}
-                                        >
-                                            {item.name}
-                                        </SelectItem>
-                                    ))}
-                                </SelectGroup>
-                            </SelectContent>
-                        </Select>
+                            placeholder={t(
+                                'component.data_table.filter.category_placeholder',
+                                'Pilih Kategori',
+                            )}
+                            searchPlaceholder={t(
+                                'component.data_table.filter.search_category_placeholder',
+                                'Cari Kategori...',
+                            )}
+                            emptyMessage={t(
+                                'component.data_table.filter.no_category_found',
+                                'Kategori tidak ditemukan.',
+                            )}
+                        />
                     </div>
                     <div className="space-y-1.5">
                         <Label className="text-xs font-medium text-muted-foreground">
@@ -401,7 +403,8 @@ export function DataTable<TData, TValue>({
                                 'Satuan',
                             )}
                         </Label>
-                        <Select
+                        <SearchableSelect
+                            options={unitFilterOptions}
                             value={getNumberFilterValue(queryParam.unit_id)}
                             onValueChange={(value) =>
                                 updateQueryParam(
@@ -409,41 +412,19 @@ export function DataTable<TData, TValue>({
                                     getNullableNumberFilterValue(value),
                                 )
                             }
-                        >
-                            <SelectTrigger className="w-full">
-                                <SelectValue
-                                    placeholder={t(
-                                        'component.data_table.filter.unit_placeholder',
-                                        'Pilih Satuan',
-                                    )}
-                                />
-                            </SelectTrigger>
-                            <SelectContent>
-                                <SelectGroup>
-                                    <SelectLabel>
-                                        {' '}
-                                        {t(
-                                            'component.data_table.filter.unit_label',
-                                            'Satuan',
-                                        )}
-                                    </SelectLabel>
-                                    <SelectItem value={FILTER_DEFAULT_VALUE}>
-                                        {t(
-                                            'component.data_table.filter.all_units',
-                                            'Semua Satuan',
-                                        )}
-                                    </SelectItem>
-                                    {units.map((item) => (
-                                        <SelectItem
-                                            key={item.id}
-                                            value={item.id.toString()}
-                                        >
-                                            {item.name}
-                                        </SelectItem>
-                                    ))}
-                                </SelectGroup>
-                            </SelectContent>
-                        </Select>
+                            placeholder={t(
+                                'component.data_table.filter.unit_placeholder',
+                                'Pilih Satuan',
+                            )}
+                            searchPlaceholder={t(
+                                'component.data_table.filter.search_unit_placeholder',
+                                'Cari Satuan...',
+                            )}
+                            emptyMessage={t(
+                                'component.data_table.filter.no_unit_found',
+                                'Satuan tidak ditemukan.',
+                            )}
+                        />
                     </div>
                     <div className="space-y-1.5">
                         <Label className="text-xs font-medium text-muted-foreground">

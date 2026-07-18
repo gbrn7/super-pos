@@ -41,8 +41,8 @@ export function CreateDialog({ onSuccess }: CreateDialogProps) {
         category_name: '',
         unit_name: '',
         name: '',
-        price: 0,
-        cost_price: 0,
+        price: null,
+        cost_price: null,
         desc: '',
         barcode: ''
     }
@@ -223,13 +223,15 @@ export function CreateDialog({ onSuccess }: CreateDialogProps) {
                                 decimalSeparator=","
                                 prefix="Rp "
                                 placeholder={t("page.master_product.dialog_modal.create_dialog.cost_price_input_placeholder", "Masukkan harga modal master Produk")}
-                                value={formData.cost_price}
+                                value={formData.cost_price ?? ''}
+                                onFocus={(e) => e.target.select()}
                                 disabled={loading}
                                 onValueChange={(values) => {
                                     setFormData((prev) => ({
                                         ...prev,
-                                        cost_price: values.floatValue ?? 0,
+                                        cost_price: values.floatValue ?? null,
                                     }));
+                                    setErrorForm((prev) => ({ ...prev, cost_price: '' }));
                                 }}
                                 className={`${errorForm.cost_price && 'border-red-500'}`}
                             />
@@ -250,13 +252,15 @@ export function CreateDialog({ onSuccess }: CreateDialogProps) {
                                 decimalSeparator=","
                                 prefix="Rp "
                                 placeholder={t("page.master_product.dialog_modal.create_dialog.price_input_placeholder", "Masukkan harga jual master Produk")}
-                                value={formData.price}
+                                value={formData.price ?? ''}
+                                onFocus={(e) => e.target.select()}
                                 disabled={loading}
                                 onValueChange={(values) => {
                                     setFormData((prev) => ({
                                         ...prev,
-                                        price: values.floatValue ?? 0,
+                                        price: values.floatValue ?? null,
                                     }));
+                                    setErrorForm((prev) => ({ ...prev, price: '' }));
                                 }}
                                 className={`${errorForm.price && 'border-red-500'}`}
                             />

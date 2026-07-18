@@ -54,8 +54,8 @@ export function EditDialog({
         category_name: masterProduct?.category_name ?? '',
         unit_name: masterProduct?.unit_name ?? '',
         name: masterProduct?.name ?? '',
-        price: Number(masterProduct?.price) ?? 0,
-        cost_price: Number(masterProduct?.cost_price) ?? 0,
+        price: masterProduct?.price != null ? Number(masterProduct.price) : null,
+        cost_price: masterProduct?.cost_price != null ? Number(masterProduct.cost_price) : null,
         desc: masterProduct?.desc ?? '',
         barcode: masterProduct?.barcode ?? '',
     });
@@ -215,13 +215,15 @@ export function EditDialog({
                                 decimalSeparator=","
                                 prefix="Rp "
                                 placeholder={t("page.master_product.dialog_modal.edit_dialog.cost_price_input_placeholder", "Masukkan harga modal master Produk")}
-                                value={formData.cost_price}
+                                value={formData.cost_price ?? ''}
+                                onFocus={(e) => e.target.select()}
                                 disabled={loading}
                                 onValueChange={(values) => {
                                     setFormData((prev) => ({
                                         ...prev,
-                                        cost_price: values.floatValue ?? 0,
+                                        cost_price: values.floatValue ?? null,
                                     }));
+                                    setErrorForm((prev) => ({ ...prev, cost_price: '' }));
                                 }}
                                 className={`${errorForm.cost_price && 'border-red-500'}`}
                             />
@@ -242,13 +244,15 @@ export function EditDialog({
                                 decimalSeparator=","
                                 prefix="Rp "
                                 placeholder={t("page.master_product.dialog_modal.edit_dialog.price_input_placeholder", "Masukkan harga jual master Produk")}
-                                value={formData.price}
+                                value={formData.price ?? ''}
+                                onFocus={(e) => e.target.select()}
                                 disabled={loading}
                                 onValueChange={(values) => {
                                     setFormData((prev) => ({
                                         ...prev,
-                                        price: values.floatValue ?? 0,
+                                        price: values.floatValue ?? null,
                                     }));
+                                    setErrorForm((prev) => ({ ...prev, price: '' }));
                                 }}
                                 className={`${errorForm.price && 'border-red-500'}`}
                             />
