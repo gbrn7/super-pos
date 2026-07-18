@@ -1,4 +1,4 @@
-import { Badge } from '@/components/ui/badge';
+import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import {
     Dialog,
@@ -6,6 +6,7 @@ import {
     DialogHeader,
     DialogTitle,
 } from '@/components/ui/dialog';
+import { Skeleton } from '@/components/ui/skeleton';
 import {
     Table,
     TableBody,
@@ -14,7 +15,11 @@ import {
     TableHeader,
     TableRow,
 } from '@/components/ui/table';
+import axiosInstance from '@/lib/axios';
 import { formatRupiah } from '@/lib/format-money';
+import { handleApiError } from '@/lib/utils';
+import { show as apiShowTransaction } from '@/routes/apiTransactions';
+import type { ResponseApi } from '@/support/interfaces/response/Response';
 import type { Transaction } from '@/support/models/transaction';
 import dayjs from 'dayjs';
 import { CreditCard, Calendar, User, Printer, ShoppingBag } from 'lucide-react';
@@ -32,19 +37,55 @@ export function DetailDialog({
     onOpenChange,
 }: DetailDialogProps) {
     const { t } = useTranslation();
+    const [detailData, setDetailData] = useState<Transaction | null>(null);
+    const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+        if (isOpen && transaction?.id) {
+            let isMounted = true;
+            setLoading(true);
+            const apiUrl = apiShowTransaction(transaction.id).url;
+            axiosInstance
+                .get<ResponseApi<Transaction>>(apiUrl)
+                .then((res) => {
+                    if (isMounted && res.data.success && res.data.data) {
+                        setDetailData(res.data.data);
+                    }
+                })
+                .catch((err) => {
+                    if (isMounted) {
+                        handleApiError(err);
+                    }
+                })
+                .finally(() => {
+                    if (isMounted) {
+                        setLoading(false);
+                    }
+                });
+
+            return () => {
+                isMounted = false;
+            };
+        } else if (!isOpen) {
+            setDetailData(null);
+            setLoading(false);
+        }
+    }, [isOpen, transaction?.id]);
 
     if (!transaction) {
         return null;
     }
 
+    const currentTransaction = detailData || transaction;
+
     const handlePrint = () => {
         window.print();
     };
 
-    const formattedDate = transaction.created_at
-        ? typeof transaction.created_at === 'number'
-            ? dayjs.unix(transaction.created_at).format('DD/MM/YYYY, HH:mm')
-            : dayjs(transaction.created_at).format('DD/MM/YYYY, HH:mm')
+    const formattedDate = currentTransaction.created_at
+        ? typeof currentTransaction.created_at === 'number'
+            ? dayjs.unix(currentTransaction.created_at).format('DD/MM/YYYY, HH:mm')
+            : dayjs(currentTransaction.created_at).format('DD/MM/YYYY, HH:mm')
         : '-';
 
     return (
@@ -58,14 +99,15 @@ export function DetailDialog({
                                 {t('page.transaction.dialog_modal.detail_dialog.dialog_title', 'Detail Transaksi')}
                             </DialogTitle>
                             <p className="text-sm font-mono text-muted-foreground mt-1">
-                                #{transaction.invoice_number}
+                                #{currentTransaction.invoice_number}
                             </p>
                         </div>
                         <Button
                             variant="outline"
                             size="sm"
                             onClick={handlePrint}
-                            className="print:hidden gap-1.5"
+                            className="print:hidden gap-1.5 mr-8"
+                            disabled={loading}
                         >
                             <Printer className="h-4 w-4" />
                             {t('page.transaction.dialog_modal.detail_dialog.print_btn', 'Cetak Nota')}
@@ -81,23 +123,35 @@ export function DetailDialog({
                                 <User className="h-3.5 w-3.5" />
                                 {t('page.transaction.dialog_modal.detail_dialog.cashier_label', 'Kasir / Petugas')}
                             </div>
-                            <p className="font-semibold text-sm">{transaction.user_name || '-'}</p>
+                            {loading ? (
+                                <Skeleton className="h-5 w-24 mt-1" />
+                            ) : (
+                                <p className="font-semibold text-sm">{currentTransaction.user_name || '-'}</p>
+                            )}
                         </div>
                         <div className="rounded-lg border bg-card p-3 shadow-xs">
                             <div className="flex items-center gap-2 text-xs text-muted-foreground mb-1">
                                 <CreditCard className="h-3.5 w-3.5" />
                                 {t('page.transaction.dialog_modal.detail_dialog.payment_method_label', 'Metode Pembayaran')}
                             </div>
-                            <Badge variant="secondary" className="font-medium">
-                                {transaction.payment_method_name || '-'}
-                            </Badge>
+                            {loading ? (
+                                <Skeleton className="h-5 w-20 mt-1" />
+                            ) : (
+                                <p className="font-semibold text-sm">
+                                    {currentTransaction.payment_method_name || '-'}
+                                </p>
+                            )}
                         </div>
                         <div className="rounded-lg border bg-card p-3 shadow-xs">
                             <div className="flex items-center gap-2 text-xs text-muted-foreground mb-1">
                                 <Calendar className="h-3.5 w-3.5" />
                                 {t('page.transaction.dialog_modal.detail_dialog.date_label', 'Waktu Transaksi')}
                             </div>
-                            <p className="font-medium text-xs text-foreground">{formattedDate}</p>
+                            {loading ? (
+                                <Skeleton className="h-5 w-28 mt-1" />
+                            ) : (
+                                <p className="font-medium text-xs text-foreground">{formattedDate}</p>
+                            )}
                         </div>
                     </div>
 
@@ -118,8 +172,18 @@ export function DetailDialog({
                                     </TableRow>
                                 </TableHeader>
                                 <TableBody>
-                                    {transaction.details && transaction.details.length > 0 ? (
-                                        transaction.details.map((item) => (
+                                    {loading ? (
+                                        Array.from({ length: 3 }).map((_, index) => (
+                                            <TableRow key={index}>
+                                                <TableCell><Skeleton className="h-5 w-full" /></TableCell>
+                                                <TableCell><Skeleton className="h-5 w-12 mx-auto" /></TableCell>
+                                                <TableCell><Skeleton className="h-5 w-8 mx-auto" /></TableCell>
+                                                <TableCell><Skeleton className="h-5 w-16 ml-auto" /></TableCell>
+                                                <TableCell><Skeleton className="h-5 w-20 ml-auto" /></TableCell>
+                                            </TableRow>
+                                        ))
+                                    ) : currentTransaction.details && currentTransaction.details.length > 0 ? (
+                                        currentTransaction.details.map((item) => (
                                             <TableRow key={item.id}>
                                                 <TableCell className="font-medium">
                                                     {item.product_name || `Produk #${item.product_id}`}
@@ -154,19 +218,31 @@ export function DetailDialog({
                     <div className="rounded-lg bg-muted/30 p-4 space-y-2 border">
                         <div className="flex justify-between items-center text-sm">
                             <span className="text-muted-foreground">Total Transaksi</span>
-                            <span className="font-bold text-lg text-primary">
-                                {formatRupiah(transaction.total_amount)}
-                            </span>
+                            {loading ? (
+                                <Skeleton className="h-6 w-24" />
+                            ) : (
+                                <span className="font-bold text-lg text-primary">
+                                    {formatRupiah(currentTransaction.total_amount)}
+                                </span>
+                            )}
                         </div>
                         <div className="flex justify-between items-center text-sm border-t pt-2">
                             <span className="text-muted-foreground">Nominal Pembayaran</span>
-                            <span className="font-medium">{formatRupiah(transaction.payment_amount)}</span>
+                            {loading ? (
+                                <Skeleton className="h-5 w-20" />
+                            ) : (
+                                <span className="font-medium">{formatRupiah(currentTransaction.payment_amount)}</span>
+                            )}
                         </div>
                         <div className="flex justify-between items-center text-sm">
                             <span className="text-muted-foreground">Kembalian</span>
-                            <span className="font-semibold text-emerald-600 dark:text-emerald-400">
-                                {formatRupiah(transaction.change_amount)}
-                            </span>
+                            {loading ? (
+                                <Skeleton className="h-5 w-20" />
+                            ) : (
+                                <span className="font-semibold text-emerald-600 dark:text-emerald-400">
+                                    {formatRupiah(currentTransaction.change_amount)}
+                                </span>
+                            )}
                         </div>
                     </div>
                 </div>

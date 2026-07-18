@@ -13,7 +13,7 @@ class TransactionRepository implements TransactionRepositoryInterface
     public function getAllByIndex(GetTransactionReqModel $request): Paginator|Collection
     {
         $query = Transaction::query()
-            ->with(['user', 'transactionDetails.product'])
+            ->with(['user'])
             ->when($request->keyword, function ($query) use ($request) {
                 if ($request->field && $request->field !== 'default') {
                     $query->where('transactions.'.$request->field, 'ilike', "%{$request->keyword}%");
