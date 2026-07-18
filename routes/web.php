@@ -5,6 +5,8 @@ use App\Http\Controllers\Api\ApiMasterProductController;
 use App\Http\Controllers\Api\ApiPaymentMethodController;
 use App\Http\Controllers\Api\ApiProductController;
 use App\Http\Controllers\Api\ApiRoleController;
+use App\Http\Controllers\Api\ApiTransactionController;
+use App\Http\Controllers\Api\ApiTransactionDetailController;
 use App\Http\Controllers\Api\ApiUnitController;
 use App\Http\Controllers\Api\ApiUserController;
 use App\Http\Controllers\CategoryController;
@@ -13,6 +15,8 @@ use App\Http\Controllers\MasterProductController;
 use App\Http\Controllers\PaymentMethodController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\TransactionDetailController;
 use App\Http\Controllers\UnitController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -38,6 +42,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('products', ProductController::class)->only('index');
 
     Route::resource('master-products', MasterProductController::class)->only('index');
+
+    Route::resource('transactions', TransactionController::class)->only('index');
+
+    Route::resource('transaction-details', TransactionDetailController::class)->only('index');
 
     Route::resource('example', ExampleController::class);
 
@@ -115,6 +123,22 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::get('/download/export-pdf', [ApiMasterProductController::class, 'exportMasterProductPdfData'])->name('apiMasterProducts.exportMasterProductsPdfData');
 
             Route::post('/import', [ApiMasterProductController::class, 'importMasterProductExcelData'])->name('apiMasterProducts.importProductsExcelData');
+        });
+
+        // transactions
+        Route::resource('transactions', ApiTransactionController::class)->names('apiTransactions')->only(['index', 'store', 'show', 'update', 'destroy']);
+
+        Route::group(['prefix' => 'transactions'], function () {
+            Route::post('/bulk-delete', [ApiTransactionController::class, 'bulkDelete'])->name('apiTransactions.bulkDelete');
+            Route::get('/invoice/{invoiceNumber}', [ApiTransactionController::class, 'getByInvoiceNumber'])->name('apiTransactions.getByInvoiceNumber');
+        });
+
+        // transaction-details
+        Route::resource('transaction-details', ApiTransactionDetailController::class)->names('apiTransactionDetails')->only(['index', 'store', 'show', 'update', 'destroy']);
+
+        Route::group(['prefix' => 'transaction-details'], function () {
+            Route::post('/bulk-delete', [ApiTransactionDetailController::class, 'bulkDelete'])->name('apiTransactionDetails.bulkDelete');
+            Route::get('/transaction/{transactionId}', [ApiTransactionDetailController::class, 'getByTransactionId'])->name('apiTransactionDetails.getByTransactionId');
         });
     });
 });

@@ -7,6 +7,8 @@ use App\Repositories\MasterProductRepository;
 use App\Repositories\PaymentMethodRepository;
 use App\Repositories\ProductRepository;
 use App\Repositories\RoleRepository;
+use App\Repositories\TransactionDetailRepository;
+use App\Repositories\TransactionRepository;
 use App\Repositories\UnitRepository;
 use App\Repositories\UserRepository;
 use App\Services\CategoryService;
@@ -14,6 +16,8 @@ use App\Services\MasterProductService;
 use App\Services\PaymentMethodService;
 use App\Services\ProductService;
 use App\Services\RoleService;
+use App\Services\TransactionDetailService;
+use App\Services\TransactionService;
 use App\Services\UnitService;
 use App\Services\UserService;
 use App\Support\Enums\RoleEnums;
@@ -22,6 +26,8 @@ use App\Support\Interfaces\Repositories\MasterProductRepositoryInterface;
 use App\Support\Interfaces\Repositories\PaymentMethodRepositoryInterface;
 use App\Support\Interfaces\Repositories\ProductRepositoryInterface;
 use App\Support\Interfaces\Repositories\RoleRepositoryInterface;
+use App\Support\Interfaces\Repositories\TransactionDetailRepositoryInterface;
+use App\Support\Interfaces\Repositories\TransactionRepositoryInterface;
 use App\Support\Interfaces\Repositories\UnitRepositoryInterface;
 use App\Support\Interfaces\Repositories\UserRepositoryInterface;
 use App\Support\Interfaces\Services\CategoryServiceInterface;
@@ -29,6 +35,8 @@ use App\Support\Interfaces\Services\MasterProductServiceInterface;
 use App\Support\Interfaces\Services\PaymentMethodServiceInterface;
 use App\Support\Interfaces\Services\ProductServiceInterface;
 use App\Support\Interfaces\Services\RoleServiceInterface;
+use App\Support\Interfaces\Services\TransactionDetailServiceInterface;
+use App\Support\Interfaces\Services\TransactionServiceInterface;
 use App\Support\Interfaces\Services\UnitServiceInterface;
 use App\Support\Interfaces\Services\UserServiceInterface;
 use Carbon\CarbonImmutable;
@@ -72,6 +80,14 @@ class AppServiceProvider extends ServiceProvider
         // Master Product service
         $this->app->bind(MasterProductRepositoryInterface::class, MasterProductRepository::class);
         $this->app->bind(MasterProductServiceInterface::class, MasterProductService::class);
+
+        // Transaction service
+        $this->app->bind(TransactionRepositoryInterface::class, TransactionRepository::class);
+        $this->app->bind(TransactionServiceInterface::class, TransactionService::class);
+
+        // Transaction Detail service
+        $this->app->bind(TransactionDetailRepositoryInterface::class, TransactionDetailRepository::class);
+        $this->app->bind(TransactionDetailServiceInterface::class, TransactionDetailService::class);
     }
 
     /**
@@ -98,13 +114,13 @@ class AppServiceProvider extends ServiceProvider
         );
 
         Password::defaults(
-            fn(): ?Password => app()->isProduction()
+            fn (): ?Password => app()->isProduction()
                 ? Password::min(12)
-                ->mixedCase()
-                ->letters()
-                ->numbers()
-                ->symbols()
-                ->uncompromised()
+                    ->mixedCase()
+                    ->letters()
+                    ->numbers()
+                    ->symbols()
+                    ->uncompromised()
                 : null,
         );
     }

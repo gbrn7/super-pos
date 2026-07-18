@@ -2,7 +2,9 @@
 
 namespace Database\Factories;
 
+use App\Models\Category;
 use App\Models\Product;
+use App\Models\Unit;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -20,15 +22,16 @@ class ProductFactory extends Factory
     {
         $productName = Str::ucfirst(fake()->word());
         $price = fake()->numberBetween(1000, 100000);
+
         return [
-            'category_id' => fake()->numberBetween(1, 5),
-            'unit_id' => fake()->numberBetween(1, 5),
+            'category_id' => Category::factory(),
+            'unit_id' => Unit::factory(),
             'name' => $productName,
             'barcode' => fake()->ean13(),
             'stock' => fake()->numberBetween(0, 100),
             'sku' => Str::of($productName)
                 ->headline()
-                ->replaceMatches('/[^A-Z]/', '') . '-' . strtoupper(Str::random(8)),
+                ->replaceMatches('/[^A-Z]/', '').'-'.strtoupper(Str::random(8)),
             'price' => $price,
             'cost_price' => (80 / 100) * $price,
             'is_active' => fake()->boolean(),
