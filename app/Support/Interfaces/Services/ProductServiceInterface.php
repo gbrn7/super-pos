@@ -27,6 +27,13 @@ interface ProductServiceInterface
     public function create(array $data): Product;
 
     /**
+     * Bulk create products.
+     *
+     * @param  array<int, array<string, mixed>>  $productsData
+     */
+    public function bulkCreate(array $productsData): int;
+
+    /**
      * Update an existing product.
      */
     public function update(int $id, array $data): ?Product;

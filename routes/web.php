@@ -85,6 +85,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::resource('product', ApiProductController::class)->names('apiProducts')->only(['index', 'store', 'show', 'update', 'destroy']);
 
         Route::group(['prefix' => 'product'], function () {
+            Route::post('/bulk-create', [ApiProductController::class, 'bulkStore'])->name('apiProducts.bulkStore');
+
             Route::post('/bulk-delete', [ApiProductController::class, 'bulkDelete'])->name('apiProducts.bulkDelete');
 
             Route::get('/download/import-template', [ApiProductController::class, 'getProductImportTemplate'])->name('apiProducts.getProductImportTemplate');
@@ -113,4 +115,4 @@ Route::middleware(['auth', 'verified'])->group(function () {
     });
 });
 
-require __DIR__ . '/settings.php';
+require __DIR__.'/settings.php';

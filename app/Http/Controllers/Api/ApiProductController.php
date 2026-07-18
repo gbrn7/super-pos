@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Product\BulkDeleteProductRequest;
+use App\Http\Requests\Product\BulkStoreProductRequest;
 use App\Http\Requests\Product\ImportProductRequest;
 use App\Http\Requests\Product\StoreProductRequest;
 use App\Http\Requests\Product\UpdateProductRequest;
@@ -33,7 +34,7 @@ class ApiProductController extends Controller implements HasMiddleware
 
             new Middleware(
                 'permission:'.ProductPermissionEnums::CREATE_PRODUCT->value,
-                only: ['store', 'getProductImportTemplate', 'importProductExcelData']
+                only: ['store', 'bulkStore', 'getProductImportTemplate', 'importProductExcelData']
             ),
 
             new Middleware(
@@ -75,6 +76,20 @@ class ApiProductController extends Controller implements HasMiddleware
             $product = $this->productService->create($request->validated());
 
             return ResponseApi::make(true, trans('message.success.created'), $product, Response::HTTP_CREATED);
+        } catch (\Throwable $th) {
+            return ResponseApi::make(false, $th->getMessage(), null, $th->getcode());
+        }
+    }
+
+    /**
+     * Bulk store resources in storage.
+     */
+    public function bulkStore(BulkStoreProductRequest $request)
+    {
+        try {
+            $createdCount = $this->productService->bulkCreate($request->validated('products'));
+
+            return ResponseApi::make(true, trans('message.success.bulk_created', ['count' => $createdCount]), null, Response::HTTP_CREATED);
         } catch (\Throwable $th) {
             return ResponseApi::make(false, $th->getMessage(), null, $th->getcode());
         }
