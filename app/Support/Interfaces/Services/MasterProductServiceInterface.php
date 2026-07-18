@@ -22,6 +22,11 @@ interface MasterProductServiceInterface
     public function getById(int $id): ?MasterProduct;
 
     /**
+     * Get a Masterproduct by its barcode.
+     */
+    public function getByBarcode(string $barcode): ?MasterProduct;
+
+    /**
      * Create a new Masterproduct.
      */
     public function create(array $data): MasterProduct;

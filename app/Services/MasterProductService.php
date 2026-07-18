@@ -50,6 +50,21 @@ class MasterProductService implements MasterProductServiceInterface
         }
     }
 
+    public function getByBarcode(string $barcode): ?MasterProduct
+    {
+        try {
+            $masterProduct = $this->MasterproductRepository->getByBarcode($barcode);
+
+            if (! isset($masterProduct)) {
+                throw new Exception(trans('message.error.data_not_found'), Response::HTTP_NOT_FOUND);
+            }
+
+            return $masterProduct;
+        } catch (\Throwable $th) {
+            throw CheckException::Check($th);
+        }
+    }
+
     public function create(array $data): MasterProduct
     {
         try {
@@ -131,13 +146,11 @@ class MasterProductService implements MasterProductServiceInterface
     public function importExcel(UploadedFile $file): int
     {
         try {
-            //set max time for this process
+            // set max time for this process
             set_time_limit(300);
 
             $data = Excel::toArray(new MasterProductImport, $file);
             $chunks = array_chunk($data[0], 1000);
-
-
 
             $unixTime = Carbon::now()->unix();
 
@@ -224,7 +237,7 @@ class MasterProductService implements MasterProductServiceInterface
 
             $sheet->fromArray($rows, null, 'A2');
 
-            $temporaryFilePath = tempnam(sys_get_temp_dir(), 'master-products-export-') . '.xlsx';
+            $temporaryFilePath = tempnam(sys_get_temp_dir(), 'master-products-export-').'.xlsx';
             $writer = new Xlsx($spreadsheet);
             $writer->save($temporaryFilePath);
 
@@ -240,7 +253,7 @@ class MasterProductService implements MasterProductServiceInterface
             $request = new GetMasterProductReqModel(new Request(['limit' => null]));
             $Masterproducts = $this->MasterproductRepository->getAllByIndex($request);
 
-            $temporaryFilePath = tempnam(sys_get_temp_dir(), 'MasterProducts-export-') . '.pdf';
+            $temporaryFilePath = tempnam(sys_get_temp_dir(), 'MasterProducts-export-').'.pdf';
 
             Pdf::loadView('exports.master-products-pdf', ['masterproducts' => $Masterproducts])
                 ->setPaper('a4', 'landscape')

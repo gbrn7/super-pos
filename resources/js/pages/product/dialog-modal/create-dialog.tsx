@@ -19,8 +19,9 @@ import { Spinner } from '@/components/ui/spinner';
 import axiosInstance from '@/lib/axios';
 import { ResponseApi } from '@/support/interfaces/response/Response';
 import { Product } from '@/support/models/product';
+import { MasterProduct } from '@/support/models/masterProduct';
 import { handleApiError, showSuccessToast, showWarningToast } from '@/lib/utils';
-import { PlusCircle } from 'lucide-react';
+import { PlusCircle, Search } from 'lucide-react';
 import ErrorFormInfo from '@/components/errorFormInfo';
 import { SearchableSelect } from '@/components/ui/searchable-select';
 import { Unit } from '@/support/models/unit';
@@ -41,6 +42,7 @@ export function CreateDialog({ onSuccess, units, categories }: CreateDialogProps
     const { t } = useTranslation();
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState<boolean>(false);
+    const [searchingBarcode, setSearchingBarcode] = useState<boolean>(false);
     const [imagePreview, setImagePreview] = useState<string>('');
 
     const defaultFormData: ProductForm = {
@@ -121,6 +123,67 @@ export function CreateDialog({ onSuccess, units, categories }: CreateDialogProps
                 setImagePreview(reader.result as string);
             };
             reader.readAsDataURL(file);
+        }
+    };
+
+    const handleSearchBarcode = async () => {
+        const searchBarcode = formData.barcode?.trim();
+        if (!searchBarcode) {
+            showWarningToast(
+                t("page.product.dialog_modal.create_dialog.barcode_empty_warning", "Silakan masukkan barcode terlebih dahulu.")
+            );
+            return;
+        }
+
+        try {
+            setSearchingBarcode(true);
+            const res = await axiosInstance.get<ResponseApi<MasterProduct>>(
+                `/api/master-product/barcode/${encodeURIComponent(searchBarcode)}`
+            );
+
+            if (res.data.success && res.data.data) {
+                const masterData = res.data.data;
+                const matchedCategory = categories.find(
+                    (c) => c.name.trim().toLowerCase() === masterData.category_name?.trim().toLowerCase()
+                );
+                const matchedUnit = units.find(
+                    (u) => u.name.trim().toLowerCase() === masterData.unit_name?.trim().toLowerCase()
+                );
+
+                const costPriceVal = Number(masterData.cost_price);
+                const priceVal = Number(masterData.price);
+
+                const parsedCostPrice = !isNaN(costPriceVal) && costPriceVal > 0 ? costPriceVal : null;
+                const parsedPrice = !isNaN(priceVal) && priceVal > 0 ? priceVal : null;
+
+                setFormData((prev) => ({
+                    ...prev,
+                    name: masterData.name || prev.name,
+                    barcode: masterData.barcode || prev.barcode,
+                    category_id: matchedCategory ? matchedCategory.id : prev.category_id,
+                    unit_id: matchedUnit ? matchedUnit.id : prev.unit_id,
+                    cost_price: parsedCostPrice,
+                    price: parsedPrice,
+                    desc: masterData.desc || prev.desc,
+                }));
+
+                setErrorForm(defaultErrorForm);
+
+                showSuccessToast(
+                    t("page.product.dialog_modal.create_dialog.master_product_found", "Data master produk ditemukan dan berhasil terisi otomatis.")
+                );
+            } else {
+                showWarningToast(
+                    res.data.message || t("page.product.dialog_modal.create_dialog.master_product_not_found", "Data master produk tidak ditemukan.")
+                );
+            }
+        } catch (error) {
+            console.error('Error searching barcode:', error);
+            showWarningToast(
+                t("page.product.dialog_modal.create_dialog.master_product_not_found", "Data master produk tidak ditemukan.")
+            );
+        } finally {
+            setSearchingBarcode(false);
         }
     };
 
@@ -208,6 +271,40 @@ export function CreateDialog({ onSuccess, units, categories }: CreateDialogProps
                         </DialogDescription>
                     </DialogHeader>
                     <FieldGroup className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        <Field className="md:col-span-2">
+                            <label htmlFor="barcode" className="text-sm">
+                                {t("page.product.dialog_modal.create_dialog.barcode_input_label", "Barcode")}
+                            </label>
+                            <div className="flex gap-2">
+                                <Input
+                                    id="barcode"
+                                    name="barcode"
+                                    placeholder={t("page.product.dialog_modal.create_dialog.barcode_input_placeholder", "Masukkan barcode produk (Opsional)")}
+                                    value={formData.barcode}
+                                    onChange={handleChange}
+                                    onKeyDown={(e) => {
+                                        if (e.key === 'Enter') {
+                                            e.preventDefault();
+                                            handleSearchBarcode();
+                                        }
+                                    }}
+                                    disabled={loading || searchingBarcode}
+                                    className={`${errorForm.barcode && 'border-red-500'}`}
+                                />
+                                <Button
+                                    type="button"
+                                    variant="outline"
+                                    onClick={handleSearchBarcode}
+                                    disabled={loading || searchingBarcode || !formData.barcode?.trim()}
+                                    title={t("page.product.dialog_modal.create_dialog.search_barcode_button", "Cari Master Product")}
+                                >
+                                    {searchingBarcode ? <Spinner className="h-4 w-4" /> : <Search className="h-4 w-4" />}
+                                </Button>
+                            </div>
+                            {errorForm.barcode && (
+                                <ErrorFormInfo message={errorForm.barcode} />
+                            )}
+                        </Field>
                         <Field>
                             <label htmlFor="name" className="text-sm">
                                 {t("page.product.dialog_modal.create_dialog.name_input_label", "Nama")}
@@ -376,23 +473,6 @@ export function CreateDialog({ onSuccess, units, categories }: CreateDialogProps
                             />
                             {errorForm.is_unlimited && (
                                 <ErrorFormInfo message={errorForm.is_unlimited} />
-                            )}
-                        </Field>
-                        <Field>
-                            <label htmlFor="barcode" className="text-sm">
-                                {t("page.product.dialog_modal.create_dialog.barcode_input_label", "Nama")}
-                            </label>
-                            <Input
-                                id="barcode"
-                                name="barcode"
-                                placeholder={t("page.product.dialog_modal.create_dialog.barcode_input_placeholder", "Masukkan barcode produk (Opsional)")}
-                                value={formData.barcode}
-                                onChange={handleChange}
-                                disabled={loading}
-                                className={`${errorForm.barcode && 'border-red-500'}`}
-                            />
-                            {errorForm.barcode && (
-                                <ErrorFormInfo message={errorForm.barcode} />
                             )}
                         </Field>
                         <Field>

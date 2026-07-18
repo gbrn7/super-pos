@@ -106,6 +106,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::group(['prefix' => 'master-product'], function () {
             Route::post('/bulk-delete', [ApiMasterProductController::class, 'bulkDelete'])->name('apiMasterProducts.bulkDelete');
 
+            Route::get('/barcode/{barcode}', [ApiMasterProductController::class, 'getByBarcode'])->name('apiMasterProducts.getByBarcode');
+
             Route::get('/download/import-template', [ApiMasterProductController::class, 'getMasterProductImportTemplate'])->name('apiMasterProducts.getMasterProductImportTemplate');
 
             Route::get('/download/export-excel', [ApiMasterProductController::class, 'exportMasterProductExcelData'])->name('apiMasterProducts.exportMasterProductsExcelData');

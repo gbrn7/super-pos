@@ -53,4 +53,9 @@ interface MasterProductRepositoryInterface
      * Get  Master product by its ID.
      */
     public function getByIds(array $ids): ?Collection;
+
+    /**
+     * Get Master product by its barcode.
+     */
+    public function getByBarcode(string $barcode): ?MasterProduct;
 }

@@ -26,12 +26,12 @@ class MasterProductRepository implements MasterProductRepositoryInterface
                         ->orwhere('desc', 'ilike', "%{$request->keyword}%");
                 }
             })
-            ->when($request->name, fn($query) => $query->where('name', 'ilike', "%{$request->name}%"))
-            ->when($request->barcode, fn($query) => $query->where('barcode', 'ilike', "%{$request->barcode}%"))
-            ->when($request->category_name, fn($query) => $query->where('category_name', 'ilike', "%{$request->category_name}%"))
-            ->when($request->unit_name, fn($query) => $query->where('unit_name', 'ilike', "%{$request->unit_name}%"))
-            ->when($request->price, fn($query) => $query->where('price', $request->price))
-            ->when($request->cost_price, fn($query) => $query->where('cost_price', $request->cost_price))
+            ->when($request->name, fn ($query) => $query->where('name', 'ilike', "%{$request->name}%"))
+            ->when($request->barcode, fn ($query) => $query->where('barcode', 'ilike', "%{$request->barcode}%"))
+            ->when($request->category_name, fn ($query) => $query->where('category_name', 'ilike', "%{$request->category_name}%"))
+            ->when($request->unit_name, fn ($query) => $query->where('unit_name', 'ilike', "%{$request->unit_name}%"))
+            ->when($request->price, fn ($query) => $query->where('price', $request->price))
+            ->when($request->cost_price, fn ($query) => $query->where('cost_price', $request->cost_price))
             ->select('*');
 
         if (isset($request->order_by) && isset($request->order)) {
@@ -51,7 +51,6 @@ class MasterProductRepository implements MasterProductRepositoryInterface
         if ($request->limit === null) {
             return $query->get();
         }
-
 
         return $query->paginate($request->limit)->onEachSide(1);
     }
@@ -94,5 +93,10 @@ class MasterProductRepository implements MasterProductRepositoryInterface
     public function getByIds(array $ids): ?Collection
     {
         return MasterProduct::whereIn('id', $ids)->get();
+    }
+
+    public function getByBarcode(string $barcode): ?MasterProduct
+    {
+        return MasterProduct::where('barcode', $barcode)->first();
     }
 }

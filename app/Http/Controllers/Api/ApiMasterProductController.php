@@ -27,22 +27,22 @@ class ApiMasterProductController extends Controller implements HasMiddleware
     {
         return [
             new Middleware(
-                'permission:' . MasterProductPermissionEnums::READ_MASTER_PRODUCT->value,
-                only: ['index', 'show', 'exportMasterProductExcelData', 'exportMasterProductPdfData']
+                'permission:'.MasterProductPermissionEnums::READ_MASTER_PRODUCT->value,
+                only: ['index', 'show', 'getByBarcode', 'exportMasterProductExcelData', 'exportMasterProductPdfData']
             ),
 
             new Middleware(
-                'permission:' . MasterProductPermissionEnums::CREATE_MASTER_PRODUCT->value,
+                'permission:'.MasterProductPermissionEnums::CREATE_MASTER_PRODUCT->value,
                 only: ['store', 'getMasterProductImportTemplate', 'importMasterProductExcelData']
             ),
 
             new Middleware(
-                'permission:' . MasterProductPermissionEnums::UPDATE_MASTER_PRODUCT->value,
+                'permission:'.MasterProductPermissionEnums::UPDATE_MASTER_PRODUCT->value,
                 only: ['update']
             ),
 
             new Middleware(
-                'permission:' . MasterProductPermissionEnums::DELETE_MASTER_PRODUCT->value,
+                'permission:'.MasterProductPermissionEnums::DELETE_MASTER_PRODUCT->value,
                 only: ['destroy', 'bulkDelete']
             ),
         ];
@@ -87,6 +87,22 @@ class ApiMasterProductController extends Controller implements HasMiddleware
     {
         try {
             $data = $this->MasterProductService->getById($id);
+
+            return ResponseApi::make(true, trans('message.success.success'), $data);
+        } catch (\Throwable $th) {
+            return ResponseApi::make(false, $th->getMessage(), null, $th->getcode());
+        }
+    }
+
+    /**
+     * Display the specified resource by barcode.
+     */
+    public function getByBarcode(string $barcode)
+    {
+        try {
+            $masterProduct = $this->MasterProductService->getByBarcode($barcode);
+
+            $data = new MasterProductResource($masterProduct);
 
             return ResponseApi::make(true, trans('message.success.success'), $data);
         } catch (\Throwable $th) {
@@ -143,7 +159,7 @@ class ApiMasterProductController extends Controller implements HasMiddleware
     public function getMasterProductImportTemplate()
     {
         $fileName = 'import-master-products-template.xlsx';
-        $publiFilePath = 'template/' . $fileName;
+        $publiFilePath = 'template/'.$fileName;
 
         if (! file_exists($publiFilePath)) {
             return ResponseApi::make(false, trans('message.error.not_found', ['resource' => 'file']), null, Response::HTTP_INTERNAL_SERVER_ERROR);
