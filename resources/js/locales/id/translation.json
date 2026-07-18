@@ -533,6 +533,7 @@
         "created_at_column_label":"Tanggal Dibuat",
         "updated_at_column_label":"Tanggal Diperbarui",
         "is_added_column_label":"Status",
+        "add_product_column_label":"Tambah Produk",
         "actions_column_label":"Aksi"
       }
     },

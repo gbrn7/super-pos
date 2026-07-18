@@ -80,7 +80,7 @@ export function BulkDeleteDialog({
         </Button>
       </AlertDialogTrigger>
       <AlertDialogContent
-        size="sm"
+        size="default"
         onOpenAutoFocus={(e) => e.preventDefault()}
       >
         <AlertDialogHeader>

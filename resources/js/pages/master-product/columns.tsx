@@ -1,5 +1,5 @@
 import type { ColumnDef } from '@tanstack/react-table';
-import { Check, Circle, FileText, Infinity, MoreHorizontal, Pencil, Trash, X } from 'lucide-react';
+import { Check, Circle, FileText, Infinity, MoreHorizontal, Pencil, Plus, PlusCircle, Trash, X } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Can } from '@/components/auth/can';
 import { ServerSideDataTableHeader } from '@/components/server-side-data-table-header';
@@ -16,7 +16,6 @@ import {
 import { formatRupiah } from '@/lib/format-money';
 import { PERMISSIONENUMS } from '@/support/enums/PermissionEnums';
 import type { MasterProduct } from '@/support/models/masterProduct';
-import { Plus } from 'lucide-react';
 
 
 interface ColumnsProps {
@@ -57,6 +56,26 @@ export const columns = (props?: ColumnsProps): ColumnDef<MasterProduct>[] => {
             ),
             enableSorting: false,
             enableHiding: false,
+        },
+        {
+            id: t("page.master_product.data_table.columns.add_product_column_label", "Tambah Produk"),
+            header: ({ column }) => (
+                <ServerSideDataTableHeader column={column} title={t("page.master_product.data_table.columns.add_product_column_label", "Tambah Produk")} className="whitespace-nowrap" />
+            ),
+            size: 140,
+            enableSorting: false,
+            cell: ({ row }) => (
+                <Button
+                    variant="ghost"
+                    size="icon"
+                    className="h-8 w-8 p-0"
+                    disabled={row.original.isAdded}
+                    onClick={() => props?.onAddProductsClick(row.original)}
+                    title={t("page.master_product.dialog_modal.action_menu.add_products_btn", "Tambah Produk")}
+                >
+                    <PlusCircle className="h-4 w-4" />
+                </Button>
+            ),
         },
         {
             id: t("page.master_product.data_table.columns.name_column_label", "Nama"),
@@ -146,6 +165,7 @@ export const columns = (props?: ColumnsProps): ColumnDef<MasterProduct>[] => {
                             {t("component.data_table.action_menu.detail_data_btn", "Detail data")}
                         </DropdownMenuItem>
                         <DropdownMenuItem
+                            disabled={row.original.isAdded}
                             onClick={() => props?.onAddProductsClick(row.original)}
                         >
                             <Plus className="mr-0.5 h-4 w-4" />

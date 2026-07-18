@@ -59,7 +59,7 @@ export function DeleteDialog({
     return (
         <AlertDialog open={isOpen} onOpenChange={setOpen}>
             <AlertDialogContent
-                size="sm"
+                size="default"
                 onOpenAutoFocus={(e) => e.preventDefault()}
             >
                 <AlertDialogHeader>
@@ -82,9 +82,8 @@ export function DeleteDialog({
                         onClick={handleDelete}
                         variant="destructive"
                         disabled={loading}
-                        className='w-full'
                     >
-                        {loading ? <Spinner /> : t("page.master_product.dialog_modal.delete_dialog.confirm_button", "Hapus Produk")}
+                        {loading ? <Spinner /> : t("page.master_product.dialog_modal.delete_dialog.confirm_button", "Hapus Master Produk")}
                     </AlertDialogAction>
                 </AlertDialogFooter>
             </AlertDialogContent>
