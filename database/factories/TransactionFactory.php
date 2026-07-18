@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\PaymentMethod;
 use App\Models\Transaction;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -20,8 +21,8 @@ class TransactionFactory extends Factory
     {
         return [
             'user_id' => User::factory(),
-            'payment_method_name' => fake()->word(),
-            'invoice_number' => 'INV-'.fake()->unique()->numerify('#####'),
+            'payment_method_id' => PaymentMethod::factory(),
+            'invoice_number' => 'INV-'.fake()->unique()->numerify('##############'),
             'total_amount' => 100000,
             'payment_amount' => 100000,
             'change_amount' => 0,

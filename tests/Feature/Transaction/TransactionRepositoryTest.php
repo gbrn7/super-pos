@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\PaymentMethod;
 use App\Models\Transaction;
 use App\Models\User;
 use App\Repositories\TransactionRepository;
@@ -54,9 +55,10 @@ test('getByInvoiceNumber returns expected transaction', function () {
 
 test('create transaction', function () {
     $user = User::factory()->create();
+    $pm = PaymentMethod::factory()->create();
     $data = [
         'user_id' => $user->id,
-        'payment_method_name' => 'Cash',
+        'payment_method_id' => $pm->id,
         'invoice_number' => 'INV-99999',
         'total_amount' => 50000,
         'payment_amount' => 50000,
@@ -70,12 +72,14 @@ test('create transaction', function () {
 });
 
 test('update transaction', function () {
-    $transaction = Transaction::factory()->create(['payment_method_name' => 'Cash']);
+    $pm1 = PaymentMethod::factory()->create();
+    $pm2 = PaymentMethod::factory()->create();
+    $transaction = Transaction::factory()->create(['payment_method_id' => $pm1->id]);
 
-    $updated = $this->repository->update($transaction, ['payment_method_name' => 'Transfer']);
+    $updated = $this->repository->update($transaction, ['payment_method_id' => $pm2->id]);
 
     expect($updated)->toBeTrue()
-        ->and($transaction->fresh()->payment_method_name)->toBe('Transfer');
+        ->and($transaction->fresh()->payment_method_id)->toBe($pm2->id);
 });
 
 test('delete transaction', function () {

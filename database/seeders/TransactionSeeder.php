@@ -28,15 +28,22 @@ class TransactionSeeder extends Seeder
             $products = Product::with('unit')->get();
         }
 
-        $paymentMethods = PaymentMethod::pluck('name')->toArray();
-        if (empty($paymentMethods)) {
-            $paymentMethods = ['Cash', 'Qris', 'Transfer'];
+        $paymentMethods = PaymentMethod::all();
+        if ($paymentMethods->isEmpty()) {
+            foreach (['Cash', 'Qris', 'Transfer'] as $pmName) {
+                PaymentMethod::create([
+                    'name' => $pmName,
+                    'created_at' => time(),
+                    'updated_at' => time(),
+                ]);
+            }
+            $paymentMethods = PaymentMethod::all();
         }
 
         // Generate 50 transactions spread across recent dates
         for ($i = 1; $i <= 50; $i++) {
             $user = $users->random();
-            $paymentMethod = fake()->randomElement($paymentMethods);
+            $paymentMethod = $paymentMethods->random();
             $createdAt = Carbon::now()->subDays(rand(0, 30))->subHours(rand(0, 23))->subMinutes(rand(0, 59));
 
             // Select 1 to 5 random products for this transaction
@@ -68,7 +75,7 @@ class TransactionSeeder extends Seeder
             }
 
             // Calculate payment amount & change
-            if ($paymentMethod === 'Cash') {
+            if ($paymentMethod->name === 'Cash') {
                 $paymentAmount = ceil($totalAmount / 10000) * 10000;
                 if ($paymentAmount < $totalAmount) {
                     $paymentAmount = $totalAmount;
@@ -78,11 +85,11 @@ class TransactionSeeder extends Seeder
             }
 
             $changeAmount = $paymentAmount - $totalAmount;
-            $invoiceNumber = 'INV-'.$createdAt->format('Ymd').'-'.str_pad((string) $i, 4, '0', STR_PAD_LEFT).'-'.fake()->unique()->numerify('###');
+            $invoiceNumber = 'INV-'.$createdAt->format('Ymd').'-'.str_pad((string) $i, 4, '0', STR_PAD_LEFT).'-'.fake()->numerify('######');
 
             $transaction = Transaction::create([
                 'user_id' => $user->id,
-                'payment_method_name' => $paymentMethod,
+                'payment_method_id' => $paymentMethod->id,
                 'invoice_number' => $invoiceNumber,
                 'total_amount' => $totalAmount,
                 'payment_amount' => $paymentAmount,

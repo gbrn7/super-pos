@@ -28,7 +28,7 @@ class UpdateTransactionRequest extends FormRequest
 
         return [
             'user_id' => ['sometimes', 'required', 'integer', 'exists:users,id'],
-            'payment_method_name' => ['sometimes', 'required', 'string', 'max:255'],
+            'payment_method_id' => ['sometimes', 'required', 'integer', 'exists:payment_methods,id'],
             'invoice_number' => ['sometimes', 'required', 'string', 'max:255', Rule::unique(Transaction::class)->ignore($id)],
             'total_amount' => ['sometimes', 'required', 'numeric', 'min:0'],
             'payment_amount' => ['sometimes', 'required', 'numeric', 'min:0'],

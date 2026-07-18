@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\PaymentMethod;
 use App\Models\Permission;
 use App\Models\Role;
 use App\Models\Transaction;
@@ -32,9 +33,10 @@ test('index returns transaction list', function () {
 });
 
 test('store creates new transaction', function () {
+    $paymentMethod = PaymentMethod::factory()->create();
     $payload = [
         'user_id' => $this->user->id,
-        'payment_method_name' => 'Cash',
+        'payment_method_id' => $paymentMethod->id,
         'invoice_number' => 'INV-CTRL-001',
         'total_amount' => 50000,
         'payment_amount' => 50000,
@@ -72,16 +74,18 @@ test('getByInvoiceNumber returns target transaction', function () {
 });
 
 test('update modifies transaction', function () {
-    $transaction = Transaction::factory()->create(['payment_method_name' => 'Cash']);
+    $pm1 = PaymentMethod::factory()->create();
+    $pm2 = PaymentMethod::factory()->create();
+    $transaction = Transaction::factory()->create(['payment_method_id' => $pm1->id]);
 
     $response = $this->actingAs($this->user)
         ->putJson(route('apiTransactions.update', $transaction->id), [
-            'payment_method_name' => 'Transfer',
+            'payment_method_id' => $pm2->id,
         ]);
 
     $response->assertOk()
         ->assertJsonPath('success', true)
-        ->assertJsonPath('data.payment_method_name', 'Transfer');
+        ->assertJsonPath('data.payment_method_id', $pm2->id);
 });
 
 test('destroy removes transaction', function () {

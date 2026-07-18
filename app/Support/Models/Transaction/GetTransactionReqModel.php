@@ -10,7 +10,7 @@ class GetTransactionReqModel
 
     public ?int $user_id;
 
-    public ?string $payment_method_name;
+    public ?int $payment_method_id;
 
     public ?string $start_date;
 
@@ -32,7 +32,7 @@ class GetTransactionReqModel
     {
         $this->invoice_number = $request->query('invoice_number');
         $this->user_id = $request->query('user_id');
-        $this->payment_method_name = $request->query('payment_method_name');
+        $this->payment_method_id = $request->query('payment_method_id') ? (int) $request->query('payment_method_id') : null;
         $this->start_date = $request->query('start_date');
         $this->end_date = $request->query('end_date');
         $this->keyword = $request->query('keyword');

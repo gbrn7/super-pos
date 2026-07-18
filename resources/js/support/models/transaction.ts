@@ -16,7 +16,8 @@ export interface Transaction {
   id: number;
   user_id: number;
   user_name?: string;
-  payment_method_name: string;
+  payment_method_id: number;
+  payment_method_name?: string;
   invoice_number: string;
   total_amount: number;
   payment_amount: number;

@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\PaymentMethod;
 use App\Models\Transaction;
 use App\Models\User;
 use App\Support\Interfaces\Services\TransactionServiceInterface;
@@ -47,10 +48,11 @@ test('getByInvoiceNumber returns transaction via service', function () {
 
 test('create transaction via service', function () {
     $user = User::factory()->create();
+    $pm = PaymentMethod::factory()->create();
 
     $created = $this->service->create([
         'user_id' => $user->id,
-        'payment_method_name' => 'QRIS',
+        'payment_method_id' => $pm->id,
         'invoice_number' => 'INV-SERVICE-CREATE',
         'total_amount' => 75000,
         'payment_amount' => 75000,
@@ -62,12 +64,14 @@ test('create transaction via service', function () {
 });
 
 test('update transaction via service', function () {
-    $transaction = Transaction::factory()->create(['payment_method_name' => 'Cash']);
+    $pm1 = PaymentMethod::factory()->create();
+    $pm2 = PaymentMethod::factory()->create();
+    $transaction = Transaction::factory()->create(['payment_method_id' => $pm1->id]);
 
-    $updated = $this->service->update($transaction->id, ['payment_method_name' => 'Debit']);
+    $updated = $this->service->update($transaction->id, ['payment_method_id' => $pm2->id]);
 
     expect($updated)->not->toBeNull()
-        ->and($updated->payment_method_name)->toBe('Debit');
+        ->and($updated->payment_method_id)->toBe($pm2->id);
 });
 
 test('delete transaction via service', function () {

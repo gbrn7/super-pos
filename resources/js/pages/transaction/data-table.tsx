@@ -18,7 +18,7 @@ import type {
     VisibilityState,
     RowSelectionState,
 } from '@tanstack/react-table';
-import { TableIcon, Calendar } from 'lucide-react';
+import { TableIcon, Calendar, CreditCard, User as UserIcon } from 'lucide-react';
 import * as React from 'react';
 import { useTranslation } from 'react-i18next';
 import { sprintf } from 'sprintf-js';
@@ -52,6 +52,8 @@ import {
 import type { TransactionQueryParam } from '@/support/interfaces/request/transaction';
 import type { Pagination } from '@/support/interfaces/resource/pagination';
 import type { Transaction } from '@/support/models/transaction';
+import type { PaymentMethod } from '@/support/models/paymentMethod';
+import type { User } from '@/support/models/user';
 import { DetailDialog } from './dialog-modal/detail-dialog';
 
 interface DataTableProps<TData, TValue> {
@@ -59,6 +61,8 @@ interface DataTableProps<TData, TValue> {
         | ColumnDef<TData, TValue>[]
         | ((props: any) => ColumnDef<TData, TValue>[]);
     data: TData[];
+    paymentMethods?: PaymentMethod[];
+    users?: User[];
     processing?: boolean;
     limitOptions?: number[];
     onRefresh: () => void;
@@ -68,9 +72,12 @@ interface DataTableProps<TData, TValue> {
     selectedTransaction: Transaction | null;
     queryParam: TransactionQueryParam;
     pagination: Pagination;
+    onQueryParamChange?: <K extends keyof TransactionQueryParam>(key: K, value: TransactionQueryParam[K]) => void;
     onChangePaginationPage: (page: number) => void;
     onChangePaginationLimit: (limit: number) => void;
     onChangeField: (field: string) => void;
+    onChangeUser?: (userId: number | null) => void;
+    onChangePaymentMethod?: (paymentMethodId: number | null) => void;
     onChangeKeyword: (keyword: string) => void;
     onChangeStartDate: (date: string) => void;
     onChangeEndDate: (date: string) => void;
@@ -82,6 +89,8 @@ interface DataTableProps<TData, TValue> {
 export function DataTable<TData, TValue>({
     columns: columnsOrFn,
     data,
+    paymentMethods = [],
+    users = [],
     processing,
     limitOptions = [10, 20, 50, 100],
     onRefresh,
@@ -91,9 +100,12 @@ export function DataTable<TData, TValue>({
     selectedTransaction,
     queryParam,
     pagination,
+    onQueryParamChange,
     onChangePaginationPage,
     onChangePaginationLimit,
     onChangeField,
+    onChangeUser,
+    onChangePaymentMethod,
     onChangeKeyword,
     onChangeStartDate,
     onChangeEndDate,
@@ -181,7 +193,7 @@ export function DataTable<TData, TValue>({
                 </div>
 
                 {/* Filter and Search Section */}
-                <div className="second-row grid grid-cols-1 gap-3 border p-3 rounded-xl bg-muted/20 md:grid-cols-2 lg:grid-cols-3">
+                <div className="second-row grid grid-cols-1 gap-3 border p-3 rounded-xl bg-muted/20 md:grid-cols-2 lg:grid-cols-4">
                     {/* Keyword Filter */}
                     <div className="space-y-1.5">
                         <Label className="text-xs font-medium text-muted-foreground">
@@ -209,6 +221,9 @@ export function DataTable<TData, TValue>({
                                         <SelectItem value="payment_method_name">
                                             Metode Pembayaran
                                         </SelectItem>
+                                        <SelectItem value="user_name">
+                                            Kasir / Petugas
+                                        </SelectItem>
                                     </SelectGroup>
                                 </SelectContent>
                             </Select>
@@ -219,6 +234,66 @@ export function DataTable<TData, TValue>({
                                 className="w-full"
                             />
                         </div>
+                    </div>
+
+                    {/* Cashier / User Filter */}
+                    <div className="space-y-1.5">
+                        <Label className="text-xs font-medium text-muted-foreground flex items-center gap-1">
+                            <UserIcon className="h-3.5 w-3.5" />
+                            {t('page.transaction.dialog_modal.detail_dialog.cashier_label', 'Kasir / Petugas')}
+                        </Label>
+                        <Select
+                            value={queryParam.user_id ? String(queryParam.user_id) : 'all'}
+                            onValueChange={(value) => {
+                                if (onChangeUser) {
+                                    onChangeUser(value === 'all' ? null : Number(value));
+                                }
+                            }}
+                        >
+                            <SelectTrigger className="w-full">
+                                <SelectValue placeholder={t('component.data_table.all_cashiers', 'Semua Kasir')} />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectItem value="all">
+                                    {t('component.data_table.all_cashiers', 'Semua Kasir')}
+                                </SelectItem>
+                                {users?.map((u) => (
+                                    <SelectItem key={u.id} value={String(u.id)}>
+                                        {u.name}
+                                    </SelectItem>
+                                ))}
+                            </SelectContent>
+                        </Select>
+                    </div>
+
+                    {/* Payment Method Filter */}
+                    <div className="space-y-1.5">
+                        <Label className="text-xs font-medium text-muted-foreground flex items-center gap-1">
+                            <CreditCard className="h-3.5 w-3.5" />
+                            {t('page.transaction.dialog_modal.detail_dialog.payment_method_label', 'Metode Pembayaran')}
+                        </Label>
+                        <Select
+                            value={queryParam.payment_method_id ? String(queryParam.payment_method_id) : 'all'}
+                            onValueChange={(value) => {
+                                if (onChangePaymentMethod) {
+                                    onChangePaymentMethod(value === 'all' ? null : Number(value));
+                                }
+                            }}
+                        >
+                            <SelectTrigger className="w-full">
+                                <SelectValue placeholder={t('component.data_table.all_payment_methods', 'Semua Metode Pembayaran')} />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectItem value="all">
+                                    {t('component.data_table.all_payment_methods', 'Semua Metode Pembayaran')}
+                                </SelectItem>
+                                {paymentMethods?.map((pm) => (
+                                    <SelectItem key={pm.id} value={String(pm.id)}>
+                                        {pm.name}
+                                    </SelectItem>
+                                ))}
+                            </SelectContent>
+                        </Select>
                     </div>
 
                     {/* Start Date Filter */}

@@ -9,8 +9,8 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
-use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Str;
+use Maatwebsite\Excel\Facades\Excel;
 
 class MasterProductSeeder extends Seeder
 {
@@ -27,7 +27,6 @@ class MasterProductSeeder extends Seeder
             return;
         }
 
-
         $data = Excel::toArray(new MasterProductImport, $publicFilePath);
         $chunks = array_chunk($data[0], 1000);
 
@@ -42,14 +41,13 @@ class MasterProductSeeder extends Seeder
                     'name' => Str::upper($row['nama']),
                     'category_name' => $row['kategori'] ?? Constants::EMPTY_STRING_VALUE,
                     'unit_name' => $row['satuan'] ?? Constants::EMPTY_STRING_VALUE,
-                    'barcode' => $row['barcode_opsional'] ?? Constants::EMPTY_STRING_VALUE,
+                    'barcode' => ! empty($row['barcode_opsional']) ? (string) $row['barcode_opsional'] : null,
                     'cost_price' => $row['harga_modal'] ?? Constants::EMPTY_NUMBER_VALUE,
                     'price' => $row['harga_jual'] ?? Constants::EMPTY_NUMBER_VALUE,
                     'desc' => $row['deskripsi_opsional'] ?? Constants::EMPTY_STRING_VALUE,
                     'created_at' => $unixTime,
                     'updated_at' => $unixTime,
                 ];
-
 
                 $newData->push($newMasterProduct);
             }

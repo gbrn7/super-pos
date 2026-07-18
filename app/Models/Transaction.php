@@ -13,7 +13,7 @@ class Transaction extends Model
 
     protected $fillable = [
         'user_id',
-        'payment_method_name',
+        'payment_method_id',
         'invoice_number',
         'total_amount',
         'payment_amount',
@@ -23,6 +23,11 @@ class Transaction extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function paymentMethod()
+    {
+        return $this->belongsTo(PaymentMethod::class);
     }
 
     public function transactionDetails()

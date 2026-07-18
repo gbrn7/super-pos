@@ -226,7 +226,7 @@ export function DetailDialog({
                                 </span>
                             )}
                         </div>
-                        <div className="flex justify-between items-center text-sm border-t pt-2">
+                        <div className="flex justify-between items-center text-sm">
                             <span className="text-muted-foreground">Nominal Pembayaran</span>
                             {loading ? (
                                 <Skeleton className="h-5 w-20" />
@@ -234,12 +234,12 @@ export function DetailDialog({
                                 <span className="font-medium">{formatRupiah(currentTransaction.payment_amount)}</span>
                             )}
                         </div>
-                        <div className="flex justify-between items-center text-sm">
+                        <div className="flex justify-between items-center text-sm border-t pt-2">
                             <span className="text-muted-foreground">Kembalian</span>
                             {loading ? (
                                 <Skeleton className="h-5 w-20" />
                             ) : (
-                                <span className="font-semibold text-emerald-600 dark:text-emerald-400">
+                                <span className="font-semibold">
                                     {formatRupiah(currentTransaction.change_amount)}
                                 </span>
                             )}

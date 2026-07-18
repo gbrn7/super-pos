@@ -26,7 +26,7 @@ class StoreTransactionRequest extends FormRequest
     {
         return [
             'user_id' => ['required', 'integer', 'exists:users,id'],
-            'payment_method_name' => ['required', 'string', 'max:255'],
+            'payment_method_id' => ['required', 'integer', 'exists:payment_methods,id'],
             'invoice_number' => ['required', 'string', 'max:255', Rule::unique(Transaction::class)],
             'total_amount' => ['required', 'numeric', 'min:0'],
             'payment_amount' => ['required', 'numeric', 'min:0'],

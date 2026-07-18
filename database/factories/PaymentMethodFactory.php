@@ -2,14 +2,13 @@
 
 namespace Database\Factories;
 
-use App\Models\Category;
+use App\Models\PaymentMethod;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Carbon;
 
 /**
- * @extends Factory<Category>
+ * @extends Factory<PaymentMethod>
  */
-class CategoryFactory extends Factory
+class PaymentMethodFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -20,9 +19,10 @@ class CategoryFactory extends Factory
     {
         return [
             'name' => fake()->unique()->words(2, true).' '.fake()->unique()->numerify('#####'),
-            'desc' => fake()->randomAscii(),
-            'created_at' => Carbon::now()->unix(),
-            'updated_at' => Carbon::now()->unix(),
+            'desc' => fake()->sentence(),
+            'image' => null,
+            'created_at' => time(),
+            'updated_at' => time(),
         ];
     }
 }

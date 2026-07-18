@@ -1,8 +1,12 @@
 import { Head } from '@inertiajs/react';
 import { useState, useEffect, useCallback } from 'react';
 import { index as apiGetTransactions } from '@/routes/apiTransactions';
+import { index as apiGetPaymentMethods } from '@/routes/apiPaymentMethods';
+import { index as apiGetUsers } from '@/routes/apiUsers';
 import { index as transactions } from '@/routes/transactions';
 import type { Transaction } from '@/support/models/transaction';
+import type { PaymentMethod } from '@/support/models/paymentMethod';
+import type { User } from '@/support/models/user';
 import type { TransactionQueryParam } from '@/support/interfaces/request/transaction';
 import type { Pagination } from '@/support/interfaces/resource/pagination';
 import { columns } from './columns';
@@ -32,6 +36,8 @@ export default function Index() {
     const { t } = useTranslation();
 
     const [transactionsData, setTransactionsData] = useState<Transaction[]>([]);
+    const [paymentMethods, setPaymentMethods] = useState<PaymentMethod[]>([]);
+    const [users, setUsers] = useState<User[]>([]);
     const [processing, setProcessing] = useState(false);
     const [detailOpen, setDetailOpen] = useState(false);
     const [selectedTransaction, setSelectedTransaction] = useState<Transaction | null>(null);
@@ -42,6 +48,8 @@ export default function Index() {
         limit: 10,
         keyword: '',
         field: 'default',
+        user_id: null,
+        payment_method_id: null,
         start_date: '',
         end_date: '',
         order_by: null,
@@ -60,6 +68,43 @@ export default function Index() {
         next_page_url: '',
     });
 
+    const fetchPaymentMethods = async () => {
+        try {
+            const res = await axiosInstance.get<ResponseApi<PaymentMethod[]>>(
+                apiGetPaymentMethods().url,
+                { params: { order_by: 'name', order: 'asc' } },
+            );
+            if (res.data.success && Array.isArray(res.data.data)) {
+                setPaymentMethods(res.data.data);
+            }
+        } catch (error) {
+            handleApiError(error);
+        }
+    };
+
+    const fetchUsers = async () => {
+        try {
+            const res = await axiosInstance.get<ResponseApi<PaginatedData<User> | User[]>>(
+                apiGetUsers().url,
+                { params: { order_by: 'name', order: 'asc' } },
+            );
+            if (res.data.success) {
+                const dataVal = res.data.data;
+                if (Array.isArray(dataVal)) {
+                    setUsers(dataVal);
+                } else if (dataVal && typeof dataVal === 'object' && 'data' in dataVal && Array.isArray(dataVal.data)) {
+                    setUsers(dataVal.data);
+                }
+            }
+        } catch (error) {
+            handleApiError(error);
+        }
+    };
+
+    useEffect(() => {
+        void Promise.all([fetchPaymentMethods(), fetchUsers()]);
+    }, []);
+
     const fetchTransactions = useCallback(async () => {
         try {
             setProcessing(true);
@@ -73,6 +118,14 @@ export default function Index() {
                 if (queryParam.field && queryParam.field !== 'default') {
                     params.field = queryParam.field;
                 }
+            }
+
+            if (queryParam.user_id) {
+                params.user_id = queryParam.user_id;
+            }
+
+            if (queryParam.payment_method_id) {
+                params.payment_method_id = queryParam.payment_method_id;
             }
 
             if (queryParam.start_date) {
@@ -144,29 +197,16 @@ export default function Index() {
         setDetailOpen(true);
     };
 
-    const handlePageChange = (page: number) => {
-        setQueryParam((prev) => ({ ...prev, page }));
-    };
-
-    const handleLimitChange = (limit: number) => {
-        setQueryParam((prev) => ({ ...prev, limit, page: 1 }));
-    };
-
-    const handleFieldChange = (field: string) => {
-        setQueryParam((prev) => ({ ...prev, field, page: 1 }));
-    };
-
-    const handleKeywordChange = (keyword: string) => {
-        setQueryParam((prev) => ({ ...prev, keyword, page: 1 }));
-    };
-
-    const handleStartDateChange = (startDate: string) => {
-        setQueryParam((prev) => ({ ...prev, start_date: startDate, page: 1 }));
-    };
-
-    const handleEndDateChange = (endDate: string) => {
-        setQueryParam((prev) => ({ ...prev, end_date: endDate, page: 1 }));
-    };
+    const handleQueryParamChange = useCallback(
+        <K extends keyof TransactionQueryParam>(key: K, value: TransactionQueryParam[K]) => {
+            setQueryParam((prev) => ({
+                ...prev,
+                [key]: value,
+                ...(key !== 'page' ? { page: 1 } : {}),
+            }));
+        },
+        [],
+    );
 
     return (
         <>
@@ -178,6 +218,8 @@ export default function Index() {
 
                 <DataTable
                     columns={columns}
+                    paymentMethods={paymentMethods}
+                    users={users}
                     processing={processing}
                     data={transactionsData}
                     limitOptions={PAGINATIONLIMITOPTIONDEFAULT}
@@ -188,12 +230,15 @@ export default function Index() {
                     selectedTransaction={selectedTransaction}
                     queryParam={queryParam}
                     pagination={pagination}
-                    onChangePaginationPage={handlePageChange}
-                    onChangePaginationLimit={handleLimitChange}
-                    onChangeField={handleFieldChange}
-                    onChangeKeyword={handleKeywordChange}
-                    onChangeStartDate={handleStartDateChange}
-                    onChangeEndDate={handleEndDateChange}
+                    onQueryParamChange={handleQueryParamChange}
+                    onChangePaginationPage={(val) => handleQueryParamChange('page', val)}
+                    onChangePaginationLimit={(val) => handleQueryParamChange('limit', val)}
+                    onChangeField={(val) => handleQueryParamChange('field', val)}
+                    onChangeUser={(val) => handleQueryParamChange('user_id', val)}
+                    onChangePaymentMethod={(val) => handleQueryParamChange('payment_method_id', val)}
+                    onChangeKeyword={(val) => handleQueryParamChange('keyword', val)}
+                    onChangeStartDate={(val) => handleQueryParamChange('start_date', val)}
+                    onChangeEndDate={(val) => handleQueryParamChange('end_date', val)}
                     setQueryParam={setQueryParam}
                     rowSelection={rowSelection}
                     setRowSelection={setRowSelection}
