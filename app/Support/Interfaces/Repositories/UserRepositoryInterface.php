@@ -12,7 +12,7 @@ interface UserRepositoryInterface
     /**
      * Get all users.
      */
-    public function getAllByIndex(GetUserReqModel $request): Paginator|Collection;
+    public function getAllByIndex(GetUserReqModel $request, bool $isIncludeSuperAdmin = false): Paginator|Collection;
 
     /**
      * Get a user by its ID.

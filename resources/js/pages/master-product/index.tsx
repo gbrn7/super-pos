@@ -172,6 +172,20 @@ export default function Index() {
         }));
     };
 
+    const handleResetFilter = () => {
+        setQueryParam({
+            limit: PAGINATIONLIMITDEFAULT,
+            page: 1,
+            field: DEFAULT_FILTER_VALUE,
+            keyword: "",
+            category_name: null,
+            unit_name: null,
+            order_by: null,
+            order: null,
+            barcode: null,
+        });
+    };
+
     // Fetch categories and units on mount
     useEffect(() => {
         fetchCategoriesAndUnits();
@@ -260,6 +274,7 @@ export default function Index() {
                     selectedMasterProduct={selectedMasterProduct}
                     queryParam={queryParam}
                     pagination={pagination}
+                    onResetFilter={handleResetFilter}
                     onChangePaginationLimit={handleChangePaginationLimit}
                     onChangePaginationPage={handleChangePaginationPage}
                     onChangeField={handleChangeField}

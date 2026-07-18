@@ -784,6 +784,50 @@ class ApiUnitController extends Controller implements HasMiddleware
 - `destroy()` and `bulkDelete()` return `Response::HTTP_OK` (200).
 - Use `$request->validated()` for validated data.
 
+#### API Permission Middleware Guidelines
+
+API Controllers protect endpoints using Spatie Permission Middleware via Laravel's `HasMiddleware` interface:
+
+```php
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
+
+class ApiUnitController extends Controller implements HasMiddleware
+{
+    public static function middleware(): array
+    {
+        return [
+            new Middleware(
+                'permission:' . UnitPermissionEnums::READ_UNIT->value,
+                only: ['index', 'show', 'all']
+            ),
+            new Middleware(
+                'permission:' . UnitPermissionEnums::CREATE_UNIT->value,
+                only: ['store']
+            ),
+            new Middleware(
+                'permission:' . UnitPermissionEnums::UPDATE_UNIT->value,
+                only: ['update']
+            ),
+            new Middleware(
+                'permission:' . UnitPermissionEnums::DELETE_UNIT->value,
+                only: ['destroy', 'bulkDelete']
+            ),
+        ];
+    }
+}
+```
+
+**Middleware Rules:**
+1. **HasMiddleware Interface**: Controllers MUST implement `Illuminate\Routing\Controllers\HasMiddleware` and define static `middleware(): array`.
+2. **Permission Enum Mapping**: Always use backed string Enums (e.g. `'permission:' . ModelPermissionEnums::ACTION_MODEL->value`), never hardcode permission strings.
+3. **Endpoint Grouping (`only`)**:
+   - `READ`: `['index', 'show', 'all']` (or custom listing/export endpoints)
+   - `CREATE`: `['store', 'bulkStore']`
+   - `UPDATE`: `['update', 'bulkUpdate']`
+   - `DELETE`: `['destroy', 'bulkDelete']`
+4. **New Custom Endpoints**: When adding new controller methods (such as `all()`, `export()`, `import()`), ALWAYS add the method name to the appropriate permission middleware `only` array.
+
 ---
 
 ### Step 14: Service Provider Binding (`app/Providers/AppServiceProvider.php`)
@@ -1266,6 +1310,24 @@ const apiUrl = apiGetTransactions({
 const res = await axiosInstance.get(apiUrl);
 ```
 
+#### Generating Wayfinder Routes & Actions
+
+Whenever new routes or controllers are added or modified, run the Wayfinder generator artisan command to regenerate typed TypeScript helper functions:
+
+```bash
+# Standard generation for actions & routes
+php artisan wayfinder:generate
+
+# Generate route helpers including form helper objects (.form())
+php artisan wayfinder:generate --with-form
+```
+
+**Key Points:**
+- The `--with-form` flag generates `.form()` helper functions alongside `.url()`, `.get()`, `.post()`, `.put()`, `.delete()`, making it easy to integrate with Inertia forms and requests.
+- Auto-generated output directories:
+  - Controller actions: `resources/js/actions/`
+  - Named routes: `resources/js/routes/`
+
 ### 9.3 DataTable Patterns (Client-Side vs Server-Side)
 
 #### 9.3.1 Client-Side DataTable Pattern (Example: `resources/js/pages/unit`)
@@ -1291,6 +1353,24 @@ Used when datasets are large and require backend-driven filtering, ordering, and
 3. **Sorting**: Use `ServerSideDataTableHeader` in column definitions to handle column sort toggling (`sortKey`, `orderBy`, `order`, `onSortChange`).
 4. **Skeleton Loading**: Render skeleton rows while `processing` state is `true`.
 5. **Pagination & Limit**: Provide limit options (10, 20, 50, 100) and custom page navigation buttons (first, prev, next, last).
+
+#### 9.3.3 DataTable UI/UX Standards & Filter Characteristics
+
+To ensure a unified user experience across all DataTables in the application, follow these layout & styling standards:
+
+1. **Outer Container**: Wrap the entire table component in a rounded border card: `<div className="rounded-2xl border p-3">`.
+2. **Top Action Bar**: Right-aligned row (`flex justify-start items-center gap-2 overflow-auto sm:justify-end lg:mt-0`) containing action buttons (`Reset Filter`, `Export`, `Bulk Delete`, `Kolom`, and `Tambah`). All action buttons use standard `<Button variant="outline">` styling for visual consistency.
+3. **Filter Box Grid (`second-row`)**:
+   - Container class: `<div className="second-row grid grid-cols-1 gap-2 gap-y-3 md:grid-cols-2 lg:grid-cols-3 border p-3 rounded-md">`.
+   - Each filter control has an explicit `<Label className="text-xs font-medium text-muted-foreground">` above its input element.
+   - Keyword search combines a column selector (`<Select>`) and query input (`<Input className="w-full">`).
+4. **Active Filter Badges**:
+   - When any filter is active, render active badges at the bottom of the filter box: `<div className="col-span-full flex flex-wrap items-center gap-1.5 pt-2 border-t text-xs">`.
+   - Each active filter is rendered as a `<Badge variant="secondary" className="gap-1.5 py-0.5 px-2 font-normal text-xs bg-muted/50 hover:bg-muted">`.
+   - Include a Close (`<X className="h-3 w-3" />`) button on each badge allowing users to remove individual filters without resetting the rest of the form.
+5. **Cell Typography & Alignment**:
+   - Table cells use standard body font (`text-sm text-foreground` or `<span className="whitespace-nowrap">`).
+   - Avoid `text-xs text-muted-foreground` styling on primary column values (such as dates & times) to keep text legibility uniform across all columns.
 
 ### 9.4 Internationalization (i18n) Rules
 

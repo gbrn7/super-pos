@@ -2,7 +2,7 @@ import { Head } from '@inertiajs/react';
 import { useState, useEffect, useCallback } from 'react';
 import { index as apiGetTransactions } from '@/routes/apiTransactions';
 import { index as apiGetPaymentMethods } from '@/routes/apiPaymentMethods';
-import { index as apiGetUsers } from '@/routes/apiUsers';
+import { all as apiGetAllUsers } from '@/routes/apiUsers';
 import { index as transactions } from '@/routes/transactions';
 import type { Transaction } from '@/support/models/transaction';
 import type { PaymentMethod } from '@/support/models/paymentMethod';
@@ -85,7 +85,7 @@ export default function Index() {
     const fetchUsers = async () => {
         try {
             const res = await axiosInstance.get<ResponseApi<PaginatedData<User> | User[]>>(
-                apiGetUsers().url,
+                apiGetAllUsers().url,
                 { params: { order_by: 'name', order: 'asc' } },
             );
             if (res.data.success) {
@@ -208,6 +208,21 @@ export default function Index() {
         [],
     );
 
+    const handleResetFilter = useCallback(() => {
+        setQueryParam({
+            page: 1,
+            limit: 10,
+            keyword: '',
+            field: 'default',
+            user_id: null,
+            payment_method_id: null,
+            start_date: '',
+            end_date: '',
+            order_by: null,
+            order: null,
+        });
+    }, []);
+
     return (
         <>
             <Head title={t('page.transaction.page_name', 'Transaksi')} />
@@ -231,6 +246,7 @@ export default function Index() {
                     queryParam={queryParam}
                     pagination={pagination}
                     onQueryParamChange={handleQueryParamChange}
+                    onResetFilter={handleResetFilter}
                     onChangePaginationPage={(val) => handleQueryParamChange('page', val)}
                     onChangePaginationLimit={(val) => handleQueryParamChange('limit', val)}
                     onChangeField={(val) => handleQueryParamChange('field', val)}

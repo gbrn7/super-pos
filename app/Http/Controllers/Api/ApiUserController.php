@@ -26,7 +26,7 @@ class ApiUserController extends Controller implements HasMiddleware
         return [
             new Middleware(
                 'permission:'.UserPermissionEnums::READ_USER->value,
-                only: ['index', 'show']
+                only: ['index', 'show', 'all']
             ),
 
             new Middleware(
@@ -52,8 +52,25 @@ class ApiUserController extends Controller implements HasMiddleware
     public function index(Request $request)
     {
         try {
+            $isIncludeSuperAdmin = $request->boolean('include_super_admin') || $request->boolean('include_superadmin');
 
-            $users = $this->userService->getAllByIndex(new GetUserReqModel($request));
+            $users = $this->userService->getAllByIndex(new GetUserReqModel($request), $isIncludeSuperAdmin);
+
+            $data = UserResource::collection($users);
+
+            return ResponseApi::make(true, trans('message.success.success'), $data);
+        } catch (\Throwable $th) {
+            return ResponseApi::make(false, $th->getMessage(), null, $th->getcode());
+        }
+    }
+
+    /**
+     * Display a listing of all resources including super admin.
+     */
+    public function all(Request $request)
+    {
+        try {
+            $users = $this->userService->getAllByIndex(new GetUserReqModel($request), isIncludeSuperAdmin: true);
 
             $data = UserResource::collection($users);
 

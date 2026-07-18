@@ -18,10 +18,10 @@ class UserService implements UserServiceInterface
 {
     public function __construct(protected UserRepositoryInterface $userRepository) {}
 
-    public function getAllByIndex(GetUserReqModel $request): Paginator|Collection
+    public function getAllByIndex(GetUserReqModel $request, bool $isIncludeSuperAdmin = false): Paginator|Collection
     {
         try {
-            return $this->userRepository->getAllByIndex($request);
+            return $this->userRepository->getAllByIndex($request, $isIncludeSuperAdmin);
         } catch (\Throwable $th) {
             throw CheckException::Check($th);
         }

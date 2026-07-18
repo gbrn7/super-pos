@@ -18,11 +18,12 @@ import type {
     VisibilityState,
     RowSelectionState,
 } from '@tanstack/react-table';
-import { TableIcon } from 'lucide-react';
+import { TableIcon, RotateCcw, X } from 'lucide-react';
 import * as React from 'react';
 import { useTranslation } from 'react-i18next';
 import { sprintf } from 'sprintf-js';
 import { Can } from '@/components/auth/can';
+import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
     DropdownMenu,
@@ -96,6 +97,7 @@ interface DataTableProps<TData, TValue> {
     categories: Category[];
     queryParam: ProductQueryParam;
     pagination: Pagination;
+    onResetFilter?: () => void;
     onChangePaginationPage: (page: number) => void;
     onChangePaginationLimit: (limit: number) => void;
     onChangeField: (field: string) => void;
@@ -128,6 +130,7 @@ export function DataTable<TData, TValue>({
     categories,
     queryParam,
     pagination,
+    onResetFilter,
     onChangePaginationPage,
     onChangePaginationLimit,
     onChangeField,
@@ -221,10 +224,32 @@ export function DataTable<TData, TValue>({
         },
     });
 
+    const isFilterActive = React.useMemo(() => {
+        return Boolean(
+            queryParam.keyword ||
+            (queryParam.field && queryParam.field !== FILTER_DEFAULT_VALUE) ||
+            queryParam.category_id ||
+            queryParam.unit_id ||
+            queryParam.is_active !== null ||
+            queryParam.is_unlimited !== null ||
+            queryParam.is_stock_available !== null ||
+            queryParam.barcode
+        );
+    }, [queryParam]);
+
     return (
         <div className="rounded-2xl border p-3">
             <div className="flex flex-col justify-between gap-3 pb-4">
-                <div className="flex justify-start gap-2 overflow-auto sm:justify-end lg:mt-0">
+                <div className="flex justify-start items-center gap-2 overflow-auto sm:justify-end lg:mt-0">
+                    {isFilterActive && onResetFilter && (
+                        <Button
+                            variant="outline"
+                            onClick={onResetFilter}
+                        >
+                            <RotateCcw className="h-4 w-4 mr-1.5" />
+                            {t('component.data_table.reset_filter', 'Reset Filter')}
+                        </Button>
+                    )}
                     <Can permission={PERMISSIONENUMS.CATEGORY.CREATE}>
                         <ImportExcelDialog onSuccess={onRefresh} />
                     </Can>
@@ -592,6 +617,112 @@ export function DataTable<TData, TValue>({
                             </SelectContent>
                         </Select>
                     </div>
+                    {/* Active Filter Badges */}
+                    {isFilterActive && (
+                        <div className="col-span-full flex flex-wrap items-center gap-1.5 pt-2 border-t text-xs">
+                            <span className="font-medium text-muted-foreground mr-1">
+                                {t('component.data_table.active_filters', 'Filter Aktif:')}
+                            </span>
+
+                            {queryParam.keyword && (
+                                <Badge variant="secondary" className="gap-1.5 py-0.5 px-2 font-normal text-xs bg-muted/50 hover:bg-muted">
+                                    <span>{t('component.data_table.search_component.search_label', 'Pencarian')}: "{queryParam.keyword}"</span>
+                                    <button
+                                        type="button"
+                                        onClick={() => onChangeKeyword('')}
+                                        className="ml-0.5 rounded-full p-0.5 hover:bg-muted-foreground/20 text-muted-foreground hover:text-foreground transition-colors"
+                                    >
+                                        <X className="h-3 w-3" />
+                                        <span className="sr-only">Hapus filter pencarian</span>
+                                    </button>
+                                </Badge>
+                            )}
+
+                            {queryParam.category_id && (
+                                <Badge variant="secondary" className="gap-1.5 py-0.5 px-2 font-normal text-xs bg-muted/50 hover:bg-muted">
+                                    <span>{t('component.data_table.filter.category_label', 'Kategori')}: {categories.find((c) => c.id === queryParam.category_id)?.name || queryParam.category_id}</span>
+                                    <button
+                                        type="button"
+                                        onClick={() => updateQueryParam('category_id', null)}
+                                        className="ml-0.5 rounded-full p-0.5 hover:bg-muted-foreground/20 text-muted-foreground hover:text-foreground transition-colors"
+                                    >
+                                        <X className="h-3 w-3" />
+                                        <span className="sr-only">Hapus filter kategori</span>
+                                    </button>
+                                </Badge>
+                            )}
+
+                            {queryParam.unit_id && (
+                                <Badge variant="secondary" className="gap-1.5 py-0.5 px-2 font-normal text-xs bg-muted/50 hover:bg-muted">
+                                    <span>{t('component.data_table.filter.unit_label', 'Satuan')}: {units.find((u) => u.id === queryParam.unit_id)?.name || queryParam.unit_id}</span>
+                                    <button
+                                        type="button"
+                                        onClick={() => updateQueryParam('unit_id', null)}
+                                        className="ml-0.5 rounded-full p-0.5 hover:bg-muted-foreground/20 text-muted-foreground hover:text-foreground transition-colors"
+                                    >
+                                        <X className="h-3 w-3" />
+                                        <span className="sr-only">Hapus filter satuan</span>
+                                    </button>
+                                </Badge>
+                            )}
+
+                            {queryParam.is_stock_available !== null && (
+                                <Badge variant="secondary" className="gap-1.5 py-0.5 px-2 font-normal text-xs bg-muted/50 hover:bg-muted">
+                                    <span>{t('component.data_table.filter.is_available_stock_label', 'Status Stok')}: {Number(queryParam.is_stock_available) === 1 ? t('component.data_table.filter.available_stock_label', 'Tersedia') : t('component.data_table.filter.unavailable_stock_label', 'Tidak Tersedia')}</span>
+                                    <button
+                                        type="button"
+                                        onClick={() => updateQueryParam('is_stock_available', null)}
+                                        className="ml-0.5 rounded-full p-0.5 hover:bg-muted-foreground/20 text-muted-foreground hover:text-foreground transition-colors"
+                                    >
+                                        <X className="h-3 w-3" />
+                                        <span className="sr-only">Hapus filter status stok</span>
+                                    </button>
+                                </Badge>
+                            )}
+
+                            {queryParam.is_active !== null && (
+                                <Badge variant="secondary" className="gap-1.5 py-0.5 px-2 font-normal text-xs bg-muted/50 hover:bg-muted">
+                                    <span>{t('component.data_table.filter.status_label', 'Status')}: {Number(queryParam.is_active) === 1 ? t('component.data_table.filter.active_status_label', 'Aktif') : t('component.data_table.filter.inactive_status_label', 'Non-Aktif')}</span>
+                                    <button
+                                        type="button"
+                                        onClick={() => updateQueryParam('is_active', null)}
+                                        className="ml-0.5 rounded-full p-0.5 hover:bg-muted-foreground/20 text-muted-foreground hover:text-foreground transition-colors"
+                                    >
+                                        <X className="h-3 w-3" />
+                                        <span className="sr-only">Hapus filter status</span>
+                                    </button>
+                                </Badge>
+                            )}
+
+                            {queryParam.is_unlimited !== null && (
+                                <Badge variant="secondary" className="gap-1.5 py-0.5 px-2 font-normal text-xs bg-muted/50 hover:bg-muted">
+                                    <span>{t('component.data_table.filter.stock_label', 'Tipe Stok')}: {Number(queryParam.is_unlimited) === 1 ? t('component.data_table.filter.unlimited_stock_label', 'Tidak Terbatas') : t('component.data_table.filter.limitted_stock_label', 'Terbatas')}</span>
+                                    <button
+                                        type="button"
+                                        onClick={() => updateQueryParam('is_unlimited', null)}
+                                        className="ml-0.5 rounded-full p-0.5 hover:bg-muted-foreground/20 text-muted-foreground hover:text-foreground transition-colors"
+                                    >
+                                        <X className="h-3 w-3" />
+                                        <span className="sr-only">Hapus filter tipe stok</span>
+                                    </button>
+                                </Badge>
+                            )}
+
+                            {queryParam.barcode && (
+                                <Badge variant="secondary" className="gap-1.5 py-0.5 px-2 font-normal text-xs bg-muted/50 hover:bg-muted">
+                                    <span>Barcode: {queryParam.barcode}</span>
+                                    <button
+                                        type="button"
+                                        onClick={() => updateQueryParam('barcode', null)}
+                                        className="ml-0.5 rounded-full p-0.5 hover:bg-muted-foreground/20 text-muted-foreground hover:text-foreground transition-colors"
+                                    >
+                                        <X className="h-3 w-3" />
+                                        <span className="sr-only">Hapus filter barcode</span>
+                                    </button>
+                                </Badge>
+                            )}
+                        </div>
+                    )}
                 </div>
             </div>
             <div className="overflow-x-auto rounded-md border">

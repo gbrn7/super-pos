@@ -175,7 +175,7 @@ export const columns = (props?: ColumnsProps): ColumnDef<Transaction>[] => {
                 const formatted = typeof dateVal === 'number'
                     ? dayjs.unix(dateVal).format('DD/MM/YYYY HH:mm')
                     : dayjs(dateVal).format('DD/MM/YYYY HH:mm');
-                return <span className="text-xs text-muted-foreground">{formatted}</span>;
+                return <span className="whitespace-nowrap">{formatted}</span>;
             },
         },
         {

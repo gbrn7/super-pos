@@ -23,6 +23,7 @@ import {
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import {
     Select,
     SelectContent,
@@ -51,8 +52,9 @@ import { EditDialog } from './dialog-modal/edit-dialog';
 import { DeleteDialog } from './dialog-modal/delete-dialog';
 import { IconChevronLeft, IconChevronRight, IconChevronsLeft, IconChevronsRight } from '@tabler/icons-react';
 import { ExportDropdownMenu } from './export-data-menu/export-dropdown-menu';
-import { TableIcon } from 'lucide-react';
+import { TableIcon, RotateCcw, X } from 'lucide-react';
 import { Can } from '@/components/auth/can';
+import { Badge } from '@/components/ui/badge';
 import { PERMISSIONENUMS } from '@/support/enums/PermissionEnums';
 
 interface DataTableProps<TData, TValue> {
@@ -149,42 +151,18 @@ export function DataTable<TData, TValue>({
     });
 
     return (
-        <div className='p-3 border rounded-2xl'>
-            <div className="flex:col lg:flex justify-between items-center pb-4">
-                <div className="first-row flex gap-2">
-                    <Select
-                        value={searchColumn}
-                        onValueChange={setSearchColumn}
-                    >
-                        <SelectTrigger className="w-full lg:w-24 xl:w-56">
-                            <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent>
-                            <SelectGroup>
-                                <SelectLabel>{t("component.data_table.search_component.search_by", "Pencarian berdasarkan")}</SelectLabel>
-                                <SelectItem value={t("page.unit.data_table.columns.name_column_label", "Nama")}>
-                                    {t("component.data_table.search_component.name", "Nama")}
-                                </SelectItem>
-                            </SelectGroup>
-                        </SelectContent>
-                    </Select>
-                    <Input
-                        placeholder={t("component.data_table.search_component.placeholder", "Telusuri")}
-                        value={
-                            (table
-                                .getColumn(searchColumn)
-                                ?.getFilterValue() as string) ?? ''
-                        }
-                        onChange={(event) => {
-                            table
-                                .getColumn(searchColumn)
-                                ?.setFilterValue(event.target.value);
-                        }}
-                        className="max-w-sm"
-                    />
-                </div>
-
-                <div className="second-row overflow-auto flex justify-start sm:justify-end gap-2 mt-2 lg:mt-0">
+        <div className="rounded-2xl border p-3">
+            <div className="flex flex-col justify-between gap-3 pb-4">
+                <div className="flex justify-start items-center gap-2 overflow-auto sm:justify-end lg:mt-0">
+                    {table.getState().columnFilters.length > 0 && (
+                        <Button
+                            variant="outline"
+                            onClick={() => table.setColumnFilters([])}
+                        >
+                            <RotateCcw className="h-4 w-4 mr-1.5" />
+                            {t('component.data_table.reset_filter', 'Reset Filter')}
+                        </Button>
+                    )}
                     <Can permission={PERMISSIONENUMS.UNIT.READ}>
                         <ExportDropdownMenu data={data} />
                     </Can>
@@ -209,7 +187,7 @@ export function DataTable<TData, TValue>({
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                             <Button variant="outline">
-                                <TableIcon className='h-4' />
+                                <TableIcon className="h-4" />
                                 {t("component.data_table.columns.label", "Kolom")}
                             </Button>
                         </DropdownMenuTrigger>
@@ -229,7 +207,7 @@ export function DataTable<TData, TValue>({
                                         >
                                             {column.id}
                                         </DropdownMenuCheckboxItem>
-                                    ); 0
+                                    );
                                 })}
                         </DropdownMenuContent>
                     </DropdownMenu>
@@ -240,6 +218,67 @@ export function DataTable<TData, TValue>({
                     </Can>
                 </div>
 
+                <div className="second-row grid grid-cols-1 gap-2 gap-y-3 md:grid-cols-2 lg:grid-cols-3 border p-3 rounded-md">
+                    <div className="space-y-1.5">
+                        <Label className="text-xs font-medium text-muted-foreground">
+                            {t("component.data_table.search_component.search_label", "Pencarian")}
+                        </Label>
+                        <div className="keyword-filter flex w-full gap-1">
+                            <Select
+                                value={searchColumn}
+                                onValueChange={setSearchColumn}
+                            >
+                                <SelectTrigger className="w-full">
+                                    <SelectValue />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectGroup>
+                                        <SelectLabel>{t("component.data_table.search_component.search_by", "Pencarian berdasarkan")}</SelectLabel>
+                                        <SelectItem value={t("page.unit.data_table.columns.name_column_label", "Nama")}>
+                                            {t("component.data_table.search_component.name", "Nama")}
+                                        </SelectItem>
+                                    </SelectGroup>
+                                </SelectContent>
+                            </Select>
+                            <Input
+                                placeholder={t("component.data_table.search_component.placeholder", "Telusuri")}
+                                value={
+                                    (table
+                                        .getColumn(searchColumn)
+                                        ?.getFilterValue() as string) ?? ''
+                                }
+                                onChange={(event) => {
+                                    table
+                                        .getColumn(searchColumn)
+                                        ?.setFilterValue(event.target.value);
+                                }}
+                                className="w-full"
+                            />
+                        </div>
+                    </div>
+
+                    {/* Active Filter Badges */}
+                    {table.getState().columnFilters.length > 0 && (
+                        <div className="col-span-full flex flex-wrap items-center gap-1.5 pt-2 border-t text-xs">
+                            <span className="font-medium text-muted-foreground mr-1">
+                                {t('component.data_table.active_filters', 'Filter Aktif:')}
+                            </span>
+                            {table.getState().columnFilters.map((filter) => (
+                                <Badge key={filter.id} variant="secondary" className="gap-1.5 py-0.5 px-2 font-normal text-xs bg-muted/50 hover:bg-muted">
+                                    <span>{filter.id}: "{String(filter.value)}"</span>
+                                    <button
+                                        type="button"
+                                        onClick={() => table.setColumnFilters(table.getState().columnFilters.filter((f) => f.id !== filter.id))}
+                                        className="ml-0.5 rounded-full p-0.5 hover:bg-muted-foreground/20 text-muted-foreground hover:text-foreground transition-colors"
+                                    >
+                                        <X className="h-3 w-3" />
+                                        <span className="sr-only">Hapus filter {filter.id}</span>
+                                    </button>
+                                </Badge>
+                            ))}
+                        </div>
+                    )}
+                </div>
             </div>
             <div className="overflow-hidden rounded-md border">
                 <Table>

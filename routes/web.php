@@ -69,11 +69,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
         });
 
         // user
-        Route::resource('user', ApiUserController::class)->names('apiUsers')->only(['index', 'store', 'show', 'update', 'destroy']);
-
         Route::group(['prefix' => 'user'], function () {
+            Route::get('/all', [ApiUserController::class, 'all'])->name('apiUsers.all');
             Route::post('/bulk-delete', [ApiUserController::class, 'bulkDelete'])->name('apiUsers.bulkDelete');
         });
+
+        Route::resource('user', ApiUserController::class)->names('apiUsers')->only(['index', 'store', 'show', 'update', 'destroy']);
 
         // unit
         Route::resource('unit', ApiUnitController::class)->names('apiUnits')->only(['index', 'store', 'show', 'update', 'destroy']);

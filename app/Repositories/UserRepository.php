@@ -11,14 +11,16 @@ use Illuminate\Support\Collection;
 
 class UserRepository implements UserRepositoryInterface
 {
-    public function getAllByIndex(GetUserReqModel $request): Paginator|Collection
+    public function getAllByIndex(GetUserReqModel $request, bool $isIncludeSuperAdmin = false): Paginator|Collection
     {
         $query = User::query()
             ->with('roles')
             ->orderBy('id', 'desc')
-            ->when($request->name, fn($query) => $query->where('name', 'ilike', "%{$request->name}%"))
-            ->whereDoesntHave('roles', function ($query) {
-                $query->where('name', RoleEnums::SUPER_ADMIN->value);
+            ->when($request->name, fn ($query) => $query->where('name', 'ilike', "%{$request->name}%"))
+            ->when(! $isIncludeSuperAdmin, function ($query) {
+                $query->whereDoesntHave('roles', function ($q) {
+                    $q->where('name', RoleEnums::SUPER_ADMIN->value);
+                });
             });
 
         if ($request->limit === null) {

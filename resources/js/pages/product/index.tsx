@@ -180,6 +180,23 @@ export default function Index() {
         }));
     };
 
+    const handleResetFilter = () => {
+        setQueryParam({
+            limit: PAGINATIONLIMITDEFAULT,
+            page: 1,
+            field: DEFAULT_FILTER_VALUE,
+            keyword: "",
+            category_id: null,
+            unit_id: null,
+            is_active: null,
+            is_unlimited: null,
+            is_stock_available: null,
+            order_by: null,
+            order: null,
+            barcode: null,
+        });
+    };
+
     useEffect(() => {
         // eslint-disable-next-line react-hooks/set-state-in-effect
         void Promise.all([fetchUnits(), fetchCategories()]);
@@ -245,6 +262,7 @@ export default function Index() {
                     selectedProduct={selectedProduct}
                     queryParam={queryParam}
                     pagination={pagination}
+                    onResetFilter={handleResetFilter}
                     onChangePaginationLimit={handleChangePaginationLimit}
                     onChangePaginationPage={handleChangePaginationPage}
                     onChangeField={handleChangeField}
