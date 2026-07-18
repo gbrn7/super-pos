@@ -216,7 +216,8 @@ export function DataTable<TData, TValue>({
             (queryParam.field && queryParam.field !== DEFAULT_FILTER_VALUE) ||
             queryParam.category_name ||
             queryParam.unit_name ||
-            queryParam.barcode
+            queryParam.barcode ||
+            (queryParam.is_added !== null && queryParam.is_added !== undefined && queryParam.is_added !== '')
         );
     }, [queryParam]);
 
@@ -384,6 +385,44 @@ export function DataTable<TData, TValue>({
                         </div>
                     </div>
 
+                    <div className="space-y-1.5 max-w-48">
+                        <Label className="text-xs font-medium text-muted-foreground">
+                            {t('component.data_table.filter.status_label', 'Status')}
+                        </Label>
+                        <Select
+                            value={queryParam.is_added ?? 'all'}
+                            onValueChange={(value) =>
+                                setQueryParam((prev) => ({
+                                    ...prev,
+                                    is_added: value === 'all' ? null : value,
+                                    page: 1,
+                                }))
+                            }
+                        >
+                            <SelectTrigger className="w-full">
+                                <SelectValue
+                                    placeholder={t(
+                                        'component.data_table.filter.status_placeholder',
+                                        'Pilih Status',
+                                    )}
+                                />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectGroup>
+                                    <SelectItem value="all">
+                                        {t('component.data_table.filter.all_status_label', 'Semua Status')}
+                                    </SelectItem>
+                                    <SelectItem value="true">
+                                        {t('page.master_product.is_added.added', 'Ditambahkan')}
+                                    </SelectItem>
+                                    <SelectItem value="false">
+                                        {t('page.master_product.is_added.not_added', 'Tidak Ditambahkan')}
+                                    </SelectItem>
+                                </SelectGroup>
+                            </SelectContent>
+                        </Select>
+                    </div>
+
                     {/* Active Filter Badges */}
                     {isFilterActive && (
                         <div className="col-span-full flex flex-wrap items-center gap-1.5 pt-2 border-t text-xs">
@@ -443,6 +482,25 @@ export function DataTable<TData, TValue>({
                                     >
                                         <X className="h-3 w-3" />
                                         <span className="sr-only">Hapus filter barcode</span>
+                                    </button>
+                                </Badge>
+                            )}
+
+                            {queryParam.is_added !== null && queryParam.is_added !== undefined && queryParam.is_added !== '' && (
+                                <Badge variant="secondary" className="gap-1.5 py-0.5 px-2 font-normal text-xs bg-muted/50 hover:bg-muted">
+                                    <span>
+                                        {t('component.data_table.filter.status_label', 'Status')}:{' '}
+                                        {queryParam.is_added === 'true'
+                                            ? t('page.master_product.is_added.added', 'Ditambahkan')
+                                            : t('page.master_product.is_added.not_added', 'Tidak Ditambahkan')}
+                                    </span>
+                                    <button
+                                        type="button"
+                                        onClick={() => setQueryParam((prev) => ({ ...prev, is_added: null, page: 1 }))}
+                                        className="ml-0.5 rounded-full p-0.5 hover:bg-muted-foreground/20 text-muted-foreground hover:text-foreground transition-colors"
+                                    >
+                                        <X className="h-3 w-3" />
+                                        <span className="sr-only">Hapus filter status</span>
                                     </button>
                                 </Badge>
                             )}

@@ -149,6 +149,7 @@
         "unit_label":"Satuan",
         "status_placeholder":"Pilih Status",
         "status_label":"Status",
+        "all_status_label":"Semua Status",
         "status_active_label":"Aktif",
         "status_inactive_label":"Tidak Aktif",
         "stock_type_placeholder":"Pilih Tipe Stok",

@@ -149,6 +149,7 @@
         "unit_label": "Unit",
         "status_placeholder": "Select Status",
         "status_label": "Status",
+        "all_status_label": "All Status",
         "status_active_label": "Active",
         "status_inactive_label": "Inactive",
         "stock_type_placeholder": "Select Stock Type",

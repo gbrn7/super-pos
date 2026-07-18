@@ -71,6 +71,7 @@ export default function Index() {
         order_by: null,
         order: null,
         barcode: null,
+        is_added: null,
     })
 
     const fetchAllMasterProducts = async () => {
@@ -183,6 +184,7 @@ export default function Index() {
             order_by: null,
             order: null,
             barcode: null,
+            is_added: null,
         });
     };
 
@@ -207,6 +209,7 @@ export default function Index() {
         queryParam.unit_name,
         queryParam.order_by,
         queryParam.order,
+        queryParam.is_added,
     ])
 
     useEffect(() => {

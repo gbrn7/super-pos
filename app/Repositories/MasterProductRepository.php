@@ -32,6 +32,13 @@ class MasterProductRepository implements MasterProductRepositoryInterface
             ->when($request->unit_name, fn ($query) => $query->where('unit_name', 'ilike', "%{$request->unit_name}%"))
             ->when($request->price, fn ($query) => $query->where('price', $request->price))
             ->when($request->cost_price, fn ($query) => $query->where('cost_price', $request->cost_price))
+            ->when($request->is_added !== null && $request->is_added !== '', function ($query) use ($request) {
+                if ($request->is_added === 'true' || $request->is_added === '1' || $request->is_added === true) {
+                    $query->whereHas('product');
+                } elseif ($request->is_added === 'false' || $request->is_added === '0' || $request->is_added === false) {
+                    $query->whereDoesntHave('product');
+                }
+            })
             ->select('*');
 
         if (isset($request->order_by) && isset($request->order)) {

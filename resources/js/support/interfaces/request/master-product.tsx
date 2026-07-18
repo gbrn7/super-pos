@@ -7,6 +7,7 @@ export interface MasterProductQueryParam {
   category_name: string | null;
   barcode: string | null;
   unit_name: string | null;
+  is_added: string | null;
   page: number;
   limit: number;
   order_by: string | null;

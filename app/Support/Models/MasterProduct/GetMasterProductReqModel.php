@@ -30,6 +30,8 @@ class GetMasterProductReqModel
 
     public ?string $keyword;
 
+    public ?string $is_added;
+
     public function __construct(Request $request)
     {
         $this->name = $request->query('name');
@@ -44,5 +46,6 @@ class GetMasterProductReqModel
         $this->order = $request->query('order');
         $this->field = $request->query('field');
         $this->keyword = $request->query('keyword');
+        $this->is_added = $request->query('is_added');
     }
 }
