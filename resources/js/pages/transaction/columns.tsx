@@ -1,8 +1,7 @@
 import type { ColumnDef } from '@tanstack/react-table';
-import { CreditCard, FileText, MoreHorizontal } from 'lucide-react';
+import { FileText, MoreHorizontal } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { ServerSideDataTableHeader } from '@/components/server-side-data-table-header';
-import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import {
@@ -55,6 +54,8 @@ export const columns = (props?: ColumnsProps): ColumnDef<Transaction>[] => {
         {
             id: t('page.transaction.data_table.columns.invoice_number_column_label', 'No. Invoice'),
             accessorKey: 'invoice_number',
+            size: 240,
+            minSize: 200,
             header: ({ column }) => (
                 <ServerSideDataTableHeader
                     column={column}
@@ -66,9 +67,14 @@ export const columns = (props?: ColumnsProps): ColumnDef<Transaction>[] => {
                 />
             ),
             cell: ({ row }) => (
-                <span className="font-mono text-sm font-semibold text-primary">
+                <button
+                    type="button"
+                    onClick={() => props?.onDetailClick(row.original)}
+                    className="whitespace-nowrap font-mono text-sm font-semibold text-primary hover:underline hover:text-primary/80 focus:outline-none cursor-pointer transition-colors text-left"
+                    title={t('component.data_table.action_menu.detail_data_btn', 'Detail data')}
+                >
                     {row.original.invoice_number}
-                </span>
+                </button>
             ),
         },
         {
@@ -99,12 +105,7 @@ export const columns = (props?: ColumnsProps): ColumnDef<Transaction>[] => {
                     onSortChange={props?.onSortChange}
                 />
             ),
-            cell: ({ row }) => (
-                <Badge variant="outline" className="gap-1.5 font-medium bg-secondary/50">
-                    <CreditCard className="h-3.5 w-3.5 text-muted-foreground" />
-                    {row.original.payment_method_name || '-'}
-                </Badge>
-            ),
+            cell: ({ row }) => row.original.payment_method_name || '-',
         },
         {
             id: t('page.transaction.data_table.columns.total_amount_column_label', 'Total Transaksi'),
@@ -153,11 +154,7 @@ export const columns = (props?: ColumnsProps): ColumnDef<Transaction>[] => {
                     onSortChange={props?.onSortChange}
                 />
             ),
-            cell: ({ row }) => (
-                <span className={row.original.change_amount > 0 ? 'text-amber-600 dark:text-amber-400 font-medium' : 'text-muted-foreground'}>
-                    {formatRupiah(row.original.change_amount)}
-                </span>
-            ),
+            cell: ({ row }) => formatRupiah(row.original.change_amount),
         },
         {
             id: t('page.transaction.data_table.columns.created_at_column_label', 'Tanggal & Waktu'),
