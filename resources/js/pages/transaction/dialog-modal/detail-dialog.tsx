@@ -43,8 +43,8 @@ export function DetailDialog({
 
     const formattedDate = transaction.created_at
         ? typeof transaction.created_at === 'number'
-            ? dayjs.unix(transaction.created_at).format('DD MMMM YYYY, HH:mm')
-            : dayjs(transaction.created_at).format('DD MMMM YYYY, HH:mm')
+            ? dayjs.unix(transaction.created_at).format('DD/MM/YYYY, HH:mm')
+            : dayjs(transaction.created_at).format('DD/MM/YYYY, HH:mm')
         : '-';
 
     return (
