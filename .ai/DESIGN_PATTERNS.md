@@ -1,13 +1,13 @@
 # Super POS — Design Pattern & Architecture Guide
 
-> Dokumen ini ditujukan untuk AI Agent / Coding Assistant agar memahami arsitektur, konvensi, dan pola desain yang digunakan pada project **Super POS**.  
-> **Selalu ikuti pola ini ketika membuat fitur baru.**
+> This document is intended for AI Agents / Coding Assistants to understand the architecture, conventions, and design patterns used in the **Super POS** project.  
+> **Always follow these patterns when creating new features.**
 
 ---
 
-## 1. Arsitektur Utama
+## 1. Core Architecture
 
-Project ini menggunakan **Repository-Service-Controller (RSC) Pattern** dengan dependency injection melalui Laravel Service Container.
+This project uses the **Repository-Service-Controller (RSC) Pattern** with dependency injection through the Laravel Service Container.
 
 ```
 Request → Route → Controller → Service → Repository → Model → Database
@@ -17,25 +17,25 @@ Request → Route → Controller → Service → Repository → Model → Databa
                  ResponseApi
 ```
 
-### Alur Data (Request → Response)
+### Data Flow (Request → Response)
 
-1. **Route** (`routes/web.php`) menerima request dan meneruskan ke Controller.
-2. **Controller** menerima request, memvalidasi via **FormRequest**, memanggil **Service**.
-3. **Service** berisi business logic, memanggil **Repository** untuk akses data.
-4. **Repository** berinteraksi langsung dengan **Model** (Eloquent) untuk query database.
-5. Response dikembalikan via **API Resource** dan dibungkus oleh **ResponseApi** utility.
+1. **Route** (`routes/web.php`) receives the request and forwards it to a Controller.
+2. **Controller** receives the request, validates via **FormRequest**, and calls the **Service**.
+3. **Service** contains business logic and calls the **Repository** for data access.
+4. **Repository** interacts directly with the **Model** (Eloquent) for database queries.
+5. The response is returned via **API Resource** and wrapped by the **ResponseApi** utility.
 
-### Prinsip Penting
+### Key Principles
 
-- **Controller** TIDAK boleh mengakses Repository secara langsung. Selalu melalui Service.
-- **Service** TIDAK boleh mengakses Model secara langsung. Selalu melalui Repository.
-- **Repository** adalah satu-satunya layer yang berinteraksi dengan Eloquent Model.
-- Semua dependency di-inject melalui **Interface**, bukan class konkret.
-- Semua binding Interface → Implementation didaftarkan di `AppServiceProvider`.
+- **Controller** MUST NOT access Repository directly. Always go through Service.
+- **Service** MUST NOT access Model directly. Always go through Repository.
+- **Repository** is the only layer that interacts with Eloquent Models.
+- All dependencies are injected through **Interfaces**, not concrete classes.
+- All Interface → Implementation bindings are registered in `AppServiceProvider`.
 
 ---
 
-## 2. Struktur Direktori
+## 2. Directory Structure
 
 ```
 app/
@@ -53,7 +53,7 @@ app/
 │   │   │   ├── StoreCategoryRequest.php
 │   │   │   ├── UpdateCategoryRequest.php
 │   │   │   └── BulkDeleteCategoryRequest.php
-│   │   └── {NamaModel}/                  # Satu folder per model
+│   │   └── {ModelName}/                  # One folder per model
 │   └── Resources/
 │       ├── CategoryResource.php
 │       └── ...
@@ -85,32 +85,32 @@ app/
 │   ├── Models/                           # Request DTO / Query Parameter Models
 │   │   ├── Category/
 │   │   │   └── GetCategoryReqModel.php
-│   │   └── {NamaModel}/
+│   │   └── {ModelName}/
 │   └── Utils/
 │       ├── CheckException.php
 │       └── ResponseApi.php
 ├── Providers/
-│   └── AppServiceProvider.php            # Binding Interface → Implementation
+│   └── AppServiceProvider.php            # Interface → Implementation bindings
 database/
 ├── factories/
 │   ├── CategoryFactory.php
 │   └── ...
 ├── migrations/
 routes/
-│   └── web.php                           # Semua route (web + api prefix)
+│   └── web.php                           # All routes (web + api prefix)
 tests/
 ├── Feature/
 │   ├── Category/
 │   │   └── CategoryTest.php
-│   └── {NamaModel}/
+│   └── {ModelName}/
 └── Pest.php
 ```
 
 ---
 
-## 3. Panduan Membuat Fitur Baru (Step-by-Step)
+## 3. Step-by-Step Guide for Creating a New Feature
 
-Contoh: membuat fitur CRUD untuk entitas **"Unit"**.
+Example: creating CRUD functionality for a **"Unit"** entity.
 
 ### Step 1: Model (`app/Models/Unit.php`)
 
@@ -132,7 +132,7 @@ class Unit extends Model
     // format date using unix/epoch time
     protected $dateFormat = 'U';
 
-    // overide default iso datetime format from model
+    // override default iso datetime format from model
     protected function serializeDate(DateTimeInterface $date): int
     {
         return $date->getTimestamp();
@@ -140,10 +140,10 @@ class Unit extends Model
 }
 ```
 
-**Konvensi:**
-- Gunakan `HasFactory` trait.
-- Definisikan `$fillable` secara eksplisit.
-- Jika tabel menggunakan unix timestamp, set `$dateFormat = 'U'` dan override `serializeDate()`.
+**Conventions:**
+- Use the `HasFactory` trait.
+- Define `$fillable` explicitly.
+- If the table uses unix timestamps, set `$dateFormat = 'U'` and override `serializeDate()`.
 
 ---
 
@@ -158,8 +158,8 @@ Schema::create('units', function (Blueprint $table) {
 });
 ```
 
-**Konvensi:**
-- Beberapa tabel menggunakan `$table->timestamps()` standar, beberapa menggunakan `unsignedBigInteger` (unix). Ikuti model terkait.
+**Conventions:**
+- Some tables use standard `$table->timestamps()`, others use `unsignedBigInteger` (unix). Follow the related model's convention.
 
 ---
 
@@ -187,10 +187,10 @@ class UnitFactory extends Factory
 }
 ```
 
-**Konvensi:**
-- Selalu buat factory bersamaan dengan model baru.
-- Gunakan `fake()` helper untuk generate data.
-- Untuk relasi foreign key, gunakan `RelatedModel::factory()` bukan `fake()->numberBetween()`.
+**Conventions:**
+- Always create a factory alongside a new model.
+- Use the `fake()` helper to generate data.
+- For foreign key relations, use `RelatedModel::factory()` instead of `fake()->numberBetween()`.
 
 ---
 
@@ -222,11 +222,11 @@ class GetUnitReqModel
 }
 ```
 
-**Konvensi:**
-- Namespace: `App\Support\Models\{NamaModel}`
-- Nama class: `Get{NamaModel}ReqModel`
-- Properti nullable (`?type`), diisi dari `$request->query()`.
-- Selalu sertakan minimal: `page`, `limit`, `order_by`, `order`.
+**Conventions:**
+- Namespace: `App\Support\Models\{ModelName}`
+- Class name: `Get{ModelName}ReqModel`
+- Nullable properties (`?type`), populated from `$request->query()`.
+- Always include at minimum: `page`, `limit`, `order_by`, `order`.
 
 ---
 
@@ -256,12 +256,12 @@ interface UnitRepositoryInterface
 }
 ```
 
-**Konvensi:**
+**Conventions:**
 - Namespace: `App\Support\Interfaces\Repositories`
-- Nama: `{NamaModel}RepositoryInterface`
-- Method `update()` dan `delete()` menerima instance Model, bukan ID.
-- Method `getAllByIndex()` menerima `Get{NamaModel}ReqModel`.
-- Setiap method memiliki PHPDoc block.
+- Name: `{ModelName}RepositoryInterface`
+- `update()` and `delete()` accept a Model instance, not an ID.
+- `getAllByIndex()` accepts `Get{ModelName}ReqModel`.
+- Each method has a PHPDoc block.
 
 ---
 
@@ -338,11 +338,11 @@ class UnitRepository implements UnitRepositoryInterface
 }
 ```
 
-**Konvensi:**
-- Implements interface terkait.
-- `getAllByIndex()`: default order `id desc`, gunakan `when()` untuk filter conditional.
-- Jika `limit` null → `get()`, jika ada → `paginate()->onEachSide(1)`.
-- Pencarian teks menggunakan `ilike` (PostgreSQL case-insensitive).
+**Conventions:**
+- Implements the related interface.
+- `getAllByIndex()`: default order is `id desc`, use `when()` for conditional filters.
+- If `limit` is null → `get()`, if present → `paginate()->onEachSide(1)`.
+- Text searches use `ilike` (PostgreSQL case-insensitive).
 
 ---
 
@@ -363,16 +363,16 @@ interface UnitServiceInterface
     public function getAllByIndex(GetUnitReqModel $request): Paginator|Collection;
     public function getById(int $id): ?Unit;
     public function create(array $data): Unit;
-    public function update(int $id, array $data): ?Unit;  // Menerima ID, bukan Model
-    public function delete(int $id): bool;                  // Menerima ID, bukan Model
+    public function update(int $id, array $data): ?Unit;  // Accepts ID, not Model
+    public function delete(int $id): bool;                  // Accepts ID, not Model
     public function bulkDelete(array $ids): int;
 }
 ```
 
-**Perbedaan penting vs Repository Interface:**
-- Service `update()` dan `delete()` menerima **ID** (int), bukan instance Model.
-- Service menambahkan method `bulkDelete()` sebagai alias dari `deleteMany()`.
-- Service TIDAK memiliki method `insert()`, `getByName()`, `getByNameExceptID()` (itu internal repository).
+**Key differences vs Repository Interface:**
+- Service `update()` and `delete()` accept an **ID** (int), not a Model instance.
+- Service adds a `bulkDelete()` method as an alias for `deleteMany()`.
+- Service does NOT expose `insert()`, `getByName()`, `getByNameExceptID()` (those are internal repository methods).
 
 ---
 
@@ -418,7 +418,7 @@ class UnitService implements UnitServiceInterface
     public function create(array $data): Unit
     {
         try {
-            // Cek duplikasi nama
+            // Check for name duplication
             $isUnitExist = $this->unitRepository->getByName($data['name']);
 
             if (isset($isUnitExist)) {
@@ -437,13 +437,13 @@ class UnitService implements UnitServiceInterface
     public function update(int $id, array $data): ?Unit
     {
         try {
-            // Cari data, throw 404 jika tidak ada
+            // Find data, throw 404 if not found
             $unit = $this->unitRepository->getById($id);
             if (! isset($unit)) {
                 throw new Exception(trans('message.error.data_not_found'), Response::HTTP_NOT_FOUND);
             }
 
-            // Cek duplikasi nama (kecuali ID sendiri)
+            // Check for name duplication (excluding own ID)
             $isUnitExist = $this->unitRepository->getByNameExceptID($data['name'], $id);
             if (isset($isUnitExist)) {
                 throw new Exception(
@@ -499,12 +499,12 @@ class UnitService implements UnitServiceInterface
 }
 ```
 
-**Konvensi:**
+**Conventions:**
 - Inject Repository via constructor property promotion: `__construct(protected UnitRepositoryInterface $unitRepository) {}`
-- **SEMUA** method dibungkus `try/catch` dengan `CheckException::Check($th)`.
-- Business logic (duplikasi cek, not found) ada di Service, BUKAN di Repository atau Controller.
-- Gunakan `trans()` untuk pesan error.
-- HTTP status codes: `422` (duplikat), `404` (not found), `500` (server error).
+- **ALL** methods are wrapped in `try/catch` with `CheckException::Check($th)`.
+- Business logic (duplication checks, not found) lives in the Service, NOT in the Repository or Controller.
+- Use `trans()` for error messages.
+- HTTP status codes: `422` (duplicate), `404` (not found), `500` (server error).
 
 ---
 
@@ -524,11 +524,11 @@ enum UnitPermissionEnums: string
 }
 ```
 
-**Konvensi:**
+**Conventions:**
 - Backed enum (`string`).
-- Format case: `{ACTION}_{MODEL}` → `CREATE_UNIT`.
-- Format value: `{action}-{model}` → `'create-unit'`.
-- Selalu 4 permission: CREATE, READ, UPDATE, DELETE.
+- Case format: `{ACTION}_{MODEL}` → `CREATE_UNIT`.
+- Value format: `{action}-{model}` → `'create-unit'`.
+- Always 4 permissions: CREATE, READ, UPDATE, DELETE.
 
 ---
 
@@ -551,9 +551,9 @@ class UnitResource extends JsonResource
 }
 ```
 
-**Konvensi:**
-- Untuk model sederhana, `parent::toArray()` cukup.
-- Untuk model dengan relasi, buat mapping eksplisit (lihat `ProductResource` sebagai contoh).
+**Conventions:**
+- For simple models, `parent::toArray()` is sufficient.
+- For models with relations, create explicit mappings (see `ProductResource` as an example).
 
 ---
 
@@ -604,11 +604,11 @@ class BulkDeleteUnitRequest extends FormRequest
 }
 ```
 
-**Konvensi:**
-- Satu folder per model: `app/Http/Requests/{NamaModel}/`
-- Minimal 3 file: `Store{Model}Request`, `Update{Model}Request`, `BulkDelete{Model}Request`.
-- `authorize()` return `true` (otorisasi ditangani middleware permission).
-- `Store` biasanya punya `Rule::unique()`, `Update` tidak (ditangani di Service).
+**Conventions:**
+- One folder per model: `app/Http/Requests/{ModelName}/`
+- Minimum 3 files: `Store{Model}Request`, `Update{Model}Request`, `BulkDelete{Model}Request`.
+- `authorize()` returns `true` (authorization is handled by permission middleware).
+- `Store` typically has `Rule::unique()`, `Update` does not (handled in Service).
 
 ---
 
@@ -640,16 +640,16 @@ class UnitController extends Controller implements HasMiddleware
 
     public function index()
     {
-        return inertia('{model}/index');  // contoh: 'unit/index'
+        return inertia('{model}/index');  // e.g., 'unit/index'
     }
 }
 ```
 
-**Konvensi:**
+**Conventions:**
 - Implements `HasMiddleware`.
-- Hanya method `index()` untuk merender halaman Inertia.
+- Only an `index()` method for rendering the Inertia page.
 - Inject Service via constructor.
-- Permission middleware menggunakan Enum.
+- Permission middleware uses the Enum.
 
 ---
 
@@ -775,14 +775,14 @@ class ApiUnitController extends Controller implements HasMiddleware
 }
 ```
 
-**Konvensi:**
-- Prefix class: `Api{NamaModel}Controller`.
-- SEMUA method dibungkus `try/catch`.
+**Conventions:**
+- Class prefix: `Api{ModelName}Controller`.
+- ALL methods are wrapped in `try/catch`.
 - Success response: `ResponseApi::make(true, message, data, httpCode)`.
 - Error response: `ResponseApi::make(false, $th->getMessage(), null, $th->getCode())`.
-- `store()` return `Response::HTTP_CREATED` (201).
-- `destroy()` dan `bulkDelete()` return `Response::HTTP_OK` (200).
-- Gunakan `$request->validated()` untuk data tervalidasi.
+- `store()` returns `Response::HTTP_CREATED` (201).
+- `destroy()` and `bulkDelete()` return `Response::HTTP_OK` (200).
+- Use `$request->validated()` for validated data.
 
 ---
 
@@ -797,45 +797,45 @@ public function register(): void
 }
 ```
 
-**Konvensi:**
+**Conventions:**
 - Bind **Repository Interface → Repository Implementation**.
 - Bind **Service Interface → Service Implementation**.
-- Berikan komentar `// {NamaModel} service` di atasnya.
-- Import semua class di bagian `use` statement.
+- Add a comment `// {ModelName} service` above the bindings.
+- Import all classes in the `use` statements section.
 
 ---
 
 ### Step 15: Route Registration (`routes/web.php`)
 
 ```php
-// Di dalam Route::middleware(['auth', 'verified'])->group()
+// Inside Route::middleware(['auth', 'verified'])->group()
 
 // Web route (Inertia page)
 Route::resource('units', UnitController::class)->only('index');
 
-// Di dalam Route::group(['prefix' => 'api'])
+// Inside Route::group(['prefix' => 'api'])
 
 // API CRUD resource
 Route::resource('unit', ApiUnitController::class)
     ->names('apiUnits')
     ->only(['index', 'store', 'show', 'update', 'destroy']);
 
-// Custom routes (bulk delete, dll)
+// Custom routes (bulk delete, etc.)
 Route::group(['prefix' => 'unit'], function () {
     Route::post('/bulk-delete', [ApiUnitController::class, 'bulkDelete'])
         ->name('apiUnits.bulkDelete');
 });
 ```
 
-**Konvensi:**
-- Web route: plural (`units`), hanya `index`.
-- API resource: singular atau sesuai konteks, dengan `->names('api{Models}')`.
-- Custom endpoint (bulk-delete, dll) dalam group terpisah dengan prefix yang sama.
-- Nama route: `api{Models}.{method}` → `apiUnits.bulkDelete`.
+**Conventions:**
+- Web route: plural (`units`), only `index`.
+- API resource: singular or contextual, with `->names('api{Models}')`.
+- Custom endpoints (bulk-delete, etc.) in a separate group with the same prefix.
+- Route naming: `api{Models}.{method}` → `apiUnits.bulkDelete`.
 
 ---
 
-### Step 16: Testing (`tests/Feature/{NamaModel}/`)
+### Step 16: Testing (`tests/Feature/{ModelName}/`)
 
 ```php
 <?php
@@ -867,15 +867,15 @@ test('create unit', function () {
 });
 ```
 
-**Konvensi:**
-- Framework: **Pest** (bukan PHPUnit).
-- `uses(RefreshDatabase::class)` di setiap file test.
-- Pest.php sudah mengkonfigurasi `RefreshDatabase` global untuk folder `Feature`, tetapi beberapa file test tetap mendeklarasikannya secara eksplisit.
-- Gunakan `test()` atau `it()` syntax.
-- Gunakan `->actingAs()` untuk autentikasi.
-- Gunakan `->getJson()`, `->postJson()`, `->putJson()`, `->deleteJson()`.
-- Assertion: `->assertOk()`, `->assertCreated()`, `->assertUnprocessable()`, `->assertNotFound()`.
-- Factory untuk membuat data test.
+**Conventions:**
+- Framework: **Pest** (not PHPUnit).
+- `uses(RefreshDatabase::class)` in each test file.
+- Pest.php already configures `RefreshDatabase` globally for the `Feature` folder, but some test files still declare it explicitly.
+- Use `test()` or `it()` syntax.
+- Use `->actingAs()` for authentication.
+- Use `->getJson()`, `->postJson()`, `->putJson()`, `->deleteJson()`.
+- Assertions: `->assertOk()`, `->assertCreated()`, `->assertUnprocessable()`, `->assertNotFound()`.
+- Factories for test data creation.
 
 ---
 
@@ -887,7 +887,7 @@ test('create unit', function () {
 ResponseApi::make(bool $isSuccess, string $message, mixed $data = null, ?int $httpCode = 200)
 ```
 
-Format response:
+Response format:
 ```json
 {
     "success": true,
@@ -902,19 +902,263 @@ Format response:
 CheckException::Check(Exception $th): Exception
 ```
 
-- Log error ke Laravel Log.
-- Jika code bukan HTTP valid (100-599), return generic 500 error.
-- Jika code valid, return exception aslinya.
+- Logs the error to the Laravel Log.
+- If the code is not a valid HTTP status (100-599), returns a generic 500 error.
+- If the code is valid, returns the original exception.
 
 ---
 
-## 5. Checklist Membuat Fitur Baru
+## 5. Multilingual Messages (i18n)
 
-Gunakan checklist ini setiap kali membuat entitas/fitur baru:
+This project supports **2 languages**: Indonesian (`id`) and English (`en`). **Every new message MUST be added to both language files.**
 
-- [ ] **Model** (`app/Models/{Model}.php`) — `HasFactory`, `$fillable`, relasi
-- [ ] **Migration** (`database/migrations/`) — schema tabel
-- [ ] **Factory** (`database/factories/{Model}Factory.php`) — data faker
+### 5.1 Directory Structure
+
+```
+lang/
+├── en/
+│   ├── message.php       # App-specific messages (success, error)
+│   └── validation.php    # Validation rule messages & attribute names
+├── id/
+│   ├── message.php       # App-specific messages (Indonesian)
+│   └── validation.php    # Validation rule messages & attribute names (Indonesian)
+```
+
+### 5.2 Language Switching Mechanism
+
+Language is determined per-request via the `x-language` HTTP header, handled by the `SetLanguage` middleware (`app/Http/Middleware/SetLanguage.php`):
+
+```php
+class SetLanguage
+{
+    public function handle(Request $request, Closure $next): Response
+    {
+        $supported = ['id', 'en'];
+
+        $lang = $request->header(Header::X_LANGUAGE, 'id');  // default: Indonesian
+
+        if (! in_array($lang, $supported)) {
+            $lang = Header::X_LANGUAGE_DEFAULT_VALUE;  // fallback: 'id'
+        }
+
+        App::setLocale($lang);
+
+        return $next($request);
+    }
+}
+```
+
+**Key points:**
+- Default language is `id` (Indonesian).
+- Client sends `x-language: en` or `x-language: id` header to switch language.
+- The header constant is defined in `App\Support\Constants\Header`.
+- This middleware is registered globally in `bootstrap/app.php`.
+
+### 5.3 Message File Pattern (`lang/{locale}/message.php`)
+
+Messages are organized into two groups: `success` and `error`.
+
+**English (`lang/en/message.php`):**
+```php
+<?php
+
+return [
+    'success' => [
+        'success'          => 'Success',
+        'created'          => 'Data successfully created',
+        'bulk_created'     => ':count data successfully created',
+        'import_processing'=> 'Import is processing',
+        'updated'          => 'Data successfully updated',
+        'bulk_updated'     => ':count data successfully updated',
+        'deleted'          => 'Data successfully deleted',
+        'bulk_deleted'     => ':count data successfully deleted',
+        'profile_updated'  => 'Profile updated',
+        'password_updated' => 'Password updated',
+    ],
+
+    'error' => [
+        'data_not_found'          => 'Data not found',
+        'data_already_exists'     => 'Data already exist',
+        'internal_server_error'   => 'Internal server error',
+        'something_went_wrong'    => 'Something went wrong',
+        'unauthorized'            => 'Unauthorized access',
+        'validation'              => 'Validation failed',
+        // ... domain-specific error messages
+    ],
+];
+```
+
+**Indonesian (`lang/id/message.php`):**
+```php
+<?php
+
+return [
+    'success' => [
+        'success'          => 'Sukses',
+        'created'          => 'Data berhasil dibuat',
+        'bulk_created'     => ':count data berhasil dibuat',
+        'import_processing'=> 'Impor sedang diproses',
+        'updated'          => 'Data berhasil diperbarui',
+        'bulk_updated'     => ':count data berhasil diperbarui',
+        'deleted'          => 'Data berhasil dihapus',
+        'bulk_deleted'     => ':count data berhasil dihapus',
+        'profile_updated'  => 'Profil berhasil diperbarui',
+        'password_updated' => 'Password diperbarui',
+    ],
+
+    'error' => [
+        'data_not_found'          => 'Data tidak ditemukan',
+        'data_already_exists'     => 'Data sudah tersedia',
+        'internal_server_error'   => 'Kesalahan server internal',
+        'something_went_wrong'    => 'Terjadi kesalahan',
+        'unauthorized'            => 'Anda tidak memiliki izin',
+        'validation'              => 'Validasi gagal',
+        // ... domain-specific error messages
+    ],
+];
+```
+
+### 5.4 Validation File Pattern (`lang/{locale}/validation.php`)
+
+Validation files contain three sections: **rule messages**, **min/max nested rules**, and **attribute names**.
+
+**English (`lang/en/validation.php`):**
+```php
+<?php
+
+return [
+    'required'  => 'The :attribute field is required.',
+    'string'    => 'The :attribute field must be a string.',
+    'numeric'   => 'The :attribute field must be a number.',
+    'array'     => 'The :attribute field must be a array.',
+    'unique'    => 'The :attribute already exists',
+    'confirmed' => 'The :attribute confirmation does not match',
+    'boolean'   => ':attribute field must be a boolean',
+    'mimes'     => 'the type of :attribute must on of :values',
+    'exists'    => 'The selected :attribute is invalid.',
+
+    'min' => [
+        'string'  => 'The :attribute field must be at least :min characters.',
+        'numeric' => 'The :attribute field must be at least :min.',
+        'array'   => 'The :attribute field must have at least :min items.',
+    ],
+
+    'max' => [
+        'file'    => 'The :attribute sized not to greater than :max Kb',
+        'string'  => 'The :attribute field must not be greater than :max characters.',
+        'numeric' => 'The :attribute field must not be greater than :max.',
+    ],
+
+    'attributes' => [
+        'name'        => 'Name',
+        'desc'        => 'Description',
+        'permissions' => 'Permissions',
+        'role'        => 'Role',
+        'password'    => 'Password',
+        'image'       => 'Image',
+        'category_id' => 'Category',
+        'unit_id'     => 'Unit',
+        'stock'       => 'Stock',
+        'price'       => 'Price',
+        'cost_price'  => 'Cost Price',
+        'is_active'   => 'Active Status',
+        // ... add new model attributes here
+    ],
+];
+```
+
+**Indonesian (`lang/id/validation.php`):**
+```php
+<?php
+
+return [
+    'required'  => ':attribute wajib diisi.',
+    'string'    => ':attribute harus berupa teks',
+    'numeric'   => ':attribute harus berupa angka',
+    'array'     => ':attribute harus berupa array',
+    'unique'    => ':attribute sudah ada',
+    'confirmed' => ':attribute konfirmasi tidak cocok',
+    'boolean'   => ':attribute harus bertipe boolean',
+    'mimes'     => ':attribute harus bertipe :values',
+    'exists'    => ':attribute yang dipilih tidak valid',
+
+    'min' => [
+        'string'  => ':attribute minimal :min karakter',
+        'numeric' => ':attribute minimal :min',
+        'array'   => ':attribute minimal memiliki :min item',
+    ],
+
+    'max' => [
+        'file'    => ':attribute maksimal :max Kb',
+        'string'  => ':attribute maksimal :max karakter.',
+        'numeric' => ':attribute maksimal :max.',
+    ],
+
+    'attributes' => [
+        'name'        => 'Nama',
+        'desc'        => 'Deskripsi',
+        'permissions' => 'Hak akses',
+        'role'        => 'Peran',
+        'password'    => 'Kata sandi',
+        'image'       => 'Gambar',
+        'category_id' => 'Kategori',
+        'unit_id'     => 'Satuan',
+        'stock'       => 'Stok',
+        'price'       => 'Harga',
+        'cost_price'  => 'Harga Pokok',
+        'is_active'   => 'Status Aktif',
+        // ... add new model attributes here
+    ],
+];
+```
+
+### 5.5 How to Use Messages in Code
+
+Always use the `trans()` helper to reference messages:
+
+```php
+// Success messages
+trans('message.success.success')       // "Success" / "Sukses"
+trans('message.success.created')       // "Data successfully created" / "Data berhasil dibuat"
+trans('message.success.deleted')       // "Data successfully deleted" / "Data berhasil dihapus"
+
+// With parameters (use :placeholder)
+trans('message.success.bulk_deleted', ['count' => $deletedCount])
+// → "5 data successfully deleted" / "5 data berhasil dihapus"
+
+// Error messages
+trans('message.error.data_not_found')        // "Data not found" / "Data tidak ditemukan"
+trans('message.error.data_already_exists')   // "Data already exist" / "Data sudah tersedia"
+trans('message.error.internal_server_error') // "Internal server error" / "Kesalahan server internal"
+```
+
+### 5.6 Rules for Adding New Messages
+
+1. **ALWAYS add to BOTH `lang/en/message.php` AND `lang/id/message.php`** — never add to only one language.
+2. **Use the same key** in both files — the key must be identical.
+3. **Group correctly** — success messages under `'success'`, error messages under `'error'`.
+4. **Key naming**: use `snake_case` descriptive keys (e.g., `'data_not_found'`, `'cost_price_greater_than_price_validation'`).
+5. **Use `:placeholder` syntax** for dynamic values (e.g., `:count`, `:resource`), **NOT `%s`** for new messages (some legacy messages still use `%s` with `sprintf`).
+6. **When adding new model attributes**, add the human-readable name to `validation.php` → `attributes` in BOTH languages.
+7. **Do NOT hardcode messages** in controllers or services — always use `trans()`.
+
+### 5.7 New Feature Message Checklist
+
+When adding a new entity/feature, check if you need to:
+
+- [ ] Add new entries to `lang/en/message.php` AND `lang/id/message.php`
+- [ ] Add new attribute names to `lang/en/validation.php` → `attributes` AND `lang/id/validation.php` → `attributes`
+- [ ] Add new validation rules if custom messages are needed
+
+---
+
+## 6. New Feature Checklist
+
+Use this checklist every time you create a new entity/feature:
+
+- [ ] **Model** (`app/Models/{Model}.php`) — `HasFactory`, `$fillable`, relations
+- [ ] **Migration** (`database/migrations/`) — table schema
+- [ ] **Factory** (`database/factories/{Model}Factory.php`) — faker data
 - [ ] **Request DTO** (`app/Support/Models/{Model}/Get{Model}ReqModel.php`)
 - [ ] **Repository Interface** (`app/Support/Interfaces/Repositories/{Model}RepositoryInterface.php`)
 - [ ] **Repository** (`app/Repositories/{Model}Repository.php`)
@@ -925,16 +1169,18 @@ Gunakan checklist ini setiap kali membuat entitas/fitur baru:
 - [ ] **Form Requests** (`app/Http/Requests/{Model}/Store|Update|BulkDelete`)
 - [ ] **Web Controller** (`app/Http/Controllers/{Model}Controller.php`)
 - [ ] **API Controller** (`app/Http/Controllers/Api/Api{Model}Controller.php`)
-- [ ] **Service Provider** — binding di `AppServiceProvider::register()`
-- [ ] **Routes** — web + API di `routes/web.php`
-- [ ] **Tests** — feature tests di `tests/Feature/{Model}/`
-- [ ] **Pint** — jalankan `vendor/bin/pint --dirty --format agent`
+- [ ] **Service Provider** — bindings in `AppServiceProvider::register()`
+- [ ] **Routes** — web + API in `routes/web.php`
+- [ ] **Messages** — add to both `lang/en/message.php` and `lang/id/message.php`
+- [ ] **Validation Attributes** — add to both `lang/en/validation.php` and `lang/id/validation.php`
+- [ ] **Tests** — feature tests in `tests/Feature/{Model}/`
+- [ ] **Pint** — run `vendor/bin/pint --dirty --format agent`
 
 ---
 
-## 6. Konvensi Penamaan
+## 7. Naming Conventions
 
-| Komponen | Format | Contoh |
+| Component | Format | Example |
 |---|---|---|
 | Model | `PascalCase` | `Unit`, `TransactionDetail` |
 | Migration | `snake_case` | `create_units_table` |
@@ -951,16 +1197,18 @@ Gunakan checklist ini setiap kali membuat entitas/fitur baru:
 | Request DTO | `Get{Model}ReqModel` | `GetUnitReqModel` |
 | Route names (API) | `api{Models}.{method}` | `apiUnits.index` |
 | Permission values | `{action}-{model}` | `create-unit` |
+| Message keys | `snake_case` | `data_not_found` |
+| Validation attributes | `snake_case` | `cost_price` |
 
 ---
 
-## 7. Tech Stack
+## 8. Tech Stack
 
 - **PHP** 8.4
 - **Laravel** v13
-- **Database**: PostgreSQL (gunakan `ilike` untuk case-insensitive search)
+- **Database**: PostgreSQL (use `ilike` for case-insensitive search)
 - **Frontend**: React 19 + Inertia.js v3 + Tailwind CSS v4
 - **Testing**: Pest v4
 - **Code Style**: Laravel Pint
 - **Auth**: Laravel Fortify
-- **Permissions**: spatie/laravel-permission (via `Role` dan `Permission` models)
+- **Permissions**: spatie/laravel-permission (via `Role` and `Permission` models)
