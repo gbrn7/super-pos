@@ -104,6 +104,29 @@ export const columns = (props?: ColumnsProps): ColumnDef<MasterProduct>[] => {
             cell: ({ row }) => (formatRupiah(row.original.price))
         },
         {
+            id: t("page.master_product.data_table.columns.is_added_column_label", "Status"),
+            accessorKey: 'is_added',
+            header: ({ column }) => (
+                <ServerSideDataTableHeader column={column} title={t("page.master_product.data_table.columns.is_added_column_label", "Status")} sortKey="is_added" orderBy={props?.orderBy} order={props?.order} onSortChange={props?.onSortChange} />
+            ),
+            cell: ({ row }) => (
+                row.original.isAdded ? (
+                    <Badge className="bg-green-50 text-green-700 dark:bg-green-950 dark:text-green-300">
+                        <Check size={184} strokeWidth={2.25} />
+                        {
+                            t("page.master_product.is_added.added", "Ditambahkan")
+                        }
+                    </Badge>
+                ) :
+                    (<Badge className="bg-slate-200 text-slate-800 dark:bg-slate-800 dark:text-slate-300">
+                        <X size={184} strokeWidth={2.25} />
+                        {
+                            t("page.master_product.is_added_column_label.not_added", "Tidak Ditambahkan")
+                        }
+                    </Badge>)
+            ),
+        },
+        {
             id: t("page.master_product.data_table.columns.actions_column_label", "Aksi"),
             enableSorting: false,
             cell: ({ row }) => (

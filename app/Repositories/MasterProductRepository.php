@@ -12,8 +12,8 @@ class MasterProductRepository implements MasterProductRepositoryInterface
 {
     public function getAllByIndex(GetMasterProductReqModel $request): Paginator|Collection
     {
-        // dd($request);
         $query = MasterProduct::query()
+            ->with('product')
             ->when($request->keyword, function ($query) use ($request) {
                 if ($request->field && $request->field != 'default') {
                     $query->where($request->field, 'ilike', "%{$request->keyword}%");
@@ -35,7 +35,15 @@ class MasterProductRepository implements MasterProductRepositoryInterface
             ->select('*');
 
         if (isset($request->order_by) && isset($request->order)) {
-            $query->orderBy($request->order_by, $request->order);
+            if ($request->order_by == 'is_added') {
+                $query->orderByRaw("
+                (SELECT CASE WHEN EXISTS (
+                SELECT 1 FROM products WHERE products.barcode = master_products.barcode
+                ) THEN 0 ELSE 1 END) {$request->order}
+                ");
+            } else {
+                $query->orderBy($request->order_by, $request->order);
+            }
         } else {
             $query->orderBy('id', 'desc');
         }
@@ -43,6 +51,7 @@ class MasterProductRepository implements MasterProductRepositoryInterface
         if ($request->limit === null) {
             return $query->get();
         }
+
 
         return $query->paginate($request->limit)->onEachSide(1);
     }

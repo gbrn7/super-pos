@@ -74,10 +74,6 @@ export function AddProductsDialog({ open, onOpenChange, masterProduct, onSuccess
 
   // Pre-fill form when masterProduct changes
   useEffect(() => {
-    console.log("------")
-    console.log("categories", categories)
-    console.log("units", units)
-    console.log("------")
     if (masterProduct && open) {
       setFormData(prev => ({
         ...prev,

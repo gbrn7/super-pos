@@ -24,6 +24,7 @@ class MasterProductResource extends JsonResource
             'price' => $this->price,
             'cost_price' => $this->cost_price,
             'desc' => $this->desc,
+            'isAdded' => isset($this->product),
             'created_at' => $this->getRawOriginal('created_at'),
             'updated_at' => $this->getRawOriginal('updated_at'),
         ];

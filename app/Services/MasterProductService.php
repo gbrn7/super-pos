@@ -36,6 +36,7 @@ class MasterProductService implements MasterProductServiceInterface
         try {
             return $this->MasterproductRepository->getAllByIndex($request);
         } catch (\Throwable $th) {
+            dd($th->getMessage());
             throw CheckException::Check($th);
         }
     }

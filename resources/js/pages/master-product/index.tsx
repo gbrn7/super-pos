@@ -99,8 +99,6 @@ export default function Index() {
                 axiosInstance.get<ResponseApi<Unit[]>>(apiGetUnits().url),
             ]);
 
-            console.log(categoriesRes.data.data)
-            console.log(unitsRes.data.data)
 
             if (categoriesRes.data.data) {
                 setCategories(categoriesRes.data.data);

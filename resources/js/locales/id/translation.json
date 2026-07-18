@@ -517,6 +517,10 @@
   },
   "master_product":{
     "page_name":"Master Produk",
+    "is_added":{
+      "added": "Ditambahkan",
+      "not_added":"Tidak Ditambahkan"
+    },
     "data_table":{
       "columns":{
         "select_column_label":"Pilih",
@@ -528,6 +532,7 @@
         "cost_price_column_label":"Harga Modal",
         "created_at_column_label":"Tanggal Dibuat",
         "updated_at_column_label":"Tanggal Diperbarui",
+        "is_added_column_label":"Status",
         "actions_column_label":"Aksi"
       }
     },
@@ -611,6 +616,31 @@
         "file_excel_label":"File Excel",
         "cancel_button":"Batal",
         "confirm_button":"Impor"
+      },
+      "add_products_dialog":{
+        "dialog_title": "Tambah Produk",
+        "dialog_desc": "Buat produk baru dari master produk",
+        "master_product_info": "Informasi Master Produk",
+        "name_label": "Nama",
+        "barcode_label": "Barcode",
+        "product_details": "Detail Produk",
+        "category_label": "Kategori",
+        "category_placeholder": "Pilih kategori",
+        "categories_label": "Kategori",
+        "unit_label": "Satuan",
+        "unit_placeholder": "Pilih satuan",
+        "units_label": "Satuan",
+        "stock_label": "Stok",
+        "stock_placeholder": "Masukkan stok produk",
+        "cost_price_label": "Harga Modal",
+        "cost_price_placeholder": "Masukkan harga modal",
+        "price_label": "Harga Jual",
+        "price_placeholder": "Masukkan harga jual",
+        "image_label": "Gambar",
+        "is_active_label": "Aktif",
+        "is_unlimited_label": "Stok Tidak Terbatas",
+        "desc_label": "Deskripsi",
+        "desc_placeholder": "Masukkan deskripsi produk"
       }
     }
   },

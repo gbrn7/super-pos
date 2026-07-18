@@ -73,7 +73,7 @@ class ProductService implements ProductServiceInterface
 
             $product = $this->productRepository->getByBarcode($data['barcode']);
 
-            if (! isset($product)) {
+            if (isset($product)) {
                 throw new Exception(
                     sprintf(trans('message.error.product_with_barcode_exist'), $data['barcode']),
                     Response::HTTP_UNPROCESSABLE_ENTITY

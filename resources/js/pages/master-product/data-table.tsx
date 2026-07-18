@@ -190,12 +190,6 @@ export function DataTable<TData, TValue>({
         },
     });
 
-    React.useEffect(() => {
-        console.log("------")
-        console.log("categories-dt", categories)
-        console.log("units-dt", units)
-        console.log("------")
-    }, [])
 
     return (
         <div className="rounded-2xl border p-3">
