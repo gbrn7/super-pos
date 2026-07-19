@@ -188,3 +188,57 @@ test('checkout generates unique invoice number', function () {
     expect($invoices)->toHaveCount(2);
     expect($invoices[0])->not->toBe($invoices[1]);
 });
+
+test('checkout fails when product is inactive', function () {
+    $user = cashierSetupUser();
+    $paymentMethod = PaymentMethod::create(['name' => 'Cash', 'desc' => '', 'image' => '']);
+    $product = Product::factory()->create(['price' => 5000, 'cost_price' => 3000, 'stock' => 10, 'is_unlimited' => false, 'is_active' => false]);
+
+    $response = $this->actingAs($user)->postJson('/api/transactions/checkout', [
+        'payment_method_id' => $paymentMethod->id,
+        'total_amount' => 5000,
+        'discount_amount' => 0,
+        'payment_amount' => 5000,
+        'change_amount' => 0,
+        'items' => [
+            [
+                'product_id' => $product->id,
+                'unit_name' => $product->unit->name,
+                'quantity' => 1,
+                'price' => $product->price,
+                'cost_price' => $product->cost_price,
+                'discount' => 0,
+            ],
+        ],
+    ]);
+
+    $response->assertStatus(422);
+    $response->assertJsonPath('message', 'Produk tidak aktif');
+});
+
+test('checkout fails when product stock is insufficient', function () {
+    $user = cashierSetupUser();
+    $paymentMethod = PaymentMethod::create(['name' => 'Cash', 'desc' => '', 'image' => '']);
+    $product = Product::factory()->create(['price' => 5000, 'cost_price' => 3000, 'stock' => 2, 'is_unlimited' => false, 'is_active' => true]);
+
+    $response = $this->actingAs($user)->postJson('/api/transactions/checkout', [
+        'payment_method_id' => $paymentMethod->id,
+        'total_amount' => 25000,
+        'discount_amount' => 0,
+        'payment_amount' => 25000,
+        'change_amount' => 0,
+        'items' => [
+            [
+                'product_id' => $product->id,
+                'unit_name' => $product->unit->name,
+                'quantity' => 5,
+                'price' => $product->price,
+                'cost_price' => $product->cost_price,
+                'discount' => 0,
+            ],
+        ],
+    ]);
+
+    $response->assertStatus(422);
+    $response->assertJsonPath('message', 'Stok produk tidak mencukupi');
+});

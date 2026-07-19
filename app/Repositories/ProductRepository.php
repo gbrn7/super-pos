@@ -21,7 +21,7 @@ class ProductRepository implements ProductRepositoryInterface
                 } elseif ($request->field === 'unit') {
                     $query->where('units.name', 'ilike', "%{$request->keyword}%");
                 } elseif (isset($request->field) && $request->field != 'default') {
-                    $query->where('products.' . $request->field, 'ilike', "%{$request->keyword}%");
+                    $query->where('products.'.$request->field, 'ilike', "%{$request->keyword}%");
                 } else {
                     $query
                         ->orwhere('products.name', 'ilike', "%{$request->keyword}%")
@@ -31,12 +31,12 @@ class ProductRepository implements ProductRepositoryInterface
                         ->orWhere('units.name', 'ilike', "%{$request->keyword}%");
                 }
             })
-            ->when($request->name, fn($query) => $query->where('products.name', 'ilike', "%{$request->name}%"))
-            ->when($request->barcode, fn($query) => $query->where('products.barcode', 'ilike', "%{$request->barcode}%"))
-            ->when($request->sku, fn($query) => $query->where('products.sku', 'ilike', "%{$request->sku}%"))
-            ->when($request->category_id, fn($query) => $query->where('products.category_id', $request->category_id))
-            ->when($request->unit_id, fn($query) => $query->where('products.unit_id', $request->unit_id))
-            ->when($request->price, fn($query) => $query->where('products.price', $request->price))
+            ->when($request->name, fn ($query) => $query->where('products.name', 'ilike', "%{$request->name}%"))
+            ->when($request->barcode, fn ($query) => $query->where('products.barcode', 'ilike', "%{$request->barcode}%"))
+            ->when($request->sku, fn ($query) => $query->where('products.sku', 'ilike', "%{$request->sku}%"))
+            ->when($request->category_id, fn ($query) => $query->where('products.category_id', $request->category_id))
+            ->when($request->unit_id, fn ($query) => $query->where('products.unit_id', $request->unit_id))
+            ->when($request->price, fn ($query) => $query->where('products.price', $request->price))
             ->when(isset($request->is_stock_available), function ($query) use ($request) {
                 if ($request->is_stock_available) {
                     $query->where('products.stock', '>', 0);
@@ -58,7 +58,7 @@ class ProductRepository implements ProductRepositoryInterface
                     $query->where('products.is_unlimited', false);
                 }
             })
-            ->when($request->cost_price, fn($query) => $query->where('products.cost_price', $request->cost_price))
+            ->when($request->cost_price, fn ($query) => $query->where('products.cost_price', $request->cost_price))
             ->select('products.*');
 
         if (isset($request->order_by) && isset($request->order)) {
@@ -67,7 +67,7 @@ class ProductRepository implements ProductRepositoryInterface
             } elseif ($request->order_by == 'unit') {
                 $query->orderBy('units.name', $request->order);
             } else {
-                $query->orderBy('products.' . $request->order_by, $request->order);
+                $query->orderBy('products.'.$request->order_by, $request->order);
             }
         } else {
             $query->orderBy('products.id', 'desc');
@@ -123,5 +123,15 @@ class ProductRepository implements ProductRepositoryInterface
     public function getByBarcode(string $barcode): ?Product
     {
         return Product::where('barcode', $barcode)->first();
+    }
+
+    public function decrementStock(Product $product, int $quantity = 1): bool
+    {
+        return (bool) $product->decrement('stock', $quantity);
+    }
+
+    public function incrementStock(Product $product, int $quantity = 1): bool
+    {
+        return (bool) $product->increment('stock', $quantity);
     }
 }

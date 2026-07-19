@@ -8,9 +8,15 @@ export type BreadcrumbItem = {
 
 export type NavItem = {
     title: string;
-    href: NonNullable<InertiaLinkProps['href']>;
-    icon?: LucideIcon | null;
+    href?: NonNullable<InertiaLinkProps['href']>;
+    icon?: LucideIcon | React.ComponentType | null;
     isActive?: boolean;
-    permission: string | string[]
-    role: string | string[]
+    permission?: string | string[];
+    role?: string | string[];
+    items?: NavItem[];
+};
+
+export type NavGroup = {
+    title?: string;
+    items: NavItem[];
 };

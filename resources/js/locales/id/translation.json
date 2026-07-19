@@ -116,6 +116,10 @@
   },
   "component": {
     "sidebar": {
+      "group_main": "Utama",
+      "group_sales": "Penjualan & Transaksi",
+      "group_inventory": "Produk & Inventori",
+      "group_system": "Sistem & Pengaturan",
       "dashboard_menu_label": "Dasbor",
       "example_menu_label": "Example",
       "category_menu_label": "Kategori",
@@ -126,7 +130,9 @@
       "user_menu_label": "Pengguna",
       "unit_menu_label": "Satuan",
       "transaction_menu_label": "Transaksi",
-      "kasir_menu_label": "Kasir"
+      "kasir_menu_label": "Kasir",
+      "product_management_menu_label": "Manajemen Produk",
+      "user_management_menu_label": "Manajemen Pengguna"
     },
     "data_table": {
       "search_component": {
@@ -1000,6 +1006,7 @@
       "payment_method_label": "Metode Pembayaran",
       "payment_method_placeholder": "Pilih metode pembayaran",
       "payment_amount_label": "Nominal Diterima",
+      "payment_amount_placeholder": "Masukkan nominal pembayaran",
       "change_label": "Kembalian:",
       "underpaid_label": "Kurang Bayar:",
       "checkout_btn": "Bayar Transaksi",

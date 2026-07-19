@@ -8,8 +8,6 @@ use App\Http\Requests\Transaction\CheckoutRequest;
 use App\Http\Requests\Transaction\StoreTransactionRequest;
 use App\Http\Requests\Transaction\UpdateTransactionRequest;
 use App\Http\Resources\TransactionResource;
-use App\Models\Product;
-use App\Models\TransactionDetail;
 use App\Support\Enums\TransactionPermissionEnums;
 use App\Support\Interfaces\Services\TransactionServiceInterface;
 use App\Support\Models\Transaction\GetTransactionReqModel;
@@ -18,8 +16,6 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\Response;
 
 class ApiTransactionController extends Controller implements HasMiddleware
@@ -157,37 +153,7 @@ class ApiTransactionController extends Controller implements HasMiddleware
     public function checkout(CheckoutRequest $request)
     {
         try {
-            $transaction = DB::transaction(function () use ($request) {
-                $invoiceNumber = 'INV-'.now()->format('Ymd').'-'.strtoupper(Str::random(6));
-
-                $transaction = $this->transactionService->create([
-                    'user_id' => auth()->id(),
-                    'payment_method_id' => $request->payment_method_id,
-                    'invoice_number' => $invoiceNumber,
-                    'total_amount' => $request->total_amount,
-                    'discount_amount' => $request->discount_amount ?? 0,
-                    'payment_amount' => $request->payment_amount,
-                    'change_amount' => $request->change_amount,
-                ]);
-
-                foreach ($request->items as $item) {
-                    TransactionDetail::create([
-                        'transaction_id' => $transaction->id,
-                        'product_id' => $item['product_id'],
-                        'unit_name' => $item['unit_name'],
-                        'quantity' => $item['quantity'],
-                        'price' => $item['price'],
-                        'cost_price' => $item['cost_price'],
-                        'discount' => $item['discount'] ?? 0,
-                    ]);
-
-                    Product::where('id', $item['product_id'])
-                        ->where('is_unlimited', false)
-                        ->decrement('stock', $item['quantity']);
-                }
-
-                return $transaction->fresh(['transactionDetails.product', 'paymentMethod', 'user']);
-            });
+            $transaction = $this->transactionService->checkout($request->validated());
 
             return ResponseApi::make(true, trans('message.success.created'), new TransactionResource($transaction), Response::HTTP_CREATED);
         } catch (\Throwable $th) {

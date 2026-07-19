@@ -43,4 +43,9 @@ interface TransactionServiceInterface
      * Bulk delete transactions by IDs.
      */
     public function bulkDelete(array $ids): int;
+
+    /**
+     * Process atomic checkout: create transaction + details + update stock.
+     */
+    public function checkout(array $data): Transaction;
 }

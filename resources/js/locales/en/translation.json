@@ -116,6 +116,10 @@
   },
   "component": {
     "sidebar": {
+      "group_main": "Main",
+      "group_sales": "Sales & Transactions",
+      "group_inventory": "Products & Inventory",
+      "group_system": "System & Settings",
       "dashboard_menu_label": "Dashboard",
       "example_menu_label": "Example",
       "category_menu_label": "Category",
@@ -126,7 +130,9 @@
       "user_menu_label": "User",
       "unit_menu_label": "Unit",
       "transaction_menu_label": "Transaction",
-      "kasir_menu_label": "Cashier"
+      "kasir_menu_label": "Cashier",
+      "product_management_menu_label": "Product Management",
+      "user_management_menu_label": "User Management"
     },
     "data_table": {
       "search_component": {
@@ -1000,6 +1006,7 @@
       "payment_method_label": "Payment Method",
       "payment_method_placeholder": "Select payment method",
       "payment_amount_label": "Amount Received",
+      "payment_amount_placeholder": "Enter payment amount",
       "change_label": "Change:",
       "underpaid_label": "Underpaid:",
       "checkout_btn": "Pay Transaction",

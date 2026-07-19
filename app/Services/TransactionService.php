@@ -3,6 +3,8 @@
 namespace App\Services;
 
 use App\Models\Transaction;
+use App\Support\Interfaces\Repositories\ProductRepositoryInterface;
+use App\Support\Interfaces\Repositories\TransactionDetailRepositoryInterface;
 use App\Support\Interfaces\Repositories\TransactionRepositoryInterface;
 use App\Support\Interfaces\Services\TransactionServiceInterface;
 use App\Support\Models\Transaction\GetTransactionReqModel;
@@ -11,10 +13,17 @@ use Exception;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Http\Response;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class TransactionService implements TransactionServiceInterface
 {
-    public function __construct(protected TransactionRepositoryInterface $transactionRepository) {}
+    public function __construct(
+        protected TransactionRepositoryInterface $transactionRepository,
+        protected TransactionDetailRepositoryInterface $transactionDetailRepository,
+        protected ProductRepositoryInterface $productRepository
+    ) {}
 
     public function getAllByIndex(GetTransactionReqModel $request): Paginator|Collection
     {
@@ -110,6 +119,59 @@ class TransactionService implements TransactionServiceInterface
     {
         try {
             return $this->transactionRepository->deleteMany($ids);
+        } catch (\Throwable $th) {
+            throw CheckException::Check($th);
+        }
+    }
+
+    public function checkout(array $data): Transaction
+    {
+        try {
+            return DB::transaction(function () use ($data) {
+                $invoiceNumber = 'INV-'.now()->format('Ymd').'-'.strtoupper(Str::random(6));
+
+                $transaction = $this->transactionRepository->create([
+                    'user_id' => Auth::id(),
+                    'payment_method_id' => $data['payment_method_id'],
+                    'invoice_number' => $invoiceNumber,
+                    'total_amount' => $data['total_amount'],
+                    'discount_amount' => $data['discount_amount'] ?? 0,
+                    'payment_amount' => $data['payment_amount'],
+                    'change_amount' => $data['change_amount'],
+                ]);
+
+                foreach ($data['items'] as $item) {
+                    $product = $this->productRepository->getById($item['product_id']);
+
+                    if (! isset($product)) {
+                        throw new Exception(trans('message.error.data_not_found'), Response::HTTP_NOT_FOUND);
+                    }
+
+                    if (! $product->is_active) {
+                        throw new Exception(trans('message.error.product_not_active'), Response::HTTP_UNPROCESSABLE_ENTITY);
+                    }
+
+                    if (! $product->is_unlimited && $product->stock < $item['quantity']) {
+                        throw new Exception(trans('message.error.out_of_stock'), Response::HTTP_UNPROCESSABLE_ENTITY);
+                    }
+
+                    $this->transactionDetailRepository->create([
+                        'transaction_id' => $transaction->id,
+                        'product_id' => $item['product_id'],
+                        'unit_name' => $item['unit_name'],
+                        'quantity' => $item['quantity'],
+                        'price' => $item['price'],
+                        'cost_price' => $item['cost_price'],
+                        'discount' => $item['discount'] ?? 0,
+                    ]);
+
+                    if (! $product->is_unlimited) {
+                        $this->productRepository->decrementStock($product, $item['quantity']);
+                    }
+                }
+
+                return $transaction->fresh(['transactionDetails.product', 'paymentMethod', 'user']);
+            });
         } catch (\Throwable $th) {
             throw CheckException::Check($th);
         }

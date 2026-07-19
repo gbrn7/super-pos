@@ -54,9 +54,18 @@ interface ProductRepositoryInterface
      */
     public function getByIds(array $ids): ?Collection;
 
-
     /**
      * Get  product by its Barcode.
      */
     public function getByBarcode(string $barcode): ?Product;
+
+    /**
+     * Decrement stock of a product.
+     */
+    public function decrementStock(Product $product, int $quantity = 1): bool;
+
+    /**
+     * Increment stock of a product.
+     */
+    public function incrementStock(Product $product, int $quantity = 1): bool;
 }

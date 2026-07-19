@@ -100,14 +100,10 @@ export default function CashierIndex() {
     const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
     // ── Computed values ─────────────────────────────────────────────────────────
-    const itemsSubtotal = cart.reduce((sum, item) => {
-        const discType = item.discountType || 'nominal';
-        const discPerUnit = discType === 'percent'
-            ? (item.product.price * (item.discount || 0)) / 100
-            : (item.discount || 0);
-        const itemPrice = Math.max(0, item.product.price - discPerUnit);
-        return sum + itemPrice * item.quantity;
-    }, 0);
+    const itemsSubtotal = cart.reduce(
+        (sum, item) => sum + item.product.price * item.quantity,
+        0,
+    );
 
     const discountAmount = totalDiscountType === 'percent'
         ? (itemsSubtotal * (Number(totalDiscountValue) || 0)) / 100
@@ -747,7 +743,6 @@ export default function CashierIndex() {
                                         key={item.product.id}
                                         item={item}
                                         onUpdateQty={updateQty}
-                                        onUpdateDiscount={updateItemDiscount}
                                         onRemove={removeFromCart}
                                     />
                                 ))
@@ -812,18 +807,25 @@ export default function CashierIndex() {
                                             className="h-8 sm:h-9 text-xs sm:text-sm text-right w-24 sm:w-32 font-bold font-mono"
                                         />
                                     ) : (
-                                        <Input
-                                            type="number"
-                                            value={totalDiscountValue}
-                                            min={0}
-                                            max={100}
-                                            placeholder="0"
-                                            onFocus={(e) => e.target.select()}
-                                            onChange={(e) =>
-                                                setTotalDiscountValue(parseFloat(e.target.value) || '')
-                                            }
-                                            className="h-8 sm:h-9 text-xs sm:text-sm text-right w-24 sm:w-28 font-bold font-mono"
-                                        />
+                                        <div className="flex items-center gap-1.5">
+                                            {Boolean(totalDiscountValue) && (
+                                                <span className="text-xs sm:text-sm font-bold font-mono text-muted-foreground">
+                                                    ({formatRupiah(discountAmount)})
+                                                </span>
+                                            )}
+                                            <Input
+                                                type="number"
+                                                value={totalDiscountValue}
+                                                min={0}
+                                                max={100}
+                                                placeholder="0"
+                                                onFocus={(e) => e.target.select()}
+                                                onChange={(e) =>
+                                                    setTotalDiscountValue(parseFloat(e.target.value) || '')
+                                                }
+                                                className="h-8 sm:h-9 text-xs sm:text-sm text-right w-16 sm:w-20 font-bold font-mono"
+                                            />
+                                        </div>
                                     )}
                                 </div>
 
@@ -898,7 +900,7 @@ export default function CashierIndex() {
                                     customInput={Input}
                                     thousandSeparator="."
                                     decimalSeparator=","
-                                    placeholder={grandTotal > 0 ? String(grandTotal) : '0'}
+                                    placeholder={t('page.kasir.payment_amount_placeholder', 'Masukkan nominal pembayaran')}
                                     value={paymentAmount}
                                     onFocus={(e) => e.target.select()}
                                     onValueChange={(values) => {
