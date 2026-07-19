@@ -3,16 +3,17 @@ import { Product } from '@/support/models/product';
 import { formatRupiah } from '@/lib/format-money';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Plus, Check, Barcode } from 'lucide-react';
+import { Plus, Check, Barcode, Edit3 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface ProductRowProps {
     product: Product;
     onAdd: (product: Product) => void;
+    onEditStock?: (product: Product) => void;
     isInCart: boolean;
 }
 
-export default function ProductRow({ product, onAdd, isInCart }: ProductRowProps) {
+export default function ProductRow({ product, onAdd, onEditStock, isInCart }: ProductRowProps) {
     const { t } = useTranslation();
     const isOutOfStock = !product.is_unlimited && product.stock <= 0;
 
@@ -47,23 +48,40 @@ export default function ProductRow({ product, onAdd, isInCart }: ProductRowProps
 
             {/* Status Stok */}
             <td className="py-3 px-2 sm:py-3.5 sm:px-3.5 whitespace-nowrap">
-                {product.is_unlimited ? (
-                    <Badge variant="outline" className="text-xs px-2 py-0.5 border-blue-500/40 text-blue-600 dark:text-blue-400 font-bold">
-                        {t('page.kasir.unlimited_stock', 'Tak Terbatas')}
-                    </Badge>
-                ) : product.stock <= 0 ? (
-                    <Badge variant="destructive" className="text-xs px-2 py-0.5 font-bold">
-                        {t('page.kasir.out_of_stock', 'Habis')}
-                    </Badge>
-                ) : product.stock <= 5 ? (
-                    <Badge variant="secondary" className="text-xs px-2 py-0.5 bg-amber-500/15 text-amber-700 dark:text-amber-400 border border-amber-500/30 font-bold">
-                        {product.stock}
-                    </Badge>
-                ) : (
-                    <Badge variant="outline" className="text-xs px-2 py-0.5 text-emerald-600 dark:text-emerald-400 border-emerald-500/30 font-bold">
-                        {product.stock}
-                    </Badge>
-                )}
+                <div className="flex items-center gap-1.5">
+                    {product.is_unlimited ? (
+                        <Badge variant="outline" className="text-xs px-2 py-0.5 border-blue-500/40 text-blue-600 dark:text-blue-400 font-bold">
+                            {t('page.kasir.unlimited_stock', 'Tak Terbatas')}
+                        </Badge>
+                    ) : product.stock <= 0 ? (
+                        <Badge variant="destructive" className="text-xs px-2 py-0.5 font-bold">
+                            {t('page.kasir.out_of_stock', 'Habis')}
+                        </Badge>
+                    ) : product.stock <= 5 ? (
+                        <Badge variant="secondary" className="text-xs px-2 py-0.5 bg-amber-500/15 text-amber-700 dark:text-amber-400 border border-amber-500/30 font-bold">
+                            {product.stock}
+                        </Badge>
+                    ) : (
+                        <Badge variant="outline" className="text-xs px-2 py-0.5 text-emerald-600 dark:text-emerald-400 border-emerald-500/30 font-bold">
+                            {product.stock}
+                        </Badge>
+                    )}
+                    {onEditStock && (
+                        <Button
+                            type="button"
+                            size="icon"
+                            variant="ghost"
+                            className="h-7 w-7 text-muted-foreground hover:text-primary hover:bg-primary/10 rounded-lg shrink-0"
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                onEditStock(product);
+                            }}
+                            title={t('page.kasir.update_stock_tooltip', 'Update Stok')}
+                        >
+                            <Edit3 className="w-3.5 h-3.5" />
+                        </Button>
+                    )}
+                </div>
             </td>
 
             {/* Satuan */}

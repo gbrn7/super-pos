@@ -1055,7 +1055,21 @@
       "checkout_with_receipt": "Bayar & Cetak Struk",
       "receipt_thank_you": "Terima kasih atas kunjungan Anda!",
       "print_btn": "Print",
-      "out_of_stock_warning": "Stok barang ini habis dan tidak dapat ditambahkan ke keranjang"
+      "out_of_stock_warning": "Stok barang ini habis dan tidak dapat ditambahkan ke keranjang",
+      "update_stock_title": "Update Stok Produk",
+      "current_stock_label": "Stok Saat Ini:",
+      "unlimited_stock_label": "Stok Tak Terbatas",
+      "unlimited_stock_desc": "Produk tidak memerlukan pelacakan stok",
+      "new_stock_label": "Jumlah Stok Baru",
+      "save_stock_btn": "Simpan Stok",
+      "stock_update_success": "Stok produk berhasil diperbarui!",
+      "update_stock_tooltip": "Update Stok",
+      "selected": "Terpilih",
+      "no_payment_image": "Tidak ada gambar pendukung",
+      "payment_method_desc_label": "Deskripsi / Instruksi:",
+      "no_payment_desc": "Tidak ada deskripsi tambahan.",
+      "close_btn": "Tutup",
+      "select_this_method": "Pilih Metode Ini"
     }
   },
   "error": {

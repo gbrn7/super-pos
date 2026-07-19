@@ -52,6 +52,7 @@ import ProductRow from './components/product-row';
 import CartItemRow from './components/cart-item-row';
 import ReceiptModal from './components/receipt-modal';
 import PaymentMethodDetailDialog from './components/payment-method-detail-dialog';
+import UpdateStockDialog from './components/update-stock-dialog';
 
 export interface CartItem {
     product: Product;
@@ -92,6 +93,7 @@ export default function CashierIndex() {
     const [receiptOpen, setReceiptOpen] = useState(false);
     const [lastTransaction, setLastTransaction] = useState<Transaction | null>(null);
     const [detailPaymentMethod, setDetailPaymentMethod] = useState<PaymentMethod | null>(null);
+    const [stockEditProduct, setStockEditProduct] = useState<Product | null>(null);
     const [mobileTab, setMobileTab] = useState<'products' | 'cart'>('products');
 
     const searchRef = useRef<HTMLInputElement>(null);
@@ -156,6 +158,20 @@ export default function CashierIndex() {
             setLoadingProducts(false);
         }
     }, []);
+
+    const handleStockUpdateSuccess = useCallback(
+        (updatedProduct: Product) => {
+            fetchProducts(search, page, selectedCategory);
+            setCart((prev) =>
+                prev.map((item) =>
+                    item.product.id === updatedProduct.id
+                        ? { ...item, product: updatedProduct }
+                        : item,
+                ),
+            );
+        },
+        [fetchProducts, search, page, selectedCategory],
+    );
 
     useEffect(() => {
         if (debounceRef.current) {
@@ -606,6 +622,7 @@ export default function CashierIndex() {
                                                 key={product.id}
                                                 product={product}
                                                 onAdd={addToCart}
+                                                onEditStock={(p) => setStockEditProduct(p)}
                                                 isInCart={cart.some((i) => i.product.id === product.id)}
                                             />
                                         ))}
@@ -1108,6 +1125,14 @@ export default function CashierIndex() {
                 isSelected={String(detailPaymentMethod?.id) === paymentMethodId}
                 onClose={() => setDetailPaymentMethod(null)}
                 onSelect={(id) => setPaymentMethodId(id)}
+            />
+
+            {/* Update Stock Dialog */}
+            <UpdateStockDialog
+                open={!!stockEditProduct}
+                product={stockEditProduct}
+                onClose={() => setStockEditProduct(null)}
+                onSuccess={handleStockUpdateSuccess}
             />
         </>
     );

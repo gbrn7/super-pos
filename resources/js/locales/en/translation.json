@@ -1055,7 +1055,21 @@
       "checkout_with_receipt": "Pay & Print Receipt",
       "receipt_thank_you": "Thank you for your visit!",
       "print_btn": "Print",
-      "out_of_stock_warning": "This product is out of stock and cannot be added to cart"
+      "out_of_stock_warning": "This product is out of stock and cannot be added to cart",
+      "update_stock_title": "Update Product Stock",
+      "current_stock_label": "Current Stock:",
+      "unlimited_stock_label": "Unlimited Stock",
+      "unlimited_stock_desc": "Product does not require stock tracking",
+      "new_stock_label": "New Stock Quantity",
+      "save_stock_btn": "Save Stock",
+      "stock_update_success": "Product stock updated successfully!",
+      "update_stock_tooltip": "Update Stock",
+      "selected": "Selected",
+      "no_payment_image": "No supporting image",
+      "payment_method_desc_label": "Description / Instructions:",
+      "no_payment_desc": "No additional description.",
+      "close_btn": "Close",
+      "select_this_method": "Select This Method"
     }
   },
   "error": {
