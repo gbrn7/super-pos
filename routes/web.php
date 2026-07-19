@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\ApiTransactionController;
 use App\Http\Controllers\Api\ApiTransactionDetailController;
 use App\Http\Controllers\Api\ApiUnitController;
 use App\Http\Controllers\Api\ApiUserController;
+use App\Http\Controllers\CashierController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ExampleController;
 use App\Http\Controllers\MasterProductController;
@@ -46,6 +47,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('transactions', TransactionController::class)->only('index');
 
     Route::resource('transaction-details', TransactionDetailController::class)->only('index');
+
+    Route::get('cashier', [CashierController::class, 'index'])->name('cashier.index');
 
     Route::resource('example', ExampleController::class);
 
@@ -132,6 +135,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::group(['prefix' => 'transactions'], function () {
             Route::post('/bulk-delete', [ApiTransactionController::class, 'bulkDelete'])->name('apiTransactions.bulkDelete');
             Route::get('/invoice/{invoiceNumber}', [ApiTransactionController::class, 'getByInvoiceNumber'])->name('apiTransactions.getByInvoiceNumber');
+            Route::post('/checkout', [ApiTransactionController::class, 'checkout'])->name('apiTransactions.checkout');
         });
 
         // transaction-details
@@ -144,4 +148,4 @@ Route::middleware(['auth', 'verified'])->group(function () {
     });
 });
 
-require __DIR__.'/settings.php';
+require __DIR__ . '/settings.php';

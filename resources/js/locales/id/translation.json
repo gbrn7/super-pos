@@ -1,45 +1,45 @@
 {
-  "validation":{
-    "category":{
+  "validation": {
+    "category": {
       "required": {
-        "name":"Nama tidak boleh kosong",
-        "file":"File impor excel tidak boleh kosong"
+        "name": "Nama tidak boleh kosong",
+        "file": "File impor excel tidak boleh kosong"
       }
     },
-    "role":{
+    "role": {
       "required": {
-        "name":"Nama tidak boleh kosong",
-        "permissions":"Minimal satu perizinan harus dipilih"
+        "name": "Nama tidak boleh kosong",
+        "permissions": "Minimal satu perizinan harus dipilih"
       },
-      "array":{
-        "permissions":"Perizinan harus berupa array"
+      "array": {
+        "permissions": "Perizinan harus berupa array"
       }
     },
-    "user":{
+    "user": {
       "required": {
-        "name":"Nama tidak boleh kosong",
-        "email":"Email tidak boleh kosong",
-        "password":"Password tidak boleh kosong",
-        "password_confirmation":"Konfirmasi Password tidak boleh kosong",
-        "role":"Peran tidak boleh kosong"
+        "name": "Nama tidak boleh kosong",
+        "email": "Email tidak boleh kosong",
+        "password": "Password tidak boleh kosong",
+        "password_confirmation": "Konfirmasi Password tidak boleh kosong",
+        "role": "Peran tidak boleh kosong"
       },
-      "email":{
-        "invalid":"Email tidak valid"
+      "email": {
+        "invalid": "Email tidak valid"
       }
     },
-    "unit":{
+    "unit": {
       "required": {
-        "name":"Nama tidak boleh kosong"
+        "name": "Nama tidak boleh kosong"
       }
     },
-    "payment_method":{
+    "payment_method": {
       "required": {
-        "name":"Nama tidak boleh kosong"
+        "name": "Nama tidak boleh kosong"
       }
     },
-    "product":{
+    "product": {
       "required": {
-        "name":"Nama tidak boleh kosong",
+        "name": "Nama tidak boleh kosong",
         "category_id": "Kategori tidak boleh kosong",
         "unit_id": "Satuan tidak boleh kosong",
         "is_active": "Status tidak boleh kosong",
@@ -51,943 +51,1014 @@
         "min_cost_price": "Harga modal minimal Rp 0"
       }
     },
-    "master_product":{
+    "master_product": {
       "required": {
-        "name":"Nama tidak boleh kosong",
+        "name": "Nama tidak boleh kosong",
         "min_price": "Harga jual minimal Rp 0",
         "min_cost_price": "Harga modal minimal Rp 0"
       }
     }
-},
-  "permission_label":{
-    "category":{
-      "permission":"Akses Fitur Kategori",
-      "create":"Buat Kategori",
-      "read":"Baca Kategori",
-      "update":"Edit Kategori",
-      "delete":"Hapus Kategori"
+  },
+  "permission_label": {
+    "category": {
+      "permission": "Akses Fitur Kategori",
+      "create": "Buat Kategori",
+      "read": "Baca Kategori",
+      "update": "Edit Kategori",
+      "delete": "Hapus Kategori"
     },
-    "role":{
-      "permission":"Akses Fitur Peran",
-      "create":"Buat Peran",
-      "read":"Baca Peran",
-      "update":"Edit Peran",
-      "delete":"hapus Peran"
+    "role": {
+      "permission": "Akses Fitur Peran",
+      "create": "Buat Peran",
+      "read": "Baca Peran",
+      "update": "Edit Peran",
+      "delete": "hapus Peran"
     },
-    "dashboard":{
-      "permission":"Akses Fitur Dasbor",
-      "read":"Baca Dasbor"
+    "dashboard": {
+      "permission": "Akses Fitur Dasbor",
+      "read": "Baca Dasbor"
     },
-    "unit":{
-      "permission":"Akses Fitur Satuan",
-      "create":"Buat Satuan",
-      "read":"Baca Satuan",
-      "update":"Edit Satuan",
-      "delete":"Hapus Satuan"
+    "unit": {
+      "permission": "Akses Fitur Satuan",
+      "create": "Buat Satuan",
+      "read": "Baca Satuan",
+      "update": "Edit Satuan",
+      "delete": "Hapus Satuan"
     },
-    "payment_method":{
-      "permission":"Akses Fitur Metode Pembayaran",
-      "create":"Buat Metode Pembayaran",
-      "read":"Baca Metode Pembayaran",
-      "update":"Edit Metode Pembayaran",
-      "delete":"Hapus Metode Pembayaran"
+    "payment_method": {
+      "permission": "Akses Fitur Metode Pembayaran",
+      "create": "Buat Metode Pembayaran",
+      "read": "Baca Metode Pembayaran",
+      "update": "Edit Metode Pembayaran",
+      "delete": "Hapus Metode Pembayaran"
     },
-    "product":{
-      "permission":"Akses Fitur Produk",
-      "create":"Buat Produk",
-      "read":"Baca Produk",
-      "update":"Edit Produk",
-      "delete":"Hapus Produk"
+    "product": {
+      "permission": "Akses Fitur Produk",
+      "create": "Buat Produk",
+      "read": "Baca Produk",
+      "update": "Edit Produk",
+      "delete": "Hapus Produk"
     },
-    "master_product":{
-      "permission":"Akses Fitur Master Produk",
-      "create":"Buat Master Produk",
-      "read":"Baca Master Produk",
-      "update":"Edit Master Produk",
-      "delete":"Hapus Master Produk"
+    "master_product": {
+      "permission": "Akses Fitur Master Produk",
+      "create": "Buat Master Produk",
+      "read": "Baca Master Produk",
+      "update": "Edit Master Produk",
+      "delete": "Hapus Master Produk"
     },
-    "transaction":{
-      "permission":"Akses Fitur Transaksi",
-      "create":"Buat Transaksi",
-      "read":"Baca Transaksi",
-      "update":"Edit Transaksi",
-      "delete":"Hapus Transaksi"
+    "transaction": {
+      "permission": "Akses Fitur Transaksi",
+      "create": "Buat Transaksi",
+      "read": "Baca Transaksi",
+      "update": "Edit Transaksi",
+      "delete": "Hapus Transaksi"
     }
   },
-  "component":{
-    "sidebar":{
-      "dashboard_menu_label":"Dasbor",
-      "example_menu_label":"Example",
-      "category_menu_label":"Kategori",
-      "product_menu_label":"Produk",
-      "master_product_menu_label":"Master Produk",
-      "payment_method_menu_label":"Metode Pembayaran",
-      "role_menu_label":"Peran",
-      "user_menu_label":"Pengguna",
-      "unit_menu_label":"Satuan",
-      "transaction_menu_label":"Transaksi"
+  "component": {
+    "sidebar": {
+      "dashboard_menu_label": "Dasbor",
+      "example_menu_label": "Example",
+      "category_menu_label": "Kategori",
+      "product_menu_label": "Produk",
+      "master_product_menu_label": "Master Produk",
+      "payment_method_menu_label": "Metode Pembayaran",
+      "role_menu_label": "Peran",
+      "user_menu_label": "Pengguna",
+      "unit_menu_label": "Satuan",
+      "transaction_menu_label": "Transaksi",
+      "kasir_menu_label": "Kasir"
     },
     "data_table": {
-      "search_component":{
+      "search_component": {
         "search_by": "Pencarian Berdasarkan",
-        "default":"Bawaan",
-        "name":"Nama",
-        "sku":"SKU",
-        "category":"Kategori",
-        "unit":"Satuan",
-        "barcode":"Barcode",
-        "description":"Deskripsi",
-        "guard_name":"Nama Garda",
-        "placeholder":"Telusuri"
+        "default": "Bawaan",
+        "name": "Nama",
+        "sku": "SKU",
+        "category": "Kategori",
+        "unit": "Satuan",
+        "barcode": "Barcode",
+        "description": "Deskripsi",
+        "guard_name": "Nama Garda",
+        "placeholder": "Telusuri"
       },
-      "filter":{
-        "category_placeholder":"Pilih Kategori",
-        "category_label":"Kategori",
-        "product_placeholder":"Pilih Produk",
-        "product_label":"Produk",
-        "unit_placeholder":"Pilih Satuan",
-        "unit_label":"Satuan",
-        "status_placeholder":"Pilih Status",
-        "status_label":"Status",
-        "all_status_label":"Semua Status",
-        "status_active_label":"Aktif",
-        "status_inactive_label":"Tidak Aktif",
-        "stock_type_placeholder":"Pilih Tipe Stok",
-        "stock_label":"Tipe Stok",
-        "limitted_stock_label":"Terbatas",
-        "unlimited_stock_label":"Tidak Terbatas",
-        "is_available_stock_placholder":"Pilih Status Stok",
-        "is_available_stock_label":"Status Stok",
-        "available_stock_label":"Tersedia",
-        "unavailable_stock_label":"Tidak Tersedia"
-      },
-      "export":{
-        "label":"Ekspor",
-        "export_excel_btn":"Ekspor Excel",
-        "export_pdf_btn":"Ekspor Pdf"
-      },
-      "columns":{
-        "label":"Kolom"
-      },
-      "action_menu":{
-        "label":"Aksi",
-        "trigger_btn_label":"Buka Menu",
-        "detail_data_btn":"Detail Data",
-        "edit_data_btn":"Edit Data",
-        "delete_data_btn":"Hapus Data"
-      },
-      "no_result":"Tidak ada hasil",
-      "row_per_page":"Baris per halaman",
-      "selected_row": "%d dari %d baris terpilih",
-      "pagination_info":"Halaman %d dari %d"
-    }
-  },
-  "page":{
-  "auth":{
-    "confirm_password":{
-      "form":{
-        "password_input_label":"Kata sandi",
-        "confirm_password_btn":"Konfirmasi Kata sandi"
-      },
-      "title":"Konfirmasi kata sandi anda",
-      "deskripsi":"Ini adalah area aman dalam aplikasi. Harap konfirmasi kata sandi Anda sebelum melanjutkan."
-    },
-    "forgot_password":{
-      "form":{
-        "email_input_label":"Email",
-        "confirm_forgot_password_btn":"Tautan setel ulang kata sandi email"
-      },
-      "title":"Lupa Kata sandi",
-      "description":"Masukkan email Anda untuk menerima tautan pengaturan ulang kata sandi.",
-      "or_return_to":"Atau, kembali ke",
-      "login_btn":"Log in"
-    }, 
-    "login":{
-      "form":{
-        "email_input_label":"Email",
-        "password_input_label":"Kata sandi",
-        "login_btn":"Log in"
-      },
-      "title":"Masuk ke akun Anda",
-      "description":"Masukkan email dan kata sandi Anda di bawah ini untuk masuk.",
-      "remember_me":"Ingat saya",
-      "dont_have_account":"Tidak punya akun?",
-      "signup_btn":"Daftar",
-      "forgot_password_link":"Forgot kata sandi?"
-    }, 
-    "register":{
-      "form":{
-        "name_input_label":"Nama",
-        "email_input_label":"Email",
-        "password_input_label":"Kata sandi",
-        "confirm_password_input_label":"Konfirmasi Kata sandi",
-        "confirm_register_btn":"Buat Akun"
-      },
-      "title":"Buat akun Anda",
-      "description":"Masukkan detail Anda di bawah ini untuk membuat akun Anda.",
-      "remember_me":"Ingat saya",
-      "already_have_account":"Sudah punya akun?",
-      "login_btn":"Log in"
-    },
-    "reset_password":{
-      "form":{
-        "email_input_label":"Email",
-        "password_input_label":"Kata sandi",
-        "confirm_password_input_label":"Konfirmasi Kata sandi",
-        "reset_btn":"Setel ulang kata sandi"
-      },
-      "title":"Setel ulang kata sandi",
-      "description":"Silakan masukkan kata sandi baru Anda di bawah ini."
-    }, 
-    "two_factor_challenge":{
-      "title":"Otentikasi dua faktor",
-      "form":{
-        "recovery_code_input_label":"Kode pemulihan",
-        "recovery_code_input_placeholder":"Masukkan Kode pemulihan",
-        "logout_btn":"Log out"
-      },
-      "recovery_code":{
-        "title":"Kode pemulihan",
-        "description":"Harap konfirmasikan akses ke akun Anda dengan memasukkan salah satu kode pemulihan darurat Anda.",
-        "toggle_text":"masuk menggunakan kode otentikasi"
-      },
-      "authentication_code":{
-        "title":"Kode otentikasi",
-        "description":"Masukkan kode otentikasi yang diberikan oleh aplikasi otentikasi Anda.",
-        "toggle_text":"masuk menggunakan kode pemulihan"
-      },
-      "continue_btn":"Melanjutkan",
-      "or_you_can":"atau anda dapat"
-    },
-    "email_verification":{
-      "form":{
-        "resend_email_btn":"Kirim ulang email verifikasi",
-        "logout_btn":"Log out"
-      },
-      "title":"Verifikasi email",
-      "description":"Silakan verifikasi alamat email Anda dengan mengklik tautan yang baru saja kami kirimkan melalui email.",
-      "info":"Tautan verifikasi baru telah dikirim ke alamat email yang Anda berikan saat pendaftaran."
-    }
-  },
-  "dashboard":{
-    "title":"Dasbor"
-  },
-  "unit":{
-    "page_name":"Satuan",
-    "data_table":{
-      "columns":{
-        "select_column_label":"Pilih",
-        "name_column_label":"Nama",
-        "created_at_column_label":"Tanggal Dibuat",
-        "updated_at_column_label":"Tanggal Diperbarui",
-        "actions_column_label":"Aksi"
-      }
-    },
-    "dialog_modal":{
-      "create_dialog": {
-        "dialog_button": "Tambah Data",
-        "dialog_title": "Tambah Satuan",
-        "dialog_desc": "Tambahkan satuan baru anda",
-        "name_input_label":"Nama",
-        "name_input_placeholder":"Masukkan nama satuan",
-        "cancel_button":"Batal",
-        "confirm_button":"Tambah Satuan"
-      },
-      "edit_dialog": {
-        "dialog_button": "Edit Data",
-        "dialog_title": "Edit Satuan",
-        "dialog_desc": "Edit data satuan",
-        "name_input_label":"Nama",
-        "name_input_placeholder":"Masukkan nama satuan",
-        "cancel_button":"Batal",
-        "confirm_button":"Edit Satuan"
-      },
-      "detail_dialog": {
-        "dialog_button": "Detail Data",
-        "dialog_title": "Detail Satuan",
-        "dialog_desc": "Detail data satuan",
-        "name_label":"Nama",
-        "created_at_label":"Tanggal Dibuat",
-        "updated_at_label": "Tanggal Diperbarui"
-      }, 
-      "delete_dialog": {
-        "dialog_button": "Hapus Data",
-        "dialog_title": "Hapus Satuan",
-        "dialog_desc": "Apakah anda yakin akan menghapus data ini ?",
-        "cancel_button":"Batal",
-        "confirm_button":"Hapus Satuan"
-      }, 
-      "bulk_delete_dialog": {
-        "dialog_button": "Hapus",
-        "dialog_title": "Hapus %d satuan",
-        "dialog_desc": "Apakah anda yakin akan menghapus %d satuan ?",
-        "cancel_button":"Batal",
-        "confirm_button":"Hapus Satuan"
-      }
-    }
-  },
-  "category":{
-    "page_name":"Kategori",
-    "data_table":{
-      "columns":{
-        "select_column_label":"Pilih",
-        "name_column_label":"Nama",
-        "desc_column_label":"Deskripsi",
-        "created_at_column_label":"Tanggal Dibuat",
-        "updated_at_column_label":"Tanggal Diperbarui",
-        "actions_column_label":"Aksi"
-      }
-    },
-    "dialog_modal":{
-      "create_dialog": {
-        "dialog_button": "Tambah Data",
-        "dialog_title": "Tambah Kategori",
-        "dialog_desc": "Tambahkan kategori baru produk anda",
-        "name_input_label":"Nama",
-        "name_input_placeholder":"Masukkan nama kategori",
-        "desc_input_label":"Deskripsi",
-        "desc_input_placeholder":"Masukkan deskripsi kategori (Opsional)",
-        "cancel_button":"Batal",
-        "confirm_button":"Tambah Kategori"
-      },
-      "edit_dialog": {
-        "dialog_button": "Edit Data",
-        "dialog_title": "Edit Kategori",
-        "dialog_desc": "Edit data kategori",
-        "name_input_label":"Nama",
-        "name_input_placeholder":"Masukkan nama kategori",
-        "desc_input_label":"Deskripsi",
-        "desc_input_placeholder":"Masukkan deskripsi kategori (Opsional)",
-        "cancel_button":"Batal",
-        "confirm_button":"Edit Kategori"
-      },
-      "detail_dialog": {
-        "dialog_button": "Detail Data",
-        "dialog_title": "Detail Kategori",
-        "dialog_desc": "Detail data kategori",
-        "name_label":"Nama",
-        "desc_label":"Deskripsi",
-        "created_at_label":"Tanggal Dibuat",
-        "updated_at_label": "Tanggal Diperbarui"
-      }, 
-      "delete_dialog": {
-        "dialog_button": "Hapus Data",
-        "dialog_title": "Hapus Kategori",
-        "dialog_desc": "Apakah anda yakin akan menghapus data ini ?",
-        "cancel_button":"Batal",
-        "confirm_button":"Hapus Kategori"
-      }, 
-      "bulk_delete_dialog": {
-        "dialog_button": "Hapus",
-        "dialog_title": "Hapus %d kategori",
-        "dialog_desc": "Apakah anda yakin akan menghapus %d kategori ?",
-        "cancel_button":"Batal",
-        "confirm_button":"Hapus Kategori"
-      }, 
-      "import_excel_dialog": {
-        "dialog_button": "Impor Excel",
-        "dialog_title": "Impor Excel",
-        "dialog_desc": "Impor data kategori dari file Excel",
-        "template_label":"Templat",
-        "category_template_file":"File templat impor data kategori",
-        "file_excel_label":"File Excel",
-        "cancel_button":"Batal",
-        "confirm_button":"Impor"
-      }
-    }
-  },
-  "product":{
-    "page_name":"Produk",
-    "data_table":{
-      "columns":{
-        "select_column_label":"Pilih",
-        "name_column_label":"Nama",
-        "sku_column_label":"SKU",
-        "barcode_column_label":"Barcode",
-        "category_column_label":"Kategori",
-        "unit_column_label":"Satuan",
-        "stock_column_label":"Stok",
-        "price_column_label":"Harga Jual",
-        "cost_price_column_label":"Harga Modal",
-        "is_active_column_label":"Status",
-        "is_unlimited_column_label":"Tipe Stok",
-        "created_at_column_label":"Tanggal Dibuat",
-        "updated_at_column_label":"Tanggal Diperbarui",
-        "actions_column_label":"Aksi"
-      }
-    },
-    "is_active":{
-      "active": "Aktif",
-      "inactive":"Tidak Aktif"
-    },
-    "is_unlimited":{
-      "Limited": "Terbatas",
-      "Unlimited":"Tidak Terbatas"
-    },
-    "dialog_modal":{
-      "create_dialog": {
-        "dialog_button": "Tambah Data",
-        "dialog_title": "Tambah Produk",
-        "dialog_desc": "Tambahkan produk baru anda",
-        "name_input_label":"Nama",
-        "name_input_placeholder":"Masukkan nama produk",
-        "image_input_label":"Gambar",
-        "image_input_placeholder":"Masukkan gambar produk",
-        "unit_id_input_label":"Satuan",
-        "unit_id_input_placeholder":"Pilih satuan produk",
-        "category_id_input_label":"Kategori",
-        "category_id_input_placeholder":"Pilih kategori produk",
-        "stock_input_label":"Stok",
-        "stock_input_placeholder":"Masukkan stok produk",
-        "cost_price_input_label":"Harga Modal",
-        "cost_price_input_placeholder":"Masukkan harga modal produk",
-        "price_input_label":"Harga Jual",
-        "price_input_placeholder":"Masukkan harga jual produk",
-        "is_active_input_label":"Status Aktif",
-        "is_unlimited_input_label":"Stok tidak terbatas",
-        "desc_input_label":"Deskripsi",
-        "desc_input_placeholder":"Masukkan deskripsi produk",
-        "barcode_input_label":"Barcode",
-        "barcode_input_placeholder":"Masukkan barcode produk",
-        "cancel_button":"Batal",
-        "confirm_button":"Tambah Produk"
-      },
-      "edit_dialog": {
-        "dialog_button": "Edit Data",
-        "dialog_title": "Edit Produk",
-        "dialog_desc": "Edit data produk",
-                "name_input_label":"Nama",
-        "name_input_placeholder":"Masukkan nama produk",
-        "image_input_label":"Gambar",
-        "image_input_placeholder":"Masukkan gambar produk",
-        "unit_id_input_label":"Satuan",
-        "unit_id_input_placeholder":"Pilih satuan produk",
-        "category_id_input_label":"Kategori",
-        "category_id_input_placeholder":"Pilih kategori produk",
-        "stock_input_label":"Stok",
-        "stock_input_placeholder":"Masukkan stok produk",
-        "cost_price_input_label":"Harga Modal",
-        "cost_price_input_placeholder":"Masukkan harga modal produk",
-        "price_input_label":"Harga Jual",
-        "price_input_placeholder":"Masukkan harga jual produk",
-        "is_active_input_label":"Status Aktif",
-        "is_unlimited_input_label":"Stok tidak terbatas",
-        "desc_input_label":"Deskripsi",
-        "desc_input_placeholder":"Masukkan deskripsi produk",
-        "barcode_input_label":"Barcode",
-        "barcode_input_placeholder":"Masukkan barcode produk",
-        "cancel_button":"Batal",
-        "confirm_button":"Edit Produk"
-      },
-      "detail_dialog": {
-        "dialog_button": "Detail Data",
-        "dialog_title": "Detail Produk",
-        "dialog_desc": "Detail data produk",
-        "name_label":"Nama",
-        "barcode_label":"Barcode",
-        "sku_label":"SKU",
-        "category_name_label":"Kategori",
-        "unit_label":"Satuan",
-        "stock_label":"Stok",
-        "cost_price_label":"Harga Modal",
-        "price_label":"Harga Jual",
-        "image_label":"Gambar",
-        "is_active_label":"Status",
-        "is_unlimited_label":"Tipe Stok",
-        "desc_label":"Deskripsi",
-        "created_at_label":"Tanggal Dibuat",
-        "updated_at_label": "Tanggal Diperbarui"
-      }, 
-      "delete_dialog": {
-        "dialog_button": "Hapus Data",
-        "dialog_title": "Hapus Produk",
-        "dialog_desc": "Apakah anda yakin akan menghapus data ini ?",
-        "cancel_button":"Batal",
-        "confirm_button":"Hapus Produk"
-      }, 
-      "bulk_delete_dialog": {
-        "dialog_button": "Hapus",
-        "dialog_title": "Hapus %d produk",
-        "dialog_desc": "Apakah anda yakin akan menghapus %d produk ?",
-        "cancel_button":"Batal",
-        "confirm_button":"Hapus Produk"
-      }, 
-      "import_excel_dialog": {
-        "dialog_button": "Impor Excel",
-        "dialog_title": "Impor Excel",
-        "dialog_desc": "Impor data produk dari file Excel",
-        "template_label":"Templat",
-        "product_template_file":"File templat impor data produk",
-        "file_excel_label":"File Excel",
-        "cancel_button":"Batal",
-        "confirm_button":"Impor"
-      }
-    }
-  },
-  "master_product":{
-    "page_name":"Master Produk",
-    "is_added":{
-      "added": "Ditambahkan",
-      "not_added":"Tidak Ditambahkan"
-    },
-    "data_table":{
-      "columns":{
-        "select_column_label":"Pilih",
-        "name_column_label":"Nama",
-        "barcode_column_label":"Barcode",
-        "category_column_label":"Kategori",
-        "unit_column_label":"Satuan",
-        "price_column_label":"Harga Jual",
-        "cost_price_column_label":"Harga Modal",
-        "created_at_column_label":"Tanggal Dibuat",
-        "updated_at_column_label":"Tanggal Diperbarui",
-        "is_added_column_label":"Status",
-        "add_product_column_label":"Tambah Produk",
-        "actions_column_label":"Aksi"
-      }
-    },
-    "dialog_modal":{
-      "create_dialog": {
-        "dialog_button": "Tambah Data",
-        "dialog_title": "Tambah Master Produk",
-        "dialog_desc": "Tambahkan master produk baru anda",
-        "name_input_label":"Nama",
-        "name_input_placeholder":"Masukkan nama master produk",
-        "unit_name_input_label":"Satuan",
-        "unit_name_input_placeholder":"Masukkan satuan master produk",
-        "category_name_input_label":"Kategori",
-        "category_name_input_placeholder":"Masukkan kategori master produk",
-        "cost_price_input_label":"Harga Modal",
-        "cost_price_input_placeholder":"Masukkan harga modal master produk",
-        "price_input_label":"Harga Jual",
-        "price_input_placeholder":"Masukkan harga jual master produk",
-        "desc_input_label":"Deskripsi",
-        "desc_input_placeholder":"Masukkan deskripsi master produk",
-        "barcode_input_label":"Barcode",
-        "barcode_input_placeholder":"Masukkan barcode master produk",
-        "cancel_button":"Batal",
-        "confirm_button":"Tambah Master Produk"
-      },
-      "edit_dialog": {
-        "dialog_button": "Edit Data",
-        "dialog_title": "Edit Master Produk",
-        "dialog_desc": "Edit master produk",
-        "name_input_label":"Nama",
-        "name_input_placeholder":"Masukkan nama master produk",
-        "unit_name_input_label":"Satuan",
-        "unit_name_input_placeholder":"Masukkan satuan master produk",
-        "category_name_input_label":"Kategori",
-        "category_name_input_placeholder":"Masukkan kategori master produk",
-        "cost_price_input_label":"Harga Modal",
-        "cost_price_input_placeholder":"Masukkan harga modal master produk",
-        "price_input_label":"Harga Jual",
-        "price_input_placeholder":"Masukkan harga jual master produk",
-        "desc_input_label":"Deskripsi",
-        "desc_input_placeholder":"Masukkan deskripsi master produk",
-        "barcode_input_label":"Barcode",
-        "barcode_input_placeholder":"Masukkan barcode master produk",
-        "cancel_button":"Batal",
-        "confirm_button":"Edit Master Produk"
-      },
-      "detail_dialog": {
-        "dialog_button": "Detail Data",
-        "dialog_title": "Detail Master Produk",
-        "dialog_desc": "Detail data master produk",
-        "name_label":"Nama",
-        "barcode_label":"Barcode",
-        "category_name_label":"Kategori",
-        "unit_label":"Satuan",
-        "cost_price_label":"Harga Modal",
-        "price_label":"Harga Jual",
-        "desc_label":"Deskripsi",
-        "created_at_label":"Tanggal Dibuat",
-        "updated_at_label": "Tanggal Diperbarui"
-      }, 
-      "delete_dialog": {
-        "dialog_button": "Hapus Data",
-        "dialog_title": "Hapus Master Produk",
-        "dialog_desc": "Apakah anda yakin akan menghapus data ini ?",
-        "cancel_button":"Batal",
-        "confirm_button":"Hapus Master Produk"
-      }, 
-      "bulk_delete_dialog": {
-        "dialog_button": "Hapus",
-        "dialog_title": "Hapus %d master produk",
-        "dialog_desc": "Apakah anda yakin akan menghapus %d master produk ?",
-        "cancel_button":"Batal",
-        "confirm_button":"Hapus Master Produk"
-      }, 
-      "import_excel_dialog": {
-        "dialog_button": "Impor Excel",
-        "dialog_title": "Impor Excel",
-        "dialog_desc": "Impor data master produk dari file Excel",
-        "template_label":"Templat",
-        "product_template_file":"File templat impor data master produk",
-        "file_excel_label":"File Excel",
-        "cancel_button":"Batal",
-        "confirm_button":"Impor"
-      },
-      "add_products_dialog":{
-        "dialog_title": "Tambah Produk",
-        "dialog_desc": "Buat produk baru dari master produk",
-        "master_product_info": "Informasi Master Produk",
-        "name_label": "Nama",
-        "barcode_label": "Barcode",
-        "product_details": "Detail Produk",
+      "filter": {
+        "category_placeholder": "Pilih Kategori",
         "category_label": "Kategori",
-        "category_placeholder": "Pilih kategori",
-        "categories_label": "Kategori",
+        "product_placeholder": "Pilih Produk",
+        "product_label": "Produk",
+        "unit_placeholder": "Pilih Satuan",
         "unit_label": "Satuan",
-        "unit_placeholder": "Pilih satuan",
-        "units_label": "Satuan",
-        "stock_label": "Stok",
-        "stock_placeholder": "Masukkan stok produk",
-        "cost_price_label": "Harga Modal",
-        "cost_price_placeholder": "Masukkan harga modal",
-        "price_label": "Harga Jual",
-        "price_placeholder": "Masukkan harga jual",
-        "image_label": "Gambar",
-        "is_active_label": "Aktif",
-        "is_unlimited_label": "Stok Tidak Terbatas",
-        "desc_label": "Deskripsi",
-        "desc_placeholder": "Masukkan deskripsi produk"
+        "status_placeholder": "Pilih Status",
+        "status_label": "Status",
+        "all_status_label": "Semua Status",
+        "status_active_label": "Aktif",
+        "status_inactive_label": "Tidak Aktif",
+        "stock_type_placeholder": "Pilih Tipe Stok",
+        "stock_label": "Tipe Stok",
+        "limitted_stock_label": "Terbatas",
+        "unlimited_stock_label": "Tidak Terbatas",
+        "is_available_stock_placholder": "Pilih Status Stok",
+        "is_available_stock_label": "Status Stok",
+        "available_stock_label": "Tersedia",
+        "unavailable_stock_label": "Tidak Tersedia"
       },
-      "bulk_add_products_dialog":{
-        "dialog_button": "Tambah Produk (%d)",
-        "dialog_title": "Tambah %d Produk Sekaligus",
-        "dialog_desc": "Konfirmasi dan kustomisasi detail produk master yang dipilih sebelum ditambahkan ke toko.",
-        "already_added_warning": "%d dari %d master produk terpilih sudah pernah ditambahkan dan akan dilewati.",
-        "batch_apply_title": "Atur Sekaligus (Batch Apply)",
-        "batch_category_placeholder": "Pilih Kategori Semua",
-        "batch_unit_placeholder": "Pilih Satuan Semua",
-        "batch_stock_placeholder": "Stok Semua",
-        "no_valid_items": "Tidak ada produk yang dapat ditambahkan (semua sudah pernah ditambahkan).",
-        "validation_error": "Mohon periksa dan lengkapi data produk yang belum valid.",
-        "confirm_button": "Simpan %d Produk"
-      }
+      "export": {
+        "label": "Ekspor",
+        "export_excel_btn": "Ekspor Excel",
+        "export_pdf_btn": "Ekspor Pdf"
+      },
+      "columns": {
+        "label": "Kolom"
+      },
+      "action_menu": {
+        "label": "Aksi",
+        "trigger_btn_label": "Buka Menu",
+        "detail_data_btn": "Detail Data",
+        "edit_data_btn": "Edit Data",
+        "delete_data_btn": "Hapus Data"
+      },
+      "no_result": "Tidak ada hasil",
+      "row_per_page": "Baris per halaman",
+      "selected_row": "%d dari %d baris terpilih",
+      "pagination_info": "Halaman %d dari %d"
     }
   },
-  "payment_method":{
-    "page_name":"Metode Pembayaran",
-    "data_table":{
-      "columns":{
-        "select_column_label":"Pilih",
-        "name_column_label":"Nama",
-        "desc_column_label":"Deskripsi",
-        "created_at_column_label":"Tanggal Dibuat",
-        "updated_at_column_label":"Tanggal Diperbarui",
-        "actions_column_label":"Aksi"
-      }
-    },
-    "dialog_modal":{
-      "create_dialog": {
-        "dialog_button": "Tambah Data",
-        "dialog_title": "Tambah Metode Pembayaran",
-        "dialog_desc": "Tambahkan metode pembayaran baru anda",
-        "name_input_label":"Nama",
-        "name_input_placeholder":"Masukkan nama metode pembayaran",
-        "desc_input_label":"Deskripsi",
-        "desc_input_placeholder":"Masukkan deskripsi metode pembayaran",
-        "image_input_label":"Gambar",
-        "image_input_placeholder":"Masukkan gambar metode pembayaran",
-        "cancel_button":"Batal",
-        "confirm_button":"Tambah Metode Pembayaran"
+  "page": {
+    "auth": {
+      "confirm_password": {
+        "form": {
+          "password_input_label": "Kata sandi",
+          "confirm_password_btn": "Konfirmasi Kata sandi"
+        },
+        "title": "Konfirmasi kata sandi anda",
+        "deskripsi": "Ini adalah area aman dalam aplikasi. Harap konfirmasi kata sandi Anda sebelum melanjutkan."
       },
-      "edit_dialog": {
-        "dialog_button": "Edit Data",
-        "dialog_title": "Edit Metode Pembayaran",
-        "dialog_desc": "Edit data metode pembayaran",
-        "name_input_label":"Nama",
-        "name_input_placeholder":"Masukkan nama metode Pembayaran",
-        "desc_input_label":"Deskripsi",
-        "desc_input_placeholder":"Masukkan deskripsi metode pembayaran",
-        "image_input_label":"Gambar",
-        "image_input_placeholder":"Masukkan gambar metode pembayaran",
-        "cancel_button":"Batal",
-        "confirm_button":"Edit Metode Pembayaran"
+      "forgot_password": {
+        "form": {
+          "email_input_label": "Email",
+          "confirm_forgot_password_btn": "Tautan setel ulang kata sandi email"
+        },
+        "title": "Lupa Kata sandi",
+        "description": "Masukkan email Anda untuk menerima tautan pengaturan ulang kata sandi.",
+        "or_return_to": "Atau, kembali ke",
+        "login_btn": "Log in"
       },
-      "detail_dialog": {
-        "dialog_button": "Detail Data",
-        "dialog_title": "Detail Metode Pembayaran",
-        "dialog_desc": "Detail data metode pembayaran",
-        "name_label":"Nama",
-        "desc_label":"Deskripsi",
-        "image_label":"Gambar",
-        "created_at_label":"Tanggal Dibuat",
-        "updated_at_label": "Tanggal Diperbarui"
-      }, 
-      "delete_dialog": {
-        "dialog_button": "Hapus Data",
-        "dialog_title": "Hapus Metode Pembayaran",
-        "dialog_desc": "Apakah anda yakin akan menghapus data ini ?",
-        "cancel_button":"Batal",
-        "confirm_button":"Hapus Metode"
-      }, 
-      "bulk_delete_dialog": {
-        "dialog_button": "Hapus",
-        "dialog_title": "Hapus %d metode pembayaran",
-        "dialog_desc": "Apakah anda yakin akan menghapus %d metode pembayaran ?",
-        "cancel_button":"Batal",
-        "confirm_button":"Hapus Metode"
-      }
-    }
-  },
-  "role":{
-    "page_name":"Peran",
-    "data_table":{
-      "columns":{
-        "select_column_label":"Pilih",
-        "name_column_label":"Nama",
-        "guard_name_column_label":"Nama Garda",
-        "created_at_column_label":"Tanggal Dibuat",
-        "updated_at_column_label":"Tanggal Diperbarui",
-        "actions_column_label":"Aksi"
-      }
-    },
-    "create":{
-      "page_name": "Tambah Peran",
-      "form":{
-        "name_input_label":"Nama",
-        "name_input_placeholder":"Masukkan nama peran",
-        "permissions_input_label":"Perizinan",
-        "cancel_button":"Batal",
-        "confirm_button":"Tambah Peran",
-        "check_all_permissions":"Pilih semua perizinan",
-        "check_all_permissions_desc":"Pilih semua perizinan yang tersedia sekaligus untuk peran ini"
-      }
-    },
-    "edit":{
-      "page_name": "Edit Peran",
-      "form":{
-        "name_input_label":"Nama",
-        "name_input_placeholder":"Masukkan nama peran",
-        "permissions_input_label":"Perizinan",
-        "cancel_button":"Batal",
-        "confirm_button":"Edit Peran",
-        "check_all_permissions":"Pilih semua perizinan",
-        "check_all_permissions_desc":"Pilih semua perizinan yang tersedia sekalig untuk peran ini"
-      }
-    },
-    "show":{
-      "page_name": "Detail Peran",
-      "form":{
-        "name_input_label":"Nama",
-        "permissions_input_label":"Perizinan",
-        "cancel_button":"Kembali"
-      }
-    },
-    "dialog_modal":{
-      "create_dialog": {
-        "dialog_button": "Tambah Data",
-        "dialog_title": "Tambah Peran",
-        "dialog_desc": "Tambahkan peran baru toko anda",
-        "name_input_label":"Nama",
-        "name_input_placeholder":"Masukkan nama peran",
-        "cancel_button":"Batal",
-        "confirm_button":"Tambah Peran"
+      "login": {
+        "form": {
+          "email_input_label": "Email",
+          "password_input_label": "Kata sandi",
+          "login_btn": "Log in"
+        },
+        "title": "Masuk ke akun Anda",
+        "description": "Masukkan email dan kata sandi Anda di bawah ini untuk masuk.",
+        "remember_me": "Ingat saya",
+        "dont_have_account": "Tidak punya akun?",
+        "signup_btn": "Daftar",
+        "forgot_password_link": "Forgot kata sandi?"
       },
-      "edit_dialog": {
-        "dialog_button": "Edit Data",
-        "dialog_title": "Edit Peran",
-        "dialog_desc": "Edit data peran",
-        "name_input_label":"Nama",
-        "name_input_placeholder":"Masukkan nama peran",
-        "cancel_button":"Batal",
-        "confirm_button":"Edit Peran"
+      "register": {
+        "form": {
+          "name_input_label": "Nama",
+          "email_input_label": "Email",
+          "password_input_label": "Kata sandi",
+          "confirm_password_input_label": "Konfirmasi Kata sandi",
+          "confirm_register_btn": "Buat Akun"
+        },
+        "title": "Buat akun Anda",
+        "description": "Masukkan detail Anda di bawah ini untuk membuat akun Anda.",
+        "remember_me": "Ingat saya",
+        "already_have_account": "Sudah punya akun?",
+        "login_btn": "Log in"
       },
-      "detail_dialog": {
-        "dialog_button": "Detail Data",
-        "dialog_title": "Detail Peran",
-        "dialog_desc": "Detail data peran",
-        "name_label":"Nama",
-        "guard_name":"Nama Garda",
-        "created_at_label":"Tanggal Dibuat",
-        "updated_at_label":"Tanggal Diperbarui"
-      }, 
-      "delete_dialog": {
-        "dialog_button": "Hapus Data",
-        "dialog_title": "Hapus Peran",
-        "dialog_desc": "Apakah anda yakin akan menghapus data ini ?",
-        "cancel_button":"Batal",
-        "confirm_button":"Hapus Peran"
-      }, 
-      "bulk_delete_dialog": {
-        "dialog_button": "Hapus",
-        "dialog_title": "Hapus %d peran",
-        "dialog_desc": "Apakah anda yakin akan menghapus %d peran ?",
-        "cancel_button":"Batal",
-        "confirm_button":"Hapus Peran"
-      }
-    }
-  },
-  "user":{
-    "page_name":"Pengguna",
-    "data_table":{
-      "columns":{
-        "select_column_label":"Pilih",
-        "name_column_label":"Nama",
-        "email_column_label":"Email",
-        "role_column_label":"Peran",
-        "created_at_column_label":"Tanggal Dibuat",
-        "updated_at_column_label":"Tanggal Diperbarui",
-        "actions_column_label":"Aksi"
-      }
-    },
-    "dialog_modal":{
-      "create_dialog": {
-        "dialog_button": "Tambah Data",
-        "dialog_title": "Tambah Pengguna",
-        "dialog_desc": "Tambahkan pengguna baru anda",
-        "name_input_label":"Nama",
-        "name_input_placeholder":"Masukkan nama pengguna",
-        "email_input_label":"Email",
-        "email_input_placeholder":"Masukkan email pengguna",
-        "password_input_label":"Kata sandi",
-        "password_input_placeholder":"Masukkan kata sandi pengguna",
-        "password_confirmation_input_label":"Konfirmasi Kata sandi",
-        "password_confirmation_input_placeholder":"Masukkan kembali kata sandi pengguna",
-        "role_input_label":"Peran",
-        "role_input_placeholder":"Masukkan peran pengguna",
-        "cancel_button":"Batal",
-        "confirm_button":"Tambah Pengguna"
+      "reset_password": {
+        "form": {
+          "email_input_label": "Email",
+          "password_input_label": "Kata sandi",
+          "confirm_password_input_label": "Konfirmasi Kata sandi",
+          "reset_btn": "Setel ulang kata sandi"
+        },
+        "title": "Setel ulang kata sandi",
+        "description": "Silakan masukkan kata sandi baru Anda di bawah ini."
       },
-      "edit_dialog": {
-        "dialog_button": "Edit Data",
-        "dialog_title": "Edit Pengguna",
-        "dialog_desc": "Edit data pengguna",
-        "name_input_label":"Nama",
-        "name_input_placeholder":"Masukkan nama pengguna",
-        "email_input_label":"Email",
-        "email_input_placeholder":"Masukkan email pengguna",
-        "password_input_label":"Kata sandi",
-        "password_input_placeholder":"Masukkan kata sandi pengguna",
-        "password_confirmation_input_label":"Konfirmasi Kata sandi",
-        "password_confirmation_input_placeholder":"Masukkan kembali kata sandi pengguna",
-        "role_input_label":"Peran",
-        "role_input_placeholder":"Pilih peran pengguna",
-        "cancel_button":"Batal",
-        "confirm_button":"Edit Pengguna"
+      "two_factor_challenge": {
+        "title": "Otentikasi dua faktor",
+        "form": {
+          "recovery_code_input_label": "Kode pemulihan",
+          "recovery_code_input_placeholder": "Masukkan Kode pemulihan",
+          "logout_btn": "Log out"
+        },
+        "recovery_code": {
+          "title": "Kode pemulihan",
+          "description": "Harap konfirmasikan akses ke akun Anda dengan memasukkan salah satu kode pemulihan darurat Anda.",
+          "toggle_text": "masuk menggunakan kode otentikasi"
+        },
+        "authentication_code": {
+          "title": "Kode otentikasi",
+          "description": "Masukkan kode otentikasi yang diberikan oleh aplikasi otentikasi Anda.",
+          "toggle_text": "masuk menggunakan kode pemulihan"
+        },
+        "continue_btn": "Melanjutkan",
+        "or_you_can": "atau anda dapat"
       },
-      "detail_dialog": {
-        "dialog_button": "Detail Data",
-        "dialog_title": "Detail Pengguna",
-        "dialog_desc": "Detail data pengguna",
-        "name_label":"Nama",
-        "email_label":"Email",
-        "role_label":"Peran",
-        "created_at_label":"Tanggal Dibuat"
-      }, 
-      "delete_dialog": {
-        "dialog_button": "Hapus Data",
-        "dialog_title": "Hapus Pengguna",
-        "dialog_desc": "Apakah anda yakin akan menghapus data ini ?",
-        "cancel_button":"Batal",
-        "confirm_button":"Hapus Pengguna"
-      }, 
-      "bulk_delete_dialog": {
-        "dialog_button": "Hapus",
-        "dialog_title": "Hapus %d pengguna",
-        "dialog_desc": "Apakah anda yakin akan menghapus %d pengguna ?",
-        "cancel_button":"Batal",
-        "confirm_button":"Hapus Pengguna"
+      "email_verification": {
+        "form": {
+          "resend_email_btn": "Kirim ulang email verifikasi",
+          "logout_btn": "Log out"
+        },
+        "title": "Verifikasi email",
+        "description": "Silakan verifikasi alamat email Anda dengan mengklik tautan yang baru saja kami kirimkan melalui email.",
+        "info": "Tautan verifikasi baru telah dikirim ke alamat email yang Anda berikan saat pendaftaran."
       }
     },
-    "transaction":{
-      "page_name":"Transaksi",
-      "data_table":{
-        "columns":{
-          "select_column_label":"Pilih",
-          "invoice_number_column_label":"No. Invoice",
-          "user_name_column_label":"Kasir / Petugas",
-          "payment_method_column_label":"Metode Pembayaran",
-          "total_amount_column_label":"Total Transaksi",
-          "payment_amount_column_label":"Bayar",
-          "change_amount_column_label":"Kembali",
-          "created_at_column_label":"Tanggal & Waktu",
-          "actions_column_label":"Aksi"
+    "dashboard": {
+      "title": "Dasbor"
+    },
+    "unit": {
+      "page_name": "Satuan",
+      "data_table": {
+        "columns": {
+          "select_column_label": "Pilih",
+          "name_column_label": "Nama",
+          "created_at_column_label": "Tanggal Dibuat",
+          "updated_at_column_label": "Tanggal Diperbarui",
+          "actions_column_label": "Aksi"
         }
       },
-      "dialog_modal":{
-        "detail_dialog":{
-          "dialog_title":"Detail Transaksi",
-          "print_btn":"Cetak Nota",
-          "cashier_label":"Kasir / Petugas",
-          "payment_method_label":"Metode Pembayaran",
-          "date_label":"Waktu Transaksi",
-          "items_title":"Rincian Produk"
+      "dialog_modal": {
+        "create_dialog": {
+          "dialog_button": "Tambah Data",
+          "dialog_title": "Tambah Satuan",
+          "dialog_desc": "Tambahkan satuan baru anda",
+          "name_input_label": "Nama",
+          "name_input_placeholder": "Masukkan nama satuan",
+          "cancel_button": "Batal",
+          "confirm_button": "Tambah Satuan"
+        },
+        "edit_dialog": {
+          "dialog_button": "Edit Data",
+          "dialog_title": "Edit Satuan",
+          "dialog_desc": "Edit data satuan",
+          "name_input_label": "Nama",
+          "name_input_placeholder": "Masukkan nama satuan",
+          "cancel_button": "Batal",
+          "confirm_button": "Edit Satuan"
+        },
+        "detail_dialog": {
+          "dialog_button": "Detail Data",
+          "dialog_title": "Detail Satuan",
+          "dialog_desc": "Detail data satuan",
+          "name_label": "Nama",
+          "created_at_label": "Tanggal Dibuat",
+          "updated_at_label": "Tanggal Diperbarui"
+        },
+        "delete_dialog": {
+          "dialog_button": "Hapus Data",
+          "dialog_title": "Hapus Satuan",
+          "dialog_desc": "Apakah anda yakin akan menghapus data ini ?",
+          "cancel_button": "Batal",
+          "confirm_button": "Hapus Satuan"
+        },
+        "bulk_delete_dialog": {
+          "dialog_button": "Hapus",
+          "dialog_title": "Hapus %d satuan",
+          "dialog_desc": "Apakah anda yakin akan menghapus %d satuan ?",
+          "cancel_button": "Batal",
+          "confirm_button": "Hapus Satuan"
         }
       }
-    }
-  },
-  "settings":{
-    "title": "Pengaturan",
-    "log_out_menu":"Log out",
-    "description": "Kelola profil dan pengaturan akun Anda",
-    "appearance":{
-      "label":"Penampilan",
-      "title":"Pengaturan penampilan",
-      "description":"Perbarui pengaturan tampilan Anda"
     },
-    "language":{
-      "label":"Bahasa",
-      "title":"Pengaturan Bahasa",
-      "description":"Perbarui pengaturan bahasa Anda",
-      "language_options":{
-        "Indonesia":"Indonesia",
-        "English":"Inggris"
-      }
-    },
-    "profile":{
-      "label":"Profil",
-      "title":"Pengaturan profil",
-      "heading_title":"Informasi Profil",
-      "description":"Perbarui nama dan alamat email Anda",
-      "form":{
-        "name_input_label":"Nama",
-        "name_input_placeholder":"Masukkan nama",
-        "email_input_label":"Email",
-        "email_input_placeholder":"Masukkan alamat email",
-        "your_email_unverified":"Alamat email Anda belum terverifikasi.",
-        "click_to_resend_verification_email":"Klik di sini untuk mengirim ulang email verifikasi.",
-        "verification_status":"Tautan verifikasi baru telah dikirim ke alamat email Anda.",
-        "save_btn":"Simpan"
+    "category": {
+      "page_name": "Kategori",
+      "data_table": {
+        "columns": {
+          "select_column_label": "Pilih",
+          "name_column_label": "Nama",
+          "desc_column_label": "Deskripsi",
+          "created_at_column_label": "Tanggal Dibuat",
+          "updated_at_column_label": "Tanggal Diperbarui",
+          "actions_column_label": "Aksi"
+        }
       },
-      "deleteUser":{
-        "warning": "peringatan",
-        "description": "Harap berhati-hati, tindakan ini tidak dapat dibatalkan.",
-        "delete_account": "Hapus akun",
-        "dialog_title": "Apakah Anda yakin ingin menghapus akun Anda?",
-        "dialog_desc": "Setelah akun Anda dihapus, semua sumber daya dan datanya juga akan dihapus secara permanen. Silakan masukkan kata sandi Anda untuk mengkonfirmasi bahwa Anda ingin menghapus akun Anda secara permanen.",
-        "password_input_label": "Kata sandi",
-        "password_input_placeholder": "Masukkan Kata sandi",
-        "cancel_btn": "Batal",
-        "confirm_delete_btn": "Hapus akun"
+      "dialog_modal": {
+        "create_dialog": {
+          "dialog_button": "Tambah Data",
+          "dialog_title": "Tambah Kategori",
+          "dialog_desc": "Tambahkan kategori baru produk anda",
+          "name_input_label": "Nama",
+          "name_input_placeholder": "Masukkan nama kategori",
+          "desc_input_label": "Deskripsi",
+          "desc_input_placeholder": "Masukkan deskripsi kategori (Opsional)",
+          "cancel_button": "Batal",
+          "confirm_button": "Tambah Kategori"
+        },
+        "edit_dialog": {
+          "dialog_button": "Edit Data",
+          "dialog_title": "Edit Kategori",
+          "dialog_desc": "Edit data kategori",
+          "name_input_label": "Nama",
+          "name_input_placeholder": "Masukkan nama kategori",
+          "desc_input_label": "Deskripsi",
+          "desc_input_placeholder": "Masukkan deskripsi kategori (Opsional)",
+          "cancel_button": "Batal",
+          "confirm_button": "Edit Kategori"
+        },
+        "detail_dialog": {
+          "dialog_button": "Detail Data",
+          "dialog_title": "Detail Kategori",
+          "dialog_desc": "Detail data kategori",
+          "name_label": "Nama",
+          "desc_label": "Deskripsi",
+          "created_at_label": "Tanggal Dibuat",
+          "updated_at_label": "Tanggal Diperbarui"
+        },
+        "delete_dialog": {
+          "dialog_button": "Hapus Data",
+          "dialog_title": "Hapus Kategori",
+          "dialog_desc": "Apakah anda yakin akan menghapus data ini ?",
+          "cancel_button": "Batal",
+          "confirm_button": "Hapus Kategori"
+        },
+        "bulk_delete_dialog": {
+          "dialog_button": "Hapus",
+          "dialog_title": "Hapus %d kategori",
+          "dialog_desc": "Apakah anda yakin akan menghapus %d kategori ?",
+          "cancel_button": "Batal",
+          "confirm_button": "Hapus Kategori"
+        },
+        "import_excel_dialog": {
+          "dialog_button": "Impor Excel",
+          "dialog_title": "Impor Excel",
+          "dialog_desc": "Impor data kategori dari file Excel",
+          "template_label": "Templat",
+          "category_template_file": "File templat impor data kategori",
+          "file_excel_label": "File Excel",
+          "cancel_button": "Batal",
+          "confirm_button": "Impor"
+        }
       }
     },
-    "security":{
-      "label":"Keamanan",
-      "title":"Pengaturan keamanan",
-      "title_secondary":"Perbarui kata sandi",
-      "description":"Pastikan akun Anda menggunakan kata sandi yang panjang dan acak agar tetap aman.",
-      "language_label":"Bahasa",
-      "current_password_input_label":"Kata sandi saat ini",
-      "current_password_input_placeholder":"Masukkan kata sandi saat ini",
-      "new_password_input_label":"Kata sandi baru",
-      "new_password_input_placeholder":"Masukkan kata sandi baru",
-      "confirm_password_input_label":"Konfirmasi Kata sandi baru",
-      "confirm_password_input_placeholder":"Masukkan Konfirmasi kata sandi baru",
-      "save_password_btn":"Simpan kata sandi",
-      "two_factor_title":"Otentikasi dua langkah",
-      "two_factor_desc":"Kelola pengaturan otentikasi dua faktor Anda",
-      "two_factor_enabled_desc":"Anda akan diminta memasukkan PIN acak yang aman selama proses login, yang dapat Anda peroleh dari aplikasi yang mendukung TOTP di ponsel Anda.",
-      "disable_two_fa_btn":"Nonaktifkan 2FA",
-      "two_factor_disabled_desc":"Saat Anda mengaktifkan otentikasi dua faktor, Anda akan diminta memasukkan PIN aman saat masuk. PIN ini dapat diperoleh dari aplikasi yang mendukung TOTP di ponsel Anda.",
-      "continue_setup":"Lanjutkan pengaturan",
-      "enable_two_factor_btn":"Aktifkan 2FA"
+    "product": {
+      "page_name": "Produk",
+      "data_table": {
+        "columns": {
+          "select_column_label": "Pilih",
+          "name_column_label": "Nama",
+          "sku_column_label": "SKU",
+          "barcode_column_label": "Barcode",
+          "category_column_label": "Kategori",
+          "unit_column_label": "Satuan",
+          "stock_column_label": "Stok",
+          "price_column_label": "Harga Jual",
+          "cost_price_column_label": "Harga Modal",
+          "is_active_column_label": "Status",
+          "is_unlimited_column_label": "Tipe Stok",
+          "created_at_column_label": "Tanggal Dibuat",
+          "updated_at_column_label": "Tanggal Diperbarui",
+          "actions_column_label": "Aksi"
+        }
+      },
+      "is_active": {
+        "active": "Aktif",
+        "inactive": "Tidak Aktif"
+      },
+      "is_unlimited": {
+        "Limited": "Terbatas",
+        "Unlimited": "Tidak Terbatas"
+      },
+      "dialog_modal": {
+        "create_dialog": {
+          "dialog_button": "Tambah Data",
+          "dialog_title": "Tambah Produk",
+          "dialog_desc": "Tambahkan produk baru anda",
+          "name_input_label": "Nama",
+          "name_input_placeholder": "Masukkan nama produk",
+          "image_input_label": "Gambar",
+          "image_input_placeholder": "Masukkan gambar produk",
+          "unit_id_input_label": "Satuan",
+          "unit_id_input_placeholder": "Pilih satuan produk",
+          "category_id_input_label": "Kategori",
+          "category_id_input_placeholder": "Pilih kategori produk",
+          "stock_input_label": "Stok",
+          "stock_input_placeholder": "Masukkan stok produk",
+          "cost_price_input_label": "Harga Modal",
+          "cost_price_input_placeholder": "Masukkan harga modal produk",
+          "price_input_label": "Harga Jual",
+          "price_input_placeholder": "Masukkan harga jual produk",
+          "is_active_input_label": "Status Aktif",
+          "is_unlimited_input_label": "Stok tidak terbatas",
+          "desc_input_label": "Deskripsi",
+          "desc_input_placeholder": "Masukkan deskripsi produk",
+          "barcode_input_label": "Barcode",
+          "barcode_input_placeholder": "Masukkan barcode produk",
+          "cancel_button": "Batal",
+          "confirm_button": "Tambah Produk"
+        },
+        "edit_dialog": {
+          "dialog_button": "Edit Data",
+          "dialog_title": "Edit Produk",
+          "dialog_desc": "Edit data produk",
+          "name_input_label": "Nama",
+          "name_input_placeholder": "Masukkan nama produk",
+          "image_input_label": "Gambar",
+          "image_input_placeholder": "Masukkan gambar produk",
+          "unit_id_input_label": "Satuan",
+          "unit_id_input_placeholder": "Pilih satuan produk",
+          "category_id_input_label": "Kategori",
+          "category_id_input_placeholder": "Pilih kategori produk",
+          "stock_input_label": "Stok",
+          "stock_input_placeholder": "Masukkan stok produk",
+          "cost_price_input_label": "Harga Modal",
+          "cost_price_input_placeholder": "Masukkan harga modal produk",
+          "price_input_label": "Harga Jual",
+          "price_input_placeholder": "Masukkan harga jual produk",
+          "is_active_input_label": "Status Aktif",
+          "is_unlimited_input_label": "Stok tidak terbatas",
+          "desc_input_label": "Deskripsi",
+          "desc_input_placeholder": "Masukkan deskripsi produk",
+          "barcode_input_label": "Barcode",
+          "barcode_input_placeholder": "Masukkan barcode produk",
+          "cancel_button": "Batal",
+          "confirm_button": "Edit Produk"
+        },
+        "detail_dialog": {
+          "dialog_button": "Detail Data",
+          "dialog_title": "Detail Produk",
+          "dialog_desc": "Detail data produk",
+          "name_label": "Nama",
+          "barcode_label": "Barcode",
+          "sku_label": "SKU",
+          "category_name_label": "Kategori",
+          "unit_label": "Satuan",
+          "stock_label": "Stok",
+          "cost_price_label": "Harga Modal",
+          "price_label": "Harga Jual",
+          "image_label": "Gambar",
+          "is_active_label": "Status",
+          "is_unlimited_label": "Tipe Stok",
+          "desc_label": "Deskripsi",
+          "created_at_label": "Tanggal Dibuat",
+          "updated_at_label": "Tanggal Diperbarui"
+        },
+        "delete_dialog": {
+          "dialog_button": "Hapus Data",
+          "dialog_title": "Hapus Produk",
+          "dialog_desc": "Apakah anda yakin akan menghapus data ini ?",
+          "cancel_button": "Batal",
+          "confirm_button": "Hapus Produk"
+        },
+        "bulk_delete_dialog": {
+          "dialog_button": "Hapus",
+          "dialog_title": "Hapus %d produk",
+          "dialog_desc": "Apakah anda yakin akan menghapus %d produk ?",
+          "cancel_button": "Batal",
+          "confirm_button": "Hapus Produk"
+        },
+        "import_excel_dialog": {
+          "dialog_button": "Impor Excel",
+          "dialog_title": "Impor Excel",
+          "dialog_desc": "Impor data produk dari file Excel",
+          "template_label": "Templat",
+          "product_template_file": "File templat impor data produk",
+          "file_excel_label": "File Excel",
+          "cancel_button": "Batal",
+          "confirm_button": "Impor"
+        }
+      }
+    },
+    "master_product": {
+      "page_name": "Master Produk",
+      "is_added": {
+        "added": "Ditambahkan",
+        "not_added": "Tidak Ditambahkan"
+      },
+      "data_table": {
+        "columns": {
+          "select_column_label": "Pilih",
+          "name_column_label": "Nama",
+          "barcode_column_label": "Barcode",
+          "category_column_label": "Kategori",
+          "unit_column_label": "Satuan",
+          "price_column_label": "Harga Jual",
+          "cost_price_column_label": "Harga Modal",
+          "created_at_column_label": "Tanggal Dibuat",
+          "updated_at_column_label": "Tanggal Diperbarui",
+          "is_added_column_label": "Status",
+          "add_product_column_label": "Tambah Produk",
+          "actions_column_label": "Aksi"
+        }
+      },
+      "dialog_modal": {
+        "create_dialog": {
+          "dialog_button": "Tambah Data",
+          "dialog_title": "Tambah Master Produk",
+          "dialog_desc": "Tambahkan master produk baru anda",
+          "name_input_label": "Nama",
+          "name_input_placeholder": "Masukkan nama master produk",
+          "unit_name_input_label": "Satuan",
+          "unit_name_input_placeholder": "Masukkan satuan master produk",
+          "category_name_input_label": "Kategori",
+          "category_name_input_placeholder": "Masukkan kategori master produk",
+          "cost_price_input_label": "Harga Modal",
+          "cost_price_input_placeholder": "Masukkan harga modal master produk",
+          "price_input_label": "Harga Jual",
+          "price_input_placeholder": "Masukkan harga jual master produk",
+          "desc_input_label": "Deskripsi",
+          "desc_input_placeholder": "Masukkan deskripsi master produk",
+          "barcode_input_label": "Barcode",
+          "barcode_input_placeholder": "Masukkan barcode master produk",
+          "cancel_button": "Batal",
+          "confirm_button": "Tambah Master Produk"
+        },
+        "edit_dialog": {
+          "dialog_button": "Edit Data",
+          "dialog_title": "Edit Master Produk",
+          "dialog_desc": "Edit master produk",
+          "name_input_label": "Nama",
+          "name_input_placeholder": "Masukkan nama master produk",
+          "unit_name_input_label": "Satuan",
+          "unit_name_input_placeholder": "Masukkan satuan master produk",
+          "category_name_input_label": "Kategori",
+          "category_name_input_placeholder": "Masukkan kategori master produk",
+          "cost_price_input_label": "Harga Modal",
+          "cost_price_input_placeholder": "Masukkan harga modal master produk",
+          "price_input_label": "Harga Jual",
+          "price_input_placeholder": "Masukkan harga jual master produk",
+          "desc_input_label": "Deskripsi",
+          "desc_input_placeholder": "Masukkan deskripsi master produk",
+          "barcode_input_label": "Barcode",
+          "barcode_input_placeholder": "Masukkan barcode master produk",
+          "cancel_button": "Batal",
+          "confirm_button": "Edit Master Produk"
+        },
+        "detail_dialog": {
+          "dialog_button": "Detail Data",
+          "dialog_title": "Detail Master Produk",
+          "dialog_desc": "Detail data master produk",
+          "name_label": "Nama",
+          "barcode_label": "Barcode",
+          "category_name_label": "Kategori",
+          "unit_label": "Satuan",
+          "cost_price_label": "Harga Modal",
+          "price_label": "Harga Jual",
+          "desc_label": "Deskripsi",
+          "created_at_label": "Tanggal Dibuat",
+          "updated_at_label": "Tanggal Diperbarui"
+        },
+        "delete_dialog": {
+          "dialog_button": "Hapus Data",
+          "dialog_title": "Hapus Master Produk",
+          "dialog_desc": "Apakah anda yakin akan menghapus data ini ?",
+          "cancel_button": "Batal",
+          "confirm_button": "Hapus Master Produk"
+        },
+        "bulk_delete_dialog": {
+          "dialog_button": "Hapus",
+          "dialog_title": "Hapus %d master produk",
+          "dialog_desc": "Apakah anda yakin akan menghapus %d master produk ?",
+          "cancel_button": "Batal",
+          "confirm_button": "Hapus Master Produk"
+        },
+        "import_excel_dialog": {
+          "dialog_button": "Impor Excel",
+          "dialog_title": "Impor Excel",
+          "dialog_desc": "Impor data master produk dari file Excel",
+          "template_label": "Templat",
+          "product_template_file": "File templat impor data master produk",
+          "file_excel_label": "File Excel",
+          "cancel_button": "Batal",
+          "confirm_button": "Impor"
+        },
+        "add_products_dialog": {
+          "dialog_title": "Tambah Produk",
+          "dialog_desc": "Buat produk baru dari master produk",
+          "master_product_info": "Informasi Master Produk",
+          "name_label": "Nama",
+          "barcode_label": "Barcode",
+          "product_details": "Detail Produk",
+          "category_label": "Kategori",
+          "category_placeholder": "Pilih kategori",
+          "categories_label": "Kategori",
+          "unit_label": "Satuan",
+          "unit_placeholder": "Pilih satuan",
+          "units_label": "Satuan",
+          "stock_label": "Stok",
+          "stock_placeholder": "Masukkan stok produk",
+          "cost_price_label": "Harga Modal",
+          "cost_price_placeholder": "Masukkan harga modal",
+          "price_label": "Harga Jual",
+          "price_placeholder": "Masukkan harga jual",
+          "image_label": "Gambar",
+          "is_active_label": "Aktif",
+          "is_unlimited_label": "Stok Tidak Terbatas",
+          "desc_label": "Deskripsi",
+          "desc_placeholder": "Masukkan deskripsi produk"
+        },
+        "bulk_add_products_dialog": {
+          "dialog_button": "Tambah Produk (%d)",
+          "dialog_title": "Tambah %d Produk Sekaligus",
+          "dialog_desc": "Konfirmasi dan kustomisasi detail produk master yang dipilih sebelum ditambahkan ke toko.",
+          "already_added_warning": "%d dari %d master produk terpilih sudah pernah ditambahkan dan akan dilewati.",
+          "batch_apply_title": "Atur Sekaligus (Batch Apply)",
+          "batch_category_placeholder": "Pilih Kategori Semua",
+          "batch_unit_placeholder": "Pilih Satuan Semua",
+          "batch_stock_placeholder": "Stok Semua",
+          "no_valid_items": "Tidak ada produk yang dapat ditambahkan (semua sudah pernah ditambahkan).",
+          "validation_error": "Mohon periksa dan lengkapi data produk yang belum valid.",
+          "confirm_button": "Simpan %d Produk"
+        }
+      }
+    },
+    "payment_method": {
+      "page_name": "Metode Pembayaran",
+      "data_table": {
+        "columns": {
+          "select_column_label": "Pilih",
+          "name_column_label": "Nama",
+          "desc_column_label": "Deskripsi",
+          "created_at_column_label": "Tanggal Dibuat",
+          "updated_at_column_label": "Tanggal Diperbarui",
+          "actions_column_label": "Aksi"
+        }
+      },
+      "dialog_modal": {
+        "create_dialog": {
+          "dialog_button": "Tambah Data",
+          "dialog_title": "Tambah Metode Pembayaran",
+          "dialog_desc": "Tambahkan metode pembayaran baru anda",
+          "name_input_label": "Nama",
+          "name_input_placeholder": "Masukkan nama metode pembayaran",
+          "desc_input_label": "Deskripsi",
+          "desc_input_placeholder": "Masukkan deskripsi metode pembayaran",
+          "image_input_label": "Gambar",
+          "image_input_placeholder": "Masukkan gambar metode pembayaran",
+          "cancel_button": "Batal",
+          "confirm_button": "Tambah Metode Pembayaran"
+        },
+        "edit_dialog": {
+          "dialog_button": "Edit Data",
+          "dialog_title": "Edit Metode Pembayaran",
+          "dialog_desc": "Edit data metode pembayaran",
+          "name_input_label": "Nama",
+          "name_input_placeholder": "Masukkan nama metode Pembayaran",
+          "desc_input_label": "Deskripsi",
+          "desc_input_placeholder": "Masukkan deskripsi metode pembayaran",
+          "image_input_label": "Gambar",
+          "image_input_placeholder": "Masukkan gambar metode pembayaran",
+          "cancel_button": "Batal",
+          "confirm_button": "Edit Metode Pembayaran"
+        },
+        "detail_dialog": {
+          "dialog_button": "Detail Data",
+          "dialog_title": "Detail Metode Pembayaran",
+          "dialog_desc": "Detail data metode pembayaran",
+          "name_label": "Nama",
+          "desc_label": "Deskripsi",
+          "image_label": "Gambar",
+          "created_at_label": "Tanggal Dibuat",
+          "updated_at_label": "Tanggal Diperbarui"
+        },
+        "delete_dialog": {
+          "dialog_button": "Hapus Data",
+          "dialog_title": "Hapus Metode Pembayaran",
+          "dialog_desc": "Apakah anda yakin akan menghapus data ini ?",
+          "cancel_button": "Batal",
+          "confirm_button": "Hapus Metode"
+        },
+        "bulk_delete_dialog": {
+          "dialog_button": "Hapus",
+          "dialog_title": "Hapus %d metode pembayaran",
+          "dialog_desc": "Apakah anda yakin akan menghapus %d metode pembayaran ?",
+          "cancel_button": "Batal",
+          "confirm_button": "Hapus Metode"
+        }
+      }
+    },
+    "role": {
+      "page_name": "Peran",
+      "data_table": {
+        "columns": {
+          "select_column_label": "Pilih",
+          "name_column_label": "Nama",
+          "guard_name_column_label": "Nama Garda",
+          "created_at_column_label": "Tanggal Dibuat",
+          "updated_at_column_label": "Tanggal Diperbarui",
+          "actions_column_label": "Aksi"
+        }
+      },
+      "create": {
+        "page_name": "Tambah Peran",
+        "form": {
+          "name_input_label": "Nama",
+          "name_input_placeholder": "Masukkan nama peran",
+          "permissions_input_label": "Perizinan",
+          "cancel_button": "Batal",
+          "confirm_button": "Tambah Peran",
+          "check_all_permissions": "Pilih semua perizinan",
+          "check_all_permissions_desc": "Pilih semua perizinan yang tersedia sekaligus untuk peran ini"
+        }
+      },
+      "edit": {
+        "page_name": "Edit Peran",
+        "form": {
+          "name_input_label": "Nama",
+          "name_input_placeholder": "Masukkan nama peran",
+          "permissions_input_label": "Perizinan",
+          "cancel_button": "Batal",
+          "confirm_button": "Edit Peran",
+          "check_all_permissions": "Pilih semua perizinan",
+          "check_all_permissions_desc": "Pilih semua perizinan yang tersedia sekalig untuk peran ini"
+        }
+      },
+      "show": {
+        "page_name": "Detail Peran",
+        "form": {
+          "name_input_label": "Nama",
+          "permissions_input_label": "Perizinan",
+          "cancel_button": "Kembali"
+        }
+      },
+      "dialog_modal": {
+        "create_dialog": {
+          "dialog_button": "Tambah Data",
+          "dialog_title": "Tambah Peran",
+          "dialog_desc": "Tambahkan peran baru toko anda",
+          "name_input_label": "Nama",
+          "name_input_placeholder": "Masukkan nama peran",
+          "cancel_button": "Batal",
+          "confirm_button": "Tambah Peran"
+        },
+        "edit_dialog": {
+          "dialog_button": "Edit Data",
+          "dialog_title": "Edit Peran",
+          "dialog_desc": "Edit data peran",
+          "name_input_label": "Nama",
+          "name_input_placeholder": "Masukkan nama peran",
+          "cancel_button": "Batal",
+          "confirm_button": "Edit Peran"
+        },
+        "detail_dialog": {
+          "dialog_button": "Detail Data",
+          "dialog_title": "Detail Peran",
+          "dialog_desc": "Detail data peran",
+          "name_label": "Nama",
+          "guard_name": "Nama Garda",
+          "created_at_label": "Tanggal Dibuat",
+          "updated_at_label": "Tanggal Diperbarui"
+        },
+        "delete_dialog": {
+          "dialog_button": "Hapus Data",
+          "dialog_title": "Hapus Peran",
+          "dialog_desc": "Apakah anda yakin akan menghapus data ini ?",
+          "cancel_button": "Batal",
+          "confirm_button": "Hapus Peran"
+        },
+        "bulk_delete_dialog": {
+          "dialog_button": "Hapus",
+          "dialog_title": "Hapus %d peran",
+          "dialog_desc": "Apakah anda yakin akan menghapus %d peran ?",
+          "cancel_button": "Batal",
+          "confirm_button": "Hapus Peran"
+        }
+      }
+    },
+    "user": {
+      "page_name": "Pengguna",
+      "data_table": {
+        "columns": {
+          "select_column_label": "Pilih",
+          "name_column_label": "Nama",
+          "email_column_label": "Email",
+          "role_column_label": "Peran",
+          "created_at_column_label": "Tanggal Dibuat",
+          "updated_at_column_label": "Tanggal Diperbarui",
+          "actions_column_label": "Aksi"
+        }
+      },
+      "dialog_modal": {
+        "create_dialog": {
+          "dialog_button": "Tambah Data",
+          "dialog_title": "Tambah Pengguna",
+          "dialog_desc": "Tambahkan pengguna baru anda",
+          "name_input_label": "Nama",
+          "name_input_placeholder": "Masukkan nama pengguna",
+          "email_input_label": "Email",
+          "email_input_placeholder": "Masukkan email pengguna",
+          "password_input_label": "Kata sandi",
+          "password_input_placeholder": "Masukkan kata sandi pengguna",
+          "password_confirmation_input_label": "Konfirmasi Kata sandi",
+          "password_confirmation_input_placeholder": "Masukkan kembali kata sandi pengguna",
+          "role_input_label": "Peran",
+          "role_input_placeholder": "Masukkan peran pengguna",
+          "cancel_button": "Batal",
+          "confirm_button": "Tambah Pengguna"
+        },
+        "edit_dialog": {
+          "dialog_button": "Edit Data",
+          "dialog_title": "Edit Pengguna",
+          "dialog_desc": "Edit data pengguna",
+          "name_input_label": "Nama",
+          "name_input_placeholder": "Masukkan nama pengguna",
+          "email_input_label": "Email",
+          "email_input_placeholder": "Masukkan email pengguna",
+          "password_input_label": "Kata sandi",
+          "password_input_placeholder": "Masukkan kata sandi pengguna",
+          "password_confirmation_input_label": "Konfirmasi Kata sandi",
+          "password_confirmation_input_placeholder": "Masukkan kembali kata sandi pengguna",
+          "role_input_label": "Peran",
+          "role_input_placeholder": "Pilih peran pengguna",
+          "cancel_button": "Batal",
+          "confirm_button": "Edit Pengguna"
+        },
+        "detail_dialog": {
+          "dialog_button": "Detail Data",
+          "dialog_title": "Detail Pengguna",
+          "dialog_desc": "Detail data pengguna",
+          "name_label": "Nama",
+          "email_label": "Email",
+          "role_label": "Peran",
+          "created_at_label": "Tanggal Dibuat"
+        },
+        "delete_dialog": {
+          "dialog_button": "Hapus Data",
+          "dialog_title": "Hapus Pengguna",
+          "dialog_desc": "Apakah anda yakin akan menghapus data ini ?",
+          "cancel_button": "Batal",
+          "confirm_button": "Hapus Pengguna"
+        },
+        "bulk_delete_dialog": {
+          "dialog_button": "Hapus",
+          "dialog_title": "Hapus %d pengguna",
+          "dialog_desc": "Apakah anda yakin akan menghapus %d pengguna ?",
+          "cancel_button": "Batal",
+          "confirm_button": "Hapus Pengguna"
+        }
+      },
+      "transaction": {
+        "page_name": "Transaksi",
+        "data_table": {
+          "columns": {
+            "select_column_label": "Pilih",
+            "invoice_number_column_label": "No. Invoice",
+            "user_name_column_label": "Kasir / Petugas",
+            "payment_method_column_label": "Metode Pembayaran",
+            "total_amount_column_label": "Total Transaksi",
+            "payment_amount_column_label": "Bayar",
+            "change_amount_column_label": "Kembali",
+            "created_at_column_label": "Tanggal & Waktu",
+            "actions_column_label": "Aksi"
+          }
+        },
+        "dialog_modal": {
+          "detail_dialog": {
+            "dialog_title": "Detail Transaksi",
+            "print_btn": "Cetak Nota",
+            "cashier_label": "Kasir / Petugas",
+            "payment_method_label": "Metode Pembayaran",
+            "date_label": "Waktu Transaksi",
+            "items_title": "Rincian Produk"
+          }
+        }
+      }
+    },
+    "settings": {
+      "title": "Pengaturan",
+      "log_out_menu": "Log out",
+      "description": "Kelola profil dan pengaturan akun Anda",
+      "appearance": {
+        "label": "Penampilan",
+        "title": "Pengaturan penampilan",
+        "description": "Perbarui pengaturan tampilan Anda"
+      },
+      "language": {
+        "label": "Bahasa",
+        "title": "Pengaturan Bahasa",
+        "description": "Perbarui pengaturan bahasa Anda",
+        "language_options": {
+          "Indonesia": "Indonesia",
+          "English": "Inggris"
+        }
+      },
+      "profile": {
+        "label": "Profil",
+        "title": "Pengaturan profil",
+        "heading_title": "Informasi Profil",
+        "description": "Perbarui nama dan alamat email Anda",
+        "form": {
+          "name_input_label": "Nama",
+          "name_input_placeholder": "Masukkan nama",
+          "email_input_label": "Email",
+          "email_input_placeholder": "Masukkan alamat email",
+          "your_email_unverified": "Alamat email Anda belum terverifikasi.",
+          "click_to_resend_verification_email": "Klik di sini untuk mengirim ulang email verifikasi.",
+          "verification_status": "Tautan verifikasi baru telah dikirim ke alamat email Anda.",
+          "save_btn": "Simpan"
+        },
+        "deleteUser": {
+          "warning": "peringatan",
+          "description": "Harap berhati-hati, tindakan ini tidak dapat dibatalkan.",
+          "delete_account": "Hapus akun",
+          "dialog_title": "Apakah Anda yakin ingin menghapus akun Anda?",
+          "dialog_desc": "Setelah akun Anda dihapus, semua sumber daya dan datanya juga akan dihapus secara permanen. Silakan masukkan kata sandi Anda untuk mengkonfirmasi bahwa Anda ingin menghapus akun Anda secara permanen.",
+          "password_input_label": "Kata sandi",
+          "password_input_placeholder": "Masukkan Kata sandi",
+          "cancel_btn": "Batal",
+          "confirm_delete_btn": "Hapus akun"
+        }
+      },
+      "security": {
+        "label": "Keamanan",
+        "title": "Pengaturan keamanan",
+        "title_secondary": "Perbarui kata sandi",
+        "description": "Pastikan akun Anda menggunakan kata sandi yang panjang dan acak agar tetap aman.",
+        "language_label": "Bahasa",
+        "current_password_input_label": "Kata sandi saat ini",
+        "current_password_input_placeholder": "Masukkan kata sandi saat ini",
+        "new_password_input_label": "Kata sandi baru",
+        "new_password_input_placeholder": "Masukkan kata sandi baru",
+        "confirm_password_input_label": "Konfirmasi Kata sandi baru",
+        "confirm_password_input_placeholder": "Masukkan Konfirmasi kata sandi baru",
+        "save_password_btn": "Simpan kata sandi",
+        "two_factor_title": "Otentikasi dua langkah",
+        "two_factor_desc": "Kelola pengaturan otentikasi dua faktor Anda",
+        "two_factor_enabled_desc": "Anda akan diminta memasukkan PIN acak yang aman selama proses login, yang dapat Anda peroleh dari aplikasi yang mendukung TOTP di ponsel Anda.",
+        "disable_two_fa_btn": "Nonaktifkan 2FA",
+        "two_factor_disabled_desc": "Saat Anda mengaktifkan otentikasi dua faktor, Anda akan diminta memasukkan PIN aman saat masuk. PIN ini dapat diperoleh dari aplikasi yang mendukung TOTP di ponsel Anda.",
+        "continue_setup": "Lanjutkan pengaturan",
+        "enable_two_factor_btn": "Aktifkan 2FA"
+      }
+    },
+    "kasir": {
+      "page_name": "Kasir",
+      "search_placeholder": "Scan Barcode / Ketik Kode / Nama Barang (Enter)...",
+      "cart_label": "Daftar Belanja",
+      "empty_cart": "Keranjang kosong",
+      "add_to_cart": "Tambah ke keranjang",
+      "discount_label": "Diskon",
+      "subtotal_label": "Subtotal",
+      "total_discount_label": "Potongan / Diskon",
+      "grand_total_label": "Grand Total",
+      "payment_method_label": "Metode Pembayaran",
+      "payment_method_placeholder": "Pilih metode pembayaran",
+      "payment_amount_label": "Nominal Diterima",
+      "change_label": "Kembalian:",
+      "underpaid_label": "Kurang Bayar:",
+      "checkout_btn": "Bayar Transaksi",
+      "clear_cart_btn": "Kosongkan",
+      "out_of_stock": "Habis",
+      "unlimited_stock": "Tak Terbatas",
+      "stock_label": "Stok:",
+      "max_stock_reached": "Stok tidak mencukupi",
+      "checkout_success": "Transaksi berhasil diselesaikan!",
+      "select_payment_method": "Pilih metode pembayaran terlebih dahulu",
+      "insufficient_payment": "Nominal bayar kurang dari total",
+      "new_transaction": "Transaksi Baru",
+      "receipt_title": "Struk Transaksi",
+      "products_tab": "Daftar Barang",
+      "cart_tab": "Keranjang",
+      "shortcut_search": "Cari Barang",
+      "shortcut_select": "Scan / Pilih",
+      "shortcut_checkout": "Proses Bayar",
+      "product_data_count": "Data Barang",
+      "category_label": "Kategori:",
+      "all_categories": "Semua",
+      "no_products_found": "Barang tidak ditemukan",
+      "no_products_desc": "Coba ketik kata kunci lain atau scan ulang barcode barang",
+      "table_code": "Kode / Barcode",
+      "table_name": "Nama Barang",
+      "table_unit": "Satuan",
+      "table_stock": "Stok",
+      "table_price": "Harga Jual",
+      "table_action": "Aksi",
+      "add_btn": "Tambah",
+      "select_btn": "Pilih",
+      "remove_item": "Hapus barang",
+      "discount_nominal_title": "Diskon Nominal (Rp)",
+      "discount_percent_title": "Diskon Persentase (%)",
+      "page_label": "Halaman",
+      "of_label": "dari",
+      "prev_btn": "Prev",
+      "next_btn": "Next",
+      "mobile_total": "Total",
+      "items_unit": "Barang",
+      "view_cart": "Lihat Keranjang",
+      "total_header": "TOTAL BELANJA",
+      "items_types": "Jenis",
+      "empty_cart_title": "Keranjang Masih Kosong",
+      "empty_cart_desc": "Pilih barang dari daftar atau scan barcode",
+      "items_subtotal": "Subtotal Barang",
+      "exact_cash": "Uang Pas",
+      "confirm_dialog_title": "Konfirmasi Pembayaran",
+      "confirm_dialog_desc": "Periksa rincian sebelum menyelesaikan transaksi",
+      "items_breakdown": "Rincian Barang",
+      "cancel_btn": "Batal",
+      "checkout_no_receipt": "Bayar Tanpa Struk",
+      "checkout_with_receipt": "Bayar & Cetak Struk",
+      "receipt_thank_you": "Terima kasih atas kunjungan Anda!",
+      "print_btn": "Print",
+      "out_of_stock_warning": "Stok barang ini habis dan tidak dapat ditambahkan ke keranjang"
     }
-  }
   },
-  "error":{
-    "default":"Kesalahan sistem internal"
+  "error": {
+    "default": "Kesalahan sistem internal"
   }
 }

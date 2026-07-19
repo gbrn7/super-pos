@@ -1372,16 +1372,99 @@ To ensure a unified user experience across all DataTables in the application, fo
    - Table cells use standard body font (`text-sm text-foreground` or `<span className="whitespace-nowrap">`).
    - Avoid `text-xs text-muted-foreground` styling on primary column values (such as dates & times) to keep text legibility uniform across all columns.
 
-### 9.4 Internationalization (i18n) Rules
+### 9.4 Internationalization (i18n) & Translation Design Patterns
 
-- **ALWAYS add new text keys to BOTH `resources/js/locales/id/translation.json` AND `resources/js/locales/en/translation.json`**.
-- Use `useTranslation()` inside React components: `const { t } = useTranslation()`.
-- Use fallback values when calling `t()`: `t('page.transaction.page_name', 'Transaksi')`.
-- **Key naming conventions**:
-  - Permission Labels: `permission_label.{entity}.{action}` (e.g. `permission_label.transaction.read`)
-  - Sidebar Menu: `component.sidebar.{entity}_menu_label` (e.g. `component.sidebar.transaction_menu_label`)
-  - Page Titles & Columns: `page.{entity}.page_name`, `page.{entity}.data_table.columns.{column_key}_column_label`
-  - Dialog Titles & Text: `page.{entity}.dialog_modal.{dialog_type}.*`
+This application uses **`react-i18next`** and **`i18next`** for full client-side internationalization.
+
+#### 9.4.1 Locales Directory & Mandatory JSON Structure
+
+Translation files are located in `resources/js/locales/`:
+- `resources/js/locales/id/translation.json` (Indonesian - default & fallback)
+- `resources/js/locales/en/translation.json` (English)
+
+**CRITICAL RULE FOR JSON NESTING HIERARCHY**:
+All page-specific translation keys **MUST be placed INSIDE the `"page"` parent object**. Placing module keys outside `"page"` (at the root JSON level) will cause `t('page.{module}.*')` lookups in non-default languages to fail, causing a silent fallback to the default Indonesian fallback string.
+
+```json
+{
+  "page": {
+    "kasir": {
+      "page_name": "Kasir Minimarket",
+      "search_placeholder": "Scan Barcode / Ketik Kode / Nama Barang (Enter)...",
+      "cart_label": "Daftar Belanja",
+      "empty_cart_title": "Keranjang Masih Kosong"
+    },
+    "product": {
+      "page_name": "Produk"
+    },
+    "transaction": {
+      "page_name": "Transaksi"
+    }
+  },
+  "component": {
+    "sidebar": {
+      "kasir_menu_label": "Kasir"
+    }
+  },
+  "permission_label": { ... },
+  "error": {
+    "default": "Kesalahan sistem internal"
+  }
+}
+```
+
+#### 9.4.2 React Component Usage Pattern
+
+1. **Import and invoke `useTranslation()`**:
+   ```tsx
+   import { useTranslation } from 'react-i18next';
+
+   export default function ModuleComponent() {
+       const { t } = useTranslation();
+
+       return (
+           <h1>{t('page.kasir.page_name', 'Kasir Minimarket')}</h1>
+       );
+   }
+   ```
+
+2. **Always Provide a Fallback String**:
+   Always pass a descriptive Indonesian string as the 2nd argument to `t()`. This ensures the UI renders gracefully even if a key is missing.
+   ```tsx
+   {t('page.kasir.clear_cart_btn', 'Kosongkan')}
+   ```
+
+3. **Synchronous Inertia Layout Titles**:
+   For Inertia page layout titles, use `i18next.t()` directly:
+   ```ts
+   import i18next from 'i18next';
+
+   KasirIndex.layout = {
+       breadcrumbs: [
+           {
+               title: i18next.t('page.kasir.page_name', 'Kasir Minimarket'),
+               href: url,
+           },
+       ],
+   };
+   ```
+
+4. **Numeric Format for Monetary vs Percentage Inputs**:
+   When rendering discount inputs or currency fields:
+   - For **Nominal Currency (Rp)** fields: Use `react-number-format` (`NumericFormat` with `thousandSeparator="."`, `decimalSeparator=","`, and `customInput={Input}`).
+   - For **Percentage (%)** fields: Use standard `<Input type="number" min={0} max={100} />`.
+
+#### 9.4.3 Key Naming Conventions
+
+| Category | Key Pattern | Example |
+| :--- | :--- | :--- |
+| **Page Name** | `page.{module}.page_name` | `page.kasir.page_name` |
+| **Page Controls / Buttons** | `page.{module}.{action}_btn` | `page.kasir.checkout_btn` |
+| **Labels & Summaries** | `page.{module}.{field}_label` | `page.kasir.total_discount_label` |
+| **DataTable Columns** | `page.{module}.data_table.columns.{col}_column_label` | `page.product.data_table.columns.name_column_label` |
+| **Dialog Modals** | `page.{module}.dialog_modal.{dialog_type}.*` | `page.category.dialog_modal.create_dialog.title` |
+| **Sidebar Menu** | `component.sidebar.{entity}_menu_label` | `component.sidebar.kasir_menu_label` |
+| **Permissions** | `permission_label.{entity}.{action}` | `permission_label.transaction.read` |
 
 ### 9.5 Permissions & Authorization Guard
 

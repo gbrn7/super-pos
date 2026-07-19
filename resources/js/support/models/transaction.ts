@@ -7,6 +7,7 @@ export interface TransactionDetail {
   quantity: number;
   cost_price: number;
   price: number;
+  discount?: number;
   subtotal: number;
   created_at: string;
   updated_at: string;
@@ -20,6 +21,7 @@ export interface Transaction {
   payment_method_name?: string;
   invoice_number: string;
   total_amount: number;
+  discount_amount?: number;
   payment_amount: number;
   change_amount: number;
   details?: TransactionDetail[];

@@ -1,5 +1,5 @@
 import { Link } from '@inertiajs/react';
-import { Banknote, Book, LayoutGrid, Package, PackageSearch, Receipt, Tags, User, Weight } from 'lucide-react';
+import { Banknote, Book, LayoutGrid, Package, PackageSearch, Receipt, ShoppingCart, Tags, User, Weight } from 'lucide-react';
 import AppLogo from '@/components/app-logo';
 import { NavFooter } from '@/components/nav-footer';
 import { NavMain } from '@/components/nav-main';
@@ -22,6 +22,7 @@ import { index as roles } from '@/routes/roles';
 import { index as users } from '@/routes/users';
 import { index as units } from '@/routes/units';
 import { index as transactions } from '@/routes/transactions';
+import { index as cashier } from '@/routes/cashier';
 import type { NavItem } from '@/types';
 import { useTranslation } from 'react-i18next';
 import { IconUserKey } from '@tabler/icons-react';
@@ -51,6 +52,13 @@ export function AppSidebar() {
                 href: dashboard(),
                 icon: LayoutGrid,
                 permission: PERMISSIONENUMS.DASHBOARD.READ,
+                role: []
+            },
+            {
+                title: t("component.sidebar.kasir_menu_label", "Kasir"),
+                href: cashier(),
+                icon: ShoppingCart,
+                permission: PERMISSIONENUMS.TRANSACTION.CREATE,
                 role: []
             },
             {

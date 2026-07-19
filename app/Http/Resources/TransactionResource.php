@@ -22,6 +22,7 @@ class TransactionResource extends JsonResource
             'payment_method_name' => $this->whenLoaded('paymentMethod', fn () => $this->paymentMethod->name),
             'invoice_number' => $this->invoice_number,
             'total_amount' => $this->total_amount,
+            'discount_amount' => $this->discount_amount,
             'payment_amount' => $this->payment_amount,
             'change_amount' => $this->change_amount,
             'details' => TransactionDetailResource::collection($this->whenLoaded('transactionDetails')),

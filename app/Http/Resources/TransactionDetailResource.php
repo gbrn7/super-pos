@@ -23,7 +23,8 @@ class TransactionDetailResource extends JsonResource
             'quantity' => $this->quantity,
             'cost_price' => $this->cost_price,
             'price' => $this->price,
-            'subtotal' => $this->quantity * $this->price,
+            'discount' => $this->discount,
+            'subtotal' => ($this->price - $this->discount) * $this->quantity,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];
