@@ -100,10 +100,24 @@ export default function CashierIndex() {
     const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
     // ── Computed values ─────────────────────────────────────────────────────────
-    const itemsSubtotal = cart.reduce(
-        (sum, item) => sum + item.product.price * item.quantity,
-        0,
-    );
+    const grossSubtotal = cart.reduce((sum, item) => sum + item.product.price * item.quantity, 0);
+
+    const totalItemDiscounts = cart.reduce((sum, item) => {
+        const discType = item.discountType || 'nominal';
+        const discPerUnit = discType === 'percent'
+            ? (item.product.price * (item.discount || 0)) / 100
+            : (item.discount || 0);
+        return sum + discPerUnit * item.quantity;
+    }, 0);
+
+    const itemsSubtotal = cart.reduce((sum, item) => {
+        const discType = item.discountType || 'nominal';
+        const discPerUnit = discType === 'percent'
+            ? (item.product.price * (item.discount || 0)) / 100
+            : (item.discount || 0);
+        const netPrice = Math.max(0, item.product.price - discPerUnit);
+        return sum + netPrice * item.quantity;
+    }, 0);
 
     const discountAmount = totalDiscountType === 'percent'
         ? (itemsSubtotal * (Number(totalDiscountValue) || 0)) / 100
@@ -743,6 +757,7 @@ export default function CashierIndex() {
                                         key={item.product.id}
                                         item={item}
                                         onUpdateQty={updateQty}
+                                        onUpdateDiscount={updateItemDiscount}
                                         onRemove={removeFromCart}
                                     />
                                 ))
@@ -773,7 +788,12 @@ export default function CashierIndex() {
                                                         ? 'bg-primary text-primary-foreground'
                                                         : 'text-muted-foreground hover:bg-muted',
                                                 )}
-                                                onClick={() => setTotalDiscountType('nominal')}
+                                                onClick={() => {
+                                                    setTotalDiscountType('nominal');
+                                                    if (typeof totalDiscountValue === 'number' && totalDiscountValue > itemsSubtotal) {
+                                                        setTotalDiscountValue(itemsSubtotal);
+                                                    }
+                                                }}
                                                 title="Diskon Nominal (Rp)"
                                             >
                                                 Rp
@@ -786,7 +806,12 @@ export default function CashierIndex() {
                                                         ? 'bg-primary text-primary-foreground'
                                                         : 'text-muted-foreground hover:bg-muted',
                                                 )}
-                                                onClick={() => setTotalDiscountType('percent')}
+                                                onClick={() => {
+                                                    setTotalDiscountType('percent');
+                                                    if (typeof totalDiscountValue === 'number' && totalDiscountValue > 100) {
+                                                        setTotalDiscountValue(100);
+                                                    }
+                                                }}
                                                 title="Diskon Persentase (%)"
                                             >
                                                 %
@@ -802,7 +827,14 @@ export default function CashierIndex() {
                                             value={totalDiscountValue}
                                             onFocus={(e) => e.target.select()}
                                             onValueChange={(values) => {
-                                                setTotalDiscountValue(values.floatValue ?? '');
+                                                const val = values.floatValue;
+                                                if (val === undefined || val < 0) {
+                                                    setTotalDiscountValue('');
+                                                } else if (val > itemsSubtotal) {
+                                                    setTotalDiscountValue(itemsSubtotal);
+                                                } else {
+                                                    setTotalDiscountValue(val);
+                                                }
                                             }}
                                             className="h-8 sm:h-9 text-xs sm:text-sm text-right w-24 sm:w-32 font-bold font-mono"
                                         />
@@ -820,9 +852,15 @@ export default function CashierIndex() {
                                                 max={100}
                                                 placeholder="0"
                                                 onFocus={(e) => e.target.select()}
-                                                onChange={(e) =>
-                                                    setTotalDiscountValue(parseFloat(e.target.value) || '')
-                                                }
+                                                onChange={(e) => {
+                                                    let val = parseFloat(e.target.value);
+                                                    if (isNaN(val) || val < 0) {
+                                                        setTotalDiscountValue('');
+                                                    } else {
+                                                        if (val > 100) val = 100;
+                                                        setTotalDiscountValue(val);
+                                                    }
+                                                }}
                                                 className="h-8 sm:h-9 text-xs sm:text-sm text-right w-16 sm:w-20 font-bold font-mono"
                                             />
                                         </div>
@@ -1046,13 +1084,43 @@ export default function CashierIndex() {
                                 <span>{t('page.kasir.items_breakdown', 'Rincian Barang')}</span>
                                 <span className="font-extrabold text-foreground">{cart.length} {t('page.kasir.items_types', 'Jenis')} ({cartCount} Pcs)</span>
                             </div>
-                            <div className="space-y-1.5 max-h-40 overflow-y-auto pr-1">
-                                {cart.map((item) => (
-                                    <div key={item.product.id} className="flex justify-between items-center text-xs sm:text-sm font-medium">
-                                        <span className="truncate flex-1 pr-2 font-bold">{item.product.name}</span>
-                                        <span className="text-muted-foreground shrink-0 font-mono font-semibold">{item.quantity} x {formatRupiah(item.product.price)}</span>
-                                    </div>
-                                ))}
+                            <div className="space-y-2 max-h-48 overflow-y-auto pr-1">
+                                {cart.map((item) => {
+                                    const discType = item.discountType || 'nominal';
+                                    const discPerUnit = discType === 'percent'
+                                        ? (item.product.price * (item.discount || 0)) / 100
+                                        : (item.discount || 0);
+                                    const netUnitPrice = Math.max(0, item.product.price - discPerUnit);
+                                    const itemSubtotal = netUnitPrice * item.quantity;
+                                    const hasDisc = discPerUnit > 0;
+
+                                    return (
+                                        <div key={item.product.id} className="space-y-0.5 border-b border-border/40 pb-1.5 last:border-b-0 last:pb-0">
+                                            <div className="flex justify-between gap-2 font-bold text-xs sm:text-sm">
+                                                <span className="truncate flex-1 text-foreground">{item.product.name}</span>
+                                                <span className="text-right shrink-0 font-mono font-extrabold">{formatRupiah(itemSubtotal)}</span>
+                                            </div>
+                                            <div className="text-[11px] text-muted-foreground flex justify-between font-mono">
+                                                <span>
+                                                    {item.quantity} x{' '}
+                                                    {hasDisc ? (
+                                                        <>
+                                                            <span className="line-through text-muted-foreground/70 mr-1 font-normal">
+                                                                {formatRupiah(item.product.price)}
+                                                            </span>
+                                                            <span className="text-emerald-600 dark:text-emerald-400 font-bold">
+                                                                {formatRupiah(netUnitPrice)}
+                                                            </span>
+                                                        </>
+                                                    ) : (
+                                                        <span>{formatRupiah(item.product.price)}</span>
+                                                    )}
+                                                    {item.product.unit_name ? ` (${item.product.unit_name})` : ''}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    );
+                                })}
                             </div>
                         </div>
 
@@ -1060,11 +1128,11 @@ export default function CashierIndex() {
                         <div className="bg-card rounded-xl border p-3.5 space-y-2 text-xs sm:text-sm font-mono font-semibold">
                             <div className="flex justify-between text-muted-foreground">
                                 <span>{t('page.kasir.items_subtotal', 'Subtotal Barang')}:</span>
-                                <span className="font-bold">{formatRupiah(itemsSubtotal)}</span>
+                                <span className="font-bold text-foreground">{formatRupiah(itemsSubtotal)}</span>
                             </div>
                             {discountAmount > 0 && (
                                 <div className="flex justify-between text-emerald-600 dark:text-emerald-400">
-                                    <span>{t('page.kasir.total_discount_label', 'Potongan / Diskon')} ({totalDiscountType === 'percent' ? `${totalDiscountValue}%` : 'Rp'}):</span>
+                                    <span>{t('page.kasir.total_discount_label', 'Diskon Transaksi')} ({totalDiscountType === 'percent' ? `${totalDiscountValue}%` : 'Rp'}):</span>
                                     <span className="font-bold">- {formatRupiah(discountAmount)}</span>
                                 </div>
                             )}

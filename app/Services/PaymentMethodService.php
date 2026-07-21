@@ -48,9 +48,9 @@ class PaymentMethodService implements PaymentMethodServiceInterface
             }
 
             if (isset($data['image']) && $data['image'] instanceof UploadedFile) {
-                $fileName = Str::random(10) . $data['image']->getClientOriginalName();
+                $fileName = Str::random(10).$data['image']->getClientOriginalName();
                 $data['image']->storeAs(Constants::PAYMENT_METHOD_PUBLIC_PATH, $fileName, 'public');
-                $data['image'] = Constants::PAYMENT_METHOD_PUBLIC_PATH . $fileName;
+                $data['image'] = Constants::PAYMENT_METHOD_PUBLIC_PATH.$fileName;
             }
 
             return $this->paymentMethodRepository->create($data);
@@ -79,9 +79,9 @@ class PaymentMethodService implements PaymentMethodServiceInterface
                     Storage::disk('public')->delete($paymentMethod->image);
                 }
 
-                $fileName = Str::random(10) . $data['image']->getClientOriginalName();
+                $fileName = Str::random(10).$data['image']->getClientOriginalName();
                 $data['image']->storeAs(Constants::PAYMENT_METHOD_PUBLIC_PATH, $fileName, 'public');
-                $data['image'] = Constants::PAYMENT_METHOD_PUBLIC_PATH . $fileName;
+                $data['image'] = Constants::PAYMENT_METHOD_PUBLIC_PATH.$fileName;
             }
 
             $isSuccess = $this->paymentMethodRepository->update($paymentMethod, $data);
@@ -133,7 +133,7 @@ class PaymentMethodService implements PaymentMethodServiceInterface
             if ($deletedCount == $ids->count()) {
                 foreach ($paymentMethods as $paymentMethod) {
                     if ($paymentMethod->image && Storage::disk('public')->exists($paymentMethod->image)) {
-                        Storage::delete('public/' . $paymentMethod->image);
+                        Storage::delete('public/'.$paymentMethod->image);
                     }
                 }
             }

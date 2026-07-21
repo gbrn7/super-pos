@@ -4,9 +4,7 @@ namespace App\Support\Interfaces\Services;
 
 use App\Models\Role;
 use App\Support\Models\Role\GetRoleReqModel;
-use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
-use Illuminate\Support\Collection;
 
 interface RoleServiceInterface
 {

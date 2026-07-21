@@ -16,31 +16,31 @@ class CategorySeeder extends Seeder
         Category::insert(
             [
                 [
-                    'name' => "Sembako",
+                    'name' => 'Sembako',
                     'desc' => fake()->sentence(),
                     'created_at' => Carbon::now()->unix(),
                     'updated_at' => Carbon::now()->unix(),
                 ],
                 [
-                    'name' => "Minuman",
+                    'name' => 'Minuman',
                     'desc' => fake()->sentence(),
                     'created_at' => Carbon::now()->unix(),
                     'updated_at' => Carbon::now()->unix(),
                 ],
                 [
-                    'name' => "Snack",
+                    'name' => 'Snack',
                     'desc' => fake()->sentence(),
                     'created_at' => Carbon::now()->unix(),
                     'updated_at' => Carbon::now()->unix(),
                 ],
                 [
-                    'name' => "Obat Obatan",
+                    'name' => 'Obat Obatan',
                     'desc' => fake()->sentence(),
                     'created_at' => Carbon::now()->unix(),
                     'updated_at' => Carbon::now()->unix(),
                 ],
                 [
-                    'name' => "Gas",
+                    'name' => 'Gas',
                     'desc' => fake()->sentence(),
                     'created_at' => Carbon::now()->unix(),
                     'updated_at' => Carbon::now()->unix(),

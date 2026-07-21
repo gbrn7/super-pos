@@ -29,7 +29,7 @@ class ProductResource extends JsonResource
             'price' => $this->price,
             'cost_price' => $this->cost_price,
             'desc' => $this->desc,
-            'image' => isset($this->image) ? asset('storage/' . $this->image) : null,
+            'image' => isset($this->image) ? asset('storage/'.$this->image) : null,
             'created_at' => $this->getRawOriginal('created_at'),
             'updated_at' => $this->getRawOriginal('updated_at'),
         ];

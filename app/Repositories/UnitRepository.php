@@ -13,8 +13,8 @@ class UnitRepository implements UnitRepositoryInterface
     public function getAllByIndex(GetUnitReqModel $request): Paginator|Collection
     {
         $query = Unit::query()
-            ->orderBy(isset($request->order_by) ? $request->order_by : 'id', isset($request->order)  ? $request->order : 'desc')
-            ->when($request->name, fn($query) => $query->where('name', 'ilike', "%{$request->name}%"));
+            ->orderBy(isset($request->order_by) ? $request->order_by : 'id', isset($request->order) ? $request->order : 'desc')
+            ->when($request->name, fn ($query) => $query->where('name', 'ilike', "%{$request->name}%"));
 
         if ($request->limit === null) {
             return $query->get();

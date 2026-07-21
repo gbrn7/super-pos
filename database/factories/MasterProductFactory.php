@@ -4,7 +4,6 @@ namespace Database\Factories;
 
 use App\Models\MasterProduct;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
 
 /**
  * @extends Factory<MasterProduct>
@@ -19,6 +18,7 @@ class MasterProductFactory extends Factory
     public function definition(): array
     {
         $price = fake()->numberBetween(1000, 100000);
+
         return [
             'category_name' => fake()->sentence(2),
             'unit_name' => 'Pcs',

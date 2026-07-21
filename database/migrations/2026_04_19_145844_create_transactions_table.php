@@ -19,6 +19,7 @@ return new class extends Migration
             $table->decimal('total_amount', 10, 2);
             $table->decimal('payment_amount', 10, 2);
             $table->decimal('change_amount', 10, 2);
+            $table->decimal('discount_amount', 10, 2)->default(0);
             $table->timestamps();
         });
     }

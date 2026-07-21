@@ -242,3 +242,45 @@ test('checkout fails when product stock is insufficient', function () {
     $response->assertStatus(422);
     $response->assertJsonPath('message', 'Stok produk tidak mencukupi');
 });
+
+test('checkout recalculates total_amount on backend ignoring tampered input', function () {
+    $user = cashierSetupUser();
+    $paymentMethod = PaymentMethod::create(['name' => 'Cash', 'desc' => '', 'image' => '']);
+    $product1 = Product::factory()->create(['price' => 15000, 'cost_price' => 10000, 'stock' => 10, 'is_unlimited' => false, 'is_active' => true]);
+    $product2 = Product::factory()->create(['price' => 25000, 'cost_price' => 18000, 'stock' => 10, 'is_unlimited' => false, 'is_active' => true]);
+
+    // Send tampered total_amount of 100 instead of real total: (15000 * 2) + (25000 * 1 - 5000) - 2000 = 48000
+    $response = $this->actingAs($user)->postJson('/api/transactions/checkout', [
+        'payment_method_id' => $paymentMethod->id,
+        'total_amount' => 100, // tampered total_amount
+        'discount_amount' => 2000,
+        'payment_amount' => 50000,
+        'change_amount' => 0, // tampered change_amount
+        'items' => [
+            [
+                'product_id' => $product1->id,
+                'unit_name' => $product1->unit->name,
+                'quantity' => 2,
+                'price' => 15000,
+                'cost_price' => 10000,
+                'discount' => 0,
+            ],
+            [
+                'product_id' => $product2->id,
+                'unit_name' => $product2->unit->name,
+                'quantity' => 1,
+                'price' => 25000,
+                'cost_price' => 18000,
+                'discount' => 5000,
+            ],
+        ],
+    ]);
+
+    $response->assertStatus(201);
+    $transaction = Transaction::first();
+
+    // Calculated total: (15000*2) + ((25000-5000)*1) - 2000 = 30000 + 20000 - 2000 = 48000
+    expect((float) $transaction->total_amount)->toBe(48000.0);
+    // Calculated change: 50000 - 48000 = 2000
+    expect((float) $transaction->change_amount)->toBe(2000.0);
+});

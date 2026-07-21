@@ -34,9 +34,10 @@ export default function ReceiptModal({ open, transaction, onClose, onNewTransact
         : dayjs().format('DD/MM/YYYY HH:mm');
 
     const details = transaction.details ?? [];
+    const totalItemDiscounts = details.reduce((acc, detail) => acc + (Number(detail.discount) || 0) * detail.quantity, 0);
     const itemsSubtotal = details.reduce((acc, detail) => acc + (Number(detail.subtotal) || 0), 0);
+    const grossTotal = details.reduce((acc, detail) => acc + (Number(detail.price) || 0) * detail.quantity, 0);
     const discountAmount = Number(transaction.discount_amount ?? 0);
-    const grossTotal = itemsSubtotal > 0 ? itemsSubtotal : Number(transaction.total_amount) + discountAmount;
 
     return (
         <Dialog open={open} onOpenChange={onClose}>
@@ -68,7 +69,8 @@ export default function ReceiptModal({ open, transaction, onClose, onNewTransact
                         {details.map((detail, index) => {
                             const disc = Number(detail.discount) || 0;
                             const unitPrice = Number(detail.price) || 0;
-                            const subtotalVal = Number(detail.subtotal) || (unitPrice - disc) * detail.quantity;
+                            const netUnitPrice = Math.max(0, unitPrice - disc);
+                            const subtotalVal = Number(detail.subtotal) || netUnitPrice * detail.quantity;
 
                             return (
                                 <div key={detail.id || index} className="space-y-0.5 border-b border-border/40 pb-1.5 last:border-b-0 last:pb-0">
@@ -78,14 +80,21 @@ export default function ReceiptModal({ open, transaction, onClose, onNewTransact
                                     </div>
                                     <div className="text-[11px] text-muted-foreground flex justify-between">
                                         <span>
-                                            {detail.quantity} x {formatRupiah(unitPrice)}
+                                            {detail.quantity} x{' '}
+                                            {disc > 0 ? (
+                                                <>
+                                                    <span className="line-through text-muted-foreground/70 mr-1 font-normal">
+                                                        {formatRupiah(unitPrice)}
+                                                    </span>
+                                                    <span className="text-emerald-600 dark:text-emerald-400 font-bold">
+                                                        {formatRupiah(netUnitPrice)}
+                                                    </span>
+                                                </>
+                                            ) : (
+                                                <span>{formatRupiah(unitPrice)}</span>
+                                            )}
                                             {detail.unit_name ? ` (${detail.unit_name})` : ''}
                                         </span>
-                                        {disc > 0 && (
-                                            <span className="text-emerald-600 dark:text-emerald-400 font-semibold">
-                                                - Disc {formatRupiah(disc)}
-                                            </span>
-                                        )}
                                     </div>
                                 </div>
                             );
@@ -96,7 +105,7 @@ export default function ReceiptModal({ open, transaction, onClose, onNewTransact
                     <div className="border-t border-dashed pt-3 space-y-1.5 text-xs sm:text-sm">
                         <div className="flex justify-between text-muted-foreground font-semibold">
                             <span>{t('page.kasir.items_subtotal', 'Subtotal Barang')}</span>
-                            <span className="font-bold text-foreground">{formatRupiah(grossTotal)}</span>
+                            <span className="font-bold text-foreground">{formatRupiah(itemsSubtotal)}</span>
                         </div>
 
                         {discountAmount > 0 && (

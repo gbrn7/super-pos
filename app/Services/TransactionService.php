@@ -130,15 +130,8 @@ class TransactionService implements TransactionServiceInterface
             return DB::transaction(function () use ($data) {
                 $invoiceNumber = 'INV-'.now()->format('Ymd').'-'.strtoupper(Str::random(6));
 
-                $transaction = $this->transactionRepository->create([
-                    'user_id' => Auth::id(),
-                    'payment_method_id' => $data['payment_method_id'],
-                    'invoice_number' => $invoiceNumber,
-                    'total_amount' => $data['total_amount'],
-                    'discount_amount' => $data['discount_amount'] ?? 0,
-                    'payment_amount' => $data['payment_amount'],
-                    'change_amount' => $data['change_amount'],
-                ]);
+                $itemsSubtotal = 0;
+                $validatedItems = [];
 
                 foreach ($data['items'] as $item) {
                     $product = $this->productRepository->getById($item['product_id']);
@@ -154,6 +147,34 @@ class TransactionService implements TransactionServiceInterface
                     if (! $product->is_unlimited && $product->stock < $item['quantity']) {
                         throw new Exception(trans('message.error.out_of_stock'), Response::HTTP_UNPROCESSABLE_ENTITY);
                     }
+
+                    $itemDiscount = $item['discount'] ?? 0;
+                    $itemsSubtotal += ($item['price'] - $itemDiscount) * $item['quantity'];
+
+                    $validatedItems[] = [
+                        'item' => $item,
+                        'product' => $product,
+                    ];
+                }
+
+                $discountAmount = $data['discount_amount'] ?? 0;
+                $totalAmount = max(0, $itemsSubtotal - $discountAmount);
+                $paymentAmount = $data['payment_amount'] ?? 0;
+                $changeAmount = max(0, $paymentAmount - $totalAmount);
+
+                $transaction = $this->transactionRepository->create([
+                    'user_id' => Auth::id(),
+                    'payment_method_id' => $data['payment_method_id'],
+                    'invoice_number' => $invoiceNumber,
+                    'total_amount' => $totalAmount,
+                    'discount_amount' => $discountAmount,
+                    'payment_amount' => $paymentAmount,
+                    'change_amount' => $changeAmount,
+                ]);
+
+                foreach ($validatedItems as $validated) {
+                    $item = $validated['item'];
+                    $product = $validated['product'];
 
                     $this->transactionDetailRepository->create([
                         'transaction_id' => $transaction->id,

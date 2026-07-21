@@ -13,8 +13,8 @@ class CategoryRepository implements CategoryRepositoryInterface
     public function getAllByIndex(GetCategoryReqModel $request): Paginator|Collection
     {
         $query = Category::query()
-            ->orderBy(isset($request->order_by) ? $request->order_by : 'id', isset($request->order)  ? $request->order : 'desc')
-            ->when($request->name, fn($query) => $query->where('name', 'ilike', "%{$request->name}%"));
+            ->orderBy(isset($request->order_by) ? $request->order_by : 'id', isset($request->order) ? $request->order : 'desc')
+            ->when($request->name, fn ($query) => $query->where('name', 'ilike', "%{$request->name}%"));
 
         if ($request->limit === null) {
             return $query->get();

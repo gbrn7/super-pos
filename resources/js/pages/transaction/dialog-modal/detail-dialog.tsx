@@ -77,6 +77,7 @@ export function DetailDialog({
     }
 
     const currentTransaction = detailData || transaction;
+    const discountAmount = Number(currentTransaction.discount_amount || 0);
 
     const handlePrint = () => {
         window.print();
@@ -164,10 +165,11 @@ export function DetailDialog({
                             <Table>
                                 <TableHeader className="bg-muted/50">
                                     <TableRow>
-                                        <TableHead className="w-[40%]">Produk</TableHead>
+                                        <TableHead className="w-[35%]">Produk</TableHead>
                                         <TableHead className="text-center">Satuan</TableHead>
                                         <TableHead className="text-center">Jumlah</TableHead>
                                         <TableHead className="text-right">Harga</TableHead>
+                                        <TableHead className="text-right">Diskon</TableHead>
                                         <TableHead className="text-right">Subtotal</TableHead>
                                     </TableRow>
                                 </TableHeader>
@@ -178,6 +180,7 @@ export function DetailDialog({
                                                 <TableCell><Skeleton className="h-5 w-full" /></TableCell>
                                                 <TableCell><Skeleton className="h-5 w-12 mx-auto" /></TableCell>
                                                 <TableCell><Skeleton className="h-5 w-8 mx-auto" /></TableCell>
+                                                <TableCell><Skeleton className="h-5 w-16 ml-auto" /></TableCell>
                                                 <TableCell><Skeleton className="h-5 w-16 ml-auto" /></TableCell>
                                                 <TableCell><Skeleton className="h-5 w-20 ml-auto" /></TableCell>
                                             </TableRow>
@@ -197,14 +200,23 @@ export function DetailDialog({
                                                 <TableCell className="text-right text-xs">
                                                     {formatRupiah(item.price)}
                                                 </TableCell>
+                                                <TableCell className="text-right text-xs">
+                                                    {item.discount && Number(item.discount) > 0 ? (
+                                                        <span className="text-emerald-600 dark:text-emerald-400 font-semibold">
+                                                            -{formatRupiah(Number(item.discount))}
+                                                        </span>
+                                                    ) : (
+                                                        '-'
+                                                    )}
+                                                </TableCell>
                                                 <TableCell className="text-right font-medium">
-                                                    {formatRupiah(item.subtotal ?? item.price * item.quantity)}
+                                                    {formatRupiah(item.subtotal ?? (Number(item.price) - Number(item.discount || 0)) * item.quantity)}
                                                 </TableCell>
                                             </TableRow>
                                         ))
                                     ) : (
                                         <TableRow>
-                                            <TableCell colSpan={5} className="text-center h-20 text-muted-foreground">
+                                            <TableCell colSpan={6} className="text-center h-20 text-muted-foreground">
                                                 Detail produk tidak tersedia.
                                             </TableCell>
                                         </TableRow>
@@ -216,8 +228,30 @@ export function DetailDialog({
 
                     {/* Financial Summary Breakdown */}
                     <div className="rounded-lg bg-muted/30 p-4 space-y-2 border">
+                        {discountAmount > 0 && (
+                            <div className="flex justify-between items-center text-sm">
+                                <span className="text-muted-foreground">Subtotal Sebelum Diskon</span>
+                                {loading ? (
+                                    <Skeleton className="h-5 w-20" />
+                                ) : (
+                                    <span className="font-medium">
+                                        {formatRupiah(Number(currentTransaction.total_amount) + discountAmount)}
+                                    </span>
+                                )}
+                            </div>
+                        )}
+                        {discountAmount > 0 && (
+                            <div className="flex justify-between items-center text-sm text-emerald-600 dark:text-emerald-400">
+                                <span className="font-medium">Diskon Transaksi</span>
+                                {loading ? (
+                                    <Skeleton className="h-5 w-20" />
+                                ) : (
+                                    <span className="font-bold">- {formatRupiah(discountAmount)}</span>
+                                )}
+                            </div>
+                        )}
                         <div className="flex justify-between items-center text-sm">
-                            <span className="text-muted-foreground">Total Transaksi</span>
+                            <span className="text-muted-foreground font-medium">Total Transaksi</span>
                             {loading ? (
                                 <Skeleton className="h-6 w-24" />
                             ) : (
