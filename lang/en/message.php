@@ -32,7 +32,7 @@ return [
         'blank_category_template_validation' => 'There are blank categories in the template, please check your template.',
         'blank_unit_template_validation' => 'There are blank units in the template, please check your template.',
         'product_not_active' => 'Product is not active',
-        'out_of_stock' => 'Product stock is insufficient',
+        'out_of_stock' => 'Product stock for :product is insufficient',
     ],
 
 ];

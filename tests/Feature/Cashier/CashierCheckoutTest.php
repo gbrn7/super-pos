@@ -219,7 +219,7 @@ test('checkout fails when product is inactive', function () {
 test('checkout fails when product stock is insufficient', function () {
     $user = cashierSetupUser();
     $paymentMethod = PaymentMethod::create(['name' => 'Cash', 'desc' => '', 'image' => '']);
-    $product = Product::factory()->create(['price' => 5000, 'cost_price' => 3000, 'stock' => 2, 'is_unlimited' => false, 'is_active' => true]);
+    $product = Product::factory()->create(['name' => 'Kopi Susu', 'price' => 5000, 'cost_price' => 3000, 'stock' => 2, 'is_unlimited' => false, 'is_active' => true]);
 
     $response = $this->actingAs($user)->postJson('/api/transactions/checkout', [
         'payment_method_id' => $paymentMethod->id,
@@ -240,7 +240,7 @@ test('checkout fails when product stock is insufficient', function () {
     ]);
 
     $response->assertStatus(422);
-    $response->assertJsonPath('message', 'Stok produk tidak mencukupi');
+    $response->assertJsonPath('message', 'Stok produk Kopi Susu tidak mencukupi');
 });
 
 test('checkout recalculates total_amount on backend ignoring tampered input', function () {

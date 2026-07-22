@@ -31,6 +31,6 @@ return [
         'blank_category_template_validation' => 'Terdapat kategori kosong pada templat, silakan periksa kembali templat Anda.',
         'blank_unit_template_validation' => 'Terdapat unit kosong pada templat, silakan periksa kembali templat Anda.',
         'product_not_active' => 'Produk tidak aktif',
-        'out_of_stock' => 'Stok produk tidak mencukupi',
+        'out_of_stock' => 'Stok produk :product tidak mencukupi',
     ],
 ];

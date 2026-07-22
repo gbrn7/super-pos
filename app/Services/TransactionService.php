@@ -145,7 +145,7 @@ class TransactionService implements TransactionServiceInterface
                     }
 
                     if (! $product->is_unlimited && $product->stock < $item['quantity']) {
-                        throw new Exception(trans('message.error.out_of_stock'), Response::HTTP_UNPROCESSABLE_ENTITY);
+                        throw new Exception(trans('message.error.out_of_stock', ['product' => $product->name]), Response::HTTP_UNPROCESSABLE_ENTITY);
                     }
 
                     $itemDiscount = $item['discount'] ?? 0;
