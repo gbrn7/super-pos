@@ -28,7 +28,7 @@
 - Consumes: None (Updates existing checkout flow)
 - Produces: Dynamic translation support for `out_of_stock` error message.
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
   Modify `tests/Feature/Cashier/CashierCheckoutTest.php` lines 219-244:
   ```php
@@ -67,12 +67,12 @@
   });
   ```
 
-- [ ] **Step 2: Run test to verify it fails**
+- [x] **Step 2: Run test to verify it fails**
 
   Run: `php artisan test --compact --filter="checkout fails when product stock is insufficient"`
   Expected: FAIL (recieved: "Stok produk tidak mencukupi")
 
-- [ ] **Step 3: Update translation files**
+- [x] **Step 3: Update translation files**
 
   Modify `lang/id/message.php` at line 34:
   ```php
@@ -84,7 +84,7 @@
           'out_of_stock' => 'Product stock for :product is insufficient',
   ```
 
-- [ ] **Step 4: Update checkout logic in TransactionService.php**
+- [x] **Step 4: Update checkout logic in TransactionService.php**
 
   Modify `app/Services/TransactionService.php` at lines 147-149:
   ```php
@@ -93,21 +93,21 @@
                       }
   ```
 
-- [ ] **Step 5: Format PHP code using Pint**
+- [x] **Step 5: Format PHP code using Pint**
 
   Run: `vendor/bin/pint --dirty --format agent`
 
-- [ ] **Step 6: Run test to verify it passes**
+- [x] **Step 6: Run test to verify it passes**
 
   Run: `php artisan test --compact --filter="checkout fails when product stock is insufficient"`
   Expected: PASS
 
-- [ ] **Step 7: Run all cashier tests to ensure no regressions**
+- [x] **Step 7: Run all cashier tests to ensure no regressions**
 
   Run: `php artisan test --compact tests/Feature/Cashier/CashierCheckoutTest.php`
   Expected: All tests pass
 
-- [ ] **Step 8: Commit the changes**
+- [x] **Step 8: Commit the changes**
 
   Run:
   ```bash
