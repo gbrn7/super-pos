@@ -12938,8 +12938,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "package",
-      "community": 111,
-      "community_name": "axios",
+      "community": 58,
+      "community_name": "package.json Domain (58)",
       "norm_label": "package.json"
     },
     {
@@ -12949,8 +12949,8 @@
       "source_location": "L2",
       "_origin": "ast",
       "id": "package_schema",
-      "community": 111,
-      "community_name": "axios",
+      "community": 58,
+      "community_name": "package.json Domain (58)",
       "norm_label": "$schema"
     },
     {
@@ -12960,8 +12960,8 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "package_private",
-      "community": 111,
-      "community_name": "axios",
+      "community": 58,
+      "community_name": "package.json Domain (58)",
       "norm_label": "private"
     },
     {
@@ -12971,8 +12971,8 @@
       "source_location": "L4",
       "_origin": "ast",
       "id": "package_type",
-      "community": 111,
-      "community_name": "axios",
+      "community": 58,
+      "community_name": "package.json Domain (58)",
       "norm_label": "type"
     },
     {
@@ -13136,8 +13136,8 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "package_devdependencies_stylistic_eslint_plugin",
-      "community": 102,
-      "community_name": "package.json",
+      "community": 53,
+      "community_name": "eslint Domain (53)",
       "norm_label": "@stylistic/eslint-plugin"
     },
     {
@@ -13147,8 +13147,8 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "stylistic_eslint_plugin",
-      "community": 102,
-      "community_name": "package.json",
+      "community": 53,
+      "community_name": "eslint Domain (53)",
       "norm_label": "@stylistic/eslint-plugin"
     },
     {
@@ -13202,8 +13202,8 @@
       "source_location": "L21",
       "_origin": "ast",
       "id": "package_devdependencies_babel_plugin_react_compiler",
-      "community": 53,
-      "community_name": "eslint Domain (53)",
+      "community": 102,
+      "community_name": "package.json",
       "norm_label": "babel-plugin-react-compiler"
     },
     {
@@ -13213,8 +13213,8 @@
       "source_location": "L21",
       "_origin": "ast",
       "id": "babel_plugin_react_compiler",
-      "community": 53,
-      "community_name": "eslint Domain (53)",
+      "community": 102,
+      "community_name": "package.json",
       "norm_label": "babel-plugin-react-compiler"
     },
     {
@@ -13268,8 +13268,8 @@
       "source_location": "L24",
       "_origin": "ast",
       "id": "package_devdependencies_eslint_import_resolver_typescript",
-      "community": 53,
-      "community_name": "eslint Domain (53)",
+      "community": 111,
+      "community_name": "axios",
       "norm_label": "eslint-import-resolver-typescript"
     },
     {
@@ -13279,8 +13279,8 @@
       "source_location": "L24",
       "_origin": "ast",
       "id": "eslint_import_resolver_typescript",
-      "community": 53,
-      "community_name": "eslint Domain (53)",
+      "community": 111,
+      "community_name": "axios",
       "norm_label": "eslint-import-resolver-typescript"
     },
     {
@@ -13312,8 +13312,8 @@
       "source_location": "L26",
       "_origin": "ast",
       "id": "package_devdependencies_eslint_plugin_react",
-      "community": 131,
-      "community_name": "eslint-plugin-react",
+      "community": 53,
+      "community_name": "eslint Domain (53)",
       "norm_label": "eslint-plugin-react"
     },
     {
@@ -13323,8 +13323,8 @@
       "source_location": "L26",
       "_origin": "ast",
       "id": "eslint_plugin_react",
-      "community": 131,
-      "community_name": "eslint-plugin-react",
+      "community": 53,
+      "community_name": "eslint Domain (53)",
       "norm_label": "eslint-plugin-react"
     },
     {
@@ -15039,8 +15039,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "resources_js_components_app_logo_icon",
-      "community": 27,
-      "community_name": "app-header.tsx Domain (27)",
+      "community": 45,
+      "community_name": "API Controllers & Endpoints (45)",
       "norm_label": "app-logo-icon.tsx"
     },
     {
@@ -15050,8 +15050,8 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "resources_js_components_app_logo_icon_applogoicon",
-      "community": 27,
-      "community_name": "app-header.tsx Domain (27)",
+      "community": 45,
+      "community_name": "API Controllers & Endpoints (45)",
       "norm_label": "applogoicon()"
     },
     {
@@ -15061,8 +15061,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "resources_js_components_app_logo",
-      "community": 27,
-      "community_name": "app-header.tsx Domain (27)",
+      "community": 45,
+      "community_name": "API Controllers & Endpoints (45)",
       "norm_label": "app-logo.tsx"
     },
     {
@@ -15072,8 +15072,8 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "resources_js_components_app_logo_applogo",
-      "community": 27,
-      "community_name": "app-header.tsx Domain (27)",
+      "community": 45,
+      "community_name": "API Controllers & Endpoints (45)",
       "norm_label": "applogo()"
     },
     {
@@ -18075,8 +18075,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "resources_js_components_ui_sheet",
-      "community": 45,
-      "community_name": "API Controllers & Endpoints (45)",
+      "community": 27,
+      "community_name": "app-header.tsx Domain (27)",
       "norm_label": "sheet.tsx"
     },
     {
@@ -18086,8 +18086,8 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "resources_js_components_ui_sheet_sheet",
-      "community": 45,
-      "community_name": "API Controllers & Endpoints (45)",
+      "community": 27,
+      "community_name": "app-header.tsx Domain (27)",
       "norm_label": "sheet()"
     },
     {
@@ -18097,8 +18097,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "resources_js_components_ui_sheet_sheettrigger",
-      "community": 45,
-      "community_name": "API Controllers & Endpoints (45)",
+      "community": 27,
+      "community_name": "app-header.tsx Domain (27)",
       "norm_label": "sheettrigger()"
     },
     {
@@ -18108,8 +18108,8 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "resources_js_components_ui_sheet_sheetclose",
-      "community": 45,
-      "community_name": "API Controllers & Endpoints (45)",
+      "community": 27,
+      "community_name": "app-header.tsx Domain (27)",
       "norm_label": "sheetclose()"
     },
     {
@@ -18119,8 +18119,8 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "resources_js_components_ui_sheet_sheetportal",
-      "community": 45,
-      "community_name": "API Controllers & Endpoints (45)",
+      "community": 27,
+      "community_name": "app-header.tsx Domain (27)",
       "norm_label": "sheetportal()"
     },
     {
@@ -18130,8 +18130,8 @@
       "source_location": "L29",
       "_origin": "ast",
       "id": "resources_js_components_ui_sheet_sheetoverlay",
-      "community": 45,
-      "community_name": "API Controllers & Endpoints (45)",
+      "community": 27,
+      "community_name": "app-header.tsx Domain (27)",
       "norm_label": "sheetoverlay()"
     },
     {
@@ -18141,8 +18141,8 @@
       "source_location": "L45",
       "_origin": "ast",
       "id": "resources_js_components_ui_sheet_sheetcontent",
-      "community": 45,
-      "community_name": "API Controllers & Endpoints (45)",
+      "community": 27,
+      "community_name": "app-header.tsx Domain (27)",
       "norm_label": "sheetcontent()"
     },
     {
@@ -18152,8 +18152,8 @@
       "source_location": "L82",
       "_origin": "ast",
       "id": "resources_js_components_ui_sheet_sheetheader",
-      "community": 45,
-      "community_name": "API Controllers & Endpoints (45)",
+      "community": 27,
+      "community_name": "app-header.tsx Domain (27)",
       "norm_label": "sheetheader()"
     },
     {
@@ -18163,8 +18163,8 @@
       "source_location": "L92",
       "_origin": "ast",
       "id": "resources_js_components_ui_sheet_sheetfooter",
-      "community": 45,
-      "community_name": "API Controllers & Endpoints (45)",
+      "community": 27,
+      "community_name": "app-header.tsx Domain (27)",
       "norm_label": "sheetfooter()"
     },
     {
@@ -18174,8 +18174,8 @@
       "source_location": "L102",
       "_origin": "ast",
       "id": "resources_js_components_ui_sheet_sheettitle",
-      "community": 45,
-      "community_name": "API Controllers & Endpoints (45)",
+      "community": 27,
+      "community_name": "app-header.tsx Domain (27)",
       "norm_label": "sheettitle()"
     },
     {
@@ -18185,8 +18185,8 @@
       "source_location": "L115",
       "_origin": "ast",
       "id": "resources_js_components_ui_sheet_sheetdescription",
-      "community": 45,
-      "community_name": "API Controllers & Endpoints (45)",
+      "community": 27,
+      "community_name": "app-header.tsx Domain (27)",
       "norm_label": "sheetdescription()"
     },
     {
@@ -19593,8 +19593,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "resources_js_layouts_auth_layout",
-      "community": 27,
-      "community_name": "app-header.tsx Domain (27)",
+      "community": 45,
+      "community_name": "API Controllers & Endpoints (45)",
       "norm_label": "auth-layout.tsx"
     },
     {
@@ -19604,8 +19604,8 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "resources_js_layouts_auth_layout_authlayout",
-      "community": 27,
-      "community_name": "app-header.tsx Domain (27)",
+      "community": 45,
+      "community_name": "API Controllers & Endpoints (45)",
       "norm_label": "authlayout()"
     },
     {
@@ -19637,8 +19637,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "resources_js_layouts_auth_auth_simple_layout",
-      "community": 27,
-      "community_name": "app-header.tsx Domain (27)",
+      "community": 45,
+      "community_name": "API Controllers & Endpoints (45)",
       "norm_label": "auth-simple-layout.tsx"
     },
     {
@@ -19648,8 +19648,8 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "resources_js_layouts_auth_auth_simple_layout_authsimplelayout",
-      "community": 27,
-      "community_name": "app-header.tsx Domain (27)",
+      "community": 45,
+      "community_name": "API Controllers & Endpoints (45)",
       "norm_label": "authsimplelayout()"
     },
     {
@@ -19659,8 +19659,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "resources_js_layouts_auth_auth_split_layout",
-      "community": 27,
-      "community_name": "app-header.tsx Domain (27)",
+      "community": 45,
+      "community_name": "API Controllers & Endpoints (45)",
       "norm_label": "auth-split-layout.tsx"
     },
     {
@@ -19670,8 +19670,8 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "resources_js_layouts_auth_auth_split_layout_authsplitlayout",
-      "community": 27,
-      "community_name": "app-header.tsx Domain (27)",
+      "community": 45,
+      "community_name": "API Controllers & Endpoints (45)",
       "norm_label": "authsplitlayout()"
     },
     {
@@ -20528,8 +20528,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "resources_js_pages_category_dialog_modal_detail_sheet",
-      "community": 45,
-      "community_name": "API Controllers & Endpoints (45)",
+      "community": 27,
+      "community_name": "app-header.tsx Domain (27)",
       "norm_label": "detail-sheet.tsx"
     },
     {
@@ -20539,8 +20539,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "resources_js_pages_category_dialog_modal_detail_sheet_detailsheetprops",
-      "community": 45,
-      "community_name": "API Controllers & Endpoints (45)",
+      "community": 27,
+      "community_name": "app-header.tsx Domain (27)",
       "norm_label": "detailsheetprops"
     },
     {
@@ -20550,8 +20550,8 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "resources_js_pages_category_dialog_modal_detail_sheet_detailsheet",
-      "community": 45,
-      "community_name": "API Controllers & Endpoints (45)",
+      "community": 27,
+      "community_name": "app-header.tsx Domain (27)",
       "norm_label": "detailsheet()"
     },
     {
@@ -24257,8 +24257,8 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "resources_js_types_ui_authlayoutprops",
-      "community": 27,
-      "community_name": "app-header.tsx Domain (27)",
+      "community": 45,
+      "community_name": "API Controllers & Endpoints (45)",
       "norm_label": "authlayoutprops"
     },
     {
@@ -91403,7 +91403,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "resources/js/pages/cashier/components/cart-item-row.tsx",
-      "source_location": "L283",
+      "source_location": "L287",
       "weight": 1.0,
       "_origin": "ast",
       "source": "resources_js_pages_cashier_components_cart_item_row_cartitemrow",

@@ -1630,8 +1630,8 @@
     "semantic_hash": ""
   },
   "resources/js/pages/cashier/components/receipt-modal.tsx": {
-    "mtime": 1784729595.6802464,
-    "ast_hash": "ebc3fd3b8cc629dd61dc68c0305f6dbc",
+    "mtime": 1784733332.0200078,
+    "ast_hash": "f79bb1b2f5c3aa553876fcd5debef479",
     "semantic_hash": ""
   },
   "resources/js/pages/cashier/components/update-stock-dialog.tsx": {
@@ -2643,5 +2643,35 @@
     "mtime": 1776735671.2772083,
     "ast_hash": "6d65603fc671e2ab354f3ff070494594",
     "semantic_hash": "6d65603fc671e2ab354f3ff070494594"
+  },
+  ".superpowers/brainstorm/33722-1784732657/content/design-options.html": {
+    "mtime": 1784732670.1798759,
+    "ast_hash": "00b1891b2edadc3257c88222c86fc26f",
+    "semantic_hash": ""
+  },
+  ".superpowers/brainstorm/34254-1784732726/content/design-options.html": {
+    "mtime": 1784732738.7579718,
+    "ast_hash": "00b1891b2edadc3257c88222c86fc26f",
+    "semantic_hash": ""
+  },
+  "docs/superpowers/plans/2026-07-22-print-receipt-styling-plan.md": {
+    "mtime": 1784733231.1704087,
+    "ast_hash": "2696b97b8d2e48b75003fe8ba2cc59dd",
+    "semantic_hash": ""
+  },
+  "docs/superpowers/plans/2026-07-22-receipt-modal-overflow-plan.md": {
+    "mtime": 1784731276.0809674,
+    "ast_hash": "b9eed75290d890710674a287d248e6f3",
+    "semantic_hash": ""
+  },
+  "docs/superpowers/specs/2026-07-22-print-receipt-styling-design.md": {
+    "mtime": 1784733198.3676965,
+    "ast_hash": "2390c13ac701cde4e8ac4133dbdc8597",
+    "semantic_hash": ""
+  },
+  "docs/superpowers/specs/2026-07-22-receipt-modal-overflow-design.md": {
+    "mtime": 1784731225.0621598,
+    "ast_hash": "be6b45239bbe7d0c59c1db38fec0649e",
+    "semantic_hash": ""
   }
 }

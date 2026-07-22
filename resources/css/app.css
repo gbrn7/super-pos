@@ -143,30 +143,67 @@
 }
 
 @media print {
-    body * {
-        visibility: hidden;
+    /* Hide the entire background application to prevent layout shifts and blank pages */
+    #app {
+        display: none !important;
     }
+
+    /* Force page background to white and text to black to prevent dark mode color inversion bugs */
+    html,
+    body {
+        background-color: white !important;
+        background-image: none !important;
+        color: black !important;
+        width: 100% !important;
+        height: auto !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    /* Force crisp black text color and transparent background inside the printable receipt */
     #printable-receipt,
     #printable-receipt * {
-        visibility: visible;
-    }
-    #printable-receipt {
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-        max-width: 80mm;
-        border: none !important;
-        background: white !important;
         color: black !important;
+        background-color: transparent !important;
+        background-image: none !important;
+    }
+
+    /* Hide the black/semi-transparent backdrop overlay completely */
+    [data-slot='dialog-overlay'] {
+        display: none !important;
+    }
+
+    /* Hide the dialog close button (x) during print */
+    [data-slot='dialog-close'] {
+        display: none !important;
+    }
+
+    /* Reset the modal content container layout to a block centered horizontally at the top */
+    [data-slot='dialog-content'],
+    div[role='dialog'] {
+        display: block !important;
+        position: relative !important;
+        left: auto !important;
+        right: auto !important;
+        top: 0 !important;
+        transform: none !important;
+        translate: none !important;
+        width: 80mm !important;
+        max-width: 80mm !important;
+        border: none !important;
+        box-shadow: none !important;
+        background: white !important;
+        padding: 0 !important;
+        margin: 0 auto !important;
+    }
+
+    /* Scale the actual printable card to fit the 80mm container */
+    #printable-receipt {
+        border: none !important;
         box-shadow: none !important;
         padding: 0 !important;
         margin: 0 !important;
-    }
-    div[role='dialog'],
-    [data-state='open'] {
-        border: none !important;
-        background: transparent !important;
-        box-shadow: none !important;
+        width: 100% !important;
+        max-width: 80mm !important;
     }
 }

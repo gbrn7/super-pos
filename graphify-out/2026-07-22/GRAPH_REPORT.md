@@ -1,11 +1,11 @@
 # Graph Report - super-pos  (2026-07-22)
 
 ## Corpus Check
-- 523 files · ~150,984 words
+- 523 files · ~150,991 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 2415 nodes · 6880 edges · 281 communities (135 shown, 146 thin omitted)
+- 2415 nodes · 6880 edges · 280 communities (134 shown, 146 thin omitted)
 - Extraction: 97% EXTRACTED · 3% INFERRED · 0% AMBIGUOUS · INFERRED: 217 edges (avg confidence: 0.78)
 - Token cost: 0 input · 0 output
 
@@ -131,7 +131,6 @@
 - eslint-plugin-import
 - input-otp Domain (129)
 - laravel-vite-plugin Domain (130)
-- eslint-plugin-react
 - nuqs Domain (132)
 - radix-ui Domain (133)
 - eslint-plugin-react-hooks
@@ -283,7 +282,7 @@
 - **Laravel Frontend-Backend Integration Stack** — github_skills_wayfinder_development_skill_laravel_wayfinder, agents_inertia_v3_rules, github_skills_tailwindcss_development_skill_tailwind_v4 [INFERRED 0.85]
 - **Laravel Security and Input Validation Pattern** — github_skills_laravel_best_practices_rules_security_mass_assignment_protection, github_skills_laravel_best_practices_rules_validation_form_request_classes, github_skills_laravel_best_practices_rules_routing_thin_controllers [INFERRED 0.85]
 
-## Communities (281 total, 146 thin omitted)
+## Communities (280 total, 146 thin omitted)
 
 ### Community 0 - "API Controllers & Endpoints (0)"
 Cohesion: 0.06
@@ -394,8 +393,8 @@ Cohesion: 0.12
 Nodes (21): AppContent(), Props, AppShell(), Props, AppSidebar(), AppSidebarHeader(), Breadcrumbs(), Breadcrumb() (+13 more)
 
 ### Community 27 - "app-header.tsx Domain (27)"
-Cohesion: 0.11
-Nodes (20): mainNavItems, Props, rightNavItems, AppLogo(), AppLogoIcon(), Avatar(), AvatarFallback(), AvatarImage() (+12 more)
+Cohesion: 0.09
+Nodes (25): mainNavItems, Props, rightNavItems, Avatar(), AvatarFallback(), AvatarImage(), Sheet(), SheetContent() (+17 more)
 
 ### Community 28 - "API Controllers & Endpoints (28)"
 Cohesion: 0.07
@@ -466,8 +465,8 @@ Cohesion: 0.17
 Nodes (6): RoleService, create(), getAllByIndex(), getById(), update(), Illuminate\Http\Resources\Json\AnonymousResourceCollection
 
 ### Community 45 - "API Controllers & Endpoints (45)"
-Cohesion: 0.19
-Nodes (9): Sheet(), SheetContent(), SheetDescription(), SheetFooter(), SheetHeader(), SheetOverlay(), SheetTitle(), SheetTrigger() (+1 more)
+Cohesion: 0.27
+Nodes (4): AppLogo(), AppLogoIcon(), AuthSimpleLayout(), AuthLayoutProps
 
 ### Community 46 - "API Controllers & Endpoints (46)"
 Cohesion: 0.15
@@ -499,7 +498,7 @@ Nodes (17): scripts, lint, lint:check, post-autoload-dump, post-update-cmd, pre-
 
 ### Community 53 - "eslint Domain (53)"
 Cohesion: 0.12
-Nodes (17): babel-plugin-react-compiler, eslint, eslint-config-prettier, eslint-import-resolver-typescript, @eslint/js, @laravel/vite-plugin-wayfinder, devDependencies, babel-plugin-react-compiler (+9 more)
+Nodes (17): eslint, eslint-config-prettier, @eslint/js, eslint-plugin-react, @laravel/vite-plugin-wayfinder, devDependencies, eslint, eslint-config-prettier (+9 more)
 
 ### Community 54 - "drawer.tsx Domain (54)"
 Cohesion: 0.10
@@ -518,8 +517,8 @@ Cohesion: 0.15
 Nodes (13): lightningcss-linux-x64-gnu, lightningcss-win32-x64-msvc, optionalDependencies, lightningcss-linux-x64-gnu, lightningcss-win32-x64-msvc, @rollup/rollup-linux-x64-gnu, @rollup/rollup-win32-x64-msvc, @tailwindcss/oxide-linux-x64-gnu (+5 more)
 
 ### Community 58 - "package.json Domain (58)"
-Cohesion: 0.22
-Nodes (9): scripts, build, build:ssr, dev, format, format:check, lint, lint:check (+1 more)
+Cohesion: 0.15
+Nodes (12): private, $schema, scripts, build, build:ssr, dev, format, format:check (+4 more)
 
 ### Community 60 - "require Domain (60)"
 Cohesion: 0.18
@@ -612,10 +611,6 @@ Nodes (3): Inertia v3 React Client & Server Integration Rules, Laravel Wayfinder
 ### Community 110 - "@base-ui/react Domain (110)"
 Cohesion: 0.50
 Nodes (4): post-create-project-cmd, @php artisan key:generate --ansi, @php artisan migrate --graceful --ansi, @php -r \"file_exists('database/database.sqlite') || touch('database/database.sqlite');\
-
-### Community 111 - "axios"
-Cohesion: 0.50
-Nodes (3): private, $schema, type
 
 ### Community 116 - "@dnd-kit/sortable Domain (116)"
 Cohesion: 0.13
