@@ -15,7 +15,9 @@ export default function ForgotPassword({ status }: { status?: string }) {
     const { t } = useTranslation();
     return (
         <>
-            <Head title={t("page.auth.forgot_password.title", "Lupa Password")} />
+            <Head
+                title={t('page.auth.forgot_password.title', 'Lupa Password')}
+            />
 
             {status && (
                 <div className="mb-4 text-center text-sm font-medium text-green-600">
@@ -28,7 +30,12 @@ export default function ForgotPassword({ status }: { status?: string }) {
                     {({ processing, errors }) => (
                         <>
                             <div className="grid gap-2">
-                                <Label htmlFor="email">{t("page.auth.forgot_password.form.email_input_label", "Email")}</Label>
+                                <Label htmlFor="email">
+                                    {t(
+                                        'page.auth.forgot_password.form.email_input_label',
+                                        'Email',
+                                    )}
+                                </Label>
                                 <Input
                                     id="email"
                                     type="email"
@@ -50,7 +57,10 @@ export default function ForgotPassword({ status }: { status?: string }) {
                                     {processing && (
                                         <LoaderCircle className="h-4 w-4 animate-spin" />
                                     )}
-                                    {t("page.auth.forgot_password.form.confirm_forgot_password_btn", "Tautan setel ulang password email")}
+                                    {t(
+                                        'page.auth.forgot_password.form.confirm_forgot_password_btn',
+                                        'Tautan setel ulang password email',
+                                    )}
                                 </Button>
                             </div>
                         </>
@@ -58,8 +68,15 @@ export default function ForgotPassword({ status }: { status?: string }) {
                 </Form>
 
                 <div className="space-x-1 text-center text-sm text-muted-foreground">
-                    <span>{t("page.auth.forgot_password.or_return_to", "Atau, kembali ke")}</span>
-                    <TextLink href={login()}>{t("page.auth.forgot_password.login_btn", "Log in")}</TextLink>
+                    <span>
+                        {t(
+                            'page.auth.forgot_password.or_return_to',
+                            'Atau, kembali ke',
+                        )}
+                    </span>
+                    <TextLink href={login()}>
+                        {t('page.auth.forgot_password.login_btn', 'Log in')}
+                    </TextLink>
                 </div>
             </div>
         </>
@@ -67,6 +84,12 @@ export default function ForgotPassword({ status }: { status?: string }) {
 }
 
 ForgotPassword.layout = {
-    title: i18next.t("page.auth.forgot_password.title", "Konfirmasi password anda"),
-    description: i18next.t("page.auth.forgot_password.description", "Ini adalah area aman dalam aplikasi. Harap konfirmasi kata sandi Anda sebelum melanjutkan."),
+    title: i18next.t(
+        'page.auth.forgot_password.title',
+        'Konfirmasi password anda',
+    ),
+    description: i18next.t(
+        'page.auth.forgot_password.description',
+        'Ini adalah area aman dalam aplikasi. Harap konfirmasi kata sandi Anda sebelum melanjutkan.',
+    ),
 };

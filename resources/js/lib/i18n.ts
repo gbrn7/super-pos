@@ -1,25 +1,22 @@
-import i18next from 'i18next'
-import { initReactI18next } from 'react-i18next'
-import en from "@/locales/en/translation.json"
-import id from "@/locales/id/translation.json"
-import { LanguageSystem } from '@/constants/Index'
+import i18next from 'i18next';
+import { initReactI18next } from 'react-i18next';
+import en from '@/locales/en/translation.json';
+import id from '@/locales/id/translation.json';
+import { LanguageSystem } from '@/constants/Index';
 
-
-i18next
-  .use(initReactI18next)
-  .init({
+i18next.use(initReactI18next).init({
     resources: {
-      en: {
-        translation: en
-      },
-      id: {
-        translation: id
-      },
+        en: {
+            translation: en,
+        },
+        id: {
+            translation: id,
+        },
     },
     lng: LanguageSystem,
     returnEmptyString: false,
     fallbackLng: 'id',
-    defaultNS: 'translation'
-  })
+    defaultNS: 'translation',
+});
 
-export default i18next
+export default i18next;

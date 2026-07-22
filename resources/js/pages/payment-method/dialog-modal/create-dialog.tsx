@@ -14,13 +14,20 @@ import { Field, FieldGroup } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { store as storePaymentMethod } from '@/routes/apiPaymentMethods';
-import type { PaymentMethodErrorForm, PaymentMethodForm } from '@/support/interfaces/request/paymentMethod';
+import type {
+    PaymentMethodErrorForm,
+    PaymentMethodForm,
+} from '@/support/interfaces/request/paymentMethod';
 import { useTranslation } from 'react-i18next';
 import { Spinner } from '@/components/ui/spinner';
 import axiosInstance from '@/lib/axios';
 import { ResponseApi } from '@/support/interfaces/response/Response';
 import { PaymentMethod } from '@/support/models/paymentMethod';
-import { handleApiError, showSuccessToast, showWarningToast } from '@/lib/utils';
+import {
+    handleApiError,
+    showSuccessToast,
+    showWarningToast,
+} from '@/lib/utils';
 import { PlusCircle } from 'lucide-react';
 import z from 'zod';
 import ErrorFormInfo from '@/components/errorFormInfo';
@@ -41,13 +48,22 @@ export function CreateDialog({ onSuccess }: CreateDialogProps) {
     });
 
     const [errorForm, setErrorForm] = useState<PaymentMethodErrorForm>({
-        name: "",
-        image: "",
-        desc: ""
+        name: '',
+        image: '',
+        desc: '',
     });
 
     const paymentMethodSchema = z.object({
-        name: z.string().trim().min(1, t("validation.paymentMethod.required.name", "Nama tidak boleh kosong")),
+        name: z
+            .string()
+            .trim()
+            .min(
+                1,
+                t(
+                    'validation.paymentMethod.required.name',
+                    'Nama tidak boleh kosong',
+                ),
+            ),
         desc: z.string().trim().nullable(),
         image: z.file().nullable(),
     });
@@ -70,12 +86,10 @@ export function CreateDialog({ onSuccess }: CreateDialogProps) {
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files.length > 0) {
             const file = e.target.files[0];
-            setFormData(
-                (prev) => ({
-                    ...prev,
-                    image: file
-                })
-            )
+            setFormData((prev) => ({
+                ...prev,
+                image: file,
+            }));
             const reader = new FileReader();
             reader.onloadend = () => {
                 setImagePreview(reader.result as string);
@@ -91,9 +105,9 @@ export function CreateDialog({ onSuccess }: CreateDialogProps) {
 
         if (!resultValidation.success) {
             const fieldErrors: PaymentMethodErrorForm = {
-                name: "",
-                image: "",
-                desc: ""
+                name: '',
+                image: '',
+                desc: '',
             };
 
             resultValidation.error.issues.forEach((error) => {
@@ -110,26 +124,29 @@ export function CreateDialog({ onSuccess }: CreateDialogProps) {
         try {
             setLoading(true);
 
-            const res = await axiosInstance.post<ResponseApi<PaymentMethod>>(storePaymentMethod().url, formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
+            const res = await axiosInstance.post<ResponseApi<PaymentMethod>>(
+                storePaymentMethod().url,
+                formData,
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    },
                 },
-            });
-
+            );
 
             if (!res.data.success) {
-                showWarningToast(res.data.message)
-                return
+                showWarningToast(res.data.message);
+                return;
             }
 
-            showSuccessToast(res.data.message)
+            showSuccessToast(res.data.message);
             setFormData({ name: '', image: null, desc: '' });
             setImagePreview('');
             setOpen(false);
             onSuccess();
         } catch (error) {
             console.error('Error creating paymentMethod:', error);
-            handleApiError(error)
+            handleApiError(error);
         } finally {
             setLoading(false);
         }
@@ -140,27 +157,44 @@ export function CreateDialog({ onSuccess }: CreateDialogProps) {
             <DialogTrigger asChild>
                 <Button variant="outline">
                     <PlusCircle className="h-4" />
-                    {t("page.payment_method.dialog_modal.create_dialog.dialog_button", "Tambah Metode Pembayaran")}
+                    {t(
+                        'page.payment_method.dialog_modal.create_dialog.dialog_button',
+                        'Tambah Metode Pembayaran',
+                    )}
                 </Button>
             </DialogTrigger>
             <DialogContent>
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <DialogHeader>
-                        <DialogTitle>{t("page.payment_method.dialog_modal.create_dialog.dialog_title", "Tambah Metode Pembayaran")}</DialogTitle>
+                        <DialogTitle>
+                            {t(
+                                'page.payment_method.dialog_modal.create_dialog.dialog_title',
+                                'Tambah Metode Pembayaran',
+                            )}
+                        </DialogTitle>
                         <DialogDescription>
-                            {t("page.payment_method.dialog_modal.create_dialog.dialog_desc", "Tambahkan metode pembayaran baru anda")}
+                            {t(
+                                'page.payment_method.dialog_modal.create_dialog.dialog_desc',
+                                'Tambahkan metode pembayaran baru anda',
+                            )}
                         </DialogDescription>
                     </DialogHeader>
                     <FieldGroup>
                         <Field>
                             <label htmlFor="name" className="text-sm">
-                                {t("page.payment_method.dialog_modal.create_dialog.name_input_label", "Nama")}
+                                {t(
+                                    'page.payment_method.dialog_modal.create_dialog.name_input_label',
+                                    'Nama',
+                                )}
                                 <span className="text-red-500"> *</span>
                             </label>
                             <Input
                                 id="name"
                                 name="name"
-                                placeholder={t("page.payment_method.dialog_modal.create_dialog.name_input_placeholder", "Masukkan nama metode pembayaran")}
+                                placeholder={t(
+                                    'page.payment_method.dialog_modal.create_dialog.name_input_placeholder',
+                                    'Masukkan nama metode pembayaran',
+                                )}
                                 value={formData.name}
                                 onChange={handleChange}
                                 disabled={loading}
@@ -168,12 +202,14 @@ export function CreateDialog({ onSuccess }: CreateDialogProps) {
                             />
                             {errorForm.name && (
                                 <ErrorFormInfo message={errorForm.name} />
-
                             )}
                         </Field>
                         <Field>
                             <label htmlFor="image" className="text-sm">
-                                {t("page.payment_method.dialog_modal.create_dialog.image_input_label", "Gambar")}
+                                {t(
+                                    'page.payment_method.dialog_modal.create_dialog.image_input_label',
+                                    'Gambar',
+                                )}
                             </label>
                             <Input
                                 id="image"
@@ -186,7 +222,11 @@ export function CreateDialog({ onSuccess }: CreateDialogProps) {
                             />
                             {imagePreview && (
                                 <div className="mt-2">
-                                    <img src={imagePreview} alt="Preview" className="h-32 w-32 object-cover rounded" />
+                                    <img
+                                        src={imagePreview}
+                                        alt="Preview"
+                                        className="h-32 w-32 rounded object-cover"
+                                    />
                                 </div>
                             )}
                             {errorForm.image && (
@@ -195,12 +235,18 @@ export function CreateDialog({ onSuccess }: CreateDialogProps) {
                         </Field>
                         <Field>
                             <label htmlFor="desc" className="text-sm">
-                                {t("page.payment_method.dialog_modal.create_dialog.desc_input_label", "Deskripsi")}
+                                {t(
+                                    'page.payment_method.dialog_modal.create_dialog.desc_input_label',
+                                    'Deskripsi',
+                                )}
                             </label>
                             <Textarea
                                 id="desc"
                                 name="desc"
-                                placeholder={t("page.payment_method.dialog_modal.create_dialog.desc_input_placeholder", "Masukkan deskripsi metode pembayaran (Opsional)")}
+                                placeholder={t(
+                                    'page.payment_method.dialog_modal.create_dialog.desc_input_placeholder',
+                                    'Masukkan deskripsi metode pembayaran (Opsional)',
+                                )}
                                 value={formData.desc}
                                 onChange={handleChange}
                                 disabled={loading}
@@ -208,7 +254,6 @@ export function CreateDialog({ onSuccess }: CreateDialogProps) {
                             />
                             {errorForm.desc && (
                                 <ErrorFormInfo message={errorForm.desc} />
-
                             )}
                         </Field>
                     </FieldGroup>
@@ -220,11 +265,21 @@ export function CreateDialog({ onSuccess }: CreateDialogProps) {
                                 onClick={() => setOpen(false)}
                                 disabled={loading}
                             >
-                                {t("page.payment_method.dialog_modal.create_dialog.cancel_button", "Batal")}
+                                {t(
+                                    'page.payment_method.dialog_modal.create_dialog.cancel_button',
+                                    'Batal',
+                                )}
                             </Button>
                         </DialogClose>
                         <Button type="submit" disabled={loading}>
-                            {loading ? <Spinner /> : t("page.payment_method.dialog_modal.create_dialog.confirm_button", "Tambah")}
+                            {loading ? (
+                                <Spinner />
+                            ) : (
+                                t(
+                                    'page.payment_method.dialog_modal.create_dialog.confirm_button',
+                                    'Tambah',
+                                )
+                            )}
                         </Button>
                     </DialogFooter>
                 </form>

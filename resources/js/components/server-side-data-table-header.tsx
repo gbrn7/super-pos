@@ -1,4 +1,4 @@
-import type {Column} from '@tanstack/react-table';
+import type { Column } from '@tanstack/react-table';
 import { ArrowDown, ArrowUp, ArrowUpDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
@@ -53,15 +53,13 @@ export function ServerSideDataTableHeader<TData, TValue>({
     };
 
     return (
-        <Button
-            variant="ghost"
-            onClick={handleSort}
-            className={className}
-        >
+        <Button variant="ghost" onClick={handleSort} className={className}>
             {title}
-            {sortedOrder === 'asc' || (!sortKey && column.getIsSorted() === 'asc') ? (
+            {sortedOrder === 'asc' ||
+            (!sortKey && column.getIsSorted() === 'asc') ? (
                 <ArrowUp className="ml-2 h-4 w-4" />
-            ) : sortedOrder === 'desc' || (!sortKey && column.getIsSorted() === 'desc') ? (
+            ) : sortedOrder === 'desc' ||
+              (!sortKey && column.getIsSorted() === 'desc') ? (
                 <ArrowDown className="ml-2 h-4 w-4" />
             ) : (
                 <ArrowUpDown className="ml-2 h-4 w-4" />

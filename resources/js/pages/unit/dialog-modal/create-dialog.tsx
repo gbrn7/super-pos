@@ -19,7 +19,11 @@ import { Spinner } from '@/components/ui/spinner';
 import axiosInstance from '@/lib/axios';
 import { ResponseApi } from '@/support/interfaces/response/Response';
 import { Unit } from '@/support/models/unit';
-import { handleApiError, showSuccessToast, showWarningToast } from '@/lib/utils';
+import {
+    handleApiError,
+    showSuccessToast,
+    showWarningToast,
+} from '@/lib/utils';
 import { PlusCircle } from 'lucide-react';
 import z from 'zod';
 import ErrorFormInfo from '@/components/errorFormInfo';
@@ -37,11 +41,17 @@ export function CreateDialog({ onSuccess }: CreateDialogProps) {
     });
 
     const [errorForm, setErrorForm] = useState<UnitForm>({
-        name: "",
+        name: '',
     });
 
     const unitSchema = z.object({
-        name: z.string().trim().min(1, t("validation.unit.required.name", "Nama tidak boleh kosong")),
+        name: z
+            .string()
+            .trim()
+            .min(
+                1,
+                t('validation.unit.required.name', 'Nama tidak boleh kosong'),
+            ),
     });
 
     const handleChange = (
@@ -66,7 +76,7 @@ export function CreateDialog({ onSuccess }: CreateDialogProps) {
 
         if (!resultValidation.success) {
             const fieldErrors: UnitForm = {
-                name: "",
+                name: '',
             };
 
             resultValidation.error.issues.forEach((error) => {
@@ -83,21 +93,23 @@ export function CreateDialog({ onSuccess }: CreateDialogProps) {
         try {
             setLoading(true);
 
-            const res = await axiosInstance.post<ResponseApi<Unit>>(storeUnit().url, formData);
-
+            const res = await axiosInstance.post<ResponseApi<Unit>>(
+                storeUnit().url,
+                formData,
+            );
 
             if (!res.data.success) {
-                showWarningToast(res.data.message)
-                return
+                showWarningToast(res.data.message);
+                return;
             }
 
-            showSuccessToast(res.data.message)
+            showSuccessToast(res.data.message);
             setFormData({ name: '' });
             setOpen(false);
             onSuccess();
         } catch (error) {
             console.error('Error creating unit:', error);
-            handleApiError(error)
+            handleApiError(error);
         } finally {
             setLoading(false);
         }
@@ -108,27 +120,44 @@ export function CreateDialog({ onSuccess }: CreateDialogProps) {
             <DialogTrigger asChild>
                 <Button variant="outline">
                     <PlusCircle className="h-4" />
-                    {t("page.unit.dialog_modal.create_dialog.dialog_button", "Tambah Satuan")}
+                    {t(
+                        'page.unit.dialog_modal.create_dialog.dialog_button',
+                        'Tambah Satuan',
+                    )}
                 </Button>
             </DialogTrigger>
             <DialogContent>
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <DialogHeader>
-                        <DialogTitle>{t("page.unit.dialog_modal.create_dialog.dialog_title", "Tambah Satuan")}</DialogTitle>
+                        <DialogTitle>
+                            {t(
+                                'page.unit.dialog_modal.create_dialog.dialog_title',
+                                'Tambah Satuan',
+                            )}
+                        </DialogTitle>
                         <DialogDescription>
-                            {t("page.unit.dialog_modal.create_dialog.dialog_desc", "Tambahkan satuan baru anda")}
+                            {t(
+                                'page.unit.dialog_modal.create_dialog.dialog_desc',
+                                'Tambahkan satuan baru anda',
+                            )}
                         </DialogDescription>
                     </DialogHeader>
                     <FieldGroup>
                         <Field>
                             <label htmlFor="name" className="text-sm">
-                                {t("page.unit.dialog_modal.create_dialog.name_input_label", "Nama")}
+                                {t(
+                                    'page.unit.dialog_modal.create_dialog.name_input_label',
+                                    'Nama',
+                                )}
                                 <span className="text-red-500"> *</span>
                             </label>
                             <Input
                                 id="name"
                                 name="name"
-                                placeholder={t("page.unit.dialog_modal.create_dialog.name_input_placeholder", "Masukkan nama satuan")}
+                                placeholder={t(
+                                    'page.unit.dialog_modal.create_dialog.name_input_placeholder',
+                                    'Masukkan nama satuan',
+                                )}
                                 value={formData.name}
                                 onChange={handleChange}
                                 disabled={loading}
@@ -136,7 +165,6 @@ export function CreateDialog({ onSuccess }: CreateDialogProps) {
                             />
                             {errorForm.name && (
                                 <ErrorFormInfo message={errorForm.name} />
-
                             )}
                         </Field>
                     </FieldGroup>
@@ -148,11 +176,21 @@ export function CreateDialog({ onSuccess }: CreateDialogProps) {
                                 onClick={() => setOpen(false)}
                                 disabled={loading}
                             >
-                                {t("page.unit.dialog_modal.create_dialog.cancel_button", "Batal")}
+                                {t(
+                                    'page.unit.dialog_modal.create_dialog.cancel_button',
+                                    'Batal',
+                                )}
                             </Button>
                         </DialogClose>
                         <Button type="submit" disabled={loading}>
-                            {loading ? <Spinner /> : t("page.unit.dialog_modal.create_dialog.confirm_button", "Tambah")}
+                            {loading ? (
+                                <Spinner />
+                            ) : (
+                                t(
+                                    'page.unit.dialog_modal.create_dialog.confirm_button',
+                                    'Tambah',
+                                )
+                            )}
                         </Button>
                     </DialogFooter>
                 </form>

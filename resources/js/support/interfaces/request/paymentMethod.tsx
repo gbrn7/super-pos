@@ -1,11 +1,11 @@
 export interface PaymentMethodForm {
-  name: string;
-  desc: string;
-  image: File | null;
+    name: string;
+    desc: string;
+    image: File | null;
 }
 
 export interface PaymentMethodErrorForm {
-  name: string;
-  desc: string;
-  image: string;
+    name: string;
+    desc: string;
+    image: string;
 }

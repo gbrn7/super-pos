@@ -14,11 +14,7 @@ interface DetailSheetProps {
     onOpenChange: (open: boolean) => void;
 }
 
-export function DetailDialog({
-    isOpen,
-    user,
-    onOpenChange,
-}: DetailSheetProps) {
+export function DetailDialog({ isOpen, user, onOpenChange }: DetailSheetProps) {
     const { t } = useTranslation();
 
     if (!user) {
@@ -30,54 +26,64 @@ export function DetailDialog({
             <DialogContent showCloseButton={true}>
                 <DialogHeader>
                     <DialogTitle>
-                        {t("page.user.dialog_modal.detail_dialog.dialog_title", "Detail Kategori")}
+                        {t(
+                            'page.user.dialog_modal.detail_dialog.dialog_title',
+                            'Detail Kategori',
+                        )}
                     </DialogTitle>
                 </DialogHeader>
-                <div className='dialog-body grid center grid-cols-1 md:grid-cols-2'>
+                <div className="dialog-body center grid grid-cols-1 md:grid-cols-2">
                     <div>
                         <p className="text-sm font-medium text-muted-foreground">
-                            {t("page.user.dialog_modal.detail_dialog.name_label", "Nama")}
+                            {t(
+                                'page.user.dialog_modal.detail_dialog.name_label',
+                                'Nama',
+                            )}
                         </p>
                         <p className="mt-1 text-base">{user.name}</p>
                     </div>
 
                     <div>
                         <p className="text-sm font-medium text-muted-foreground">
-                            {t("page.user.dialog_modal.detail_dialog.email_label", "Email")}
+                            {t(
+                                'page.user.dialog_modal.detail_dialog.email_label',
+                                'Email',
+                            )}
+                        </p>
+                        <p className="mt-1 text-base">{user.email}</p>
+                    </div>
+
+                    <div>
+                        <p className="text-sm font-medium text-muted-foreground">
+                            {t(
+                                'page.user.dialog_modal.detail_dialog.role_label',
+                                'Peran',
+                            )}
+                        </p>
+                        <p className="mt-1 text-base">{user.role}</p>
+                    </div>
+
+                    <div>
+                        <p className="text-sm font-medium text-muted-foreground">
+                            {t(
+                                'page.user.dialog_modal.detail_dialog.created_at_label',
+                                'Tanggal Dibuat',
+                            )}
                         </p>
                         <p className="mt-1 text-base">
-                            {user.email}
+                            {formatDate(user.created_at)}
                         </p>
                     </div>
 
                     <div>
                         <p className="text-sm font-medium text-muted-foreground">
-                            {t("page.user.dialog_modal.detail_dialog.role_label", "Peran")}
+                            {t(
+                                'page.user.dialog_modal.detail_dialog.updated_at_label',
+                                'Tanggal Diperbarui',
+                            )}
                         </p>
                         <p className="mt-1 text-base">
-                            {user.role}
-                        </p>
-                    </div>
-
-                    <div>
-                        <p className="text-sm font-medium text-muted-foreground">
-                            {t("page.user.dialog_modal.detail_dialog.created_at_label", "Tanggal Dibuat")}
-                        </p>
-                        <p className="mt-1 text-base">
-                            {
-                                formatDate(user.created_at)
-                            }
-                        </p>
-                    </div>
-
-                    <div>
-                        <p className="text-sm font-medium text-muted-foreground">
-                            {t("page.user.dialog_modal.detail_dialog.updated_at_label", "Tanggal Diperbarui")}
-                        </p>
-                        <p className="mt-1 text-base">
-                            {
-                                formatDate(user.updated_at)
-                            }
+                            {formatDate(user.updated_at)}
                         </p>
                     </div>
                 </div>

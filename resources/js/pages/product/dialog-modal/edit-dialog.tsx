@@ -17,8 +17,16 @@ import { useTranslation } from 'react-i18next';
 import { Spinner } from '@/components/ui/spinner';
 import axiosInstance from '@/lib/axios';
 import { ResponseApi } from '@/support/interfaces/response/Response';
-import { handleApiError, showSuccessToast, showWarningToast } from '@/lib/utils';
-import { ProductErrorForm, ProductForm, ProductSchema } from '@/support/interfaces/request/product';
+import {
+    handleApiError,
+    showSuccessToast,
+    showWarningToast,
+} from '@/lib/utils';
+import {
+    ProductErrorForm,
+    ProductForm,
+    ProductSchema,
+} from '@/support/interfaces/request/product';
 import ErrorFormInfo from '@/components/errorFormInfo';
 import { SearchableSelect } from '@/components/ui/searchable-select';
 import { Unit } from '@/support/models/unit';
@@ -42,12 +50,14 @@ export function EditDialog({
     product,
     setOpen,
     units,
-    categories
+    categories,
 }: EditDialogProps) {
     const { t } = useTranslation();
 
     const [loading, setLoading] = useState<boolean>(false);
-    const [imagePreview, setImagePreview] = useState<string>(product?.image ?? '');
+    const [imagePreview, setImagePreview] = useState<string>(
+        product?.image ?? '',
+    );
 
     const defaultErrorForm: ProductErrorForm = {
         category_id: '',
@@ -60,8 +70,8 @@ export function EditDialog({
         cost_price: '',
         image: '',
         desc: '',
-        barcode: ''
-    }
+        barcode: '',
+    };
 
     const [formData, setFormData] = useState<ProductForm>({
         category_id: product?.category_id ?? 0,
@@ -74,25 +84,28 @@ export function EditDialog({
         cost_price: Number(product?.cost_price) ?? 0,
         desc: product?.desc ?? '',
         barcode: product?.barcode ?? '',
-        image: null
+        image: null,
     });
 
-    const [errorForm, setErrorForm] = useState<ProductErrorForm>(defaultErrorForm);
+    const [errorForm, setErrorForm] =
+        useState<ProductErrorForm>(defaultErrorForm);
 
-    const categoryOptions = useMemo(() =>
-        categories.map((item) => ({
-            label: item.name,
-            value: item.id.toString(),
-        })),
-        [categories]
+    const categoryOptions = useMemo(
+        () =>
+            categories.map((item) => ({
+                label: item.name,
+                value: item.id.toString(),
+            })),
+        [categories],
     );
 
-    const unitOptions = useMemo(() =>
-        units.map((item) => ({
-            label: item.name,
-            value: item.id.toString(),
-        })),
-        [units]
+    const unitOptions = useMemo(
+        () =>
+            units.map((item) => ({
+                label: item.name,
+                value: item.id.toString(),
+            })),
+        [units],
     );
 
     const handleChange = (
@@ -110,17 +123,13 @@ export function EditDialog({
         });
     };
 
-
-
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files.length > 0) {
             const file = e.target.files[0];
-            setFormData(
-                (prev) => ({
-                    ...prev,
-                    image: file
-                })
-            );
+            setFormData((prev) => ({
+                ...prev,
+                image: file,
+            }));
             const reader = new FileReader();
             reader.onloadend = () => {
                 setImagePreview(reader.result as string);
@@ -129,10 +138,9 @@ export function EditDialog({
         }
     };
     const handleSubmit = async (e: React.SubmitEvent) => {
-
         e.preventDefault();
 
-        console.log("formdata", formData);
+        console.log('formdata', formData);
 
         const resultValidation = ProductSchema.safeParse(formData);
         if (!resultValidation.success) {
@@ -149,7 +157,6 @@ export function EditDialog({
             return;
         }
 
-
         try {
             setLoading(true);
 
@@ -159,33 +166,33 @@ export function EditDialog({
                     category_id: formData.category_id,
                     unit_id: formData.unit_id,
                     name: formData.name,
-                    is_active: formData.is_active ? "1" : "0",
-                    is_unlimited: formData.is_unlimited ? "1" : "0",
+                    is_active: formData.is_active ? '1' : '0',
+                    is_unlimited: formData.is_unlimited ? '1' : '0',
                     stock: formData.stock,
                     price: formData.price,
                     cost_price: formData.cost_price,
                     image: formData.image,
                     desc: formData.desc,
-                    barcode: formData.barcode
+                    barcode: formData.barcode,
                 },
                 {
                     headers: {
                         'Content-Type': 'multipart/form-data',
                     },
-                }
+                },
             );
 
             if (!res.data.success) {
-                showWarningToast(res.data.message)
-                return
+                showWarningToast(res.data.message);
+                return;
             }
 
-            showSuccessToast(res.data.message)
+            showSuccessToast(res.data.message);
             setOpen(false);
             onSuccess();
         } catch (error) {
             console.error('Error updating product:', error);
-            handleApiError(error)
+            handleApiError(error);
         } finally {
             setLoading(false);
             setErrorForm(defaultErrorForm);
@@ -194,24 +201,41 @@ export function EditDialog({
 
     return (
         <Dialog open={isOpen} onOpenChange={setOpen}>
-            <DialogContent onOpenAutoFocus={(e) => e.preventDefault()} className='max-w-250! max-h-[90vh] overflow-y-auto'>
+            <DialogContent
+                onOpenAutoFocus={(e) => e.preventDefault()}
+                className="max-h-[90vh] max-w-250! overflow-y-auto"
+            >
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <DialogHeader>
-                        <DialogTitle>{t("page.product.dialog_modal.edit_dialog.dialog_title", "Edit Produk")}</DialogTitle>
+                        <DialogTitle>
+                            {t(
+                                'page.product.dialog_modal.edit_dialog.dialog_title',
+                                'Edit Produk',
+                            )}
+                        </DialogTitle>
                         <DialogDescription>
-                            {t("page.product.dialog_modal.edit_dialog.dialog_desc", "Edit data produk")}
+                            {t(
+                                'page.product.dialog_modal.edit_dialog.dialog_desc',
+                                'Edit data produk',
+                            )}
                         </DialogDescription>
                     </DialogHeader>
-                    <FieldGroup className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <FieldGroup className="grid grid-cols-1 gap-3 md:grid-cols-2">
                         <Field>
                             <label htmlFor="name" className="text-sm">
-                                {t("page.product.dialog_modal.edit_dialog.name_input_label", "Nama")}
+                                {t(
+                                    'page.product.dialog_modal.edit_dialog.name_input_label',
+                                    'Nama',
+                                )}
                                 <span className="text-red-500"> *</span>
                             </label>
                             <Input
                                 id="name"
                                 name="name"
-                                placeholder={t("page.product.dialog_modal.edit_dialog.name_input_placeholder", "Masukkan nama produk")}
+                                placeholder={t(
+                                    'page.product.dialog_modal.edit_dialog.name_input_placeholder',
+                                    'Masukkan nama produk',
+                                )}
                                 value={formData.name}
                                 onChange={handleChange}
                                 disabled={loading}
@@ -223,16 +247,33 @@ export function EditDialog({
                         </Field>
                         <Field>
                             <label htmlFor="unit_id" className="text-sm">
-                                {t("page.product.dialog_modal.edit_dialog.unit_id_input_label", "Satuan")}
+                                {t(
+                                    'page.product.dialog_modal.edit_dialog.unit_id_input_label',
+                                    'Satuan',
+                                )}
                                 <span className="text-red-500"> *</span>
                             </label>
                             <SearchableSelect
                                 options={unitOptions}
                                 value={formData.unit_id?.toString() || ''}
-                                onValueChange={(value) => setFormData((prev) => ({ ...prev, unit_id: Number(value) }))}
-                                placeholder={t("page.product.dialog_modal.edit_dialog.unit_id_input_placeholder", "Pilih satuan produk")}
-                                searchPlaceholder={t("page.product.dialog_modal.edit_dialog.search_unit_placeholder", "Cari satuan...")}
-                                emptyMessage={t("page.product.dialog_modal.edit_dialog.no_unit_found", "Satuan tidak ditemukan.")}
+                                onValueChange={(value) =>
+                                    setFormData((prev) => ({
+                                        ...prev,
+                                        unit_id: Number(value),
+                                    }))
+                                }
+                                placeholder={t(
+                                    'page.product.dialog_modal.edit_dialog.unit_id_input_placeholder',
+                                    'Pilih satuan produk',
+                                )}
+                                searchPlaceholder={t(
+                                    'page.product.dialog_modal.edit_dialog.search_unit_placeholder',
+                                    'Cari satuan...',
+                                )}
+                                emptyMessage={t(
+                                    'page.product.dialog_modal.edit_dialog.no_unit_found',
+                                    'Satuan tidak ditemukan.',
+                                )}
                                 disabled={loading}
                                 className={`${errorForm.unit_id && 'border-red-500'}`}
                             />
@@ -242,14 +283,20 @@ export function EditDialog({
                         </Field>
                         <Field>
                             <label htmlFor="stock" className="text-sm">
-                                {t("page.product.dialog_modal.edit_dialog.stock_input_label", "Stok")}
+                                {t(
+                                    'page.product.dialog_modal.edit_dialog.stock_input_label',
+                                    'Stok',
+                                )}
                                 <span className="text-red-500"> *</span>
                             </label>
                             <NumericFormat
                                 id="stock"
                                 name="stock"
                                 customInput={Input}
-                                placeholder={t("page.product.dialog_modal.edit_dialog.stock_input_placeholder", "Masukkan stok produk")}
+                                placeholder={t(
+                                    'page.product.dialog_modal.edit_dialog.stock_input_placeholder',
+                                    'Masukkan stok produk',
+                                )}
                                 value={formData.stock}
                                 disabled={loading}
                                 onValueChange={(values) => {
@@ -266,26 +313,48 @@ export function EditDialog({
                         </Field>
                         <Field>
                             <label htmlFor="category_id" className="text-sm">
-                                {t("page.product.dialog_modal.edit_dialog.category_id_input_label", "Kategori")}
+                                {t(
+                                    'page.product.dialog_modal.edit_dialog.category_id_input_label',
+                                    'Kategori',
+                                )}
                                 <span className="text-red-500"> *</span>
                             </label>
                             <SearchableSelect
                                 options={categoryOptions}
                                 value={formData.category_id?.toString() || ''}
-                                onValueChange={(value) => setFormData((prev) => ({ ...prev, category_id: Number(value) }))}
-                                placeholder={t("page.product.dialog_modal.edit_dialog.category_id_input_placeholder", "Pilih kategori Produk")}
-                                searchPlaceholder={t("page.product.dialog_modal.edit_dialog.search_category_placeholder", "Cari kategori...")}
-                                emptyMessage={t("page.product.dialog_modal.edit_dialog.no_category_found", "Kategori tidak ditemukan.")}
+                                onValueChange={(value) =>
+                                    setFormData((prev) => ({
+                                        ...prev,
+                                        category_id: Number(value),
+                                    }))
+                                }
+                                placeholder={t(
+                                    'page.product.dialog_modal.edit_dialog.category_id_input_placeholder',
+                                    'Pilih kategori Produk',
+                                )}
+                                searchPlaceholder={t(
+                                    'page.product.dialog_modal.edit_dialog.search_category_placeholder',
+                                    'Cari kategori...',
+                                )}
+                                emptyMessage={t(
+                                    'page.product.dialog_modal.edit_dialog.no_category_found',
+                                    'Kategori tidak ditemukan.',
+                                )}
                                 disabled={loading}
                                 className={`${errorForm.category_id && 'border-red-500'}`}
                             />
                             {errorForm.category_id && (
-                                <ErrorFormInfo message={errorForm.category_id} />
+                                <ErrorFormInfo
+                                    message={errorForm.category_id}
+                                />
                             )}
                         </Field>
                         <Field>
                             <label htmlFor="cost_price" className="text-sm">
-                                {t("page.product.dialog_modal.edit_dialog.cost_price_input_label", "Harga Modal")}
+                                {t(
+                                    'page.product.dialog_modal.edit_dialog.cost_price_input_label',
+                                    'Harga Modal',
+                                )}
                                 <span className="text-red-500"> *</span>
                             </label>
                             <NumericFormat
@@ -295,7 +364,10 @@ export function EditDialog({
                                 thousandSeparator="."
                                 decimalSeparator=","
                                 prefix="Rp "
-                                placeholder={t("page.product.dialog_modal.edit_dialog.cost_price_input_placeholder", "Masukkan harga modal produk")}
+                                placeholder={t(
+                                    'page.product.dialog_modal.edit_dialog.cost_price_input_placeholder',
+                                    'Masukkan harga modal produk',
+                                )}
                                 value={formData.cost_price ?? ''}
                                 onFocus={(e) => e.target.select()}
                                 disabled={loading}
@@ -304,7 +376,10 @@ export function EditDialog({
                                         ...prev,
                                         cost_price: values.floatValue ?? null,
                                     }));
-                                    setErrorForm((prev) => ({ ...prev, cost_price: '' }));
+                                    setErrorForm((prev) => ({
+                                        ...prev,
+                                        cost_price: '',
+                                    }));
                                 }}
                                 className={`${errorForm.cost_price && 'border-red-500'}`}
                             />
@@ -314,7 +389,10 @@ export function EditDialog({
                         </Field>
                         <Field>
                             <label htmlFor="price" className="text-sm">
-                                {t("page.product.dialog_modal.edit_dialog.price_input_label", "Harga Jual")}
+                                {t(
+                                    'page.product.dialog_modal.edit_dialog.price_input_label',
+                                    'Harga Jual',
+                                )}
                                 <span className="text-red-500"> *</span>
                             </label>
                             <NumericFormat
@@ -324,7 +402,10 @@ export function EditDialog({
                                 thousandSeparator="."
                                 decimalSeparator=","
                                 prefix="Rp "
-                                placeholder={t("page.product.dialog_modal.edit_dialog.price_input_placeholder", "Masukkan harga jual produk")}
+                                placeholder={t(
+                                    'page.product.dialog_modal.edit_dialog.price_input_placeholder',
+                                    'Masukkan harga jual produk',
+                                )}
                                 value={formData.price ?? ''}
                                 onFocus={(e) => e.target.select()}
                                 disabled={loading}
@@ -333,7 +414,10 @@ export function EditDialog({
                                         ...prev,
                                         price: values.floatValue ?? null,
                                     }));
-                                    setErrorForm((prev) => ({ ...prev, price: '' }));
+                                    setErrorForm((prev) => ({
+                                        ...prev,
+                                        price: '',
+                                    }));
                                 }}
                                 className={`${errorForm.price && 'border-red-500'}`}
                             />
@@ -343,14 +427,22 @@ export function EditDialog({
                         </Field>
                         <Field>
                             <label htmlFor="is_active" className="text-sm">
-                                {t("page.product.dialog_modal.edit_dialog.is_active_input_label", "Status")}
+                                {t(
+                                    'page.product.dialog_modal.edit_dialog.is_active_input_label',
+                                    'Status',
+                                )}
                                 <span className="text-red-500"> *</span>
                             </label>
                             <Switch
                                 checked={formData.is_active}
                                 id="is_active_input_label"
                                 name="is_active"
-                                onCheckedChange={(value) => setFormData((prev) => ({ ...prev, is_active: value }))}
+                                onCheckedChange={(value) =>
+                                    setFormData((prev) => ({
+                                        ...prev,
+                                        is_active: value,
+                                    }))
+                                }
                                 className={`${errorForm.is_active && 'border-red-500'}`}
                             />
                             {errorForm.is_active && (
@@ -359,28 +451,44 @@ export function EditDialog({
                         </Field>
                         <Field>
                             <label htmlFor="is_unlimited" className="text-sm">
-                                {t("page.product.dialog_modal.edit_dialog.is_unlimited_input_label", "Stok Tidak Terbatas")}
+                                {t(
+                                    'page.product.dialog_modal.edit_dialog.is_unlimited_input_label',
+                                    'Stok Tidak Terbatas',
+                                )}
                                 <span className="text-red-500"> *</span>
                             </label>
                             <Switch
                                 checked={formData.is_unlimited}
                                 id="is_unlimited_input_label"
                                 name="is_unlimited"
-                                onCheckedChange={(value) => setFormData((prev) => ({ ...prev, is_unlimited: value }))}
+                                onCheckedChange={(value) =>
+                                    setFormData((prev) => ({
+                                        ...prev,
+                                        is_unlimited: value,
+                                    }))
+                                }
                                 className={`${errorForm.is_unlimited && 'border-red-500'}`}
                             />
                             {errorForm.is_unlimited && (
-                                <ErrorFormInfo message={errorForm.is_unlimited} />
+                                <ErrorFormInfo
+                                    message={errorForm.is_unlimited}
+                                />
                             )}
                         </Field>
                         <Field>
                             <label htmlFor="barcode" className="text-sm">
-                                {t("page.product.dialog_modal.edit_dialog.barcode_input_label", "Nama")}
+                                {t(
+                                    'page.product.dialog_modal.edit_dialog.barcode_input_label',
+                                    'Nama',
+                                )}
                             </label>
                             <Input
                                 id="barcode"
                                 name="barcode"
-                                placeholder={t("page.product.dialog_modal.edit_dialog.barcode_input_placeholder", "Masukkan barcode produk (Opsional)")}
+                                placeholder={t(
+                                    'page.product.dialog_modal.edit_dialog.barcode_input_placeholder',
+                                    'Masukkan barcode produk (Opsional)',
+                                )}
                                 value={formData.barcode}
                                 onChange={handleChange}
                                 disabled={loading}
@@ -392,7 +500,10 @@ export function EditDialog({
                         </Field>
                         <Field>
                             <label htmlFor="image" className="text-sm">
-                                {t("page.product.dialog_modal.edit_dialog.image_input_label", "Gambar")}
+                                {t(
+                                    'page.product.dialog_modal.edit_dialog.image_input_label',
+                                    'Gambar',
+                                )}
                             </label>
                             <Input
                                 id="image"
@@ -405,7 +516,11 @@ export function EditDialog({
                             />
                             {imagePreview && (
                                 <div className="mt-2">
-                                    <img src={imagePreview} alt="Preview" className="h-32 w-32 object-cover rounded" />
+                                    <img
+                                        src={imagePreview}
+                                        alt="Preview"
+                                        className="h-32 w-32 rounded object-cover"
+                                    />
                                 </div>
                             )}
                             {errorForm.image && (
@@ -414,12 +529,18 @@ export function EditDialog({
                         </Field>
                         <Field>
                             <label htmlFor="desc" className="text-sm">
-                                {t("page.product.dialog_modal.edit_dialog.desc_input_label", "Deskripsi")}
+                                {t(
+                                    'page.product.dialog_modal.edit_dialog.desc_input_label',
+                                    'Deskripsi',
+                                )}
                             </label>
                             <Textarea
                                 id="desc"
                                 name="desc"
-                                placeholder={t("page.product.dialog_modal.edit_dialog.desc_input_placeholder", "Masukkan deskripsi produk (Opsional)")}
+                                placeholder={t(
+                                    'page.product.dialog_modal.edit_dialog.desc_input_placeholder',
+                                    'Masukkan deskripsi produk (Opsional)',
+                                )}
                                 value={formData.desc}
                                 onChange={handleChange}
                                 disabled={loading}
@@ -427,7 +548,6 @@ export function EditDialog({
                             />
                             {errorForm.desc && (
                                 <ErrorFormInfo message={errorForm.desc} />
-
                             )}
                         </Field>
                     </FieldGroup>
@@ -439,11 +559,21 @@ export function EditDialog({
                                 onClick={() => setOpen(false)}
                                 disabled={loading}
                             >
-                                {t("page.product.dialog_modal.edit_dialog.cancel_button", "Batal")}
+                                {t(
+                                    'page.product.dialog_modal.edit_dialog.cancel_button',
+                                    'Batal',
+                                )}
                             </Button>
                         </DialogClose>
                         <Button type="submit" disabled={loading}>
-                            {loading ? <Spinner /> : t("page.product.dialog_modal.edit_dialog.confirm_button", "Edit Produk")}
+                            {loading ? (
+                                <Spinner />
+                            ) : (
+                                t(
+                                    'page.product.dialog_modal.edit_dialog.confirm_button',
+                                    'Edit Produk',
+                                )
+                            )}
                         </Button>
                     </DialogFooter>
                 </form>

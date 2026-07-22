@@ -2,7 +2,11 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { bulkDelete } from '@/routes/apiTransactions';
 import axiosInstance from '@/lib/axios';
-import { handleApiError, showSuccessToast, showWarningToast } from '@/lib/utils';
+import {
+    handleApiError,
+    showSuccessToast,
+    showWarningToast,
+} from '@/lib/utils';
 import type { ResponseApi } from '@/support/interfaces/response/Response';
 import type { Transaction } from '@/support/models/transaction';
 import {
@@ -52,7 +56,10 @@ export function BulkDeleteDialog({
             if (res.data.success) {
                 showSuccessToast(
                     res.data.message ||
-                        t('page.transaction.dialog_modal.bulk_delete_dialog.success_message', 'Transaksi terpilih berhasil dihapus'),
+                        t(
+                            'page.transaction.dialog_modal.bulk_delete_dialog.success_message',
+                            'Transaksi terpilih berhasil dihapus',
+                        ),
                 );
                 setOpen(false);
                 onSuccess();
@@ -75,13 +82,20 @@ export function BulkDeleteDialog({
                     onClick={onBulkDeleteClick}
                 >
                     <Trash2 className="mr-1.5 h-4 w-4" />
-                    {t('component.data_table.bulk_delete_btn', 'Hapus Terpilih')} ({selectedLength})
+                    {t(
+                        'component.data_table.bulk_delete_btn',
+                        'Hapus Terpilih',
+                    )}{' '}
+                    ({selectedLength})
                 </Button>
             </AlertDialogTrigger>
             <AlertDialogContent>
                 <AlertDialogHeader>
                     <AlertDialogTitle>
-                        {t('page.transaction.dialog_modal.bulk_delete_dialog.title', 'Hapus Beberapa Transaksi')}
+                        {t(
+                            'page.transaction.dialog_modal.bulk_delete_dialog.title',
+                            'Hapus Beberapa Transaksi',
+                        )}
                     </AlertDialogTitle>
                     <AlertDialogDescription>
                         {t(
@@ -99,7 +113,9 @@ export function BulkDeleteDialog({
                         onClick={handleBulkDelete}
                         disabled={loading}
                     >
-                        {loading ? t('component.dialog.loading', 'Memproses...') : t('component.dialog.delete_btn', 'Hapus')}
+                        {loading
+                            ? t('component.dialog.loading', 'Memproses...')
+                            : t('component.dialog.delete_btn', 'Hapus')}
                     </Button>
                 </AlertDialogFooter>
             </AlertDialogContent>

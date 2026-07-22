@@ -34,20 +34,21 @@ export default function PaymentMethodDetailDialog({
 
     return (
         <Dialog open={open} onOpenChange={onClose}>
-            <DialogContent className="max-w-sm sm:max-w-md p-5">
+            <DialogContent className="max-w-sm p-5 sm:max-w-md">
                 <DialogHeader className="border-b pb-3">
                     <div className="flex items-center justify-between gap-2">
                         <div className="flex items-center gap-2">
-                            <div className="p-2 bg-primary/10 text-primary rounded-lg shrink-0">
-                                <Banknote className="w-5 h-5" />
+                            <div className="shrink-0 rounded-lg bg-primary/10 p-2 text-primary">
+                                <Banknote className="h-5 w-5" />
                             </div>
-                            <DialogTitle className="text-base sm:text-lg font-extrabold leading-tight">
+                            <DialogTitle className="text-base leading-tight font-extrabold sm:text-lg">
                                 {paymentMethod.name}
                             </DialogTitle>
                         </div>
                         {isSelected && (
-                            <Badge className="bg-emerald-600 text-white font-bold gap-1 text-xs shrink-0">
-                                <Check className="w-3 h-3" /> {t('page.kasir.selected', 'Terpilih')}
+                            <Badge className="shrink-0 gap-1 bg-emerald-600 text-xs font-bold text-white">
+                                <Check className="h-3 w-3" />{' '}
+                                {t('page.kasir.selected', 'Terpilih')}
                             </Badge>
                         )}
                     </div>
@@ -56,52 +57,66 @@ export default function PaymentMethodDetailDialog({
                 <div className="space-y-4 py-2">
                     {/* Gambar (Logo / QR Code) */}
                     {paymentMethod.image ? (
-                        <div className="flex flex-col items-center justify-center p-3 bg-muted/30 rounded-xl border border-dashed">
+                        <div className="flex flex-col items-center justify-center rounded-xl border border-dashed bg-muted/30 p-3">
                             <img
                                 src={paymentMethod.image}
                                 alt={paymentMethod.name}
-                                className="max-h-60 max-w-full object-contain rounded-lg shadow-xs bg-white p-2"
+                                className="max-h-60 max-w-full rounded-lg bg-white object-contain p-2 shadow-xs"
                                 onError={(e) => {
-                                    (e.target as HTMLElement).style.display = 'none';
+                                    (e.target as HTMLElement).style.display =
+                                        'none';
                                 }}
                             />
                         </div>
                     ) : (
-                        <div className="flex flex-col items-center justify-center p-6 bg-muted/20 rounded-xl border border-dashed text-muted-foreground text-center">
-                            <ImageIcon className="w-10 h-10 opacity-30 mb-1" />
-                            <p className="text-xs font-medium">{t('page.kasir.no_payment_image', 'Tidak ada gambar pendukung')}</p>
+                        <div className="flex flex-col items-center justify-center rounded-xl border border-dashed bg-muted/20 p-6 text-center text-muted-foreground">
+                            <ImageIcon className="mb-1 h-10 w-10 opacity-30" />
+                            <p className="text-xs font-medium">
+                                {t(
+                                    'page.kasir.no_payment_image',
+                                    'Tidak ada gambar pendukung',
+                                )}
+                            </p>
                         </div>
                     )}
 
                     {/* Deskripsi / Instruksi Pembayaran */}
                     <div className="space-y-1.5">
-                        <span className="text-xs font-bold text-muted-foreground uppercase tracking-wider block">
-                            {t('page.kasir.payment_method_desc_label', 'Deskripsi / Instruksi:')}
+                        <span className="block text-xs font-bold tracking-wider text-muted-foreground uppercase">
+                            {t(
+                                'page.kasir.payment_method_desc_label',
+                                'Deskripsi / Instruksi:',
+                            )}
                         </span>
-                        <div className="p-3.5 bg-muted/40 rounded-xl border text-xs sm:text-sm text-foreground whitespace-pre-line leading-relaxed font-medium">
-                            {paymentMethod.desc ? paymentMethod.desc : t('page.kasir.no_payment_desc', 'Tidak ada deskripsi tambahan.')}
+                        <div className="rounded-xl border bg-muted/40 p-3.5 text-xs leading-relaxed font-medium whitespace-pre-line text-foreground sm:text-sm">
+                            {paymentMethod.desc
+                                ? paymentMethod.desc
+                                : t(
+                                      'page.kasir.no_payment_desc',
+                                      'Tidak ada deskripsi tambahan.',
+                                  )}
                         </div>
                     </div>
                 </div>
 
-                <DialogFooter className="flex-row gap-2 pt-2 border-t">
+                <DialogFooter className="flex-row gap-2 border-t pt-2">
                     <Button
                         type="button"
                         variant="outline"
-                        className="flex-1 font-bold h-10 text-xs sm:text-sm"
+                        className="h-10 flex-1 text-xs font-bold sm:text-sm"
                         onClick={onClose}
                     >
                         {t('page.kasir.close_btn', 'Tutup')}
                     </Button>
                     <Button
                         type="button"
-                        className="flex-1 font-extrabold h-10 text-xs sm:text-sm bg-primary"
+                        className="h-10 flex-1 bg-primary text-xs font-extrabold sm:text-sm"
                         onClick={() => {
                             onSelect(String(paymentMethod.id));
                             onClose();
                         }}
                     >
-                        <Check className="w-4 h-4 mr-1.5" />
+                        <Check className="mr-1.5 h-4 w-4" />
                         {t('page.kasir.select_this_method', 'Pilih Metode Ini')}
                     </Button>
                 </DialogFooter>

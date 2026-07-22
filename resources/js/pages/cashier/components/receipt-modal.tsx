@@ -1,5 +1,8 @@
-import { Transaction } from '@/support/models/transaction';
-import { formatRupiah } from '@/lib/format-money';
+import dayjs from 'dayjs';
+import { CheckCircle2, Printer, ShoppingBag } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import {
     Dialog,
     DialogContent,
@@ -7,11 +10,8 @@ import {
     DialogHeader,
     DialogTitle,
 } from '@/components/ui/dialog';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { CheckCircle2, Printer, ShoppingBag } from 'lucide-react';
-import { useTranslation } from 'react-i18next';
-import dayjs from 'dayjs';
+import { formatRupiah } from '@/lib/format-money';
+import type { Transaction } from '@/support/models/transaction';
 
 interface ReceiptModalProps {
     open: boolean;
@@ -20,7 +20,12 @@ interface ReceiptModalProps {
     onNewTransaction: () => void;
 }
 
-export default function ReceiptModal({ open, transaction, onClose, onNewTransaction }: ReceiptModalProps) {
+export default function ReceiptModal({
+    open,
+    transaction,
+    onClose,
+    onNewTransaction,
+}: ReceiptModalProps) {
     const { t } = useTranslation();
 
     if (!transaction) {
@@ -34,9 +39,10 @@ export default function ReceiptModal({ open, transaction, onClose, onNewTransact
         : dayjs().format('DD/MM/YYYY HH:mm');
 
     const details = transaction.details ?? [];
-    const totalItemDiscounts = details.reduce((acc, detail) => acc + (Number(detail.discount) || 0) * detail.quantity, 0);
-    const itemsSubtotal = details.reduce((acc, detail) => acc + (Number(detail.subtotal) || 0), 0);
-    const grossTotal = details.reduce((acc, detail) => acc + (Number(detail.price) || 0) * detail.quantity, 0);
+    const itemsSubtotal = details.reduce(
+        (acc, detail) => acc + (Number(detail.subtotal) || 0),
+        0,
+    );
     const discountAmount = Number(transaction.discount_amount ?? 0);
 
     return (
@@ -44,56 +50,87 @@ export default function ReceiptModal({ open, transaction, onClose, onNewTransact
             <DialogContent className="max-w-sm sm:max-w-md">
                 <DialogHeader className="print:hidden">
                     <div className="flex flex-col items-center gap-3 pt-2">
-                        <div className="bg-emerald-100 dark:bg-emerald-900/30 rounded-full p-3">
-                            <CheckCircle2 className="w-8 h-8 text-emerald-600 dark:text-emerald-400" />
+                        <div className="rounded-full bg-emerald-100 p-3 dark:bg-emerald-900/30">
+                            <CheckCircle2 className="h-8 w-8 text-emerald-600 dark:text-emerald-400" />
                         </div>
                         <DialogTitle className="text-center text-lg font-extrabold">
-                            {t('page.kasir.checkout_success', 'Transaksi Berhasil!')}
+                            {t(
+                                'page.kasir.checkout_success',
+                                'Transaksi Berhasil!',
+                            )}
                         </DialogTitle>
                     </div>
                 </DialogHeader>
 
                 {/* Printable Receipt Card */}
-                <div className="bg-card rounded-xl p-4 sm:p-5 space-y-3 font-mono text-sm border border-dashed shadow-xs">
+                <div
+                    id="printable-receipt"
+                    className="space-y-3 rounded-xl border border-dashed bg-card p-4 font-mono text-sm shadow-xs sm:p-5"
+                >
                     {/* Store header */}
-                    <div className="text-center border-b border-dashed pb-3 space-y-1">
-                        <p className="font-black text-base tracking-wide uppercase">Super POS</p>
-                        <p className="text-xs text-muted-foreground font-semibold">{createdAt}</p>
-                        <Badge variant="outline" className="text-[10px] font-mono font-bold mt-1 px-2">
+                    <div className="space-y-1 border-b border-dashed pb-3 text-center">
+                        <p className="text-base font-black tracking-wide uppercase">
+                            Super POS
+                        </p>
+                        <p className="text-xs font-semibold text-muted-foreground">
+                            {createdAt}
+                        </p>
+                        <Badge
+                            variant="outline"
+                            className="mt-1 px-2 font-mono text-[10px] font-bold"
+                        >
                             {transaction.invoice_number}
                         </Badge>
                     </div>
 
                     {/* Items List */}
-                    <div className="space-y-2 py-1">
+                    <div className="scrollbar-thin max-h-[30vh] space-y-2 overflow-y-auto py-1 pr-1.5 print:max-h-none print:overflow-visible print:pr-0">
                         {details.map((detail, index) => {
                             const disc = Number(detail.discount) || 0;
                             const unitPrice = Number(detail.price) || 0;
                             const netUnitPrice = Math.max(0, unitPrice - disc);
-                            const subtotalVal = Number(detail.subtotal) || netUnitPrice * detail.quantity;
+                            const subtotalVal =
+                                Number(detail.subtotal) ||
+                                netUnitPrice * detail.quantity;
 
                             return (
-                                <div key={detail.id || index} className="space-y-0.5 border-b border-border/40 pb-1.5 last:border-b-0 last:pb-0">
-                                    <div className="flex justify-between gap-2 font-bold text-xs sm:text-sm">
-                                        <span className="truncate flex-1">{detail.product_name || `Barang #${detail.product_id}`}</span>
-                                        <span className="text-right shrink-0">{formatRupiah(subtotalVal)}</span>
+                                <div
+                                    key={detail.id || index}
+                                    className="space-y-0.5 border-b border-border/40 pb-1.5 last:border-b-0 last:pb-0"
+                                >
+                                    <div className="flex justify-between gap-2 text-xs font-bold sm:text-sm">
+                                        <span className="flex-1 truncate">
+                                            {detail.product_name ||
+                                                `Barang #${detail.product_id}`}
+                                        </span>
+                                        <span className="shrink-0 text-right">
+                                            {formatRupiah(subtotalVal)}
+                                        </span>
                                     </div>
-                                    <div className="text-[11px] text-muted-foreground flex justify-between">
+                                    <div className="flex justify-between text-[11px] text-muted-foreground">
                                         <span>
                                             {detail.quantity} x{' '}
                                             {disc > 0 ? (
                                                 <>
-                                                    <span className="line-through text-muted-foreground/70 mr-1 font-normal">
-                                                        {formatRupiah(unitPrice)}
+                                                    <span className="mr-1 font-normal text-muted-foreground/70 line-through">
+                                                        {formatRupiah(
+                                                            unitPrice,
+                                                        )}
                                                     </span>
-                                                    <span className="text-emerald-600 dark:text-emerald-400 font-bold">
-                                                        {formatRupiah(netUnitPrice)}
+                                                    <span className="font-bold text-emerald-600 dark:text-emerald-400">
+                                                        {formatRupiah(
+                                                            netUnitPrice,
+                                                        )}
                                                     </span>
                                                 </>
                                             ) : (
-                                                <span>{formatRupiah(unitPrice)}</span>
+                                                <span>
+                                                    {formatRupiah(unitPrice)}
+                                                </span>
                                             )}
-                                            {detail.unit_name ? ` (${detail.unit_name})` : ''}
+                                            {detail.unit_name
+                                                ? ` (${detail.unit_name})`
+                                                : ''}
                                         </span>
                                     </div>
                                 </div>
@@ -102,44 +139,88 @@ export default function ReceiptModal({ open, transaction, onClose, onNewTransact
                     </div>
 
                     {/* Totals Summary */}
-                    <div className="border-t border-dashed pt-3 space-y-1.5 text-xs sm:text-sm">
-                        <div className="flex justify-between text-muted-foreground font-semibold">
-                            <span>{t('page.kasir.items_subtotal', 'Subtotal Barang')}</span>
-                            <span className="font-bold text-foreground">{formatRupiah(itemsSubtotal)}</span>
+                    <div className="space-y-1.5 border-t border-dashed pt-3 text-xs sm:text-sm">
+                        <div className="flex justify-between font-semibold text-muted-foreground">
+                            <span>
+                                {t(
+                                    'page.kasir.items_subtotal',
+                                    'Subtotal Barang',
+                                )}
+                            </span>
+                            <span className="font-bold text-foreground">
+                                {formatRupiah(itemsSubtotal)}
+                            </span>
                         </div>
 
                         {discountAmount > 0 && (
-                            <div className="flex justify-between text-emerald-600 dark:text-emerald-400 font-bold">
-                                <span>{t('page.kasir.total_discount_label', 'Potongan / Diskon')}</span>
+                            <div className="flex justify-between font-bold text-emerald-600 dark:text-emerald-400">
+                                <span>
+                                    {t(
+                                        'page.kasir.total_discount_label',
+                                        'Potongan / Diskon',
+                                    )}
+                                </span>
                                 <span>- {formatRupiah(discountAmount)}</span>
                             </div>
                         )}
 
-                        <div className="flex justify-between font-black text-sm sm:text-base pt-1 border-t text-foreground">
-                            <span>{t('page.kasir.grand_total_label', 'Grand Total')}</span>
-                            <span className="text-emerald-600 dark:text-emerald-400">{formatRupiah(Number(transaction.total_amount))}</span>
+                        <div className="flex justify-between border-t pt-1 text-sm font-black text-foreground sm:text-base">
+                            <span>
+                                {t(
+                                    'page.kasir.grand_total_label',
+                                    'Grand Total',
+                                )}
+                            </span>
+                            <span className="text-emerald-600 dark:text-emerald-400">
+                                {formatRupiah(Number(transaction.total_amount))}
+                            </span>
                         </div>
 
-                        <div className="flex justify-between text-muted-foreground font-semibold pt-0.5">
-                            <span>{t('page.kasir.payment_amount_label', 'Nominal Diterima')}</span>
-                            <span className="font-bold text-foreground">{formatRupiah(Number(transaction.payment_amount))}</span>
+                        <div className="flex justify-between pt-0.5 font-semibold text-muted-foreground">
+                            <span>
+                                {t(
+                                    'page.kasir.payment_amount_label',
+                                    'Nominal Diterima',
+                                )}
+                            </span>
+                            <span className="font-bold text-foreground">
+                                {formatRupiah(
+                                    Number(transaction.payment_amount),
+                                )}
+                            </span>
                         </div>
 
                         <div className="flex justify-between font-bold text-primary">
-                            <span>{t('page.kasir.change_label', 'Kembalian:')}</span>
-                            <span className="font-black">{formatRupiah(Number(transaction.change_amount))}</span>
+                            <span>
+                                {t('page.kasir.change_label', 'Kembalian:')}
+                            </span>
+                            <span className="font-black">
+                                {formatRupiah(
+                                    Number(transaction.change_amount),
+                                )}
+                            </span>
                         </div>
 
                         {transaction.payment_method_name && (
-                            <div className="flex justify-between text-xs text-muted-foreground pt-1 border-t border-border/50">
-                                <span>{t('page.kasir.payment_method_label', 'Metode Pembayaran')}</span>
-                                <span className="font-bold text-foreground">{transaction.payment_method_name}</span>
+                            <div className="flex justify-between border-t border-border/50 pt-1 text-xs text-muted-foreground">
+                                <span>
+                                    {t(
+                                        'page.kasir.payment_method_label',
+                                        'Metode Pembayaran',
+                                    )}
+                                </span>
+                                <span className="font-bold text-foreground">
+                                    {transaction.payment_method_name}
+                                </span>
                             </div>
                         )}
                     </div>
 
-                    <p className="text-center text-[11px] text-muted-foreground border-t border-dashed pt-3 font-semibold">
-                        {t('page.kasir.receipt_thank_you', 'Terima kasih atas kunjungan Anda!')}
+                    <p className="border-t border-dashed pt-3 text-center text-[11px] font-semibold text-muted-foreground">
+                        {t(
+                            'page.kasir.receipt_thank_you',
+                            'Terima kasih atas kunjungan Anda!',
+                        )}
                     </p>
                 </div>
 
@@ -148,19 +229,19 @@ export default function ReceiptModal({ open, transaction, onClose, onNewTransact
                         type="button"
                         variant="outline"
                         size="sm"
-                        className="flex-1 gap-1.5 font-bold h-10"
+                        className="h-10 flex-1 gap-1.5 font-bold"
                         onClick={() => window.print()}
                     >
-                        <Printer className="w-4 h-4" />
+                        <Printer className="h-4 w-4" />
                         {t('page.kasir.print_btn', 'Print')}
                     </Button>
                     <Button
                         type="button"
                         size="sm"
-                        className="flex-1 gap-1.5 font-extrabold bg-emerald-600 hover:bg-emerald-700 text-white h-10"
+                        className="h-10 flex-1 gap-1.5 bg-emerald-600 font-extrabold text-white hover:bg-emerald-700"
                         onClick={onNewTransaction}
                     >
-                        <ShoppingBag className="w-4 h-4" />
+                        <ShoppingBag className="h-4 w-4" />
                         {t('page.kasir.new_transaction', 'Transaksi Baru')}
                     </Button>
                 </DialogFooter>

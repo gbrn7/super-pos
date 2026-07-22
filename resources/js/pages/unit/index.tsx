@@ -16,13 +16,9 @@ import type { RowSelectionState } from '@tanstack/react-table';
 
 const { url } = units();
 
-
 export default function Index() {
-
-
     const { url: apiUrl } = apiGetUnits();
-    const { t } = useTranslation()
-
+    const { t } = useTranslation();
 
     const [allUnits, setAllUnits] = useState<Unit[]>([]);
     const [processing, setProcessing] = useState(false);
@@ -30,9 +26,7 @@ export default function Index() {
     const [editOpen, setEditOpen] = useState(false);
     const [deleteOpen, setDeleteOpen] = useState(false);
     const [bulkDeleteOpen, setBulkDeleteOpen] = useState(false);
-    const [selectedUnit, setSelectedUnit] = useState<Unit | null>(
-        null,
-    );
+    const [selectedUnit, setSelectedUnit] = useState<Unit | null>(null);
     const [selectedUnits, setSelectedUnits] = useState<Unit[]>([]);
     const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
 
@@ -41,15 +35,15 @@ export default function Index() {
             setProcessing(true);
             const res = await axiosInstance.get<ResponseApi<Unit[]>>(apiUrl);
             if (!res.data.success) {
-                showWarningToast(res.data.message)
-                return
+                showWarningToast(res.data.message);
+                return;
             }
             setAllUnits(res.data.data);
         } catch (error) {
-            handleApiError(error)
+            handleApiError(error);
         } finally {
             setProcessing(false);
-            setSelectedUnits([])
+            setSelectedUnits([]);
         }
     };
 
@@ -81,10 +75,10 @@ export default function Index() {
 
     return (
         <>
-            <Head title={t("page.unit.page_name", "Kategori")} />
+            <Head title={t('page.unit.page_name', 'Kategori')} />
             <div className="mb-16 flex h-full flex-1 flex-col overflow-x-auto rounded-xl p-4">
                 <HeaderContent>
-                    {t("page.unit.page_name", "Kategori")}
+                    {t('page.unit.page_name', 'Kategori')}
                 </HeaderContent>
                 <DataTable
                     columns={columns}
@@ -117,7 +111,7 @@ export default function Index() {
 Index.layout = {
     breadcrumbs: [
         {
-            title: i18next.t("page.unit.page_name", "Kategori"),
+            title: i18next.t('page.unit.page_name', 'Kategori'),
             href: url,
         },
     ],

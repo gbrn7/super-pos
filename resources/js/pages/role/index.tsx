@@ -16,11 +16,9 @@ import type { RowSelectionState } from '@tanstack/react-table';
 
 const { url } = roles();
 
-
 export default function index() {
     const { url: apiUrl } = apiGetRoles();
-    const { t } = useTranslation()
-
+    const { t } = useTranslation();
 
     const [allRoles, setAllRoles] = useState<Role[]>([]);
     const [processing, setProcessing] = useState(false);
@@ -28,9 +26,7 @@ export default function index() {
     const [editOpen, setEditOpen] = useState(false);
     const [deleteOpen, setDeleteOpen] = useState(false);
     const [bulkDeleteOpen, setBulkDeleteOpen] = useState(false);
-    const [selectedRole, setSelectedRole] = useState<Role | null>(
-        null,
-    );
+    const [selectedRole, setSelectedRole] = useState<Role | null>(null);
     const [selectedRoles, setSelectedRoles] = useState<Role[]>([]);
     const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
 
@@ -39,15 +35,15 @@ export default function index() {
             setProcessing(true);
             const res = await axiosInstance.get<ResponseApi<Role[]>>(apiUrl);
             if (!res.data.success) {
-                showWarningToast(res.data.message)
-                return
+                showWarningToast(res.data.message);
+                return;
             }
             setAllRoles(res.data.data);
         } catch (error) {
-            handleApiError(error)
+            handleApiError(error);
         } finally {
             setProcessing(false);
-            setSelectedRoles([])
+            setSelectedRoles([]);
         }
     };
 
@@ -79,10 +75,10 @@ export default function index() {
 
     return (
         <>
-            <Head title={t("page.role.page_name", "Peran")} />
+            <Head title={t('page.role.page_name', 'Peran')} />
             <div className="mb-16 flex h-full flex-1 flex-col overflow-x-auto rounded-xl p-4">
                 <HeaderContent>
-                    {t("page.role.page_name", "Peran")}
+                    {t('page.role.page_name', 'Peran')}
                 </HeaderContent>
                 <DataTable
                     columns={columns}
@@ -111,7 +107,7 @@ export default function index() {
 index.layout = {
     breadcrumbs: [
         {
-            title: i18next.t("page.role.page_name", "Peran"),
+            title: i18next.t('page.role.page_name', 'Peran'),
             href: url,
         },
     ],

@@ -141,3 +141,32 @@
         @apply bg-background text-foreground;
     }
 }
+
+@media print {
+    body * {
+        visibility: hidden;
+    }
+    #printable-receipt,
+    #printable-receipt * {
+        visibility: visible;
+    }
+    #printable-receipt {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        max-width: 80mm;
+        border: none !important;
+        background: white !important;
+        color: black !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+    div[role='dialog'],
+    [data-state='open'] {
+        border: none !important;
+        background: transparent !important;
+        box-shadow: none !important;
+    }
+}

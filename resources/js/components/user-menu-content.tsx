@@ -18,7 +18,7 @@ type Props = {
 };
 
 export function UserMenuContent({ user }: Props) {
-    const { t } = useTranslation()
+    const { t } = useTranslation();
     const cleanup = useMobileNavigation();
 
     const handleLogout = () => {
@@ -43,7 +43,7 @@ export function UserMenuContent({ user }: Props) {
                         onClick={cleanup}
                     >
                         <Settings className="mr-2" />
-                        {t("page.settings.title", "Pengaturan")}
+                        {t('page.settings.title', 'Pengaturan')}
                     </Link>
                 </DropdownMenuItem>
             </DropdownMenuGroup>
@@ -57,7 +57,7 @@ export function UserMenuContent({ user }: Props) {
                     data-test="logout-button"
                 >
                     <LogOut className="mr-2" />
-                    {t("page.settings.log_out_menu", "Log out")}
+                    {t('page.settings.log_out_menu', 'Log out')}
                 </Link>
             </DropdownMenuItem>
         </>

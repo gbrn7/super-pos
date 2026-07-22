@@ -28,7 +28,10 @@ export const columns = (props?: ColumnsProps): ColumnDef<Transaction>[] => {
 
     return [
         {
-            id: t('page.transaction.data_table.columns.select_column_label', 'Pilih'),
+            id: t(
+                'page.transaction.data_table.columns.select_column_label',
+                'Pilih',
+            ),
             header: ({ table }) => (
                 <Checkbox
                     checked={
@@ -52,14 +55,20 @@ export const columns = (props?: ColumnsProps): ColumnDef<Transaction>[] => {
             enableHiding: false,
         },
         {
-            id: t('page.transaction.data_table.columns.invoice_number_column_label', 'No. Invoice'),
+            id: t(
+                'page.transaction.data_table.columns.invoice_number_column_label',
+                'No. Invoice',
+            ),
             accessorKey: 'invoice_number',
             size: 240,
             minSize: 200,
             header: ({ column }) => (
                 <ServerSideDataTableHeader
                     column={column}
-                    title={t('page.transaction.data_table.columns.invoice_number_column_label', 'No. Invoice')}
+                    title={t(
+                        'page.transaction.data_table.columns.invoice_number_column_label',
+                        'No. Invoice',
+                    )}
                     sortKey="invoice_number"
                     orderBy={props?.orderBy}
                     order={props?.order}
@@ -70,20 +79,29 @@ export const columns = (props?: ColumnsProps): ColumnDef<Transaction>[] => {
                 <button
                     type="button"
                     onClick={() => props?.onDetailClick(row.original)}
-                    className="whitespace-nowrap font-mono text-sm font-semibold text-primary hover:underline hover:text-primary/80 focus:outline-none cursor-pointer transition-colors text-left"
-                    title={t('component.data_table.action_menu.detail_data_btn', 'Detail data')}
+                    className="cursor-pointer text-left font-mono text-sm font-semibold whitespace-nowrap text-primary transition-colors hover:text-primary/80 hover:underline focus:outline-none"
+                    title={t(
+                        'component.data_table.action_menu.detail_data_btn',
+                        'Detail data',
+                    )}
                 >
                     {row.original.invoice_number}
                 </button>
             ),
         },
         {
-            id: t('page.transaction.data_table.columns.user_name_column_label', 'Kasir / Petugas'),
+            id: t(
+                'page.transaction.data_table.columns.user_name_column_label',
+                'Kasir / Petugas',
+            ),
             accessorKey: 'user_name',
             header: ({ column }) => (
                 <ServerSideDataTableHeader
                     column={column}
-                    title={t('page.transaction.data_table.columns.user_name_column_label', 'Kasir / Petugas')}
+                    title={t(
+                        'page.transaction.data_table.columns.user_name_column_label',
+                        'Kasir / Petugas',
+                    )}
                     sortKey="user_id"
                     orderBy={props?.orderBy}
                     order={props?.order}
@@ -93,12 +111,18 @@ export const columns = (props?: ColumnsProps): ColumnDef<Transaction>[] => {
             cell: ({ row }) => row.original.user_name || '-',
         },
         {
-            id: t('page.transaction.data_table.columns.payment_method_column_label', 'Metode Pembayaran'),
+            id: t(
+                'page.transaction.data_table.columns.payment_method_column_label',
+                'Metode Pembayaran',
+            ),
             accessorKey: 'payment_method_name',
             header: ({ column }) => (
                 <ServerSideDataTableHeader
                     column={column}
-                    title={t('page.transaction.data_table.columns.payment_method_column_label', 'Metode Pembayaran')}
+                    title={t(
+                        'page.transaction.data_table.columns.payment_method_column_label',
+                        'Metode Pembayaran',
+                    )}
                     sortKey="payment_method_name"
                     orderBy={props?.orderBy}
                     order={props?.order}
@@ -108,12 +132,18 @@ export const columns = (props?: ColumnsProps): ColumnDef<Transaction>[] => {
             cell: ({ row }) => row.original.payment_method_name || '-',
         },
         {
-            id: t('page.transaction.data_table.columns.total_amount_column_label', 'Total Transaksi'),
+            id: t(
+                'page.transaction.data_table.columns.total_amount_column_label',
+                'Total Transaksi',
+            ),
             accessorKey: 'total_amount',
             header: ({ column }) => (
                 <ServerSideDataTableHeader
                     column={column}
-                    title={t('page.transaction.data_table.columns.total_amount_column_label', 'Total Transaksi')}
+                    title={t(
+                        'page.transaction.data_table.columns.total_amount_column_label',
+                        'Total Transaksi',
+                    )}
                     sortKey="total_amount"
                     orderBy={props?.orderBy}
                     order={props?.order}
@@ -127,12 +157,18 @@ export const columns = (props?: ColumnsProps): ColumnDef<Transaction>[] => {
             ),
         },
         {
-            id: t('page.transaction.data_table.columns.payment_amount_column_label', 'Bayar'),
+            id: t(
+                'page.transaction.data_table.columns.payment_amount_column_label',
+                'Bayar',
+            ),
             accessorKey: 'payment_amount',
             header: ({ column }) => (
                 <ServerSideDataTableHeader
                     column={column}
-                    title={t('page.transaction.data_table.columns.payment_amount_column_label', 'Bayar')}
+                    title={t(
+                        'page.transaction.data_table.columns.payment_amount_column_label',
+                        'Bayar',
+                    )}
                     sortKey="payment_amount"
                     orderBy={props?.orderBy}
                     order={props?.order}
@@ -142,12 +178,18 @@ export const columns = (props?: ColumnsProps): ColumnDef<Transaction>[] => {
             cell: ({ row }) => formatRupiah(row.original.payment_amount),
         },
         {
-            id: t('page.transaction.data_table.columns.change_amount_column_label', 'Kembali'),
+            id: t(
+                'page.transaction.data_table.columns.change_amount_column_label',
+                'Kembali',
+            ),
             accessorKey: 'change_amount',
             header: ({ column }) => (
                 <ServerSideDataTableHeader
                     column={column}
-                    title={t('page.transaction.data_table.columns.change_amount_column_label', 'Kembali')}
+                    title={t(
+                        'page.transaction.data_table.columns.change_amount_column_label',
+                        'Kembali',
+                    )}
                     sortKey="change_amount"
                     orderBy={props?.orderBy}
                     order={props?.order}
@@ -157,12 +199,18 @@ export const columns = (props?: ColumnsProps): ColumnDef<Transaction>[] => {
             cell: ({ row }) => formatRupiah(row.original.change_amount),
         },
         {
-            id: t('page.transaction.data_table.columns.created_at_column_label', 'Tanggal & Waktu'),
+            id: t(
+                'page.transaction.data_table.columns.created_at_column_label',
+                'Tanggal & Waktu',
+            ),
             accessorKey: 'created_at',
             header: ({ column }) => (
                 <ServerSideDataTableHeader
                     column={column}
-                    title={t('page.transaction.data_table.columns.created_at_column_label', 'Tanggal & Waktu')}
+                    title={t(
+                        'page.transaction.data_table.columns.created_at_column_label',
+                        'Tanggal & Waktu',
+                    )}
                     sortKey="created_at"
                     orderBy={props?.orderBy}
                     order={props?.order}
@@ -172,32 +220,47 @@ export const columns = (props?: ColumnsProps): ColumnDef<Transaction>[] => {
             cell: ({ row }) => {
                 const dateVal = row.original.created_at;
                 if (!dateVal) return '-';
-                const formatted = typeof dateVal === 'number'
-                    ? dayjs.unix(dateVal).format('DD/MM/YYYY HH:mm')
-                    : dayjs(dateVal).format('DD/MM/YYYY HH:mm');
+                const formatted =
+                    typeof dateVal === 'number'
+                        ? dayjs.unix(dateVal).format('DD/MM/YYYY HH:mm')
+                        : dayjs(dateVal).format('DD/MM/YYYY HH:mm');
                 return <span className="whitespace-nowrap">{formatted}</span>;
             },
         },
         {
-            id: t('page.transaction.data_table.columns.actions_column_label', 'Aksi'),
+            id: t(
+                'page.transaction.data_table.columns.actions_column_label',
+                'Aksi',
+            ),
             enableSorting: false,
             cell: ({ row }) => (
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                         <Button variant="ghost" className="h-8 w-8 p-0">
                             <span className="sr-only">
-                                {t('component.data_table.action_menu.trigger_btn_label', 'Buka Menu')}
+                                {t(
+                                    'component.data_table.action_menu.trigger_btn_label',
+                                    'Buka Menu',
+                                )}
                             </span>
                             <MoreHorizontal className="h-4 w-4" />
                         </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
                         <DropdownMenuLabel>
-                            {t('component.data_table.action_menu.label', 'Aksi')}
+                            {t(
+                                'component.data_table.action_menu.label',
+                                'Aksi',
+                            )}
                         </DropdownMenuLabel>
-                        <DropdownMenuItem onClick={() => props?.onDetailClick(row.original)}>
+                        <DropdownMenuItem
+                            onClick={() => props?.onDetailClick(row.original)}
+                        >
                             <FileText className="mr-2 h-4 w-4 text-blue-500" />
-                            {t('component.data_table.action_menu.detail_data_btn', 'Detail data')}
+                            {t(
+                                'component.data_table.action_menu.detail_data_btn',
+                                'Detail data',
+                            )}
                         </DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>

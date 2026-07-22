@@ -1,1085 +1,1085 @@
 {
-  "validation": {
-    "category": {
-      "required": {
-        "name": "Name cannot be empty",
-        "file": "Excel file import cannot be empty"
-      }
+    "validation": {
+        "category": {
+            "required": {
+                "name": "Name cannot be empty",
+                "file": "Excel file import cannot be empty"
+            }
+        },
+        "role": {
+            "required": {
+                "name": "Name cannot be empty",
+                "permissions": "At least one permission must be selected"
+            },
+            "array": {
+                "permissions": "Permissions must be an array"
+            }
+        },
+        "user": {
+            "required": {
+                "name": "Name cannot be empty",
+                "email": "Email cannot be empty",
+                "password": "Password cannot be empty",
+                "password_confirmation": "Password confirmation cannot be empty",
+                "role": "Role cannot be empty"
+            },
+            "email": {
+                "invalid": "Email not valid"
+            }
+        },
+        "unit": {
+            "required": {
+                "name": "Name cannot be empty"
+            }
+        },
+        "payment_method": {
+            "required": {
+                "name": "Name cannot be empty"
+            }
+        },
+        "product": {
+            "required": {
+                "name": "Name is required",
+                "category_id": "Category is required",
+                "unit_id": "Unit is required",
+                "is_active": "Status is required",
+                "stock": "Stock is required",
+                "min_stock": "Minimum stock is 0",
+                "price": "Price is required",
+                "min_price": "Minimum selling price is Rp 0",
+                "cost_price": "Cost price is required",
+                "min_cost_price": "Minimum cost price is Rp 0"
+            }
+        },
+        "master_product": {
+            "required": {
+                "name": "Name cannot be empty",
+                "min_price": "Minimum selling price is Rp 0",
+                "min_cost_price": "Minimum cost price is Rp 0"
+            }
+        }
     },
-    "role": {
-      "required": {
-        "name": "Name cannot be empty",
-        "permissions": "At least one permission must be selected"
-      },
-      "array": {
-        "permissions": "Permissions must be an array"
-      }
+    "permission_label": {
+        "category": {
+            "permission": "Access Category Feature",
+            "create": "Create Category",
+            "read": "Read Category",
+            "update": "Edit Category",
+            "delete": "Delete Category"
+        },
+        "role": {
+            "permission": "Access Role Feature",
+            "create": "Create Role",
+            "read": "Read Role",
+            "update": "Edit Role",
+            "delete": "Delete Role"
+        },
+        "dashboard": {
+            "permission": "Access Dashboard Feature",
+            "read": "Read Dashboard"
+        },
+        "unit": {
+            "permission": "Access Unit Feature",
+            "create": "Create Unit",
+            "read": "Read Unit",
+            "update": "Update Unit",
+            "delete": "Delete Unit"
+        },
+        "payment_method": {
+            "permission": "Access Payment Feature Method",
+            "create": "Create Payment Method",
+            "read": "Read Payment Method",
+            "update": "Update Payment Method",
+            "delete": "Delete Payment Method"
+        },
+        "product": {
+            "permission": "Access Product Feature",
+            "create": "Create Product",
+            "read": "Read Product",
+            "update": "Update Product",
+            "delete": "Delete Product"
+        },
+        "master_product": {
+            "permission": "Access Master Product Feature",
+            "create": "Create Master Product",
+            "read": "Read Master Product",
+            "update": "Edit Master Product",
+            "delete": "Delete Master Product"
+        },
+        "transaction": {
+            "permission": "Access Transaction Feature",
+            "create": "Create Transaction",
+            "read": "Read Transaction",
+            "update": "Edit Transaction",
+            "delete": "Delete Transaction"
+        }
     },
-    "user": {
-      "required": {
-        "name": "Name cannot be empty",
-        "email": "Email cannot be empty",
-        "password": "Password cannot be empty",
-        "password_confirmation": "Password confirmation cannot be empty",
-        "role": "Role cannot be empty"
-      },
-      "email": {
-        "invalid": "Email not valid"
-      }
+    "component": {
+        "sidebar": {
+            "group_main": "Main",
+            "group_sales": "Sales & Transactions",
+            "group_inventory": "Products & Inventory",
+            "group_system": "System & Settings",
+            "dashboard_menu_label": "Dashboard",
+            "example_menu_label": "Example",
+            "category_menu_label": "Category",
+            "product_menu_label": "Product",
+            "master_product_menu_label": "Master Product",
+            "payment_method_menu_label": "Payment Method",
+            "role_menu_label": "Role",
+            "user_menu_label": "User",
+            "unit_menu_label": "Unit",
+            "transaction_menu_label": "Transaction",
+            "kasir_menu_label": "Cashier",
+            "product_management_menu_label": "Product Management",
+            "user_management_menu_label": "User Management"
+        },
+        "data_table": {
+            "search_component": {
+                "search_by": "Search By",
+                "default": "Default",
+                "name": "Name",
+                "sku": "SKU",
+                "category": "Category",
+                "unit": "Unit",
+                "barcode": "Barcode",
+                "description": "Description",
+                "guard_name": "Guard Name",
+                "placeholder": "Search"
+            },
+            "filter": {
+                "category_placeholder": "Select Category",
+                "category_label": "Category",
+                "product_placeholder": "Select Product",
+                "product_label": "Product",
+                "unit_placeholder": "Select Unit",
+                "unit_label": "Unit",
+                "status_placeholder": "Select Status",
+                "status_label": "Status",
+                "all_status_label": "All Status",
+                "status_active_label": "Active",
+                "status_inactive_label": "Inactive",
+                "stock_type_placeholder": "Select Stock Type",
+                "stock_label": "Stock Type",
+                "limitted_stock_label": "Limited",
+                "unlimited_stock_label": "Unlimited",
+                "is_available_stock_placholder": "Select Stock Status",
+                "is_available_stock_label": "Stock Status",
+                "available_stock_label": "Available",
+                "unavailable_stock_label": "Unavailable"
+            },
+            "export": {
+                "label": "Export",
+                "export_excel_btn": "Export Excel",
+                "export_pdf_btn": "Export PDF"
+            },
+            "columns": {
+                "label": "Columns"
+            },
+            "action_menu": {
+                "label": "Action",
+                "trigger_btn_label": "Open Menu",
+                "detail_data_btn": "Detail Data",
+                "edit_data_btn": "Edit Data",
+                "delete_data_btn": "Delete Data"
+            },
+            "no_result": "No results found",
+            "row_per_page": "Rows per page",
+            "selected_row": "%d of %d row(s) selected",
+            "pagination_info": "Page %d of %d"
+        }
     },
-    "unit": {
-      "required": {
-        "name": "Name cannot be empty"
-      }
+    "page": {
+        "auth": {
+            "confirm_password": {
+                "form": {
+                    "password_input_label": "Password",
+                    "confirm_password_btn": "Confirm Password"
+                },
+                "title": "Confirm your password",
+                "deskripsi": "This is a secure area of the application. Please confirm your password before continuing."
+            },
+            "forgot_password": {
+                "form": {
+                    "email_input_label": "Email",
+                    "confirm_forgot_password_btn": "Email Password Reset Link"
+                },
+                "title": "Forgot Password",
+                "description": "Enter your email to receive a password reset link.",
+                "or_return_to": "Or, return to",
+                "login_btn": "Log in"
+            },
+            "login": {
+                "form": {
+                    "email_input_label": "Email",
+                    "password_input_label": "Password",
+                    "login_btn": "Log in"
+                },
+                "title": "Log in to your account",
+                "description": "Enter your email and password below to log in.",
+                "remember_me": "Remember me",
+                "dont_have_account": "Don't have an account?",
+                "signup_btn": "Sign up",
+                "forgot_password_link": "Forgot password?"
+            },
+            "register": {
+                "form": {
+                    "name_input_label": "Name",
+                    "email_input_label": "Email",
+                    "password_input_label": "Password",
+                    "confirm_password_input_label": "Confirm Password",
+                    "confirm_register_btn": "Create Account"
+                },
+                "title": "Create your account",
+                "description": "Enter your details below to create your account.",
+                "remember_me": "Remember me",
+                "already_have_account": "Already have an account?",
+                "login_btn": "Log in"
+            },
+            "reset_password": {
+                "form": {
+                    "email_input_label": "Email",
+                    "password_input_label": "Password",
+                    "confirm_password_input_label": "Confirm Password",
+                    "reset_btn": "Reset Password"
+                },
+                "title": "Reset Password",
+                "description": "Please enter your new password below."
+            },
+            "two_factor_challenge": {
+                "title": "Two Factor Authentication",
+                "form": {
+                    "recovery_code_input_label": "Recovery Code",
+                    "recovery_code_input_placeholder": "Enter Recovery Code",
+                    "logout_btn": "Log out"
+                },
+                "recovery_code": {
+                    "title": "Recovery Code",
+                    "description": "Please confirm access to your account by entering one of your emergency recovery codes.",
+                    "toggle_text": "log in using authentication code"
+                },
+                "authentication_code": {
+                    "title": "Authentication Code",
+                    "description": "Enter the authentication code provided by your authentication application.",
+                    "toggle_text": "log in using recovery code"
+                },
+                "continue_btn": "Continue",
+                "or_you_can": "or you can"
+            },
+            "email_verification": {
+                "form": {
+                    "resend_email_btn": "Resend Verification Email",
+                    "logout_btn": "Log out"
+                },
+                "title": "Email Verification",
+                "description": "Please verify your email address by clicking the link we just emailed to you.",
+                "info": "A new verification link has been sent to the email address you provided during registration."
+            }
+        },
+        "dashboard": {
+            "title": "Dashboard"
+        },
+        "unit": {
+            "page_name": "Unit",
+            "data_table": {
+                "columns": {
+                    "select_column_label": "Select",
+                    "name_column_label": "Name",
+                    "created_at_column_label": "Created At",
+                    "updated_at_column_label": "Updated At",
+                    "actions_column_label": "Actions"
+                }
+            },
+            "dialog_modal": {
+                "create_dialog": {
+                    "dialog_button": "Add Data",
+                    "dialog_title": "Add Unit",
+                    "dialog_desc": "Add a new unit for your product",
+                    "name_input_label": "Name",
+                    "name_input_placeholder": "Enter unit name",
+                    "cancel_button": "Cancel",
+                    "confirm_button": "Add Unit"
+                },
+                "edit_dialog": {
+                    "dialog_button": "Edit Data",
+                    "dialog_title": "Edit Unit",
+                    "dialog_desc": "Edit unit data",
+                    "name_input_label": "Name",
+                    "name_input_placeholder": "Enter unit name",
+                    "cancel_button": "Cancel",
+                    "confirm_button": "Edit Unit"
+                },
+                "detail_dialog": {
+                    "dialog_button": "Detail Data",
+                    "dialog_title": "Detail Unit",
+                    "dialog_desc": "Detail unit data",
+                    "name_label": "Name",
+                    "created_at_label": "Created At",
+                    "updated_at_label": "Updated At"
+                },
+                "delete_dialog": {
+                    "dialog_button": "Delete Data",
+                    "dialog_title": "Delete Unit",
+                    "dialog_desc": "Are you sure you want to delete this data?",
+                    "cancel_button": "Cancel",
+                    "confirm_button": "Delete Unit"
+                },
+                "bulk_delete_dialog": {
+                    "dialog_button": "Delete",
+                    "dialog_title": "Delete %d units",
+                    "dialog_desc": "Are you sure you want to delete %d units?",
+                    "cancel_button": "Cancel",
+                    "confirm_button": "Delete Units"
+                }
+            }
+        },
+        "category": {
+            "page_name": "Category",
+            "data_table": {
+                "columns": {
+                    "select_column_label": "Select",
+                    "name_column_label": "Name",
+                    "desc_column_label": "Description",
+                    "created_at_column_label": "Created At",
+                    "updated_at_column_label": "Updated At",
+                    "actions_column_label": "Actions"
+                }
+            },
+            "dialog_modal": {
+                "create_dialog": {
+                    "dialog_button": "Add Data",
+                    "dialog_title": "Add Category",
+                    "dialog_desc": "Add a new category for your product",
+                    "name_input_label": "Name",
+                    "name_input_placeholder": "Enter category name",
+                    "desc_input_label": "Description",
+                    "desc_input_placeholder": "Enter category description (Optional)",
+                    "cancel_button": "Cancel",
+                    "confirm_button": "Add Category"
+                },
+                "edit_dialog": {
+                    "dialog_button": "Edit Data",
+                    "dialog_title": "Edit Category",
+                    "dialog_desc": "Edit category data",
+                    "name_input_label": "Name",
+                    "name_input_placeholder": "Enter category name",
+                    "desc_input_label": "Description",
+                    "desc_input_placeholder": "Enter category description (Optional)",
+                    "cancel_button": "Cancel",
+                    "confirm_button": "Edit Category"
+                },
+                "detail_dialog": {
+                    "dialog_button": "Detail Data",
+                    "dialog_title": "Category Detail",
+                    "dialog_desc": "Category detail data",
+                    "name_label": "Name",
+                    "desc_label": "Description",
+                    "created_at_label": "Created Date",
+                    "updated_at_label": "Updated Date"
+                },
+                "delete_dialog": {
+                    "dialog_button": "Delete Data",
+                    "dialog_title": "Delete Category",
+                    "dialog_desc": "Are you sure you want to delete this data?",
+                    "cancel_button": "Cancel",
+                    "confirm_button": "Delete Category"
+                },
+                "bulk_delete_dialog": {
+                    "dialog_button": "Delete",
+                    "dialog_title": "Delete %d categories",
+                    "dialog_desc": "Are you sure you want to delete %d categories?",
+                    "cancel_button": "Cancel",
+                    "confirm_button": "Delete Category"
+                },
+                "import_excel_dialog": {
+                    "dialog_button": "Import Excel",
+                    "dialog_title": "Import Excel",
+                    "dialog_desc": "Import category data from Excel file",
+                    "template_label": "Template",
+                    "category_template_file": "Category data import template file",
+                    "file_excel_label": "Excel File",
+                    "cancel_button": "Cancel",
+                    "confirm_button": "Import"
+                }
+            }
+        },
+        "product": {
+            "page_name": "Product",
+            "data_table": {
+                "columns": {
+                    "select_column_label": "Select",
+                    "name_column_label": "Name",
+                    "sku_column_label": "SKU",
+                    "barcode_column_label": "Barcode",
+                    "category_column_label": "Category",
+                    "unit_column_label": "Unit",
+                    "stock_column_label": "Stock",
+                    "price_column_label": "SellingPrice",
+                    "cost_price_column_label": "Cost Price",
+                    "is_active_column_label": "Status",
+                    "is_unlimited_column_label": "Stock Type",
+                    "created_at_column_label": "Created At",
+                    "updated_at_column_label": "Updated At",
+                    "actions_column_label": "Actions"
+                }
+            },
+            "is_active": {
+                "active": "Active",
+                "inactive": "Inactive"
+            },
+            "is_unlimited": {
+                "Limited": "Limited",
+                "Unlimited": "Unlimited"
+            },
+            "dialog_modal": {
+                "create_dialog": {
+                    "dialog_button": "Add Data",
+                    "dialog_title": "Add Product",
+                    "dialog_desc": "Add a new product",
+                    "name_input_label": "Name",
+                    "name_input_placeholder": "Enter product name",
+                    "image_input_label": "Image",
+                    "image_input_placeholder": "Upload product image",
+                    "unit_id_input_label": "Unit",
+                    "unit_id_input_placeholder": "Select product unit",
+                    "category_id_input_label": "Category",
+                    "category_id_input_placeholder": "Select product category",
+                    "stock_input_label": "Stock",
+                    "stock_input_placeholder": "Enter product stock",
+                    "cost_price_input_label": "Cost Price",
+                    "cost_price_input_placeholder": "Enter product cost price",
+                    "price_input_label": "Price",
+                    "price_input_placeholder": "Enter product price",
+                    "is_active_input_label": "Status",
+                    "is_unlimited_input_label": "Stock Status",
+                    "desc_input_label": "Description",
+                    "desc_input_placeholder": "Enter product description",
+                    "barcode_input_label": "Barcode",
+                    "barcode_input_placeholder": "Enter product barcode",
+                    "cancel_button": "Cancel",
+                    "confirm_button": "Add Product"
+                },
+                "edit_dialog": {
+                    "dialog_button": "Edit Data",
+                    "dialog_title": "Edit Product",
+                    "dialog_desc": "Edit product data",
+                    "name_input_label": "Name",
+                    "name_input_placeholder": "Enter product name",
+                    "image_input_label": "Image",
+                    "image_input_placeholder": "Upload product image",
+                    "unit_id_input_label": "Unit",
+                    "unit_id_input_placeholder": "Select product unit",
+                    "category_id_input_label": "Category",
+                    "category_id_input_placeholder": "Select product category",
+                    "stock_input_label": "Stock",
+                    "stock_input_placeholder": "Enter product stock",
+                    "cost_price_input_label": "Cost Price",
+                    "cost_price_input_placeholder": "Enter product cost price",
+                    "price_input_label": "Price",
+                    "price_input_placeholder": "Enter product price",
+                    "is_active_input_label": "Status",
+                    "is_unlimited_input_label": "Stock Status",
+                    "desc_input_label": "Description",
+                    "desc_input_placeholder": "Enter product description",
+                    "barcode_input_label": "Barcode",
+                    "barcode_input_placeholder": "Enter product barcode",
+                    "cancel_button": "Cancel",
+                    "confirm_button": "Update Product"
+                },
+                "detail_dialog": {
+                    "dialog_button": "View Details",
+                    "dialog_title": "Product Details",
+                    "dialog_desc": "Product information",
+                    "name_label": "Name",
+                    "barcode_label": "Barcode",
+                    "sku_label": "SKU",
+                    "category_name_label": "Category",
+                    "unit_label": "Unit",
+                    "stock_label": "Stock",
+                    "cost_price_label": "Cost Price",
+                    "price_label": "Selling Price",
+                    "image_label": "Image",
+                    "is_active_label": "Status",
+                    "is_unlimited_label": "Stock Type",
+                    "desc_label": "Description",
+                    "created_at_label": "Created At",
+                    "updated_at_label": "Updated At"
+                },
+                "delete_dialog": {
+                    "dialog_button": "Delete Data",
+                    "dialog_title": "Delete Product",
+                    "dialog_desc": "Are you sure you want to delete this product?",
+                    "cancel_button": "Cancel",
+                    "confirm_button": "Delete Product"
+                },
+                "bulk_delete_dialog": {
+                    "dialog_button": "Delete",
+                    "dialog_title": "Delete %d Products",
+                    "dialog_desc": "Are you sure you want to delete %d products?",
+                    "cancel_button": "Cancel",
+                    "confirm_button": "Delete Products"
+                },
+                "import_excel_dialog": {
+                    "dialog_button": "Import Excel",
+                    "dialog_title": "Import Excel",
+                    "dialog_desc": "Import product data from an Excel file",
+                    "template_label": "Template",
+                    "product_template_file": "Product data import template file",
+                    "file_excel_label": "Excel File",
+                    "cancel_button": "Cancel",
+                    "confirm_button": "Import"
+                }
+            }
+        },
+        "master_product": {
+            "page_name": "Master Product",
+            "is_added": {
+                "added": "Added",
+                "not_added": "Not Added"
+            },
+            "data_table": {
+                "columns": {
+                    "select_column_label": "Select",
+                    "name_column_label": "Name",
+                    "barcode_column_label": "Barcode",
+                    "category_column_label": "Category",
+                    "unit_column_label": "Unit",
+                    "price_column_label": "Selling Price",
+                    "cost_price_column_label": "Cost Price",
+                    "created_at_column_label": "Created At",
+                    "updated_at_column_label": "Updated At",
+                    "is_added_column_label": "Status",
+                    "add_product_column_label": "Add Product",
+                    "actions_column_label": "Actions"
+                }
+            },
+            "dialog_modal": {
+                "create_dialog": {
+                    "dialog_button": "Add Data",
+                    "dialog_title": "Add Master Product",
+                    "dialog_desc": "Add your new master product",
+                    "name_input_label": "Name",
+                    "name_input_placeholder": "Enter master product name",
+                    "unit_name_input_label": "Unit",
+                    "unit_name_input_placeholder": "Enter master product unit",
+                    "category_name_input_label": "Category",
+                    "category_name_input_placeholder": "Enter master product category",
+                    "cost_price_input_label": "Cost Price",
+                    "cost_price_input_placeholder": "Enter master product cost price",
+                    "price_input_label": "Selling Price",
+                    "price_input_placeholder": "Enter master product selling price",
+                    "desc_input_label": "Description",
+                    "desc_input_placeholder": "Enter master product description",
+                    "barcode_input_label": "Barcode",
+                    "barcode_input_placeholder": "Enter master product barcode",
+                    "cancel_button": "Cancel",
+                    "confirm_button": "Add Master Product"
+                },
+                "edit_dialog": {
+                    "dialog_button": "Edit Data",
+                    "dialog_title": "Edit Master Product",
+                    "dialog_desc": "Edit master product",
+                    "name_input_label": "Name",
+                    "name_input_placeholder": "Enter master product name",
+                    "unit_name_input_label": "Unit",
+                    "unit_name_input_placeholder": "Enter master product unit",
+                    "category_name_input_label": "Category",
+                    "category_name_input_placeholder": "Enter master product category",
+                    "cost_price_input_label": "Cost Price",
+                    "cost_price_input_placeholder": "Enter master product cost price",
+                    "price_input_label": "Selling Price",
+                    "price_input_placeholder": "Enter master product selling price",
+                    "desc_input_label": "Description",
+                    "desc_input_placeholder": "Enter master product description",
+                    "barcode_input_label": "Barcode",
+                    "barcode_input_placeholder": "Enter master product barcode",
+                    "cancel_button": "Cancel",
+                    "confirm_button": "Edit Master Product"
+                },
+                "detail_dialog": {
+                    "dialog_button": "Detail Data",
+                    "dialog_title": "Master Product Detail",
+                    "dialog_desc": "Master product detail data",
+                    "name_label": "Name",
+                    "barcode_label": "Barcode",
+                    "category_name_label": "Category",
+                    "unit_label": "Unit",
+                    "cost_price_label": "Cost Price",
+                    "price_label": "Selling Price",
+                    "desc_label": "Description",
+                    "created_at_label": "Created At",
+                    "updated_at_label": "Updated At"
+                },
+                "delete_dialog": {
+                    "dialog_button": "Delete Data",
+                    "dialog_title": "Delete Master Product",
+                    "dialog_desc": "Are you sure you want to delete this data?",
+                    "cancel_button": "Cancel",
+                    "confirm_button": "Delete Master Product"
+                },
+                "bulk_delete_dialog": {
+                    "dialog_button": "Delete",
+                    "dialog_title": "Delete %d master products",
+                    "dialog_desc": "Are you sure you want to delete %d master products?",
+                    "cancel_button": "Cancel",
+                    "confirm_button": "Delete Master Product"
+                },
+                "import_excel_dialog": {
+                    "dialog_button": "Import Excel",
+                    "dialog_title": "Import Excel",
+                    "dialog_desc": "Import master product data from Excel file",
+                    "template_label": "Template",
+                    "product_template_file": "Master product data import template file",
+                    "file_excel_label": "Excel File",
+                    "cancel_button": "Cancel",
+                    "confirm_button": "Import"
+                },
+                "add_products_dialog": {
+                    "dialog_title": "Add Product",
+                    "dialog_desc": "Create a new product from master product",
+                    "master_product_info": "Master Product Information",
+                    "name_label": "Name",
+                    "barcode_label": "Barcode",
+                    "product_details": "Product Details",
+                    "category_label": "Category",
+                    "category_placeholder": "Select category",
+                    "categories_label": "Category",
+                    "unit_label": "Unit",
+                    "unit_placeholder": "Select unit",
+                    "units_label": "Unit",
+                    "stock_label": "Stock",
+                    "stock_placeholder": "Enter product stock",
+                    "cost_price_label": "Cost Price",
+                    "cost_price_placeholder": "Enter cost price",
+                    "price_label": "Selling Price",
+                    "price_placeholder": "Enter selling price",
+                    "image_label": "Image",
+                    "is_active_label": "Active",
+                    "is_unlimited_label": "Unlimited Stock",
+                    "desc_label": "Description",
+                    "desc_placeholder": "Enter product description"
+                },
+                "bulk_add_products_dialog": {
+                    "dialog_button": "Add Products (%d)",
+                    "dialog_title": "Add %d Products At Once",
+                    "dialog_desc": "Confirm and customize details for selected master products before adding to store.",
+                    "already_added_warning": "%d of %d selected master products have already been added and will be skipped.",
+                    "batch_apply_title": "Batch Apply",
+                    "batch_category_placeholder": "Select Category For All",
+                    "batch_unit_placeholder": "Select Unit For All",
+                    "batch_stock_placeholder": "Stock For All",
+                    "no_valid_items": "No products can be added (all selected items have already been added).",
+                    "validation_error": "Please check and complete invalid product data.",
+                    "confirm_button": "Save %d Products"
+                }
+            }
+        },
+        "payment_method": {
+            "page_name": "Payment Methods",
+            "data_table": {
+                "columns": {
+                    "select_column_label": "Select",
+                    "name_column_label": "Name",
+                    "desc_column_label": "Description",
+                    "created_at_column_label": "Created At",
+                    "updated_at_column_label": "Updated At",
+                    "actions_column_label": "Actions"
+                }
+            },
+            "dialog_modal": {
+                "create_dialog": {
+                    "dialog_button": "Add Data",
+                    "dialog_title": "Add Payment Method",
+                    "dialog_desc": "Add a new payment method for your product",
+                    "name_input_label": "Name",
+                    "name_input_placeholder": "Enter payment method name",
+                    "desc_input_label": "Description",
+                    "desc_input_placeholder": "Enter payment method description",
+                    "image_input_label": "Image",
+                    "image_input_placeholder": "Enter payment method image",
+                    "cancel_button": "Cancel",
+                    "confirm_button": "Add Payment Method"
+                },
+                "edit_dialog": {
+                    "dialog_button": "Edit Data",
+                    "dialog_title": "Edit Payment Method",
+                    "dialog_desc": "Edit payment method data",
+                    "name_input_label": "Name",
+                    "name_input_placeholder": "Enter payment method name",
+                    "desc_input_label": "Description",
+                    "desc_input_placeholder": "Enter payment method description",
+                    "image_input_label": "Gambar",
+                    "image_input_placeholder": "Enter payment method image",
+                    "cancel_button": "Cancel",
+                    "confirm_button": "Update Payment Method"
+                },
+                "detail_dialog": {
+                    "dialog_button": "View Details",
+                    "dialog_title": "Payment Method Details",
+                    "dialog_desc": "Payment method details",
+                    "name_label": "Name",
+                    "desc_label": "Description",
+                    "image_label": "Image",
+                    "created_at_label": "Created At",
+                    "updated_at_label": "Updated At"
+                },
+                "delete_dialog": {
+                    "dialog_button": "Delete Data",
+                    "dialog_title": "Delete Payment Method",
+                    "dialog_desc": "Are you sure you want to delete this data?",
+                    "cancel_button": "Cancel",
+                    "confirm_button": "Delete Method"
+                },
+                "bulk_delete_dialog": {
+                    "dialog_button": "Delete",
+                    "dialog_title": "Delete %d Payment Methods",
+                    "dialog_desc": "Are you sure you want to delete %d payment methods?",
+                    "cancel_button": "Cancel",
+                    "confirm_button": "Delete Methods"
+                }
+            }
+        },
+        "role": {
+            "page_name": "Role",
+            "data_table": {
+                "columns": {
+                    "select_column_label": "Select",
+                    "name_column_label": "Name",
+                    "guard_name_column_label": "Guard Name",
+                    "created_at_column_label": "Created At",
+                    "updated_at_column_label": "Updated At",
+                    "actions_column_label": "Actions"
+                }
+            },
+            "create": {
+                "page_name": "Add Role",
+                "form": {
+                    "name_input_label": "Name",
+                    "name_input_placeholder": "Enter role name",
+                    "permissions_input_label": "Permissions",
+                    "cancel_button": "Cancel",
+                    "confirm_button": "Add Role",
+                    "check_all_permissions": "Select all permissions",
+                    "check_all_permissions_desc": "Select all available permissions for this role"
+                }
+            },
+            "edit": {
+                "page_name": "Edit Role",
+                "form": {
+                    "name_input_label": "Name",
+                    "name_input_placeholder": "Enter role name",
+                    "permissions_input_label": "Permissions",
+                    "cancel_button": "Cancel",
+                    "confirm_button": "Edit Role",
+                    "check_all_permissions": "Select all permissions",
+                    "check_all_permissions_desc": "Select all available permissions for this role"
+                }
+            },
+            "show": {
+                "page_name": "Detail Peran",
+                "form": {
+                    "name_input_label": "Name",
+                    "permissions_input_label": "Permissions",
+                    "cancel_button": "Back"
+                }
+            },
+            "dialog_modal": {
+                "create_dialog": {
+                    "dialog_button": "Add Data",
+                    "dialog_title": "Add Role",
+                    "dialog_desc": "Add a new role for your merchant",
+                    "name_input_label": "Name",
+                    "name_input_placeholder": "Enter role name",
+                    "cancel_button": "Cancel",
+                    "confirm_button": "Add Role"
+                },
+                "edit_dialog": {
+                    "dialog_button": "Edit Data",
+                    "dialog_title": "Edit Role",
+                    "dialog_desc": "Edit role data",
+                    "name_input_label": "Name",
+                    "name_input_placeholder": "Enter role name",
+                    "cancel_button": "Cancel",
+                    "confirm_button": "Edit Role"
+                },
+                "detail_dialog": {
+                    "dialog_button": "Detail Data",
+                    "dialog_title": "Role Detail",
+                    "dialog_desc": "Role detail data",
+                    "name_label": "Name",
+                    "guard_name": "Guard Name",
+                    "created_at_label": "Created Date",
+                    "updated_at_label": "Updated At"
+                },
+                "delete_dialog": {
+                    "dialog_button": "Delete Data",
+                    "dialog_title": "Delete Role",
+                    "dialog_desc": "Are you sure you want to delete this data?",
+                    "cancel_button": "Cancel",
+                    "confirm_button": "Delete Role"
+                },
+                "bulk_delete_dialog": {
+                    "dialog_button": "Delete",
+                    "dialog_title": "Delete %d categories",
+                    "dialog_desc": "Are you sure you want to delete %d categories?",
+                    "cancel_button": "Cancel",
+                    "confirm_button": "Delete Role"
+                }
+            }
+        },
+        "user": {
+            "page_name": "User",
+            "data_table": {
+                "columns": {
+                    "select_column_label": "Choose",
+                    "name_column_label": "Name",
+                    "email_column_label": "Email",
+                    "role_column_label": "Role",
+                    "created_at_column_label": "Created At",
+                    "updated_at_column_label": "Updated At",
+                    "actions_column_label": "Actions"
+                }
+            },
+            "dialog_modal": {
+                "create_dialog": {
+                    "dialog_button": "Add Data",
+                    "dialog_title": "Add User",
+                    "dialog_desc": "Add a new user to your store",
+                    "name_input_label": "Name",
+                    "name_input_placeholder": "Enter user name",
+                    "email_input_label": "Email",
+                    "email_input_placeholder": "Enter email address",
+                    "password_input_label": "Password",
+                    "password_input_placeholder": "Enter password",
+                    "password_confirmation_input_label": "Confirm Password",
+                    "password_confirmation_input_placeholder": "Confirm password",
+                    "role_input_label": "Role",
+                    "role_input_placeholder": "Enter user role",
+                    "cancel_button": "Cancel",
+                    "confirm_button": "Add User"
+                },
+                "edit_dialog": {
+                    "dialog_button": "Edit Data",
+                    "dialog_title": "Edit User",
+                    "dialog_desc": "Edit user data",
+                    "name_input_label": "Name",
+                    "name_input_placeholder": "Enter user name",
+                    "email_input_label": "Email",
+                    "email_input_placeholder": "Enter email address",
+                    "password_input_label": "Password",
+                    "password_input_placeholder": "Enter password",
+                    "password_confirmation_input_label": "Confirm Password",
+                    "password_confirmation_input_placeholder": "Confirm password",
+                    "role_input_label": "Role",
+                    "role_input_placeholder": "Enter user role",
+                    "cancel_button": "Cancel",
+                    "confirm_button": "Edit User"
+                },
+                "detail_dialog": {
+                    "dialog_button": "Detail Data",
+                    "dialog_title": "User Detail",
+                    "dialog_desc": "User detail data",
+                    "name_label": "Name",
+                    "email_label": "Email",
+                    "role_label": "Role",
+                    "created_at_label": "Created Date"
+                },
+                "delete_dialog": {
+                    "dialog_button": "Delete Data",
+                    "dialog_title": "Delete User",
+                    "dialog_desc": "Are you sure you want to delete this user?",
+                    "cancel_button": "Cancel",
+                    "confirm_button": "Delete User"
+                },
+                "bulk_delete_dialog": {
+                    "dialog_button": "Delete",
+                    "dialog_title": "Delete %d users",
+                    "dialog_desc": "Are you sure you want to delete %d users?",
+                    "cancel_button": "Cancel",
+                    "confirm_button": "Delete Users"
+                }
+            }
+        },
+        "transaction": {
+            "page_name": "Transaction",
+            "data_table": {
+                "columns": {
+                    "select_column_label": "Select",
+                    "invoice_number_column_label": "Invoice No.",
+                    "user_name_column_label": "Cashier / Staff",
+                    "payment_method_column_label": "Payment Method",
+                    "total_amount_column_label": "Total Transaction",
+                    "payment_amount_column_label": "Paid Amount",
+                    "change_amount_column_label": "Change",
+                    "created_at_column_label": "Date & Time",
+                    "actions_column_label": "Actions"
+                }
+            },
+            "dialog_modal": {
+                "detail_dialog": {
+                    "dialog_title": "Transaction Details",
+                    "print_btn": "Print Receipt",
+                    "cashier_label": "Cashier / Staff",
+                    "payment_method_label": "Payment Method",
+                    "date_label": "Transaction Time",
+                    "items_title": "Product Details"
+                }
+            }
+        },
+        "settings": {
+            "title": "Settings",
+            "log_out_menu": "Log out",
+            "description": "Manage your profile and account settings",
+            "appearance": {
+                "label": "Appearance",
+                "title": "Appearance settings",
+                "description": "Update your appearance settings"
+            },
+            "language": {
+                "label": "Language",
+                "title": "Language settings",
+                "description": "Update your language settings",
+                "language_options": {
+                    "Indonesia": "Indonesia",
+                    "English": "English"
+                }
+            },
+            "profile": {
+                "label": "Profile",
+                "title": "Profile Settings",
+                "heading_title": "Profile Information",
+                "description": "Update your name and email address",
+                "form": {
+                    "name_input_label": "Name",
+                    "name_input_placeholder": "Enter name",
+                    "email_input_label": "Email",
+                    "email_input_placeholder": "Enter email address",
+                    "your_email_unverified": "Your email address is unverified.",
+                    "click_to_resend_verification_email": "Click here to resend the verification email.",
+                    "verification_status": "A new verification link has been sent to your email address.",
+                    "save_btn": "Save"
+                },
+                "deleteUser": {
+                    "warning": "warning",
+                    "description": "Please be careful, this action cannot be undone.",
+                    "delete_account": "Delete Account",
+                    "dialog_title": "Are you sure you want to delete your account?",
+                    "dialog_desc": "Once your account is deleted, all of its resources and data will also be permanently deleted. Please enter your password to confirm that you want to permanently delete your account.",
+                    "password_input_label": "Password",
+                    "password_input_placeholder": "Enter Password",
+                    "cancel_btn": "Cancel",
+                    "confirm_delete_btn": "Delete Account"
+                }
+            },
+            "security": {
+                "label": "Security",
+                "title": "Security Settings",
+                "title_secondary": "Update Password",
+                "description": "Ensure your account uses a long and random password to stay secure.",
+                "language_label": "Language",
+                "current_password_input_label": "Current Password",
+                "current_password_input_placeholder": "Enter current password",
+                "new_password_input_label": "New Password",
+                "new_password_input_placeholder": "Enter new password",
+                "confirm_password_input_label": "Confirm New Password",
+                "confirm_password_input_placeholder": "Enter new password confirmation",
+                "save_password_btn": "Save Password",
+                "two_factor_title": "Two Factor Authentication",
+                "two_factor_desc": "Manage your two factor authentication settings",
+                "two_factor_enabled_desc": "You will be prompted to enter a secure random PIN during login, which you can obtain from a TOTP-supported application on your phone.",
+                "disable_two_fa_btn": "Disable 2FA",
+                "two_factor_disabled_desc": "When you enable two factor authentication, you will be prompted to enter a secure PIN during login. This PIN can be obtained from a TOTP-supported application on your phone.",
+                "continue_setup": "Continue Setup",
+                "enable_two_factor_btn": "Enable 2FA"
+            }
+        },
+        "kasir": {
+            "page_name": "Cashier",
+            "search_placeholder": "Scan Barcode / Type Code / Product Name (Enter)...",
+            "cart_label": "Shopping List",
+            "empty_cart": "Cart is empty",
+            "add_to_cart": "Add to cart",
+            "discount_label": "Discount",
+            "subtotal_label": "Subtotal",
+            "total_discount_label": "Deduction / Discount",
+            "grand_total_label": "Grand Total",
+            "payment_method_label": "Payment Method",
+            "payment_method_placeholder": "Select payment method",
+            "payment_amount_label": "Amount Received",
+            "payment_amount_placeholder": "Enter payment amount",
+            "change_label": "Change:",
+            "underpaid_label": "Underpaid:",
+            "checkout_btn": "Pay Transaction",
+            "clear_cart_btn": "Clear",
+            "out_of_stock": "Out of Stock",
+            "unlimited_stock": "Unlimited",
+            "stock_label": "Stock:",
+            "max_stock_reached": "Insufficient stock",
+            "checkout_success": "Transaction completed successfully!",
+            "select_payment_method": "Please select a payment method first",
+            "insufficient_payment": "Payment amount is less than grand total",
+            "new_transaction": "New Transaction",
+            "receipt_title": "Transaction Receipt",
+            "products_tab": "Product List",
+            "cart_tab": "Cart",
+            "shortcut_search": "Search Product",
+            "shortcut_select": "Scan / Select",
+            "shortcut_checkout": "Checkout",
+            "product_data_count": "Products",
+            "category_label": "Category:",
+            "all_categories": "All",
+            "no_products_found": "No products found",
+            "no_products_desc": "Try typing a different keyword or rescan the barcode",
+            "table_code": "Code / Barcode",
+            "table_name": "Product Name",
+            "table_unit": "Unit",
+            "table_stock": "Stock",
+            "table_price": "Selling Price",
+            "table_action": "Action",
+            "add_btn": "Add",
+            "select_btn": "Select",
+            "remove_item": "Remove item",
+            "discount_nominal_title": "Fixed Discount (Rp)",
+            "discount_percent_title": "Percentage Discount (%)",
+            "page_label": "Page",
+            "of_label": "of",
+            "prev_btn": "Prev",
+            "next_btn": "Next",
+            "mobile_total": "Total",
+            "items_unit": "Items",
+            "view_cart": "View Cart",
+            "total_header": "TOTAL AMOUNT",
+            "items_types": "Types",
+            "empty_cart_title": "Cart is Empty",
+            "empty_cart_desc": "Select products from the list or scan barcode",
+            "items_subtotal": "Subtotal",
+            "exact_cash": "Exact Cash",
+            "confirm_dialog_title": "Confirm Payment",
+            "confirm_dialog_desc": "Check details before completing the transaction",
+            "items_breakdown": "Items Breakdown",
+            "cancel_btn": "Cancel",
+            "checkout_no_receipt": "Pay Without Receipt",
+            "checkout_with_receipt": "Pay & Print Receipt",
+            "receipt_thank_you": "Thank you for your visit!",
+            "print_btn": "Print",
+            "out_of_stock_warning": "This product is out of stock and cannot be added to cart",
+            "update_stock_title": "Update Product Stock",
+            "current_stock_label": "Current Stock:",
+            "unlimited_stock_label": "Unlimited Stock",
+            "unlimited_stock_desc": "Product does not require stock tracking",
+            "new_stock_label": "New Stock Quantity",
+            "save_stock_btn": "Save Stock",
+            "stock_update_success": "Product stock updated successfully!",
+            "update_stock_tooltip": "Update Stock",
+            "selected": "Selected",
+            "no_payment_image": "No supporting image",
+            "payment_method_desc_label": "Description / Instructions:",
+            "no_payment_desc": "No additional description.",
+            "close_btn": "Close",
+            "select_this_method": "Select This Method"
+        }
     },
-    "payment_method": {
-      "required": {
-        "name": "Name cannot be empty"
-      }
-    },
-    "product": {
-      "required": {
-        "name": "Name is required",
-        "category_id": "Category is required",
-        "unit_id": "Unit is required",
-        "is_active": "Status is required",
-        "stock": "Stock is required",
-        "min_stock": "Minimum stock is 0",
-        "price": "Price is required",
-        "min_price": "Minimum selling price is Rp 0",
-        "cost_price": "Cost price is required",
-        "min_cost_price": "Minimum cost price is Rp 0"
-      }
-    },
-    "master_product": {
-      "required": {
-        "name": "Name cannot be empty",
-        "min_price": "Minimum selling price is Rp 0",
-        "min_cost_price": "Minimum cost price is Rp 0"
-      }
+    "error": {
+        "default": "Internal server error"
     }
-  },
-  "permission_label": {
-    "category": {
-      "permission": "Access Category Feature",
-      "create": "Create Category",
-      "read": "Read Category",
-      "update": "Edit Category",
-      "delete": "Delete Category"
-    },
-    "role": {
-      "permission": "Access Role Feature",
-      "create": "Create Role",
-      "read": "Read Role",
-      "update": "Edit Role",
-      "delete": "Delete Role"
-    },
-    "dashboard": {
-      "permission": "Access Dashboard Feature",
-      "read": "Read Dashboard"
-    },
-    "unit": {
-      "permission": "Access Unit Feature",
-      "create": "Create Unit",
-      "read": "Read Unit",
-      "update": "Update Unit",
-      "delete": "Delete Unit"
-    },
-    "payment_method": {
-      "permission": "Access Payment Feature Method",
-      "create": "Create Payment Method",
-      "read": "Read Payment Method",
-      "update": "Update Payment Method",
-      "delete": "Delete Payment Method"
-    },
-    "product": {
-      "permission": "Access Product Feature",
-      "create": "Create Product",
-      "read": "Read Product",
-      "update": "Update Product",
-      "delete": "Delete Product"
-    },
-    "master_product": {
-      "permission": "Access Master Product Feature",
-      "create": "Create Master Product",
-      "read": "Read Master Product",
-      "update": "Edit Master Product",
-      "delete": "Delete Master Product"
-    },
-    "transaction": {
-      "permission": "Access Transaction Feature",
-      "create": "Create Transaction",
-      "read": "Read Transaction",
-      "update": "Edit Transaction",
-      "delete": "Delete Transaction"
-    }
-  },
-  "component": {
-    "sidebar": {
-      "group_main": "Main",
-      "group_sales": "Sales & Transactions",
-      "group_inventory": "Products & Inventory",
-      "group_system": "System & Settings",
-      "dashboard_menu_label": "Dashboard",
-      "example_menu_label": "Example",
-      "category_menu_label": "Category",
-      "product_menu_label": "Product",
-      "master_product_menu_label": "Master Product",
-      "payment_method_menu_label": "Payment Method",
-      "role_menu_label": "Role",
-      "user_menu_label": "User",
-      "unit_menu_label": "Unit",
-      "transaction_menu_label": "Transaction",
-      "kasir_menu_label": "Cashier",
-      "product_management_menu_label": "Product Management",
-      "user_management_menu_label": "User Management"
-    },
-    "data_table": {
-      "search_component": {
-        "search_by": "Search By",
-        "default": "Default",
-        "name": "Name",
-        "sku": "SKU",
-        "category": "Category",
-        "unit": "Unit",
-        "barcode": "Barcode",
-        "description": "Description",
-        "guard_name": "Guard Name",
-        "placeholder": "Search"
-      },
-      "filter": {
-        "category_placeholder": "Select Category",
-        "category_label": "Category",
-        "product_placeholder": "Select Product",
-        "product_label": "Product",
-        "unit_placeholder": "Select Unit",
-        "unit_label": "Unit",
-        "status_placeholder": "Select Status",
-        "status_label": "Status",
-        "all_status_label": "All Status",
-        "status_active_label": "Active",
-        "status_inactive_label": "Inactive",
-        "stock_type_placeholder": "Select Stock Type",
-        "stock_label": "Stock Type",
-        "limitted_stock_label": "Limited",
-        "unlimited_stock_label": "Unlimited",
-        "is_available_stock_placholder": "Select Stock Status",
-        "is_available_stock_label": "Stock Status",
-        "available_stock_label": "Available",
-        "unavailable_stock_label": "Unavailable"
-      },
-      "export": {
-        "label": "Export",
-        "export_excel_btn": "Export Excel",
-        "export_pdf_btn": "Export PDF"
-      },
-      "columns": {
-        "label": "Columns"
-      },
-      "action_menu": {
-        "label": "Action",
-        "trigger_btn_label": "Open Menu",
-        "detail_data_btn": "Detail Data",
-        "edit_data_btn": "Edit Data",
-        "delete_data_btn": "Delete Data"
-      },
-      "no_result": "No results found",
-      "row_per_page": "Rows per page",
-      "selected_row": "%d of %d row(s) selected",
-      "pagination_info": "Page %d of %d"
-    }
-  },
-  "page": {
-    "auth": {
-      "confirm_password": {
-        "form": {
-          "password_input_label": "Password",
-          "confirm_password_btn": "Confirm Password"
-        },
-        "title": "Confirm your password",
-        "deskripsi": "This is a secure area of the application. Please confirm your password before continuing."
-      },
-      "forgot_password": {
-        "form": {
-          "email_input_label": "Email",
-          "confirm_forgot_password_btn": "Email Password Reset Link"
-        },
-        "title": "Forgot Password",
-        "description": "Enter your email to receive a password reset link.",
-        "or_return_to": "Or, return to",
-        "login_btn": "Log in"
-      },
-      "login": {
-        "form": {
-          "email_input_label": "Email",
-          "password_input_label": "Password",
-          "login_btn": "Log in"
-        },
-        "title": "Log in to your account",
-        "description": "Enter your email and password below to log in.",
-        "remember_me": "Remember me",
-        "dont_have_account": "Don't have an account?",
-        "signup_btn": "Sign up",
-        "forgot_password_link": "Forgot password?"
-      },
-      "register": {
-        "form": {
-          "name_input_label": "Name",
-          "email_input_label": "Email",
-          "password_input_label": "Password",
-          "confirm_password_input_label": "Confirm Password",
-          "confirm_register_btn": "Create Account"
-        },
-        "title": "Create your account",
-        "description": "Enter your details below to create your account.",
-        "remember_me": "Remember me",
-        "already_have_account": "Already have an account?",
-        "login_btn": "Log in"
-      },
-      "reset_password": {
-        "form": {
-          "email_input_label": "Email",
-          "password_input_label": "Password",
-          "confirm_password_input_label": "Confirm Password",
-          "reset_btn": "Reset Password"
-        },
-        "title": "Reset Password",
-        "description": "Please enter your new password below."
-      },
-      "two_factor_challenge": {
-        "title": "Two Factor Authentication",
-        "form": {
-          "recovery_code_input_label": "Recovery Code",
-          "recovery_code_input_placeholder": "Enter Recovery Code",
-          "logout_btn": "Log out"
-        },
-        "recovery_code": {
-          "title": "Recovery Code",
-          "description": "Please confirm access to your account by entering one of your emergency recovery codes.",
-          "toggle_text": "log in using authentication code"
-        },
-        "authentication_code": {
-          "title": "Authentication Code",
-          "description": "Enter the authentication code provided by your authentication application.",
-          "toggle_text": "log in using recovery code"
-        },
-        "continue_btn": "Continue",
-        "or_you_can": "or you can"
-      },
-      "email_verification": {
-        "form": {
-          "resend_email_btn": "Resend Verification Email",
-          "logout_btn": "Log out"
-        },
-        "title": "Email Verification",
-        "description": "Please verify your email address by clicking the link we just emailed to you.",
-        "info": "A new verification link has been sent to the email address you provided during registration."
-      }
-    },
-    "dashboard": {
-      "title": "Dashboard"
-    },
-    "unit": {
-      "page_name": "Unit",
-      "data_table": {
-        "columns": {
-          "select_column_label": "Select",
-          "name_column_label": "Name",
-          "created_at_column_label": "Created At",
-          "updated_at_column_label": "Updated At",
-          "actions_column_label": "Actions"
-        }
-      },
-      "dialog_modal": {
-        "create_dialog": {
-          "dialog_button": "Add Data",
-          "dialog_title": "Add Unit",
-          "dialog_desc": "Add a new unit for your product",
-          "name_input_label": "Name",
-          "name_input_placeholder": "Enter unit name",
-          "cancel_button": "Cancel",
-          "confirm_button": "Add Unit"
-        },
-        "edit_dialog": {
-          "dialog_button": "Edit Data",
-          "dialog_title": "Edit Unit",
-          "dialog_desc": "Edit unit data",
-          "name_input_label": "Name",
-          "name_input_placeholder": "Enter unit name",
-          "cancel_button": "Cancel",
-          "confirm_button": "Edit Unit"
-        },
-        "detail_dialog": {
-          "dialog_button": "Detail Data",
-          "dialog_title": "Detail Unit",
-          "dialog_desc": "Detail unit data",
-          "name_label": "Name",
-          "created_at_label": "Created At",
-          "updated_at_label": "Updated At"
-        },
-        "delete_dialog": {
-          "dialog_button": "Delete Data",
-          "dialog_title": "Delete Unit",
-          "dialog_desc": "Are you sure you want to delete this data?",
-          "cancel_button": "Cancel",
-          "confirm_button": "Delete Unit"
-        },
-        "bulk_delete_dialog": {
-          "dialog_button": "Delete",
-          "dialog_title": "Delete %d units",
-          "dialog_desc": "Are you sure you want to delete %d units?",
-          "cancel_button": "Cancel",
-          "confirm_button": "Delete Units"
-        }
-      }
-    },
-    "category": {
-      "page_name": "Category",
-      "data_table": {
-        "columns": {
-          "select_column_label": "Select",
-          "name_column_label": "Name",
-          "desc_column_label": "Description",
-          "created_at_column_label": "Created At",
-          "updated_at_column_label": "Updated At",
-          "actions_column_label": "Actions"
-        }
-      },
-      "dialog_modal": {
-        "create_dialog": {
-          "dialog_button": "Add Data",
-          "dialog_title": "Add Category",
-          "dialog_desc": "Add a new category for your product",
-          "name_input_label": "Name",
-          "name_input_placeholder": "Enter category name",
-          "desc_input_label": "Description",
-          "desc_input_placeholder": "Enter category description (Optional)",
-          "cancel_button": "Cancel",
-          "confirm_button": "Add Category"
-        },
-        "edit_dialog": {
-          "dialog_button": "Edit Data",
-          "dialog_title": "Edit Category",
-          "dialog_desc": "Edit category data",
-          "name_input_label": "Name",
-          "name_input_placeholder": "Enter category name",
-          "desc_input_label": "Description",
-          "desc_input_placeholder": "Enter category description (Optional)",
-          "cancel_button": "Cancel",
-          "confirm_button": "Edit Category"
-        },
-        "detail_dialog": {
-          "dialog_button": "Detail Data",
-          "dialog_title": "Category Detail",
-          "dialog_desc": "Category detail data",
-          "name_label": "Name",
-          "desc_label": "Description",
-          "created_at_label": "Created Date",
-          "updated_at_label": "Updated Date"
-        },
-        "delete_dialog": {
-          "dialog_button": "Delete Data",
-          "dialog_title": "Delete Category",
-          "dialog_desc": "Are you sure you want to delete this data?",
-          "cancel_button": "Cancel",
-          "confirm_button": "Delete Category"
-        },
-        "bulk_delete_dialog": {
-          "dialog_button": "Delete",
-          "dialog_title": "Delete %d categories",
-          "dialog_desc": "Are you sure you want to delete %d categories?",
-          "cancel_button": "Cancel",
-          "confirm_button": "Delete Category"
-        },
-        "import_excel_dialog": {
-          "dialog_button": "Import Excel",
-          "dialog_title": "Import Excel",
-          "dialog_desc": "Import category data from Excel file",
-          "template_label": "Template",
-          "category_template_file": "Category data import template file",
-          "file_excel_label": "Excel File",
-          "cancel_button": "Cancel",
-          "confirm_button": "Import"
-        }
-      }
-    },
-    "product": {
-      "page_name": "Product",
-      "data_table": {
-        "columns": {
-          "select_column_label": "Select",
-          "name_column_label": "Name",
-          "sku_column_label": "SKU",
-          "barcode_column_label": "Barcode",
-          "category_column_label": "Category",
-          "unit_column_label": "Unit",
-          "stock_column_label": "Stock",
-          "price_column_label": "SellingPrice",
-          "cost_price_column_label": "Cost Price",
-          "is_active_column_label": "Status",
-          "is_unlimited_column_label": "Stock Type",
-          "created_at_column_label": "Created At",
-          "updated_at_column_label": "Updated At",
-          "actions_column_label": "Actions"
-        }
-      },
-      "is_active": {
-        "active": "Active",
-        "inactive": "Inactive"
-      },
-      "is_unlimited": {
-        "Limited": "Limited",
-        "Unlimited": "Unlimited"
-      },
-      "dialog_modal": {
-        "create_dialog": {
-          "dialog_button": "Add Data",
-          "dialog_title": "Add Product",
-          "dialog_desc": "Add a new product",
-          "name_input_label": "Name",
-          "name_input_placeholder": "Enter product name",
-          "image_input_label": "Image",
-          "image_input_placeholder": "Upload product image",
-          "unit_id_input_label": "Unit",
-          "unit_id_input_placeholder": "Select product unit",
-          "category_id_input_label": "Category",
-          "category_id_input_placeholder": "Select product category",
-          "stock_input_label": "Stock",
-          "stock_input_placeholder": "Enter product stock",
-          "cost_price_input_label": "Cost Price",
-          "cost_price_input_placeholder": "Enter product cost price",
-          "price_input_label": "Price",
-          "price_input_placeholder": "Enter product price",
-          "is_active_input_label": "Status",
-          "is_unlimited_input_label": "Stock Status",
-          "desc_input_label": "Description",
-          "desc_input_placeholder": "Enter product description",
-          "barcode_input_label": "Barcode",
-          "barcode_input_placeholder": "Enter product barcode",
-          "cancel_button": "Cancel",
-          "confirm_button": "Add Product"
-        },
-        "edit_dialog": {
-          "dialog_button": "Edit Data",
-          "dialog_title": "Edit Product",
-          "dialog_desc": "Edit product data",
-          "name_input_label": "Name",
-          "name_input_placeholder": "Enter product name",
-          "image_input_label": "Image",
-          "image_input_placeholder": "Upload product image",
-          "unit_id_input_label": "Unit",
-          "unit_id_input_placeholder": "Select product unit",
-          "category_id_input_label": "Category",
-          "category_id_input_placeholder": "Select product category",
-          "stock_input_label": "Stock",
-          "stock_input_placeholder": "Enter product stock",
-          "cost_price_input_label": "Cost Price",
-          "cost_price_input_placeholder": "Enter product cost price",
-          "price_input_label": "Price",
-          "price_input_placeholder": "Enter product price",
-          "is_active_input_label": "Status",
-          "is_unlimited_input_label": "Stock Status",
-          "desc_input_label": "Description",
-          "desc_input_placeholder": "Enter product description",
-          "barcode_input_label": "Barcode",
-          "barcode_input_placeholder": "Enter product barcode",
-          "cancel_button": "Cancel",
-          "confirm_button": "Update Product"
-        },
-        "detail_dialog": {
-          "dialog_button": "View Details",
-          "dialog_title": "Product Details",
-          "dialog_desc": "Product information",
-          "name_label": "Name",
-          "barcode_label": "Barcode",
-          "sku_label": "SKU",
-          "category_name_label": "Category",
-          "unit_label": "Unit",
-          "stock_label": "Stock",
-          "cost_price_label": "Cost Price",
-          "price_label": "Selling Price",
-          "image_label": "Image",
-          "is_active_label": "Status",
-          "is_unlimited_label": "Stock Type",
-          "desc_label": "Description",
-          "created_at_label": "Created At",
-          "updated_at_label": "Updated At"
-        },
-        "delete_dialog": {
-          "dialog_button": "Delete Data",
-          "dialog_title": "Delete Product",
-          "dialog_desc": "Are you sure you want to delete this product?",
-          "cancel_button": "Cancel",
-          "confirm_button": "Delete Product"
-        },
-        "bulk_delete_dialog": {
-          "dialog_button": "Delete",
-          "dialog_title": "Delete %d Products",
-          "dialog_desc": "Are you sure you want to delete %d products?",
-          "cancel_button": "Cancel",
-          "confirm_button": "Delete Products"
-        },
-        "import_excel_dialog": {
-          "dialog_button": "Import Excel",
-          "dialog_title": "Import Excel",
-          "dialog_desc": "Import product data from an Excel file",
-          "template_label": "Template",
-          "product_template_file": "Product data import template file",
-          "file_excel_label": "Excel File",
-          "cancel_button": "Cancel",
-          "confirm_button": "Import"
-        }
-      }
-    },
-    "master_product": {
-      "page_name": "Master Product",
-      "is_added": {
-        "added": "Added",
-        "not_added": "Not Added"
-      },
-      "data_table": {
-        "columns": {
-          "select_column_label": "Select",
-          "name_column_label": "Name",
-          "barcode_column_label": "Barcode",
-          "category_column_label": "Category",
-          "unit_column_label": "Unit",
-          "price_column_label": "Selling Price",
-          "cost_price_column_label": "Cost Price",
-          "created_at_column_label": "Created At",
-          "updated_at_column_label": "Updated At",
-          "is_added_column_label": "Status",
-          "add_product_column_label": "Add Product",
-          "actions_column_label": "Actions"
-        }
-      },
-      "dialog_modal": {
-        "create_dialog": {
-          "dialog_button": "Add Data",
-          "dialog_title": "Add Master Product",
-          "dialog_desc": "Add your new master product",
-          "name_input_label": "Name",
-          "name_input_placeholder": "Enter master product name",
-          "unit_name_input_label": "Unit",
-          "unit_name_input_placeholder": "Enter master product unit",
-          "category_name_input_label": "Category",
-          "category_name_input_placeholder": "Enter master product category",
-          "cost_price_input_label": "Cost Price",
-          "cost_price_input_placeholder": "Enter master product cost price",
-          "price_input_label": "Selling Price",
-          "price_input_placeholder": "Enter master product selling price",
-          "desc_input_label": "Description",
-          "desc_input_placeholder": "Enter master product description",
-          "barcode_input_label": "Barcode",
-          "barcode_input_placeholder": "Enter master product barcode",
-          "cancel_button": "Cancel",
-          "confirm_button": "Add Master Product"
-        },
-        "edit_dialog": {
-          "dialog_button": "Edit Data",
-          "dialog_title": "Edit Master Product",
-          "dialog_desc": "Edit master product",
-          "name_input_label": "Name",
-          "name_input_placeholder": "Enter master product name",
-          "unit_name_input_label": "Unit",
-          "unit_name_input_placeholder": "Enter master product unit",
-          "category_name_input_label": "Category",
-          "category_name_input_placeholder": "Enter master product category",
-          "cost_price_input_label": "Cost Price",
-          "cost_price_input_placeholder": "Enter master product cost price",
-          "price_input_label": "Selling Price",
-          "price_input_placeholder": "Enter master product selling price",
-          "desc_input_label": "Description",
-          "desc_input_placeholder": "Enter master product description",
-          "barcode_input_label": "Barcode",
-          "barcode_input_placeholder": "Enter master product barcode",
-          "cancel_button": "Cancel",
-          "confirm_button": "Edit Master Product"
-        },
-        "detail_dialog": {
-          "dialog_button": "Detail Data",
-          "dialog_title": "Master Product Detail",
-          "dialog_desc": "Master product detail data",
-          "name_label": "Name",
-          "barcode_label": "Barcode",
-          "category_name_label": "Category",
-          "unit_label": "Unit",
-          "cost_price_label": "Cost Price",
-          "price_label": "Selling Price",
-          "desc_label": "Description",
-          "created_at_label": "Created At",
-          "updated_at_label": "Updated At"
-        },
-        "delete_dialog": {
-          "dialog_button": "Delete Data",
-          "dialog_title": "Delete Master Product",
-          "dialog_desc": "Are you sure you want to delete this data?",
-          "cancel_button": "Cancel",
-          "confirm_button": "Delete Master Product"
-        },
-        "bulk_delete_dialog": {
-          "dialog_button": "Delete",
-          "dialog_title": "Delete %d master products",
-          "dialog_desc": "Are you sure you want to delete %d master products?",
-          "cancel_button": "Cancel",
-          "confirm_button": "Delete Master Product"
-        },
-        "import_excel_dialog": {
-          "dialog_button": "Import Excel",
-          "dialog_title": "Import Excel",
-          "dialog_desc": "Import master product data from Excel file",
-          "template_label": "Template",
-          "product_template_file": "Master product data import template file",
-          "file_excel_label": "Excel File",
-          "cancel_button": "Cancel",
-          "confirm_button": "Import"
-        },
-        "add_products_dialog": {
-          "dialog_title": "Add Product",
-          "dialog_desc": "Create a new product from master product",
-          "master_product_info": "Master Product Information",
-          "name_label": "Name",
-          "barcode_label": "Barcode",
-          "product_details": "Product Details",
-          "category_label": "Category",
-          "category_placeholder": "Select category",
-          "categories_label": "Category",
-          "unit_label": "Unit",
-          "unit_placeholder": "Select unit",
-          "units_label": "Unit",
-          "stock_label": "Stock",
-          "stock_placeholder": "Enter product stock",
-          "cost_price_label": "Cost Price",
-          "cost_price_placeholder": "Enter cost price",
-          "price_label": "Selling Price",
-          "price_placeholder": "Enter selling price",
-          "image_label": "Image",
-          "is_active_label": "Active",
-          "is_unlimited_label": "Unlimited Stock",
-          "desc_label": "Description",
-          "desc_placeholder": "Enter product description"
-        },
-        "bulk_add_products_dialog": {
-          "dialog_button": "Add Products (%d)",
-          "dialog_title": "Add %d Products At Once",
-          "dialog_desc": "Confirm and customize details for selected master products before adding to store.",
-          "already_added_warning": "%d of %d selected master products have already been added and will be skipped.",
-          "batch_apply_title": "Batch Apply",
-          "batch_category_placeholder": "Select Category For All",
-          "batch_unit_placeholder": "Select Unit For All",
-          "batch_stock_placeholder": "Stock For All",
-          "no_valid_items": "No products can be added (all selected items have already been added).",
-          "validation_error": "Please check and complete invalid product data.",
-          "confirm_button": "Save %d Products"
-        }
-      }
-    },
-    "payment_method": {
-      "page_name": "Payment Methods",
-      "data_table": {
-        "columns": {
-          "select_column_label": "Select",
-          "name_column_label": "Name",
-          "desc_column_label": "Description",
-          "created_at_column_label": "Created At",
-          "updated_at_column_label": "Updated At",
-          "actions_column_label": "Actions"
-        }
-      },
-      "dialog_modal": {
-        "create_dialog": {
-          "dialog_button": "Add Data",
-          "dialog_title": "Add Payment Method",
-          "dialog_desc": "Add a new payment method for your product",
-          "name_input_label": "Name",
-          "name_input_placeholder": "Enter payment method name",
-          "desc_input_label": "Description",
-          "desc_input_placeholder": "Enter payment method description",
-          "image_input_label": "Image",
-          "image_input_placeholder": "Enter payment method image",
-          "cancel_button": "Cancel",
-          "confirm_button": "Add Payment Method"
-        },
-        "edit_dialog": {
-          "dialog_button": "Edit Data",
-          "dialog_title": "Edit Payment Method",
-          "dialog_desc": "Edit payment method data",
-          "name_input_label": "Name",
-          "name_input_placeholder": "Enter payment method name",
-          "desc_input_label": "Description",
-          "desc_input_placeholder": "Enter payment method description",
-          "image_input_label": "Gambar",
-          "image_input_placeholder": "Enter payment method image",
-          "cancel_button": "Cancel",
-          "confirm_button": "Update Payment Method"
-        },
-        "detail_dialog": {
-          "dialog_button": "View Details",
-          "dialog_title": "Payment Method Details",
-          "dialog_desc": "Payment method details",
-          "name_label": "Name",
-          "desc_label": "Description",
-          "image_label": "Image",
-          "created_at_label": "Created At",
-          "updated_at_label": "Updated At"
-        },
-        "delete_dialog": {
-          "dialog_button": "Delete Data",
-          "dialog_title": "Delete Payment Method",
-          "dialog_desc": "Are you sure you want to delete this data?",
-          "cancel_button": "Cancel",
-          "confirm_button": "Delete Method"
-        },
-        "bulk_delete_dialog": {
-          "dialog_button": "Delete",
-          "dialog_title": "Delete %d Payment Methods",
-          "dialog_desc": "Are you sure you want to delete %d payment methods?",
-          "cancel_button": "Cancel",
-          "confirm_button": "Delete Methods"
-        }
-      }
-    },
-    "role": {
-      "page_name": "Role",
-      "data_table": {
-        "columns": {
-          "select_column_label": "Select",
-          "name_column_label": "Name",
-          "guard_name_column_label": "Guard Name",
-          "created_at_column_label": "Created At",
-          "updated_at_column_label": "Updated At",
-          "actions_column_label": "Actions"
-        }
-      },
-      "create": {
-        "page_name": "Add Role",
-        "form": {
-          "name_input_label": "Name",
-          "name_input_placeholder": "Enter role name",
-          "permissions_input_label": "Permissions",
-          "cancel_button": "Cancel",
-          "confirm_button": "Add Role",
-          "check_all_permissions": "Select all permissions",
-          "check_all_permissions_desc": "Select all available permissions for this role"
-        }
-      },
-      "edit": {
-        "page_name": "Edit Role",
-        "form": {
-          "name_input_label": "Name",
-          "name_input_placeholder": "Enter role name",
-          "permissions_input_label": "Permissions",
-          "cancel_button": "Cancel",
-          "confirm_button": "Edit Role",
-          "check_all_permissions": "Select all permissions",
-          "check_all_permissions_desc": "Select all available permissions for this role"
-        }
-      },
-      "show": {
-        "page_name": "Detail Peran",
-        "form": {
-          "name_input_label": "Name",
-          "permissions_input_label": "Permissions",
-          "cancel_button": "Back"
-        }
-      },
-      "dialog_modal": {
-        "create_dialog": {
-          "dialog_button": "Add Data",
-          "dialog_title": "Add Role",
-          "dialog_desc": "Add a new role for your merchant",
-          "name_input_label": "Name",
-          "name_input_placeholder": "Enter role name",
-          "cancel_button": "Cancel",
-          "confirm_button": "Add Role"
-        },
-        "edit_dialog": {
-          "dialog_button": "Edit Data",
-          "dialog_title": "Edit Role",
-          "dialog_desc": "Edit role data",
-          "name_input_label": "Name",
-          "name_input_placeholder": "Enter role name",
-          "cancel_button": "Cancel",
-          "confirm_button": "Edit Role"
-        },
-        "detail_dialog": {
-          "dialog_button": "Detail Data",
-          "dialog_title": "Role Detail",
-          "dialog_desc": "Role detail data",
-          "name_label": "Name",
-          "guard_name": "Guard Name",
-          "created_at_label": "Created Date",
-          "updated_at_label": "Updated At"
-        },
-        "delete_dialog": {
-          "dialog_button": "Delete Data",
-          "dialog_title": "Delete Role",
-          "dialog_desc": "Are you sure you want to delete this data?",
-          "cancel_button": "Cancel",
-          "confirm_button": "Delete Role"
-        },
-        "bulk_delete_dialog": {
-          "dialog_button": "Delete",
-          "dialog_title": "Delete %d categories",
-          "dialog_desc": "Are you sure you want to delete %d categories?",
-          "cancel_button": "Cancel",
-          "confirm_button": "Delete Role"
-        }
-      }
-    },
-    "user": {
-      "page_name": "User",
-      "data_table": {
-        "columns": {
-          "select_column_label": "Choose",
-          "name_column_label": "Name",
-          "email_column_label": "Email",
-          "role_column_label": "Role",
-          "created_at_column_label": "Created At",
-          "updated_at_column_label": "Updated At",
-          "actions_column_label": "Actions"
-        }
-      },
-      "dialog_modal": {
-        "create_dialog": {
-          "dialog_button": "Add Data",
-          "dialog_title": "Add User",
-          "dialog_desc": "Add a new user to your store",
-          "name_input_label": "Name",
-          "name_input_placeholder": "Enter user name",
-          "email_input_label": "Email",
-          "email_input_placeholder": "Enter email address",
-          "password_input_label": "Password",
-          "password_input_placeholder": "Enter password",
-          "password_confirmation_input_label": "Confirm Password",
-          "password_confirmation_input_placeholder": "Confirm password",
-          "role_input_label": "Role",
-          "role_input_placeholder": "Enter user role",
-          "cancel_button": "Cancel",
-          "confirm_button": "Add User"
-        },
-        "edit_dialog": {
-          "dialog_button": "Edit Data",
-          "dialog_title": "Edit User",
-          "dialog_desc": "Edit user data",
-          "name_input_label": "Name",
-          "name_input_placeholder": "Enter user name",
-          "email_input_label": "Email",
-          "email_input_placeholder": "Enter email address",
-          "password_input_label": "Password",
-          "password_input_placeholder": "Enter password",
-          "password_confirmation_input_label": "Confirm Password",
-          "password_confirmation_input_placeholder": "Confirm password",
-          "role_input_label": "Role",
-          "role_input_placeholder": "Enter user role",
-          "cancel_button": "Cancel",
-          "confirm_button": "Edit User"
-        },
-        "detail_dialog": {
-          "dialog_button": "Detail Data",
-          "dialog_title": "User Detail",
-          "dialog_desc": "User detail data",
-          "name_label": "Name",
-          "email_label": "Email",
-          "role_label": "Role",
-          "created_at_label": "Created Date"
-        },
-        "delete_dialog": {
-          "dialog_button": "Delete Data",
-          "dialog_title": "Delete User",
-          "dialog_desc": "Are you sure you want to delete this user?",
-          "cancel_button": "Cancel",
-          "confirm_button": "Delete User"
-        },
-        "bulk_delete_dialog": {
-          "dialog_button": "Delete",
-          "dialog_title": "Delete %d users",
-          "dialog_desc": "Are you sure you want to delete %d users?",
-          "cancel_button": "Cancel",
-          "confirm_button": "Delete Users"
-        }
-      }
-    },
-    "transaction": {
-      "page_name": "Transaction",
-      "data_table": {
-        "columns": {
-          "select_column_label": "Select",
-          "invoice_number_column_label": "Invoice No.",
-          "user_name_column_label": "Cashier / Staff",
-          "payment_method_column_label": "Payment Method",
-          "total_amount_column_label": "Total Transaction",
-          "payment_amount_column_label": "Paid Amount",
-          "change_amount_column_label": "Change",
-          "created_at_column_label": "Date & Time",
-          "actions_column_label": "Actions"
-        }
-      },
-      "dialog_modal": {
-        "detail_dialog": {
-          "dialog_title": "Transaction Details",
-          "print_btn": "Print Receipt",
-          "cashier_label": "Cashier / Staff",
-          "payment_method_label": "Payment Method",
-          "date_label": "Transaction Time",
-          "items_title": "Product Details"
-        }
-      }
-    },
-    "settings": {
-      "title": "Settings",
-      "log_out_menu": "Log out",
-      "description": "Manage your profile and account settings",
-      "appearance": {
-        "label": "Appearance",
-        "title": "Appearance settings",
-        "description": "Update your appearance settings"
-      },
-      "language": {
-        "label": "Language",
-        "title": "Language settings",
-        "description": "Update your language settings",
-        "language_options": {
-          "Indonesia": "Indonesia",
-          "English": "English"
-        }
-      },
-      "profile": {
-        "label": "Profile",
-        "title": "Profile Settings",
-        "heading_title": "Profile Information",
-        "description": "Update your name and email address",
-        "form": {
-          "name_input_label": "Name",
-          "name_input_placeholder": "Enter name",
-          "email_input_label": "Email",
-          "email_input_placeholder": "Enter email address",
-          "your_email_unverified": "Your email address is unverified.",
-          "click_to_resend_verification_email": "Click here to resend the verification email.",
-          "verification_status": "A new verification link has been sent to your email address.",
-          "save_btn": "Save"
-        },
-        "deleteUser": {
-          "warning": "warning",
-          "description": "Please be careful, this action cannot be undone.",
-          "delete_account": "Delete Account",
-          "dialog_title": "Are you sure you want to delete your account?",
-          "dialog_desc": "Once your account is deleted, all of its resources and data will also be permanently deleted. Please enter your password to confirm that you want to permanently delete your account.",
-          "password_input_label": "Password",
-          "password_input_placeholder": "Enter Password",
-          "cancel_btn": "Cancel",
-          "confirm_delete_btn": "Delete Account"
-        }
-      },
-      "security": {
-        "label": "Security",
-        "title": "Security Settings",
-        "title_secondary": "Update Password",
-        "description": "Ensure your account uses a long and random password to stay secure.",
-        "language_label": "Language",
-        "current_password_input_label": "Current Password",
-        "current_password_input_placeholder": "Enter current password",
-        "new_password_input_label": "New Password",
-        "new_password_input_placeholder": "Enter new password",
-        "confirm_password_input_label": "Confirm New Password",
-        "confirm_password_input_placeholder": "Enter new password confirmation",
-        "save_password_btn": "Save Password",
-        "two_factor_title": "Two Factor Authentication",
-        "two_factor_desc": "Manage your two factor authentication settings",
-        "two_factor_enabled_desc": "You will be prompted to enter a secure random PIN during login, which you can obtain from a TOTP-supported application on your phone.",
-        "disable_two_fa_btn": "Disable 2FA",
-        "two_factor_disabled_desc": "When you enable two factor authentication, you will be prompted to enter a secure PIN during login. This PIN can be obtained from a TOTP-supported application on your phone.",
-        "continue_setup": "Continue Setup",
-        "enable_two_factor_btn": "Enable 2FA"
-      }
-    },
-    "kasir": {
-      "page_name": "Cashier",
-      "search_placeholder": "Scan Barcode / Type Code / Product Name (Enter)...",
-      "cart_label": "Shopping List",
-      "empty_cart": "Cart is empty",
-      "add_to_cart": "Add to cart",
-      "discount_label": "Discount",
-      "subtotal_label": "Subtotal",
-      "total_discount_label": "Deduction / Discount",
-      "grand_total_label": "Grand Total",
-      "payment_method_label": "Payment Method",
-      "payment_method_placeholder": "Select payment method",
-      "payment_amount_label": "Amount Received",
-      "payment_amount_placeholder": "Enter payment amount",
-      "change_label": "Change:",
-      "underpaid_label": "Underpaid:",
-      "checkout_btn": "Pay Transaction",
-      "clear_cart_btn": "Clear",
-      "out_of_stock": "Out of Stock",
-      "unlimited_stock": "Unlimited",
-      "stock_label": "Stock:",
-      "max_stock_reached": "Insufficient stock",
-      "checkout_success": "Transaction completed successfully!",
-      "select_payment_method": "Please select a payment method first",
-      "insufficient_payment": "Payment amount is less than grand total",
-      "new_transaction": "New Transaction",
-      "receipt_title": "Transaction Receipt",
-      "products_tab": "Product List",
-      "cart_tab": "Cart",
-      "shortcut_search": "Search Product",
-      "shortcut_select": "Scan / Select",
-      "shortcut_checkout": "Checkout",
-      "product_data_count": "Products",
-      "category_label": "Category:",
-      "all_categories": "All",
-      "no_products_found": "No products found",
-      "no_products_desc": "Try typing a different keyword or rescan the barcode",
-      "table_code": "Code / Barcode",
-      "table_name": "Product Name",
-      "table_unit": "Unit",
-      "table_stock": "Stock",
-      "table_price": "Selling Price",
-      "table_action": "Action",
-      "add_btn": "Add",
-      "select_btn": "Select",
-      "remove_item": "Remove item",
-      "discount_nominal_title": "Fixed Discount (Rp)",
-      "discount_percent_title": "Percentage Discount (%)",
-      "page_label": "Page",
-      "of_label": "of",
-      "prev_btn": "Prev",
-      "next_btn": "Next",
-      "mobile_total": "Total",
-      "items_unit": "Items",
-      "view_cart": "View Cart",
-      "total_header": "TOTAL AMOUNT",
-      "items_types": "Types",
-      "empty_cart_title": "Cart is Empty",
-      "empty_cart_desc": "Select products from the list or scan barcode",
-      "items_subtotal": "Subtotal",
-      "exact_cash": "Exact Cash",
-      "confirm_dialog_title": "Confirm Payment",
-      "confirm_dialog_desc": "Check details before completing the transaction",
-      "items_breakdown": "Items Breakdown",
-      "cancel_btn": "Cancel",
-      "checkout_no_receipt": "Pay Without Receipt",
-      "checkout_with_receipt": "Pay & Print Receipt",
-      "receipt_thank_you": "Thank you for your visit!",
-      "print_btn": "Print",
-      "out_of_stock_warning": "This product is out of stock and cannot be added to cart",
-      "update_stock_title": "Update Product Stock",
-      "current_stock_label": "Current Stock:",
-      "unlimited_stock_label": "Unlimited Stock",
-      "unlimited_stock_desc": "Product does not require stock tracking",
-      "new_stock_label": "New Stock Quantity",
-      "save_stock_btn": "Save Stock",
-      "stock_update_success": "Product stock updated successfully!",
-      "update_stock_tooltip": "Update Stock",
-      "selected": "Selected",
-      "no_payment_image": "No supporting image",
-      "payment_method_desc_label": "Description / Instructions:",
-      "no_payment_desc": "No additional description.",
-      "close_btn": "Close",
-      "select_this_method": "Select This Method"
-    }
-  },
-  "error": {
-    "default": "Internal server error"
-  }
 }

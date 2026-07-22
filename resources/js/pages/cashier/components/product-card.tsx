@@ -12,38 +12,48 @@ interface ProductCardProps {
     isInCart: boolean;
 }
 
-export default function ProductCard({ product, onAdd, isInCart }: ProductCardProps) {
+export default function ProductCard({
+    product,
+    onAdd,
+    isInCart,
+}: ProductCardProps) {
     const { t } = useTranslation();
     const isOutOfStock = !product.is_unlimited && product.stock <= 0;
 
     return (
         <div
             className={cn(
-                'group relative flex flex-col rounded-xl border bg-card transition-all duration-200 overflow-hidden cursor-pointer',
-                'hover:shadow-md hover:-translate-y-0.5',
-                isOutOfStock && 'opacity-60 cursor-not-allowed',
+                'group relative flex cursor-pointer flex-col overflow-hidden rounded-xl border bg-card transition-all duration-200',
+                'hover:-translate-y-0.5 hover:shadow-md',
+                isOutOfStock && 'cursor-not-allowed opacity-60',
                 isInCart && 'ring-2 ring-primary/60',
             )}
             onClick={() => !isOutOfStock && onAdd(product)}
         >
             {/* Product Image */}
-            <div className="relative aspect-square bg-muted/40 flex items-center justify-center overflow-hidden">
+            <div className="relative flex aspect-square items-center justify-center overflow-hidden bg-muted/40">
                 {product.image ? (
                     <img
                         src={`/storage/${product.image}`}
                         alt={product.name}
-                        className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                        className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
                     />
                 ) : (
-                    <ImageIcon className="w-10 h-10 text-muted-foreground/40" />
+                    <ImageIcon className="h-10 w-10 text-muted-foreground/40" />
                 )}
 
                 {/* Stock badge */}
                 {!product.is_unlimited && (
                     <div className="absolute top-1.5 right-1.5">
                         <Badge
-                            variant={product.stock <= 0 ? 'destructive' : product.stock <= 5 ? 'secondary' : 'default'}
-                            className="text-[10px] px-1.5 py-0.5 font-semibold"
+                            variant={
+                                product.stock <= 0
+                                    ? 'destructive'
+                                    : product.stock <= 5
+                                      ? 'secondary'
+                                      : 'default'
+                            }
+                            className="px-1.5 py-0.5 text-[10px] font-semibold"
                         >
                             {product.stock <= 0
                                 ? t('page.kasir.out_of_stock', 'Habis')
@@ -54,23 +64,29 @@ export default function ProductCard({ product, onAdd, isInCart }: ProductCardPro
 
                 {/* Add to cart overlay */}
                 {!isOutOfStock && (
-                    <div className="absolute inset-0 bg-primary/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                        <div className="bg-primary rounded-full p-2 shadow-lg transform scale-75 group-hover:scale-100 transition-transform">
-                            <Plus className="w-4 h-4 text-primary-foreground" />
+                    <div className="absolute inset-0 flex items-center justify-center bg-primary/10 opacity-0 transition-opacity group-hover:opacity-100">
+                        <div className="scale-75 transform rounded-full bg-primary p-2 shadow-lg transition-transform group-hover:scale-100">
+                            <Plus className="h-4 w-4 text-primary-foreground" />
                         </div>
                     </div>
                 )}
             </div>
 
             {/* Product Info */}
-            <div className="p-2.5 flex flex-col gap-1 flex-1">
-                <p className="text-xs font-semibold leading-tight line-clamp-2 text-foreground">{product.name}</p>
-                <p className="text-[10px] text-muted-foreground">{product.unit_name}</p>
+            <div className="flex flex-1 flex-col gap-1 p-2.5">
+                <p className="line-clamp-2 text-xs leading-tight font-semibold text-foreground">
+                    {product.name}
+                </p>
+                <p className="text-[10px] text-muted-foreground">
+                    {product.unit_name}
+                </p>
                 <div className="mt-auto flex items-center justify-between gap-1 pt-1">
-                    <p className="text-xs font-bold text-primary">{formatRupiah(product.price)}</p>
+                    <p className="text-xs font-bold text-primary">
+                        {formatRupiah(product.price)}
+                    </p>
                     {isInCart && (
                         <div className="flex items-center gap-0.5 text-primary">
-                            <ShoppingCart className="w-3 h-3" />
+                            <ShoppingCart className="h-3 w-3" />
                         </div>
                     )}
                 </div>

@@ -21,7 +21,8 @@ import type { NavGroup, NavItem } from '@/types';
 
 function SidebarNavItem({ item }: { item: NavItem }) {
     const { isCurrentUrl } = useCurrentUrl();
-    const { hasPermission, hasAnyPermission, hasRole, isSuperAdmin } = useAuth();
+    const { hasPermission, hasAnyPermission, hasRole, isSuperAdmin } =
+        useAuth();
 
     const isItemAllowed = (navItem: NavItem): boolean => {
         if (isSuperAdmin()) return true;
@@ -29,7 +30,9 @@ function SidebarNavItem({ item }: { item: NavItem }) {
         let hasRoleAccess = true;
         if (navItem.role) {
             if (Array.isArray(navItem.role)) {
-                hasRoleAccess = navItem.role.length === 0 || navItem.role.some(r => hasRole(r));
+                hasRoleAccess =
+                    navItem.role.length === 0 ||
+                    navItem.role.some((r) => hasRole(r));
             } else {
                 hasRoleAccess = hasRole(navItem.role);
             }
@@ -38,7 +41,9 @@ function SidebarNavItem({ item }: { item: NavItem }) {
         let hasPermAccess = true;
         if (navItem.permission) {
             if (Array.isArray(navItem.permission)) {
-                hasPermAccess = navItem.permission.length === 0 || hasAnyPermission(navItem.permission);
+                hasPermAccess =
+                    navItem.permission.length === 0 ||
+                    hasAnyPermission(navItem.permission);
             } else {
                 hasPermAccess = hasPermission(navItem.permission);
             }
@@ -70,13 +75,13 @@ function SidebarNavItem({ item }: { item: NavItem }) {
         );
     }
 
-    const allowedSubItems = item.items.filter(sub => isItemAllowed(sub));
+    const allowedSubItems = item.items.filter((sub) => isItemAllowed(sub));
     if (allowedSubItems.length === 0) {
         return null;
     }
 
     const isChildActive = allowedSubItems.some(
-        sub => sub.href && isCurrentUrl(sub.href)
+        (sub) => sub.href && isCurrentUrl(sub.href),
     );
 
     return (
@@ -102,7 +107,11 @@ function SidebarNavItem({ item }: { item: NavItem }) {
                             <SidebarMenuSubItem key={subItem.title}>
                                 <SidebarMenuSubButton
                                     asChild
-                                    isActive={subItem.href ? isCurrentUrl(subItem.href) : false}
+                                    isActive={
+                                        subItem.href
+                                            ? isCurrentUrl(subItem.href)
+                                            : false
+                                    }
                                 >
                                     {subItem.href ? (
                                         <Link href={subItem.href} prefetch>
@@ -129,15 +138,15 @@ export function NavMain({
     items?: NavItem[];
     groups?: NavGroup[];
 }) {
-    const navGroups: NavGroup[] = groups.length > 0
-        ? groups
-        : [{ items }];
+    const navGroups: NavGroup[] = groups.length > 0 ? groups : [{ items }];
 
     return (
         <>
             {navGroups.map((group, index) => (
                 <SidebarGroup key={group.title || index} className="px-2 py-1">
-                    {group.title && <SidebarGroupLabel>{group.title}</SidebarGroupLabel>}
+                    {group.title && (
+                        <SidebarGroupLabel>{group.title}</SidebarGroupLabel>
+                    )}
                     <SidebarMenu>
                         {group.items.map((item) => (
                             <SidebarNavItem key={item.title} item={item} />

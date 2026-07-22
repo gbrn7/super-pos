@@ -70,8 +70,8 @@ import { ExportDropdownMenu } from './export-data-menu/export-dropdown-menu';
 
 interface DataTableProps<TData, TValue> {
     columns:
-    | ColumnDef<TData, TValue>[]
-    | ((props: any) => ColumnDef<TData, TValue>[]);
+        | ColumnDef<TData, TValue>[]
+        | ((props: any) => ColumnDef<TData, TValue>[]);
     data: TData[];
     processing?: boolean;
     limitOptions?: number[];
@@ -103,7 +103,9 @@ interface DataTableProps<TData, TValue> {
     onChangePaginationLimit: (limit: number) => void;
     onChangeField: (field: string) => void;
     onChangeKeyword: (keyword: string) => void;
-    setQueryParam: React.Dispatch<React.SetStateAction<MasterProductQueryParam>>;
+    setQueryParam: React.Dispatch<
+        React.SetStateAction<MasterProductQueryParam>
+    >;
     units: Unit[];
     categories: Category[];
     rowSelection: RowSelectionState;
@@ -153,24 +155,24 @@ export function DataTable<TData, TValue>({
     const columns =
         typeof columnsOrFn === 'function'
             ? columnsOrFn({
-                onDetailClick,
-                onEditClick,
-                onDeleteClick,
-                onAddProductsClick,
-                onSortChange: (
-                    orderBy: string | null,
-                    order: string | null,
-                ) => {
-                    setQueryParam((prev) => ({
-                        ...prev,
-                        order_by: orderBy,
-                        order,
-                        page: 1,
-                    }));
-                },
-                order: queryParam.order,
-                orderBy: queryParam.order_by,
-            })
+                  onDetailClick,
+                  onEditClick,
+                  onDeleteClick,
+                  onAddProductsClick,
+                  onSortChange: (
+                      orderBy: string | null,
+                      order: string | null,
+                  ) => {
+                      setQueryParam((prev) => ({
+                          ...prev,
+                          order_by: orderBy,
+                          order,
+                          page: 1,
+                      }));
+                  },
+                  order: queryParam.order,
+                  orderBy: queryParam.order_by,
+              })
             : columnsOrFn;
 
     const [sorting, setSorting] = React.useState<SortingState>([]);
@@ -201,13 +203,16 @@ export function DataTable<TData, TValue>({
         },
     });
 
-
     const handleBulkAddClick = React.useCallback(() => {
-        onBulkAddProductsClick?.(Object.values(selectedMasterProductsMap) as TData[]);
+        onBulkAddProductsClick?.(
+            Object.values(selectedMasterProductsMap) as TData[],
+        );
     }, [onBulkAddProductsClick, selectedMasterProductsMap]);
 
     const handleBulkDeleteClickAction = React.useCallback(() => {
-        onBulkDeleteClick?.(Object.values(selectedMasterProductsMap) as TData[]);
+        onBulkDeleteClick?.(
+            Object.values(selectedMasterProductsMap) as TData[],
+        );
     }, [onBulkDeleteClick, selectedMasterProductsMap]);
 
     const isFilterActive = React.useMemo(() => {
@@ -217,21 +222,23 @@ export function DataTable<TData, TValue>({
             queryParam.category_name ||
             queryParam.unit_name ||
             queryParam.barcode ||
-            (queryParam.is_added !== null && queryParam.is_added !== undefined && queryParam.is_added !== '')
+            (queryParam.is_added !== null &&
+                queryParam.is_added !== undefined &&
+                queryParam.is_added !== ''),
         );
     }, [queryParam]);
 
     return (
         <div className="rounded-2xl border p-3">
-            <div className="flex flex-col justify-between gap-3 pb-4 bulk-action-btn">
-                <div className="flex justify-start items-center gap-2 overflow-auto sm:justify-end lg:mt-0">
+            <div className="bulk-action-btn flex flex-col justify-between gap-3 pb-4">
+                <div className="flex items-center justify-start gap-2 overflow-auto sm:justify-end lg:mt-0">
                     {isFilterActive && onResetFilter && (
-                        <Button
-                            variant="outline"
-                            onClick={onResetFilter}
-                        >
-                            <RotateCcw className="h-4 w-4 mr-1.5" />
-                            {t('component.data_table.reset_filter', 'Reset Filter')}
+                        <Button variant="outline" onClick={onResetFilter}>
+                            <RotateCcw className="mr-1.5 h-4 w-4" />
+                            {t(
+                                'component.data_table.reset_filter',
+                                'Reset Filter',
+                            )}
                         </Button>
                     )}
                     <Can permission={PERMISSIONENUMS.CATEGORY.CREATE}>
@@ -242,19 +249,17 @@ export function DataTable<TData, TValue>({
                     </Can>
                     <Can permission={PERMISSIONENUMS.PRODUCT.CREATE}>
                         <BulkAddProductsDialog
-                            isDisabled={
-                                !(Object.keys(rowSelection).length > 0)
-                            }
-                            selectedLength={
-                                Object.keys(rowSelection).length
-                            }
+                            isDisabled={!(Object.keys(rowSelection).length > 0)}
+                            selectedLength={Object.keys(rowSelection).length}
                             isOpen={isBulkAddProductsDialogOpen}
                             onSuccess={() => {
                                 onRefresh();
                                 setRowSelection({});
                             }}
                             setOpen={setOpenBulkAddProductsDialogOpen}
-                            masterProducts={Object.values(selectedMasterProductsMap)}
+                            masterProducts={Object.values(
+                                selectedMasterProductsMap,
+                            )}
                             categories={categories}
                             units={units}
                             onBulkAddClick={handleBulkAddClick}
@@ -262,19 +267,17 @@ export function DataTable<TData, TValue>({
                     </Can>
                     <Can permission={PERMISSIONENUMS.MASTER_PRODUCT.DELETE}>
                         <BulkDeleteDialog
-                            isDisabled={
-                                !(Object.keys(rowSelection).length > 0)
-                            }
-                            selectedLength={
-                                Object.keys(rowSelection).length
-                            }
+                            isDisabled={!(Object.keys(rowSelection).length > 0)}
+                            selectedLength={Object.keys(rowSelection).length}
                             isOpen={isBulkDeleteDialogOpen}
                             onSuccess={() => {
                                 onRefresh();
                                 setRowSelection({});
                             }}
                             setOpen={setOpenBulkDeleteDialogOpen}
-                            masterProducts={Object.values(selectedMasterProductsMap)}
+                            masterProducts={Object.values(
+                                selectedMasterProductsMap,
+                            )}
                             onBulkDeleteClick={handleBulkDeleteClickAction}
                         />
                     </Can>
@@ -309,12 +312,10 @@ export function DataTable<TData, TValue>({
                         </DropdownMenuContent>
                     </DropdownMenu>
                     <Can permission={PERMISSIONENUMS.MASTER_PRODUCT.CREATE}>
-                        <CreateDialog
-                            onSuccess={onRefresh}
-                        />
+                        <CreateDialog onSuccess={onRefresh} />
                     </Can>
                 </div>
-                <div className="second-row grid grid-cols-1 gap-2 gap-y-3 md:grid-cols-2 lg:grid-cols-3 border p-3 rounded-md">
+                <div className="second-row grid grid-cols-1 gap-2 gap-y-3 rounded-md border p-3 md:grid-cols-2 lg:grid-cols-3">
                     <div className="space-y-1.5">
                         <Label className="text-xs font-medium text-muted-foreground">
                             {t(
@@ -385,9 +386,12 @@ export function DataTable<TData, TValue>({
                         </div>
                     </div>
 
-                    <div className="space-y-1.5 max-w-48">
+                    <div className="max-w-48 space-y-1.5">
                         <Label className="text-xs font-medium text-muted-foreground">
-                            {t('component.data_table.filter.status_label', 'Status')}
+                            {t(
+                                'component.data_table.filter.status_label',
+                                'Status',
+                            )}
                         </Label>
                         <Select
                             value={queryParam.is_added ?? 'all'}
@@ -410,13 +414,22 @@ export function DataTable<TData, TValue>({
                             <SelectContent>
                                 <SelectGroup>
                                     <SelectItem value="all">
-                                        {t('component.data_table.filter.all_status_label', 'Semua Status')}
+                                        {t(
+                                            'component.data_table.filter.all_status_label',
+                                            'Semua Status',
+                                        )}
                                     </SelectItem>
                                     <SelectItem value="true">
-                                        {t('page.master_product.is_added.added', 'Ditambahkan')}
+                                        {t(
+                                            'page.master_product.is_added.added',
+                                            'Ditambahkan',
+                                        )}
                                     </SelectItem>
                                     <SelectItem value="false">
-                                        {t('page.master_product.is_added.not_added', 'Tidak Ditambahkan')}
+                                        {t(
+                                            'page.master_product.is_added.not_added',
+                                            'Tidak Ditambahkan',
+                                        )}
                                     </SelectItem>
                                 </SelectGroup>
                             </SelectContent>
@@ -425,85 +438,167 @@ export function DataTable<TData, TValue>({
 
                     {/* Active Filter Badges */}
                     {isFilterActive && (
-                        <div className="col-span-full flex flex-wrap items-center gap-1.5 pt-2 border-t text-xs">
-                            <span className="font-medium text-muted-foreground mr-1">
-                                {t('component.data_table.active_filters', 'Filter Aktif:')}
+                        <div className="col-span-full flex flex-wrap items-center gap-1.5 border-t pt-2 text-xs">
+                            <span className="mr-1 font-medium text-muted-foreground">
+                                {t(
+                                    'component.data_table.active_filters',
+                                    'Filter Aktif:',
+                                )}
                             </span>
 
                             {queryParam.keyword && (
-                                <Badge variant="secondary" className="gap-1.5 py-0.5 px-2 font-normal text-xs bg-muted/50 hover:bg-muted">
-                                    <span>{t('component.data_table.search_component.search_label', 'Pencarian')}: "{queryParam.keyword}"</span>
+                                <Badge
+                                    variant="secondary"
+                                    className="gap-1.5 bg-muted/50 px-2 py-0.5 text-xs font-normal hover:bg-muted"
+                                >
+                                    <span>
+                                        {t(
+                                            'component.data_table.search_component.search_label',
+                                            'Pencarian',
+                                        )}
+                                        : "{queryParam.keyword}"
+                                    </span>
                                     <button
                                         type="button"
                                         onClick={() => onChangeKeyword('')}
-                                        className="ml-0.5 rounded-full p-0.5 hover:bg-muted-foreground/20 text-muted-foreground hover:text-foreground transition-colors"
+                                        className="ml-0.5 rounded-full p-0.5 text-muted-foreground transition-colors hover:bg-muted-foreground/20 hover:text-foreground"
                                     >
                                         <X className="h-3 w-3" />
-                                        <span className="sr-only">Hapus filter pencarian</span>
+                                        <span className="sr-only">
+                                            Hapus filter pencarian
+                                        </span>
                                     </button>
                                 </Badge>
                             )}
 
                             {queryParam.category_name && (
-                                <Badge variant="secondary" className="gap-1.5 py-0.5 px-2 font-normal text-xs bg-muted/50 hover:bg-muted">
-                                    <span>{t('component.data_table.filter.category_label', 'Kategori')}: {queryParam.category_name}</span>
+                                <Badge
+                                    variant="secondary"
+                                    className="gap-1.5 bg-muted/50 px-2 py-0.5 text-xs font-normal hover:bg-muted"
+                                >
+                                    <span>
+                                        {t(
+                                            'component.data_table.filter.category_label',
+                                            'Kategori',
+                                        )}
+                                        : {queryParam.category_name}
+                                    </span>
                                     <button
                                         type="button"
-                                        onClick={() => setQueryParam((prev) => ({ ...prev, category_name: null, page: 1 }))}
-                                        className="ml-0.5 rounded-full p-0.5 hover:bg-muted-foreground/20 text-muted-foreground hover:text-foreground transition-colors"
+                                        onClick={() =>
+                                            setQueryParam((prev) => ({
+                                                ...prev,
+                                                category_name: null,
+                                                page: 1,
+                                            }))
+                                        }
+                                        className="ml-0.5 rounded-full p-0.5 text-muted-foreground transition-colors hover:bg-muted-foreground/20 hover:text-foreground"
                                     >
                                         <X className="h-3 w-3" />
-                                        <span className="sr-only">Hapus filter kategori</span>
+                                        <span className="sr-only">
+                                            Hapus filter kategori
+                                        </span>
                                     </button>
                                 </Badge>
                             )}
 
                             {queryParam.unit_name && (
-                                <Badge variant="secondary" className="gap-1.5 py-0.5 px-2 font-normal text-xs bg-muted/50 hover:bg-muted">
-                                    <span>{t('component.data_table.filter.unit_label', 'Satuan')}: {queryParam.unit_name}</span>
+                                <Badge
+                                    variant="secondary"
+                                    className="gap-1.5 bg-muted/50 px-2 py-0.5 text-xs font-normal hover:bg-muted"
+                                >
+                                    <span>
+                                        {t(
+                                            'component.data_table.filter.unit_label',
+                                            'Satuan',
+                                        )}
+                                        : {queryParam.unit_name}
+                                    </span>
                                     <button
                                         type="button"
-                                        onClick={() => setQueryParam((prev) => ({ ...prev, unit_name: null, page: 1 }))}
-                                        className="ml-0.5 rounded-full p-0.5 hover:bg-muted-foreground/20 text-muted-foreground hover:text-foreground transition-colors"
+                                        onClick={() =>
+                                            setQueryParam((prev) => ({
+                                                ...prev,
+                                                unit_name: null,
+                                                page: 1,
+                                            }))
+                                        }
+                                        className="ml-0.5 rounded-full p-0.5 text-muted-foreground transition-colors hover:bg-muted-foreground/20 hover:text-foreground"
                                     >
                                         <X className="h-3 w-3" />
-                                        <span className="sr-only">Hapus filter satuan</span>
+                                        <span className="sr-only">
+                                            Hapus filter satuan
+                                        </span>
                                     </button>
                                 </Badge>
                             )}
 
                             {queryParam.barcode && (
-                                <Badge variant="secondary" className="gap-1.5 py-0.5 px-2 font-normal text-xs bg-muted/50 hover:bg-muted">
+                                <Badge
+                                    variant="secondary"
+                                    className="gap-1.5 bg-muted/50 px-2 py-0.5 text-xs font-normal hover:bg-muted"
+                                >
                                     <span>Barcode: {queryParam.barcode}</span>
                                     <button
                                         type="button"
-                                        onClick={() => setQueryParam((prev) => ({ ...prev, barcode: null, page: 1 }))}
-                                        className="ml-0.5 rounded-full p-0.5 hover:bg-muted-foreground/20 text-muted-foreground hover:text-foreground transition-colors"
+                                        onClick={() =>
+                                            setQueryParam((prev) => ({
+                                                ...prev,
+                                                barcode: null,
+                                                page: 1,
+                                            }))
+                                        }
+                                        className="ml-0.5 rounded-full p-0.5 text-muted-foreground transition-colors hover:bg-muted-foreground/20 hover:text-foreground"
                                     >
                                         <X className="h-3 w-3" />
-                                        <span className="sr-only">Hapus filter barcode</span>
+                                        <span className="sr-only">
+                                            Hapus filter barcode
+                                        </span>
                                     </button>
                                 </Badge>
                             )}
 
-                            {queryParam.is_added !== null && queryParam.is_added !== undefined && queryParam.is_added !== '' && (
-                                <Badge variant="secondary" className="gap-1.5 py-0.5 px-2 font-normal text-xs bg-muted/50 hover:bg-muted">
-                                    <span>
-                                        {t('component.data_table.filter.status_label', 'Status')}:{' '}
-                                        {queryParam.is_added === 'true'
-                                            ? t('page.master_product.is_added.added', 'Ditambahkan')
-                                            : t('page.master_product.is_added.not_added', 'Tidak Ditambahkan')}
-                                    </span>
-                                    <button
-                                        type="button"
-                                        onClick={() => setQueryParam((prev) => ({ ...prev, is_added: null, page: 1 }))}
-                                        className="ml-0.5 rounded-full p-0.5 hover:bg-muted-foreground/20 text-muted-foreground hover:text-foreground transition-colors"
+                            {queryParam.is_added !== null &&
+                                queryParam.is_added !== undefined &&
+                                queryParam.is_added !== '' && (
+                                    <Badge
+                                        variant="secondary"
+                                        className="gap-1.5 bg-muted/50 px-2 py-0.5 text-xs font-normal hover:bg-muted"
                                     >
-                                        <X className="h-3 w-3" />
-                                        <span className="sr-only">Hapus filter status</span>
-                                    </button>
-                                </Badge>
-                            )}
+                                        <span>
+                                            {t(
+                                                'component.data_table.filter.status_label',
+                                                'Status',
+                                            )}
+                                            :{' '}
+                                            {queryParam.is_added === 'true'
+                                                ? t(
+                                                      'page.master_product.is_added.added',
+                                                      'Ditambahkan',
+                                                  )
+                                                : t(
+                                                      'page.master_product.is_added.not_added',
+                                                      'Tidak Ditambahkan',
+                                                  )}
+                                        </span>
+                                        <button
+                                            type="button"
+                                            onClick={() =>
+                                                setQueryParam((prev) => ({
+                                                    ...prev,
+                                                    is_added: null,
+                                                    page: 1,
+                                                }))
+                                            }
+                                            className="ml-0.5 rounded-full p-0.5 text-muted-foreground transition-colors hover:bg-muted-foreground/20 hover:text-foreground"
+                                        >
+                                            <X className="h-3 w-3" />
+                                            <span className="sr-only">
+                                                Hapus filter status
+                                            </span>
+                                        </button>
+                                    </Badge>
+                                )}
                         </div>
                     )}
                 </div>
@@ -708,7 +803,7 @@ export function DataTable<TData, TValue>({
                             }}
                             disabled={
                                 pagination.current_page ==
-                                pagination.last_page || processing
+                                    pagination.last_page || processing
                             }
                         >
                             <span className="sr-only">Go to next page</span>
@@ -723,7 +818,7 @@ export function DataTable<TData, TValue>({
                             }
                             disabled={
                                 pagination.current_page ==
-                                pagination.last_page || processing
+                                    pagination.last_page || processing
                             }
                         >
                             <span className="sr-only">Go to last page</span>

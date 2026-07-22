@@ -1,4 +1,4 @@
 export interface CategoryForm {
-  name: string;
-  desc: string;
+    name: string;
+    desc: string;
 }

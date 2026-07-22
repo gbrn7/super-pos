@@ -16,40 +16,40 @@ import type { RowSelectionState } from '@tanstack/react-table';
 
 const { url } = paymentMethods();
 
-
 export default function Index() {
-
-
     const { url: apiUrl } = apiGetPaymentMethods();
-    const { t } = useTranslation()
+    const { t } = useTranslation();
 
-
-    const [allPaymentMethods, setAllPaymentMethods] = useState<PaymentMethod[]>([]);
+    const [allPaymentMethods, setAllPaymentMethods] = useState<PaymentMethod[]>(
+        [],
+    );
     const [processing, setProcessing] = useState(false);
     const [detailOpen, setDetailOpen] = useState(false);
     const [editOpen, setEditOpen] = useState(false);
     const [deleteOpen, setDeleteOpen] = useState(false);
     const [bulkDeleteOpen, setBulkDeleteOpen] = useState(false);
-    const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<PaymentMethod | null>(
-        null,
-    );
-    const [selectedPaymentMethods, setSelectedPaymentMethods] = useState<PaymentMethod[]>([]);
+    const [selectedPaymentMethod, setSelectedPaymentMethod] =
+        useState<PaymentMethod | null>(null);
+    const [selectedPaymentMethods, setSelectedPaymentMethods] = useState<
+        PaymentMethod[]
+    >([]);
     const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
 
     const fetchAllPaymentMethods = async () => {
         try {
             setProcessing(true);
-            const res = await axiosInstance.get<ResponseApi<PaymentMethod[]>>(apiUrl);
+            const res =
+                await axiosInstance.get<ResponseApi<PaymentMethod[]>>(apiUrl);
             if (!res.data.success) {
-                showWarningToast(res.data.message)
-                return
+                showWarningToast(res.data.message);
+                return;
             }
             setAllPaymentMethods(res.data.data);
         } catch (error) {
-            handleApiError(error)
+            handleApiError(error);
         } finally {
             setProcessing(false);
-            setSelectedPaymentMethods([])
+            setSelectedPaymentMethods([]);
         }
     };
 
@@ -81,10 +81,12 @@ export default function Index() {
 
     return (
         <>
-            <Head title={t("page.payment_method.page_name", "Metode Pembayaran")} />
+            <Head
+                title={t('page.payment_method.page_name', 'Metode Pembayaran')}
+            />
             <div className="mb-16 flex h-full flex-1 flex-col overflow-x-auto rounded-xl p-4">
                 <HeaderContent>
-                    {t("page.payment_method.page_name", "Metode Pembayaran")}
+                    {t('page.payment_method.page_name', 'Metode Pembayaran')}
                 </HeaderContent>
                 <DataTable
                     columns={columns}
@@ -117,7 +119,10 @@ export default function Index() {
 Index.layout = {
     breadcrumbs: [
         {
-            title: i18next.t("page.payment_method.page_name", "Metode Pembayaran"),
+            title: i18next.t(
+                'page.payment_method.page_name',
+                'Metode Pembayaran',
+            ),
             href: url,
         },
     ],

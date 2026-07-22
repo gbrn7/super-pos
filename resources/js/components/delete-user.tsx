@@ -18,7 +18,7 @@ import { Label } from '@/components/ui/label';
 import { useTranslation } from 'react-i18next';
 
 export default function DeleteUser() {
-    const { t } = useTranslation()
+    const { t } = useTranslation();
     const passwordInput = useRef<HTMLInputElement>(null);
 
     return (
@@ -30,9 +30,17 @@ export default function DeleteUser() {
             />
             <div className="space-y-4 rounded-lg border border-red-100 bg-red-50 p-4 dark:border-red-200/10 dark:bg-red-700/10">
                 <div className="relative space-y-0.5 text-red-600 dark:text-red-100">
-                    <p className="font-medium">{t("page.settings.profile.deleteUser.warning", "Peringatan")}</p>
+                    <p className="font-medium">
+                        {t(
+                            'page.settings.profile.deleteUser.warning',
+                            'Peringatan',
+                        )}
+                    </p>
                     <p className="text-sm">
-                        {t("page.settings.profile.deleteUser.description", "Harap berhati-hati, tindakan ini tidak dapat dibatalkan.")}
+                        {t(
+                            'page.settings.profile.deleteUser.description',
+                            'Harap berhati-hati, tindakan ini tidak dapat dibatalkan.',
+                        )}
                     </p>
                 </div>
 
@@ -42,15 +50,24 @@ export default function DeleteUser() {
                             variant="destructive"
                             data-test="delete-user-button"
                         >
-                            {t("page.settings.profile.deleteUser.delete_account", "Hapus akun")}
+                            {t(
+                                'page.settings.profile.deleteUser.delete_account',
+                                'Hapus akun',
+                            )}
                         </Button>
                     </DialogTrigger>
                     <DialogContent>
                         <DialogTitle>
-                            {t("page.settings.profile.deleteUser.dialog_title", "Apakah Anda yakin ingin menghapus akun Anda?")}
+                            {t(
+                                'page.settings.profile.deleteUser.dialog_title',
+                                'Apakah Anda yakin ingin menghapus akun Anda?',
+                            )}
                         </DialogTitle>
                         <DialogDescription>
-                            {t("page.settings.profile.deleteUser.description", "Setelah akun Anda dihapus, semua sumber daya dan datanya juga akan dihapus secara permanen. Silakan masukkan kata sandi Anda untuk mengkonfirmasi bahwa Anda ingin menghapus akun Anda secara permanen.")}
+                            {t(
+                                'page.settings.profile.deleteUser.description',
+                                'Setelah akun Anda dihapus, semua sumber daya dan datanya juga akan dihapus secara permanen. Silakan masukkan kata sandi Anda untuk mengkonfirmasi bahwa Anda ingin menghapus akun Anda secara permanen.',
+                            )}
                         </DialogDescription>
 
                         <Form
@@ -69,14 +86,20 @@ export default function DeleteUser() {
                                             htmlFor="password"
                                             className="sr-only"
                                         >
-                                            {t("page.settings.profile.deleteUser.password_input_label", "Password")}
+                                            {t(
+                                                'page.settings.profile.deleteUser.password_input_label',
+                                                'Password',
+                                            )}
                                         </Label>
 
                                         <PasswordInput
                                             id="password"
                                             name="password"
                                             ref={passwordInput}
-                                            placeholder={t("page.settings.profile.deleteUser.password_input_placeholder", "Password")}
+                                            placeholder={t(
+                                                'page.settings.profile.deleteUser.password_input_placeholder',
+                                                'Password',
+                                            )}
                                             autoComplete="current-password"
                                         />
 
@@ -91,7 +114,10 @@ export default function DeleteUser() {
                                                     resetAndClearErrors()
                                                 }
                                             >
-                                                {t("page.settings.profile.deleteUser.cancel_btn", "Batal")}
+                                                {t(
+                                                    'page.settings.profile.deleteUser.cancel_btn',
+                                                    'Batal',
+                                                )}
                                             </Button>
                                         </DialogClose>
 
@@ -104,7 +130,10 @@ export default function DeleteUser() {
                                                 type="submit"
                                                 data-test="confirm-delete-user-button"
                                             >
-                                                {t("page.settings.profile.deleteUser.confirm_delete_btn", "Hapus akun")}
+                                                {t(
+                                                    'page.settings.profile.deleteUser.confirm_delete_btn',
+                                                    'Hapus akun',
+                                                )}
                                             </button>
                                         </Button>
                                     </DialogFooter>

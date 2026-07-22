@@ -25,7 +25,7 @@ export default function Login({
 }: Props) {
     return (
         <>
-            <Head title={t("page.auth.login.title", "Masuk ke akun Anda")} />
+            <Head title={t('page.auth.login.title', 'Masuk ke akun Anda')} />
 
             <Form
                 {...store.form()}
@@ -36,7 +36,12 @@ export default function Login({
                     <>
                         <div className="grid gap-6">
                             <div className="grid gap-2">
-                                <Label htmlFor="email">{t("page.auth.login.form.email_input_label", "Email")}</Label>
+                                <Label htmlFor="email">
+                                    {t(
+                                        'page.auth.login.form.email_input_label',
+                                        'Email',
+                                    )}
+                                </Label>
                                 <Input
                                     id="email"
                                     type="email"
@@ -52,14 +57,22 @@ export default function Login({
 
                             <div className="grid gap-2">
                                 <div className="flex items-center">
-                                    <Label htmlFor="password">{t("page.auth.login.form.password_input_label", "Password")}</Label>
+                                    <Label htmlFor="password">
+                                        {t(
+                                            'page.auth.login.form.password_input_label',
+                                            'Password',
+                                        )}
+                                    </Label>
                                     {canResetPassword && (
                                         <TextLink
                                             href={request()}
                                             className="ml-auto text-sm"
                                             tabIndex={5}
                                         >
-                                            {t('page.auth.login.forgot_password_link', "Lupa password?")}
+                                            {t(
+                                                'page.auth.login.forgot_password_link',
+                                                'Lupa password?',
+                                            )}
                                         </TextLink>
                                     )}
                                 </div>
@@ -80,7 +93,12 @@ export default function Login({
                                     name="remember"
                                     tabIndex={3}
                                 />
-                                <Label htmlFor="remember">{t('page.auth.login.remember_me', "Ingat saya")}</Label>
+                                <Label htmlFor="remember">
+                                    {t(
+                                        'page.auth.login.remember_me',
+                                        'Ingat saya',
+                                    )}
+                                </Label>
                             </div>
 
                             <Button
@@ -91,15 +109,18 @@ export default function Login({
                                 data-test="login-button"
                             >
                                 {processing && <Spinner />}
-                                {t("page.auth.login.form.login_btn", "Log in")}
+                                {t('page.auth.login.form.login_btn', 'Log in')}
                             </Button>
                         </div>
 
                         {canRegister && (
                             <div className="text-center text-sm text-muted-foreground">
-                                {t("page.auth.login.dont_have_account", "Tidak punya akun?")}{' '}
+                                {t(
+                                    'page.auth.login.dont_have_account',
+                                    'Tidak punya akun?',
+                                )}{' '}
                                 <TextLink href={register()} tabIndex={5}>
-                                    {t("page.auth.login.signup_btn", "Daftar")}
+                                    {t('page.auth.login.signup_btn', 'Daftar')}
                                 </TextLink>
                             </div>
                         )}
@@ -117,6 +138,9 @@ export default function Login({
 }
 
 Login.layout = {
-    title: i18next.t("page.auth.register.title", "Buat akun Anda"),
-    description: i18next.t("page.auth.register.description", "Masukkan detail Anda di bawah ini untuk membuat akun Anda."),
+    title: i18next.t('page.auth.register.title', 'Buat akun Anda'),
+    description: i18next.t(
+        'page.auth.register.description',
+        'Masukkan detail Anda di bawah ini untuk membuat akun Anda.',
+    ),
 };

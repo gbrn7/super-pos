@@ -1,5 +1,17 @@
 import { Link } from '@inertiajs/react';
-import { Banknote, Book, LayoutGrid, Package, PackageSearch, Receipt, ShoppingCart, Tags, User, Users, Weight } from 'lucide-react';
+import {
+    Banknote,
+    Book,
+    LayoutGrid,
+    Package,
+    PackageSearch,
+    Receipt,
+    ShoppingCart,
+    Tags,
+    User,
+    Users,
+    Weight,
+} from 'lucide-react';
 import AppLogo from '@/components/app-logo';
 import { NavFooter } from '@/components/nav-footer';
 import { NavMain } from '@/components/nav-main';
@@ -28,7 +40,6 @@ import { useTranslation } from 'react-i18next';
 import { IconUserKey } from '@tabler/icons-react';
 import { PERMISSIONENUMS } from '@/support/enums/PermissionEnums';
 
-
 const footerNavItems: NavItem[] = [
     // {
     //     title: 'Repository',
@@ -47,114 +58,147 @@ export function AppSidebar() {
 
     const navGroups: NavGroup[] = [
         {
-            title: t("component.sidebar.group_main", "Utama"),
+            title: t('component.sidebar.group_main', 'Utama'),
             items: [
                 {
-                    title: t("component.sidebar.dashboard_menu_label", "Dasbor"),
+                    title: t(
+                        'component.sidebar.dashboard_menu_label',
+                        'Dasbor',
+                    ),
                     href: dashboard(),
                     icon: LayoutGrid,
                     permission: PERMISSIONENUMS.DASHBOARD.READ,
-                    role: []
+                    role: [],
                 },
                 {
-                    title: t("component.sidebar.example_menu_label", "Example"),
+                    title: t('component.sidebar.example_menu_label', 'Example'),
                     href: '/example',
                     icon: Book,
                     permission: PERMISSIONENUMS.DASHBOARD.READ,
-                    role: []
+                    role: [],
                 },
-            ]
+            ],
         },
         {
-            title: t("component.sidebar.group_sales", "Penjualan & Transaksi"),
+            title: t('component.sidebar.group_sales', 'Penjualan & Transaksi'),
             items: [
                 {
-                    title: t("component.sidebar.kasir_menu_label", "Kasir"),
+                    title: t('component.sidebar.kasir_menu_label', 'Kasir'),
                     href: cashier(),
                     icon: ShoppingCart,
                     permission: PERMISSIONENUMS.TRANSACTION.CREATE,
-                    role: []
+                    role: [],
                 },
                 {
-                    title: t("component.sidebar.transaction_menu_label", "Transaksi"),
+                    title: t(
+                        'component.sidebar.transaction_menu_label',
+                        'Transaksi',
+                    ),
                     href: transactions(),
                     icon: Receipt,
                     permission: PERMISSIONENUMS.TRANSACTION.READ,
-                    role: []
+                    role: [],
                 },
-            ]
+            ],
         },
         {
-            title: t("component.sidebar.group_inventory", "Produk & Inventori"),
+            title: t('component.sidebar.group_inventory', 'Produk & Inventori'),
             items: [
                 {
-                    title: t("component.sidebar.product_management_menu_label", "Manajemen Produk"),
+                    title: t(
+                        'component.sidebar.product_management_menu_label',
+                        'Manajemen Produk',
+                    ),
                     icon: Package,
                     items: [
                         {
-                            title: t("component.sidebar.product_menu_label", "Produk"),
+                            title: t(
+                                'component.sidebar.product_menu_label',
+                                'Produk',
+                            ),
                             href: products(),
                             icon: Package,
                             permission: PERMISSIONENUMS.PRODUCT.READ,
-                            role: []
+                            role: [],
                         },
                         {
-                            title: t("component.sidebar.master_product_menu_label", "Master Produk"),
+                            title: t(
+                                'component.sidebar.master_product_menu_label',
+                                'Master Produk',
+                            ),
                             href: masterProducts(),
                             icon: PackageSearch,
                             permission: PERMISSIONENUMS.MASTER_PRODUCT.READ,
-                            role: []
+                            role: [],
                         },
                         {
-                            title: t("component.sidebar.category_menu_label", "Kategori"),
+                            title: t(
+                                'component.sidebar.category_menu_label',
+                                'Kategori',
+                            ),
                             href: categories(),
                             icon: Tags,
                             permission: PERMISSIONENUMS.CATEGORY.READ,
-                            role: []
+                            role: [],
                         },
                         {
-                            title: t("component.sidebar.unit_menu_label", "Satuan"),
+                            title: t(
+                                'component.sidebar.unit_menu_label',
+                                'Satuan',
+                            ),
                             href: units(),
                             icon: Weight,
                             permission: PERMISSIONENUMS.UNIT.READ,
-                            role: []
+                            role: [],
                         },
-                    ]
-                }
-            ]
+                    ],
+                },
+            ],
         },
         {
-            title: t("component.sidebar.group_system", "Sistem & Pengaturan"),
+            title: t('component.sidebar.group_system', 'Sistem & Pengaturan'),
             items: [
                 {
-                    title: t("component.sidebar.user_management_menu_label", "Manajemen Pengguna"),
+                    title: t(
+                        'component.sidebar.user_management_menu_label',
+                        'Manajemen Pengguna',
+                    ),
                     icon: Users,
                     items: [
                         {
-                            title: t("component.sidebar.user_menu_label", "Pengguna"),
+                            title: t(
+                                'component.sidebar.user_menu_label',
+                                'Pengguna',
+                            ),
                             href: users(),
                             icon: User,
                             permission: PERMISSIONENUMS.USER.READ,
-                            role: []
+                            role: [],
                         },
                         {
-                            title: t("component.sidebar.role_menu_label", "Peran"),
+                            title: t(
+                                'component.sidebar.role_menu_label',
+                                'Peran',
+                            ),
                             href: roles(),
                             icon: IconUserKey,
                             permission: PERMISSIONENUMS.ROLE.READ,
-                            role: []
+                            role: [],
                         },
-                    ]
+                    ],
                 },
                 {
-                    title: t("component.sidebar.payment_method_menu_label", "Metode Pembayaran"),
+                    title: t(
+                        'component.sidebar.payment_method_menu_label',
+                        'Metode Pembayaran',
+                    ),
                     href: paymentMethods(),
                     icon: Banknote,
                     permission: PERMISSIONENUMS.PAYMENT_METHOD.READ,
-                    role: []
+                    role: [],
                 },
-            ]
-        }
+            ],
+        },
     ];
 
     return (

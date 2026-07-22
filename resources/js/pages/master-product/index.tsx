@@ -3,7 +3,12 @@ import i18next from 'i18next';
 import { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import HeaderContent from '@/components/header-content';
-import { DEBOUNCEDEFAULTDURATION, DEFAULT_FILTER_VALUE, PAGINATIONLIMITDEFAULT, PAGINATIONLIMITOPTIONDEFAULT } from '@/constants/Index';
+import {
+    DEBOUNCEDEFAULTDURATION,
+    DEFAULT_FILTER_VALUE,
+    PAGINATIONLIMITDEFAULT,
+    PAGINATIONLIMITOPTIONDEFAULT,
+} from '@/constants/Index';
 import axiosInstance from '@/lib/axios';
 import { handleApiError, showWarningToast } from '@/lib/utils';
 import { index as apiGetMasterProducts } from '@/routes/apiMasterProducts';
@@ -21,18 +26,15 @@ import type { Unit } from '@/support/models/unit';
 import { columns } from './columns';
 import { DataTable } from './data-table';
 
-
 const { url } = masterproducts();
 
-
 export default function Index() {
-
-
     const { url: apiUrl } = apiGetMasterProducts();
-    const { t } = useTranslation()
+    const { t } = useTranslation();
 
-
-    const [allMasterProducts, setAllMasterProducts] = useState<MasterProduct[]>([]);
+    const [allMasterProducts, setAllMasterProducts] = useState<MasterProduct[]>(
+        [],
+    );
     const [categories, setCategories] = useState<Category[]>([]);
     const [units, setUnits] = useState<Unit[]>([]);
     const [pagination, setPagination] = useState<Pagination>({
@@ -43,8 +45,8 @@ export default function Index() {
         from: 0,
         to: 0,
         links: [],
-        prev_page_url: "",
-        next_page_url: "",
+        prev_page_url: '',
+        next_page_url: '',
     });
     const [processing, setProcessing] = useState(false);
     const [detailOpen, setDetailOpen] = useState(false);
@@ -53,11 +55,14 @@ export default function Index() {
     const [bulkDeleteOpen, setBulkDeleteOpen] = useState(false);
     const [bulkAddProductsOpen, setBulkAddProductsOpen] = useState(false);
     const [addProductsOpen, setAddProductsOpen] = useState(false);
-    const [selectedMasterProduct, setSelectedMasterProduct] = useState<MasterProduct | null>(
-        null,
-    );
-    const [selectedMasterProducts, setSelectedMasterProducts] = useState<MasterProduct[]>([]);
-    const [selectedMasterProductsMap, setSelectedMasterProductsMap] = useState<Record<string | number, MasterProduct>>({});
+    const [selectedMasterProduct, setSelectedMasterProduct] =
+        useState<MasterProduct | null>(null);
+    const [selectedMasterProducts, setSelectedMasterProducts] = useState<
+        MasterProduct[]
+    >([]);
+    const [selectedMasterProductsMap, setSelectedMasterProductsMap] = useState<
+        Record<string | number, MasterProduct>
+    >({});
     const hasMountedQueryEffect = useRef(false);
     const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
 
@@ -65,30 +70,32 @@ export default function Index() {
         limit: PAGINATIONLIMITDEFAULT,
         page: 1,
         field: DEFAULT_FILTER_VALUE,
-        keyword: "",
+        keyword: '',
         category_name: null,
         unit_name: null,
         order_by: null,
         order: null,
         barcode: null,
         is_added: null,
-    })
+    });
 
     const fetchAllMasterProducts = async () => {
         try {
             setProcessing(true);
-            const res = await axiosInstance.get<ResponseApi<PaginationResponse<MasterProduct>>>(apiUrl, { params: queryParam });
+            const res = await axiosInstance.get<
+                ResponseApi<PaginationResponse<MasterProduct>>
+            >(apiUrl, { params: queryParam });
 
             if (!res.data.success) {
-                showWarningToast(res.data.message)
+                showWarningToast(res.data.message);
 
-                return
+                return;
             }
 
             setAllMasterProducts(res.data.data.items);
             setPagination(res.data.data.pagination);
         } catch (error) {
-            handleApiError(error)
+            handleApiError(error);
         } finally {
             setProcessing(false);
         }
@@ -97,10 +104,11 @@ export default function Index() {
     const fetchCategoriesAndUnits = async () => {
         try {
             const [categoriesRes, unitsRes] = await Promise.all([
-                axiosInstance.get<ResponseApi<Category[]>>(apiGetCategories().url),
+                axiosInstance.get<ResponseApi<Category[]>>(
+                    apiGetCategories().url,
+                ),
                 axiosInstance.get<ResponseApi<Unit[]>>(apiGetUnits().url),
             ]);
-
 
             if (categoriesRes.data.data) {
                 setCategories(categoriesRes.data.data);
@@ -147,21 +155,21 @@ export default function Index() {
     const handleChangePaginationPage = (page: number) => {
         setQueryParam((prev) => ({
             ...prev,
-            page: page
+            page: page,
         }));
     };
 
     const handleChangePaginationLimit = (limit: number) => {
         setQueryParam((prev) => ({
             ...prev,
-            limit: limit
+            limit: limit,
         }));
     };
 
     const handleChangeField = (field: string) => {
         setQueryParam((prev) => ({
             ...prev,
-            field: field
+            field: field,
         }));
     };
 
@@ -178,7 +186,7 @@ export default function Index() {
             limit: PAGINATIONLIMITDEFAULT,
             page: 1,
             field: DEFAULT_FILTER_VALUE,
-            keyword: "",
+            keyword: '',
             category_name: null,
             unit_name: null,
             order_by: null,
@@ -210,7 +218,7 @@ export default function Index() {
         queryParam.order_by,
         queryParam.order,
         queryParam.is_added,
-    ])
+    ]);
 
     useEffect(() => {
         const timeout = setTimeout(() => {
@@ -218,7 +226,7 @@ export default function Index() {
         }, DEBOUNCEDEFAULTDURATION);
 
         return () => clearTimeout(timeout);
-    }, [queryParam.keyword])
+    }, [queryParam.keyword]);
 
     useEffect(() => {
         if (Object.keys(rowSelection).length === 0) {
@@ -244,10 +252,10 @@ export default function Index() {
 
     return (
         <>
-            <Head title={t("page.master_product.page_name", "Produk")} />
+            <Head title={t('page.master_product.page_name', 'Produk')} />
             <div className="mb-16 flex h-full flex-1 flex-col overflow-x-auto rounded-xl p-4">
                 <HeaderContent>
-                    {t("page.master_product.page_name", "Master Produk")}
+                    {t('page.master_product.page_name', 'Master Produk')}
                 </HeaderContent>
                 <DataTable
                     columns={columns}
@@ -296,7 +304,7 @@ export default function Index() {
 Index.layout = {
     breadcrumbs: [
         {
-            title: i18next.t("page.master_product.page_name", "Master Produk"),
+            title: i18next.t('page.master_product.page_name', 'Master Produk'),
             href: url,
         },
     ],

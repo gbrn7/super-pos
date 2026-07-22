@@ -6,26 +6,36 @@ import i18next from 'i18next';
 import { useTranslation } from 'react-i18next';
 import AppLayout from '@/layouts/app-layout';
 
-
-
 export default function Appearance() {
     const { t } = useTranslation();
 
-
     return (
         <>
-            <Head title={t("page.settings.appearance.title", "Pengaturan penampilan")} />
+            <Head
+                title={t(
+                    'page.settings.appearance.title',
+                    'Pengaturan penampilan',
+                )}
+            />
 
-            <h1 className="sr-only">{t("page.settings.appearance.title", "Pengaturan penampilan")}</h1>
+            <h1 className="sr-only">
+                {t('page.settings.appearance.title', 'Pengaturan penampilan')}
+            </h1>
 
             <div className="space-y-6">
                 <Heading
                     variant="small"
-                    title={t("page.settings.appearance.title", "Pengaturan penampilan")}
-                    description={t("page.settings.appearance.description", "Perbarui pengaturan tampilan akun Anda")}
+                    title={t(
+                        'page.settings.appearance.title',
+                        'Pengaturan penampilan',
+                    )}
+                    description={t(
+                        'page.settings.appearance.description',
+                        'Perbarui pengaturan tampilan akun Anda',
+                    )}
                 />
                 <AppearanceTabs />
-            </div >
+            </div>
         </>
     );
 }
@@ -33,12 +43,14 @@ export default function Appearance() {
 Appearance.layout = {
     breadcrumbs: [
         {
-            title: i18next.t("page.settings.appearance.title", "Pengaturan penampilan"),
+            title: i18next.t(
+                'page.settings.appearance.title',
+                'Pengaturan penampilan',
+            ),
             href: editAppearance(),
         },
     ],
 };
-
 
 // function AppearanceLayout({ children }: { children: React.ReactNode }) {
 //     const { t } = useTranslation();

@@ -18,7 +18,11 @@ import { useTranslation } from 'react-i18next';
 import { Spinner } from '@/components/ui/spinner';
 import axiosInstance from '@/lib/axios';
 import { ResponseApi } from '@/support/interfaces/response/Response';
-import { handleApiError, showSuccessToast, showWarningToast } from '@/lib/utils';
+import {
+    handleApiError,
+    showSuccessToast,
+    showWarningToast,
+} from '@/lib/utils';
 import { UnitForm } from '@/support/interfaces/request/unit';
 import z from 'zod';
 import ErrorFormInfo from '@/components/errorFormInfo';
@@ -41,15 +45,21 @@ export function EditDialog({
     const [loading, setLoading] = useState<boolean>(false);
 
     const [formData, setFormData] = useState({
-        name: unit?.name ?? ''
+        name: unit?.name ?? '',
     });
 
     const [errorForm, setErrorForm] = useState<UnitForm>({
-        name: ""
+        name: '',
     });
 
     const unitSchema = z.object({
-        name: z.string().trim().min(1, t("validation.unit.required.name", "Nama tidak boleh kosong"))
+        name: z
+            .string()
+            .trim()
+            .min(
+                1,
+                t('validation.unit.required.name', 'Nama tidak boleh kosong'),
+            ),
     });
 
     const handleChange = (
@@ -74,7 +84,7 @@ export function EditDialog({
 
         if (!resultValidation.success) {
             const fieldErrors: UnitForm = {
-                name: ""
+                name: '',
             };
 
             resultValidation.error.issues.forEach((error) => {
@@ -88,23 +98,24 @@ export function EditDialog({
             return;
         }
 
-
         try {
             setLoading(true);
 
-
-            const res = await axiosInstance.put<ResponseApi<Unit>>(updateUnit(unit?.id || '').url, formData);
+            const res = await axiosInstance.put<ResponseApi<Unit>>(
+                updateUnit(unit?.id || '').url,
+                formData,
+            );
 
             if (!res.data.success) {
-                showWarningToast(res.data.message)
-                return
+                showWarningToast(res.data.message);
+                return;
             }
 
-            showSuccessToast(res.data.message)
+            showSuccessToast(res.data.message);
             onSuccess();
         } catch (error) {
             console.error('Error updating unit:', error);
-            handleApiError(error)
+            handleApiError(error);
         } finally {
             setLoading(false);
             setOpen(false);
@@ -116,21 +127,35 @@ export function EditDialog({
             <DialogContent onOpenAutoFocus={(e) => e.preventDefault()}>
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <DialogHeader>
-                        <DialogTitle>{t("page.unit.dialog_modal.edit_dialog.dialog_title", "Edit Unit")}</DialogTitle>
+                        <DialogTitle>
+                            {t(
+                                'page.unit.dialog_modal.edit_dialog.dialog_title',
+                                'Edit Unit',
+                            )}
+                        </DialogTitle>
                         <DialogDescription>
-                            {t("page.unit.dialog_modal.edit_dialog.dialog_desc", "Edit data unit")}
+                            {t(
+                                'page.unit.dialog_modal.edit_dialog.dialog_desc',
+                                'Edit data unit',
+                            )}
                         </DialogDescription>
                     </DialogHeader>
                     <FieldGroup>
                         <Field>
                             <label htmlFor="name" className="text-sm">
-                                {t("page.unit.dialog_modal.edit_dialog.name_input_label", "Nama")}
+                                {t(
+                                    'page.unit.dialog_modal.edit_dialog.name_input_label',
+                                    'Nama',
+                                )}
                                 <span className="text-red-500"> *</span>
                             </label>
                             <Input
                                 id="name"
                                 name="name"
-                                placeholder={t("page.unit.dialog_modal.edit_dialog.name_input_placeholder", "Masukkan nama unit")}
+                                placeholder={t(
+                                    'page.unit.dialog_modal.edit_dialog.name_input_placeholder',
+                                    'Masukkan nama unit',
+                                )}
                                 value={formData.name}
                                 onChange={handleChange}
                                 disabled={loading}
@@ -149,11 +174,21 @@ export function EditDialog({
                                 onClick={() => setOpen(false)}
                                 disabled={loading}
                             >
-                                {t("page.unit.dialog_modal.edit_dialog.cancel_button", "Batal")}
+                                {t(
+                                    'page.unit.dialog_modal.edit_dialog.cancel_button',
+                                    'Batal',
+                                )}
                             </Button>
                         </DialogClose>
                         <Button type="submit" disabled={loading}>
-                            {loading ? <Spinner /> : t("page.unit.dialog_modal.edit_dialog.confirm_button", "Edit Unit")}
+                            {loading ? (
+                                <Spinner />
+                            ) : (
+                                t(
+                                    'page.unit.dialog_modal.edit_dialog.confirm_button',
+                                    'Edit Unit',
+                                )
+                            )}
                         </Button>
                     </DialogFooter>
                 </form>

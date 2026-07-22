@@ -16,13 +16,9 @@ import type { RowSelectionState } from '@tanstack/react-table';
 
 const { url } = categories();
 
-
 export default function Index() {
-
-
     const { url: apiUrl } = apiGetCategories();
-    const { t } = useTranslation()
-
+    const { t } = useTranslation();
 
     const [allCategories, setAllCategories] = useState<Category[]>([]);
     const [processing, setProcessing] = useState(false);
@@ -33,23 +29,26 @@ export default function Index() {
     const [selectedCategory, setSelectedCategory] = useState<Category | null>(
         null,
     );
-    const [selectedCategories, setSelectedCategories] = useState<Category[]>([]);
+    const [selectedCategories, setSelectedCategories] = useState<Category[]>(
+        [],
+    );
     const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
 
     const fetchAllCategories = async () => {
         try {
             setProcessing(true);
-            const res = await axiosInstance.get<ResponseApi<Category[]>>(apiUrl);
+            const res =
+                await axiosInstance.get<ResponseApi<Category[]>>(apiUrl);
             if (!res.data.success) {
-                showWarningToast(res.data.message)
-                return
+                showWarningToast(res.data.message);
+                return;
             }
             setAllCategories(res.data.data);
         } catch (error) {
-            handleApiError(error)
+            handleApiError(error);
         } finally {
             setProcessing(false);
-            setSelectedCategories([])
+            setSelectedCategories([]);
         }
     };
 
@@ -81,10 +80,10 @@ export default function Index() {
 
     return (
         <>
-            <Head title={t("page.category.page_name", "Kategori")} />
+            <Head title={t('page.category.page_name', 'Kategori')} />
             <div className="mb-16 flex h-full flex-1 flex-col overflow-x-auto rounded-xl p-4">
                 <HeaderContent>
-                    {t("page.category.page_name", "Kategori")}
+                    {t('page.category.page_name', 'Kategori')}
                 </HeaderContent>
                 <DataTable
                     columns={columns}
@@ -117,7 +116,7 @@ export default function Index() {
 Index.layout = {
     breadcrumbs: [
         {
-            title: i18next.t("page.category.page_name", "Kategori"),
+            title: i18next.t('page.category.page_name', 'Kategori'),
             href: url,
         },
     ],

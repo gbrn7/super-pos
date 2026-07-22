@@ -18,13 +18,9 @@ import type { RowSelectionState } from '@tanstack/react-table';
 
 const { url } = users();
 
-
 export default function Index() {
-
-
     const { url: apiUrl } = apiGetUsers();
-    const { t } = useTranslation()
-
+    const { t } = useTranslation();
 
     const [allUsers, setAllUsers] = useState<User[]>([]);
     const [roles, setRoles] = useState<Role[]>([]);
@@ -33,9 +29,7 @@ export default function Index() {
     const [editOpen, setEditOpen] = useState(false);
     const [deleteOpen, setDeleteOpen] = useState(false);
     const [bulkDeleteOpen, setBulkDeleteOpen] = useState(false);
-    const [selectedUser, setSelectedUser] = useState<User | null>(
-        null,
-    );
+    const [selectedUser, setSelectedUser] = useState<User | null>(null);
     const [selectedUsers, setSelectedUsers] = useState<User[]>([]);
     const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
 
@@ -45,30 +39,32 @@ export default function Index() {
             const res = await axiosInstance.get<ResponseApi<User[]>>(apiUrl);
 
             if (!res.data.success) {
-                showWarningToast(res.data.message)
-                return
+                showWarningToast(res.data.message);
+                return;
             }
             setAllUsers(res.data.data);
         } catch (error) {
-            handleApiError(error)
+            handleApiError(error);
         } finally {
             setProcessing(false);
-            setSelectedUsers([])
+            setSelectedUsers([]);
         }
     };
 
     const fetchRoles = async () => {
         try {
-            const res = await axiosInstance.get<ResponseApi<Role[]>>(apiGetRoles().url);
+            const res = await axiosInstance.get<ResponseApi<Role[]>>(
+                apiGetRoles().url,
+            );
 
             if (!res.data.success) {
-                showWarningToast(res.data.message)
-                return
+                showWarningToast(res.data.message);
+                return;
             }
 
             setRoles(res.data.data);
         } catch (error) {
-            handleApiError(error)
+            handleApiError(error);
         } finally {
             setProcessing(false);
         }
@@ -104,10 +100,10 @@ export default function Index() {
 
     return (
         <>
-            <Head title={t("page.user.page_name", "Kategori")} />
+            <Head title={t('page.user.page_name', 'Kategori')} />
             <div className="mb-16 flex h-full flex-1 flex-col overflow-x-auto rounded-xl p-4">
                 <HeaderContent>
-                    {t("page.user.page_name", "Kategori")}
+                    {t('page.user.page_name', 'Kategori')}
                 </HeaderContent>
                 <DataTable
                     roles={roles}
@@ -141,7 +137,7 @@ export default function Index() {
 Index.layout = {
     breadcrumbs: [
         {
-            title: i18next.t("page.user.page_name", "Kategori"),
+            title: i18next.t('page.user.page_name', 'Kategori'),
             href: url,
         },
     ],

@@ -19,8 +19,15 @@ import { useTranslation } from 'react-i18next';
 import { Spinner } from '@/components/ui/spinner';
 import axiosInstance from '@/lib/axios';
 import { ResponseApi } from '@/support/interfaces/response/Response';
-import { handleApiError, showSuccessToast, showWarningToast } from '@/lib/utils';
-import { PaymentMethodErrorForm, PaymentMethodForm } from '@/support/interfaces/request/paymentMethod';
+import {
+    handleApiError,
+    showSuccessToast,
+    showWarningToast,
+} from '@/lib/utils';
+import {
+    PaymentMethodErrorForm,
+    PaymentMethodForm,
+} from '@/support/interfaces/request/paymentMethod';
 import z from 'zod';
 import ErrorFormInfo from '@/components/errorFormInfo';
 
@@ -41,7 +48,9 @@ export function EditDialog({
 
     const [loading, setLoading] = useState<boolean>(false);
     const [imageFile, setImageFile] = useState<File | null>(null);
-    const [imagePreview, setImagePreview] = useState<string>(paymentMethod?.image ?? '');
+    const [imagePreview, setImagePreview] = useState<string>(
+        paymentMethod?.image ?? '',
+    );
 
     const [formData, setFormData] = useState({
         name: paymentMethod?.name ?? '',
@@ -49,13 +58,22 @@ export function EditDialog({
     });
 
     const [errorForm, setErrorForm] = useState<PaymentMethodErrorForm>({
-        name: "",
-        image: "",
-        desc: ""
+        name: '',
+        image: '',
+        desc: '',
     });
 
     const paymentMethodSchema = z.object({
-        name: z.string().trim().min(1, t("validation.paymentMethod.required.name", "Nama tidak boleh kosong")),
+        name: z
+            .string()
+            .trim()
+            .min(
+                1,
+                t(
+                    'validation.paymentMethod.required.name',
+                    'Nama tidak boleh kosong',
+                ),
+            ),
         desc: z.string().trim(),
     });
 
@@ -93,9 +111,9 @@ export function EditDialog({
 
         if (!resultValidation.success) {
             const fieldErrors: PaymentMethodErrorForm = {
-                name: "",
-                image: "",
-                desc: ""
+                name: '',
+                image: '',
+                desc: '',
             };
 
             resultValidation.error.issues.forEach((error) => {
@@ -109,7 +127,6 @@ export function EditDialog({
             return;
         }
 
-
         try {
             setLoading(true);
 
@@ -120,22 +137,26 @@ export function EditDialog({
                 submitData.append('image', imageFile);
             }
 
-            const res = await axiosInstance.put<ResponseApi<PaymentMethod>>(updatePaymentMethod(paymentMethod?.id || '').url, submitData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
+            const res = await axiosInstance.put<ResponseApi<PaymentMethod>>(
+                updatePaymentMethod(paymentMethod?.id || '').url,
+                submitData,
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    },
                 },
-            });
+            );
 
             if (!res.data.success) {
-                showWarningToast(res.data.message)
-                return
+                showWarningToast(res.data.message);
+                return;
             }
 
-            showSuccessToast(res.data.message)
+            showSuccessToast(res.data.message);
             onSuccess();
         } catch (error) {
             console.error('Error updating paymentMethod:', error);
-            handleApiError(error)
+            handleApiError(error);
         } finally {
             setLoading(false);
             setOpen(false);
@@ -147,21 +168,35 @@ export function EditDialog({
             <DialogContent onOpenAutoFocus={(e) => e.preventDefault()}>
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <DialogHeader>
-                        <DialogTitle>{t("page.payment_method.dialog_modal.edit_dialog.dialog_title", "Edit Metode Pembayaran")}</DialogTitle>
+                        <DialogTitle>
+                            {t(
+                                'page.payment_method.dialog_modal.edit_dialog.dialog_title',
+                                'Edit Metode Pembayaran',
+                            )}
+                        </DialogTitle>
                         <DialogDescription>
-                            {t("page.payment_method.dialog_modal.edit_dialog.dialog_desc", "Edit data metode pembayaran")}
+                            {t(
+                                'page.payment_method.dialog_modal.edit_dialog.dialog_desc',
+                                'Edit data metode pembayaran',
+                            )}
                         </DialogDescription>
                     </DialogHeader>
                     <FieldGroup>
                         <Field>
                             <label htmlFor="name" className="text-sm">
-                                {t("page.payment_method.dialog_modal.edit_dialog.name_input_label", "Nama")}
+                                {t(
+                                    'page.payment_method.dialog_modal.edit_dialog.name_input_label',
+                                    'Nama',
+                                )}
                                 <span className="text-red-500"> *</span>
                             </label>
                             <Input
                                 id="name"
                                 name="name"
-                                placeholder={t("page.payment_method.dialog_modal.edit_dialog.name_input_placeholder", "Masukkan nama metode pembayaran")}
+                                placeholder={t(
+                                    'page.payment_method.dialog_modal.edit_dialog.name_input_placeholder',
+                                    'Masukkan nama metode pembayaran',
+                                )}
                                 value={formData.name}
                                 onChange={handleChange}
                                 disabled={loading}
@@ -173,7 +208,10 @@ export function EditDialog({
                         </Field>
                         <Field>
                             <label htmlFor="image" className="text-sm">
-                                {t("page.payment_method.dialog_modal.edit_dialog.image_input_label", "Gambar")}
+                                {t(
+                                    'page.payment_method.dialog_modal.edit_dialog.image_input_label',
+                                    'Gambar',
+                                )}
                             </label>
                             <Input
                                 id="image"
@@ -186,7 +224,11 @@ export function EditDialog({
                             />
                             {imagePreview != '' && (
                                 <div className="mt-2">
-                                    <img src={imagePreview} alt="Preview" className="h-32 w-32 object-cover rounded" />
+                                    <img
+                                        src={imagePreview}
+                                        alt="Preview"
+                                        className="h-32 w-32 rounded object-cover"
+                                    />
                                 </div>
                             )}
                             {errorForm.image && (
@@ -195,12 +237,18 @@ export function EditDialog({
                         </Field>
                         <Field>
                             <label htmlFor="desc" className="text-sm">
-                                {t("page.payment_method.dialog_modal.edit_dialog.desc_input_label", "Deskripsi")}
+                                {t(
+                                    'page.payment_method.dialog_modal.edit_dialog.desc_input_label',
+                                    'Deskripsi',
+                                )}
                             </label>
                             <Textarea
                                 id="desc"
                                 name="desc"
-                                placeholder={t("page.payment_method.dialog_modal.edit_dialog.desc_input_placeholder", "Masukkan deskripsi metode pembayaran (Opsional)")}
+                                placeholder={t(
+                                    'page.payment_method.dialog_modal.edit_dialog.desc_input_placeholder',
+                                    'Masukkan deskripsi metode pembayaran (Opsional)',
+                                )}
                                 value={formData.desc}
                                 onChange={handleChange}
                                 disabled={loading}
@@ -219,11 +267,21 @@ export function EditDialog({
                                 onClick={() => setOpen(false)}
                                 disabled={loading}
                             >
-                                {t("page.payment_method.dialog_modal.edit_dialog.cancel_button", "Batal")}
+                                {t(
+                                    'page.payment_method.dialog_modal.edit_dialog.cancel_button',
+                                    'Batal',
+                                )}
                             </Button>
                         </DialogClose>
                         <Button type="submit" disabled={loading}>
-                            {loading ? <Spinner /> : t("page.payment_method.dialog_modal.edit_dialog.confirm_button", "Edit Metode pembayaran")}
+                            {loading ? (
+                                <Spinner />
+                            ) : (
+                                t(
+                                    'page.payment_method.dialog_modal.edit_dialog.confirm_button',
+                                    'Edit Metode pembayaran',
+                                )
+                            )}
                         </Button>
                     </DialogFooter>
                 </form>

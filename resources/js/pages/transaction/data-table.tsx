@@ -18,7 +18,14 @@ import type {
     VisibilityState,
     RowSelectionState,
 } from '@tanstack/react-table';
-import { TableIcon, Calendar, CreditCard, User as UserIcon, RotateCcw, X } from 'lucide-react';
+import {
+    TableIcon,
+    Calendar,
+    CreditCard,
+    User as UserIcon,
+    RotateCcw,
+    X,
+} from 'lucide-react';
 import * as React from 'react';
 import { useTranslation } from 'react-i18next';
 import { sprintf } from 'sprintf-js';
@@ -73,7 +80,10 @@ interface DataTableProps<TData, TValue> {
     selectedTransaction: Transaction | null;
     queryParam: TransactionQueryParam;
     pagination: Pagination;
-    onQueryParamChange?: <K extends keyof TransactionQueryParam>(key: K, value: TransactionQueryParam[K]) => void;
+    onQueryParamChange?: <K extends keyof TransactionQueryParam>(
+        key: K,
+        value: TransactionQueryParam[K],
+    ) => void;
     onResetFilter?: () => void;
     onChangePaginationPage: (page: number) => void;
     onChangePaginationLimit: (limit: number) => void;
@@ -139,8 +149,10 @@ export function DataTable<TData, TValue>({
             : columnsOrFn;
 
     const [sorting, setSorting] = React.useState<SortingState>([]);
-    const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
-    const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
+    const [columnFilters, setColumnFilters] =
+        React.useState<ColumnFiltersState>([]);
+    const [columnVisibility, setColumnVisibility] =
+        React.useState<VisibilityState>({});
 
     const table = useReactTable({
         data,
@@ -172,23 +184,26 @@ export function DataTable<TData, TValue>({
     );
 
     return (
-        <div className="rounded-2xl border p-3 bg-card">
+        <div className="rounded-2xl border bg-card p-3">
             <div className="flex flex-col justify-between gap-3 pb-4">
-                <div className="flex justify-end items-center gap-2 overflow-auto">
+                <div className="flex items-center justify-end gap-2 overflow-auto">
                     {isFilterActive && onResetFilter && (
-                        <Button
-                            variant="outline"
-                            onClick={onResetFilter}
-                        >
-                            <RotateCcw className="h-4 w-4 mr-1.5" />
-                            {t('component.data_table.reset_filter', 'Reset Filter')}
+                        <Button variant="outline" onClick={onResetFilter}>
+                            <RotateCcw className="mr-1.5 h-4 w-4" />
+                            {t(
+                                'component.data_table.reset_filter',
+                                'Reset Filter',
+                            )}
                         </Button>
                     )}
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                             <Button variant="outline">
-                                <TableIcon className="h-4 w-4 mr-1.5" />
-                                {t('component.data_table.columns.label', 'Kolom')}
+                                <TableIcon className="mr-1.5 h-4 w-4" />
+                                {t(
+                                    'component.data_table.columns.label',
+                                    'Kolom',
+                                )}
                             </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
@@ -214,11 +229,14 @@ export function DataTable<TData, TValue>({
                 </div>
 
                 {/* Filter and Search Section */}
-                <div className="second-row grid grid-cols-1 gap-2 gap-y-3 md:grid-cols-2 lg:grid-cols-3 border p-3 rounded-md">
+                <div className="second-row grid grid-cols-1 gap-2 gap-y-3 rounded-md border p-3 md:grid-cols-2 lg:grid-cols-3">
                     {/* Keyword Filter */}
                     <div className="space-y-1.5">
                         <Label className="text-xs font-medium text-muted-foreground">
-                            {t('component.data_table.search_component.search_label', 'Pencarian')}
+                            {t(
+                                'component.data_table.search_component.search_label',
+                                'Pencarian',
+                            )}
                         </Label>
                         <div className="keyword-filter flex w-full gap-1">
                             <Select
@@ -231,10 +249,16 @@ export function DataTable<TData, TValue>({
                                 <SelectContent>
                                     <SelectGroup>
                                         <SelectLabel>
-                                            {t('component.data_table.search_component.search_by', 'Pencarian berdasarkan')}
+                                            {t(
+                                                'component.data_table.search_component.search_by',
+                                                'Pencarian berdasarkan',
+                                            )}
                                         </SelectLabel>
                                         <SelectItem value="default">
-                                            {t('component.data_table.search_component.default', 'Bawaan')}
+                                            {t(
+                                                'component.data_table.search_component.default',
+                                                'Bawaan',
+                                            )}
                                         </SelectItem>
                                         <SelectItem value="invoice_number">
                                             No. Invoice
@@ -249,9 +273,14 @@ export function DataTable<TData, TValue>({
                                 </SelectContent>
                             </Select>
                             <Input
-                                placeholder={t('component.data_table.search_component.placeholder', 'Telusuri...')}
+                                placeholder={t(
+                                    'component.data_table.search_component.placeholder',
+                                    'Telusuri...',
+                                )}
                                 value={queryParam.keyword}
-                                onChange={(event) => onChangeKeyword(event.target.value)}
+                                onChange={(event) =>
+                                    onChangeKeyword(event.target.value)
+                                }
                                 className="w-full"
                             />
                         </div>
@@ -259,24 +288,41 @@ export function DataTable<TData, TValue>({
 
                     {/* Cashier / User Filter */}
                     <div className="space-y-1.5">
-                        <Label className="text-xs font-medium text-muted-foreground flex items-center gap-1">
+                        <Label className="flex items-center gap-1 text-xs font-medium text-muted-foreground">
                             <UserIcon className="h-3.5 w-3.5" />
-                            {t('page.transaction.dialog_modal.detail_dialog.cashier_label', 'Kasir / Petugas')}
+                            {t(
+                                'page.transaction.dialog_modal.detail_dialog.cashier_label',
+                                'Kasir / Petugas',
+                            )}
                         </Label>
                         <Select
-                            value={queryParam.user_id ? String(queryParam.user_id) : 'all'}
+                            value={
+                                queryParam.user_id
+                                    ? String(queryParam.user_id)
+                                    : 'all'
+                            }
                             onValueChange={(value) => {
                                 if (onChangeUser) {
-                                    onChangeUser(value === 'all' ? null : Number(value));
+                                    onChangeUser(
+                                        value === 'all' ? null : Number(value),
+                                    );
                                 }
                             }}
                         >
                             <SelectTrigger className="w-full">
-                                <SelectValue placeholder={t('component.data_table.all_cashiers', 'Semua Kasir')} />
+                                <SelectValue
+                                    placeholder={t(
+                                        'component.data_table.all_cashiers',
+                                        'Semua Kasir',
+                                    )}
+                                />
                             </SelectTrigger>
                             <SelectContent>
                                 <SelectItem value="all">
-                                    {t('component.data_table.all_cashiers', 'Semua Kasir')}
+                                    {t(
+                                        'component.data_table.all_cashiers',
+                                        'Semua Kasir',
+                                    )}
                                 </SelectItem>
                                 {users?.map((u) => (
                                     <SelectItem key={u.id} value={String(u.id)}>
@@ -289,27 +335,47 @@ export function DataTable<TData, TValue>({
 
                     {/* Payment Method Filter */}
                     <div className="space-y-1.5">
-                        <Label className="text-xs font-medium text-muted-foreground flex items-center gap-1">
+                        <Label className="flex items-center gap-1 text-xs font-medium text-muted-foreground">
                             <CreditCard className="h-3.5 w-3.5" />
-                            {t('page.transaction.dialog_modal.detail_dialog.payment_method_label', 'Metode Pembayaran')}
+                            {t(
+                                'page.transaction.dialog_modal.detail_dialog.payment_method_label',
+                                'Metode Pembayaran',
+                            )}
                         </Label>
                         <Select
-                            value={queryParam.payment_method_id ? String(queryParam.payment_method_id) : 'all'}
+                            value={
+                                queryParam.payment_method_id
+                                    ? String(queryParam.payment_method_id)
+                                    : 'all'
+                            }
                             onValueChange={(value) => {
                                 if (onChangePaymentMethod) {
-                                    onChangePaymentMethod(value === 'all' ? null : Number(value));
+                                    onChangePaymentMethod(
+                                        value === 'all' ? null : Number(value),
+                                    );
                                 }
                             }}
                         >
                             <SelectTrigger className="w-full">
-                                <SelectValue placeholder={t('component.data_table.all_payment_methods', 'Semua Metode Pembayaran')} />
+                                <SelectValue
+                                    placeholder={t(
+                                        'component.data_table.all_payment_methods',
+                                        'Semua Metode Pembayaran',
+                                    )}
+                                />
                             </SelectTrigger>
                             <SelectContent>
                                 <SelectItem value="all">
-                                    {t('component.data_table.all_payment_methods', 'Semua Metode Pembayaran')}
+                                    {t(
+                                        'component.data_table.all_payment_methods',
+                                        'Semua Metode Pembayaran',
+                                    )}
                                 </SelectItem>
                                 {paymentMethods?.map((pm) => (
-                                    <SelectItem key={pm.id} value={String(pm.id)}>
+                                    <SelectItem
+                                        key={pm.id}
+                                        value={String(pm.id)}
+                                    >
                                         {pm.name}
                                     </SelectItem>
                                 ))}
@@ -319,7 +385,7 @@ export function DataTable<TData, TValue>({
 
                     {/* Start Date Filter */}
                     <div className="space-y-1.5">
-                        <Label className="text-xs font-medium text-muted-foreground flex items-center gap-1">
+                        <Label className="flex items-center gap-1 text-xs font-medium text-muted-foreground">
                             <Calendar className="h-3.5 w-3.5" />
                             Tanggal Mulai
                         </Label>
@@ -333,7 +399,7 @@ export function DataTable<TData, TValue>({
 
                     {/* End Date Filter */}
                     <div className="space-y-1.5">
-                        <Label className="text-xs font-medium text-muted-foreground flex items-center gap-1">
+                        <Label className="flex items-center gap-1 text-xs font-medium text-muted-foreground">
                             <Calendar className="h-3.5 w-3.5" />
                             Tanggal Akhir
                         </Label>
@@ -347,77 +413,140 @@ export function DataTable<TData, TValue>({
 
                     {/* Active Filter Badges */}
                     {isFilterActive && (
-                        <div className="col-span-full flex flex-wrap items-center gap-1.5 pt-2 border-t text-xs">
-                            <span className="font-medium text-muted-foreground mr-1">
-                                {t('component.data_table.active_filters', 'Filter Aktif:')}
+                        <div className="col-span-full flex flex-wrap items-center gap-1.5 border-t pt-2 text-xs">
+                            <span className="mr-1 font-medium text-muted-foreground">
+                                {t(
+                                    'component.data_table.active_filters',
+                                    'Filter Aktif:',
+                                )}
                             </span>
 
                             {queryParam.keyword && (
-                                <Badge variant="secondary" className="gap-1.5 py-0.5 px-2 font-normal text-xs bg-muted/50 hover:bg-muted">
-                                    <span>{t('component.data_table.search_component.search_label', 'Pencarian')}: "{queryParam.keyword}"</span>
+                                <Badge
+                                    variant="secondary"
+                                    className="gap-1.5 bg-muted/50 px-2 py-0.5 text-xs font-normal hover:bg-muted"
+                                >
+                                    <span>
+                                        {t(
+                                            'component.data_table.search_component.search_label',
+                                            'Pencarian',
+                                        )}
+                                        : "{queryParam.keyword}"
+                                    </span>
                                     <button
                                         type="button"
                                         onClick={() => onChangeKeyword('')}
-                                        className="ml-0.5 rounded-full p-0.5 hover:bg-muted-foreground/20 text-muted-foreground hover:text-foreground transition-colors"
+                                        className="ml-0.5 rounded-full p-0.5 text-muted-foreground transition-colors hover:bg-muted-foreground/20 hover:text-foreground"
                                     >
                                         <X className="h-3 w-3" />
-                                        <span className="sr-only">Hapus filter pencarian</span>
+                                        <span className="sr-only">
+                                            Hapus filter pencarian
+                                        </span>
                                     </button>
                                 </Badge>
                             )}
 
                             {queryParam.user_id && (
-                                <Badge variant="secondary" className="gap-1.5 py-0.5 px-2 font-normal text-xs bg-muted/50 hover:bg-muted">
-                                    <span>{t('page.transaction.dialog_modal.detail_dialog.cashier_label', 'Kasir')}: {users?.find((u) => u.id === queryParam.user_id)?.name || queryParam.user_id}</span>
+                                <Badge
+                                    variant="secondary"
+                                    className="gap-1.5 bg-muted/50 px-2 py-0.5 text-xs font-normal hover:bg-muted"
+                                >
+                                    <span>
+                                        {t(
+                                            'page.transaction.dialog_modal.detail_dialog.cashier_label',
+                                            'Kasir',
+                                        )}
+                                        :{' '}
+                                        {users?.find(
+                                            (u) => u.id === queryParam.user_id,
+                                        )?.name || queryParam.user_id}
+                                    </span>
                                     <button
                                         type="button"
-                                        onClick={() => onChangeUser && onChangeUser(null)}
-                                        className="ml-0.5 rounded-full p-0.5 hover:bg-muted-foreground/20 text-muted-foreground hover:text-foreground transition-colors"
+                                        onClick={() =>
+                                            onChangeUser && onChangeUser(null)
+                                        }
+                                        className="ml-0.5 rounded-full p-0.5 text-muted-foreground transition-colors hover:bg-muted-foreground/20 hover:text-foreground"
                                     >
                                         <X className="h-3 w-3" />
-                                        <span className="sr-only">Hapus filter kasir</span>
+                                        <span className="sr-only">
+                                            Hapus filter kasir
+                                        </span>
                                     </button>
                                 </Badge>
                             )}
 
                             {queryParam.payment_method_id && (
-                                <Badge variant="secondary" className="gap-1.5 py-0.5 px-2 font-normal text-xs bg-muted/50 hover:bg-muted">
-                                    <span>{t('page.transaction.dialog_modal.detail_dialog.payment_method_label', 'Metode Pembayaran')}: {paymentMethods?.find((pm) => pm.id === queryParam.payment_method_id)?.name || queryParam.payment_method_id}</span>
+                                <Badge
+                                    variant="secondary"
+                                    className="gap-1.5 bg-muted/50 px-2 py-0.5 text-xs font-normal hover:bg-muted"
+                                >
+                                    <span>
+                                        {t(
+                                            'page.transaction.dialog_modal.detail_dialog.payment_method_label',
+                                            'Metode Pembayaran',
+                                        )}
+                                        :{' '}
+                                        {paymentMethods?.find(
+                                            (pm) =>
+                                                pm.id ===
+                                                queryParam.payment_method_id,
+                                        )?.name || queryParam.payment_method_id}
+                                    </span>
                                     <button
                                         type="button"
-                                        onClick={() => onChangePaymentMethod && onChangePaymentMethod(null)}
-                                        className="ml-0.5 rounded-full p-0.5 hover:bg-muted-foreground/20 text-muted-foreground hover:text-foreground transition-colors"
+                                        onClick={() =>
+                                            onChangePaymentMethod &&
+                                            onChangePaymentMethod(null)
+                                        }
+                                        className="ml-0.5 rounded-full p-0.5 text-muted-foreground transition-colors hover:bg-muted-foreground/20 hover:text-foreground"
                                     >
                                         <X className="h-3 w-3" />
-                                        <span className="sr-only">Hapus filter metode pembayaran</span>
+                                        <span className="sr-only">
+                                            Hapus filter metode pembayaran
+                                        </span>
                                     </button>
                                 </Badge>
                             )}
 
                             {queryParam.start_date && (
-                                <Badge variant="secondary" className="gap-1.5 py-0.5 px-2 font-normal text-xs bg-muted/50 hover:bg-muted">
-                                    <span>Tanggal Mulai: {queryParam.start_date}</span>
+                                <Badge
+                                    variant="secondary"
+                                    className="gap-1.5 bg-muted/50 px-2 py-0.5 text-xs font-normal hover:bg-muted"
+                                >
+                                    <span>
+                                        Tanggal Mulai: {queryParam.start_date}
+                                    </span>
                                     <button
                                         type="button"
                                         onClick={() => onChangeStartDate('')}
-                                        className="ml-0.5 rounded-full p-0.5 hover:bg-muted-foreground/20 text-muted-foreground hover:text-foreground transition-colors"
+                                        className="ml-0.5 rounded-full p-0.5 text-muted-foreground transition-colors hover:bg-muted-foreground/20 hover:text-foreground"
                                     >
                                         <X className="h-3 w-3" />
-                                        <span className="sr-only">Hapus filter tanggal mulai</span>
+                                        <span className="sr-only">
+                                            Hapus filter tanggal mulai
+                                        </span>
                                     </button>
                                 </Badge>
                             )}
 
                             {queryParam.end_date && (
-                                <Badge variant="secondary" className="gap-1.5 py-0.5 px-2 font-normal text-xs bg-muted/50 hover:bg-muted">
-                                    <span>Tanggal Akhir: {queryParam.end_date}</span>
+                                <Badge
+                                    variant="secondary"
+                                    className="gap-1.5 bg-muted/50 px-2 py-0.5 text-xs font-normal hover:bg-muted"
+                                >
+                                    <span>
+                                        Tanggal Akhir: {queryParam.end_date}
+                                    </span>
                                     <button
                                         type="button"
                                         onClick={() => onChangeEndDate('')}
-                                        className="ml-0.5 rounded-full p-0.5 hover:bg-muted-foreground/20 text-muted-foreground hover:text-foreground transition-colors"
+                                        className="ml-0.5 rounded-full p-0.5 text-muted-foreground transition-colors hover:bg-muted-foreground/20 hover:text-foreground"
                                     >
                                         <X className="h-3 w-3" />
-                                        <span className="sr-only">Hapus filter tanggal akhir</span>
+                                        <span className="sr-only">
+                                            Hapus filter tanggal akhir
+                                        </span>
                                     </button>
                                 </Badge>
                             )}
@@ -443,7 +572,8 @@ export function DataTable<TData, TValue>({
                                             {header.isPlaceholder ? null : (
                                                 <div className="flex cursor-pointer items-center gap-2 select-none hover:text-foreground">
                                                     {flexRender(
-                                                        header.column.columnDef.header,
+                                                        header.column.columnDef
+                                                            .header,
                                                         header.getContext(),
                                                     )}
                                                 </div>
@@ -456,20 +586,24 @@ export function DataTable<TData, TValue>({
                     </TableHeader>
                     <TableBody>
                         {processing ? (
-                            Array.from({ length: queryParam.limit || 10 }).map((_, index) => (
-                                <TableRow key={index}>
-                                    {table.getAllColumns().map((column) => (
-                                        <TableCell key={column.id}>
-                                            <Skeleton className="h-6 w-full" />
-                                        </TableCell>
-                                    ))}
-                                </TableRow>
-                            ))
+                            Array.from({ length: queryParam.limit || 10 }).map(
+                                (_, index) => (
+                                    <TableRow key={index}>
+                                        {table.getAllColumns().map((column) => (
+                                            <TableCell key={column.id}>
+                                                <Skeleton className="h-6 w-full" />
+                                            </TableCell>
+                                        ))}
+                                    </TableRow>
+                                ),
+                            )
                         ) : table.getRowModel().rows?.length ? (
                             table.getRowModel().rows.map((row) => (
                                 <TableRow
                                     key={row.id}
-                                    data-state={row.getIsSelected() && 'selected'}
+                                    data-state={
+                                        row.getIsSelected() && 'selected'
+                                    }
                                 >
                                     {row.getVisibleCells().map((cell) => (
                                         <TableCell key={cell.id}>
@@ -487,7 +621,10 @@ export function DataTable<TData, TValue>({
                                     colSpan={columns.length}
                                     className="h-28 text-center text-muted-foreground"
                                 >
-                                    {t('component.data_table.no_result', 'Tidak ada data transaksi.')}
+                                    {t(
+                                        'component.data_table.no_result',
+                                        'Tidak ada data transaksi.',
+                                    )}
                                 </TableCell>
                             </TableRow>
                         )}
@@ -527,7 +664,10 @@ export function DataTable<TData, TValue>({
                         <SelectContent>
                             <SelectGroup>
                                 <SelectLabel>
-                                    {t('component.data_table.row_per_page', 'Baris per halaman')}
+                                    {t(
+                                        'component.data_table.row_per_page',
+                                        'Baris per halaman',
+                                    )}
                                 </SelectLabel>
                                 {limitOptions.map((option) => (
                                     <SelectItem
@@ -540,7 +680,7 @@ export function DataTable<TData, TValue>({
                             </SelectGroup>
                         </SelectContent>
                     </Select>
-                    <div className="text-sm text-muted-foreground whitespace-nowrap">
+                    <div className="text-sm whitespace-nowrap text-muted-foreground">
                         {sprintf(
                             t(
                                 'component.data_table.pagination_info',
@@ -555,7 +695,9 @@ export function DataTable<TData, TValue>({
                             variant="outline"
                             className="hidden h-8 w-8 p-0 lg:flex"
                             onClick={() => onChangePaginationPage(1)}
-                            disabled={pagination.current_page <= 1 || processing}
+                            disabled={
+                                pagination.current_page <= 1 || processing
+                            }
                         >
                             <span className="sr-only">Halaman Pertama</span>
                             <IconChevronsLeft className="h-4 w-4" />
@@ -566,10 +708,14 @@ export function DataTable<TData, TValue>({
                             size="icon"
                             onClick={() => {
                                 if (pagination.current_page - 1 > 0) {
-                                    onChangePaginationPage(pagination.current_page - 1);
+                                    onChangePaginationPage(
+                                        pagination.current_page - 1,
+                                    );
                                 }
                             }}
-                            disabled={pagination.current_page <= 1 || processing}
+                            disabled={
+                                pagination.current_page <= 1 || processing
+                            }
                         >
                             <span className="sr-only">Halaman Sebelumnya</span>
                             <IconChevronLeft className="h-4 w-4" />
@@ -579,11 +725,19 @@ export function DataTable<TData, TValue>({
                             className="size-8"
                             size="icon"
                             onClick={() => {
-                                if (pagination.current_page < pagination.last_page) {
-                                    onChangePaginationPage(pagination.current_page + 1);
+                                if (
+                                    pagination.current_page <
+                                    pagination.last_page
+                                ) {
+                                    onChangePaginationPage(
+                                        pagination.current_page + 1,
+                                    );
                                 }
                             }}
-                            disabled={pagination.current_page >= pagination.last_page || processing}
+                            disabled={
+                                pagination.current_page >=
+                                    pagination.last_page || processing
+                            }
                         >
                             <span className="sr-only">Halaman Selanjutnya</span>
                             <IconChevronRight className="h-4 w-4" />
@@ -592,8 +746,13 @@ export function DataTable<TData, TValue>({
                             variant="outline"
                             className="hidden size-8 lg:flex"
                             size="icon"
-                            onClick={() => onChangePaginationPage(pagination.last_page)}
-                            disabled={pagination.current_page >= pagination.last_page || processing}
+                            onClick={() =>
+                                onChangePaginationPage(pagination.last_page)
+                            }
+                            disabled={
+                                pagination.current_page >=
+                                    pagination.last_page || processing
+                            }
                         >
                             <span className="sr-only">Halaman Terakhir</span>
                             <IconChevronsRight className="h-4 w-4" />

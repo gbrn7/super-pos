@@ -47,7 +47,12 @@ import type { Role } from '@/support/models/role';
 import { useTranslation } from 'react-i18next';
 import { sprintf } from 'sprintf-js';
 import { DeleteDialog } from './dialog-modal/delete-dialog';
-import { IconChevronLeft, IconChevronRight, IconChevronsLeft, IconChevronsRight } from '@tabler/icons-react';
+import {
+    IconChevronLeft,
+    IconChevronRight,
+    IconChevronsLeft,
+    IconChevronsRight,
+} from '@tabler/icons-react';
 import { PlusCircle, TableIcon, RotateCcw, X } from 'lucide-react';
 import { Can } from '@/components/auth/can';
 import { Badge } from '@/components/ui/badge';
@@ -57,8 +62,8 @@ import { PERMISSIONENUMS } from '@/support/enums/PermissionEnums';
 
 interface DataTableProps<TData, TValue> {
     columns:
-    | ColumnDef<TData, TValue>[]
-    | ((props: any) => ColumnDef<TData, TValue>[]);
+        | ColumnDef<TData, TValue>[]
+        | ((props: any) => ColumnDef<TData, TValue>[]);
     data: TData[];
     processing?: boolean;
     limitOptions?: number[];
@@ -71,8 +76,8 @@ interface DataTableProps<TData, TValue> {
     onBulkDeleteClick?: (data: TData[]) => void;
     isBulkDeleteDialogOpen: boolean;
     setOpenBulkDeleteDialogOpen: (open: boolean) => void;
-    selectedBulkRoles: Role[]
-    selectedRole: Role | null
+    selectedBulkRoles: Role[];
+    selectedRole: Role | null;
     rowSelection: RowSelectionState;
     setRowSelection: React.Dispatch<React.SetStateAction<RowSelectionState>>;
 }
@@ -97,7 +102,6 @@ export function DataTable<TData, TValue>({
 }: DataTableProps<TData, TValue>) {
     const { t } = useTranslation();
 
-
     const columns =
         typeof columnsOrFn === 'function'
             ? columnsOrFn({ onDetailClick, onEditClick, onDeleteClick })
@@ -116,7 +120,9 @@ export function DataTable<TData, TValue>({
         pageSize: 10,
     });
 
-    const [searchColumn, setSearchColumn] = React.useState<string>(t("page.role.data_table.columns.name_column_label", "Nama"));
+    const [searchColumn, setSearchColumn] = React.useState<string>(
+        t('page.role.data_table.columns.name_column_label', 'Nama'),
+    );
 
     const table = useReactTable({
         data,
@@ -143,30 +149,36 @@ export function DataTable<TData, TValue>({
     return (
         <div className="rounded-2xl border p-3">
             <div className="flex flex-col justify-between gap-3 pb-4">
-                <div className="flex justify-start items-center gap-2 overflow-auto sm:justify-end lg:mt-0">
+                <div className="flex items-center justify-start gap-2 overflow-auto sm:justify-end lg:mt-0">
                     {table.getState().columnFilters.length > 0 && (
                         <Button
                             variant="outline"
                             onClick={() => table.setColumnFilters([])}
                         >
-                            <RotateCcw className="h-4 w-4 mr-1.5" />
-                            {t('component.data_table.reset_filter', 'Reset Filter')}
+                            <RotateCcw className="mr-1.5 h-4 w-4" />
+                            {t(
+                                'component.data_table.reset_filter',
+                                'Reset Filter',
+                            )}
                         </Button>
                     )}
-                    <Can
-                        permission={PERMISSIONENUMS.ROLE.DELETE}
-                    >
-                        <BulkDeleteDialog isDisabled={!(Object.keys(rowSelection).length > 0)}
+                    <Can permission={PERMISSIONENUMS.ROLE.DELETE}>
+                        <BulkDeleteDialog
+                            isDisabled={!(Object.keys(rowSelection).length > 0)}
                             selectedLength={Object.keys(rowSelection).length}
                             isOpen={isBulkDeleteDialogOpen}
                             onSuccess={() => {
-                                onRefresh()
-                                setRowSelection({})
+                                onRefresh();
+                                setRowSelection({});
                             }}
                             setOpen={setOpenBulkDeleteDialogOpen}
-                            roles={Object.keys(rowSelection).map(id => ({ id: Number(id) } as Role))}
+                            roles={Object.keys(rowSelection).map(
+                                (id) => ({ id: Number(id) }) as Role,
+                            )}
                             onBulkDeleteClick={() => {
-                                const selectedRows = Object.keys(rowSelection).map(id => ({ id: Number(id) } as Role));
+                                const selectedRows = Object.keys(
+                                    rowSelection,
+                                ).map((id) => ({ id: Number(id) }) as Role);
                                 onBulkDeleteClick?.(selectedRows as any);
                             }}
                         />
@@ -175,7 +187,10 @@ export function DataTable<TData, TValue>({
                         <DropdownMenuTrigger asChild>
                             <Button variant="outline">
                                 <TableIcon className="h-4" />
-                                {t("component.data_table.columns.label", "Kolom")}
+                                {t(
+                                    'component.data_table.columns.label',
+                                    'Kolom',
+                                )}
                             </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
@@ -198,22 +213,26 @@ export function DataTable<TData, TValue>({
                                 })}
                         </DropdownMenuContent>
                     </DropdownMenu>
-                    <Can
-                        permission={PERMISSIONENUMS.ROLE.CREATE}
-                    >
+                    <Can permission={PERMISSIONENUMS.ROLE.CREATE}>
                         <Link href={create().url}>
                             <Button variant="outline">
                                 <PlusCircle className="h-4" />
-                                {t("page.role.dialog_modal.create_dialog.dialog_button", "Tambah Peran")}
+                                {t(
+                                    'page.role.dialog_modal.create_dialog.dialog_button',
+                                    'Tambah Peran',
+                                )}
                             </Button>
                         </Link>
                     </Can>
                 </div>
 
-                <div className="second-row grid grid-cols-1 gap-2 gap-y-3 md:grid-cols-2 lg:grid-cols-3 border p-3 rounded-md">
+                <div className="second-row grid grid-cols-1 gap-2 gap-y-3 rounded-md border p-3 md:grid-cols-2 lg:grid-cols-3">
                     <div className="space-y-1.5">
                         <Label className="text-xs font-medium text-muted-foreground">
-                            {t("component.data_table.search_component.search_label", "Pencarian")}
+                            {t(
+                                'component.data_table.search_component.search_label',
+                                'Pencarian',
+                            )}
                         </Label>
                         <div className="keyword-filter flex w-full gap-1">
                             <Select
@@ -226,19 +245,41 @@ export function DataTable<TData, TValue>({
                                 <SelectContent>
                                     <SelectGroup>
                                         <SelectLabel>
-                                            {t("component.data_table.search_component.search_by", "Pencarian berdasarkan")}
+                                            {t(
+                                                'component.data_table.search_component.search_by',
+                                                'Pencarian berdasarkan',
+                                            )}
                                         </SelectLabel>
-                                        <SelectItem value={t("page.role.data_table.columns.name_column_label", "Nama")}>
-                                            {t("component.data_table.search_component.name", "Nama")}
+                                        <SelectItem
+                                            value={t(
+                                                'page.role.data_table.columns.name_column_label',
+                                                'Nama',
+                                            )}
+                                        >
+                                            {t(
+                                                'component.data_table.search_component.name',
+                                                'Nama',
+                                            )}
                                         </SelectItem>
-                                        <SelectItem value={t("page.role.data_table.columns.guard_name_column_label", "Nama Garda")}>
-                                            {t("component.data_table.search_component.guard_name", "Nama Garda")}
+                                        <SelectItem
+                                            value={t(
+                                                'page.role.data_table.columns.guard_name_column_label',
+                                                'Nama Garda',
+                                            )}
+                                        >
+                                            {t(
+                                                'component.data_table.search_component.guard_name',
+                                                'Nama Garda',
+                                            )}
                                         </SelectItem>
                                     </SelectGroup>
                                 </SelectContent>
                             </Select>
                             <Input
-                                placeholder={t("component.data_table.search_component.placeholder", "Telusuri")}
+                                placeholder={t(
+                                    'component.data_table.search_component.placeholder',
+                                    'Telusuri',
+                                )}
                                 value={
                                     (table
                                         .getColumn(searchColumn)
@@ -256,20 +297,40 @@ export function DataTable<TData, TValue>({
 
                     {/* Active Filter Badges */}
                     {table.getState().columnFilters.length > 0 && (
-                        <div className="col-span-full flex flex-wrap items-center gap-1.5 pt-2 border-t text-xs">
-                            <span className="font-medium text-muted-foreground mr-1">
-                                {t('component.data_table.active_filters', 'Filter Aktif:')}
+                        <div className="col-span-full flex flex-wrap items-center gap-1.5 border-t pt-2 text-xs">
+                            <span className="mr-1 font-medium text-muted-foreground">
+                                {t(
+                                    'component.data_table.active_filters',
+                                    'Filter Aktif:',
+                                )}
                             </span>
                             {table.getState().columnFilters.map((filter) => (
-                                <Badge key={filter.id} variant="secondary" className="gap-1.5 py-0.5 px-2 font-normal text-xs bg-muted/50 hover:bg-muted">
-                                    <span>{filter.id}: "{String(filter.value)}"</span>
+                                <Badge
+                                    key={filter.id}
+                                    variant="secondary"
+                                    className="gap-1.5 bg-muted/50 px-2 py-0.5 text-xs font-normal hover:bg-muted"
+                                >
+                                    <span>
+                                        {filter.id}: "{String(filter.value)}"
+                                    </span>
                                     <button
                                         type="button"
-                                        onClick={() => table.setColumnFilters(table.getState().columnFilters.filter((f) => f.id !== filter.id))}
-                                        className="ml-0.5 rounded-full p-0.5 hover:bg-muted-foreground/20 text-muted-foreground hover:text-foreground transition-colors"
+                                        onClick={() =>
+                                            table.setColumnFilters(
+                                                table
+                                                    .getState()
+                                                    .columnFilters.filter(
+                                                        (f) =>
+                                                            f.id !== filter.id,
+                                                    ),
+                                            )
+                                        }
+                                        className="ml-0.5 rounded-full p-0.5 text-muted-foreground transition-colors hover:bg-muted-foreground/20 hover:text-foreground"
                                     >
                                         <X className="h-3 w-3" />
-                                        <span className="sr-only">Hapus filter {filter.id}</span>
+                                        <span className="sr-only">
+                                            Hapus filter {filter.id}
+                                        </span>
                                     </button>
                                 </Badge>
                             ))}
@@ -340,7 +401,10 @@ export function DataTable<TData, TValue>({
                                     colSpan={columns.length}
                                     className="h-24 text-center"
                                 >
-                                    {t("component.data_table.no_result", "Tidak ada hasil")}
+                                    {t(
+                                        'component.data_table.no_result',
+                                        'Tidak ada hasil',
+                                    )}
                                 </TableCell>
                             </TableRow>
                         )}
@@ -357,9 +421,12 @@ export function DataTable<TData, TValue>({
             <div className="flex items-center justify-end space-x-4 overflow-auto py-4">
                 <div className="hidden flex-1 text-sm text-muted-foreground lg:flex">
                     {sprintf(
-                        t("component.data_table.selected_row", "%d dari %d baris terpilih."),
+                        t(
+                            'component.data_table.selected_row',
+                            '%d dari %d baris terpilih.',
+                        ),
                         table.getFilteredSelectedRowModel().rows.length,
-                        table.getFilteredRowModel().rows.length
+                        table.getFilteredRowModel().rows.length,
                     )}
                 </div>
                 <div className="flex w-full items-center gap-8 lg:w-fit">
@@ -374,7 +441,12 @@ export function DataTable<TData, TValue>({
                         </SelectTrigger>
                         <SelectContent>
                             <SelectGroup>
-                                <SelectLabel>{t("component.data_table.row_per_page", "Baris per halaman")}</SelectLabel>
+                                <SelectLabel>
+                                    {t(
+                                        'component.data_table.row_per_page',
+                                        'Baris per halaman',
+                                    )}
+                                </SelectLabel>
                                 {limitOptions.map((option) => (
                                     <SelectItem
                                         key={option}
@@ -387,10 +459,14 @@ export function DataTable<TData, TValue>({
                         </SelectContent>
                     </Select>
                     <div className="text-sm text-muted-foreground">
-                        {sprintf
-                            (
-                                t("component.data_table.pagination_info", "Halaman %d dari %d"), (table.getState().pagination.pageIndex + 1), table.getPageCount())
-                        }
+                        {sprintf(
+                            t(
+                                'component.data_table.pagination_info',
+                                'Halaman %d dari %d',
+                            ),
+                            table.getState().pagination.pageIndex + 1,
+                            table.getPageCount(),
+                        )}
                     </div>
                     <div className="ml-auto flex items-center gap-2 lg:ml-0">
                         <Button
@@ -426,7 +502,9 @@ export function DataTable<TData, TValue>({
                             variant="outline"
                             className="hidden size-8 lg:flex"
                             size="icon"
-                            onClick={() => table.setPageIndex(table.getPageCount() - 1)}
+                            onClick={() =>
+                                table.setPageIndex(table.getPageCount() - 1)
+                            }
                             disabled={!table.getCanNextPage()}
                         >
                             <span className="sr-only">Go to last page</span>
@@ -434,7 +512,6 @@ export function DataTable<TData, TValue>({
                         </Button>
                     </div>
                 </div>
-
             </div>
         </div>
     );

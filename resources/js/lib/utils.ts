@@ -16,11 +16,9 @@ export function toUrl(url: NonNullable<InertiaLinkProps['href']>): string {
     return typeof url === 'string' ? url : url.url;
 }
 
-
-
 export function handleApiError<T = ResponseErrorApi>(
     error: unknown,
-    callback?: (data: T) => void
+    callback?: (data: T) => void,
 ) {
     if (axios.isAxiosError<T>(error)) {
         const data = error.response?.data;
@@ -31,17 +29,16 @@ export function handleApiError<T = ResponseErrorApi>(
         }
 
         if ((data as ResponseErrorApi)?.errors) {
-            showValidationErrors((data as ResponseErrorApi)?.errors)
+            showValidationErrors((data as ResponseErrorApi)?.errors);
             return;
         }
 
         // default toast
         const message =
             (data as ResponseErrorApi)?.message ??
-            t("error.default", "Kesalahan sistem internal");
+            t('error.default', 'Kesalahan sistem internal');
 
-
-        showErrorToast(message)
+        showErrorToast(message);
 
         return;
     }
@@ -49,41 +46,48 @@ export function handleApiError<T = ResponseErrorApi>(
     toast.error('Unknown error occurred');
 }
 
-export function showValidationErrors(
-    errors: Record<string, string[]>
-) {
+export function showValidationErrors(errors: Record<string, string[]>) {
     Object.values(errors).forEach((fieldErrors) => {
         fieldErrors.forEach((message) => {
-            showErrorToast(message)
-        })
-    })
+            showErrorToast(message);
+        });
+    });
 }
 
 export function showToast(message: string) {
-    toast(message, { position: TOASTPOSITIONDEFAULT, className: 'capitalize' })
+    toast(message, { position: TOASTPOSITIONDEFAULT, className: 'capitalize' });
 }
 
 export function showInfoToast(message: string) {
-    toast.info(message, { position: TOASTPOSITIONDEFAULT, className: 'capitalize' })
+    toast.info(message, {
+        position: TOASTPOSITIONDEFAULT,
+        className: 'capitalize',
+    });
 }
 
 export function showErrorToast(message: string) {
-    toast.error(message, { position: TOASTPOSITIONDEFAULT, className: 'capitalize' })
+    toast.error(message, {
+        position: TOASTPOSITIONDEFAULT,
+        className: 'capitalize',
+    });
 }
 
 export function showWarningToast(message: string) {
-    toast.warning(message, { position: TOASTPOSITIONDEFAULT, className: 'capitalize' })
+    toast.warning(message, {
+        position: TOASTPOSITIONDEFAULT,
+        className: 'capitalize',
+    });
 }
 
 export function showSuccessToast(message: string) {
-    toast.success(message, { position: TOASTPOSITIONDEFAULT, className: 'capitalize' })
+    toast.success(message, {
+        position: TOASTPOSITIONDEFAULT,
+        className: 'capitalize',
+    });
 }
 
-export const getNumberFilterValue = (value: number | null) => (
-    value == null ? FILTER_DEFAULT_VALUE : value.toString()
-);
+export const getNumberFilterValue = (value: number | null) =>
+    value == null ? FILTER_DEFAULT_VALUE : value.toString();
 
-
-export const getNullableNumberFilterValue = (value: string) => (
-    value === FILTER_DEFAULT_VALUE ? null : Number(value)
-);
+export const getNullableNumberFilterValue = (value: string) =>
+    value === FILTER_DEFAULT_VALUE ? null : Number(value);

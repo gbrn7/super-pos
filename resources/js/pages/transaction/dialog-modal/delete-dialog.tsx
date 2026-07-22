@@ -2,7 +2,11 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { destroy } from '@/routes/apiTransactions';
 import axiosInstance from '@/lib/axios';
-import { handleApiError, showSuccessToast, showWarningToast } from '@/lib/utils';
+import {
+    handleApiError,
+    showSuccessToast,
+    showWarningToast,
+} from '@/lib/utils';
 import type { ResponseApi } from '@/support/interfaces/response/Response';
 import type { Transaction } from '@/support/models/transaction';
 import {
@@ -40,10 +44,17 @@ export function DeleteDialog({
         try {
             setLoading(true);
             const deleteUrl = destroy(transaction.id).url;
-            const res = await axiosInstance.delete<ResponseApi<null>>(deleteUrl);
+            const res =
+                await axiosInstance.delete<ResponseApi<null>>(deleteUrl);
 
             if (res.data.success) {
-                showSuccessToast(res.data.message || t('page.transaction.dialog_modal.delete_dialog.success_message', 'Transaksi berhasil dihapus'));
+                showSuccessToast(
+                    res.data.message ||
+                        t(
+                            'page.transaction.dialog_modal.delete_dialog.success_message',
+                            'Transaksi berhasil dihapus',
+                        ),
+                );
                 setOpen(false);
                 onSuccess();
             } else {
@@ -61,7 +72,10 @@ export function DeleteDialog({
             <AlertDialogContent>
                 <AlertDialogHeader>
                     <AlertDialogTitle>
-                        {t('page.transaction.dialog_modal.delete_dialog.title', 'Hapus Transaksi')}
+                        {t(
+                            'page.transaction.dialog_modal.delete_dialog.title',
+                            'Hapus Transaksi',
+                        )}
                     </AlertDialogTitle>
                     <AlertDialogDescription>
                         {t(
@@ -82,7 +96,9 @@ export function DeleteDialog({
                         onClick={handleDelete}
                         disabled={loading}
                     >
-                        {loading ? t('component.dialog.loading', 'Memproses...') : t('component.dialog.delete_btn', 'Hapus')}
+                        {loading
+                            ? t('component.dialog.loading', 'Memproses...')
+                            : t('component.dialog.delete_btn', 'Hapus')}
                     </Button>
                 </AlertDialogFooter>
             </AlertDialogContent>

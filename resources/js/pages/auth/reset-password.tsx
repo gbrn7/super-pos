@@ -18,7 +18,12 @@ export default function ResetPassword({ token, email }: Props) {
     const { t } = useTranslation();
     return (
         <>
-            <Head title={t("page.auth.reset_password.title", "Setel Ulang Password")} />
+            <Head
+                title={t(
+                    'page.auth.reset_password.title',
+                    'Setel Ulang Password',
+                )}
+            />
 
             <Form
                 {...update.form()}
@@ -28,7 +33,12 @@ export default function ResetPassword({ token, email }: Props) {
                 {({ processing, errors }) => (
                     <div className="grid gap-6">
                         <div className="grid gap-2">
-                            <Label htmlFor="email">{t("page.auth.reset_password.form.email_input_label", "Email")}</Label>
+                            <Label htmlFor="email">
+                                {t(
+                                    'page.auth.reset_password.form.email_input_label',
+                                    'Email',
+                                )}
+                            </Label>
                             <Input
                                 id="email"
                                 type="email"
@@ -45,7 +55,12 @@ export default function ResetPassword({ token, email }: Props) {
                         </div>
 
                         <div className="grid gap-2">
-                            <Label htmlFor="password">{t("page.auth.reset_password.form.password_input_label", "Password")}</Label>
+                            <Label htmlFor="password">
+                                {t(
+                                    'page.auth.reset_password.form.password_input_label',
+                                    'Password',
+                                )}
+                            </Label>
                             <PasswordInput
                                 id="password"
                                 name="password"
@@ -59,7 +74,10 @@ export default function ResetPassword({ token, email }: Props) {
 
                         <div className="grid gap-2">
                             <Label htmlFor="password_confirmation">
-                                {t("page.auth.reset_password.form.confirm_password_input_label", "Konfirmasi Password")}
+                                {t(
+                                    'page.auth.reset_password.form.confirm_password_input_label',
+                                    'Konfirmasi Password',
+                                )}
                             </Label>
                             <PasswordInput
                                 id="password_confirmation"
@@ -81,7 +99,10 @@ export default function ResetPassword({ token, email }: Props) {
                             data-test="reset-password-button"
                         >
                             {processing && <Spinner />}
-                            {t("page.auth.reset_password.form.reset_btn", "Setel ulang password")}
+                            {t(
+                                'page.auth.reset_password.form.reset_btn',
+                                'Setel ulang password',
+                            )}
                         </Button>
                     </div>
                 )}
@@ -91,6 +112,9 @@ export default function ResetPassword({ token, email }: Props) {
 }
 
 ResetPassword.layout = {
-    title: i18next.t("page.auth.reset_password.title", "Setel ulang password"),
-    description: i18next.t("page.auth.reset_password.description", "Silakan masukkan kata sandi baru Anda di bawah ini."),
+    title: i18next.t('page.auth.reset_password.title', 'Setel ulang password'),
+    description: i18next.t(
+        'page.auth.reset_password.description',
+        'Silakan masukkan kata sandi baru Anda di bawah ini.',
+    ),
 };

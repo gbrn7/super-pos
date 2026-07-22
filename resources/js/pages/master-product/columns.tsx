@@ -1,5 +1,16 @@
 import type { ColumnDef } from '@tanstack/react-table';
-import { Check, Circle, FileText, Infinity, MoreHorizontal, Pencil, Plus, PlusCircle, Trash, X } from 'lucide-react';
+import {
+    Check,
+    Circle,
+    FileText,
+    Infinity,
+    MoreHorizontal,
+    Pencil,
+    Plus,
+    PlusCircle,
+    Trash,
+    X,
+} from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Can } from '@/components/auth/can';
 import { ServerSideDataTableHeader } from '@/components/server-side-data-table-header';
@@ -17,7 +28,6 @@ import { formatRupiah } from '@/lib/format-money';
 import { PERMISSIONENUMS } from '@/support/enums/PermissionEnums';
 import type { MasterProduct } from '@/support/models/masterProduct';
 
-
 interface ColumnsProps {
     onDetailClick: (masterProduct: MasterProduct) => void;
     onEditClick: (masterProduct: MasterProduct) => void;
@@ -30,11 +40,14 @@ interface ColumnsProps {
 
 export const columns = (props?: ColumnsProps): ColumnDef<MasterProduct>[] => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
-    const { t } = useTranslation()
+    const { t } = useTranslation();
 
     return [
         {
-            id: t("page.master_product.data_table.columns.select_column_label", "Pilih"),
+            id: t(
+                'page.master_product.data_table.columns.select_column_label',
+                'Pilih',
+            ),
             header: ({ table }) => (
                 <Checkbox
                     checked={
@@ -58,9 +71,19 @@ export const columns = (props?: ColumnsProps): ColumnDef<MasterProduct>[] => {
             enableHiding: false,
         },
         {
-            id: t("page.master_product.data_table.columns.add_product_column_label", "Tambah Produk"),
+            id: t(
+                'page.master_product.data_table.columns.add_product_column_label',
+                'Tambah Produk',
+            ),
             header: ({ column }) => (
-                <ServerSideDataTableHeader column={column} title={t("page.master_product.data_table.columns.add_product_column_label", "Tambah Produk")} className="whitespace-nowrap" />
+                <ServerSideDataTableHeader
+                    column={column}
+                    title={t(
+                        'page.master_product.data_table.columns.add_product_column_label',
+                        'Tambah Produk',
+                    )}
+                    className="whitespace-nowrap"
+                />
             ),
             size: 140,
             enableSorting: false,
@@ -71,126 +94,248 @@ export const columns = (props?: ColumnsProps): ColumnDef<MasterProduct>[] => {
                     className="h-8 w-8 p-0"
                     disabled={row.original.isAdded}
                     onClick={() => props?.onAddProductsClick(row.original)}
-                    title={t("page.master_product.dialog_modal.action_menu.add_products_btn", "Tambah Produk")}
+                    title={t(
+                        'page.master_product.dialog_modal.action_menu.add_products_btn',
+                        'Tambah Produk',
+                    )}
                 >
                     <PlusCircle className="h-4 w-4" />
                 </Button>
             ),
         },
         {
-            id: t("page.master_product.data_table.columns.name_column_label", "Nama"),
+            id: t(
+                'page.master_product.data_table.columns.name_column_label',
+                'Nama',
+            ),
             accessorKey: 'name',
             header: ({ column }) => (
-                <ServerSideDataTableHeader column={column} title={t("page.master_product.data_table.columns.name_column_label", "Nama")} sortKey="name" orderBy={props?.orderBy} order={props?.order} onSortChange={props?.onSortChange} />
+                <ServerSideDataTableHeader
+                    column={column}
+                    title={t(
+                        'page.master_product.data_table.columns.name_column_label',
+                        'Nama',
+                    )}
+                    sortKey="name"
+                    orderBy={props?.orderBy}
+                    order={props?.order}
+                    onSortChange={props?.onSortChange}
+                />
             ),
             size: 300,
         },
         {
-            id: t("page.master_product.data_table.columns.barcode_column_label", "Barcode"),
+            id: t(
+                'page.master_product.data_table.columns.barcode_column_label',
+                'Barcode',
+            ),
             accessorKey: 'barcode',
             header: ({ column }) => (
-                <ServerSideDataTableHeader column={column} title={t("page.master_product.data_table.columns.barcode_column_label", "Barcode")} sortKey="barcode" orderBy={props?.orderBy} order={props?.order} onSortChange={props?.onSortChange} />
+                <ServerSideDataTableHeader
+                    column={column}
+                    title={t(
+                        'page.master_product.data_table.columns.barcode_column_label',
+                        'Barcode',
+                    )}
+                    sortKey="barcode"
+                    orderBy={props?.orderBy}
+                    order={props?.order}
+                    onSortChange={props?.onSortChange}
+                />
             ),
         },
         {
-            id: t("page.master_product.data_table.columns.category_column_label", "Kategori"),
+            id: t(
+                'page.master_product.data_table.columns.category_column_label',
+                'Kategori',
+            ),
             accessorKey: 'category_name',
             header: ({ column }) => (
-                <ServerSideDataTableHeader column={column} title={t("page.master_product.data_table.columns.category_column_label", "Kategori")} sortKey="category_name" orderBy={props?.orderBy} order={props?.order} onSortChange={props?.onSortChange} />
+                <ServerSideDataTableHeader
+                    column={column}
+                    title={t(
+                        'page.master_product.data_table.columns.category_column_label',
+                        'Kategori',
+                    )}
+                    sortKey="category_name"
+                    orderBy={props?.orderBy}
+                    order={props?.order}
+                    onSortChange={props?.onSortChange}
+                />
             ),
         },
         {
-            id: t("page.master_product.data_table.columns.unit_column_label", "Satuan"),
+            id: t(
+                'page.master_product.data_table.columns.unit_column_label',
+                'Satuan',
+            ),
             accessorKey: 'unit_name',
             header: ({ column }) => (
-                <ServerSideDataTableHeader column={column} title={t("page.master_product.data_table.columns.unit_column_label", "Satuan")} sortKey="unit_name" orderBy={props?.orderBy} order={props?.order} onSortChange={props?.onSortChange} />
+                <ServerSideDataTableHeader
+                    column={column}
+                    title={t(
+                        'page.master_product.data_table.columns.unit_column_label',
+                        'Satuan',
+                    )}
+                    sortKey="unit_name"
+                    orderBy={props?.orderBy}
+                    order={props?.order}
+                    onSortChange={props?.onSortChange}
+                />
             ),
         },
         {
-            id: t("page.master_product.data_table.columns.cost_price_column_label", "Harga Modal"),
+            id: t(
+                'page.master_product.data_table.columns.cost_price_column_label',
+                'Harga Modal',
+            ),
             accessorKey: 'cost_price',
             header: ({ column }) => (
-                <ServerSideDataTableHeader column={column} title={t("page.master_product.data_table.columns.cost_price_column_label", "Harga Modal")} sortKey="cost_price" orderBy={props?.orderBy} order={props?.order} onSortChange={props?.onSortChange} />
+                <ServerSideDataTableHeader
+                    column={column}
+                    title={t(
+                        'page.master_product.data_table.columns.cost_price_column_label',
+                        'Harga Modal',
+                    )}
+                    sortKey="cost_price"
+                    orderBy={props?.orderBy}
+                    order={props?.order}
+                    onSortChange={props?.onSortChange}
+                />
             ),
-            cell: ({ row }) => (formatRupiah(row.original.cost_price))
+            cell: ({ row }) => formatRupiah(row.original.cost_price),
         },
         {
-            id: t("page.master_product.data_table.columns.price_column_label", "Harga Jual"),
+            id: t(
+                'page.master_product.data_table.columns.price_column_label',
+                'Harga Jual',
+            ),
             accessorKey: 'price',
             header: ({ column }) => (
-                <ServerSideDataTableHeader column={column} title={t("page.master_product.data_table.columns.price_column_label", "Harga Jual")} sortKey="price" orderBy={props?.orderBy} order={props?.order} onSortChange={props?.onSortChange} />
+                <ServerSideDataTableHeader
+                    column={column}
+                    title={t(
+                        'page.master_product.data_table.columns.price_column_label',
+                        'Harga Jual',
+                    )}
+                    sortKey="price"
+                    orderBy={props?.orderBy}
+                    order={props?.order}
+                    onSortChange={props?.onSortChange}
+                />
             ),
-            cell: ({ row }) => (formatRupiah(row.original.price))
+            cell: ({ row }) => formatRupiah(row.original.price),
         },
         {
-            id: t("page.master_product.data_table.columns.is_added_column_label", "Status"),
+            id: t(
+                'page.master_product.data_table.columns.is_added_column_label',
+                'Status',
+            ),
             accessorKey: 'is_added',
             header: ({ column }) => (
-                <ServerSideDataTableHeader column={column} title={t("page.master_product.data_table.columns.is_added_column_label", "Status")} sortKey="is_added" orderBy={props?.orderBy} order={props?.order} onSortChange={props?.onSortChange} />
+                <ServerSideDataTableHeader
+                    column={column}
+                    title={t(
+                        'page.master_product.data_table.columns.is_added_column_label',
+                        'Status',
+                    )}
+                    sortKey="is_added"
+                    orderBy={props?.orderBy}
+                    order={props?.order}
+                    onSortChange={props?.onSortChange}
+                />
             ),
-            cell: ({ row }) => (
+            cell: ({ row }) =>
                 row.original.isAdded ? (
                     <Badge className="bg-green-50 text-green-700 dark:bg-green-950 dark:text-green-300">
                         <Check size={184} strokeWidth={2.25} />
-                        {
-                            t("page.master_product.is_added.added", "Ditambahkan")
-                        }
+                        {t('page.master_product.is_added.added', 'Ditambahkan')}
                     </Badge>
-                ) :
-                    (<Badge className="bg-slate-200 text-slate-800 dark:bg-slate-800 dark:text-slate-300">
+                ) : (
+                    <Badge className="bg-slate-200 text-slate-800 dark:bg-slate-800 dark:text-slate-300">
                         <X size={184} strokeWidth={2.25} />
-                        {
-                            t("page.master_product.is_added_column_label.not_added", "Tidak Ditambahkan")
-                        }
-                    </Badge>)
-            ),
+                        {t(
+                            'page.master_product.is_added_column_label.not_added',
+                            'Tidak Ditambahkan',
+                        )}
+                    </Badge>
+                ),
         },
         {
-            id: t("page.master_product.data_table.columns.actions_column_label", "Aksi"),
+            id: t(
+                'page.master_product.data_table.columns.actions_column_label',
+                'Aksi',
+            ),
             enableSorting: false,
             cell: ({ row }) => (
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                         <Button variant="ghost" className="h-8 w-8 p-0">
-                            <span className="sr-only">{t("component.data_table.action_menu.trigger_btn_label", "Buka Menu")}</span>
+                            <span className="sr-only">
+                                {t(
+                                    'component.data_table.action_menu.trigger_btn_label',
+                                    'Buka Menu',
+                                )}
+                            </span>
                             <MoreHorizontal className="h-4 w-4" />
                         </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
-                        <DropdownMenuLabel>{t("component.data_table.action_menu.label", "Aksi")}</DropdownMenuLabel>
+                        <DropdownMenuLabel>
+                            {t(
+                                'component.data_table.action_menu.label',
+                                'Aksi',
+                            )}
+                        </DropdownMenuLabel>
                         <DropdownMenuItem
                             onClick={() => props?.onDetailClick(row.original)}
                         >
                             <FileText className="mr-0.5 h-4 w-4" />
-                            {t("component.data_table.action_menu.detail_data_btn", "Detail data")}
+                            {t(
+                                'component.data_table.action_menu.detail_data_btn',
+                                'Detail data',
+                            )}
                         </DropdownMenuItem>
                         <DropdownMenuItem
                             disabled={row.original.isAdded}
-                            onClick={() => props?.onAddProductsClick(row.original)}
+                            onClick={() =>
+                                props?.onAddProductsClick(row.original)
+                            }
                         >
                             <Plus className="mr-0.5 h-4 w-4" />
-                            {t("page.master_product.dialog_modal.action_menu.add_products_btn", "Tambah Produk")}
+                            {t(
+                                'page.master_product.dialog_modal.action_menu.add_products_btn',
+                                'Tambah Produk',
+                            )}
                         </DropdownMenuItem>
                         <Can permission={PERMISSIONENUMS.MASTER_PRODUCT.UPDATE}>
                             <DropdownMenuItem
                                 onClick={() => props?.onEditClick(row.original)}
                             >
                                 <Pencil className="mr-0.5 h-4 w-4" />
-                                {t("component.data_table.action_menu.edit_data_btn", "Edit data")}
+                                {t(
+                                    'component.data_table.action_menu.edit_data_btn',
+                                    'Edit data',
+                                )}
                             </DropdownMenuItem>
                         </Can>
                         <Can permission={PERMISSIONENUMS.MASTER_PRODUCT.DELETE}>
                             <DropdownMenuItem
-                                onClick={() => props?.onDeleteClick(row.original)}
+                                onClick={() =>
+                                    props?.onDeleteClick(row.original)
+                                }
                                 variant="destructive"
                             >
                                 <Trash className="mr-0.5 h-4 w-4" />
-                                {t("component.data_table.action_menu.delete_data_btn", "Hapus data")}
+                                {t(
+                                    'component.data_table.action_menu.delete_data_btn',
+                                    'Hapus data',
+                                )}
                             </DropdownMenuItem>
                         </Can>
                     </DropdownMenuContent>
                 </DropdownMenu>
             ),
         },
-    ]
+    ];
 };

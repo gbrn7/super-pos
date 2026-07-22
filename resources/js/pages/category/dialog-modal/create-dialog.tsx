@@ -20,7 +20,11 @@ import { Spinner } from '@/components/ui/spinner';
 import axiosInstance from '@/lib/axios';
 import { ResponseApi } from '@/support/interfaces/response/Response';
 import { Category } from '@/support/models/category';
-import { handleApiError, showSuccessToast, showWarningToast } from '@/lib/utils';
+import {
+    handleApiError,
+    showSuccessToast,
+    showWarningToast,
+} from '@/lib/utils';
 import { PlusCircle } from 'lucide-react';
 import z from 'zod';
 import ErrorFormInfo from '@/components/errorFormInfo';
@@ -39,12 +43,21 @@ export function CreateDialog({ onSuccess }: CreateDialogProps) {
     });
 
     const [errorForm, setErrorForm] = useState<CategoryForm>({
-        name: "",
-        desc: ""
+        name: '',
+        desc: '',
     });
 
     const categorySchema = z.object({
-        name: z.string().trim().min(1, t("validation.category.required.name", "Nama tidak boleh kosong")),
+        name: z
+            .string()
+            .trim()
+            .min(
+                1,
+                t(
+                    'validation.category.required.name',
+                    'Nama tidak boleh kosong',
+                ),
+            ),
         desc: z.string().trim(),
     });
 
@@ -70,8 +83,8 @@ export function CreateDialog({ onSuccess }: CreateDialogProps) {
 
         if (!resultValidation.success) {
             const fieldErrors: CategoryForm = {
-                name: "",
-                desc: ""
+                name: '',
+                desc: '',
             };
 
             resultValidation.error.issues.forEach((error) => {
@@ -88,21 +101,23 @@ export function CreateDialog({ onSuccess }: CreateDialogProps) {
         try {
             setLoading(true);
 
-            const res = await axiosInstance.post<ResponseApi<Category>>(storeCategory().url, formData);
-
+            const res = await axiosInstance.post<ResponseApi<Category>>(
+                storeCategory().url,
+                formData,
+            );
 
             if (!res.data.success) {
-                showWarningToast(res.data.message)
-                return
+                showWarningToast(res.data.message);
+                return;
             }
 
-            showSuccessToast(res.data.message)
+            showSuccessToast(res.data.message);
             setFormData({ name: '', desc: '' });
             setOpen(false);
             onSuccess();
         } catch (error) {
             console.error('Error creating category:', error);
-            handleApiError(error)
+            handleApiError(error);
         } finally {
             setLoading(false);
         }
@@ -113,27 +128,44 @@ export function CreateDialog({ onSuccess }: CreateDialogProps) {
             <DialogTrigger asChild>
                 <Button variant="outline">
                     <PlusCircle className="h-4" />
-                    {t("page.category.dialog_modal.create_dialog.dialog_button", "Tambah Kategori")}
+                    {t(
+                        'page.category.dialog_modal.create_dialog.dialog_button',
+                        'Tambah Kategori',
+                    )}
                 </Button>
             </DialogTrigger>
             <DialogContent>
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <DialogHeader>
-                        <DialogTitle>{t("page.category.dialog_modal.create_dialog.dialog_title", "Tambah Kategori")}</DialogTitle>
+                        <DialogTitle>
+                            {t(
+                                'page.category.dialog_modal.create_dialog.dialog_title',
+                                'Tambah Kategori',
+                            )}
+                        </DialogTitle>
                         <DialogDescription>
-                            {t("page.category.dialog_modal.create_dialog.dialog_desc", "Tambahkan kategori baru produk anda")}
+                            {t(
+                                'page.category.dialog_modal.create_dialog.dialog_desc',
+                                'Tambahkan kategori baru produk anda',
+                            )}
                         </DialogDescription>
                     </DialogHeader>
                     <FieldGroup>
                         <Field>
                             <label htmlFor="name" className="text-sm">
-                                {t("page.category.dialog_modal.create_dialog.name_input_label", "Nama")}
+                                {t(
+                                    'page.category.dialog_modal.create_dialog.name_input_label',
+                                    'Nama',
+                                )}
                                 <span className="text-red-500"> *</span>
                             </label>
                             <Input
                                 id="name"
                                 name="name"
-                                placeholder={t("page.category.dialog_modal.create_dialog.name_input_placeholder", "Masukkan nama kategori")}
+                                placeholder={t(
+                                    'page.category.dialog_modal.create_dialog.name_input_placeholder',
+                                    'Masukkan nama kategori',
+                                )}
                                 value={formData.name}
                                 onChange={handleChange}
                                 disabled={loading}
@@ -141,17 +173,22 @@ export function CreateDialog({ onSuccess }: CreateDialogProps) {
                             />
                             {errorForm.name && (
                                 <ErrorFormInfo message={errorForm.name} />
-
                             )}
                         </Field>
                         <Field>
                             <label htmlFor="desc" className="text-sm">
-                                {t("page.category.dialog_modal.create_dialog.desc_input_label", "Deskripsi")}
+                                {t(
+                                    'page.category.dialog_modal.create_dialog.desc_input_label',
+                                    'Deskripsi',
+                                )}
                             </label>
                             <Textarea
                                 id="desc"
                                 name="desc"
-                                placeholder={t("page.category.dialog_modal.create_dialog.desc_input_placeholder", "Masukkan deskripsi kategori (Opsional)")}
+                                placeholder={t(
+                                    'page.category.dialog_modal.create_dialog.desc_input_placeholder',
+                                    'Masukkan deskripsi kategori (Opsional)',
+                                )}
                                 value={formData.desc}
                                 onChange={handleChange}
                                 disabled={loading}
@@ -160,7 +197,6 @@ export function CreateDialog({ onSuccess }: CreateDialogProps) {
                             />
                             {errorForm.desc && (
                                 <ErrorFormInfo message={errorForm.desc} />
-
                             )}
                         </Field>
                     </FieldGroup>
@@ -172,11 +208,21 @@ export function CreateDialog({ onSuccess }: CreateDialogProps) {
                                 onClick={() => setOpen(false)}
                                 disabled={loading}
                             >
-                                {t("page.category.dialog_modal.create_dialog.cancel_button", "Batal")}
+                                {t(
+                                    'page.category.dialog_modal.create_dialog.cancel_button',
+                                    'Batal',
+                                )}
                             </Button>
                         </DialogClose>
                         <Button type="submit" disabled={loading}>
-                            {loading ? <Spinner /> : t("page.category.dialog_modal.create_dialog.confirm_button", "Tambah")}
+                            {loading ? (
+                                <Spinner />
+                            ) : (
+                                t(
+                                    'page.category.dialog_modal.create_dialog.confirm_button',
+                                    'Tambah',
+                                )
+                            )}
                         </Button>
                     </DialogFooter>
                 </form>
