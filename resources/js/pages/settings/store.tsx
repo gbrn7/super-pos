@@ -31,6 +31,38 @@ export default function Store({ storeSetting }: { storeSetting: StoreSetting }) 
     const [phone, setPhone] = useState(storeSetting.phone);
     const [receiptFooter, setReceiptFooter] = useState(storeSetting.receipt_footer || '');
 
+    const dummyTransaction = {
+        id: 1,
+        invoice_number: 'INV/20260723/0001',
+        payment_method_name: 'Cash',
+        user_name: t('page.settings.store.receipt_preview.mock_cashier', 'Admin'),
+        created_at: '2026-07-23T08:42:00.000000Z',
+        total_amount: 48000,
+        discount_amount: 0,
+        payment_amount: 50000,
+        change_amount: 2000,
+        details: [
+            {
+                id: 1,
+                product_name: t('page.settings.store.receipt_preview.mock_item_1', 'Kopi Susu Gula Aren'),
+                product_id: 1,
+                price: 18000,
+                quantity: 1,
+                discount: 0,
+                unit_name: 'pcs',
+            },
+            {
+                id: 2,
+                product_name: t('page.settings.store.receipt_preview.mock_item_2', 'Roti Bakar Cokelat'),
+                product_id: 2,
+                price: 15000,
+                quantity: 2,
+                discount: 0,
+                unit_name: 'pcs',
+            },
+        ],
+    } as any;
+
     return (
         <>
             <Head
@@ -256,7 +288,7 @@ export default function Store({ storeSetting }: { storeSetting: StoreSetting }) 
                         storeAddress={address}
                         storePhone={phone}
                         storeReceiptFooter={receiptFooter}
-                        isPreview={true}
+                        transaction={dummyTransaction}
                     />
                 </div>
             </div>

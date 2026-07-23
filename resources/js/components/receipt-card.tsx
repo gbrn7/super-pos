@@ -8,8 +8,7 @@ export interface ReceiptCardProps {
     storeAddress: string;
     storePhone: string;
     storeReceiptFooter?: string | null;
-    transaction?: Transaction | null;
-    isPreview?: boolean;
+    transaction: Transaction;
 }
 
 export default function ReceiptCard({
@@ -18,7 +17,6 @@ export default function ReceiptCard({
     storePhone,
     storeReceiptFooter,
     transaction,
-    isPreview = false,
 }: ReceiptCardProps) {
     const { t } = useTranslation();
 
@@ -27,70 +25,34 @@ export default function ReceiptCard({
         return formatRupiah(val).replace('Rp', '').trim();
     };
 
-    const details = isPreview
-        ? [
-              {
-                  id: 1,
-                  product_name: t('page.settings.store.receipt_preview.mock_item_1', 'Kopi Susu Gula Aren'),
-                  product_id: 1,
-                  price: 18000,
-                  quantity: 1,
-                  discount: 0,
-                  unit_name: 'pcs',
-              },
-              {
-                  id: 2,
-                  product_name: t('page.settings.store.receipt_preview.mock_item_2', 'Roti Bakar Cokelat'),
-                  product_id: 2,
-                  price: 15000,
-                  quantity: 2,
-                  discount: 0,
-                  unit_name: 'pcs',
-              },
-          ]
-        : (transaction?.details ?? []);
+    const details = transaction.details ?? [];
+    const invoiceNumber = transaction.invoice_number ?? '';
+    const paymentMethodName = transaction.payment_method_name ?? 'Cash';
 
-    const invoiceNumber = isPreview
-        ? 'INV/20260723/0001'
-        : (transaction?.invoice_number ?? '');
+    const createdAt = transaction.created_at
+        ? (typeof transaction.created_at === 'number'
+            ? dayjs.unix(transaction.created_at).format('DD/MM/YYYY HH:mm')
+            : dayjs(transaction.created_at).format('DD/MM/YYYY HH:mm'))
+        : dayjs().format('DD/MM/YYYY HH:mm');
 
-    const paymentMethodName = isPreview
-        ? 'Cash'
-        : (transaction?.payment_method_name ?? 'Cash');
+    const discountAmount = Number(transaction.discount_amount ?? 0);
+    const totalItemDiscount = details.reduce(
+        (acc, detail) => acc + (Number(detail.discount) || 0) * detail.quantity,
+        0,
+    );
 
-    const createdAt = isPreview
-        ? '23/07/2026 08:42'
-        : (transaction?.created_at
-            ? (typeof transaction.created_at === 'number'
-                ? dayjs.unix(transaction.created_at).format('DD/MM/YYYY HH:mm')
-                : dayjs(transaction.created_at).format('DD/MM/YYYY HH:mm'))
-            : dayjs().format('DD/MM/YYYY HH:mm'));
-
-    const discountAmount = isPreview
-        ? 0
-        : Number(transaction?.discount_amount ?? 0);
-
-    const totalItemDiscount = isPreview
-        ? 0
-        : details.reduce(
-            (acc, detail) => acc + (Number(detail.discount) || 0) * detail.quantity,
-            0,
-        );
-
-    const grossSubtotal = isPreview
-        ? 48000
-        : details.reduce(
-            (acc, detail) => acc + (Number(detail.price) || 0) * detail.quantity,
-            0,
-        );
+    const grossSubtotal = details.reduce(
+        (acc, detail) => acc + (Number(detail.price) || 0) * detail.quantity,
+        0,
+    );
 
     const netItemsSubtotal = grossSubtotal - totalItemDiscount;
     const totalSavings = totalItemDiscount + discountAmount;
     const hasTransactionDiscount = discountAmount > 0;
 
-    const totalAmount = isPreview ? 48000 : Number(transaction?.total_amount ?? 0);
-    const paymentAmount = isPreview ? 50000 : Number(transaction?.payment_amount ?? 0);
-    const changeAmount = isPreview ? 2000 : Number(transaction?.change_amount ?? 0);
+    const totalAmount = Number(transaction.total_amount ?? 0);
+    const paymentAmount = Number(transaction.payment_amount ?? 0);
+    const changeAmount = Number(transaction.change_amount ?? 0);
 
     return (
         <div
@@ -128,15 +90,13 @@ export default function ReceiptCard({
                         {paymentMethodName}
                     </span>
                 </div>
-                {(isPreview || (transaction && transaction.user_name)) && (
+                {transaction.user_name && (
                     <div className="flex items-center justify-between">
                         <span>
                             {t('page.kasir.receipt_cashier', 'Kasir')}
                         </span>
                         <span className="font-medium text-foreground">
-                            {isPreview
-                                ? t('page.settings.store.receipt_preview.mock_cashier', 'Admin')
-                                : transaction?.user_name}
+                            {transaction.user_name}
                         </span>
                     </div>
                 )}
