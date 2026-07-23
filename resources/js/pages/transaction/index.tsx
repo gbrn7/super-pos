@@ -1,24 +1,25 @@
 import { Head } from '@inertiajs/react';
+import type { RowSelectionState } from '@tanstack/react-table';
+import i18next from 'i18next';
 import { useState, useEffect, useCallback } from 'react';
-import { index as apiGetTransactions } from '@/routes/apiTransactions';
+import { useTranslation } from 'react-i18next';
+import HeaderContent from '@/components/header-content';
+import type { StoreSetting } from '@/components/receipt-modal';
+import { PAGINATIONLIMITOPTIONDEFAULT } from '@/constants/Index';
+import axiosInstance from '@/lib/axios';
+import { handleApiError, showWarningToast } from '@/lib/utils';
 import { index as apiGetPaymentMethods } from '@/routes/apiPaymentMethods';
+import { index as apiGetTransactions } from '@/routes/apiTransactions';
 import { all as apiGetAllUsers } from '@/routes/apiUsers';
 import { index as transactions } from '@/routes/transactions';
-import type { Transaction } from '@/support/models/transaction';
-import type { PaymentMethod } from '@/support/models/paymentMethod';
-import type { User } from '@/support/models/user';
 import type { TransactionQueryParam } from '@/support/interfaces/request/transaction';
 import type { Pagination } from '@/support/interfaces/resource/pagination';
+import type { ResponseApi } from '@/support/interfaces/response/Response';
+import type { PaymentMethod } from '@/support/models/paymentMethod';
+import type { Transaction } from '@/support/models/transaction';
+import type { User } from '@/support/models/user';
 import { columns } from './columns';
 import { DataTable } from './data-table';
-import { useTranslation } from 'react-i18next';
-import i18next from 'i18next';
-import axiosInstance from '@/lib/axios';
-import type { ResponseApi } from '@/support/interfaces/response/Response';
-import { handleApiError, showWarningToast } from '@/lib/utils';
-import HeaderContent from '@/components/header-content';
-import { PAGINATIONLIMITOPTIONDEFAULT } from '@/constants/Index';
-import type { RowSelectionState } from '@tanstack/react-table';
 
 const { url } = transactions();
 
@@ -32,7 +33,7 @@ interface PaginatedData<T> {
     total?: number;
 }
 
-export default function Index() {
+export default function Index({ storeSetting }: { storeSetting?: StoreSetting | null }) {
     const { t } = useTranslation();
 
     const [transactionsData, setTransactionsData] = useState<Transaction[]>([]);
@@ -75,6 +76,7 @@ export default function Index() {
                 apiGetPaymentMethods().url,
                 { params: { order_by: 'name', order: 'asc' } },
             );
+
             if (res.data.success && Array.isArray(res.data.data)) {
                 setPaymentMethods(res.data.data);
             }
@@ -90,8 +92,10 @@ export default function Index() {
             >(apiGetAllUsers().url, {
                 params: { order_by: 'name', order: 'asc' },
             });
+
             if (res.data.success) {
                 const dataVal = res.data.data;
+
                 if (Array.isArray(dataVal)) {
                     setUsers(dataVal);
                 } else if (
@@ -109,6 +113,7 @@ export default function Index() {
     };
 
     useEffect(() => {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         void Promise.all([fetchPaymentMethods(), fetchUsers()]);
     }, []);
 
@@ -122,6 +127,7 @@ export default function Index() {
 
             if (queryParam.keyword) {
                 params.keyword = queryParam.keyword;
+
                 if (queryParam.field && queryParam.field !== 'default') {
                     params.field = queryParam.field;
                 }
@@ -156,10 +162,12 @@ export default function Index() {
 
             if (!res.data.success) {
                 showWarningToast(res.data.message);
+
                 return;
             }
 
             const resData = res.data.data;
+
             if (
                 resData &&
                 typeof resData === 'object' &&
@@ -167,6 +175,7 @@ export default function Index() {
                 Array.isArray(resData.data)
             ) {
                 setTransactionsData(resData.data);
+
                 if (resData.meta) {
                     setPagination(resData.meta);
                 } else if ('current_page' in resData) {
@@ -292,6 +301,7 @@ export default function Index() {
                     setQueryParam={setQueryParam}
                     rowSelection={rowSelection}
                     setRowSelection={setRowSelection}
+                    storeSetting={storeSetting}
                 />
             </div>
         </>

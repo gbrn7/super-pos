@@ -29,6 +29,7 @@ import {
 import * as React from 'react';
 import { useTranslation } from 'react-i18next';
 import { sprintf } from 'sprintf-js';
+import type { StoreSetting } from '@/components/receipt-modal';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
@@ -59,8 +60,8 @@ import {
 } from '@/components/ui/table';
 import type { TransactionQueryParam } from '@/support/interfaces/request/transaction';
 import type { Pagination } from '@/support/interfaces/resource/pagination';
-import type { Transaction } from '@/support/models/transaction';
 import type { PaymentMethod } from '@/support/models/paymentMethod';
+import type { Transaction } from '@/support/models/transaction';
 import type { User } from '@/support/models/user';
 import { DetailDialog } from './dialog-modal/detail-dialog';
 
@@ -96,6 +97,7 @@ interface DataTableProps<TData, TValue> {
     setQueryParam: React.Dispatch<React.SetStateAction<TransactionQueryParam>>;
     rowSelection: RowSelectionState;
     setRowSelection: React.Dispatch<React.SetStateAction<RowSelectionState>>;
+    storeSetting?: StoreSetting | null;
 }
 
 export function DataTable<TData, TValue>({
@@ -105,14 +107,12 @@ export function DataTable<TData, TValue>({
     users = [],
     processing,
     limitOptions = [10, 20, 50, 100],
-    onRefresh,
     detailDataOpen,
     setDetailOpen,
     onDetailClick,
     selectedTransaction,
     queryParam,
     pagination,
-    onQueryParamChange,
     onResetFilter,
     onChangePaginationPage,
     onChangePaginationLimit,
@@ -125,6 +125,7 @@ export function DataTable<TData, TValue>({
     setQueryParam,
     rowSelection,
     setRowSelection,
+    storeSetting,
 }: DataTableProps<TData, TValue>) {
     const { t } = useTranslation();
 
@@ -636,6 +637,7 @@ export function DataTable<TData, TValue>({
                     isOpen={detailDataOpen}
                     transaction={selectedTransaction}
                     onOpenChange={setDetailOpen}
+                    storeSetting={storeSetting}
                 />
             </div>
 
