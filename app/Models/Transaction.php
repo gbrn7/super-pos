@@ -35,4 +35,9 @@ class Transaction extends Model
     {
         return $this->hasMany(TransactionDetail::class);
     }
+
+    public function transactionProfit()
+    {
+        return $this->hasOne(TransactionProfit::class);
+    }
 }
