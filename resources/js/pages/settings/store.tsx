@@ -283,102 +283,163 @@ export default function Store({ storeSetting }: { storeSetting: StoreSetting }) 
                         )}
                     />
 
-                    {/* Paper Receipt Styling */}
-                    <div className="w-full max-w-xs mx-auto rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 p-5 shadow-xs font-mono text-[11px] leading-relaxed text-zinc-800 dark:text-zinc-300">
+                    {/* Paper Receipt Styling matching receipt-modal.tsx */}
+                    <div
+                        id="printable-receipt"
+                        className="w-full max-w-xs mx-auto space-y-4 rounded-xl border bg-card p-5 font-sans text-xs leading-relaxed shadow-xs"
+                    >
                         {/* Store Header */}
-                        <div className="text-center space-y-1">
-                            <h4 className="text-xs font-bold tracking-tight text-foreground uppercase truncate">
+                        <div className="space-y-1 text-center">
+                            <h3 className="text-sm font-extrabold tracking-tight text-foreground uppercase truncate">
                                 {name || 'NAMA TOKO'}
-                            </h4>
-                            <p className="text-[10px] text-zinc-500 dark:text-zinc-400 whitespace-pre-line leading-normal">
+                            </h3>
+                            <p className="text-[10px] leading-normal text-muted-foreground/80 whitespace-pre-line">
                                 {address || 'Alamat Toko'}
                                 {phone && `\nTelp: ${phone}`}
                             </p>
                         </div>
 
-                        <div className="border-t border-dashed border-zinc-300 dark:border-zinc-800 my-2 select-none" />
+                        <div className="my-1 border-t border-border/50 select-none" />
 
-                        {/* Metadata */}
-                        <div className="space-y-0.5 text-zinc-500 dark:text-zinc-400">
-                            <div className="flex justify-between">
-                                <span>No. Struk</span>
-                                <span className="font-bold text-foreground">INV/20260723/0001</span>
+                        {/* Transaction Details */}
+                        <div className="space-y-1.5 text-xs text-muted-foreground">
+                            <div className="flex items-center justify-between">
+                                <span>
+                                    {t(
+                                        'page.kasir.receipt_transaction_code',
+                                        'Kode Transaksi',
+                                    )}
+                                </span>
+                                <span className="font-bold text-foreground tabular-nums">
+                                    INV/20260723/0001
+                                </span>
                             </div>
-                            <div className="flex justify-between">
-                                <span>Kasir</span>
-                                <span className="text-foreground">Admin</span>
+                            <div className="flex items-center justify-between">
+                                <span>
+                                    {t(
+                                        'page.kasir.receipt_payment_method',
+                                        'Metode Pembayaran',
+                                    )}
+                                </span>
+                                <span className="rounded bg-secondary px-1.5 py-0.5 text-[10px] font-semibold text-foreground uppercase">
+                                    Cash
+                                </span>
                             </div>
-                            <div className="flex justify-between">
-                                <span>Tanggal</span>
-                                <span className="text-foreground">23/07/2026 08:42</span>
+                            <div className="flex items-center justify-between">
+                                <span>
+                                    {t('page.kasir.receipt_date', 'Tanggal')}
+                                </span>
+                                <span className="font-medium text-foreground tabular-nums">
+                                    23/07/2026 08:42
+                                </span>
                             </div>
                         </div>
 
-                        <div className="border-t border-dashed border-zinc-300 dark:border-zinc-800 my-2 select-none" />
+                        <div className="my-1 border-t border-border/50 select-none" />
 
-                        {/* Items */}
-                        <div className="space-y-2">
-                            <div className="flex justify-between text-zinc-500 dark:text-zinc-400 font-bold">
-                                <span className="flex-1">Barang</span>
-                                <span className="w-6 text-right">Qty</span>
-                                <span className="w-14 text-right">Harga</span>
-                                <span className="w-16 text-right">Total</span>
-                            </div>
+                        {/* Table Column Headers */}
+                        <div className="flex justify-between text-[10px] font-bold tracking-wider text-muted-foreground uppercase">
+                            <span className="flex-1 text-left">
+                                {t('page.kasir.receipt_item_name', 'Nama Barang')}
+                            </span>
+                            <span className="w-8 text-right">
+                                {t('page.kasir.receipt_qty', 'Qty')}
+                            </span>
+                            <span className="w-16 text-right">
+                                {t('page.kasir.receipt_price', 'Harga')}
+                            </span>
+                            <span className="w-20 text-right">
+                                {t('page.kasir.receipt_total', 'Total')}
+                            </span>
+                        </div>
 
-                            <div className="border-t border-dotted border-zinc-200 dark:border-zinc-900 my-1 select-none" />
+                        <div className="my-1 border-t border-dashed border-border/50 select-none" />
 
-                            <div className="space-y-1">
-                                <div className="flex justify-between items-start gap-1">
-                                    <span className="flex-1 text-foreground font-semibold line-clamp-2">Kopi Susu Gula Aren</span>
-                                    <span className="w-6 text-right text-zinc-500">1</span>
-                                    <span className="w-14 text-right text-zinc-500">{formatPrice(18000)}</span>
-                                    <span className="w-16 text-right text-foreground font-bold">{formatPrice(18000)}</span>
+                        {/* Items List */}
+                        <div className="space-y-3">
+                            <div className="flex items-start justify-between gap-2 text-xs">
+                                <div className="min-w-0 flex-1">
+                                    <span className="block leading-snug font-semibold break-words text-foreground">
+                                        Kopi Susu Gula Aren
+                                    </span>
                                 </div>
-                                <div className="flex justify-between items-start gap-1">
-                                    <span className="flex-1 text-foreground font-semibold line-clamp-2">Roti Bakar Cokelat</span>
-                                    <span className="w-6 text-right text-zinc-500">2</span>
-                                    <span className="w-14 text-right text-zinc-500">{formatPrice(15000)}</span>
-                                    <span className="w-16 text-right text-foreground font-bold">{formatPrice(30000)}</span>
+                                <span className="w-8 pt-0.5 text-right font-medium text-muted-foreground tabular-nums">
+                                    1
+                                </span>
+                                <span className="w-16 pt-0.5 text-right font-medium text-muted-foreground tabular-nums">
+                                    {formatPrice(18000)}
+                                </span>
+                                <span className="w-20 pt-0.5 text-right font-bold text-foreground tabular-nums">
+                                    {formatPrice(18000)}
+                                </span>
+                            </div>
+                            <div className="flex items-start justify-between gap-2 text-xs">
+                                <div className="min-w-0 flex-1">
+                                    <span className="block leading-snug font-semibold break-words text-foreground">
+                                        Roti Bakar Cokelat
+                                    </span>
                                 </div>
+                                <span className="w-8 pt-0.5 text-right font-medium text-muted-foreground tabular-nums">
+                                    2
+                                </span>
+                                <span className="w-16 pt-0.5 text-right font-medium text-muted-foreground tabular-nums">
+                                    {formatPrice(15000)}
+                                </span>
+                                <span className="w-20 pt-0.5 text-right font-bold text-foreground tabular-nums">
+                                    {formatPrice(30000)}
+                                </span>
                             </div>
                         </div>
 
-                        <div className="border-t border-dashed border-zinc-300 dark:border-zinc-800 my-2 select-none" />
+                        <div className="my-1 border-t border-dashed border-border/50 select-none" />
 
-                        {/* Totals */}
-                        <div className="space-y-1">
-                            <div className="flex justify-between">
-                                <span className="text-zinc-500">Subtotal</span>
-                                <span className="font-semibold text-foreground">{formatPrice(48000)}</span>
+                        {/* Totals Summary */}
+                        <div className="space-y-2 border-t border-border/50 pt-3 text-xs">
+                            <div className="flex items-center justify-between">
+                                <span className="font-bold text-foreground">
+                                    {t('page.kasir.receipt_total', 'TOTAL')}
+                                </span>
+                                <span className="text-sm font-extrabold text-foreground tabular-nums">
+                                    {formatPrice(48000)}
+                                </span>
                             </div>
-                            <div className="flex justify-between font-bold text-xs">
-                                <span>TOTAL</span>
-                                <span className="text-foreground">{formatPrice(48000)}</span>
+
+                            <div className="flex items-center justify-between text-muted-foreground">
+                                <span>{t('page.kasir.receipt_pay', 'Bayar')}</span>
+                                <span className="font-semibold text-foreground tabular-nums">
+                                    {formatPrice(50000)}
+                                </span>
                             </div>
-                            <div className="flex justify-between text-zinc-500">
-                                <span>Bayar (Tunai)</span>
-                                <span>{formatPrice(50000)}</span>
-                            </div>
-                            <div className="flex justify-between font-bold text-foreground">
-                                <span>Kembalian</span>
-                                <span>{formatPrice(2000)}</span>
+
+                            <div className="flex items-center justify-between border-t border-border/20 pt-1">
+                                <span className="font-bold text-foreground">
+                                    {t('page.kasir.receipt_change', 'Kembalian')}
+                                </span>
+                                <span className="text-sm font-extrabold text-foreground tabular-nums">
+                                    {formatPrice(2000)}
+                                </span>
                             </div>
                         </div>
 
-                        <div className="border-t border-dashed border-zinc-300 dark:border-zinc-800 my-2 select-none" />
+                        <div className="my-1 border-t border-border/50 select-none" />
 
                         {/* Receipt Custom Header / Footer */}
                         <div className="text-center space-y-2 text-zinc-500 dark:text-zinc-400">
                             {receiptHeader && (
-                                <p className="whitespace-pre-wrap border-b border-dotted border-zinc-200 dark:border-zinc-900 pb-1.5 leading-normal">
+                                <p className="whitespace-pre-wrap border-b border-dotted border-border/20 pb-1.5 leading-normal">
                                     {receiptHeader}
                                 </p>
                             )}
-                            <p className="font-bold text-[10px] uppercase">
-                                {t('page.kasir.receipt_thank_you', 'TERIMA KASIH. SELAMAT BELANJA KEMBALI')}
-                            </p>
+                            <div className="pt-1 text-center">
+                                <p className="text-[10px] font-bold tracking-wider text-muted-foreground/80 uppercase">
+                                    {t(
+                                        'page.kasir.receipt_thank_you',
+                                        'TERIMA KASIH. SELAMAT BELANJA KEMBALI',
+                                    )}
+                                </p>
+                            </div>
                             {receiptFooter && (
-                                <p className="whitespace-pre-wrap border-t border-dotted border-zinc-200 dark:border-zinc-900 pt-1.5 leading-normal">
+                                <p className="whitespace-pre-wrap border-t border-dotted border-border/20 pt-1.5 leading-normal">
                                     {receiptFooter}
                                 </p>
                             )}
