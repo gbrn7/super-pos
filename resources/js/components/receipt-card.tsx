@@ -66,22 +66,16 @@ export default function ReceiptCard({
                 </h3>
                 <p className="text-[10px] leading-normal text-muted-foreground/80 whitespace-pre-line">
                     {storeAddress || t('page.settings.store.receipt_preview.mock_address', 'Alamat Toko')}
-                    {storePhone && `\nTelp: ${storePhone}`}
                 </p>
+                <div className="text-[10px] font-bold text-foreground tabular-nums tracking-wide mt-1">
+                    {invoiceNumber}
+                </div>
             </div>
 
             <div className="my-1 border-t border-border/50 select-none" />
 
             {/* Transaction Details */}
             <div className="space-y-1.5 text-xs text-muted-foreground">
-                <div className="flex items-center justify-between">
-                    <span>
-                        {t('page.kasir.receipt_transaction_code', 'Kode Transaksi')}
-                    </span>
-                    <span className="font-bold text-foreground tabular-nums">
-                        {invoiceNumber}
-                    </span>
-                </div>
                 <div className="flex items-center justify-between">
                     <span>
                         {t('page.kasir.receipt_payment_method', 'Metode Pembayaran')}
@@ -249,6 +243,11 @@ export default function ReceiptCard({
 
             {/* Receipt Footer */}
             <div className="text-center space-y-2 text-zinc-500 dark:text-zinc-400">
+                {storePhone && (
+                    <p className="text-[10px] leading-normal text-muted-foreground/80">
+                        Telp: {storePhone}
+                    </p>
+                )}
                 <div className="pt-1 text-center">
                     <p className="text-[10px] font-bold tracking-wider text-muted-foreground/80 uppercase">
                         {t('page.kasir.receipt_thank_you', 'TERIMA KASIH. SELAMAT BELANJA KEMBALI')}
