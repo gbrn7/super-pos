@@ -991,6 +991,29 @@
                 "two_factor_disabled_desc": "Saat Anda mengaktifkan otentikasi dua faktor, Anda akan diminta memasukkan PIN aman saat masuk. PIN ini dapat diperoleh dari aplikasi yang mendukung TOTP di ponsel Anda.",
                 "continue_setup": "Lanjutkan pengaturan",
                 "enable_two_factor_btn": "Aktifkan 2FA"
+            },
+            "store": {
+                "label": "Informasi Toko",
+                "title": "Pengaturan Toko",
+                "description": "Perbarui detail informasi toko Anda",
+                "form": {
+                    "title": "Informasi Toko",
+                    "name_input_label": "Nama Toko",
+                    "name_input_placeholder": "Masukkan nama toko",
+                    "address_input_label": "Alamat",
+                    "address_input_placeholder": "Masukkan alamat toko",
+                    "phone_input_label": "No. Telepon",
+                    "phone_input_placeholder": "Masukkan nomor telepon toko",
+                    "email_input_label": "Email",
+                    "email_input_placeholder": "Masukkan email toko",
+                    "tax_number_input_label": "NPWP / No. Pajak",
+                    "tax_number_input_placeholder": "Masukkan NPWP toko",
+                    "receipt_header_input_label": "Header Struk",
+                    "receipt_header_input_placeholder": "Masukkan teks header struk",
+                    "receipt_footer_input_label": "Footer Struk",
+                    "receipt_footer_input_placeholder": "Masukkan teks footer struk",
+                    "save_btn": "Simpan"
+                }
             }
         },
         "kasir": {
@@ -1076,7 +1099,20 @@
             "payment_method_desc_label": "Deskripsi / Instruksi:",
             "no_payment_desc": "Tidak ada deskripsi tambahan.",
             "close_btn": "Tutup",
-            "select_this_method": "Pilih Metode Ini"
+            "select_this_method": "Pilih Metode Ini",
+            "receipt_transaction_code": "Kode Transaksi",
+            "receipt_payment_method": "Metode Pembayaran",
+            "receipt_date": "Tanggal",
+            "receipt_item_name": "Nama Barang",
+            "receipt_qty": "Qty",
+            "receipt_price": "Harga",
+            "receipt_total": "Total",
+            "receipt_subtotal": "Subtotal",
+            "receipt_transaction_discount": "Diskon Transaksi",
+            "receipt_pay": "Bayar",
+            "receipt_change": "Kembalian",
+            "receipt_total_savings": "TOTAL HEMAT",
+            "receipt_saved": "Hemat"
         }
     },
     "error": {

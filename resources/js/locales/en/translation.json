@@ -991,6 +991,29 @@
                 "two_factor_disabled_desc": "When you enable two factor authentication, you will be prompted to enter a secure PIN during login. This PIN can be obtained from a TOTP-supported application on your phone.",
                 "continue_setup": "Continue Setup",
                 "enable_two_factor_btn": "Enable 2FA"
+            },
+            "store": {
+                "label": "Store Information",
+                "title": "Store Settings",
+                "description": "Update your store information details",
+                "form": {
+                    "title": "Store Information",
+                    "name_input_label": "Store Name",
+                    "name_input_placeholder": "Enter store name",
+                    "address_input_label": "Address",
+                    "address_input_placeholder": "Enter store address",
+                    "phone_input_label": "Phone Number",
+                    "phone_input_placeholder": "Enter store phone number",
+                    "email_input_label": "Email",
+                    "email_input_placeholder": "Enter store email address",
+                    "tax_number_input_label": "Tax Number",
+                    "tax_number_input_placeholder": "Enter store tax number",
+                    "receipt_header_input_label": "Receipt Header",
+                    "receipt_header_input_placeholder": "Enter receipt header text",
+                    "receipt_footer_input_label": "Receipt Footer",
+                    "receipt_footer_input_placeholder": "Enter receipt footer text",
+                    "save_btn": "Save"
+                }
             }
         },
         "kasir": {
@@ -1076,7 +1099,20 @@
             "payment_method_desc_label": "Description / Instructions:",
             "no_payment_desc": "No additional description.",
             "close_btn": "Close",
-            "select_this_method": "Select This Method"
+            "select_this_method": "Select This Method",
+            "receipt_transaction_code": "Transaction Code",
+            "receipt_payment_method": "Payment Method",
+            "receipt_date": "Date",
+            "receipt_item_name": "Item Name",
+            "receipt_qty": "Qty",
+            "receipt_price": "Price",
+            "receipt_total": "Total",
+            "receipt_subtotal": "Subtotal",
+            "receipt_transaction_discount": "Transaction Discount",
+            "receipt_pay": "Pay",
+            "receipt_change": "Change",
+            "receipt_total_savings": "TOTAL SAVED",
+            "receipt_saved": "Saved"
         }
     },
     "error": {
