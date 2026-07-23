@@ -78,10 +78,10 @@ export default function ReceiptCard({
             <div className="space-y-1.5 text-xs text-muted-foreground">
                 <div className="flex items-center justify-between">
                     <span>
-                        {t('page.kasir.receipt_payment_method', 'Metode Pembayaran')}
+                        {t('page.kasir.receipt_date', 'Tanggal')}
                     </span>
-                    <span className="rounded bg-secondary px-1.5 py-0.5 text-[10px] font-semibold text-foreground uppercase">
-                        {paymentMethodName}
+                    <span className="font-medium text-foreground tabular-nums">
+                        {createdAt}
                     </span>
                 </div>
                 {transaction.user_name && (
@@ -96,10 +96,10 @@ export default function ReceiptCard({
                 )}
                 <div className="flex items-center justify-between">
                     <span>
-                        {t('page.kasir.receipt_date', 'Tanggal')}
+                        {t('page.kasir.receipt_payment_method', 'Metode Pembayaran')}
                     </span>
-                    <span className="font-medium text-foreground tabular-nums">
-                        {createdAt}
+                    <span className="rounded bg-secondary px-1.5 py-0.5 text-[10px] font-semibold text-foreground uppercase">
+                        {paymentMethodName}
                     </span>
                 </div>
             </div>
