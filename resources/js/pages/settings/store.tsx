@@ -291,10 +291,10 @@ export default function Store({ storeSetting }: { storeSetting: StoreSetting }) 
                         {/* Store Header */}
                         <div className="space-y-1 text-center">
                             <h3 className="text-sm font-extrabold tracking-tight text-foreground uppercase truncate">
-                                {name || 'NAMA TOKO'}
+                                {name || t('page.settings.store.receipt_preview.mock_name', 'NAMA TOKO')}
                             </h3>
                             <p className="text-[10px] leading-normal text-muted-foreground/80 whitespace-pre-line">
-                                {address || 'Alamat Toko'}
+                                {address || t('page.settings.store.receipt_preview.mock_address', 'Alamat Toko')}
                                 {phone && `\nTelp: ${phone}`}
                             </p>
                         </div>
@@ -323,6 +323,17 @@ export default function Store({ storeSetting }: { storeSetting: StoreSetting }) 
                                 </span>
                                 <span className="rounded bg-secondary px-1.5 py-0.5 text-[10px] font-semibold text-foreground uppercase">
                                     Cash
+                                </span>
+                            </div>
+                            <div className="flex items-center justify-between">
+                                <span>
+                                    {t(
+                                        'page.kasir.receipt_cashier',
+                                        'Kasir',
+                                    )}
+                                </span>
+                                <span className="font-medium text-foreground">
+                                    {t('page.settings.store.receipt_preview.mock_cashier', 'Admin')}
                                 </span>
                             </div>
                             <div className="flex items-center justify-between">
@@ -360,7 +371,7 @@ export default function Store({ storeSetting }: { storeSetting: StoreSetting }) 
                             <div className="flex items-start justify-between gap-2 text-xs">
                                 <div className="min-w-0 flex-1">
                                     <span className="block leading-snug font-semibold break-words text-foreground">
-                                        Kopi Susu Gula Aren
+                                        {t('page.settings.store.receipt_preview.mock_item_1', 'Kopi Susu Gula Aren')}
                                     </span>
                                 </div>
                                 <span className="w-8 pt-0.5 text-right font-medium text-muted-foreground tabular-nums">
@@ -376,7 +387,7 @@ export default function Store({ storeSetting }: { storeSetting: StoreSetting }) 
                             <div className="flex items-start justify-between gap-2 text-xs">
                                 <div className="min-w-0 flex-1">
                                     <span className="block leading-snug font-semibold break-words text-foreground">
-                                        Roti Bakar Cokelat
+                                        {t('page.settings.store.receipt_preview.mock_item_2', 'Roti Bakar Cokelat')}
                                     </span>
                                 </div>
                                 <span className="w-8 pt-0.5 text-right font-medium text-muted-foreground tabular-nums">

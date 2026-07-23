@@ -996,6 +996,15 @@
                 "label": "Store Information",
                 "title": "Store Settings",
                 "description": "Update your store information details",
+                "receipt_preview_label": "Receipt Preview",
+                "receipt_preview_desc": "Preview of the printed receipt layout.",
+                "receipt_preview": {
+                    "mock_item_1": "Iced Brown Sugar Coffee",
+                    "mock_item_2": "Chocolate Toast",
+                    "mock_cashier": "Admin",
+                    "mock_address": "Store Address",
+                    "mock_name": "STORE NAME"
+                },
                 "form": {
                     "title": "Store Information",
                     "name_input_label": "Store Name",
@@ -1100,6 +1109,7 @@
             "no_payment_desc": "No additional description.",
             "close_btn": "Close",
             "select_this_method": "Select This Method",
+            "receipt_cashier": "Cashier",
             "receipt_transaction_code": "Transaction Code",
             "receipt_payment_method": "Payment Method",
             "receipt_date": "Date",

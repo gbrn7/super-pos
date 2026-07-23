@@ -996,6 +996,15 @@
                 "label": "Informasi Toko",
                 "title": "Pengaturan Toko",
                 "description": "Perbarui detail informasi toko Anda",
+                "receipt_preview_label": "Pratinjau Struk",
+                "receipt_preview_desc": "Pratinjau tampilan struk belanja cetak.",
+                "receipt_preview": {
+                    "mock_item_1": "Kopi Susu Gula Aren",
+                    "mock_item_2": "Roti Bakar Cokelat",
+                    "mock_cashier": "Admin",
+                    "mock_address": "Alamat Toko",
+                    "mock_name": "NAMA TOKO"
+                },
                 "form": {
                     "title": "Informasi Toko",
                     "name_input_label": "Nama Toko",
@@ -1100,6 +1109,7 @@
             "no_payment_desc": "Tidak ada deskripsi tambahan.",
             "close_btn": "Tutup",
             "select_this_method": "Pilih Metode Ini",
+            "receipt_cashier": "Kasir",
             "receipt_transaction_code": "Kode Transaksi",
             "receipt_payment_method": "Metode Pembayaran",
             "receipt_date": "Tanggal",
