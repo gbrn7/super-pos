@@ -15,7 +15,6 @@ return new class extends Migration
             $table->string('phone');
             $table->string('email')->nullable();
             $table->string('tax_number')->nullable();
-            $table->text('receipt_header')->nullable();
             $table->text('receipt_footer')->nullable();
             $table->timestamps();
         });

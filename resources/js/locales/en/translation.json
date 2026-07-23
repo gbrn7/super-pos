@@ -1017,8 +1017,6 @@
                     "email_input_placeholder": "Enter store email address",
                     "tax_number_input_label": "Tax Number",
                     "tax_number_input_placeholder": "Enter store tax number",
-                    "receipt_header_input_label": "Receipt Header",
-                    "receipt_header_input_placeholder": "Enter receipt header text",
                     "receipt_footer_input_label": "Receipt Footer",
                     "receipt_footer_input_placeholder": "Enter receipt footer text",
                     "save_btn": "Save"

@@ -15,7 +15,6 @@ class StoreSetting extends Model
         'phone',
         'email',
         'tax_number',
-        'receipt_header',
         'receipt_footer',
     ];
 }

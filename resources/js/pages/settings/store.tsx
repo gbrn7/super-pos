@@ -19,7 +19,6 @@ interface StoreSetting {
     phone: string;
     email: string | null;
     tax_number: string | null;
-    receipt_header: string | null;
     receipt_footer: string | null;
 }
 
@@ -30,7 +29,6 @@ export default function Store({ storeSetting }: { storeSetting: StoreSetting }) 
     const [name, setName] = useState(storeSetting.name);
     const [address, setAddress] = useState(storeSetting.address);
     const [phone, setPhone] = useState(storeSetting.phone);
-    const [receiptHeader, setReceiptHeader] = useState(storeSetting.receipt_header || '');
     const [receiptFooter, setReceiptFooter] = useState(storeSetting.receipt_footer || '');
 
     // Helper to format price inside receipt
@@ -201,32 +199,6 @@ export default function Store({ storeSetting }: { storeSetting: StoreSetting }) 
                                     <InputError
                                         className="mt-2"
                                         message={errors.tax_number}
-                                    />
-                                </div>
-
-                                <div className="grid gap-2">
-                                    <Label htmlFor="receipt_header">
-                                        {t(
-                                            'page.settings.store.form.receipt_header_input_label',
-                                            'Header Struk',
-                                        )}
-                                    </Label>
-
-                                    <Textarea
-                                        id="receipt_header"
-                                        className="mt-1 block w-full min-h-[60px]"
-                                        defaultValue={storeSetting.receipt_header ?? ''}
-                                        onChange={(e) => setReceiptHeader(e.target.value)}
-                                        name="receipt_header"
-                                        placeholder={t(
-                                            'page.settings.store.form.receipt_header_input_placeholder',
-                                            'Masukkan teks header struk',
-                                        )}
-                                    />
-
-                                    <InputError
-                                        className="mt-2"
-                                        message={errors.receipt_header}
                                     />
                                 </div>
 
@@ -434,13 +406,8 @@ export default function Store({ storeSetting }: { storeSetting: StoreSetting }) 
 
                         <div className="my-1 border-t border-border/50 select-none" />
 
-                        {/* Receipt Custom Header / Footer */}
+                        {/* Receipt Custom Footer */}
                         <div className="text-center space-y-2 text-zinc-500 dark:text-zinc-400">
-                            {receiptHeader && (
-                                <p className="whitespace-pre-wrap border-b border-dotted border-border/20 pb-1.5 leading-normal">
-                                    {receiptHeader}
-                                </p>
-                            )}
                             <div className="pt-1 text-center">
                                 <p className="text-[10px] font-bold tracking-wider text-muted-foreground/80 uppercase">
                                     {t(

@@ -1017,8 +1017,6 @@
                     "email_input_placeholder": "Masukkan email toko",
                     "tax_number_input_label": "NPWP / No. Pajak",
                     "tax_number_input_placeholder": "Masukkan NPWP toko",
-                    "receipt_header_input_label": "Header Struk",
-                    "receipt_header_input_placeholder": "Masukkan teks header struk",
                     "receipt_footer_input_label": "Footer Struk",
                     "receipt_footer_input_placeholder": "Masukkan teks footer struk",
                     "save_btn": "Simpan"

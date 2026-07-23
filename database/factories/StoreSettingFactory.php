@@ -17,7 +17,6 @@ class StoreSettingFactory extends Factory
             'phone' => '021-5551234',
             'email' => 'store@example.com',
             'tax_number' => '12.345.678.9-012.000',
-            'receipt_header' => 'Terima Kasih Atas Kunjungan Anda',
             'receipt_footer' => 'Barang yang sudah dibeli tidak dapat ditukar',
         ];
     }
