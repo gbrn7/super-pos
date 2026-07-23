@@ -1120,10 +1120,17 @@
             "receipt_pay": "Pay",
             "receipt_change": "Change",
             "receipt_total_savings": "TOTAL SAVED",
-            "receipt_saved": "Saved"
+            "receipt_saved": "Saved",
+            "receipt_item_placeholder": "Item #{{id}}",
+            "receipt_pcs_fallback": "pcs",
+            "receipt_phone_label": "Phone"
         }
     },
     "error": {
         "default": "Internal server error"
+    },
+    "payment_method_name": {
+        "Cash": "Cash",
+        "Qris": "QRIS"
     }
 }

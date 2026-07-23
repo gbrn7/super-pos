@@ -1120,10 +1120,17 @@
             "receipt_pay": "Bayar",
             "receipt_change": "Kembalian",
             "receipt_total_savings": "TOTAL HEMAT",
-            "receipt_saved": "Hemat"
+            "receipt_saved": "Hemat",
+            "receipt_item_placeholder": "Barang #{{id}}",
+            "receipt_pcs_fallback": "pcs",
+            "receipt_phone_label": "Telp"
         }
     },
     "error": {
         "default": "Kesalahan sistem internal"
+    },
+    "payment_method_name": {
+        "Cash": "Tunai",
+        "Qris": "QRIS"
     }
 }

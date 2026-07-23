@@ -155,8 +155,12 @@ export function DetailDialog({
                                 <Skeleton className="mt-1 h-5 w-20" />
                             ) : (
                                 <p className="text-sm font-semibold">
-                                    {currentTransaction.payment_method_name ||
-                                        '-'}
+                                    {currentTransaction.payment_method_name
+                                        ? t(
+                                              `payment_method_name.${currentTransaction.payment_method_name}`,
+                                              currentTransaction.payment_method_name,
+                                          )
+                                        : '-'}
                                 </p>
                             )}
                         </div>

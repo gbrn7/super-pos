@@ -279,5 +279,6 @@
   "277": "Illuminate\\Http\\Resources\\Json\\AnonymousResourceCollection",
   "278": "PaymentMethod",
   "279": "TelescopeServiceProvider",
+  "280": "BulkStoreProductRequest",
   "281": "class-variance-authority"
 }
