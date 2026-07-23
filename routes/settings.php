@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Settings\ProfileController;
 use App\Http\Controllers\Settings\SecurityController;
+use App\Http\Controllers\Settings\StoreSettingController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth'])->group(function () {
@@ -22,4 +23,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::inertia('settings/appearance', 'settings/appearance')->name('appearance.edit');
     Route::inertia('settings/language', 'settings/language')->name('language.edit');
+
+    Route::get('settings/store', [StoreSettingController::class, 'edit'])->name('store.edit');
+    Route::patch('settings/store', [StoreSettingController::class, 'update'])->name('store.update');
 });

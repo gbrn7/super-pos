@@ -12,6 +12,7 @@ return [
         'bulk_deleted' => ':count data successfully deleted',
         'profile_updated' => 'Profil updated',
         'password_updated' => 'Password updated',
+        'store_settings_updated' => 'Store settings successfully updated',
     ],
 
     'error' => [
