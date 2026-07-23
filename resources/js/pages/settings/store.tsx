@@ -11,6 +11,7 @@ import i18next from 'i18next';
 import { useTranslation } from 'react-i18next';
 import { useState } from 'react';
 import ReceiptCard from '@/components/receipt-card';
+import dayjs from 'dayjs';
 
 interface StoreSetting {
     id: number;
@@ -33,7 +34,7 @@ export default function Store({ storeSetting }: { storeSetting: StoreSetting }) 
 
     const dummyTransaction = {
         id: 1,
-        invoice_number: 'INV/20260723/0001',
+        invoice_number: 'INV-' + dayjs().format('YYYYMMDD') + '-ABCDEF',
         payment_method_name: 'Cash',
         user_name: t('page.settings.store.receipt_preview.mock_cashier', 'Admin'),
         created_at: '2026-07-23T08:42:00.000000Z',
