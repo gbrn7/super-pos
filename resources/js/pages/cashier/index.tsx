@@ -352,7 +352,7 @@ export default function CashierIndex({ storeSetting }: { storeSetting?: StoreSet
                         p.barcode === barcodeQuery.trim() ||
                         p.sku === barcodeQuery.trim() ||
                         p.name.toLowerCase() ===
-                            barcodeQuery.trim().toLowerCase(),
+                        barcodeQuery.trim().toLowerCase(),
                 );
                 if (exactMatch) {
                     const success = addToCart(exactMatch);
@@ -505,7 +505,7 @@ export default function CashierIndex({ storeSetting }: { storeSetting?: StoreSet
                         const discPerUnit =
                             discType === 'percent'
                                 ? (item.product.price * (item.discount || 0)) /
-                                  100
+                                100
                                 : item.discount || 0;
                         return {
                             product_id: item.product.id,
@@ -597,7 +597,7 @@ export default function CashierIndex({ storeSetting }: { storeSetting?: StoreSet
                         <span>{t('page.kasir.cart_tab', 'Keranjang')}</span>
                         {cartCount > 0 && (
                             <Badge className="h-5 bg-emerald-600 px-2 text-xs font-black">
-                                {cartCount} Pcs
+                                {cartCount} Item
                             </Badge>
                         )}
                     </button>
@@ -924,7 +924,7 @@ export default function CashierIndex({ storeSetting }: { storeSetting?: StoreSet
                                 </span>
                                 <span className="flex items-center gap-1.5 font-extrabold text-emerald-400">
                                     <Receipt className="h-4 w-4" /> {cartCount}{' '}
-                                    Pcs
+                                    Item
                                 </span>
                             </div>
                             <div className="font-mono text-3xl font-black tracking-tight text-emerald-400 sm:text-4xl">
@@ -1037,9 +1037,9 @@ export default function CashierIndex({ storeSetting }: { storeSetting?: StoreSet
                                                     );
                                                     if (
                                                         typeof totalDiscountValue ===
-                                                            'number' &&
+                                                        'number' &&
                                                         totalDiscountValue >
-                                                            itemsSubtotal
+                                                        itemsSubtotal
                                                     ) {
                                                         setTotalDiscountValue(
                                                             itemsSubtotal,
@@ -1065,7 +1065,7 @@ export default function CashierIndex({ storeSetting }: { storeSetting?: StoreSet
                                                     );
                                                     if (
                                                         typeof totalDiscountValue ===
-                                                            'number' &&
+                                                        'number' &&
                                                         totalDiscountValue > 100
                                                     ) {
                                                         setTotalDiscountValue(
@@ -1363,13 +1363,13 @@ export default function CashierIndex({ storeSetting }: { storeSetting?: StoreSet
                                 <span className="text-xs font-extrabold tracking-wider uppercase sm:text-sm">
                                     {change < 0
                                         ? t(
-                                              'page.kasir.underpaid_label',
-                                              'Kurang Bayar:',
-                                          )
+                                            'page.kasir.underpaid_label',
+                                            'Kurang Bayar:',
+                                        )
                                         : t(
-                                              'page.kasir.change_label',
-                                              'Kembalian:',
-                                          )}
+                                            'page.kasir.change_label',
+                                            'Kembalian:',
+                                        )}
                                 </span>
                                 <span className="text-lg font-black sm:text-xl">
                                     {formatRupiah(Math.abs(change))}
@@ -1451,7 +1451,7 @@ export default function CashierIndex({ storeSetting }: { storeSetting?: StoreSet
                                 <span className="font-extrabold text-foreground">
                                     {cart.length}{' '}
                                     {t('page.kasir.items_types', 'Jenis')} (
-                                    {cartCount} Pcs)
+                                    {cartCount} Item)
                                 </span>
                             </div>
                             <div className="max-h-48 space-y-2 overflow-y-auto pr-1">
@@ -1461,8 +1461,8 @@ export default function CashierIndex({ storeSetting }: { storeSetting?: StoreSet
                                     const discPerUnit =
                                         discType === 'percent'
                                             ? (item.product.price *
-                                                  (item.discount || 0)) /
-                                              100
+                                                (item.discount || 0)) /
+                                            100
                                             : item.discount || 0;
                                     const netUnitPrice = Math.max(
                                         0,
