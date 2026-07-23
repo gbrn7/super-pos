@@ -48,8 +48,9 @@ export default function Store({ storeSetting }: { storeSetting: StoreSetting }) 
                 {t('page.settings.store.title', 'Pengaturan Toko')}
             </h1>
 
-            <div className="space-y-10">
-                <div>
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                {/* Form Section */}
+                <div className="lg:col-span-7 space-y-6">
                     <Heading
                         variant="small"
                         title={t(
@@ -67,7 +68,7 @@ export default function Store({ storeSetting }: { storeSetting: StoreSetting }) 
                         options={{
                             preserveScroll: true,
                         }}
-                        className="mt-6 space-y-6"
+                        className="space-y-6"
                     >
                         {({ processing, errors }) => (
                             <>
@@ -272,18 +273,18 @@ export default function Store({ storeSetting }: { storeSetting: StoreSetting }) 
                 </div>
 
                 {/* Receipt Preview Section */}
-                <div className="border-t border-border pt-8 space-y-4">
+                <div className="lg:col-span-5 space-y-4 lg:sticky lg:top-6 border-t border-border pt-6 lg:border-t-0 lg:pt-0">
                     <Heading
                         variant="small"
                         title={t('page.settings.store.receipt_preview_label', 'Pratinjau Struk')}
                         description={t(
                             'page.settings.store.receipt_preview_desc',
-                            'Pratinjau tampilan struk belanja cetak berdasarkan informasi toko Anda.',
+                            'Pratinjau tampilan struk belanja cetak.',
                         )}
                     />
 
                     {/* Paper Receipt Styling */}
-                    <div className="max-w-xs mx-auto rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 p-5 shadow-xs font-mono text-[11px] leading-relaxed text-zinc-800 dark:text-zinc-300">
+                    <div className="w-full max-w-xs mx-auto rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 p-5 shadow-xs font-mono text-[11px] leading-relaxed text-zinc-800 dark:text-zinc-300">
                         {/* Store Header */}
                         <div className="text-center space-y-1">
                             <h4 className="text-xs font-bold tracking-tight text-foreground uppercase truncate">
