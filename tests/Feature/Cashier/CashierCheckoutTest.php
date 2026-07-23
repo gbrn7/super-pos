@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Support\Enums\RoleEnums;
 use App\Support\Enums\TransactionPermissionEnums;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Inertia\Testing\AssertableInertia;
 
 uses(RefreshDatabase::class);
 
@@ -283,4 +284,17 @@ test('checkout recalculates total_amount on backend ignoring tampered input', fu
     expect((float) $transaction->total_amount)->toBe(48000.0);
     // Calculated change: 50000 - 48000 = 2000
     expect((float) $transaction->change_amount)->toBe(2000.0);
+});
+
+test('cashier index page displays with store settings', function () {
+    $user = cashierSetupUser();
+
+    $response = $this->actingAs($user)->get('/cashier');
+
+    $response->assertStatus(200);
+    $response->assertInertia(fn (AssertableInertia $page) => $page
+        ->component('cashier/index')
+        ->has('storeSetting')
+        ->where('storeSetting.name', 'Toko Maju Jaya')
+    );
 });

@@ -55,7 +55,7 @@ import {
 } from 'lucide-react';
 import ProductRow from './components/product-row';
 import CartItemRow from './components/cart-item-row';
-import ReceiptModal from './components/receipt-modal';
+import ReceiptModal, { StoreSetting } from '@/components/receipt-modal';
 import PaymentMethodDetailDialog from './components/payment-method-detail-dialog';
 import UpdateStockDialog from './components/update-stock-dialog';
 
@@ -68,7 +68,7 @@ export interface CartItem {
 
 const { url } = cashierRoute();
 
-export default function CashierIndex() {
+export default function CashierIndex({ storeSetting }: { storeSetting?: StoreSetting | null }) {
     const { t } = useTranslation();
 
     // ── Products state ──────────────────────────────────────────────────────────
@@ -1626,6 +1626,7 @@ export default function CashierIndex() {
             <ReceiptModal
                 open={receiptOpen}
                 transaction={lastTransaction}
+                storeSetting={storeSetting}
                 onClose={() => setReceiptOpen(false)}
                 onNewTransaction={handleNewTransaction}
             />
