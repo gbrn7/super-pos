@@ -7,6 +7,7 @@ export interface ReceiptCardProps {
     storeName: string;
     storeAddress: string;
     storePhone: string;
+    storeEmail?: string | null;
     storeReceiptFooter?: string | null;
     transaction: Transaction;
 }
@@ -15,6 +16,7 @@ export default function ReceiptCard({
     storeName,
     storeAddress,
     storePhone,
+    storeEmail,
     storeReceiptFooter,
     transaction,
 }: ReceiptCardProps) {
@@ -243,21 +245,23 @@ export default function ReceiptCard({
 
             {/* Receipt Footer */}
             <div className="text-center space-y-2 text-zinc-500 dark:text-zinc-400">
-                {storePhone && (
+                {(storePhone || storeEmail) && (
                     <p className="text-[10px] leading-normal text-muted-foreground/80">
-                        Telp: {storePhone}
+                        {storePhone && `${t('page.kasir.receipt_phone_label', 'Telp')}: ${storePhone}`}
+                        {storePhone && storeEmail && ' | '}
+                        {storeEmail && `Email: ${storeEmail}`}
                     </p>
                 )}
-                <div className="pt-1 text-center">
+                {storeReceiptFooter && (
+                    <p className="whitespace-pre-wrap leading-normal text-[10px]">
+                        {storeReceiptFooter}
+                    </p>
+                )}
+                <div className={`pt-1 text-center ${storeReceiptFooter ? 'border-t border-dotted border-border/20 pt-1.5' : ''}`}>
                     <p className="text-[10px] font-bold tracking-wider text-muted-foreground/80 uppercase">
                         {t('page.kasir.receipt_thank_you', 'TERIMA KASIH. SELAMAT BELANJA KEMBALI')}
                     </p>
                 </div>
-                {storeReceiptFooter && (
-                    <p className="whitespace-pre-wrap border-t border-dotted border-border/20 pt-1.5 leading-normal text-[10px]">
-                        {storeReceiptFooter}
-                    </p>
-                )}
             </div>
         </div>
     );

@@ -47,6 +47,7 @@ export default function ReceiptModal({
         name: 'Toko Maju Jaya',
         address: 'Jl. Raya Bekasi KM.18 RT.004/0009, Jakarta Timur, 13250',
         phone: '081234567890',
+        email: 'support@tokomajujaya.com',
         receipt_footer: null,
     };
 
@@ -69,9 +70,9 @@ export default function ReceiptModal({
                     storeName={finalStoreSetting.name}
                     storeAddress={finalStoreSetting.address}
                     storePhone={finalStoreSetting.phone}
+                    storeEmail={finalStoreSetting.email}
                     storeReceiptFooter={finalStoreSetting.receipt_footer}
                     transaction={transaction}
-                    isPreview={false}
                 />
 
                 <DialogFooter className="flex-row gap-2 sm:flex-row print:hidden">

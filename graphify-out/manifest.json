@@ -1635,8 +1635,8 @@
     "semantic_hash": ""
   },
   "resources/js/pages/cashier/index.tsx": {
-    "mtime": 1784818148.2058902,
-    "ast_hash": "60cbf8b896c1fe6ccae0516d0900d51a",
+    "mtime": 1784822051.6430745,
+    "ast_hash": "1db1b5ea62ceece0dcd39243c0074ade",
     "semantic_hash": ""
   },
   "resources/js/pages/category/columns.tsx": {
@@ -2710,8 +2710,8 @@
     "semantic_hash": ""
   },
   "resources/js/pages/settings/store.tsx": {
-    "mtime": 1784818782.5520608,
-    "ast_hash": "b4e16cc98fcfb18bb38a8d6ebd77c88e",
+    "mtime": 1784822454.4866192,
+    "ast_hash": "947684b7ba9f960aca705355c676ee59",
     "semantic_hash": ""
   },
   "tests/Feature/Settings/StoreSettingDatabaseTest.php": {
@@ -2730,13 +2730,13 @@
     "semantic_hash": ""
   },
   "resources/js/components/receipt-card.tsx": {
-    "mtime": 1784820104.5765793,
-    "ast_hash": "b5c95150789b1840cac3e613507b2329",
+    "mtime": 1784822423.8823307,
+    "ast_hash": "07af83d632ee07f6572b162b643f9ab9",
     "semantic_hash": ""
   },
   "resources/js/components/receipt-modal.tsx": {
-    "mtime": 1784818114.3431146,
-    "ast_hash": "8e678db791597404c1a1ae8069abbd05",
+    "mtime": 1784822430.2034209,
+    "ast_hash": "b7154b44a7c93f891d0434dc1bdc57ba",
     "semantic_hash": ""
   },
   "docs/superpowers/plans/2026-07-23-reusable-receipt-plan.md": {

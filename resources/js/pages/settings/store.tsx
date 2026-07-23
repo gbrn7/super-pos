@@ -30,6 +30,7 @@ export default function Store({ storeSetting }: { storeSetting: StoreSetting }) 
     const [name, setName] = useState(storeSetting.name);
     const [address, setAddress] = useState(storeSetting.address);
     const [phone, setPhone] = useState(storeSetting.phone);
+    const [email, setEmail] = useState(storeSetting.email || '');
     const [receiptFooter, setReceiptFooter] = useState(storeSetting.receipt_footer || '');
 
     const dummyTransaction = {
@@ -191,7 +192,8 @@ export default function Store({ storeSetting }: { storeSetting: StoreSetting }) 
                                         id="email"
                                         type="email"
                                         className="mt-1 block w-full"
-                                        defaultValue={storeSetting.email ?? ''}
+                                        value={email}
+                                        onChange={(e) => setEmail(e.target.value)}
                                         name="email"
                                         placeholder={t(
                                             'page.settings.store.form.email_input_placeholder',
@@ -288,6 +290,7 @@ export default function Store({ storeSetting }: { storeSetting: StoreSetting }) 
                         storeName={name}
                         storeAddress={address}
                         storePhone={phone}
+                        storeEmail={email}
                         storeReceiptFooter={receiptFooter}
                         transaction={dummyTransaction}
                     />

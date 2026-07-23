@@ -1102,8 +1102,8 @@
       "source_location": "L148",
       "_origin": "ast",
       "id": "app_http_controllers_api_apimasterproductcontroller_apimasterproductcontroller_bulkdelete",
-      "community": 28,
-      "community_name": "API Controllers & Endpoints (28)",
+      "community": 54,
+      "community_name": "drawer.tsx Domain (54)",
       "norm_label": ".bulkdelete()"
     },
     {
@@ -1388,8 +1388,8 @@
       "source_location": "L163",
       "_origin": "ast",
       "id": "app_http_controllers_api_apiproductcontroller_apiproductcontroller_bulkdelete",
-      "community": 54,
-      "community_name": "drawer.tsx Domain (54)",
+      "community": 28,
+      "community_name": "API Controllers & Endpoints (28)",
       "norm_label": ".bulkdelete()"
     },
     {
@@ -1410,8 +1410,8 @@
       "source_location": "L186",
       "_origin": "ast",
       "id": "app_http_controllers_api_apiproductcontroller_apiproductcontroller_importproductexceldata",
-      "community": 28,
-      "community_name": "API Controllers & Endpoints (28)",
+      "community": 54,
+      "community_name": "drawer.tsx Domain (54)",
       "norm_label": ".importproductexceldata()"
     },
     {
@@ -1685,8 +1685,8 @@
       "source_location": "L153",
       "_origin": "ast",
       "id": "app_http_controllers_api_apitransactioncontroller_apitransactioncontroller_checkout",
-      "community": 54,
-      "community_name": "drawer.tsx Domain (54)",
+      "community": 28,
+      "community_name": "API Controllers & Endpoints (28)",
       "norm_label": ".checkout()"
     },
     {
@@ -2345,8 +2345,8 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "app_http_controllers_rolecontroller_rolecontroller",
-      "community": 68,
-      "community_name": "RoleService Domain (68)",
+      "community": 45,
+      "community_name": "API Controllers & Endpoints (45)",
       "norm_label": "rolecontroller"
     },
     {
@@ -2356,8 +2356,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "app_http_controllers_rolecontroller_rolecontroller_middleware",
-      "community": 68,
-      "community_name": "RoleService Domain (68)",
+      "community": 45,
+      "community_name": "API Controllers & Endpoints (45)",
       "norm_label": ".middleware()"
     },
     {
@@ -2367,8 +2367,8 @@
       "source_location": "L29",
       "_origin": "ast",
       "id": "app_http_controllers_rolecontroller_rolecontroller_index",
-      "community": 68,
-      "community_name": "RoleService Domain (68)",
+      "community": 45,
+      "community_name": "API Controllers & Endpoints (45)",
       "norm_label": ".index()"
     },
     {
@@ -2378,8 +2378,8 @@
       "source_location": "L34",
       "_origin": "ast",
       "id": "app_http_controllers_rolecontroller_rolecontroller_create",
-      "community": 68,
-      "community_name": "RoleService Domain (68)",
+      "community": 45,
+      "community_name": "API Controllers & Endpoints (45)",
       "norm_label": ".create()"
     },
     {
@@ -2389,8 +2389,8 @@
       "source_location": "L39",
       "_origin": "ast",
       "id": "app_http_controllers_rolecontroller_rolecontroller_show",
-      "community": 68,
-      "community_name": "RoleService Domain (68)",
+      "community": 45,
+      "community_name": "API Controllers & Endpoints (45)",
       "norm_label": ".show()"
     },
     {
@@ -2400,8 +2400,8 @@
       "source_location": "L44",
       "_origin": "ast",
       "id": "app_http_controllers_rolecontroller_rolecontroller_edit",
-      "community": 68,
-      "community_name": "RoleService Domain (68)",
+      "community": 45,
+      "community_name": "API Controllers & Endpoints (45)",
       "norm_label": ".edit()"
     },
     {
@@ -3126,8 +3126,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_http_requests_masterproduct_bulkdeletemasterproductrequest",
-      "community": 28,
-      "community_name": "API Controllers & Endpoints (28)",
+      "community": 54,
+      "community_name": "drawer.tsx Domain (54)",
       "norm_label": "bulkdeletemasterproductrequest.php"
     },
     {
@@ -3137,8 +3137,8 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "app_http_requests_masterproduct_bulkdeletemasterproductrequest_bulkdeletemasterproductrequest",
-      "community": 28,
-      "community_name": "API Controllers & Endpoints (28)",
+      "community": 54,
+      "community_name": "drawer.tsx Domain (54)",
       "norm_label": "bulkdeletemasterproductrequest"
     },
     {
@@ -3148,8 +3148,8 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "app_http_requests_masterproduct_bulkdeletemasterproductrequest_bulkdeletemasterproductrequest_authorize",
-      "community": 28,
-      "community_name": "API Controllers & Endpoints (28)",
+      "community": 54,
+      "community_name": "drawer.tsx Domain (54)",
       "norm_label": ".authorize()"
     },
     {
@@ -3159,8 +3159,8 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "app_http_requests_masterproduct_bulkdeletemasterproductrequest_bulkdeletemasterproductrequest_rules",
-      "community": 28,
-      "community_name": "API Controllers & Endpoints (28)",
+      "community": 54,
+      "community_name": "drawer.tsx Domain (54)",
       "norm_label": ".rules()"
     },
     {
@@ -3434,8 +3434,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_http_requests_product_bulkdeleteproductrequest",
-      "community": 54,
-      "community_name": "drawer.tsx Domain (54)",
+      "community": 28,
+      "community_name": "API Controllers & Endpoints (28)",
       "norm_label": "bulkdeleteproductrequest.php"
     },
     {
@@ -3445,8 +3445,8 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "app_http_requests_product_bulkdeleteproductrequest_bulkdeleteproductrequest",
-      "community": 54,
-      "community_name": "drawer.tsx Domain (54)",
+      "community": 28,
+      "community_name": "API Controllers & Endpoints (28)",
       "norm_label": "bulkdeleteproductrequest"
     },
     {
@@ -3456,8 +3456,8 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "app_http_requests_product_bulkdeleteproductrequest_bulkdeleteproductrequest_authorize",
-      "community": 54,
-      "community_name": "drawer.tsx Domain (54)",
+      "community": 28,
+      "community_name": "API Controllers & Endpoints (28)",
       "norm_label": ".authorize()"
     },
     {
@@ -3467,8 +3467,8 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "app_http_requests_product_bulkdeleteproductrequest_bulkdeleteproductrequest_rules",
-      "community": 54,
-      "community_name": "drawer.tsx Domain (54)",
+      "community": 28,
+      "community_name": "API Controllers & Endpoints (28)",
       "norm_label": ".rules()"
     },
     {
@@ -3533,8 +3533,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_http_requests_product_importproductrequest",
-      "community": 28,
-      "community_name": "API Controllers & Endpoints (28)",
+      "community": 54,
+      "community_name": "drawer.tsx Domain (54)",
       "norm_label": "importproductrequest.php"
     },
     {
@@ -3544,8 +3544,8 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "app_http_requests_product_importproductrequest_importproductrequest",
-      "community": 28,
-      "community_name": "API Controllers & Endpoints (28)",
+      "community": 54,
+      "community_name": "drawer.tsx Domain (54)",
       "norm_label": "importproductrequest"
     },
     {
@@ -3555,8 +3555,8 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "app_http_requests_product_importproductrequest_importproductrequest_authorize",
-      "community": 28,
-      "community_name": "API Controllers & Endpoints (28)",
+      "community": 54,
+      "community_name": "drawer.tsx Domain (54)",
       "norm_label": ".authorize()"
     },
     {
@@ -3566,8 +3566,8 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "app_http_requests_product_importproductrequest_importproductrequest_rules",
-      "community": 28,
-      "community_name": "API Controllers & Endpoints (28)",
+      "community": 54,
+      "community_name": "drawer.tsx Domain (54)",
       "norm_label": ".rules()"
     },
     {
@@ -4039,8 +4039,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_http_requests_transaction_checkoutrequest",
-      "community": 54,
-      "community_name": "drawer.tsx Domain (54)",
+      "community": 28,
+      "community_name": "API Controllers & Endpoints (28)",
       "norm_label": "checkoutrequest.php"
     },
     {
@@ -4050,8 +4050,8 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "app_http_requests_transaction_checkoutrequest_checkoutrequest",
-      "community": 54,
-      "community_name": "drawer.tsx Domain (54)",
+      "community": 28,
+      "community_name": "API Controllers & Endpoints (28)",
       "norm_label": "checkoutrequest"
     },
     {
@@ -4061,8 +4061,8 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "app_http_requests_transaction_checkoutrequest_checkoutrequest_authorize",
-      "community": 54,
-      "community_name": "drawer.tsx Domain (54)",
+      "community": 28,
+      "community_name": "API Controllers & Endpoints (28)",
       "norm_label": ".authorize()"
     },
     {
@@ -4072,8 +4072,8 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "app_http_requests_transaction_checkoutrequest_checkoutrequest_rules",
-      "community": 54,
-      "community_name": "drawer.tsx Domain (54)",
+      "community": 28,
+      "community_name": "API Controllers & Endpoints (28)",
       "norm_label": ".rules()"
     },
     {
@@ -7042,8 +7042,8 @@
       "source_location": "L28",
       "_origin": "ast",
       "id": "app_services_masterproductservice_masterproductservice",
-      "community": 23,
-      "community_name": "Product Catalog & Inventory (23)",
+      "community": 22,
+      "community_name": "Product Catalog & Inventory (22)",
       "norm_label": "masterproductservice"
     },
     {
@@ -7053,8 +7053,8 @@
       "source_location": "L30",
       "_origin": "ast",
       "id": "app_services_masterproductservice_masterproductservice_construct",
-      "community": 23,
-      "community_name": "Product Catalog & Inventory (23)",
+      "community": 22,
+      "community_name": "Product Catalog & Inventory (22)",
       "norm_label": ".__construct()"
     },
     {
@@ -7075,8 +7075,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "app_services_masterproductservice_php_collection",
-      "community": 23,
-      "community_name": "Product Catalog & Inventory (23)",
+      "community": 22,
+      "community_name": "Product Catalog & Inventory (22)",
       "norm_label": "collection"
     },
     {
@@ -7086,8 +7086,8 @@
       "source_location": "L44",
       "_origin": "ast",
       "id": "app_services_masterproductservice_masterproductservice_getbyid",
-      "community": 23,
-      "community_name": "Product Catalog & Inventory (23)",
+      "community": 22,
+      "community_name": "Product Catalog & Inventory (22)",
       "norm_label": ".getbyid()"
     },
     {
@@ -7097,8 +7097,8 @@
       "source_location": "L53",
       "_origin": "ast",
       "id": "app_services_masterproductservice_masterproductservice_getbybarcode",
-      "community": 23,
-      "community_name": "Product Catalog & Inventory (23)",
+      "community": 22,
+      "community_name": "Product Catalog & Inventory (22)",
       "norm_label": ".getbybarcode()"
     },
     {
@@ -7108,8 +7108,8 @@
       "source_location": "L68",
       "_origin": "ast",
       "id": "app_services_masterproductservice_masterproductservice_create",
-      "community": 23,
-      "community_name": "Product Catalog & Inventory (23)",
+      "community": 22,
+      "community_name": "Product Catalog & Inventory (22)",
       "norm_label": ".create()"
     },
     {
@@ -7119,8 +7119,8 @@
       "source_location": "L84",
       "_origin": "ast",
       "id": "app_services_masterproductservice_masterproductservice_update",
-      "community": 23,
-      "community_name": "Product Catalog & Inventory (23)",
+      "community": 22,
+      "community_name": "Product Catalog & Inventory (22)",
       "norm_label": ".update()"
     },
     {
@@ -7130,8 +7130,8 @@
       "source_location": "L112",
       "_origin": "ast",
       "id": "app_services_masterproductservice_masterproductservice_delete",
-      "community": 23,
-      "community_name": "Product Catalog & Inventory (23)",
+      "community": 22,
+      "community_name": "Product Catalog & Inventory (22)",
       "norm_label": ".delete()"
     },
     {
@@ -7141,8 +7141,8 @@
       "source_location": "L133",
       "_origin": "ast",
       "id": "app_services_masterproductservice_masterproductservice_bulkdelete",
-      "community": 23,
-      "community_name": "Product Catalog & Inventory (23)",
+      "community": 22,
+      "community_name": "Product Catalog & Inventory (22)",
       "norm_label": ".bulkdelete()"
     },
     {
@@ -7152,8 +7152,8 @@
       "source_location": "L146",
       "_origin": "ast",
       "id": "app_services_masterproductservice_masterproductservice_importexcel",
-      "community": 23,
-      "community_name": "Product Catalog & Inventory (23)",
+      "community": 22,
+      "community_name": "Product Catalog & Inventory (22)",
       "norm_label": ".importexcel()"
     },
     {
@@ -7295,8 +7295,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_services_productservice",
-      "community": 12,
-      "community_name": "Category Data & Repositories (12)",
+      "community": 21,
+      "community_name": "Product Catalog & Inventory (21)",
       "norm_label": "productservice.php"
     },
     {
@@ -9264,8 +9264,8 @@
       "source_location": "L46",
       "_origin": "ast",
       "id": "app_support_interfaces_services_categoryserviceinterface_importexcel",
-      "community": 12,
-      "community_name": "Category Data & Repositories (12)",
+      "community": 22,
+      "community_name": "Product Catalog & Inventory (22)",
       "norm_label": "importexcel()"
     },
     {
@@ -9363,8 +9363,8 @@
       "source_location": "L52",
       "_origin": "ast",
       "id": "app_support_interfaces_services_masterproductserviceinterface_importexcel",
-      "community": 12,
-      "community_name": "Category Data & Repositories (12)",
+      "community": 22,
+      "community_name": "Product Catalog & Inventory (22)",
       "norm_label": "importexcel()"
     },
     {
@@ -9572,8 +9572,8 @@
       "source_location": "L59",
       "_origin": "ast",
       "id": "app_support_interfaces_services_productserviceinterface_importexcel",
-      "community": 12,
-      "community_name": "Category Data & Repositories (12)",
+      "community": 22,
+      "community_name": "Product Catalog & Inventory (22)",
       "norm_label": "importexcel()"
     },
     {
@@ -13147,8 +13147,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "package",
-      "community": 45,
-      "community_name": "API Controllers & Endpoints (45)",
+      "community": 58,
+      "community_name": "package.json Domain (58)",
       "norm_label": "package.json"
     },
     {
@@ -13158,8 +13158,8 @@
       "source_location": "L2",
       "_origin": "ast",
       "id": "package_schema",
-      "community": 45,
-      "community_name": "API Controllers & Endpoints (45)",
+      "community": 58,
+      "community_name": "package.json Domain (58)",
       "norm_label": "$schema"
     },
     {
@@ -13169,8 +13169,8 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "package_private",
-      "community": 45,
-      "community_name": "API Controllers & Endpoints (45)",
+      "community": 58,
+      "community_name": "package.json Domain (58)",
       "norm_label": "private"
     },
     {
@@ -13180,8 +13180,8 @@
       "source_location": "L4",
       "_origin": "ast",
       "id": "package_type",
-      "community": 45,
-      "community_name": "API Controllers & Endpoints (45)",
+      "community": 58,
+      "community_name": "package.json Domain (58)",
       "norm_label": "type"
     },
     {
@@ -13411,8 +13411,8 @@
       "source_location": "L21",
       "_origin": "ast",
       "id": "package_devdependencies_babel_plugin_react_compiler",
-      "community": 278,
-      "community_name": "PaymentMethod",
+      "community": 67,
+      "community_name": "User & Auth Management (67)",
       "norm_label": "babel-plugin-react-compiler"
     },
     {
@@ -13422,8 +13422,8 @@
       "source_location": "L21",
       "_origin": "ast",
       "id": "babel_plugin_react_compiler",
-      "community": 278,
-      "community_name": "PaymentMethod",
+      "community": 67,
+      "community_name": "User & Auth Management (67)",
       "norm_label": "babel-plugin-react-compiler"
     },
     {
@@ -13521,8 +13521,8 @@
       "source_location": "L26",
       "_origin": "ast",
       "id": "package_devdependencies_eslint_plugin_react",
-      "community": 53,
-      "community_name": "eslint Domain (53)",
+      "community": 281,
+      "community_name": "class-variance-authority",
       "norm_label": "eslint-plugin-react"
     },
     {
@@ -13532,8 +13532,8 @@
       "source_location": "L26",
       "_origin": "ast",
       "id": "eslint_plugin_react",
-      "community": 53,
-      "community_name": "eslint Domain (53)",
+      "community": 281,
+      "community_name": "class-variance-authority",
       "norm_label": "eslint-plugin-react"
     },
     {
@@ -13609,8 +13609,8 @@
       "source_location": "L30",
       "_origin": "ast",
       "id": "package_devdependencies_typescript_eslint",
-      "community": 279,
-      "community_name": "TelescopeServiceProvider",
+      "community": 53,
+      "community_name": "eslint Domain (53)",
       "norm_label": "typescript-eslint"
     },
     {
@@ -13620,8 +13620,8 @@
       "source_location": "L30",
       "_origin": "ast",
       "id": "typescript_eslint",
-      "community": 279,
-      "community_name": "TelescopeServiceProvider",
+      "community": 53,
+      "community_name": "eslint Domain (53)",
       "norm_label": "typescript-eslint"
     },
     {
@@ -13642,8 +13642,8 @@
       "source_location": "L33",
       "_origin": "ast",
       "id": "package_dependencies_base_ui_react",
-      "community": 67,
-      "community_name": "User & Auth Management (67)",
+      "community": 116,
+      "community_name": "@dnd-kit/sortable Domain (116)",
       "norm_label": "@base-ui/react"
     },
     {
@@ -13653,8 +13653,8 @@
       "source_location": "L33",
       "_origin": "ast",
       "id": "base_ui_react",
-      "community": 67,
-      "community_name": "User & Auth Management (67)",
+      "community": 116,
+      "community_name": "@dnd-kit/sortable Domain (116)",
       "norm_label": "@base-ui/react"
     },
     {
@@ -14236,8 +14236,8 @@
       "source_location": "L60",
       "_origin": "ast",
       "id": "package_dependencies_axios",
-      "community": 116,
-      "community_name": "@dnd-kit/sortable Domain (116)",
+      "community": 280,
+      "community_name": "axios",
       "norm_label": "axios"
     },
     {
@@ -14247,8 +14247,8 @@
       "source_location": "L60",
       "_origin": "ast",
       "id": "axios",
-      "community": 116,
-      "community_name": "@dnd-kit/sortable Domain (116)",
+      "community": 280,
+      "community_name": "axios",
       "norm_label": "axios"
     },
     {
@@ -14258,8 +14258,8 @@
       "source_location": "L61",
       "_origin": "ast",
       "id": "package_dependencies_class_variance_authority",
-      "community": 281,
-      "community_name": "class-variance-authority",
+      "community": 68,
+      "community_name": "RoleService Domain (68)",
       "norm_label": "class-variance-authority"
     },
     {
@@ -14269,8 +14269,8 @@
       "source_location": "L61",
       "_origin": "ast",
       "id": "class_variance_authority",
-      "community": 281,
-      "community_name": "class-variance-authority",
+      "community": 68,
+      "community_name": "RoleService Domain (68)",
       "norm_label": "class-variance-authority"
     },
     {
@@ -14929,8 +14929,8 @@
       "source_location": "L91",
       "_origin": "ast",
       "id": "xlsx",
-      "community": 12,
-      "community_name": "Category Data & Repositories (12)",
+      "community": 21,
+      "community_name": "Product Catalog & Inventory (21)",
       "norm_label": "xlsx"
     },
     {
@@ -15817,7 +15817,7 @@
       "label": "ReceiptCard()",
       "file_type": "code",
       "source_file": "resources/js/components/receipt-card.tsx",
-      "source_location": "L14",
+      "source_location": "L15",
       "_origin": "ast",
       "id": "resources_js_components_receipt_card_receiptcard",
       "community": 121,
@@ -26501,8 +26501,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "illuminate_http_uploadedfile",
-      "community": 12,
-      "community_name": "Category Data & Repositories (12)",
+      "community": 22,
+      "community_name": "Product Catalog & Inventory (22)",
       "norm_label": "illuminate\\http\\uploadedfile"
     },
     {
@@ -65513,7 +65513,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "resources/js/components/receipt-card.tsx",
-      "source_location": "L14",
+      "source_location": "L15",
       "weight": 1.0,
       "_origin": "ast",
       "source": "resources_js_components_receipt_card",
@@ -65608,7 +65608,7 @@
       "context": "field",
       "confidence": "EXTRACTED",
       "source_file": "resources/js/components/receipt-card.tsx",
-      "source_location": "L11",
+      "source_location": "L12",
       "weight": 1.0,
       "_origin": "ast",
       "source": "resources_js_components_receipt_card_receiptcardprops",
@@ -65621,7 +65621,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "resources/js/components/receipt-card.tsx",
-      "source_location": "L25",
+      "source_location": "L27",
       "weight": 1.0,
       "_origin": "ast",
       "source": "resources_js_components_receipt_card_receiptcard",
@@ -93349,7 +93349,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "resources/js/pages/cashier/index.tsx",
-      "source_location": "L884",
+      "source_location": "L888",
       "weight": 1.0,
       "_origin": "ast",
       "source": "resources_js_pages_cashier_index_cashierindex",
@@ -94310,7 +94310,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "resources/js/pages/cashier/index.tsx",
-      "source_location": "L568",
+      "source_location": "L572",
       "weight": 1.0,
       "_origin": "ast",
       "source": "resources_js_pages_cashier_index_cashierindex",
@@ -110146,5 +110146,5 @@
       "source_file": ".github/skills/laravel-best-practices/rules/security.md"
     }
   ],
-  "built_at_commit": "ceb80f1556d685b91944b317494f13df8e4fa694"
+  "built_at_commit": "805ac70348259ebb2bd18d0a649ba4c75872eeba"
 }

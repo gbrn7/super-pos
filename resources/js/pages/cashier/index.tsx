@@ -531,6 +531,10 @@ export default function CashierIndex({ storeSetting }: { storeSetting?: StoreSet
 
                 if (shouldPrintReceipt) {
                     setReceiptOpen(true);
+                    setTimeout(() => {
+                        window.print();
+                        handleNewTransaction();
+                    }, 150);
                 } else {
                     clearCart();
                     setMobileTab('products');
@@ -1578,7 +1582,7 @@ export default function CashierIndex({ storeSetting }: { storeSetting?: StoreSet
                         {/* Change highlight panel */}
                         <div className="flex items-center justify-between rounded-xl border border-emerald-500/40 bg-emerald-500/15 p-3.5 font-mono text-emerald-800 dark:text-emerald-300">
                             <span className="text-xs font-black tracking-wider uppercase sm:text-sm">
-                                {t('page.kasir.change_label', 'KEMBALIAN')}:
+                                {t('page.kasir.change_label', 'KEMBALIAN')}
                             </span>
                             <span className="text-xl font-black sm:text-2xl">
                                 {formatRupiah(Math.max(0, change))}
