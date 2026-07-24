@@ -3,8 +3,6 @@ import i18next from 'i18next';
 import { useState, useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import HeaderContent from '@/components/header-content';
-import { Card, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { formatRupiah } from '@/lib/format-money';
 import axiosInstance from '@/lib/axios';
 import { handleApiError } from '@/lib/utils';
 import { DetailDialog } from '@/pages/transaction/dialog-modal/detail-dialog';
@@ -155,35 +153,7 @@ export default function ProfitReportIndex({ storeSetting }: { storeSetting?: Sto
             <div className="mb-16 flex h-full flex-1 flex-col gap-6 overflow-x-auto rounded-xl p-4">
                 <HeaderContent>{t('page.profit.page_name', 'Laporan Profit')}</HeaderContent>
 
-                {/* Summary Cards */}
-                <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-                    <Card className="bg-gradient-to-tr from-primary/5 to-card border-l-4 border-l-blue-500 shadow-xs">
-                        <CardHeader className="py-4">
-                            <CardDescription>{t('page.profit.cards.revenue', 'Total Pendapatan')}</CardDescription>
-                            <CardTitle className="text-2xl font-bold text-foreground">
-                                {formatRupiah(summary.total_revenue)}
-                            </CardTitle>
-                        </CardHeader>
-                    </Card>
 
-                    <Card className="bg-gradient-to-tr from-primary/5 to-card border-l-4 border-l-amber-500 shadow-xs">
-                        <CardHeader className="py-4">
-                            <CardDescription>{t('page.profit.cards.cost', 'Total Modal / HPP')}</CardDescription>
-                            <CardTitle className="text-2xl font-bold text-foreground">
-                                {formatRupiah(summary.total_cost)}
-                            </CardTitle>
-                        </CardHeader>
-                    </Card>
-
-                    <Card className="bg-gradient-to-tr from-primary/5 to-card border-l-4 border-l-emerald-500 shadow-xs">
-                        <CardHeader className="py-4">
-                            <CardDescription>{t('page.profit.cards.profit', 'Total Laba Bersih')}</CardDescription>
-                            <CardTitle className={`text-2xl font-bold ${summary.total_net_profit >= 0 ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600 dark:text-rose-400'}`}>
-                                {formatRupiah(summary.total_net_profit)}
-                            </CardTitle>
-                        </CardHeader>
-                    </Card>
-                </div>
 
                 {/* Table Component */}
                 <DataTable
