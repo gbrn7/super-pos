@@ -9,6 +9,7 @@ use App\Support\Enums\DashboardPermissionEnums;
 use App\Support\Enums\PaymentMethodPermissionEnums;
 use App\Support\Enums\RoleEnums;
 use App\Support\Enums\RolePermissionEnums;
+use App\Support\Enums\TransactionPermissionEnums;
 use App\Support\Enums\UnitPermissionEnums;
 use Illuminate\Database\Seeder;
 
@@ -49,6 +50,12 @@ class PermissionSeeder extends Seeder
             ]);
         }
 
+        foreach (TransactionPermissionEnums::cases() as $permission) {
+            Permission::firstOrCreate([
+                'name' => $permission->value,
+            ]);
+        }
+
         // super admin already have access, the setup gate on appServiceProvider
 
         $admin = Role::findByName(RoleEnums::ADMIN->value);
@@ -68,6 +75,7 @@ class PermissionSeeder extends Seeder
             UnitPermissionEnums::DELETE_UNIT->value,
 
             PaymentMethodPermissionEnums::READ_PAYMENT_METHOD->value,
+            TransactionPermissionEnums::READ_TRANSACTION_PROFIT->value,
         ]);
 
         $user = Role::findByName(RoleEnums::USER->value);

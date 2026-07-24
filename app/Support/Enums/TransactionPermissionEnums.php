@@ -8,4 +8,5 @@ enum TransactionPermissionEnums: string
     case READ_TRANSACTION = 'read-transaction';
     case UPDATE_TRANSACTION = 'update-transaction';
     case DELETE_TRANSACTION = 'delete-transaction';
+    case READ_TRANSACTION_PROFIT = 'read-transaction-profit';
 }

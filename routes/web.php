@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\ApiCategoryController;
 use App\Http\Controllers\Api\ApiMasterProductController;
 use App\Http\Controllers\Api\ApiPaymentMethodController;
 use App\Http\Controllers\Api\ApiProductController;
+use App\Http\Controllers\Api\ApiProfitReportController;
 use App\Http\Controllers\Api\ApiRoleController;
 use App\Http\Controllers\Api\ApiTransactionController;
 use App\Http\Controllers\Api\ApiTransactionDetailController;
@@ -15,6 +16,7 @@ use App\Http\Controllers\ExampleController;
 use App\Http\Controllers\MasterProductController;
 use App\Http\Controllers\PaymentMethodController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProfitReportController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\TransactionDetailController;
@@ -51,6 +53,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('cashier', [CashierController::class, 'index'])->name('cashier.index');
 
     Route::resource('example', ExampleController::class);
+
+    Route::resource('profit-report', ProfitReportController::class)->only('index');
 
     Route::group(['prefix' => 'api'], function () {
         // categories
@@ -145,6 +149,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::post('/bulk-delete', [ApiTransactionDetailController::class, 'bulkDelete'])->name('apiTransactionDetails.bulkDelete');
             Route::get('/transaction/{transactionId}', [ApiTransactionDetailController::class, 'getByTransactionId'])->name('apiTransactionDetails.getByTransactionId');
         });
+
+        // profit report
+        Route::get('/profit-report', [ApiProfitReportController::class, 'index'])->name('apiProfitReport.index');
     });
 });
 
