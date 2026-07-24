@@ -58,6 +58,7 @@ enum TransactionPermissionEnums {
     READ = 'read-transaction',
     UPDATE = 'update-transaction',
     DELETE = 'delete-transaction',
+    READ_PROFIT = 'read-transaction-profit',
 }
 
 export const PERMISSIONENUMS = {
@@ -301,6 +302,13 @@ export const PERMISSIONLIST = (): Permission[] => {
                         'Hapus Transaksi',
                     ),
                     VALUE: TransactionPermissionEnums.DELETE,
+                },
+                {
+                    LABEL: t(
+                        'permission_label.transaction.read_profit',
+                        'Baca Profit Transaksi',
+                    ),
+                    VALUE: TransactionPermissionEnums.READ_PROFIT,
                 },
             ],
         },
