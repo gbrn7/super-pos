@@ -96,7 +96,7 @@ export function DataTable<TData, TValue>({
     });
 
     return (
-        <div className="space-y-4">
+        <div className="rounded-2xl border bg-card p-3 space-y-4">
             {/* Top Action Bar */}
             <div className="flex justify-end gap-2 items-center">
                 {isFilterActive && (
@@ -328,7 +328,7 @@ export function DataTable<TData, TValue>({
             )}
 
             {/* Table */}
-            <div className="rounded-md border bg-card">
+            <div className="overflow-x-auto rounded-md border">
                 <Table>
                     <TableHeader>
                         {table.getHeaderGroups().map((headerGroup) => (
