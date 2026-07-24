@@ -11,9 +11,10 @@ import {
     type ColumnDef,
     type SortingState,
 } from '@tanstack/react-table';
-import { RefreshCw, Search, Calendar, CreditCard, User as UserIcon, X } from 'lucide-react';
+import { RotateCcw, Search, Calendar, CreditCard, User as UserIcon, X } from 'lucide-react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -47,7 +48,6 @@ interface DataTableProps<TData, TValue> {
     pagination: any;
     onQueryParamChange: (key: string, value: any) => void;
     onResetFilter: () => void;
-    onRefresh: () => void;
     onChangePaginationPage: (page: number) => void;
     onChangePaginationLimit: (limit: number) => void;
     limitOptions: number[];
@@ -63,13 +63,20 @@ export function DataTable<TData, TValue>({
     pagination,
     onQueryParamChange,
     onResetFilter,
-    onRefresh,
     onChangePaginationPage,
     onChangePaginationLimit,
     limitOptions,
 }: DataTableProps<TData, TValue>) {
     const { t } = useTranslation();
     const [sorting, setSorting] = useState<SortingState>([]);
+
+    const isFilterActive = Boolean(
+        queryParam.keyword ||
+        queryParam.user_id ||
+        queryParam.payment_method_id ||
+        queryParam.start_date ||
+        queryParam.end_date
+    );
 
     const table = useReactTable({
         data,
@@ -84,6 +91,16 @@ export function DataTable<TData, TValue>({
 
     return (
         <div className="space-y-4">
+            {/* Top Reset Action Bar */}
+            {isFilterActive && (
+                <div className="flex justify-end gap-2">
+                    <Button variant="outline" onClick={onResetFilter} size="sm" className="h-8">
+                        <RotateCcw className="mr-1.5 h-3.5 w-3.5" />
+                        {t('component.data_table.reset_filter', 'Reset Filter')}
+                    </Button>
+                </div>
+            )}
+
             {/* Filter and Search Section */}
             <div className="second-row grid grid-cols-1 gap-2 gap-y-3 rounded-md border p-3 md:grid-cols-2 lg:grid-cols-3">
                 {/* Keyword Filter */}
@@ -176,16 +193,109 @@ export function DataTable<TData, TValue>({
                     />
                 </div>
 
-                {/* Action Buttons */}
-                <div className="flex gap-2 items-end justify-end self-end space-y-1.5 pt-1.5">
-                    <Button variant="outline" onClick={onResetFilter} className="w-full md:w-auto">
-                        {t('page.profit.filters.reset_btn', 'Reset')}
-                    </Button>
-                    <Button variant="outline" size="icon" onClick={onRefresh} disabled={processing}>
-                        <RefreshCw className={`h-4 w-4 ${processing ? 'animate-spin' : ''}`} />
-                    </Button>
-                </div>
             </div>
+
+            {/* Active Filter Badges */}
+            {isFilterActive && (
+                <div className="col-span-full flex flex-wrap items-center gap-1.5 pt-2 text-xs">
+                    <span className="mr-1 font-medium text-muted-foreground">
+                        {t('component.data_table.active_filters', 'Filter Aktif:')}
+                    </span>
+
+                    {queryParam.keyword && (
+                        <Badge
+                            variant="secondary"
+                            className="gap-1.5 bg-muted/50 px-2 py-0.5 text-xs font-normal hover:bg-muted"
+                        >
+                            <span>
+                                {t('component.data_table.search_component.search_label', 'Pencarian')}: "{queryParam.keyword}"
+                            </span>
+                            <button
+                                type="button"
+                                onClick={() => onQueryParamChange('keyword', '')}
+                                className="ml-0.5 rounded-full p-0.5 text-muted-foreground transition-colors hover:bg-muted-foreground/20 hover:text-foreground"
+                            >
+                                <X className="h-3 w-3" />
+                                <span className="sr-only">Hapus filter pencarian</span>
+                            </button>
+                        </Badge>
+                    )}
+
+                    {queryParam.user_id && (
+                        <Badge
+                            variant="secondary"
+                            className="gap-1.5 bg-muted/50 px-2 py-0.5 text-xs font-normal hover:bg-muted"
+                        >
+                            <span>
+                                {t('page.transaction.dialog_modal.detail_dialog.cashier_label', 'Kasir')}:{' '}
+                                {users.find((u) => u.id === queryParam.user_id)?.name || queryParam.user_id}
+                            </span>
+                            <button
+                                type="button"
+                                onClick={() => onQueryParamChange('user_id', null)}
+                                className="ml-0.5 rounded-full p-0.5 text-muted-foreground transition-colors hover:bg-muted-foreground/20 hover:text-foreground"
+                            >
+                                <X className="h-3 w-3" />
+                                <span className="sr-only">Hapus filter kasir</span>
+                            </button>
+                        </Badge>
+                    )}
+
+                    {queryParam.payment_method_id && (
+                        <Badge
+                            variant="secondary"
+                            className="gap-1.5 bg-muted/50 px-2 py-0.5 text-xs font-normal hover:bg-muted"
+                        >
+                            <span>
+                                {t('page.transaction.dialog_modal.detail_dialog.payment_method_label', 'Metode Bayar')}:{' '}
+                                {paymentMethods.find((pm) => pm.id === queryParam.payment_method_id)?.name || queryParam.payment_method_id}
+                            </span>
+                            <button
+                                type="button"
+                                onClick={() => onQueryParamChange('payment_method_id', null)}
+                                className="ml-0.5 rounded-full p-0.5 text-muted-foreground transition-colors hover:bg-muted-foreground/20 hover:text-foreground"
+                            >
+                                <X className="h-3 w-3" />
+                                <span className="sr-only">Hapus filter metode pembayaran</span>
+                            </button>
+                        </Badge>
+                    )}
+
+                    {queryParam.start_date && (
+                        <Badge
+                            variant="secondary"
+                            className="gap-1.5 bg-muted/50 px-2 py-0.5 text-xs font-normal hover:bg-muted"
+                        >
+                            <span>Mulai: {queryParam.start_date}</span>
+                            <button
+                                type="button"
+                                onClick={() => onQueryParamChange('start_date', '')}
+                                className="ml-0.5 rounded-full p-0.5 text-muted-foreground transition-colors hover:bg-muted-foreground/20 hover:text-foreground"
+                            >
+                                <X className="h-3 w-3" />
+                                <span className="sr-only">Hapus filter tanggal mulai</span>
+                            </button>
+                        </Badge>
+                    )}
+
+                    {queryParam.end_date && (
+                        <Badge
+                            variant="secondary"
+                            className="gap-1.5 bg-muted/50 px-2 py-0.5 text-xs font-normal hover:bg-muted"
+                        >
+                            <span>Akhir: {queryParam.end_date}</span>
+                            <button
+                                type="button"
+                                onClick={() => onQueryParamChange('end_date', '')}
+                                className="ml-0.5 rounded-full p-0.5 text-muted-foreground transition-colors hover:bg-muted-foreground/20 hover:text-foreground"
+                            >
+                                <X className="h-3 w-3" />
+                                <span className="sr-only">Hapus filter tanggal akhir</span>
+                            </button>
+                        </Badge>
+                    )}
+                </div>
+            )}
 
             {/* Table */}
             <div className="rounded-md border bg-card">

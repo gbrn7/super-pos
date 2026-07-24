@@ -179,7 +179,6 @@ export default function CashProfitIndex({ storeSetting }: { storeSetting?: Store
                     pagination={pagination}
                     onQueryParamChange={handleQueryParamChange}
                     onResetFilter={handleResetFilter}
-                    onRefresh={fetchCashProfit}
                     onChangePaginationPage={(val) => handleQueryParamChange('page', val)}
                     onChangePaginationLimit={(val) => handleQueryParamChange('limit', val)}
                     limitOptions={[10, 25, 50, 100]}
