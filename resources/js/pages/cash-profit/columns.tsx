@@ -13,15 +13,13 @@ import {
 import { formatRupiah } from '@/lib/format-money';
 import dayjs from 'dayjs';
 
-export interface ProfitRecord {
+export interface CashProfitRecord {
     id: number;
     transaction_id: number;
     invoice_number: string;
     created_at: number;
     cashier_name: string;
     payment_method_name: string;
-    total_revenue: number;
-    total_cost: number;
     profit: number;
 }
 
@@ -32,7 +30,7 @@ interface ColumnsProps {
     order: string | null;
 }
 
-export const columns = (props?: ColumnsProps): ColumnDef<ProfitRecord>[] => {
+export const columns = (props?: ColumnsProps): ColumnDef<CashProfitRecord>[] => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const { t } = useTranslation();
 
@@ -76,42 +74,12 @@ export const columns = (props?: ColumnsProps): ColumnDef<ProfitRecord>[] => {
             cell: ({ row }) => row.original.payment_method_name,
         },
         {
-            id: t('page.profit.columns.revenue', 'Total Penjualan'),
-            accessorKey: 'total_revenue',
-            header: ({ column }) => (
-                <ServerSideDataTableHeader
-                    column={column}
-                    title={t('page.profit.columns.revenue', 'Total Penjualan')}
-                    sortKey="total_revenue"
-                    orderBy={props?.orderBy}
-                    order={props?.order}
-                    onSortChange={props?.onSortChange}
-                />
-            ),
-            cell: ({ row }) => formatRupiah(row.original.total_revenue),
-        },
-        {
-            id: t('page.profit.columns.cost', 'Total Modal (HPP)'),
-            accessorKey: 'total_cost',
-            header: ({ column }) => (
-                <ServerSideDataTableHeader
-                    column={column}
-                    title={t('page.profit.columns.cost', 'Total Modal (HPP)')}
-                    sortKey="total_cost"
-                    orderBy={props?.orderBy}
-                    order={props?.order}
-                    onSortChange={props?.onSortChange}
-                />
-            ),
-            cell: ({ row }) => formatRupiah(row.original.total_cost),
-        },
-        {
-            id: t('page.profit.columns.profit', 'Laba Bersih'),
+            id: t('page.profit.columns.profit', 'Keuntungan'),
             accessorKey: 'profit',
             header: ({ column }) => (
                 <ServerSideDataTableHeader
                     column={column}
-                    title={t('page.profit.columns.profit', 'Laba Bersih')}
+                    title={t('page.profit.columns.profit', 'Keuntungan')}
                     sortKey="profit"
                     orderBy={props?.orderBy}
                     order={props?.order}

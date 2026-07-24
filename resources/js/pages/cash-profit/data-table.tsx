@@ -193,15 +193,15 @@ export function DataTable<TData, TValue>({
                                 </TableRow>
                             ))
                         ) : (
-                              <TableRow>
-                                  <TableCell colSpan={columns.length} className="h-24 text-center text-muted-foreground">
-                                      {t('component.data_table.no_data', 'Tidak ada data.')}
-                                  </TableCell>
-                              </TableRow>
-                          )}
-                      </TableBody>
-                  </Table>
-              </div>
+                            <TableRow>
+                                <TableCell colSpan={columns.length} className="h-24 text-center text-muted-foreground">
+                                    {t('component.data_table.no_data', 'Tidak ada data.')}
+                                </TableCell>
+                            </TableRow>
+                        )}
+                    </TableBody>
+                </Table>
+            </div>
 
             {/* Pagination Footer */}
             <div className="flex flex-col items-center justify-between gap-4 border-t px-2 py-4 lg:flex-row">

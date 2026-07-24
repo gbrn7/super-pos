@@ -3,6 +3,8 @@ import i18next from 'i18next';
 import { useState, useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import HeaderContent from '@/components/header-content';
+import { Card, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { formatRupiah } from '@/lib/format-money';
 import axiosInstance from '@/lib/axios';
 import { handleApiError } from '@/lib/utils';
 import { DetailDialog } from '@/pages/transaction/dialog-modal/detail-dialog';
@@ -11,26 +13,22 @@ import type { PaymentMethod } from '@/support/models/paymentMethod';
 import type { User } from '@/support/models/user';
 import { index as apiGetPaymentMethods } from '@/routes/apiPaymentMethods';
 import { all as apiGetAllUsers } from '@/routes/apiUsers';
-import { index as profitReportRoute } from '@/routes/profit-report';
-import { columns, type ProfitRecord } from './columns';
+import { index as cashProfitRoute } from '@/routes/cash-profit';
+import { columns, type CashProfitRecord } from './columns';
 import { DataTable } from './data-table';
 
-const { url } = profitReportRoute();
+const { url } = cashProfitRoute();
 
 interface SummaryData {
-    total_revenue: number;
-    total_cost: number;
     total_net_profit: number;
     total_transactions: number;
 }
 
-export default function ProfitReportIndex({ storeSetting }: { storeSetting?: StoreSetting | null }) {
+export default function CashProfitIndex({ storeSetting }: { storeSetting?: StoreSetting | null }) {
     const { t } = useTranslation();
 
-    const [profitData, setProfitData] = useState<ProfitRecord[]>([]);
+    const [profitData, setProfitData] = useState<CashProfitRecord[]>([]);
     const [summary, setSummary] = useState<SummaryData>({
-        total_revenue: 0,
-        total_cost: 0,
         total_net_profit: 0,
         total_transactions: 0,
     });
@@ -81,11 +79,11 @@ export default function ProfitReportIndex({ storeSetting }: { storeSetting?: Sto
         }
     };
 
-    const fetchProfitReport = useCallback(async () => {
+    const fetchCashProfit = useCallback(async () => {
         try {
             setProcessing(true);
             const params: Record<string, any> = { ...queryParam };
-            const res = await axiosInstance.get('/api/profit-report', { params });
+            const res = await axiosInstance.get('/api/cash-profit', { params });
             if (res.data.success) {
                 setProfitData(res.data.data.transactions.data);
                 setSummary(res.data.data.summary);
@@ -106,10 +104,10 @@ export default function ProfitReportIndex({ storeSetting }: { storeSetting?: Sto
 
     useEffect(() => {
         const timeoutId = setTimeout(() => {
-            void fetchProfitReport();
+            void fetchCashProfit();
         }, 300);
         return () => clearTimeout(timeoutId);
-    }, [fetchProfitReport]);
+    }, [fetchCashProfit]);
 
     const handleDetailClick = (transactionId: number, invoiceNumber: string) => {
         setSelectedTransaction({ id: transactionId, invoice_number: invoiceNumber });
@@ -149,11 +147,21 @@ export default function ProfitReportIndex({ storeSetting }: { storeSetting?: Sto
 
     return (
         <>
-            <Head title={t('page.profit.page_name', 'Laporan Profit')} />
+            <Head title={t('page.profit.page_name', 'Kas Profit')} />
             <div className="mb-16 flex h-full flex-1 flex-col gap-6 overflow-x-auto rounded-xl p-4">
-                <HeaderContent>{t('page.profit.page_name', 'Laporan Profit')}</HeaderContent>
+                <HeaderContent>{t('page.profit.page_name', 'Kas Profit')}</HeaderContent>
 
-
+                {/* Summary Card */}
+                <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+                    <Card className="bg-gradient-to-tr from-primary/5 to-card border-l-4 border-l-emerald-500 shadow-xs">
+                        <CardHeader className="py-4">
+                            <CardDescription>{t('page.profit.cards.profit', 'Total Kas Profit')}</CardDescription>
+                            <CardTitle className={`text-2xl font-bold ${summary.total_net_profit >= 0 ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600 dark:text-rose-400'}`}>
+                                {formatRupiah(summary.total_net_profit)}
+                            </CardTitle>
+                        </CardHeader>
+                    </Card>
+                </div>
 
                 {/* Table Component */}
                 <DataTable
@@ -171,7 +179,7 @@ export default function ProfitReportIndex({ storeSetting }: { storeSetting?: Sto
                     pagination={pagination}
                     onQueryParamChange={handleQueryParamChange}
                     onResetFilter={handleResetFilter}
-                    onRefresh={fetchProfitReport}
+                    onRefresh={fetchCashProfit}
                     onChangePaginationPage={(val) => handleQueryParamChange('page', val)}
                     onChangePaginationLimit={(val) => handleQueryParamChange('limit', val)}
                     limitOptions={[10, 25, 50, 100]}
@@ -191,10 +199,10 @@ export default function ProfitReportIndex({ storeSetting }: { storeSetting?: Sto
     );
 }
 
-ProfitReportIndex.layout = {
+CashProfitIndex.layout = {
     breadcrumbs: [
         {
-            title: i18next.t('page.profit.page_name', 'Laporan Profit'),
+            title: i18next.t('page.profit.page_name', 'Kas Profit'),
             href: url,
         },
     ],
