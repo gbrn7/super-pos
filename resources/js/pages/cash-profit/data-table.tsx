@@ -11,11 +11,12 @@ import {
     type ColumnDef,
     type SortingState,
 } from '@tanstack/react-table';
-import { RefreshCw, Search } from 'lucide-react';
+import { RefreshCw, Search, Calendar, CreditCard, User as UserIcon, X } from 'lucide-react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import {
     Select,
     SelectContent,
@@ -83,24 +84,37 @@ export function DataTable<TData, TValue>({
 
     return (
         <div className="space-y-4">
-            {/* Filters */}
-            <div className="flex flex-wrap gap-3 items-end">
-                <div className="flex-1 min-w-[200px] relative">
-                    <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-                    <Input
-                        placeholder={t('page.profit.filters.search_invoice', 'Cari Invoice...')}
-                        value={queryParam.keyword || ''}
-                        onChange={(e) => onQueryParamChange('keyword', e.target.value)}
-                        className="pl-8"
-                    />
+            {/* Filter and Search Section */}
+            <div className="second-row grid grid-cols-1 gap-2 gap-y-3 rounded-md border p-3 md:grid-cols-2 lg:grid-cols-3">
+                {/* Keyword Filter */}
+                <div className="space-y-1.5">
+                    <Label className="text-xs font-medium text-muted-foreground">
+                        {t('component.data_table.search_component.search_label', 'Pencarian')}
+                    </Label>
+                    <div className="keyword-filter flex w-full gap-1">
+                        <div className="relative w-full">
+                            <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+                            <Input
+                                placeholder={t('page.profit.filters.search_invoice', 'Cari Invoice...')}
+                                value={queryParam.keyword || ''}
+                                onChange={(e) => onQueryParamChange('keyword', e.target.value)}
+                                className="pl-8 w-full"
+                            />
+                        </div>
+                    </div>
                 </div>
 
-                <div className="w-[180px]">
+                {/* Cashier / User Filter */}
+                <div className="space-y-1.5">
+                    <Label className="flex items-center gap-1 text-xs font-medium text-muted-foreground">
+                        <UserIcon className="h-3.5 w-3.5" />
+                        {t('page.transaction.dialog_modal.detail_dialog.cashier_label', 'Kasir / Petugas')}
+                    </Label>
                     <Select
                         value={queryParam.user_id ? String(queryParam.user_id) : 'all'}
                         onValueChange={(val) => onQueryParamChange('user_id', val === 'all' ? null : Number(val))}
                     >
-                        <SelectTrigger>
+                        <SelectTrigger className="w-full">
                             <SelectValue placeholder={t('page.profit.filters.all_cashiers', 'Semua Kasir')} />
                         </SelectTrigger>
                         <SelectContent>
@@ -112,12 +126,17 @@ export function DataTable<TData, TValue>({
                     </Select>
                 </div>
 
-                <div className="w-[180px]">
+                {/* Payment Method Filter */}
+                <div className="space-y-1.5">
+                    <Label className="flex items-center gap-1 text-xs font-medium text-muted-foreground">
+                        <CreditCard className="h-3.5 w-3.5" />
+                        {t('page.transaction.dialog_modal.detail_dialog.payment_method_label', 'Metode Pembayaran')}
+                    </Label>
                     <Select
                         value={queryParam.payment_method_id ? String(queryParam.payment_method_id) : 'all'}
                         onValueChange={(val) => onQueryParamChange('payment_method_id', val === 'all' ? null : Number(val))}
                     >
-                        <SelectTrigger>
+                        <SelectTrigger className="w-full">
                             <SelectValue placeholder={t('page.profit.filters.all_payments', 'Semua Metode')} />
                         </SelectTrigger>
                         <SelectContent>
@@ -129,28 +148,43 @@ export function DataTable<TData, TValue>({
                     </Select>
                 </div>
 
-                <div className="flex gap-2">
+                {/* Start Date Filter */}
+                <div className="space-y-1.5">
+                    <Label className="flex items-center gap-1 text-xs font-medium text-muted-foreground">
+                        <Calendar className="h-3.5 w-3.5" />
+                        Tanggal Mulai
+                    </Label>
                     <Input
                         type="date"
                         value={queryParam.start_date || ''}
                         onChange={(e) => onQueryParamChange('start_date', e.target.value)}
-                        className="w-[140px]"
+                        className="w-full"
                     />
-                    <span className="self-center text-muted-foreground">-</span>
+                </div>
+
+                {/* End Date Filter */}
+                <div className="space-y-1.5">
+                    <Label className="flex items-center gap-1 text-xs font-medium text-muted-foreground">
+                        <Calendar className="h-3.5 w-3.5" />
+                        Tanggal Akhir
+                    </Label>
                     <Input
                         type="date"
                         value={queryParam.end_date || ''}
                         onChange={(e) => onQueryParamChange('end_date', e.target.value)}
-                        className="w-[140px]"
+                        className="w-full"
                     />
                 </div>
 
-                <Button variant="outline" onClick={onResetFilter}>
-                    {t('page.profit.filters.reset_btn', 'Reset')}
-                </Button>
-                <Button variant="outline" size="icon" onClick={onRefresh} disabled={processing}>
-                    <RefreshCw className={`h-4 w-4 ${processing ? 'animate-spin' : ''}`} />
-                </Button>
+                {/* Action Buttons */}
+                <div className="flex gap-2 items-end justify-end self-end space-y-1.5 pt-1.5">
+                    <Button variant="outline" onClick={onResetFilter} className="w-full md:w-auto">
+                        {t('page.profit.filters.reset_btn', 'Reset')}
+                    </Button>
+                    <Button variant="outline" size="icon" onClick={onRefresh} disabled={processing}>
+                        <RefreshCw className={`h-4 w-4 ${processing ? 'animate-spin' : ''}`} />
+                    </Button>
+                </div>
             </div>
 
             {/* Table */}
