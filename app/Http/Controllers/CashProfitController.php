@@ -6,20 +6,24 @@ use App\Models\StoreSetting;
 use App\Support\Enums\TransactionPermissionEnums;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
+use Inertia\Response;
 
-class ProfitReportController extends Controller implements HasMiddleware
+class CashProfitController extends Controller implements HasMiddleware
 {
     public static function middleware(): array
     {
         return [
             new Middleware(
-                'permission:'.TransactionPermissionEnums::READ_TRANSACTION_PROFIT->value,
+                'permission:'.TransactionPermissionEnums::READ_CASH_PROFIT->value,
                 only: ['index']
             ),
         ];
     }
 
-    public function index()
+    /**
+     * Display a listing of the cash profits for the web view.
+     */
+    public function index(): Response
     {
         $storeSetting = StoreSetting::first() ?? new StoreSetting([
             'name' => 'Toko Maju Jaya',
@@ -28,7 +32,7 @@ class ProfitReportController extends Controller implements HasMiddleware
             'email' => 'contact@majujaya.com',
         ]);
 
-        return inertia('profit-report/index', [
+        return inertia('cash-profit/index', [
             'storeSetting' => $storeSetting,
         ]);
     }

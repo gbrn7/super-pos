@@ -75,7 +75,7 @@ class PermissionSeeder extends Seeder
             UnitPermissionEnums::DELETE_UNIT->value,
 
             PaymentMethodPermissionEnums::READ_PAYMENT_METHOD->value,
-            TransactionPermissionEnums::READ_TRANSACTION_PROFIT->value,
+            TransactionPermissionEnums::READ_CASH_PROFIT->value,
         ]);
 
         $user = Role::findByName(RoleEnums::USER->value);

@@ -1,18 +1,18 @@
 <?php
 
+use App\Models\CashProfit;
 use App\Models\PaymentMethod;
 use App\Models\Permission;
 use App\Models\Transaction;
-use App\Models\TransactionProfit;
 use App\Models\User;
 use App\Support\Enums\TransactionPermissionEnums;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
-test('admin with read-transaction-profit permission can access profit report API', function () {
+test('admin with read-cash-profit permission can access cash profit API', function () {
     $user = User::factory()->create();
-    $permission = Permission::firstOrCreate(['name' => TransactionPermissionEnums::READ_TRANSACTION_PROFIT->value]);
+    $permission = Permission::firstOrCreate(['name' => TransactionPermissionEnums::READ_CASH_PROFIT->value]);
     $user->givePermissionTo($permission);
     $this->actingAs($user);
 
@@ -26,26 +26,23 @@ test('admin with read-transaction-profit permission can access profit report API
         'change_amount' => 50000.00,
     ]);
 
-    TransactionProfit::create([
+    CashProfit::create([
         'transaction_id' => $transaction->id,
-        'total_revenue' => 150000.00,
-        'total_cost' => 100000.00,
         'profit' => 50000.00,
     ]);
 
-    $response = $this->getJson(route('apiProfitReport.index'));
+    $response = $this->getJson(route('apiCashProfit.index'));
 
     $response->assertStatus(200)
         ->assertJsonPath('success', true)
-        ->assertJsonPath('data.summary.total_revenue', 150000)
-        ->assertJsonPath('data.summary.total_cost', 100000)
-        ->assertJsonPath('data.summary.total_net_profit', 50000);
+        ->assertJsonPath('data.summary.total_net_profit', 50000)
+        ->assertJsonPath('data.summary.total_transactions', 1);
 });
 
-test('unauthorized user cannot access profit report API', function () {
+test('unauthorized user cannot access cash profit API', function () {
     $user = User::factory()->create();
     $this->actingAs($user);
 
-    $response = $this->getJson(route('apiProfitReport.index'));
+    $response = $this->getJson(route('apiCashProfit.index'));
     $response->assertStatus(403);
 });

@@ -3,32 +3,36 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\TransactionProfit;
+use App\Models\CashProfit;
 use App\Support\Enums\TransactionPermissionEnums;
 use App\Support\Utils\ResponseApi;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 
-class ApiProfitReportController extends Controller implements HasMiddleware
+class ApiCashProfitController extends Controller implements HasMiddleware
 {
     public static function middleware(): array
     {
         return [
             new Middleware(
-                'permission:'.TransactionPermissionEnums::READ_TRANSACTION_PROFIT->value,
+                'permission:'.TransactionPermissionEnums::READ_CASH_PROFIT->value,
                 only: ['index']
             ),
         ];
     }
 
-    public function index(Request $request)
+    /**
+     * Display a listing of the cash profits.
+     */
+    public function index(Request $request): JsonResponse
     {
         try {
-            $query = TransactionProfit::query()
+            $query = CashProfit::query()
                 ->with(['transaction.user', 'transaction.paymentMethod']);
 
-            // Filter by Date Range
+            // Filters
             if ($request->filled('start_date')) {
                 $query->whereHas('transaction', function ($q) use ($request) {
                     $q->whereDate('created_at', '>=', $request->start_date);
@@ -39,33 +43,27 @@ class ApiProfitReportController extends Controller implements HasMiddleware
                     $q->whereDate('created_at', '<=', $request->end_date);
                 });
             }
-
-            // Filter by User/Cashier
             if ($request->filled('user_id')) {
                 $query->whereHas('transaction', function ($q) use ($request) {
                     $q->where('user_id', $request->user_id);
                 });
             }
-
-            // Filter by Payment Method
             if ($request->filled('payment_method_id')) {
                 $query->whereHas('transaction', function ($q) use ($request) {
                     $q->where('payment_method_id', $request->payment_method_id);
                 });
             }
-
-            // Search by Invoice Number
             if ($request->filled('keyword')) {
                 $query->whereHas('transaction', function ($q) use ($request) {
                     $q->where('invoice_number', 'ilike', "%{$request->keyword}%");
                 });
             }
 
-            // Order by
+            // Sorting
             if ($request->filled('order_by') && $request->filled('order')) {
                 $orderBy = $request->order_by;
-                if (in_array($orderBy, ['total_revenue', 'total_cost', 'profit'])) {
-                    $query->orderBy($orderBy, $request->order);
+                if ($orderBy === 'profit') {
+                    $query->orderBy('profit', $request->order);
                 } else {
                     $query->orderBy('id', 'desc');
                 }
@@ -73,11 +71,9 @@ class ApiProfitReportController extends Controller implements HasMiddleware
                 $query->orderBy('id', 'desc');
             }
 
-            // Calculate aggregated totals BEFORE pagination
+            // Aggregate summary before paging
             $summaryQuery = clone $query;
             $summary = [
-                'total_revenue' => (float) $summaryQuery->sum('total_revenue'),
-                'total_cost' => (float) $summaryQuery->sum('total_cost'),
                 'total_net_profit' => (float) $summaryQuery->sum('profit'),
                 'total_transactions' => $summaryQuery->count(),
             ];
@@ -85,7 +81,6 @@ class ApiProfitReportController extends Controller implements HasMiddleware
             $limit = $request->input('limit', 10);
             $paginated = $query->paginate($limit);
 
-            // Map to clean resource data
             $mappedData = collect($paginated->items())->map(function ($item) {
                 return [
                     'id' => $item->id,
@@ -94,8 +89,6 @@ class ApiProfitReportController extends Controller implements HasMiddleware
                     'created_at' => $item->transaction->created_at->getTimestamp(),
                     'cashier_name' => $item->transaction->user->name ?? '-',
                     'payment_method_name' => $item->transaction->paymentMethod->name ?? '-',
-                    'total_revenue' => (float) $item->total_revenue,
-                    'total_cost' => (float) $item->total_cost,
                     'profit' => (float) $item->profit,
                 ];
             });
