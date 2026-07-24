@@ -2805,18 +2805,18 @@
     "semantic_hash": ""
   },
   "resources/js/pages/cash-profit/columns.tsx": {
-    "mtime": 1784854616.7649677,
-    "ast_hash": "cf315f785ab40f92dd41fc38e7c22a3b",
+    "mtime": 1784853843.1678693,
+    "ast_hash": "2d04e1d19b9b3b61f8ec2696a05f5080",
     "semantic_hash": ""
   },
   "resources/js/pages/cash-profit/data-table.tsx": {
-    "mtime": 1784854707.0893054,
-    "ast_hash": "18a8c26b0958a1238539e6792284c173",
+    "mtime": 1784853851.181513,
+    "ast_hash": "8b54fad8b2f5cf21b5cef3afb0518b68",
     "semantic_hash": ""
   },
   "resources/js/pages/cash-profit/index.tsx": {
-    "mtime": 1784854468.5774145,
-    "ast_hash": "62b9673fdee1263ab60e5decb861749b",
+    "mtime": 1784853857.066807,
+    "ast_hash": "ecbbdad1ccf3cebc9deb1fc15303aae6",
     "semantic_hash": ""
   }
 }
