@@ -194,13 +194,12 @@ class TransactionService implements TransactionServiceInterface
                     }
                 }
 
-                $transaction->transactionProfit()->create([
-                    'total_revenue' => $totalAmount,
-                    'total_cost' => $totalCost,
-                    'profit' => $totalAmount - $totalCost,
+                // Save net profit to cash_profits table
+                $transaction->cashProfit()->create([
+                    'profit' => $transaction->total_amount - $totalCost,
                 ]);
 
-                return $transaction->fresh(['transactionDetails.product', 'paymentMethod', 'user', 'transactionProfit']);
+                return $transaction->fresh(['transactionDetails.product', 'paymentMethod', 'user', 'cashProfit']);
             });
         } catch (\Throwable $th) {
             throw CheckException::Check($th);

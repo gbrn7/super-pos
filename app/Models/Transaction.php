@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Transaction extends Model
 {
@@ -36,8 +37,8 @@ class Transaction extends Model
         return $this->hasMany(TransactionDetail::class);
     }
 
-    public function transactionProfit()
+    public function cashProfit(): HasOne
     {
-        return $this->hasOne(TransactionProfit::class);
+        return $this->hasOne(CashProfit::class);
     }
 }

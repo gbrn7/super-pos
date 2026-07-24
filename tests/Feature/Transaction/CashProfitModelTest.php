@@ -1,14 +1,14 @@
 <?php
 
+use App\Models\CashProfit;
 use App\Models\PaymentMethod;
 use App\Models\Transaction;
-use App\Models\TransactionProfit;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
-test('transaction has a profit relationship and correctly records profit values', function () {
+test('transaction has a cash profit relationship and correctly records profit data', function () {
     $user = User::factory()->create();
     $paymentMethod = PaymentMethod::factory()->create();
 
@@ -19,17 +19,14 @@ test('transaction has a profit relationship and correctly records profit values'
         'total_amount' => 150000.00,
         'payment_amount' => 200000.00,
         'change_amount' => 50000.00,
-        'discount_amount' => 0.00,
     ]);
 
-    $profit = TransactionProfit::create([
+    $cashProfit = CashProfit::create([
         'transaction_id' => $transaction->id,
-        'total_revenue' => 150000.00,
-        'total_cost' => 100000.00,
         'profit' => 50000.00,
     ]);
 
-    expect($transaction->fresh()->transactionProfit)->not->toBeNull()
-        ->and($transaction->fresh()->transactionProfit->profit)->toEqual(50000.00)
-        ->and($profit->transaction->id)->toEqual($transaction->id);
+    expect($transaction->cashProfit)->not->toBeNull()
+        ->and($transaction->cashProfit->profit)->toEqual('50000.00')
+        ->and($cashProfit->transaction->id)->toEqual($transaction->id);
 });
