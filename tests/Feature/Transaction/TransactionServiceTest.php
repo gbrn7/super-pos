@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\PaymentMethod;
+use App\Models\Product;
 use App\Models\Transaction;
 use App\Models\User;
 use App\Support\Interfaces\Services\TransactionServiceInterface;
@@ -90,4 +91,41 @@ test('bulkDelete transactions via service', function () {
     $count = $this->service->bulkDelete($ids);
 
     expect($count)->toBe(3);
+});
+
+test('checkout records profit data successfully', function () {
+    $user = User::factory()->create();
+    $this->actingAs($user);
+    $paymentMethod = PaymentMethod::factory()->create();
+    $product = Product::factory()->create([
+        'price' => 10000,
+        'cost_price' => 7000,
+        'stock' => 10,
+        'is_active' => true,
+        'is_unlimited' => false,
+    ]);
+
+    $checkoutData = [
+        'payment_method_id' => $paymentMethod->id,
+        'discount_amount' => 1000,
+        'payment_amount' => 10000,
+        'items' => [
+            [
+                'product_id' => $product->id,
+                'unit_name' => 'PCS',
+                'quantity' => 1,
+                'price' => 10000,
+                'cost_price' => 7000,
+                'discount' => 0,
+            ],
+        ],
+    ];
+
+    $transaction = $this->service->checkout($checkoutData);
+
+    expect($transaction->transactionProfit)->not->toBeNull();
+    // Revenue = (10000 * 1) - 1000 = 9000. Cost = 7000 * 1 = 7000. Profit = 9000 - 7000 = 2000.
+    expect((float) $transaction->transactionProfit->total_revenue)->toEqual(9000.00);
+    expect((float) $transaction->transactionProfit->total_cost)->toEqual(7000.00);
+    expect((float) $transaction->transactionProfit->profit)->toEqual(2000.00);
 });

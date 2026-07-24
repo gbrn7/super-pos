@@ -172,6 +172,7 @@ class TransactionService implements TransactionServiceInterface
                     'change_amount' => $changeAmount,
                 ]);
 
+                $totalCost = 0;
                 foreach ($validatedItems as $validated) {
                     $item = $validated['item'];
                     $product = $validated['product'];
@@ -186,12 +187,20 @@ class TransactionService implements TransactionServiceInterface
                         'discount' => $item['discount'] ?? 0,
                     ]);
 
+                    $totalCost += $item['cost_price'] * $item['quantity'];
+
                     if (! $product->is_unlimited) {
                         $this->productRepository->decrementStock($product, $item['quantity']);
                     }
                 }
 
-                return $transaction->fresh(['transactionDetails.product', 'paymentMethod', 'user']);
+                $transaction->transactionProfit()->create([
+                    'total_revenue' => $totalAmount,
+                    'total_cost' => $totalCost,
+                    'profit' => $totalAmount - $totalCost,
+                ]);
+
+                return $transaction->fresh(['transactionDetails.product', 'paymentMethod', 'user', 'transactionProfit']);
             });
         } catch (\Throwable $th) {
             throw CheckException::Check($th);
