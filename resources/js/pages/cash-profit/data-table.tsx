@@ -11,11 +11,17 @@ import {
     type ColumnDef,
     type SortingState,
 } from '@tanstack/react-table';
-import { RotateCcw, Search, Calendar, CreditCard, User as UserIcon, X } from 'lucide-react';
+import { RotateCcw, Search, Calendar, CreditCard, User as UserIcon, X, Table as TableIcon } from 'lucide-react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import {
+    DropdownMenu,
+    DropdownMenuTrigger,
+    DropdownMenuContent,
+    DropdownMenuCheckboxItem,
+} from '@/components/ui/dropdown-menu';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import {
@@ -91,15 +97,39 @@ export function DataTable<TData, TValue>({
 
     return (
         <div className="space-y-4">
-            {/* Top Reset Action Bar */}
-            {isFilterActive && (
-                <div className="flex justify-end gap-2">
+            {/* Top Action Bar */}
+            <div className="flex justify-end gap-2 items-center">
+                {isFilterActive && (
                     <Button variant="outline" onClick={onResetFilter} size="sm" className="h-8">
                         <RotateCcw className="mr-1.5 h-3.5 w-3.5" />
                         {t('component.data_table.reset_filter', 'Reset Filter')}
                     </Button>
-                </div>
-            )}
+                )}
+
+                <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                        <Button variant="outline" size="sm" className="h-8">
+                            <TableIcon className="mr-1.5 h-4 w-4" />
+                            {t('component.data_table.columns.label', 'Kolom')}
+                        </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end">
+                        {table
+                            .getAllColumns()
+                            .filter((column) => column.getCanHide())
+                            .map((column) => (
+                                <DropdownMenuCheckboxItem
+                                    key={column.id}
+                                    className="capitalize"
+                                    checked={column.getIsVisible()}
+                                    onCheckedChange={(value) => column.toggleVisibility(!!value)}
+                                >
+                                    {column.id}
+                                </DropdownMenuCheckboxItem>
+                            ))}
+                    </DropdownMenuContent>
+                </DropdownMenu>
+            </div>
 
             {/* Filter and Search Section */}
             <div className="second-row grid grid-cols-1 gap-2 gap-y-3 rounded-md border p-3 md:grid-cols-2 lg:grid-cols-3">

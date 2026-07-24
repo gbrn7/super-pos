@@ -98,6 +98,7 @@ export const columns = (props?: ColumnsProps): ColumnDef<CashProfitRecord>[] => 
         },
         {
             id: t('page.profit.columns.actions', 'Aksi'),
+            enableHiding: false,
             cell: ({ row }) => (
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
