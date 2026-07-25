@@ -6,6 +6,7 @@ use App\Models\Transaction;
 use App\Support\Interfaces\Repositories\ProductRepositoryInterface;
 use App\Support\Interfaces\Repositories\TransactionDetailRepositoryInterface;
 use App\Support\Interfaces\Repositories\TransactionRepositoryInterface;
+use App\Support\Interfaces\Services\ProfitWalletServiceInterface;
 use App\Support\Interfaces\Services\TransactionServiceInterface;
 use App\Support\Models\Transaction\GetTransactionReqModel;
 use App\Support\Utils\CheckException;
@@ -22,7 +23,8 @@ class TransactionService implements TransactionServiceInterface
     public function __construct(
         protected TransactionRepositoryInterface $transactionRepository,
         protected TransactionDetailRepositoryInterface $transactionDetailRepository,
-        protected ProductRepositoryInterface $productRepository
+        protected ProductRepositoryInterface $productRepository,
+        protected ProfitWalletServiceInterface $profitWalletService
     ) {}
 
     public function getAllByIndex(GetTransactionReqModel $request): Paginator|Collection
@@ -194,10 +196,15 @@ class TransactionService implements TransactionServiceInterface
                     }
                 }
 
+                $profit = $transaction->total_amount - $totalCost;
+
                 // Save net profit to cash_profits table
                 $transaction->cashProfit()->create([
-                    'profit' => $transaction->total_amount - $totalCost,
+                    'profit' => $profit,
                 ]);
+
+                // Record sales profit to the store's profit wallet
+                $this->profitWalletService->recordSalesProfit($profit, $transaction->id);
 
                 return $transaction->fresh(['transactionDetails.product', 'paymentMethod', 'user', 'cashProfit']);
             });
