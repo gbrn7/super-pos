@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { formatRupiah } from '@/lib/format-money';
 import { Button } from '@/components/ui/button';
 import {
     Dialog,
@@ -115,7 +116,7 @@ export function DrawdownDialog({ onSuccess }: DrawdownDialogProps) {
                                 {t('page.capital_wallet.dialog_modal.drawdown.amount_label', 'Nominal Penarikan')}
                                 <span className="text-red-500"> *</span>
                             </label>
-                            <NumericFormat
+                             <NumericFormat
                                 thousandSeparator="."
                                 decimalSeparator=","
                                 prefix="Rp "
@@ -132,6 +133,24 @@ export function DrawdownDialog({ onSuccess }: DrawdownDialogProps) {
                                 disabled={loading}
                                 className={`${errorForm.amount && 'border-red-500'}`}
                             />
+                            <div className="flex flex-wrap gap-1.5 mt-2">
+                                {[50000, 100000, 250000, 500000, 1000000, 5000000].map((val) => (
+                                    <Button
+                                        key={val}
+                                        type="button"
+                                        variant="outline"
+                                        size="sm"
+                                        onClick={() => {
+                                            setFormData((prev) => ({ ...prev, amount: val }));
+                                            setErrorForm((prev) => ({ ...prev, amount: '' }));
+                                        }}
+                                        className="h-7 text-[10px] font-normal px-2.5 rounded-lg border-dashed hover:bg-muted"
+                                        disabled={loading}
+                                    >
+                                        {formatRupiah(val)}
+                                    </Button>
+                                ))}
+                            </div>
                             {errorForm.amount && <ErrorFormInfo message={errorForm.amount} />}
                         </Field>
                         <Field>
