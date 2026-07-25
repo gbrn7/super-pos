@@ -997,7 +997,7 @@
                     "qty_header": "Qty",
                     "cost_price_header": "Cost Price",
                     "price_header": "Selling Price",
-                    "discount_header": "Discount",
+                    "discount_header": "Discount / Unit",
                     "subtotal_header": "Subtotal",
                     "product_discount": "Product Discount",
                     "transaction_discount": "Transaction Discount"
