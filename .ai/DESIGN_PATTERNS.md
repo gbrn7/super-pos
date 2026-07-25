@@ -1542,9 +1542,11 @@ To ensure consistency between the backend API responses and frontend TypeScript 
     1. Define individual item types inside `resources/js/support/models/`.
     2. Import `PaginationResponse` from `@/support/interfaces/resource/resource-response`.
     3. Import `ResponseApi` from `@/support/interfaces/response/Response`.
-*   **Axios Generic Types**: Type the Axios response object with the generic response wrapper:
+*   **Axios Generic Types**: Type the Axios response object with the generic response wrapper, utilizing auto-generated Wayfinder route helpers for the URL:
     ```typescript
-    const res = await axiosInstance.get<ResponseApi<PaginationResponse<YourEntity>>>('/api/your-endpoint');
+    import { index as apiGetEntities } from '@/routes/apiEntities';
+
+    const res = await axiosInstance.get<ResponseApi<PaginationResponse<YourEntity>>>(apiGetEntities().url);
     if (res.data.success) {
         setItems(res.data.data.items);
         setPagination(res.data.data.pagination);
