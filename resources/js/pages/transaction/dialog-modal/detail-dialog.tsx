@@ -417,28 +417,28 @@ export function DetailDialog({
                                     )}
                                 </div>
                                 {totalItemDiscount > 0 && (
-                                    <div className="flex items-center justify-between text-sm text-emerald-600 dark:text-emerald-400">
-                                        <span className="font-medium">
+                                    <div className="flex items-center justify-between text-sm">
+                                        <span className="font-medium text-muted-foreground">
                                             {t('page.transaction.dialog_modal.detail_dialog.product_discount', 'Diskon Produk')}
                                         </span>
                                         {loading ? (
                                             <Skeleton className="h-5 w-20" />
                                         ) : (
-                                            <span className="font-bold">
+                                            <span className="font-bold text-rose-600 dark:text-rose-400">
                                                 - {formatRupiah(totalItemDiscount)}
                                             </span>
                                         )}
                                     </div>
                                 )}
                                 {discountAmount > 0 && (
-                                    <div className="flex items-center justify-between text-sm text-emerald-600 dark:text-emerald-400">
-                                        <span className="font-medium">
+                                    <div className="flex items-center justify-between text-sm">
+                                        <span className="font-medium text-muted-foreground">
                                             {t('page.transaction.dialog_modal.detail_dialog.transaction_discount', 'Diskon Transaksi')}
                                         </span>
                                         {loading ? (
                                             <Skeleton className="h-5 w-20" />
                                         ) : (
-                                            <span className="font-bold">
+                                            <span className="font-bold text-rose-600 dark:text-rose-400">
                                                 - {formatRupiah(discountAmount)}
                                             </span>
                                         )}
