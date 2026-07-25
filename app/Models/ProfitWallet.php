@@ -13,7 +13,13 @@ class ProfitWallet extends Model
     /** @use HasFactory<ProfitWalletFactory> */
     use HasFactory;
 
-    protected $fillable = ['balance', 'status'];
+    protected $fillable = ['balance', 'status', 'total_inflow', 'total_outflow'];
+
+    protected $casts = [
+        'balance' => 'float',
+        'total_inflow' => 'float',
+        'total_outflow' => 'float',
+    ];
 
     protected $dateFormat = 'U';
 

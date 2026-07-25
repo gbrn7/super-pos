@@ -21,9 +21,11 @@ test('repository handles wallet retrieval, creation, locking and updates', funct
     $lockedActive = $this->repository->lockActiveWalletForUpdate();
     expect($lockedActive->id)->toBe($found->id);
 
-    $updated = $this->repository->updateWalletBalance($found, 5000.00);
+    $updated = $this->repository->updateWalletBalance($found, 5000.00, 10000.00, 2000.00);
     expect($updated)->toBeTrue()
-        ->and($found->fresh()->balance)->toEqual(5000.00);
+        ->and($found->fresh()->balance)->toEqual(5000.00)
+        ->and($found->fresh()->total_inflow)->toEqual(10000.00)
+        ->and($found->fresh()->total_outflow)->toEqual(2000.00);
 
     $newWallet = $this->repository->createWallet(['balance' => 100.00, 'status' => 'inactive']);
     expect($newWallet)->toBeInstanceOf(ProfitWallet::class)

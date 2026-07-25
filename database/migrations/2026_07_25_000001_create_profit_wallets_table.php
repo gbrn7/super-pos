@@ -13,6 +13,8 @@ return new class extends Migration
         Schema::create('profit_wallets', function (Blueprint $table) {
             $table->id();
             $table->decimal('balance', 15, 2)->default(0.00);
+            $table->decimal('total_inflow', 15, 2)->default(0.00);
+            $table->decimal('total_outflow', 15, 2)->default(0.00);
             $table->string('status')->default(ProfitWalletStatusEnums::ACTIVE->value);
             $table->unsignedBigInteger('created_at');
             $table->unsignedBigInteger('updated_at');
@@ -21,6 +23,8 @@ return new class extends Migration
         $now = time();
         DB::table('profit_wallets')->insert([
             'balance' => 0.00,
+            'total_inflow' => 0.00,
+            'total_outflow' => 0.00,
             'status' => ProfitWalletStatusEnums::ACTIVE->value,
             'created_at' => $now,
             'updated_at' => $now,

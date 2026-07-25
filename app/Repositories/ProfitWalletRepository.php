@@ -35,9 +35,13 @@ class ProfitWalletRepository implements ProfitWalletRepositoryInterface
         return ProfitWallet::create($data);
     }
 
-    public function updateWalletBalance(ProfitWallet $wallet, float $balance): bool
+    public function updateWalletBalance(ProfitWallet $wallet, float $balance, float $totalInflow, float $totalOutflow): bool
     {
-        return $wallet->update(['balance' => $balance]);
+        return $wallet->update([
+            'balance' => $balance,
+            'total_inflow' => $totalInflow,
+            'total_outflow' => $totalOutflow,
+        ]);
     }
 
     public function createTransaction(array $data): ProfitWalletTransaction
@@ -84,8 +88,18 @@ class ProfitWalletRepository implements ProfitWalletRepositoryInterface
         return $query->paginate($request->limit)->onEachSide(1);
     }
 
-    public function getTransactionSummary(GetProfitWalletTransactionReqModel $request, float $currentBalance): array
+    public function getTransactionSummary(GetProfitWalletTransactionReqModel $request, ProfitWallet $wallet): array
     {
+        $hasFilters = $request->start_date || $request->end_date || $request->type || $request->transaction_type || $request->keyword;
+
+        if (! $hasFilters) {
+            return [
+                'current_balance' => (float) $wallet->balance,
+                'total_inflow' => (float) $wallet->total_inflow,
+                'total_outflow' => (float) $wallet->total_outflow,
+            ];
+        }
+
         $query = ProfitWalletTransaction::query();
 
         if ($request->start_date) {
@@ -113,7 +127,7 @@ class ProfitWalletRepository implements ProfitWalletRepositoryInterface
         }
 
         return [
-            'current_balance' => $currentBalance,
+            'current_balance' => (float) $wallet->balance,
             'total_inflow' => (float) $query->clone()->where('type', ProfitWalletTransactionDirectionEnums::IN->value)->sum('amount'),
             'total_outflow' => (float) $query->clone()->where('type', ProfitWalletTransactionDirectionEnums::OUT->value)->sum('amount'),
         ];

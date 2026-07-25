@@ -69,7 +69,9 @@ class ProfitWalletService implements ProfitWalletServiceInterface
                     'notes' => trans('message.success.profit_wallet.sales_profit_notes'),
                 ]);
 
-                $this->profitWalletRepository->updateWalletBalance($wallet, $after);
+                $inflowUpdate = (float) $wallet->total_inflow + ($profit >= 0 ? $amount : 0);
+                $outflowUpdate = (float) $wallet->total_outflow + ($profit < 0 ? $amount : 0);
+                $this->profitWalletRepository->updateWalletBalance($wallet, $after, $inflowUpdate, $outflowUpdate);
 
                 return $transaction;
             });
@@ -92,7 +94,7 @@ class ProfitWalletService implements ProfitWalletServiceInterface
         try {
             $wallet = $this->getOrCreateWallet();
 
-            return $this->profitWalletRepository->getTransactionSummary($request, (float) $wallet->balance);
+            return $this->profitWalletRepository->getTransactionSummary($request, $wallet);
         } catch (\Throwable $th) {
             throw CheckException::Check($th);
         }
@@ -125,7 +127,8 @@ class ProfitWalletService implements ProfitWalletServiceInterface
                     'notes' => $request->notes ?? 'Disbursement to owner bank account',
                 ]);
 
-                $this->profitWalletRepository->updateWalletBalance($wallet, $after);
+                $outflowUpdate = (float) $wallet->total_outflow + $request->amount;
+                $this->profitWalletRepository->updateWalletBalance($wallet, $after, (float) $wallet->total_inflow, $outflowUpdate);
 
                 return $transaction;
             });
@@ -161,7 +164,8 @@ class ProfitWalletService implements ProfitWalletServiceInterface
                     'notes' => $request->notes ?? 'Reinvestment/business capital withdrawal',
                 ]);
 
-                $this->profitWalletRepository->updateWalletBalance($wallet, $after);
+                $outflowUpdate = (float) $wallet->total_outflow + $request->amount;
+                $this->profitWalletRepository->updateWalletBalance($wallet, $after, (float) $wallet->total_inflow, $outflowUpdate);
 
                 return $transaction;
             });

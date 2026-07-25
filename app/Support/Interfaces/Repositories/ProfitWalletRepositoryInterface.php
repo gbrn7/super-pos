@@ -31,9 +31,9 @@ interface ProfitWalletRepositoryInterface
     public function createWallet(array $data): ProfitWallet;
 
     /**
-     * Update wallet balance.
+     * Update wallet balance, inflow, and outflow.
      */
-    public function updateWalletBalance(ProfitWallet $wallet, float $balance): bool;
+    public function updateWalletBalance(ProfitWallet $wallet, float $balance, float $totalInflow, float $totalOutflow): bool;
 
     /**
      * Record a transaction in the ledger.
@@ -48,5 +48,5 @@ interface ProfitWalletRepositoryInterface
     /**
      * Get transaction summary matching filters.
      */
-    public function getTransactionSummary(GetProfitWalletTransactionReqModel $request, float $currentBalance): array;
+    public function getTransactionSummary(GetProfitWalletTransactionReqModel $request, ProfitWallet $wallet): array;
 }
