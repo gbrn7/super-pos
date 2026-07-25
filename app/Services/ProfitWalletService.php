@@ -5,6 +5,9 @@ namespace App\Services;
 use App\Models\ProfitWallet;
 use App\Models\ProfitWalletTransaction;
 use App\Models\Transaction;
+use App\Support\Enums\ProfitWalletStatusEnums;
+use App\Support\Enums\ProfitWalletTransactionDirectionEnums;
+use App\Support\Enums\ProfitWalletTransactionTypeEnums;
 use App\Support\Interfaces\Repositories\ProfitWalletRepositoryInterface;
 use App\Support\Interfaces\Services\ProfitWalletServiceInterface;
 use App\Support\Models\ProfitWallet\DisburseProfitWalletReqModel;
@@ -32,7 +35,7 @@ class ProfitWalletService implements ProfitWalletServiceInterface
                 if (! $wallet) {
                     $wallet = $this->profitWalletRepository->createWallet([
                         'balance' => 0.00,
-                        'status' => 'active',
+                        'status' => ProfitWalletStatusEnums::ACTIVE->value,
                     ]);
                 }
 
@@ -51,14 +54,14 @@ class ProfitWalletService implements ProfitWalletServiceInterface
 
                 $before = (float) $wallet->balance;
                 $after = $before + $profit;
-                $type = $profit >= 0 ? 'in' : 'out';
+                $type = $profit >= 0 ? ProfitWalletTransactionDirectionEnums::IN->value : ProfitWalletTransactionDirectionEnums::OUT->value;
                 $amount = abs($profit);
 
                 $transaction = $this->profitWalletRepository->createTransaction([
                     'profit_wallet_id' => $wallet->id,
                     'amount' => $amount,
                     'type' => $type,
-                    'transaction_type' => 'sales_profit',
+                    'transaction_type' => ProfitWalletTransactionTypeEnums::SALES_PROFIT->value,
                     'reference_id' => $transactionId,
                     'reference_type' => Transaction::class,
                     'balance_before' => $before,
@@ -115,8 +118,8 @@ class ProfitWalletService implements ProfitWalletServiceInterface
                 $transaction = $this->profitWalletRepository->createTransaction([
                     'profit_wallet_id' => $wallet->id,
                     'amount' => $request->amount,
-                    'type' => 'out',
-                    'transaction_type' => 'disbursement',
+                    'type' => ProfitWalletTransactionDirectionEnums::OUT->value,
+                    'transaction_type' => ProfitWalletTransactionTypeEnums::DISBURSEMENT->value,
                     'balance_before' => $before,
                     'balance_after' => $after,
                     'notes' => $request->notes ?? 'Disbursement to owner bank account',
@@ -151,8 +154,8 @@ class ProfitWalletService implements ProfitWalletServiceInterface
                 $transaction = $this->profitWalletRepository->createTransaction([
                     'profit_wallet_id' => $wallet->id,
                     'amount' => $request->amount,
-                    'type' => 'out',
-                    'transaction_type' => 'capital_withdrawal',
+                    'type' => ProfitWalletTransactionDirectionEnums::OUT->value,
+                    'transaction_type' => ProfitWalletTransactionTypeEnums::CAPITAL_WITHDRAWAL->value,
                     'balance_before' => $before,
                     'balance_after' => $after,
                     'notes' => $request->notes ?? 'Reinvestment/business capital withdrawal',

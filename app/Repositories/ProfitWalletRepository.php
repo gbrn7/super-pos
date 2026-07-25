@@ -5,6 +5,8 @@ namespace App\Repositories;
 use App\Models\ProfitWallet;
 use App\Models\ProfitWalletTransaction;
 use App\Models\Transaction;
+use App\Support\Enums\ProfitWalletStatusEnums;
+use App\Support\Enums\ProfitWalletTransactionDirectionEnums;
 use App\Support\Interfaces\Repositories\ProfitWalletRepositoryInterface;
 use App\Support\Models\ProfitWallet\GetProfitWalletTransactionReqModel;
 use Carbon\Carbon;
@@ -15,12 +17,12 @@ class ProfitWalletRepository implements ProfitWalletRepositoryInterface
 {
     public function getActiveWallet(): ?ProfitWallet
     {
-        return ProfitWallet::where('status', 'active')->first();
+        return ProfitWallet::where('status', ProfitWalletStatusEnums::ACTIVE->value)->first();
     }
 
     public function lockActiveWalletForUpdate(): ?ProfitWallet
     {
-        return ProfitWallet::where('status', 'active')->lockForUpdate()->first();
+        return ProfitWallet::where('status', ProfitWalletStatusEnums::ACTIVE->value)->lockForUpdate()->first();
     }
 
     public function lockWalletForUpdate(int $id): ?ProfitWallet
@@ -112,8 +114,8 @@ class ProfitWalletRepository implements ProfitWalletRepositoryInterface
 
         return [
             'current_balance' => $currentBalance,
-            'total_inflow' => (float) $query->clone()->where('type', 'in')->sum('amount'),
-            'total_outflow' => (float) $query->clone()->where('type', 'out')->sum('amount'),
+            'total_inflow' => (float) $query->clone()->where('type', ProfitWalletTransactionDirectionEnums::IN->value)->sum('amount'),
+            'total_outflow' => (float) $query->clone()->where('type', ProfitWalletTransactionDirectionEnums::OUT->value)->sum('amount'),
         ];
     }
 }
