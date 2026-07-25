@@ -265,10 +265,10 @@ export function DetailDialog({
                                                     {t('page.transaction.dialog_modal.detail_dialog.qty_header', 'Jumlah')}
                                                 </TableHead>
                                                 <TableHead className="text-right">
-                                                    {t('page.transaction.dialog_modal.detail_dialog.discount_header', 'Diskon / Satuan')}
+                                                    {t('page.transaction.dialog_modal.detail_dialog.subtotal_header', 'Subtotal')}
                                                 </TableHead>
                                                 <TableHead className="text-right">
-                                                    {t('page.transaction.dialog_modal.detail_dialog.subtotal_header', 'Subtotal')}
+                                                    {t('page.transaction.dialog_modal.detail_dialog.discount_header', 'Diskon / Satuan')}
                                                 </TableHead>
                                             </TableRow>
                                         </TableHeader>
@@ -293,10 +293,10 @@ export function DetailDialog({
                                                                 <Skeleton className="mx-auto h-5 w-8" />
                                                             </TableCell>
                                                             <TableCell>
-                                                                <Skeleton className="ml-auto h-5 w-16" />
+                                                                <Skeleton className="ml-auto h-5 w-20" />
                                                             </TableCell>
                                                             <TableCell>
-                                                                <Skeleton className="ml-auto h-5 w-20" />
+                                                                <Skeleton className="ml-auto h-5 w-16" />
                                                             </TableCell>
                                                         </TableRow>
                                                     ),
@@ -354,6 +354,19 @@ export function DetailDialog({
                                                             <TableCell className="text-center font-semibold">
                                                                 {item.quantity}
                                                             </TableCell>
+                                                            <TableCell className="text-right font-medium">
+                                                                {formatRupiah(
+                                                                    item.subtotal ??
+                                                                        (Number(
+                                                                            item.price,
+                                                                        ) -
+                                                                            Number(
+                                                                                item.discount ||
+                                                                                    0,
+                                                                            )) *
+                                                                            item.quantity,
+                                                                )}
+                                                            </TableCell>
                                                             <TableCell className="text-right text-xs">
                                                                 {item.discount &&
                                                                 Number(
@@ -369,19 +382,6 @@ export function DetailDialog({
                                                                     </span>
                                                                 ) : (
                                                                     '-'
-                                                                )}
-                                                            </TableCell>
-                                                            <TableCell className="text-right font-medium">
-                                                                {formatRupiah(
-                                                                    item.subtotal ??
-                                                                        (Number(
-                                                                            item.price,
-                                                                        ) -
-                                                                            Number(
-                                                                                item.discount ||
-                                                                                    0,
-                                                                            )) *
-                                                                            item.quantity,
                                                                 )}
                                                             </TableCell>
                                                         </TableRow>
