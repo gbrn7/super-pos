@@ -128,7 +128,7 @@ export function DetailDialog({
 
     return (
         <Dialog open={isOpen} onOpenChange={onOpenChange}>
-            <DialogContent className="max-h-[90vh] overflow-y-auto p-6 sm:max-w-[95vw]">
+            <DialogContent className="max-h-[90vh] overflow-y-auto p-6 sm:max-w-4xl">
                 <div className="space-y-6 print:hidden">
                     <DialogHeader className="border-b pb-4">
                         <div className="flex items-center justify-between">
@@ -245,7 +245,8 @@ export function DetailDialog({
                                         'Rincian Produk',
                                     )}
                                 </h4>
-                                <div className="max-h-[320px] overflow-y-auto rounded-md border">
+                                <div className="overflow-x-auto rounded-md border">
+                                    <div className="min-w-[1100px] max-h-[320px] overflow-y-auto">
                                     <Table>
                                         <TableHeader className="sticky top-0 z-10 bg-muted">
                                             <TableRow>
@@ -405,6 +406,7 @@ export function DetailDialog({
                                             )}
                                         </TableBody>
                                     </Table>
+                                    </div>
                                 </div>
                             </div>
 
