@@ -102,6 +102,14 @@ export function DetailDialog({
 
     const currentTransaction = detailData || transaction;
     const discountAmount = Number(currentTransaction.discount_amount || 0);
+    const details = currentTransaction.details ?? [];
+    const grossSubtotal = details.length > 0
+        ? details.reduce((sum, item) => sum + (Number(item.price) || 0) * item.quantity, 0)
+        : Number(currentTransaction.total_amount) + discountAmount;
+    const totalItemDiscount = details.reduce(
+        (sum, item) => sum + (Number(item.discount) || 0) * item.quantity,
+        0,
+    );
 
     const handlePrint = () => {
         window.print();
@@ -368,20 +376,28 @@ export function DetailDialog({
 
                             {/* Financial Summary Breakdown */}
                             <div className="space-y-2 rounded-lg border bg-muted/30 p-4">
-                                {discountAmount > 0 && (
-                                    <div className="flex items-center justify-between text-sm">
-                                        <span className="text-muted-foreground">
-                                            Subtotal Sebelum Diskon
+                                <div className="flex items-center justify-between text-sm">
+                                    <span className="text-muted-foreground">
+                                        {t('page.transaction.dialog_modal.detail_dialog.subtotal_header', 'Subtotal')}
+                                    </span>
+                                    {loading ? (
+                                        <Skeleton className="h-5 w-20" />
+                                    ) : (
+                                        <span className="font-medium">
+                                            {formatRupiah(grossSubtotal)}
+                                        </span>
+                                    )}
+                                </div>
+                                {totalItemDiscount > 0 && (
+                                    <div className="flex items-center justify-between text-sm text-emerald-600 dark:text-emerald-400">
+                                        <span className="font-medium">
+                                            {t('page.transaction.dialog_modal.detail_dialog.product_discount', 'Diskon Produk')}
                                         </span>
                                         {loading ? (
                                             <Skeleton className="h-5 w-20" />
                                         ) : (
-                                            <span className="font-medium">
-                                                {formatRupiah(
-                                                    Number(
-                                                        currentTransaction.total_amount,
-                                                    ) + discountAmount,
-                                                )}
+                                            <span className="font-bold">
+                                                - {formatRupiah(totalItemDiscount)}
                                             </span>
                                         )}
                                     </div>
@@ -389,7 +405,7 @@ export function DetailDialog({
                                 {discountAmount > 0 && (
                                     <div className="flex items-center justify-between text-sm text-emerald-600 dark:text-emerald-400">
                                         <span className="font-medium">
-                                            Diskon Transaksi
+                                            {t('page.transaction.dialog_modal.detail_dialog.transaction_discount', 'Diskon Transaksi')}
                                         </span>
                                         {loading ? (
                                             <Skeleton className="h-5 w-20" />

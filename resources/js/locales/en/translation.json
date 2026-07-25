@@ -998,7 +998,9 @@
                     "cost_price_header": "Cost Price",
                     "price_header": "Selling Price",
                     "discount_header": "Discount",
-                    "subtotal_header": "Subtotal"
+                    "subtotal_header": "Subtotal",
+                    "product_discount": "Product Discount",
+                    "transaction_discount": "Transaction Discount"
                 }
             }
         },
