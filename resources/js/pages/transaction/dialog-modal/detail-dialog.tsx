@@ -442,7 +442,7 @@ export function DetailDialog({
                                         )}
                                     </div>
                                 )}
-                                <div className="flex items-center justify-between text-sm">
+                                <div className="flex items-center justify-between border-t pt-2 text-sm">
                                     <span className="font-medium text-muted-foreground">
                                         Total Transaksi
                                     </span>
