@@ -262,13 +262,13 @@ export function DataTable<TData, TValue>({
                                             )}
                                         </SelectItem>
                                         <SelectItem value="invoice_number">
-                                            No. Invoice
+                                            {t('component.data_table.search_component.invoice_number', 'No. Invoice')}
                                         </SelectItem>
                                         <SelectItem value="payment_method_name">
-                                            Metode Pembayaran
+                                            {t('component.data_table.search_component.payment_method_name', 'Metode Pembayaran')}
                                         </SelectItem>
                                         <SelectItem value="user_name">
-                                            Kasir / Petugas
+                                            {t('component.data_table.search_component.user_name', 'Kasir / Petugas')}
                                         </SelectItem>
                                     </SelectGroup>
                                 </SelectContent>
@@ -388,7 +388,7 @@ export function DataTable<TData, TValue>({
                     <div className="space-y-1.5">
                         <Label className="flex items-center gap-1 text-xs font-medium text-muted-foreground">
                             <Calendar className="h-3.5 w-3.5" />
-                            Tanggal Mulai
+                            {t('component.data_table.filter.start_date_label', 'Tanggal Mulai')}
                         </Label>
                         <Input
                             type="date"
@@ -402,7 +402,7 @@ export function DataTable<TData, TValue>({
                     <div className="space-y-1.5">
                         <Label className="flex items-center gap-1 text-xs font-medium text-muted-foreground">
                             <Calendar className="h-3.5 w-3.5" />
-                            Tanggal Akhir
+                            {t('component.data_table.filter.end_date_label', 'Tanggal Akhir')}
                         </Label>
                         <Input
                             type="date"
@@ -516,7 +516,7 @@ export function DataTable<TData, TValue>({
                                     className="gap-1.5 bg-muted/50 px-2 py-0.5 text-xs font-normal hover:bg-muted"
                                 >
                                     <span>
-                                        Tanggal Mulai: {queryParam.start_date}
+                                        {t('component.data_table.filter.start_date_label', 'Tanggal Mulai')}: {queryParam.start_date}
                                     </span>
                                     <button
                                         type="button"
@@ -525,7 +525,7 @@ export function DataTable<TData, TValue>({
                                     >
                                         <X className="h-3 w-3" />
                                         <span className="sr-only">
-                                            Hapus filter tanggal mulai
+                                            {t('component.data_table.remove_start_date_filter', 'Hapus filter tanggal mulai')}
                                         </span>
                                     </button>
                                 </Badge>
@@ -537,7 +537,7 @@ export function DataTable<TData, TValue>({
                                     className="gap-1.5 bg-muted/50 px-2 py-0.5 text-xs font-normal hover:bg-muted"
                                 >
                                     <span>
-                                        Tanggal Akhir: {queryParam.end_date}
+                                        {t('component.data_table.filter.end_date_label', 'Tanggal Akhir')}: {queryParam.end_date}
                                     </span>
                                     <button
                                         type="button"
@@ -546,7 +546,7 @@ export function DataTable<TData, TValue>({
                                     >
                                         <X className="h-3 w-3" />
                                         <span className="sr-only">
-                                            Hapus filter tanggal akhir
+                                            {t('component.data_table.remove_end_date_filter', 'Hapus filter tanggal akhir')}
                                         </span>
                                     </button>
                                 </Badge>
@@ -701,7 +701,7 @@ export function DataTable<TData, TValue>({
                                 pagination.current_page <= 1 || processing
                             }
                         >
-                            <span className="sr-only">Halaman Pertama</span>
+                            <span className="sr-only">{t('component.data_table.pagination.first_page', 'Halaman Pertama')}</span>
                             <IconChevronsLeft className="h-4 w-4" />
                         </Button>
                         <Button
@@ -719,7 +719,7 @@ export function DataTable<TData, TValue>({
                                 pagination.current_page <= 1 || processing
                             }
                         >
-                            <span className="sr-only">Halaman Sebelumnya</span>
+                            <span className="sr-only">{t('component.data_table.pagination.prev_page', 'Halaman Sebelumnya')}</span>
                             <IconChevronLeft className="h-4 w-4" />
                         </Button>
                         <Button
@@ -741,7 +741,7 @@ export function DataTable<TData, TValue>({
                                     pagination.last_page || processing
                             }
                         >
-                            <span className="sr-only">Halaman Selanjutnya</span>
+                            <span className="sr-only">{t('component.data_table.pagination.next_page', 'Halaman Selanjutnya')}</span>
                             <IconChevronRight className="h-4 w-4" />
                         </Button>
                         <Button
@@ -756,7 +756,7 @@ export function DataTable<TData, TValue>({
                                     pagination.last_page || processing
                             }
                         >
-                            <span className="sr-only">Halaman Terakhir</span>
+                            <span className="sr-only">{t('component.data_table.pagination.last_page', 'Halaman Terakhir')}</span>
                             <IconChevronsRight className="h-4 w-4" />
                         </Button>
                     </div>

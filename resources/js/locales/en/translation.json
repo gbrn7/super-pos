@@ -157,7 +157,11 @@
                 "barcode": "Barcode",
                 "description": "Description",
                 "guard_name": "Guard Name",
-                "placeholder": "Search"
+                "placeholder": "Search",
+                "search_label": "Search",
+                "invoice_number": "Invoice No.",
+                "payment_method_name": "Payment Method",
+                "user_name": "Cashier / Staff"
             },
             "filter": {
                 "category_placeholder": "Select Category",
@@ -178,7 +182,9 @@
                 "is_available_stock_placholder": "Select Stock Status",
                 "is_available_stock_label": "Stock Status",
                 "available_stock_label": "Available",
-                "unavailable_stock_label": "Unavailable"
+                "unavailable_stock_label": "Unavailable",
+                "start_date_label": "Start Date",
+                "end_date_label": "End Date"
             },
             "export": {
                 "label": "Export",
@@ -198,7 +204,15 @@
             "no_result": "No results found",
             "row_per_page": "Rows per page",
             "selected_row": "%d of %d row(s) selected",
-            "pagination_info": "Page %d of %d"
+            "pagination_info": "Page %d of %d",
+            "pagination": {
+                "first_page": "First Page",
+                "prev_page": "Previous Page",
+                "next_page": "Next Page",
+                "last_page": "Last Page"
+            },
+            "remove_start_date_filter": "Remove start date filter",
+            "remove_end_date_filter": "Remove end date filter"
         }
     },
     "page": {

@@ -157,7 +157,11 @@
                 "barcode": "Barcode",
                 "description": "Deskripsi",
                 "guard_name": "Nama Garda",
-                "placeholder": "Telusuri"
+                "placeholder": "Telusuri",
+                "search_label": "Pencarian",
+                "invoice_number": "No. Invoice",
+                "payment_method_name": "Metode Pembayaran",
+                "user_name": "Kasir / Petugas"
             },
             "filter": {
                 "category_placeholder": "Pilih Kategori",
@@ -178,7 +182,9 @@
                 "is_available_stock_placholder": "Pilih Status Stok",
                 "is_available_stock_label": "Status Stok",
                 "available_stock_label": "Tersedia",
-                "unavailable_stock_label": "Tidak Tersedia"
+                "unavailable_stock_label": "Tidak Tersedia",
+                "start_date_label": "Tanggal Mulai",
+                "end_date_label": "Tanggal Akhir"
             },
             "export": {
                 "label": "Ekspor",
@@ -198,7 +204,15 @@
             "no_result": "Tidak ada hasil",
             "row_per_page": "Baris per halaman",
             "selected_row": "%d dari %d baris terpilih",
-            "pagination_info": "Halaman %d dari %d"
+            "pagination_info": "Halaman %d dari %d",
+            "pagination": {
+                "first_page": "Halaman Pertama",
+                "prev_page": "Halaman Sebelumnya",
+                "next_page": "Halaman Selanjutnya",
+                "last_page": "Halaman Terakhir"
+            },
+            "remove_start_date_filter": "Hapus filter tanggal mulai",
+            "remove_end_date_filter": "Hapus filter tanggal akhir"
         }
     },
     "page": {
