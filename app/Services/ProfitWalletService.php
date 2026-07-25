@@ -66,7 +66,7 @@ class ProfitWalletService implements ProfitWalletServiceInterface
                     'reference_type' => Transaction::class,
                     'balance_before' => $before,
                     'balance_after' => $after,
-                    'notes' => trans('message.success.profit_wallet.sales_profit_notes'),
+                    'notes' => trans('message.success.profit_wallet.sales_notes'),
                 ]);
 
                 $inflowUpdate = (float) $wallet->total_inflow + ($profit >= 0 ? $amount : 0);

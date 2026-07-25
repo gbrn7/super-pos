@@ -14,7 +14,7 @@ return [
         'password_updated' => 'Password updated',
         'store_settings_updated' => 'Store settings successfully updated',
         'profit_wallet' => [
-            'sales_profit_notes' => 'Sales profit from POS checkout',
+            'sales_profit_notes' => 'Sales from POS checkout',
         ],
     ],
 

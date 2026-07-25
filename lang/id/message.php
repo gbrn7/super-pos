@@ -14,7 +14,7 @@ return [
         'password_updated' => 'Password diperbarui',
         'store_settings_updated' => 'Pengaturan toko berhasil diperbarui',
         'profit_wallet' => [
-            'sales_profit_notes' => 'Keuntungan penjualan dari POS kasir',
+            'sales_profit_notes' => 'Penjualan dari POS kasir',
         ],
     ],
     'error' => [
