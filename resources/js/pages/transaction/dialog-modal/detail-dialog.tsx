@@ -103,16 +103,16 @@ export function DetailDialog({
     const currentTransaction = detailData || transaction;
     const discountAmount = Number(currentTransaction.discount_amount || 0);
     const details = currentTransaction.details ?? [];
-    const totalItemDiscount = details.reduce(
-        (sum, item) => sum + (Number(item.discount) || 0) * item.quantity,
-        0,
-    );
-    const grossSubtotal = details.length > 0
+    const netSubtotal = details.length > 0
         ? details.reduce(
-              (sum, item) => sum + (Number(item.price) || 0) * item.quantity,
+              (sum, item) =>
+                  sum +
+                  (item.subtotal ??
+                      (Number(item.price) - Number(item.discount || 0)) *
+                          item.quantity),
               0,
           )
-        : Number(currentTransaction.total_amount) + discountAmount + totalItemDiscount;
+        : Number(currentTransaction.total_amount) + discountAmount;
 
     const handlePrint = () => {
         window.print();
@@ -399,24 +399,10 @@ export function DetailDialog({
                                         <Skeleton className="h-5 w-20" />
                                     ) : (
                                         <span className="font-medium">
-                                            {formatRupiah(grossSubtotal)}
+                                            {formatRupiah(netSubtotal)}
                                         </span>
                                     )}
                                 </div>
-                                {totalItemDiscount > 0 && (
-                                    <div className="flex items-center justify-between text-sm">
-                                        <span className="font-medium text-muted-foreground">
-                                            {t('page.transaction.dialog_modal.detail_dialog.product_discount', 'Diskon Produk')}
-                                        </span>
-                                        {loading ? (
-                                            <Skeleton className="h-5 w-20" />
-                                        ) : (
-                                            <span className="font-bold text-rose-600 dark:text-rose-400">
-                                                - {formatRupiah(totalItemDiscount)}
-                                            </span>
-                                        )}
-                                    </div>
-                                )}
                                 {discountAmount > 0 && (
                                     <div className="flex items-center justify-between text-sm">
                                         <span className="font-medium text-muted-foreground">
