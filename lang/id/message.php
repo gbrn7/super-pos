@@ -16,6 +16,10 @@ return [
         'profit_wallet' => [
             'sales_notes' => 'Penjualan dari POS kasir',
         ],
+        'capital_wallet' => [
+            'sales_recovery_notes' => 'Pemulihan modal dari penjualan POS',
+            'reinvestment_notes' => 'Reinvestasi dari dompet profit',
+        ],
     ],
     'error' => [
         'data_not_found' => 'Data tidak ditemukan',
@@ -40,6 +44,11 @@ return [
             'amount_must_be_greater_than_zero' => 'Jumlah nominal harus lebih besar dari nol.',
             'insufficient_balance_for_disbursement' => 'Saldo dompet profit tidak mencukupi untuk pencairan.',
             'insufficient_balance_for_capital_withdrawal' => 'Saldo dompet profit tidak mencukupi untuk penarikan modal.',
+        ],
+        'capital_wallet' => [
+            'amount_must_be_greater_than_zero' => 'Jumlah nominal harus lebih besar dari nol.',
+            'insufficient_balance_for_drawdown' => 'Saldo dompet modal tidak mencukupi untuk penarikan modal.',
+            'insufficient_balance_for_purchase' => 'Saldo dompet modal tidak mencukupi untuk pembelian produk.',
         ],
     ],
 ];

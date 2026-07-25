@@ -16,6 +16,10 @@ return [
         'profit_wallet' => [
             'sales_notes' => 'Sales from POS checkout',
         ],
+        'capital_wallet' => [
+            'sales_recovery_notes' => 'Sales capital recovery from POS checkout',
+            'reinvestment_notes' => 'Reinvestment from profit wallet',
+        ],
     ],
 
     'error' => [
@@ -41,6 +45,11 @@ return [
             'amount_must_be_greater_than_zero' => 'Amount must be greater than zero.',
             'insufficient_balance_for_disbursement' => 'Insufficient wallet balance for disbursement.',
             'insufficient_balance_for_capital_withdrawal' => 'Insufficient wallet balance for capital withdrawal.',
+        ],
+        'capital_wallet' => [
+            'amount_must_be_greater_than_zero' => 'Amount must be greater than zero.',
+            'insufficient_balance_for_drawdown' => 'Insufficient capital wallet balance for drawdown.',
+            'insufficient_balance_for_purchase' => 'Insufficient capital wallet balance for product purchase.',
         ],
     ],
 

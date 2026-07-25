@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Repositories\CapitalWalletRepository;
 use App\Repositories\CategoryRepository;
 use App\Repositories\MasterProductRepository;
 use App\Repositories\PaymentMethodRepository;
@@ -12,6 +13,7 @@ use App\Repositories\TransactionDetailRepository;
 use App\Repositories\TransactionRepository;
 use App\Repositories\UnitRepository;
 use App\Repositories\UserRepository;
+use App\Services\CapitalWalletService;
 use App\Services\CategoryService;
 use App\Services\MasterProductService;
 use App\Services\PaymentMethodService;
@@ -23,6 +25,7 @@ use App\Services\TransactionService;
 use App\Services\UnitService;
 use App\Services\UserService;
 use App\Support\Enums\RoleEnums;
+use App\Support\Interfaces\Repositories\CapitalWalletRepositoryInterface;
 use App\Support\Interfaces\Repositories\CategoryRepositoryInterface;
 use App\Support\Interfaces\Repositories\MasterProductRepositoryInterface;
 use App\Support\Interfaces\Repositories\PaymentMethodRepositoryInterface;
@@ -33,6 +36,7 @@ use App\Support\Interfaces\Repositories\TransactionDetailRepositoryInterface;
 use App\Support\Interfaces\Repositories\TransactionRepositoryInterface;
 use App\Support\Interfaces\Repositories\UnitRepositoryInterface;
 use App\Support\Interfaces\Repositories\UserRepositoryInterface;
+use App\Support\Interfaces\Services\CapitalWalletServiceInterface;
 use App\Support\Interfaces\Services\CategoryServiceInterface;
 use App\Support\Interfaces\Services\MasterProductServiceInterface;
 use App\Support\Interfaces\Services\PaymentMethodServiceInterface;
@@ -96,6 +100,10 @@ class AppServiceProvider extends ServiceProvider
         // Profit wallet service repository
         $this->app->bind(ProfitWalletRepositoryInterface::class, ProfitWalletRepository::class);
         $this->app->bind(ProfitWalletServiceInterface::class, ProfitWalletService::class);
+
+        // Capital wallet service repository
+        $this->app->bind(CapitalWalletRepositoryInterface::class, CapitalWalletRepository::class);
+        $this->app->bind(CapitalWalletServiceInterface::class, CapitalWalletService::class);
     }
 
     /**
