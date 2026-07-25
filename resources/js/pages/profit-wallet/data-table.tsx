@@ -11,6 +11,7 @@ import {
     IconChevronsRight,
 } from '@tabler/icons-react';
 import { useTranslation } from 'react-i18next';
+import { sprintf } from 'sprintf-js';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import {
@@ -197,7 +198,7 @@ export function DataTable<TData, TValue>({
                 <div className="space-y-1.5">
                     <Label className="flex items-center gap-1 text-xs font-medium text-muted-foreground">
                         <Calendar className="h-3.5 w-3.5" />
-                        Mulai
+                        {t('page.profit_wallet.data_table.filters.start_date_label', 'Mulai')}
                     </Label>
                     <Input
                         type="date"
@@ -212,7 +213,7 @@ export function DataTable<TData, TValue>({
                 <div className="space-y-1.5">
                     <Label className="flex items-center gap-1 text-xs font-medium text-muted-foreground">
                         <Calendar className="h-3.5 w-3.5" />
-                        Hingga
+                        {t('page.profit_wallet.data_table.filters.end_date_label', 'Hingga')}
                     </Label>
                     <Input
                         type="date"
@@ -269,27 +270,27 @@ export function DataTable<TData, TValue>({
                     )}
                     {queryParam.start_date && (
                         <Badge variant="secondary" className="gap-1 font-normal py-0.5 px-2 bg-muted/50 hover:bg-muted">
-                            Mulai: {queryParam.start_date}
+                            {t('page.profit_wallet.data_table.filters.start_date_label', 'Mulai')}: {queryParam.start_date}
                             <button
                                 type="button"
                                 onClick={() => onQueryParamChange('start_date', '')}
                                 className="ml-0.5 rounded-full p-0.5 text-muted-foreground transition-colors hover:bg-muted-foreground/20 hover:text-foreground"
                             >
                                 <X className="h-3 w-3" />
-                                <span className="sr-only">Hapus filter tanggal mulai</span>
+                                <span className="sr-only">{t('component.data_table.remove_start_date_filter', 'Hapus filter tanggal mulai')}</span>
                             </button>
                         </Badge>
                     )}
                     {queryParam.end_date && (
                         <Badge variant="secondary" className="gap-1 font-normal py-0.5 px-2 bg-muted/50 hover:bg-muted">
-                            Akhir: {queryParam.end_date}
+                            {t('page.profit_wallet.data_table.filters.end_date_badge_label', 'Akhir')}: {queryParam.end_date}
                             <button
                                 type="button"
                                 onClick={() => onQueryParamChange('end_date', '')}
                                 className="ml-0.5 rounded-full p-0.5 text-muted-foreground transition-colors hover:bg-muted-foreground/20 hover:text-foreground"
                             >
                                 <X className="h-3 w-3" />
-                                <span className="sr-only">Hapus filter tanggal akhir</span>
+                                <span className="sr-only">{t('component.data_table.remove_end_date_filter', 'Hapus filter tanggal akhir')}</span>
                             </button>
                         </Badge>
                     )}
@@ -341,7 +342,15 @@ export function DataTable<TData, TValue>({
             {/* Pagination Footer */}
             <div className="flex flex-col items-center justify-between gap-4 border-t px-2 py-4 lg:flex-row">
                 <div className="text-sm text-muted-foreground">
-                    Halaman {pagination.current_page} dari {pagination.last_page} ({pagination.total} total data)
+                    {sprintf(
+                        t(
+                            'component.data_table.pagination_info_total',
+                            'Halaman %d dari %d (%d total data)',
+                        ),
+                        pagination.current_page,
+                        pagination.last_page,
+                        pagination.total,
+                    )}
                 </div>
                 <div className="flex w-full items-center gap-8 lg:w-fit">
                     <Select
@@ -372,7 +381,7 @@ export function DataTable<TData, TValue>({
                             onClick={() => onChangePaginationPage(1)}
                             disabled={pagination.current_page === 1 || processing}
                         >
-                            <span className="sr-only">Go to first page</span>
+                            <span className="sr-only">{t('component.data_table.pagination.first_page', 'Halaman Pertama')}</span>
                             <IconChevronsLeft className="h-4 w-4" />
                         </Button>
                         <Button
@@ -386,7 +395,7 @@ export function DataTable<TData, TValue>({
                             }}
                             disabled={pagination.current_page === 1 || processing}
                         >
-                            <span className="sr-only">Go to previous page</span>
+                            <span className="sr-only">{t('component.data_table.pagination.prev_page', 'Halaman Sebelumnya')}</span>
                             <IconChevronLeft className="h-4 w-4" />
                         </Button>
                         <Button
@@ -400,7 +409,7 @@ export function DataTable<TData, TValue>({
                             }}
                             disabled={pagination.current_page === pagination.last_page || processing}
                         >
-                            <span className="sr-only">Go to next page</span>
+                            <span className="sr-only">{t('component.data_table.pagination.next_page', 'Halaman Selanjutnya')}</span>
                             <IconChevronRight className="h-4 w-4" />
                         </Button>
                         <Button
@@ -410,7 +419,7 @@ export function DataTable<TData, TValue>({
                             onClick={() => onChangePaginationPage(pagination.last_page)}
                             disabled={pagination.current_page === pagination.last_page || processing}
                         >
-                            <span className="sr-only">Go to last page</span>
+                            <span className="sr-only">{t('component.data_table.pagination.last_page', 'Halaman Terakhir')}</span>
                             <IconChevronsRight className="h-4 w-4" />
                         </Button>
                     </div>

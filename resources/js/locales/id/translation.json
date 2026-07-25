@@ -212,7 +212,8 @@
                 "last_page": "Halaman Terakhir"
             },
             "remove_start_date_filter": "Hapus filter tanggal mulai",
-            "remove_end_date_filter": "Hapus filter tanggal akhir"
+            "remove_end_date_filter": "Hapus filter tanggal akhir",
+            "pagination_info_total": "Halaman %d dari %d (%d total data)"
         }
     },
     "page": {
@@ -259,7 +260,10 @@
                     "tx_type_placeholder": "Semua Jenis",
                     "tx_sales_profit": "Keuntungan Penjualan",
                     "tx_disbursement": "Pencairan Profit",
-                    "tx_capital_withdrawal": "Penarikan Modal"
+                    "tx_capital_withdrawal": "Penarikan Modal",
+                    "start_date_label": "Mulai",
+                    "end_date_label": "Hingga",
+                    "end_date_badge_label": "Akhir"
                 },
                 "columns": {
                     "created_at": "Waktu Mutasi",

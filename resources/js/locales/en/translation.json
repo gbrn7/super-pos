@@ -211,6 +211,7 @@
                 "next_page": "Next Page",
                 "last_page": "Last Page"
             },
+            "pagination_info_total": "Page %d of %d (%d total items)",
             "remove_start_date_filter": "Remove start date filter",
             "remove_end_date_filter": "Remove end date filter"
         }
@@ -259,7 +260,10 @@
                     "tx_type_placeholder": "All Types",
                     "tx_sales_profit": "Sales Profit",
                     "tx_disbursement": "Disbursement",
-                    "tx_capital_withdrawal": "Capital Withdrawal"
+                    "tx_capital_withdrawal": "Capital Withdrawal",
+                    "start_date_label": "Start Date",
+                    "end_date_label": "End Date",
+                    "end_date_badge_label": "End"
                 },
                 "columns": {
                     "created_at": "Transaction Time",
