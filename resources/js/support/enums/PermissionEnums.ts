@@ -58,7 +58,7 @@ enum TransactionPermissionEnums {
     READ = 'read-transaction',
     UPDATE = 'update-transaction',
     DELETE = 'delete-transaction',
-    READ_CASH_PROFIT = 'read-cash-profit',
+
 }
 
 enum ProfitWalletPermissionEnums {
@@ -66,6 +66,14 @@ enum ProfitWalletPermissionEnums {
     READ = 'read-profit-wallet',
     DISBURSE = 'disburse-profit-wallet',
     WITHDRAW_CAPITAL = 'withdraw-capital-profit-wallet',
+}
+
+enum CapitalWalletPermissionEnums {
+    CREATE = 'create-capital-wallet',
+    READ = 'read-capital-wallet',
+    INJECT = 'inject-capital-wallet',
+    DRAWDOWN = 'drawdown-capital-wallet',
+    PURCHASE_PRODUCT = 'purchase-product-capital-wallet',
 }
 
 export const PERMISSIONENUMS = {
@@ -79,6 +87,7 @@ export const PERMISSIONENUMS = {
     MASTER_PRODUCT: MasterProductPermissionEnums,
     TRANSACTION: TransactionPermissionEnums,
     PROFIT_WALLET: ProfitWalletPermissionEnums,
+    CAPITAL_WALLET: CapitalWalletPermissionEnums,
 };
 
 export const PERMISSIONLIST = (): Permission[] => {
@@ -311,13 +320,7 @@ export const PERMISSIONLIST = (): Permission[] => {
                     ),
                     VALUE: TransactionPermissionEnums.DELETE,
                 },
-                {
-                    LABEL: t(
-                        'permission_label.transaction.read_cash_profit',
-                        'Baca Kas Profit',
-                    ),
-                    VALUE: TransactionPermissionEnums.READ_CASH_PROFIT,
-                },
+
             ],
         },
         {
@@ -334,6 +337,27 @@ export const PERMISSIONLIST = (): Permission[] => {
                 {
                     LABEL: t('permission_label.profit_wallet.withdraw_capital', 'Penarikan Modal'),
                     VALUE: ProfitWalletPermissionEnums.WITHDRAW_CAPITAL,
+                },
+            ],
+        },
+        {
+            LABEL: t('permission_label.capital_wallet.permission', 'Dompet Modal'),
+            ACCESSLIST: [
+                {
+                    LABEL: t('permission_label.capital_wallet.read', 'Baca Dompet Modal'),
+                    VALUE: CapitalWalletPermissionEnums.READ,
+                },
+                {
+                    LABEL: t('permission_label.capital_wallet.inject', 'Suntik Modal'),
+                    VALUE: CapitalWalletPermissionEnums.INJECT,
+                },
+                {
+                    LABEL: t('permission_label.capital_wallet.drawdown', 'Tarik Modal'),
+                    VALUE: CapitalWalletPermissionEnums.DRAWDOWN,
+                },
+                {
+                    LABEL: t('permission_label.capital_wallet.purchase_product', 'Kulakan Produk'),
+                    VALUE: CapitalWalletPermissionEnums.PURCHASE_PRODUCT,
                 },
             ],
         },

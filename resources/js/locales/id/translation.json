@@ -61,6 +61,10 @@
         "profit_wallet": {
             "min_amount": "Nominal minimal Rp 0,01",
             "max_notes": "Catatan maksimal 500 karakter"
+        },
+        "capital_wallet": {
+            "min_amount": "Nominal minimal Rp 0,01",
+            "max_notes": "Catatan maksimal 500 karakter"
         }
     },
     "permission_label": {
@@ -122,6 +126,13 @@
             "read": "Baca Dompet Profit",
             "disburse": "Pencairan Dana",
             "withdraw_capital": "Penarikan Modal"
+        },
+        "capital_wallet": {
+            "permission": "Akses Fitur Dompet Modal",
+            "read": "Baca Dompet Modal",
+            "inject": "Suntik Modal",
+            "drawdown": "Tarik Modal",
+            "purchase_product": "Kulakan Produk"
         }
     },
     "component": {
@@ -144,7 +155,8 @@
             "product_management_menu_label": "Manajemen Produk",
             "user_management_menu_label": "Manajemen Pengguna",
             "group_finance": "Keuangan",
-            "profit_wallet_menu_label": "Dompet Profit"
+            "profit_wallet_menu_label": "Dompet Profit",
+            "capital_wallet_menu_label": "Dompet Modal"
         },
         "data_table": {
             "search_component": {
@@ -261,6 +273,79 @@
                     "tx_sales_profit": "Keuntungan Penjualan",
                     "tx_disbursement": "Pencairan Profit",
                     "tx_capital_withdrawal": "Penarikan Modal",
+                    "start_date_label": "Mulai",
+                    "end_date_label": "Hingga",
+                    "end_date_badge_label": "Akhir"
+                },
+                "columns": {
+                    "created_at": "Waktu Mutasi",
+                    "tx_type": "Jenis Transaksi",
+                    "direction": "Arah Aliran",
+                    "amount": "Jumlah",
+                    "balance_before": "Saldo Awal",
+                    "balance_after": "Saldo Akhir",
+                    "notes": "Catatan",
+                    "reference": "Rujukan"
+                }
+            }
+        },
+        "capital_wallet": {
+            "page_name": "Dompet Modal",
+            "cards": {
+                "balance": "Saldo Berjalan",
+                "inflow": "Total Uang Masuk",
+                "outflow": "Total Uang Keluar"
+            },
+            "dialog_modal": {
+                "inject": {
+                    "dialog_button": "Suntik Modal",
+                    "dialog_title": "Suntik Modal",
+                    "dialog_desc": "Tambahkan dana segar ke dompet modal untuk membiayai operasional atau pembelian stok.",
+                    "amount_label": "Nominal Suntikan",
+                    "amount_placeholder": "Masukkan nominal modal baru",
+                    "notes_label": "Catatan",
+                    "notes_placeholder": "Masukkan catatan suntikan (misal: Setoran Modal Pemilik)",
+                    "cancel_btn": "Batal",
+                    "confirm_btn": "Suntik"
+                },
+                "drawdown": {
+                    "dialog_button": "Tarik Modal",
+                    "dialog_title": "Tarik Modal",
+                    "dialog_desc": "Tarik kembali dana modal yang tidak terpakai dari kas dompet modal.",
+                    "amount_label": "Nominal Penarikan",
+                    "amount_placeholder": "Masukkan nominal penarikan modal",
+                    "notes_label": "Catatan",
+                    "notes_placeholder": "Masukkan catatan penarikan (misal: Penarikan Modal Owner)",
+                    "cancel_btn": "Batal",
+                    "confirm_btn": "Tarik"
+                },
+                "purchase_product": {
+                    "dialog_button": "Kulakan Produk",
+                    "dialog_title": "Kulakan Produk",
+                    "dialog_desc": "Gunakan saldo dompet modal untuk membiayai pembelian stok produk (kulakan).",
+                    "amount_label": "Nominal Pembelian",
+                    "amount_placeholder": "Masukkan nominal pembelian produk",
+                    "notes_label": "Catatan",
+                    "notes_placeholder": "Masukkan catatan kulakan (misal: Kulakan Sembako Supplier A)",
+                    "cancel_btn": "Batal",
+                    "confirm_btn": "Bayar"
+                }
+            },
+            "data_table": {
+                "table_title": "Mutasi Dompet",
+                "filters": {
+                    "keyword": "Kata Kunci",
+                    "type_label": "Arah Aliran",
+                    "type_placeholder": "Semua Arah",
+                    "direction_in": "Uang Masuk",
+                    "direction_out": "Uang Keluar",
+                    "tx_type_label": "Jenis Transaksi",
+                    "tx_type_placeholder": "Semua Jenis",
+                    "tx_capital_injection": "Suntik Modal",
+                    "tx_capital_drawdown": "Tarik Modal",
+                    "tx_product_purchase": "Kulakan Produk",
+                    "tx_sales_recovery": "Pemulihan Modal",
+                    "tx_reinvestment": "Reinvestasi",
                     "start_date_label": "Mulai",
                     "end_date_label": "Hingga",
                     "end_date_badge_label": "Akhir"

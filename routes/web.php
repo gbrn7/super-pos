@@ -11,6 +11,7 @@ use App\Http\Controllers\Api\ApiTransactionController;
 use App\Http\Controllers\Api\ApiTransactionDetailController;
 use App\Http\Controllers\Api\ApiUnitController;
 use App\Http\Controllers\Api\ApiUserController;
+use App\Http\Controllers\CapitalWalletController;
 use App\Http\Controllers\CashierController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ExampleController;
@@ -56,6 +57,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('example', ExampleController::class);
 
     Route::resource('profit-wallet', ProfitWalletController::class)->only('index');
+    Route::resource('capital-wallet', CapitalWalletController::class)->only('index');
 
     Route::group(['prefix' => 'api'], function () {
         // categories

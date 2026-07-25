@@ -37,8 +37,9 @@ import { index as users } from '@/routes/users';
 import { index as units } from '@/routes/units';
 import { index as transactions } from '@/routes/transactions';
 import { index as cashier } from '@/routes/cashier';
-import { index as cashProfit } from '@/routes/cash-profit';
+
 import { index as profitWallet } from '@/routes/profit-wallet';
+import { index as capitalWallet } from '@/routes/capital-wallet';
 import type { NavGroup, NavItem } from '@/types';
 import { useTranslation } from 'react-i18next';
 import { IconUserKey } from '@tabler/icons-react';
@@ -103,16 +104,7 @@ export function AppSidebar() {
                     permission: PERMISSIONENUMS.TRANSACTION.READ,
                     role: [],
                 },
-                {
-                    title: t(
-                        'component.sidebar.profit_report_menu_label',
-                        'Kas Profit',
-                    ),
-                    href: cashProfit(),
-                    icon: TrendingUp,
-                    permission: PERMISSIONENUMS.TRANSACTION.READ_CASH_PROFIT,
-                    role: [],
-                },
+
             ],
         },
         {
@@ -177,6 +169,13 @@ export function AppSidebar() {
                     href: profitWallet(),
                     icon: Wallet,
                     permission: PERMISSIONENUMS.PROFIT_WALLET.READ,
+                    role: [],
+                },
+                {
+                    title: t('component.sidebar.capital_wallet_menu_label', 'Dompet Modal'),
+                    href: capitalWallet(),
+                    icon: Wallet,
+                    permission: PERMISSIONENUMS.CAPITAL_WALLET.READ,
                     role: [],
                 },
             ],

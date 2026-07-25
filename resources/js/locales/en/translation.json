@@ -61,6 +61,10 @@
         "profit_wallet": {
             "min_amount": "Minimum amount is Rp 0.01",
             "max_notes": "Maximum notes is 500 characters"
+        },
+        "capital_wallet": {
+            "min_amount": "Minimum amount is Rp 0.01",
+            "max_notes": "Maximum notes is 500 characters"
         }
     },
     "permission_label": {
@@ -122,6 +126,13 @@
             "read": "Read Profit Wallet",
             "disburse": "Disburse Funds",
             "withdraw_capital": "Withdraw Capital"
+        },
+        "capital_wallet": {
+            "permission": "Access Capital Wallet Feature",
+            "read": "Read Capital Wallet",
+            "inject": "Inject Capital",
+            "drawdown": "Drawdown Capital",
+            "purchase_product": "Product Purchase"
         }
     },
     "component": {
@@ -144,7 +155,8 @@
             "product_management_menu_label": "Product Management",
             "user_management_menu_label": "User Management",
             "group_finance": "Finance",
-            "profit_wallet_menu_label": "Profit Wallet"
+            "profit_wallet_menu_label": "Profit Wallet",
+            "capital_wallet_menu_label": "Capital Wallet"
         },
         "data_table": {
             "search_component": {
@@ -261,6 +273,79 @@
                     "tx_sales_profit": "Sales Profit",
                     "tx_disbursement": "Disbursement",
                     "tx_capital_withdrawal": "Capital Withdrawal",
+                    "start_date_label": "Start Date",
+                    "end_date_label": "End Date",
+                    "end_date_badge_label": "End"
+                },
+                "columns": {
+                    "created_at": "Transaction Time",
+                    "tx_type": "Transaction Type",
+                    "direction": "Direction",
+                    "amount": "Amount",
+                    "balance_before": "Opening Balance",
+                    "balance_after": "Closing Balance",
+                    "notes": "Notes",
+                    "reference": "Reference"
+                }
+            }
+        },
+        "capital_wallet": {
+            "page_name": "Capital Wallet",
+            "cards": {
+                "balance": "Current Balance",
+                "inflow": "Total Inflow",
+                "outflow": "Total Outflow"
+            },
+            "dialog_modal": {
+                "inject": {
+                    "dialog_button": "Inject Capital",
+                    "dialog_title": "Inject Capital",
+                    "dialog_desc": "Add fresh funds into the capital wallet to finance operational costs or purchase stocks.",
+                    "amount_label": "Injection Amount",
+                    "amount_placeholder": "Enter new capital amount",
+                    "notes_label": "Notes",
+                    "notes_placeholder": "Enter injection notes (e.g. Owner Capital Deposit)",
+                    "cancel_btn": "Cancel",
+                    "confirm_btn": "Inject"
+                },
+                "drawdown": {
+                    "dialog_button": "Drawdown Capital",
+                    "dialog_title": "Drawdown Capital",
+                    "dialog_desc": "Withdraw unused capital funds from the capital wallet.",
+                    "amount_label": "Drawdown Amount",
+                    "amount_placeholder": "Enter drawdown amount",
+                    "notes_label": "Notes",
+                    "notes_placeholder": "Enter drawdown notes (e.g. Owner Drawdown)",
+                    "cancel_btn": "Cancel",
+                    "confirm_btn": "Withdraw"
+                },
+                "purchase_product": {
+                    "dialog_button": "Product Purchase",
+                    "dialog_title": "Purchase Products (Kulakan)",
+                    "dialog_desc": "Use capital wallet balance to finance buying product stock.",
+                    "amount_label": "Purchase Amount",
+                    "amount_placeholder": "Enter product purchase amount",
+                    "notes_label": "Notes",
+                    "notes_placeholder": "Enter purchase notes (e.g. Stock Restock Supplier A)",
+                    "cancel_btn": "Cancel",
+                    "confirm_btn": "Pay"
+                }
+            },
+            "data_table": {
+                "table_title": "Wallet Ledger",
+                "filters": {
+                    "keyword": "Keyword",
+                    "type_label": "Direction",
+                    "type_placeholder": "All Directions",
+                    "direction_in": "Inflow",
+                    "direction_out": "Outflow",
+                    "tx_type_label": "Transaction Type",
+                    "tx_type_placeholder": "All Types",
+                    "tx_capital_injection": "Capital Injection",
+                    "tx_capital_drawdown": "Capital Drawdown",
+                    "tx_product_purchase": "Product Purchase",
+                    "tx_sales_recovery": "Sales Capital Recovery",
+                    "tx_reinvestment": "Reinvestment",
                     "start_date_label": "Start Date",
                     "end_date_label": "End Date",
                     "end_date_badge_label": "End"
