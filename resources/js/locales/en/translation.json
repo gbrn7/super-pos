@@ -57,6 +57,10 @@
                 "min_price": "Minimum selling price is Rp 0",
                 "min_cost_price": "Minimum cost price is Rp 0"
             }
+        },
+        "profit_wallet": {
+            "min_amount": "Minimum amount is Rp 0.01",
+            "max_notes": "Maximum notes is 500 characters"
         }
     },
     "permission_label": {
@@ -112,6 +116,12 @@
             "read": "Read Transaction",
             "update": "Edit Transaction",
             "delete": "Delete Transaction"
+        },
+        "profit_wallet": {
+            "permission": "Access Profit Wallet Feature",
+            "read": "Read Profit Wallet",
+            "disburse": "Disburse Funds",
+            "withdraw_capital": "Withdraw Capital"
         }
     },
     "component": {
@@ -132,7 +142,9 @@
             "transaction_menu_label": "Transaction",
             "kasir_menu_label": "Cashier",
             "product_management_menu_label": "Product Management",
-            "user_management_menu_label": "User Management"
+            "user_management_menu_label": "User Management",
+            "group_finance": "Finance",
+            "profit_wallet_menu_label": "Profit Wallet"
         },
         "data_table": {
             "search_component": {
@@ -190,6 +202,63 @@
         }
     },
     "page": {
+        "profit_wallet": {
+            "page_name": "Profit Wallet",
+            "cards": {
+                "balance": "Current Balance",
+                "inflow": "Total Inflow",
+                "outflow": "Total Outflow"
+            },
+            "dialog_modal": {
+                "disburse": {
+                    "dialog_button": "Disburse Profit",
+                    "dialog_title": "Disburse Profit",
+                    "dialog_desc": "Disburse your accumulated net profits to the owner's bank account.",
+                    "amount_label": "Disbursement Amount",
+                    "amount_placeholder": "Enter disbursement amount",
+                    "notes_label": "Notes",
+                    "notes_placeholder": "Enter disbursement notes (e.g. Owner BCA Transfer)",
+                    "cancel_btn": "Cancel",
+                    "confirm_btn": "Disburse"
+                },
+                "withdraw_capital": {
+                    "dialog_button": "Withdraw Capital",
+                    "dialog_title": "Withdraw Reinvestment Capital",
+                    "dialog_desc": "Withdraw net profit to reinvest back into shop operational capital.",
+                    "amount_label": "Capital Amount",
+                    "amount_placeholder": "Enter capital amount",
+                    "notes_label": "Notes",
+                    "notes_placeholder": "Enter capital notes (e.g. Store Reinvestment)",
+                    "cancel_btn": "Cancel",
+                    "confirm_btn": "Withdraw"
+                }
+            },
+            "data_table": {
+                "table_title": "Wallet Ledger",
+                "filters": {
+                    "keyword": "Keyword",
+                    "type_label": "Direction",
+                    "type_placeholder": "All Directions",
+                    "direction_in": "Inflow",
+                    "direction_out": "Outflow",
+                    "tx_type_label": "Transaction Type",
+                    "tx_type_placeholder": "All Types",
+                    "tx_sales_profit": "Sales Profit",
+                    "tx_disbursement": "Disbursement",
+                    "tx_capital_withdrawal": "Capital Withdrawal"
+                },
+                "columns": {
+                    "created_at": "Transaction Time",
+                    "tx_type": "Transaction Type",
+                    "direction": "Direction",
+                    "amount": "Amount",
+                    "balance_before": "Opening Balance",
+                    "balance_after": "Closing Balance",
+                    "notes": "Notes",
+                    "reference": "Reference"
+                }
+            }
+        },
         "auth": {
             "confirm_password": {
                 "form": {

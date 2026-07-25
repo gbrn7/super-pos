@@ -61,6 +61,13 @@ enum TransactionPermissionEnums {
     READ_CASH_PROFIT = 'read-cash-profit',
 }
 
+enum ProfitWalletPermissionEnums {
+    CREATE = 'create-profit-wallet',
+    READ = 'read-profit-wallet',
+    DISBURSE = 'disburse-profit-wallet',
+    WITHDRAW_CAPITAL = 'withdraw-capital-profit-wallet',
+}
+
 export const PERMISSIONENUMS = {
     CATEGORY: CategoryPermissionEnums,
     DASHBOARD: DashboardPermissionEnums,
@@ -71,6 +78,7 @@ export const PERMISSIONENUMS = {
     PRODUCT: ProductPermissionEnums,
     MASTER_PRODUCT: MasterProductPermissionEnums,
     TRANSACTION: TransactionPermissionEnums,
+    PROFIT_WALLET: ProfitWalletPermissionEnums,
 };
 
 export const PERMISSIONLIST = (): Permission[] => {
@@ -309,6 +317,23 @@ export const PERMISSIONLIST = (): Permission[] => {
                         'Baca Kas Profit',
                     ),
                     VALUE: TransactionPermissionEnums.READ_CASH_PROFIT,
+                },
+            ],
+        },
+        {
+            LABEL: t('permission_label.profit_wallet.permission', 'Dompet Profit'),
+            ACCESSLIST: [
+                {
+                    LABEL: t('permission_label.profit_wallet.read', 'Baca Dompet Profit'),
+                    VALUE: ProfitWalletPermissionEnums.READ,
+                },
+                {
+                    LABEL: t('permission_label.profit_wallet.disburse', 'Pencairan Dana'),
+                    VALUE: ProfitWalletPermissionEnums.DISBURSE,
+                },
+                {
+                    LABEL: t('permission_label.profit_wallet.withdraw_capital', 'Penarikan Modal'),
+                    VALUE: ProfitWalletPermissionEnums.WITHDRAW_CAPITAL,
                 },
             ],
         },

@@ -12,6 +12,7 @@ import {
     Users,
     Weight,
     TrendingUp,
+    Wallet,
 } from 'lucide-react';
 import AppLogo from '@/components/app-logo';
 import { NavFooter } from '@/components/nav-footer';
@@ -37,6 +38,7 @@ import { index as units } from '@/routes/units';
 import { index as transactions } from '@/routes/transactions';
 import { index as cashier } from '@/routes/cashier';
 import { index as cashProfit } from '@/routes/cash-profit';
+import { index as profitWallet } from '@/routes/profit-wallet';
 import type { NavGroup, NavItem } from '@/types';
 import { useTranslation } from 'react-i18next';
 import { IconUserKey } from '@tabler/icons-react';
@@ -164,6 +166,18 @@ export function AppSidebar() {
                             role: [],
                         },
                     ],
+                },
+            ],
+        },
+        {
+            title: t('component.sidebar.group_finance', 'Keuangan'),
+            items: [
+                {
+                    title: t('component.sidebar.profit_wallet_menu_label', 'Dompet Profit'),
+                    href: profitWallet(),
+                    icon: Wallet,
+                    permission: PERMISSIONENUMS.PROFIT_WALLET.READ,
+                    role: [],
                 },
             ],
         },

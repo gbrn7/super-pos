@@ -57,6 +57,10 @@
                 "min_price": "Harga jual minimal Rp 0",
                 "min_cost_price": "Harga modal minimal Rp 0"
             }
+        },
+        "profit_wallet": {
+            "min_amount": "Nominal minimal Rp 0,01",
+            "max_notes": "Catatan maksimal 500 karakter"
         }
     },
     "permission_label": {
@@ -112,6 +116,12 @@
             "read": "Baca Transaksi",
             "update": "Edit Transaksi",
             "delete": "Hapus Transaksi"
+        },
+        "profit_wallet": {
+            "permission": "Akses Fitur Dompet Profit",
+            "read": "Baca Dompet Profit",
+            "disburse": "Pencairan Dana",
+            "withdraw_capital": "Penarikan Modal"
         }
     },
     "component": {
@@ -132,7 +142,9 @@
             "transaction_menu_label": "Transaksi",
             "kasir_menu_label": "Kasir",
             "product_management_menu_label": "Manajemen Produk",
-            "user_management_menu_label": "Manajemen Pengguna"
+            "user_management_menu_label": "Manajemen Pengguna",
+            "group_finance": "Keuangan",
+            "profit_wallet_menu_label": "Dompet Profit"
         },
         "data_table": {
             "search_component": {
@@ -190,6 +202,63 @@
         }
     },
     "page": {
+        "profit_wallet": {
+            "page_name": "Dompet Profit",
+            "cards": {
+                "balance": "Saldo Berjalan",
+                "inflow": "Total Uang Masuk",
+                "outflow": "Total Uang Keluar"
+            },
+            "dialog_modal": {
+                "disburse": {
+                    "dialog_button": "Cairkan Profit",
+                    "dialog_title": "Cairkan Profit",
+                    "dialog_desc": "Cairkan akumulasi profit bersih Anda ke rekening pemilik.",
+                    "amount_label": "Nominal Pencairan",
+                    "amount_placeholder": "Masukkan nominal pencairan",
+                    "notes_label": "Catatan",
+                    "notes_placeholder": "Masukkan catatan pencairan (misal: Transfer BCA Owner)",
+                    "cancel_btn": "Batal",
+                    "confirm_btn": "Cairkan"
+                },
+                "withdraw_capital": {
+                    "dialog_button": "Tarik Modal",
+                    "dialog_title": "Tarik Modal Kembali",
+                    "dialog_desc": "Tarik profit bersih Anda untuk diinvestasikan kembali sebagai modal operasional.",
+                    "amount_label": "Nominal Modal",
+                    "amount_placeholder": "Masukkan nominal penarikan modal",
+                    "notes_label": "Catatan",
+                    "notes_placeholder": "Masukkan catatan modal (misal: Reinvestasi Kas Toko)",
+                    "cancel_btn": "Batal",
+                    "confirm_btn": "Tarik"
+                }
+            },
+            "data_table": {
+                "table_title": "Mutasi Dompet",
+                "filters": {
+                    "keyword": "Kata Kunci",
+                    "type_label": "Arah Aliran",
+                    "type_placeholder": "Semua Arah",
+                    "direction_in": "Uang Masuk",
+                    "direction_out": "Uang Keluar",
+                    "tx_type_label": "Jenis Transaksi",
+                    "tx_type_placeholder": "Semua Jenis",
+                    "tx_sales_profit": "Keuntungan Penjualan",
+                    "tx_disbursement": "Pencairan Profit",
+                    "tx_capital_withdrawal": "Penarikan Modal"
+                },
+                "columns": {
+                    "created_at": "Waktu Mutasi",
+                    "tx_type": "Jenis Transaksi",
+                    "direction": "Arah Aliran",
+                    "amount": "Jumlah",
+                    "balance_before": "Saldo Awal",
+                    "balance_after": "Saldo Akhir",
+                    "notes": "Catatan",
+                    "reference": "Rujukan"
+                }
+            }
+        },
         "auth": {
             "confirm_password": {
                 "form": {
