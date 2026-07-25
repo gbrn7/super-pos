@@ -6,6 +6,7 @@ use App\Repositories\CategoryRepository;
 use App\Repositories\MasterProductRepository;
 use App\Repositories\PaymentMethodRepository;
 use App\Repositories\ProductRepository;
+use App\Repositories\ProfitWalletRepository;
 use App\Repositories\RoleRepository;
 use App\Repositories\TransactionDetailRepository;
 use App\Repositories\TransactionRepository;
@@ -25,6 +26,7 @@ use App\Support\Interfaces\Repositories\CategoryRepositoryInterface;
 use App\Support\Interfaces\Repositories\MasterProductRepositoryInterface;
 use App\Support\Interfaces\Repositories\PaymentMethodRepositoryInterface;
 use App\Support\Interfaces\Repositories\ProductRepositoryInterface;
+use App\Support\Interfaces\Repositories\ProfitWalletRepositoryInterface;
 use App\Support\Interfaces\Repositories\RoleRepositoryInterface;
 use App\Support\Interfaces\Repositories\TransactionDetailRepositoryInterface;
 use App\Support\Interfaces\Repositories\TransactionRepositoryInterface;
@@ -88,6 +90,9 @@ class AppServiceProvider extends ServiceProvider
         // Transaction Detail service
         $this->app->bind(TransactionDetailRepositoryInterface::class, TransactionDetailRepository::class);
         $this->app->bind(TransactionDetailServiceInterface::class, TransactionDetailService::class);
+
+        // Profit wallet service repository
+        $this->app->bind(ProfitWalletRepositoryInterface::class, ProfitWalletRepository::class);
     }
 
     /**
