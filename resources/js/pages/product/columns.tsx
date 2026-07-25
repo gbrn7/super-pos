@@ -9,6 +9,7 @@ import {
     Pencil,
     Trash,
     X,
+    Boxes,
 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Can } from '@/components/auth/can';
@@ -32,6 +33,7 @@ interface ColumnsProps {
     onDetailClick: (product: Product) => void;
     onEditClick: (product: Product) => void;
     onDeleteClick: (product: Product) => void;
+    onUpdateStockClick?: (product: Product) => void;
     onSortChange: (orderBy: string | null, order: string | null) => void;
     orderBy: string | null;
     order: string | null;
@@ -350,6 +352,15 @@ export const columns = (props?: ColumnsProps): ColumnDef<Product>[] => {
                                 {t(
                                     'component.data_table.action_menu.edit_data_btn',
                                     'Edit data',
+                                )}
+                            </DropdownMenuItem>
+                            <DropdownMenuItem
+                                onClick={() => props?.onUpdateStockClick?.(row.original)}
+                            >
+                                <Boxes className="mr-0.5 h-4 w-4" />
+                                {t(
+                                    'component.data_table.action_menu.update_stock_btn',
+                                    'Update stok',
                                 )}
                             </DropdownMenuItem>
                         </Can>
