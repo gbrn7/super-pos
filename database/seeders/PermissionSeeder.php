@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Permission;
 use App\Models\Role;
+use App\Support\Enums\CapitalWalletPermissionEnums;
 use App\Support\Enums\CategoryPermissionEnums;
 use App\Support\Enums\DashboardPermissionEnums;
 use App\Support\Enums\PaymentMethodPermissionEnums;
@@ -63,6 +64,12 @@ class PermissionSeeder extends Seeder
             ]);
         }
 
+        foreach (CapitalWalletPermissionEnums::cases() as $permission) {
+            Permission::firstOrCreate([
+                'name' => $permission->value,
+            ]);
+        }
+
         // super admin already have access, the setup gate on appServiceProvider
 
         $admin = Role::findByName(RoleEnums::ADMIN->value);
@@ -82,11 +89,15 @@ class PermissionSeeder extends Seeder
             UnitPermissionEnums::DELETE_UNIT->value,
 
             PaymentMethodPermissionEnums::READ_PAYMENT_METHOD->value,
-            TransactionPermissionEnums::READ_CASH_PROFIT->value,
 
             ProfitWalletPermissionEnums::READ_PROFIT_WALLET->value,
             ProfitWalletPermissionEnums::DISBURSE_PROFIT_WALLET->value,
             ProfitWalletPermissionEnums::WITHDRAW_CAPITAL_PROFIT_WALLET->value,
+
+            CapitalWalletPermissionEnums::READ_CAPITAL_WALLET->value,
+            CapitalWalletPermissionEnums::INJECT_CAPITAL_WALLET->value,
+            CapitalWalletPermissionEnums::DRAWDOWN_CAPITAL_WALLET->value,
+            CapitalWalletPermissionEnums::PURCHASE_PRODUCT_CAPITAL_WALLET->value,
         ]);
 
         $user = Role::findByName(RoleEnums::USER->value);
