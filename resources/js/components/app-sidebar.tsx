@@ -167,7 +167,7 @@ export function AppSidebar() {
                 {
                     title: t('component.sidebar.profit_wallet_menu_label', 'Dompet Profit'),
                     href: profitWallet(),
-                    icon: Wallet,
+                    icon: TrendingUp,
                     permission: PERMISSIONENUMS.PROFIT_WALLET.READ,
                     role: [],
                 },
