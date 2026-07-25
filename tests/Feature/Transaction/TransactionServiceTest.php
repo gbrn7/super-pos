@@ -123,12 +123,11 @@ test('checkout records profit data successfully', function () {
 
     $transaction = $this->service->checkout($checkoutData);
 
-    expect($transaction->cashProfit)->not->toBeNull();
-    // Revenue = (10000 * 1) - 1000 = 9000. Cost = 7000 * 1 = 7000. Profit = 9000 - 7000 = 2000.
-    expect((float) $transaction->cashProfit->profit)->toEqual(2000.00);
-
-    $this->assertDatabaseHas('cash_profits', [
-        'transaction_id' => $transaction->id,
-        'profit' => 2000.00,
+    $this->assertDatabaseHas('profit_wallet_transactions', [
+        'amount' => 2000.00,
+        'type' => 'in',
+        'transaction_type' => 'sales_profit',
+        'reference_id' => $transaction->id,
+        'reference_type' => get_class($transaction),
     ]);
 });
