@@ -103,13 +103,16 @@ export function DetailDialog({
     const currentTransaction = detailData || transaction;
     const discountAmount = Number(currentTransaction.discount_amount || 0);
     const details = currentTransaction.details ?? [];
-    const grossSubtotal = details.length > 0
-        ? details.reduce((sum, item) => sum + (Number(item.price) || 0) * item.quantity, 0)
-        : Number(currentTransaction.total_amount) + discountAmount;
     const totalItemDiscount = details.reduce(
         (sum, item) => sum + (Number(item.discount) || 0) * item.quantity,
         0,
     );
+    const grossSubtotal = details.length > 0
+        ? details.reduce(
+              (sum, item) => sum + (Number(item.price) || 0) * item.quantity,
+              0,
+          )
+        : Number(currentTransaction.total_amount) + discountAmount + totalItemDiscount;
 
     const handlePrint = () => {
         window.print();
