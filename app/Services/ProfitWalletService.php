@@ -66,7 +66,7 @@ class ProfitWalletService implements ProfitWalletServiceInterface
                     'reference_type' => Transaction::class,
                     'balance_before' => $before,
                     'balance_after' => $after,
-                    'notes' => 'Sales profit from POS checkout',
+                    'notes' => trans('message.success.profit_wallet.sales_profit_notes'),
                 ]);
 
                 $this->profitWalletRepository->updateWalletBalance($wallet, $after);
