@@ -990,7 +990,14 @@
                         "cashier_label": "Kasir / Petugas",
                         "payment_method_label": "Metode Pembayaran",
                         "date_label": "Waktu Transaksi",
-                        "items_title": "Rincian Produk"
+                        "items_title": "Rincian Produk",
+                        "product_header": "Produk",
+                        "unit_header": "Satuan",
+                        "qty_header": "Jumlah",
+                        "cost_price_header": "Harga Modal",
+                        "price_header": "Harga Jual",
+                        "discount_header": "Diskon",
+                        "subtotal_header": "Subtotal"
                     }
                 }
             }

@@ -238,23 +238,26 @@ export function DetailDialog({
                                     <Table>
                                         <TableHeader className="sticky top-0 z-10 bg-muted">
                                             <TableRow>
-                                                <TableHead className="w-[35%]">
-                                                    Produk
+                                                <TableHead className="w-[30%]">
+                                                    {t('page.transaction.dialog_modal.detail_dialog.product_header', 'Produk')}
                                                 </TableHead>
                                                 <TableHead className="text-center">
-                                                    Satuan
+                                                    {t('page.transaction.dialog_modal.detail_dialog.unit_header', 'Satuan')}
                                                 </TableHead>
                                                 <TableHead className="text-center">
-                                                    Jumlah
+                                                    {t('page.transaction.dialog_modal.detail_dialog.qty_header', 'Jumlah')}
                                                 </TableHead>
                                                 <TableHead className="text-right">
-                                                    Harga
+                                                    {t('page.transaction.dialog_modal.detail_dialog.cost_price_header', 'Harga Modal')}
                                                 </TableHead>
                                                 <TableHead className="text-right">
-                                                    Diskon
+                                                    {t('page.transaction.dialog_modal.detail_dialog.price_header', 'Harga Jual')}
                                                 </TableHead>
                                                 <TableHead className="text-right">
-                                                    Subtotal
+                                                    {t('page.transaction.dialog_modal.detail_dialog.discount_header', 'Diskon')}
+                                                </TableHead>
+                                                <TableHead className="text-right">
+                                                    {t('page.transaction.dialog_modal.detail_dialog.subtotal_header', 'Subtotal')}
                                                 </TableHead>
                                             </TableRow>
                                         </TableHeader>
@@ -271,6 +274,9 @@ export function DetailDialog({
                                                             </TableCell>
                                                             <TableCell>
                                                                 <Skeleton className="mx-auto h-5 w-8" />
+                                                            </TableCell>
+                                                            <TableCell>
+                                                                <Skeleton className="ml-auto h-5 w-16" />
                                                             </TableCell>
                                                             <TableCell>
                                                                 <Skeleton className="ml-auto h-5 w-16" />
@@ -300,6 +306,11 @@ export function DetailDialog({
                                                             </TableCell>
                                                             <TableCell className="text-center font-semibold">
                                                                 {item.quantity}
+                                                            </TableCell>
+                                                            <TableCell className="text-right text-xs">
+                                                                {formatRupiah(
+                                                                    item.cost_price,
+                                                                )}
                                                             </TableCell>
                                                             <TableCell className="text-right text-xs">
                                                                 {formatRupiah(
@@ -342,7 +353,7 @@ export function DetailDialog({
                                             ) : (
                                                 <TableRow>
                                                     <TableCell
-                                                        colSpan={6}
+                                                        colSpan={7}
                                                         className="h-20 text-center text-muted-foreground"
                                                     >
                                                         Detail produk tidak

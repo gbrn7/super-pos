@@ -991,7 +991,14 @@
                     "cashier_label": "Cashier / Staff",
                     "payment_method_label": "Payment Method",
                     "date_label": "Transaction Time",
-                    "items_title": "Product Details"
+                    "items_title": "Product Details",
+                    "product_header": "Product",
+                    "unit_header": "Unit",
+                    "qty_header": "Qty",
+                    "cost_price_header": "Cost Price",
+                    "price_header": "Selling Price",
+                    "discount_header": "Discount",
+                    "subtotal_header": "Subtotal"
                 }
             }
         },
