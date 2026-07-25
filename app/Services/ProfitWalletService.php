@@ -7,9 +7,14 @@ use App\Models\ProfitWalletTransaction;
 use App\Models\Transaction;
 use App\Support\Interfaces\Repositories\ProfitWalletRepositoryInterface;
 use App\Support\Interfaces\Services\ProfitWalletServiceInterface;
+use App\Support\Models\ProfitWallet\DisburseProfitWalletReqModel;
+use App\Support\Models\ProfitWallet\GetProfitWalletTransactionReqModel;
+use App\Support\Models\ProfitWallet\WithdrawCapitalProfitWalletReqModel;
 use App\Support\Utils\CheckException;
 use Exception;
+use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Http\Response;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
 class ProfitWalletService implements ProfitWalletServiceInterface
@@ -70,31 +75,51 @@ class ProfitWalletService implements ProfitWalletServiceInterface
         }
     }
 
-    public function disburse(float $amount, ?string $notes = null): ProfitWalletTransaction
+    public function getTransactions(GetProfitWalletTransactionReqModel $request): Paginator|Collection
     {
         try {
-            if ($amount <= 0) {
-                throw new Exception('Disbursement amount must be greater than zero.', Response::HTTP_UNPROCESSABLE_ENTITY);
-            }
+            return $this->profitWalletRepository->getTransactions($request);
+        } catch (\Throwable $th) {
+            throw CheckException::Check($th);
+        }
+    }
 
-            return DB::transaction(function () use ($amount, $notes) {
+    public function getTransactionSummary(GetProfitWalletTransactionReqModel $request): array
+    {
+        try {
+            $wallet = $this->getOrCreateWallet();
+
+            return $this->profitWalletRepository->getTransactionSummary($request, (float) $wallet->balance);
+        } catch (\Throwable $th) {
+            throw CheckException::Check($th);
+        }
+    }
+
+    public function disburse(DisburseProfitWalletReqModel $request): ProfitWalletTransaction
+    {
+        try {
+            return DB::transaction(function () use ($request) {
+                if ($request->amount <= 0) {
+                    throw new Exception('Amount must be greater than zero.', Response::HTTP_UNPROCESSABLE_ENTITY);
+                }
+
                 $wallet = $this->getOrCreateWallet();
 
                 $before = (float) $wallet->balance;
-                if ($before < $amount) {
+                if ($before < $request->amount) {
                     throw new Exception('Insufficient wallet balance for disbursement.', Response::HTTP_UNPROCESSABLE_ENTITY);
                 }
 
-                $after = $before - $amount;
+                $after = $before - $request->amount;
 
                 $transaction = $this->profitWalletRepository->createTransaction([
                     'profit_wallet_id' => $wallet->id,
-                    'amount' => $amount,
+                    'amount' => $request->amount,
                     'type' => 'out',
                     'transaction_type' => 'disbursement',
                     'balance_before' => $before,
                     'balance_after' => $after,
-                    'notes' => $notes ?? 'Disbursement to owner bank account',
+                    'notes' => $request->notes ?? 'Disbursement to owner bank account',
                 ]);
 
                 $this->profitWalletRepository->updateWalletBalance($wallet, $after);
@@ -106,31 +131,31 @@ class ProfitWalletService implements ProfitWalletServiceInterface
         }
     }
 
-    public function withdrawCapital(float $amount, ?string $notes = null): ProfitWalletTransaction
+    public function withdrawCapital(WithdrawCapitalProfitWalletReqModel $request): ProfitWalletTransaction
     {
         try {
-            if ($amount <= 0) {
-                throw new Exception('Capital withdrawal amount must be greater than zero.', Response::HTTP_UNPROCESSABLE_ENTITY);
-            }
+            return DB::transaction(function () use ($request) {
+                if ($request->amount <= 0) {
+                    throw new Exception('Amount must be greater than zero.', Response::HTTP_UNPROCESSABLE_ENTITY);
+                }
 
-            return DB::transaction(function () use ($amount, $notes) {
                 $wallet = $this->getOrCreateWallet();
 
                 $before = (float) $wallet->balance;
-                if ($before < $amount) {
+                if ($before < $request->amount) {
                     throw new Exception('Insufficient wallet balance for capital withdrawal.', Response::HTTP_UNPROCESSABLE_ENTITY);
                 }
 
-                $after = $before - $amount;
+                $after = $before - $request->amount;
 
                 $transaction = $this->profitWalletRepository->createTransaction([
                     'profit_wallet_id' => $wallet->id,
-                    'amount' => $amount,
+                    'amount' => $request->amount,
                     'type' => 'out',
                     'transaction_type' => 'capital_withdrawal',
                     'balance_before' => $before,
                     'balance_after' => $after,
-                    'notes' => $notes ?? 'Reinvestment/business capital withdrawal',
+                    'notes' => $request->notes ?? 'Reinvestment/business capital withdrawal',
                 ]);
 
                 $this->profitWalletRepository->updateWalletBalance($wallet, $after);

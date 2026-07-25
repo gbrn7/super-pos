@@ -4,6 +4,9 @@ namespace App\Support\Interfaces\Repositories;
 
 use App\Models\ProfitWallet;
 use App\Models\ProfitWalletTransaction;
+use App\Support\Models\ProfitWallet\GetProfitWalletTransactionReqModel;
+use Illuminate\Contracts\Pagination\Paginator;
+use Illuminate\Support\Collection;
 
 interface ProfitWalletRepositoryInterface
 {
@@ -36,4 +39,14 @@ interface ProfitWalletRepositoryInterface
      * Record a transaction in the ledger.
      */
     public function createTransaction(array $data): ProfitWalletTransaction;
+
+    /**
+     * Get transactions based on filter model.
+     */
+    public function getTransactions(GetProfitWalletTransactionReqModel $request): Paginator|Collection;
+
+    /**
+     * Get transaction summary matching filters.
+     */
+    public function getTransactionSummary(GetProfitWalletTransactionReqModel $request, float $currentBalance): array;
 }

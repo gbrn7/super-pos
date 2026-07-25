@@ -2,7 +2,10 @@
 
 use App\Models\Transaction;
 use App\Support\Interfaces\Services\ProfitWalletServiceInterface;
+use App\Support\Models\ProfitWallet\DisburseProfitWalletReqModel;
+use App\Support\Models\ProfitWallet\WithdrawCapitalProfitWalletReqModel;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\Request;
 
 uses(RefreshDatabase::class);
 
@@ -26,7 +29,7 @@ test('service handles top-ups, disbursements, and reinvestments correctly', func
     expect($wallet->fresh()->balance)->toEqual(1000.00);
 
     // 2. Disbursement
-    $tx2 = $this->service->disburse(300.00, 'Test disburse');
+    $tx2 = $this->service->disburse(new DisburseProfitWalletReqModel(new Request(['amount' => 300.00, 'notes' => 'Test disburse'])));
     expect($tx2->balance_before)->toEqual(1000.00)
         ->and($tx2->balance_after)->toEqual(700.00)
         ->and($tx2->type)->toBe('out')
@@ -35,7 +38,7 @@ test('service handles top-ups, disbursements, and reinvestments correctly', func
     expect($wallet->fresh()->balance)->toEqual(700.00);
 
     // 3. Capital Withdrawal
-    $tx3 = $this->service->withdrawCapital(200.00, 'Test capital');
+    $tx3 = $this->service->withdrawCapital(new WithdrawCapitalProfitWalletReqModel(new Request(['amount' => 200.00, 'notes' => 'Test capital'])));
     expect($tx3->balance_before)->toEqual(700.00)
         ->and($tx3->balance_after)->toEqual(500.00)
         ->and($tx3->type)->toBe('out')
@@ -46,19 +49,19 @@ test('service handles top-ups, disbursements, and reinvestments correctly', func
 
 test('disburse throws exception on insufficient balance', function () {
     $this->service->getOrCreateWallet();
-    $this->service->disburse(100.00);
+    $this->service->disburse(new DisburseProfitWalletReqModel(new Request(['amount' => 100.00])));
 })->throws(Exception::class);
 
 test('disburse throws exception on zero or negative amount', function (float $amount) {
     $wallet = $this->service->getOrCreateWallet();
     $this->service->recordSalesProfit(1000.00, 1);
-    $this->service->disburse($amount);
+    $this->service->disburse(new DisburseProfitWalletReqModel(new Request(['amount' => $amount])));
 })->with([0.0, -100.0])->throws(Exception::class);
 
 test('withdrawCapital throws exception on zero or negative amount', function (float $amount) {
     $wallet = $this->service->getOrCreateWallet();
     $this->service->recordSalesProfit(1000.00, 1);
-    $this->service->withdrawCapital($amount);
+    $this->service->withdrawCapital(new WithdrawCapitalProfitWalletReqModel(new Request(['amount' => $amount])));
 })->with([0.0, -500.0])->throws(Exception::class);
 
 test('recordSalesProfit handles negative profit correctly', function () {
