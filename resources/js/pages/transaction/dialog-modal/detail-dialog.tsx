@@ -245,8 +245,8 @@ export function DetailDialog({
                                         'Rincian Produk',
                                     )}
                                 </h4>
-                                <div className="overflow-x-auto rounded-md border">
-                                    <div className="min-w-[1100px] max-h-[320px] overflow-y-auto">
+                                <div className="max-h-[320px] min-w-0 overflow-auto rounded-md border">
+                                    <div className="min-w-[1100px]">
                                     <Table>
                                         <TableHeader className="sticky top-0 z-10 bg-muted">
                                             <TableRow>
