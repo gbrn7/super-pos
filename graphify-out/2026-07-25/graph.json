@@ -860,8 +860,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_http_controllers_api_apicashprofitcontroller",
-      "community": 0,
-      "community_name": "API Controllers & Endpoints (0)",
+      "community": 111,
+      "community_name": "ApiCategoryController",
       "norm_label": "apicashprofitcontroller.php"
     },
     {
@@ -871,8 +871,8 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "app_http_controllers_api_apicashprofitcontroller_apicashprofitcontroller",
-      "community": 0,
-      "community_name": "API Controllers & Endpoints (0)",
+      "community": 111,
+      "community_name": "ApiCategoryController",
       "norm_label": "apicashprofitcontroller"
     },
     {
@@ -882,8 +882,8 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "app_http_controllers_api_apicashprofitcontroller_apicashprofitcontroller_middleware",
-      "community": 0,
-      "community_name": "API Controllers & Endpoints (0)",
+      "community": 111,
+      "community_name": "ApiCategoryController",
       "norm_label": ".middleware()"
     },
     {
@@ -893,8 +893,8 @@
       "source_location": "L29",
       "_origin": "ast",
       "id": "app_http_controllers_api_apicashprofitcontroller_apicashprofitcontroller_index",
-      "community": 0,
-      "community_name": "API Controllers & Endpoints (0)",
+      "community": 111,
+      "community_name": "ApiCategoryController",
       "norm_label": ".index()"
     },
     {
@@ -904,8 +904,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_http_controllers_api_apicategorycontroller",
-      "community": 0,
-      "community_name": "API Controllers & Endpoints (0)",
+      "community": 37,
+      "community_name": "API Controllers & Endpoints (37)",
       "norm_label": "apicategorycontroller.php"
     },
     {
@@ -915,8 +915,8 @@
       "source_location": "L21",
       "_origin": "ast",
       "id": "app_http_controllers_api_apicategorycontroller_apicategorycontroller",
-      "community": 45,
-      "community_name": "API Controllers & Endpoints (45)",
+      "community": 37,
+      "community_name": "API Controllers & Endpoints (37)",
       "norm_label": "apicategorycontroller"
     },
     {
@@ -926,8 +926,8 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "app_http_controllers_api_apicategorycontroller_apicategorycontroller_construct",
-      "community": 45,
-      "community_name": "API Controllers & Endpoints (45)",
+      "community": 37,
+      "community_name": "API Controllers & Endpoints (37)",
       "norm_label": ".__construct()"
     },
     {
@@ -937,8 +937,8 @@
       "source_location": "L25",
       "_origin": "ast",
       "id": "app_http_controllers_api_apicategorycontroller_apicategorycontroller_middleware",
-      "community": 45,
-      "community_name": "API Controllers & Endpoints (45)",
+      "community": 37,
+      "community_name": "API Controllers & Endpoints (37)",
       "norm_label": ".middleware()"
     },
     {
@@ -959,8 +959,8 @@
       "source_location": "L69",
       "_origin": "ast",
       "id": "app_http_controllers_api_apicategorycontroller_apicategorycontroller_store",
-      "community": 45,
-      "community_name": "API Controllers & Endpoints (45)",
+      "community": 37,
+      "community_name": "API Controllers & Endpoints (37)",
       "norm_label": ".store()"
     },
     {
@@ -970,8 +970,8 @@
       "source_location": "L83",
       "_origin": "ast",
       "id": "app_http_controllers_api_apicategorycontroller_apicategorycontroller_show",
-      "community": 45,
-      "community_name": "API Controllers & Endpoints (45)",
+      "community": 37,
+      "community_name": "API Controllers & Endpoints (37)",
       "norm_label": ".show()"
     },
     {
@@ -992,8 +992,8 @@
       "source_location": "L111",
       "_origin": "ast",
       "id": "app_http_controllers_api_apicategorycontroller_apicategorycontroller_destroy",
-      "community": 45,
-      "community_name": "API Controllers & Endpoints (45)",
+      "community": 37,
+      "community_name": "API Controllers & Endpoints (37)",
       "norm_label": ".destroy()"
     },
     {
@@ -1003,8 +1003,8 @@
       "source_location": "L129",
       "_origin": "ast",
       "id": "app_http_controllers_api_apicategorycontroller_apicategorycontroller_bulkdelete",
-      "community": 45,
-      "community_name": "API Controllers & Endpoints (45)",
+      "community": 37,
+      "community_name": "API Controllers & Endpoints (37)",
       "norm_label": ".bulkdelete()"
     },
     {
@@ -1014,8 +1014,8 @@
       "source_location": "L140",
       "_origin": "ast",
       "id": "app_http_controllers_api_apicategorycontroller_apicategorycontroller_getcategoryimporttemplate",
-      "community": 45,
-      "community_name": "API Controllers & Endpoints (45)",
+      "community": 37,
+      "community_name": "API Controllers & Endpoints (37)",
       "norm_label": ".getcategoryimporttemplate()"
     },
     {
@@ -1036,8 +1036,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_http_controllers_api_apimasterproductcontroller",
-      "community": 0,
-      "community_name": "API Controllers & Endpoints (0)",
+      "community": 37,
+      "community_name": "API Controllers & Endpoints (37)",
       "norm_label": "apimasterproductcontroller.php"
     },
     {
@@ -1201,8 +1201,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_http_controllers_api_apipaymentmethodcontroller",
-      "community": 0,
-      "community_name": "API Controllers & Endpoints (0)",
+      "community": 127,
+      "community_name": "index.tsx",
       "norm_label": "apipaymentmethodcontroller.php"
     },
     {
@@ -1256,8 +1256,8 @@
       "source_location": "L69",
       "_origin": "ast",
       "id": "app_http_controllers_api_apipaymentmethodcontroller_apipaymentmethodcontroller_store",
-      "community": 37,
-      "community_name": "API Controllers & Endpoints (37)",
+      "community": 127,
+      "community_name": "index.tsx",
       "norm_label": ".store()"
     },
     {
@@ -1278,8 +1278,8 @@
       "source_location": "L97",
       "_origin": "ast",
       "id": "app_http_controllers_api_apipaymentmethodcontroller_apipaymentmethodcontroller_update",
-      "community": 37,
-      "community_name": "API Controllers & Endpoints (37)",
+      "community": 127,
+      "community_name": "index.tsx",
       "norm_label": ".update()"
     },
     {
@@ -1300,8 +1300,8 @@
       "source_location": "L129",
       "_origin": "ast",
       "id": "app_http_controllers_api_apipaymentmethodcontroller_apipaymentmethodcontroller_bulkdelete",
-      "community": 37,
-      "community_name": "API Controllers & Endpoints (37)",
+      "community": 127,
+      "community_name": "index.tsx",
       "norm_label": ".bulkdelete()"
     },
     {
@@ -1311,8 +1311,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_http_controllers_api_apiproductcontroller",
-      "community": 0,
-      "community_name": "API Controllers & Endpoints (0)",
+      "community": 45,
+      "community_name": "API Controllers & Endpoints (45)",
       "norm_label": "apiproductcontroller.php"
     },
     {
@@ -1366,8 +1366,8 @@
       "source_location": "L73",
       "_origin": "ast",
       "id": "app_http_controllers_api_apiproductcontroller_apiproductcontroller_store",
-      "community": 37,
-      "community_name": "API Controllers & Endpoints (37)",
+      "community": 45,
+      "community_name": "API Controllers & Endpoints (45)",
       "norm_label": ".store()"
     },
     {
@@ -1432,8 +1432,8 @@
       "source_location": "L163",
       "_origin": "ast",
       "id": "app_http_controllers_api_apiproductcontroller_apiproductcontroller_bulkdelete",
-      "community": 37,
-      "community_name": "API Controllers & Endpoints (37)",
+      "community": 45,
+      "community_name": "API Controllers & Endpoints (45)",
       "norm_label": ".bulkdelete()"
     },
     {
@@ -1487,8 +1487,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_http_controllers_api_apiprofitwalletcontroller",
-      "community": 0,
-      "community_name": "API Controllers & Endpoints (0)",
+      "community": 111,
+      "community_name": "ApiCategoryController",
       "norm_label": "apiprofitwalletcontroller.php"
     },
     {
@@ -1531,8 +1531,8 @@
       "source_location": "L36",
       "_origin": "ast",
       "id": "app_http_controllers_api_apiprofitwalletcontroller_apiprofitwalletcontroller_index",
-      "community": 7,
-      "community_name": "Transaction Management (7)",
+      "community": 111,
+      "community_name": "ApiCategoryController",
       "norm_label": ".index()"
     },
     {
@@ -1685,8 +1685,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_http_controllers_api_apitransactioncontroller",
-      "community": 0,
-      "community_name": "API Controllers & Endpoints (0)",
+      "community": 56,
+      "community_name": "RoleService.php Domain (56)",
       "norm_label": "apitransactioncontroller.php"
     },
     {
@@ -2048,8 +2048,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_http_controllers_api_apiusercontroller",
-      "community": 0,
-      "community_name": "API Controllers & Endpoints (0)",
+      "community": 20,
+      "community_name": "API Controllers & Endpoints (20)",
       "norm_label": "apiusercontroller.php"
     },
     {
@@ -2180,8 +2180,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "app_http_controllers_cashprofitcontroller_cashprofitcontroller",
-      "community": 39,
-      "community_name": "Role Domain (39)",
+      "community": 0,
+      "community_name": "API Controllers & Endpoints (0)",
       "norm_label": "cashprofitcontroller"
     },
     {
@@ -2191,8 +2191,8 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "app_http_controllers_cashprofitcontroller_cashprofitcontroller_middleware",
-      "community": 39,
-      "community_name": "Role Domain (39)",
+      "community": 0,
+      "community_name": "API Controllers & Endpoints (0)",
       "norm_label": ".middleware()"
     },
     {
@@ -2246,8 +2246,8 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "app_http_controllers_cashiercontroller_cashiercontroller_index",
-      "community": 0,
-      "community_name": "API Controllers & Endpoints (0)",
+      "community": 39,
+      "community_name": "Role Domain (39)",
       "norm_label": ".index()"
     },
     {
@@ -2312,8 +2312,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_http_controllers_controller",
-      "community": 0,
-      "community_name": "API Controllers & Endpoints (0)",
+      "community": 39,
+      "community_name": "Role Domain (39)",
       "norm_label": "controller.php"
     },
     {
@@ -2323,8 +2323,8 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "app_http_controllers_controller_controller",
-      "community": 0,
-      "community_name": "API Controllers & Endpoints (0)",
+      "community": 39,
+      "community_name": "Role Domain (39)",
       "norm_label": "controller"
     },
     {
@@ -2334,8 +2334,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_http_controllers_examplecontroller",
-      "community": 0,
-      "community_name": "API Controllers & Endpoints (0)",
+      "community": 39,
+      "community_name": "Role Domain (39)",
       "norm_label": "examplecontroller.php"
     },
     {
@@ -2345,8 +2345,8 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "app_http_controllers_examplecontroller_examplecontroller",
-      "community": 0,
-      "community_name": "API Controllers & Endpoints (0)",
+      "community": 39,
+      "community_name": "Role Domain (39)",
       "norm_label": "examplecontroller"
     },
     {
@@ -2356,8 +2356,8 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "app_http_controllers_examplecontroller_examplecontroller_index",
-      "community": 0,
-      "community_name": "API Controllers & Endpoints (0)",
+      "community": 39,
+      "community_name": "Role Domain (39)",
       "norm_label": ".index()"
     },
     {
@@ -3049,8 +3049,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_http_middleware_handleappearance",
-      "community": 34,
-      "community_name": "two-factor-recovery-codes.tsx Domain (34)",
+      "community": 7,
+      "community_name": "Transaction Management (7)",
       "norm_label": "handleappearance.php"
     },
     {
@@ -3060,8 +3060,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "app_http_middleware_handleappearance_handleappearance",
-      "community": 34,
-      "community_name": "two-factor-recovery-codes.tsx Domain (34)",
+      "community": 7,
+      "community_name": "Transaction Management (7)",
       "norm_label": "handleappearance"
     },
     {
@@ -3071,8 +3071,8 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "app_http_middleware_handleappearance_handleappearance_handle",
-      "community": 34,
-      "community_name": "two-factor-recovery-codes.tsx Domain (34)",
+      "community": 7,
+      "community_name": "Transaction Management (7)",
       "norm_label": ".handle()"
     },
     {
@@ -3126,8 +3126,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_http_middleware_setlanguage",
-      "community": 34,
-      "community_name": "two-factor-recovery-codes.tsx Domain (34)",
+      "community": 7,
+      "community_name": "Transaction Management (7)",
       "norm_label": "setlanguage.php"
     },
     {
@@ -3137,8 +3137,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "app_http_middleware_setlanguage_setlanguage",
-      "community": 34,
-      "community_name": "two-factor-recovery-codes.tsx Domain (34)",
+      "community": 7,
+      "community_name": "Transaction Management (7)",
       "norm_label": "setlanguage"
     },
     {
@@ -3148,8 +3148,8 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "app_http_middleware_setlanguage_setlanguage_handle",
-      "community": 34,
-      "community_name": "two-factor-recovery-codes.tsx Domain (34)",
+      "community": 7,
+      "community_name": "Transaction Management (7)",
       "norm_label": ".handle()"
     },
     {
@@ -3159,8 +3159,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_http_requests_category_bulkdeletecategoryrequest",
-      "community": 45,
-      "community_name": "API Controllers & Endpoints (45)",
+      "community": 37,
+      "community_name": "API Controllers & Endpoints (37)",
       "norm_label": "bulkdeletecategoryrequest.php"
     },
     {
@@ -3170,8 +3170,8 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "app_http_requests_category_bulkdeletecategoryrequest_bulkdeletecategoryrequest",
-      "community": 45,
-      "community_name": "API Controllers & Endpoints (45)",
+      "community": 37,
+      "community_name": "API Controllers & Endpoints (37)",
       "norm_label": "bulkdeletecategoryrequest"
     },
     {
@@ -3181,8 +3181,8 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "app_http_requests_category_bulkdeletecategoryrequest_bulkdeletecategoryrequest_authorize",
-      "community": 45,
-      "community_name": "API Controllers & Endpoints (45)",
+      "community": 37,
+      "community_name": "API Controllers & Endpoints (37)",
       "norm_label": ".authorize()"
     },
     {
@@ -3192,8 +3192,8 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "app_http_requests_category_bulkdeletecategoryrequest_bulkdeletecategoryrequest_rules",
-      "community": 45,
-      "community_name": "API Controllers & Endpoints (45)",
+      "community": 37,
+      "community_name": "API Controllers & Endpoints (37)",
       "norm_label": ".rules()"
     },
     {
@@ -3247,8 +3247,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_http_requests_category_storecategoryrequest",
-      "community": 45,
-      "community_name": "API Controllers & Endpoints (45)",
+      "community": 37,
+      "community_name": "API Controllers & Endpoints (37)",
       "norm_label": "storecategoryrequest.php"
     },
     {
@@ -3258,8 +3258,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "app_http_requests_category_storecategoryrequest_storecategoryrequest",
-      "community": 45,
-      "community_name": "API Controllers & Endpoints (45)",
+      "community": 37,
+      "community_name": "API Controllers & Endpoints (37)",
       "norm_label": "storecategoryrequest"
     },
     {
@@ -3269,8 +3269,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "app_http_requests_category_storecategoryrequest_storecategoryrequest_authorize",
-      "community": 45,
-      "community_name": "API Controllers & Endpoints (45)",
+      "community": 37,
+      "community_name": "API Controllers & Endpoints (37)",
       "norm_label": ".authorize()"
     },
     {
@@ -3280,8 +3280,8 @@
       "source_location": "L25",
       "_origin": "ast",
       "id": "app_http_requests_category_storecategoryrequest_storecategoryrequest_rules",
-      "community": 45,
-      "community_name": "API Controllers & Endpoints (45)",
+      "community": 37,
+      "community_name": "API Controllers & Endpoints (37)",
       "norm_label": ".rules()"
     },
     {
@@ -3511,8 +3511,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_http_requests_paymentmethod_bulkdeletepaymentmethodrequest",
-      "community": 37,
-      "community_name": "API Controllers & Endpoints (37)",
+      "community": 127,
+      "community_name": "index.tsx",
       "norm_label": "bulkdeletepaymentmethodrequest.php"
     },
     {
@@ -3522,8 +3522,8 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "app_http_requests_paymentmethod_bulkdeletepaymentmethodrequest_bulkdeletepaymentmethodrequest",
-      "community": 37,
-      "community_name": "API Controllers & Endpoints (37)",
+      "community": 127,
+      "community_name": "index.tsx",
       "norm_label": "bulkdeletepaymentmethodrequest"
     },
     {
@@ -3533,8 +3533,8 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "app_http_requests_paymentmethod_bulkdeletepaymentmethodrequest_bulkdeletepaymentmethodrequest_authorize",
-      "community": 37,
-      "community_name": "API Controllers & Endpoints (37)",
+      "community": 127,
+      "community_name": "index.tsx",
       "norm_label": ".authorize()"
     },
     {
@@ -3544,8 +3544,8 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "app_http_requests_paymentmethod_bulkdeletepaymentmethodrequest_bulkdeletepaymentmethodrequest_rules",
-      "community": 37,
-      "community_name": "API Controllers & Endpoints (37)",
+      "community": 127,
+      "community_name": "index.tsx",
       "norm_label": ".rules()"
     },
     {
@@ -3555,8 +3555,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_http_requests_paymentmethod_storepaymentmethodrequest",
-      "community": 37,
-      "community_name": "API Controllers & Endpoints (37)",
+      "community": 127,
+      "community_name": "index.tsx",
       "norm_label": "storepaymentmethodrequest.php"
     },
     {
@@ -3566,8 +3566,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "app_http_requests_paymentmethod_storepaymentmethodrequest_storepaymentmethodrequest",
-      "community": 37,
-      "community_name": "API Controllers & Endpoints (37)",
+      "community": 127,
+      "community_name": "index.tsx",
       "norm_label": "storepaymentmethodrequest"
     },
     {
@@ -3577,8 +3577,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "app_http_requests_paymentmethod_storepaymentmethodrequest_storepaymentmethodrequest_authorize",
-      "community": 37,
-      "community_name": "API Controllers & Endpoints (37)",
+      "community": 127,
+      "community_name": "index.tsx",
       "norm_label": ".authorize()"
     },
     {
@@ -3588,8 +3588,8 @@
       "source_location": "L25",
       "_origin": "ast",
       "id": "app_http_requests_paymentmethod_storepaymentmethodrequest_storepaymentmethodrequest_rules",
-      "community": 37,
-      "community_name": "API Controllers & Endpoints (37)",
+      "community": 127,
+      "community_name": "index.tsx",
       "norm_label": ".rules()"
     },
     {
@@ -3599,8 +3599,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_http_requests_paymentmethod_updatepaymentmethodrequest",
-      "community": 37,
-      "community_name": "API Controllers & Endpoints (37)",
+      "community": 127,
+      "community_name": "index.tsx",
       "norm_label": "updatepaymentmethodrequest.php"
     },
     {
@@ -3610,8 +3610,8 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "app_http_requests_paymentmethod_updatepaymentmethodrequest_updatepaymentmethodrequest",
-      "community": 37,
-      "community_name": "API Controllers & Endpoints (37)",
+      "community": 127,
+      "community_name": "index.tsx",
       "norm_label": "updatepaymentmethodrequest"
     },
     {
@@ -3621,8 +3621,8 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "app_http_requests_paymentmethod_updatepaymentmethodrequest_updatepaymentmethodrequest_authorize",
-      "community": 37,
-      "community_name": "API Controllers & Endpoints (37)",
+      "community": 127,
+      "community_name": "index.tsx",
       "norm_label": ".authorize()"
     },
     {
@@ -3632,8 +3632,8 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "app_http_requests_paymentmethod_updatepaymentmethodrequest_updatepaymentmethodrequest_rules",
-      "community": 37,
-      "community_name": "API Controllers & Endpoints (37)",
+      "community": 127,
+      "community_name": "index.tsx",
       "norm_label": ".rules()"
     },
     {
@@ -3643,8 +3643,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_http_requests_product_bulkdeleteproductrequest",
-      "community": 37,
-      "community_name": "API Controllers & Endpoints (37)",
+      "community": 45,
+      "community_name": "API Controllers & Endpoints (45)",
       "norm_label": "bulkdeleteproductrequest.php"
     },
     {
@@ -3654,8 +3654,8 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "app_http_requests_product_bulkdeleteproductrequest_bulkdeleteproductrequest",
-      "community": 37,
-      "community_name": "API Controllers & Endpoints (37)",
+      "community": 45,
+      "community_name": "API Controllers & Endpoints (45)",
       "norm_label": "bulkdeleteproductrequest"
     },
     {
@@ -3665,8 +3665,8 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "app_http_requests_product_bulkdeleteproductrequest_bulkdeleteproductrequest_authorize",
-      "community": 37,
-      "community_name": "API Controllers & Endpoints (37)",
+      "community": 45,
+      "community_name": "API Controllers & Endpoints (45)",
       "norm_label": ".authorize()"
     },
     {
@@ -3676,8 +3676,8 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "app_http_requests_product_bulkdeleteproductrequest_bulkdeleteproductrequest_rules",
-      "community": 37,
-      "community_name": "API Controllers & Endpoints (37)",
+      "community": 45,
+      "community_name": "API Controllers & Endpoints (45)",
       "norm_label": ".rules()"
     },
     {
@@ -3786,8 +3786,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_http_requests_product_storeproductrequest",
-      "community": 37,
-      "community_name": "API Controllers & Endpoints (37)",
+      "community": 45,
+      "community_name": "API Controllers & Endpoints (45)",
       "norm_label": "storeproductrequest.php"
     },
     {
@@ -3797,8 +3797,8 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "app_http_requests_product_storeproductrequest_storeproductrequest",
-      "community": 37,
-      "community_name": "API Controllers & Endpoints (37)",
+      "community": 45,
+      "community_name": "API Controllers & Endpoints (45)",
       "norm_label": "storeproductrequest"
     },
     {
@@ -3808,8 +3808,8 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "app_http_requests_product_storeproductrequest_storeproductrequest_authorize",
-      "community": 37,
-      "community_name": "API Controllers & Endpoints (37)",
+      "community": 45,
+      "community_name": "API Controllers & Endpoints (45)",
       "norm_label": ".authorize()"
     },
     {
@@ -3819,8 +3819,8 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "app_http_requests_product_storeproductrequest_storeproductrequest_rules",
-      "community": 37,
-      "community_name": "API Controllers & Endpoints (37)",
+      "community": 45,
+      "community_name": "API Controllers & Endpoints (45)",
       "norm_label": ".rules()"
     },
     {
@@ -3830,8 +3830,8 @@
       "source_location": "L45",
       "_origin": "ast",
       "id": "app_http_requests_product_storeproductrequest_storeproductrequest_messages",
-      "community": 37,
-      "community_name": "API Controllers & Endpoints (37)",
+      "community": 45,
+      "community_name": "API Controllers & Endpoints (45)",
       "norm_label": ".messages()"
     },
     {
@@ -5040,8 +5040,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_http_resources_profitwallettransactionresource",
-      "community": 7,
-      "community_name": "Transaction Management (7)",
+      "community": 111,
+      "community_name": "ApiCategoryController",
       "norm_label": "profitwallettransactionresource.php"
     },
     {
@@ -5051,8 +5051,8 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "app_http_resources_profitwallettransactionresource_profitwallettransactionresource",
-      "community": 7,
-      "community_name": "Transaction Management (7)",
+      "community": 111,
+      "community_name": "ApiCategoryController",
       "norm_label": "profitwallettransactionresource"
     },
     {
@@ -5062,8 +5062,8 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "app_http_resources_profitwallettransactionresource_profitwallettransactionresource_toarray",
-      "community": 7,
-      "community_name": "Transaction Management (7)",
+      "community": 111,
+      "community_name": "ApiCategoryController",
       "norm_label": ".toarray()"
     },
     {
@@ -5238,8 +5238,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_imports_categoryimport",
-      "community": 28,
-      "community_name": "API Controllers & Endpoints (28)",
+      "community": 131,
+      "community_name": "clsx",
       "norm_label": "categoryimport.php"
     },
     {
@@ -5249,8 +5249,8 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "app_imports_categoryimport_categoryimport",
-      "community": 28,
-      "community_name": "API Controllers & Endpoints (28)",
+      "community": 131,
+      "community_name": "clsx",
       "norm_label": "categoryimport"
     },
     {
@@ -5260,8 +5260,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "app_imports_categoryimport_categoryimport_collection",
-      "community": 28,
-      "community_name": "API Controllers & Endpoints (28)",
+      "community": 131,
+      "community_name": "clsx",
       "norm_label": ".collection()"
     },
     {
@@ -5271,8 +5271,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_imports_masterproductimport",
-      "community": 28,
-      "community_name": "API Controllers & Endpoints (28)",
+      "community": 131,
+      "community_name": "clsx",
       "norm_label": "masterproductimport.php"
     },
     {
@@ -5282,8 +5282,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "app_imports_masterproductimport_masterproductimport",
-      "community": 28,
-      "community_name": "API Controllers & Endpoints (28)",
+      "community": 131,
+      "community_name": "clsx",
       "norm_label": "masterproductimport"
     },
     {
@@ -5293,8 +5293,8 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "app_imports_masterproductimport_masterproductimport_collection",
-      "community": 28,
-      "community_name": "API Controllers & Endpoints (28)",
+      "community": 131,
+      "community_name": "clsx",
       "norm_label": ".collection()"
     },
     {
@@ -5304,8 +5304,8 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "app_imports_masterproductimport_masterproductimport_array",
-      "community": 28,
-      "community_name": "API Controllers & Endpoints (28)",
+      "community": 131,
+      "community_name": "clsx",
       "norm_label": ".array()"
     },
     {
@@ -5315,8 +5315,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_imports_productimport",
-      "community": 28,
-      "community_name": "API Controllers & Endpoints (28)",
+      "community": 131,
+      "community_name": "clsx",
       "norm_label": "productimport.php"
     },
     {
@@ -5326,8 +5326,8 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "app_imports_productimport_productimport",
-      "community": 28,
-      "community_name": "API Controllers & Endpoints (28)",
+      "community": 131,
+      "community_name": "clsx",
       "norm_label": "productimport"
     },
     {
@@ -5337,8 +5337,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "app_imports_productimport_productimport_collection",
-      "community": 28,
-      "community_name": "API Controllers & Endpoints (28)",
+      "community": 131,
+      "community_name": "clsx",
       "norm_label": ".collection()"
     },
     {
@@ -5997,8 +5997,8 @@
       "source_location": "L41",
       "_origin": "ast",
       "id": "app_models_transaction_transaction_cashprofit",
-      "community": 43,
-      "community_name": "Category Data & Repositories (43)",
+      "community": 13,
+      "community_name": "Transaction Management (13)",
       "norm_label": ".cashprofit()"
     },
     {
@@ -6008,8 +6008,8 @@
       "source_location": "L46",
       "_origin": "ast",
       "id": "app_models_transaction_transaction_profitwallettransaction",
-      "community": 43,
-      "community_name": "Category Data & Repositories (43)",
+      "community": 13,
+      "community_name": "Transaction Management (13)",
       "norm_label": ".profitwallettransaction()"
     },
     {
@@ -6140,8 +6140,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_providers_appserviceprovider",
-      "community": 28,
-      "community_name": "API Controllers & Endpoints (28)",
+      "community": 116,
+      "community_name": "@dnd-kit/sortable Domain (116)",
       "norm_label": "appserviceprovider.php"
     },
     {
@@ -6151,8 +6151,8 @@
       "source_location": "L53",
       "_origin": "ast",
       "id": "app_providers_appserviceprovider_appserviceprovider",
-      "community": 51,
-      "community_name": "axios Domain (51)",
+      "community": 109,
+      "community_name": "cart-item-row.tsx",
       "norm_label": "appserviceprovider"
     },
     {
@@ -6162,8 +6162,8 @@
       "source_location": "L58",
       "_origin": "ast",
       "id": "app_providers_appserviceprovider_appserviceprovider_register",
-      "community": 51,
-      "community_name": "axios Domain (51)",
+      "community": 109,
+      "community_name": "cart-item-row.tsx",
       "norm_label": ".register()"
     },
     {
@@ -6173,8 +6173,8 @@
       "source_location": "L104",
       "_origin": "ast",
       "id": "app_providers_appserviceprovider_appserviceprovider_boot",
-      "community": 51,
-      "community_name": "axios Domain (51)",
+      "community": 109,
+      "community_name": "cart-item-row.tsx",
       "norm_label": ".boot()"
     },
     {
@@ -6184,8 +6184,8 @@
       "source_location": "L116",
       "_origin": "ast",
       "id": "app_providers_appserviceprovider_appserviceprovider_configuredefaults",
-      "community": 51,
-      "community_name": "axios Domain (51)",
+      "community": 109,
+      "community_name": "cart-item-row.tsx",
       "norm_label": ".configuredefaults()"
     },
     {
@@ -6316,8 +6316,8 @@
       "source_location": "L57",
       "_origin": "ast",
       "id": "app_providers_telescopeserviceprovider_telescopeserviceprovider_gate",
-      "community": 51,
-      "community_name": "axios Domain (51)",
+      "community": 109,
+      "community_name": "cart-item-row.tsx",
       "norm_label": ".gate()"
     },
     {
@@ -6580,8 +6580,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_repositories_paymentmethodrepository",
-      "community": 16,
-      "community_name": "PaymentMethod Domain (16)",
+      "community": 28,
+      "community_name": "API Controllers & Endpoints (28)",
       "norm_label": "paymentmethodrepository.php"
     },
     {
@@ -6602,8 +6602,8 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "app_repositories_paymentmethodrepository_paymentmethodrepository_getallbyindex",
-      "community": 16,
-      "community_name": "PaymentMethod Domain (16)",
+      "community": 28,
+      "community_name": "API Controllers & Endpoints (28)",
       "norm_label": ".getallbyindex()"
     },
     {
@@ -7086,8 +7086,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_repositories_transactiondetailrepository",
-      "community": 9,
-      "community_name": "Transaction Management (9)",
+      "community": 28,
+      "community_name": "API Controllers & Endpoints (28)",
       "norm_label": "transactiondetailrepository.php"
     },
     {
@@ -7108,8 +7108,8 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "app_repositories_transactiondetailrepository_transactiondetailrepository_getallbyindex",
-      "community": 9,
-      "community_name": "Transaction Management (9)",
+      "community": 28,
+      "community_name": "API Controllers & Endpoints (28)",
       "norm_label": ".getallbyindex()"
     },
     {
@@ -7218,8 +7218,8 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "app_repositories_transactionrepository_transactionrepository_getallbyindex",
-      "community": 13,
-      "community_name": "Transaction Management (13)",
+      "community": 28,
+      "community_name": "API Controllers & Endpoints (28)",
       "norm_label": ".getallbyindex()"
     },
     {
@@ -7548,8 +7548,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_services_categoryservice",
-      "community": 28,
-      "community_name": "API Controllers & Endpoints (28)",
+      "community": 116,
+      "community_name": "@dnd-kit/sortable Domain (116)",
       "norm_label": "categoryservice.php"
     },
     {
@@ -7581,8 +7581,8 @@
       "source_location": "L24",
       "_origin": "ast",
       "id": "app_services_categoryservice_categoryservice_getallbyindex",
-      "community": 12,
-      "community_name": "Category Data & Repositories (12)",
+      "community": 28,
+      "community_name": "API Controllers & Endpoints (28)",
       "norm_label": ".getallbyindex()"
     },
     {
@@ -7669,8 +7669,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_services_masterproductservice",
-      "community": 28,
-      "community_name": "API Controllers & Endpoints (28)",
+      "community": 116,
+      "community_name": "@dnd-kit/sortable Domain (116)",
       "norm_label": "masterproductservice.php"
     },
     {
@@ -7823,8 +7823,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_services_paymentmethodservice",
-      "community": 28,
-      "community_name": "API Controllers & Endpoints (28)",
+      "community": 116,
+      "community_name": "@dnd-kit/sortable Domain (116)",
       "norm_label": "paymentmethodservice.php"
     },
     {
@@ -7856,8 +7856,8 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "app_services_paymentmethodservice_paymentmethodservice_getallbyindex",
-      "community": 16,
-      "community_name": "PaymentMethod Domain (16)",
+      "community": 28,
+      "community_name": "API Controllers & Endpoints (28)",
       "norm_label": ".getallbyindex()"
     },
     {
@@ -7933,8 +7933,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_services_productservice",
-      "community": 28,
-      "community_name": "API Controllers & Endpoints (28)",
+      "community": 116,
+      "community_name": "@dnd-kit/sortable Domain (116)",
       "norm_label": "productservice.php"
     },
     {
@@ -8153,8 +8153,8 @@
       "source_location": "L83",
       "_origin": "ast",
       "id": "app_services_profitwalletservice_profitwalletservice_gettransactions",
-      "community": 10,
-      "community_name": "Data Table UI Components (10)",
+      "community": 28,
+      "community_name": "API Controllers & Endpoints (28)",
       "norm_label": ".gettransactions()"
     },
     {
@@ -8197,8 +8197,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_services_roleservice",
-      "community": 28,
-      "community_name": "API Controllers & Endpoints (28)",
+      "community": 116,
+      "community_name": "@dnd-kit/sortable Domain (116)",
       "norm_label": "roleservice.php"
     },
     {
@@ -8296,8 +8296,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_services_transactiondetailservice",
-      "community": 28,
-      "community_name": "API Controllers & Endpoints (28)",
+      "community": 116,
+      "community_name": "@dnd-kit/sortable Domain (116)",
       "norm_label": "transactiondetailservice.php"
     },
     {
@@ -8329,8 +8329,8 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "app_services_transactiondetailservice_transactiondetailservice_getallbyindex",
-      "community": 9,
-      "community_name": "Transaction Management (9)",
+      "community": 28,
+      "community_name": "API Controllers & Endpoints (28)",
       "norm_label": ".getallbyindex()"
     },
     {
@@ -8406,8 +8406,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_services_transactionservice",
-      "community": 28,
-      "community_name": "API Controllers & Endpoints (28)",
+      "community": 116,
+      "community_name": "@dnd-kit/sortable Domain (116)",
       "norm_label": "transactionservice.php"
     },
     {
@@ -8439,8 +8439,8 @@
       "source_location": "L30",
       "_origin": "ast",
       "id": "app_services_transactionservice_transactionservice_getallbyindex",
-      "community": 23,
-      "community_name": "Product Catalog & Inventory (23)",
+      "community": 28,
+      "community_name": "API Controllers & Endpoints (28)",
       "norm_label": ".getallbyindex()"
     },
     {
@@ -8527,8 +8527,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_services_unitservice",
-      "community": 28,
-      "community_name": "API Controllers & Endpoints (28)",
+      "community": 116,
+      "community_name": "@dnd-kit/sortable Domain (116)",
       "norm_label": "unitservice.php"
     },
     {
@@ -8560,8 +8560,8 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "app_services_unitservice_unitservice_getallbyindex",
-      "community": 17,
-      "community_name": "Unit Domain (17)",
+      "community": 28,
+      "community_name": "API Controllers & Endpoints (28)",
       "norm_label": ".getallbyindex()"
     },
     {
@@ -8725,8 +8725,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_support_constants_constants",
-      "community": 28,
-      "community_name": "API Controllers & Endpoints (28)",
+      "community": 116,
+      "community_name": "@dnd-kit/sortable Domain (116)",
       "norm_label": "constants.php"
     },
     {
@@ -8736,8 +8736,8 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "app_support_constants_constants_constants",
-      "community": 28,
-      "community_name": "API Controllers & Endpoints (28)",
+      "community": 116,
+      "community_name": "@dnd-kit/sortable Domain (116)",
       "norm_label": "constants"
     },
     {
@@ -8747,8 +8747,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_support_constants_errorcode",
-      "community": 28,
-      "community_name": "API Controllers & Endpoints (28)",
+      "community": 116,
+      "community_name": "@dnd-kit/sortable Domain (116)",
       "norm_label": "errorcode.php"
     },
     {
@@ -8758,8 +8758,8 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "app_support_constants_errorcode_errorcode",
-      "community": 28,
-      "community_name": "API Controllers & Endpoints (28)",
+      "community": 116,
+      "community_name": "@dnd-kit/sortable Domain (116)",
       "norm_label": "errorcode"
     },
     {
@@ -8791,8 +8791,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_support_enums_categorypermissionenums",
-      "community": 0,
-      "community_name": "API Controllers & Endpoints (0)",
+      "community": 37,
+      "community_name": "API Controllers & Endpoints (37)",
       "norm_label": "categorypermissionenums.php"
     },
     {
@@ -8802,8 +8802,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_support_enums_dashboardpermissionenums",
-      "community": 116,
-      "community_name": "@dnd-kit/sortable Domain (116)",
+      "community": 0,
+      "community_name": "API Controllers & Endpoints (0)",
       "norm_label": "dashboardpermissionenums.php"
     },
     {
@@ -8846,8 +8846,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_support_enums_profitwalletpermissionenums",
-      "community": 116,
-      "community_name": "@dnd-kit/sortable Domain (116)",
+      "community": 0,
+      "community_name": "API Controllers & Endpoints (0)",
       "norm_label": "profitwalletpermissionenums.php"
     },
     {
@@ -9000,8 +9000,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "app_support_interfaces_repositories_categoryrepositoryinterface_getallbyindex",
-      "community": 12,
-      "community_name": "Category Data & Repositories (12)",
+      "community": 28,
+      "community_name": "API Controllers & Endpoints (28)",
       "norm_label": "getallbyindex()"
     },
     {
@@ -9110,8 +9110,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "app_support_interfaces_repositories_masterproductrepositoryinterface_getallbyindex",
-      "community": 22,
-      "community_name": "Product Catalog & Inventory (22)",
+      "community": 28,
+      "community_name": "API Controllers & Endpoints (28)",
       "norm_label": "getallbyindex()"
     },
     {
@@ -9231,8 +9231,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "app_support_interfaces_repositories_paymentmethodrepositoryinterface_getallbyindex",
-      "community": 16,
-      "community_name": "PaymentMethod Domain (16)",
+      "community": 28,
+      "community_name": "API Controllers & Endpoints (28)",
       "norm_label": "getallbyindex()"
     },
     {
@@ -9341,8 +9341,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "app_support_interfaces_repositories_productrepositoryinterface_getallbyindex",
-      "community": 21,
-      "community_name": "Product Catalog & Inventory (21)",
+      "community": 28,
+      "community_name": "API Controllers & Endpoints (28)",
       "norm_label": "getallbyindex()"
     },
     {
@@ -9693,8 +9693,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "app_support_interfaces_repositories_transactiondetailrepositoryinterface_getallbyindex",
-      "community": 9,
-      "community_name": "Transaction Management (9)",
+      "community": 28,
+      "community_name": "API Controllers & Endpoints (28)",
       "norm_label": "getallbyindex()"
     },
     {
@@ -9891,8 +9891,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "app_support_interfaces_repositories_unitrepositoryinterface_getallbyindex",
-      "community": 17,
-      "community_name": "Unit Domain (17)",
+      "community": 28,
+      "community_name": "API Controllers & Endpoints (28)",
       "norm_label": "getallbyindex()"
     },
     {
@@ -10177,8 +10177,8 @@
       "source_location": "L46",
       "_origin": "ast",
       "id": "app_support_interfaces_services_categoryserviceinterface_importexcel",
-      "community": 12,
-      "community_name": "Category Data & Repositories (12)",
+      "community": 116,
+      "community_name": "@dnd-kit/sortable Domain (116)",
       "norm_label": "importexcel()"
     },
     {
@@ -10199,8 +10199,8 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "app_support_interfaces_services_masterproductserviceinterface_getallbyindex",
-      "community": 22,
-      "community_name": "Product Catalog & Inventory (22)",
+      "community": 28,
+      "community_name": "API Controllers & Endpoints (28)",
       "norm_label": "getallbyindex()"
     },
     {
@@ -10276,8 +10276,8 @@
       "source_location": "L52",
       "_origin": "ast",
       "id": "app_support_interfaces_services_masterproductserviceinterface_importexcel",
-      "community": 12,
-      "community_name": "Category Data & Repositories (12)",
+      "community": 116,
+      "community_name": "@dnd-kit/sortable Domain (116)",
       "norm_label": "importexcel()"
     },
     {
@@ -10320,8 +10320,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "app_support_interfaces_services_paymentmethodserviceinterface_getallbyindex",
-      "community": 16,
-      "community_name": "PaymentMethod Domain (16)",
+      "community": 28,
+      "community_name": "API Controllers & Endpoints (28)",
       "norm_label": "getallbyindex()"
     },
     {
@@ -10397,8 +10397,8 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "app_support_interfaces_services_productserviceinterface_getallbyindex",
-      "community": 21,
-      "community_name": "Product Catalog & Inventory (21)",
+      "community": 28,
+      "community_name": "API Controllers & Endpoints (28)",
       "norm_label": "getallbyindex()"
     },
     {
@@ -10485,8 +10485,8 @@
       "source_location": "L59",
       "_origin": "ast",
       "id": "app_support_interfaces_services_productserviceinterface_importexcel",
-      "community": 12,
-      "community_name": "Category Data & Repositories (12)",
+      "community": 116,
+      "community_name": "@dnd-kit/sortable Domain (116)",
       "norm_label": "importexcel()"
     },
     {
@@ -10683,8 +10683,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "app_support_interfaces_services_transactiondetailserviceinterface_getallbyindex",
-      "community": 9,
-      "community_name": "Transaction Management (9)",
+      "community": 28,
+      "community_name": "API Controllers & Endpoints (28)",
       "norm_label": "getallbyindex()"
     },
     {
@@ -10771,8 +10771,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "app_support_interfaces_services_transactionserviceinterface_getallbyindex",
-      "community": 13,
-      "community_name": "Transaction Management (13)",
+      "community": 28,
+      "community_name": "API Controllers & Endpoints (28)",
       "norm_label": "getallbyindex()"
     },
     {
@@ -10870,8 +10870,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "app_support_interfaces_services_unitserviceinterface_getallbyindex",
-      "community": 17,
-      "community_name": "Unit Domain (17)",
+      "community": 28,
+      "community_name": "API Controllers & Endpoints (28)",
       "norm_label": "getallbyindex()"
     },
     {
@@ -11079,8 +11079,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_support_models_masterproduct_getmasterproductreqmodel",
-      "community": 7,
-      "community_name": "Transaction Management (7)",
+      "community": 37,
+      "community_name": "API Controllers & Endpoints (37)",
       "norm_label": "getmasterproductreqmodel.php"
     },
     {
@@ -11112,8 +11112,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_support_models_paymentmethod_getpaymentmethodreqmodel",
-      "community": 7,
-      "community_name": "Transaction Management (7)",
+      "community": 127,
+      "community_name": "index.tsx",
       "norm_label": "getpaymentmethodreqmodel.php"
     },
     {
@@ -11123,8 +11123,8 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "app_support_models_paymentmethod_getpaymentmethodreqmodel_getpaymentmethodreqmodel",
-      "community": 16,
-      "community_name": "PaymentMethod Domain (16)",
+      "community": 28,
+      "community_name": "API Controllers & Endpoints (28)",
       "norm_label": "getpaymentmethodreqmodel"
     },
     {
@@ -11145,8 +11145,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_support_models_product_getproductreqmodel",
-      "community": 7,
-      "community_name": "Transaction Management (7)",
+      "community": 45,
+      "community_name": "API Controllers & Endpoints (45)",
       "norm_label": "getproductreqmodel.php"
     },
     {
@@ -11277,8 +11277,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_support_models_role_getrolereqmodel",
-      "community": 7,
-      "community_name": "Transaction Management (7)",
+      "community": 0,
+      "community_name": "API Controllers & Endpoints (0)",
       "norm_label": "getrolereqmodel.php"
     },
     {
@@ -11310,8 +11310,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_support_models_transaction_gettransactionreqmodel",
-      "community": 7,
-      "community_name": "Transaction Management (7)",
+      "community": 56,
+      "community_name": "RoleService.php Domain (56)",
       "norm_label": "gettransactionreqmodel.php"
     },
     {
@@ -11354,8 +11354,8 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "app_support_models_transactiondetail_gettransactiondetailreqmodel_gettransactiondetailreqmodel",
-      "community": 9,
-      "community_name": "Transaction Management (9)",
+      "community": 28,
+      "community_name": "API Controllers & Endpoints (28)",
       "norm_label": "gettransactiondetailreqmodel"
     },
     {
@@ -11365,8 +11365,8 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "app_support_models_transactiondetail_gettransactiondetailreqmodel_gettransactiondetailreqmodel_construct",
-      "community": 9,
-      "community_name": "Transaction Management (9)",
+      "community": 28,
+      "community_name": "API Controllers & Endpoints (28)",
       "norm_label": ".__construct()"
     },
     {
@@ -11409,8 +11409,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_support_models_user_getuserreqmodel",
-      "community": 7,
-      "community_name": "Transaction Management (7)",
+      "community": 20,
+      "community_name": "API Controllers & Endpoints (20)",
       "norm_label": "getuserreqmodel.php"
     },
     {
@@ -11442,8 +11442,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_support_utils_checkexception",
-      "community": 28,
-      "community_name": "API Controllers & Endpoints (28)",
+      "community": 116,
+      "community_name": "@dnd-kit/sortable Domain (116)",
       "norm_label": "checkexception.php"
     },
     {
@@ -11475,8 +11475,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "exception",
-      "community": 28,
-      "community_name": "API Controllers & Endpoints (28)",
+      "community": 116,
+      "community_name": "@dnd-kit/sortable Domain (116)",
       "norm_label": "exception"
     },
     {
@@ -11552,8 +11552,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_support_utils_paginationresource",
-      "community": 7,
-      "community_name": "Transaction Management (7)",
+      "community": 111,
+      "community_name": "ApiCategoryController",
       "norm_label": "paginationresource.php"
     },
     {
@@ -11563,8 +11563,8 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "app_support_utils_paginationresource_paginationresource",
-      "community": 7,
-      "community_name": "Transaction Management (7)",
+      "community": 111,
+      "community_name": "ApiCategoryController",
       "norm_label": "paginationresource"
     },
     {
@@ -11574,8 +11574,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "app_support_utils_paginationresource_paginationresource_make",
-      "community": 7,
-      "community_name": "Transaction Management (7)",
+      "community": 111,
+      "community_name": "ApiCategoryController",
       "norm_label": ".make()"
     },
     {
@@ -11585,8 +11585,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_support_utils_responseapi",
-      "community": 0,
-      "community_name": "API Controllers & Endpoints (0)",
+      "community": 111,
+      "community_name": "ApiCategoryController",
       "norm_label": "responseapi.php"
     },
     {
@@ -11607,8 +11607,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "app_support_utils_responseapi_responseapi_make",
-      "community": 45,
-      "community_name": "API Controllers & Endpoints (45)",
+      "community": 111,
+      "community_name": "ApiCategoryController",
       "norm_label": ".make()"
     },
     {
@@ -11640,8 +11640,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "bootstrap_app",
-      "community": 34,
-      "community_name": "two-factor-recovery-codes.tsx Domain (34)",
+      "community": 7,
+      "community_name": "Transaction Management (7)",
       "norm_label": "app.php"
     },
     {
@@ -12520,8 +12520,8 @@
       "source_location": "L72",
       "_origin": "ast",
       "id": "composer_scripts_test",
-      "community": 127,
-      "community_name": "index.tsx",
+      "community": 52,
+      "community_name": "scripts Domain (52)",
       "norm_label": "test"
     },
     {
@@ -12531,8 +12531,8 @@
       "source_location": "L72",
       "_origin": "ast",
       "id": "ref_php_artisan_config_clear_ansi",
-      "community": 127,
-      "community_name": "index.tsx",
+      "community": 52,
+      "community_name": "scripts Domain (52)",
       "norm_label": "@php artisan config:clear --ansi"
     },
     {
@@ -12542,8 +12542,8 @@
       "source_location": "L72",
       "_origin": "ast",
       "id": "ref_lint_check",
-      "community": 127,
-      "community_name": "index.tsx",
+      "community": 52,
+      "community_name": "scripts Domain (52)",
       "norm_label": "@lint:check"
     },
     {
@@ -12553,8 +12553,8 @@
       "source_location": "L72",
       "_origin": "ast",
       "id": "ref_php_artisan_test",
-      "community": 127,
-      "community_name": "index.tsx",
+      "community": 52,
+      "community_name": "scripts Domain (52)",
       "norm_label": "@php artisan test"
     },
     {
@@ -12641,8 +12641,8 @@
       "source_location": "L88",
       "_origin": "ast",
       "id": "composer_scripts_post_create_project_cmd",
-      "community": 52,
-      "community_name": "scripts Domain (52)",
+      "community": 153,
+      "community_name": "class-variance-authority",
       "norm_label": "post-create-project-cmd"
     },
     {
@@ -12652,8 +12652,8 @@
       "source_location": "L88",
       "_origin": "ast",
       "id": "ref_php_artisan_key_generate_ansi",
-      "community": 52,
-      "community_name": "scripts Domain (52)",
+      "community": 153,
+      "community_name": "class-variance-authority",
       "norm_label": "@php artisan key:generate --ansi"
     },
     {
@@ -12663,8 +12663,8 @@
       "source_location": "L88",
       "_origin": "ast",
       "id": "ref_php_r_file_exists_database_database_sqlite_touch_database_database_sqlite",
-      "community": 52,
-      "community_name": "scripts Domain (52)",
+      "community": 153,
+      "community_name": "class-variance-authority",
       "norm_label": "@php -r \\\"file_exists('database/database.sqlite') || touch('database/database.sqlite');\\"
     },
     {
@@ -12674,8 +12674,8 @@
       "source_location": "L88",
       "_origin": "ast",
       "id": "ref_php_artisan_migrate_graceful_ansi",
-      "community": 52,
-      "community_name": "scripts Domain (52)",
+      "community": 153,
+      "community_name": "class-variance-authority",
       "norm_label": "@php artisan migrate --graceful --ansi"
     },
     {
@@ -14115,8 +14115,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "database_seeders_permissionseeder",
-      "community": 116,
-      "community_name": "@dnd-kit/sortable Domain (116)",
+      "community": 0,
+      "community_name": "API Controllers & Endpoints (0)",
       "norm_label": "permissionseeder.php"
     },
     {
@@ -14181,8 +14181,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "database_seeders_roleseeder",
-      "community": 116,
-      "community_name": "@dnd-kit/sortable Domain (116)",
+      "community": 0,
+      "community_name": "API Controllers & Endpoints (0)",
       "norm_label": "roleseeder.php"
     },
     {
@@ -14808,8 +14808,8 @@
       "source_location": "L26",
       "_origin": "ast",
       "id": "package_devdependencies_eslint_plugin_react",
-      "community": 153,
-      "community_name": "class-variance-authority",
+      "community": 53,
+      "community_name": "eslint Domain (53)",
       "norm_label": "eslint-plugin-react"
     },
     {
@@ -14819,8 +14819,8 @@
       "source_location": "L26",
       "_origin": "ast",
       "id": "eslint_plugin_react",
-      "community": 153,
-      "community_name": "class-variance-authority",
+      "community": 53,
+      "community_name": "eslint Domain (53)",
       "norm_label": "eslint-plugin-react"
     },
     {
@@ -14896,8 +14896,8 @@
       "source_location": "L30",
       "_origin": "ast",
       "id": "package_devdependencies_typescript_eslint",
-      "community": 53,
-      "community_name": "eslint Domain (53)",
+      "community": 306,
+      "community_name": "typescript-eslint",
       "norm_label": "typescript-eslint"
     },
     {
@@ -14907,8 +14907,8 @@
       "source_location": "L30",
       "_origin": "ast",
       "id": "typescript_eslint",
-      "community": 53,
-      "community_name": "eslint Domain (53)",
+      "community": 306,
+      "community_name": "typescript-eslint",
       "norm_label": "typescript-eslint"
     },
     {
@@ -14929,8 +14929,8 @@
       "source_location": "L33",
       "_origin": "ast",
       "id": "package_dependencies_base_ui_react",
-      "community": 131,
-      "community_name": "clsx",
+      "community": 129,
+      "community_name": "@base-ui/react",
       "norm_label": "@base-ui/react"
     },
     {
@@ -14940,8 +14940,8 @@
       "source_location": "L33",
       "_origin": "ast",
       "id": "base_ui_react",
-      "community": 131,
-      "community_name": "clsx",
+      "community": 129,
+      "community_name": "@base-ui/react",
       "norm_label": "@base-ui/react"
     },
     {
@@ -15523,8 +15523,8 @@
       "source_location": "L60",
       "_origin": "ast",
       "id": "package_dependencies_axios",
-      "community": 129,
-      "community_name": "@base-ui/react",
+      "community": 34,
+      "community_name": "two-factor-recovery-codes.tsx Domain (34)",
       "norm_label": "axios"
     },
     {
@@ -15534,8 +15534,8 @@
       "source_location": "L60",
       "_origin": "ast",
       "id": "axios",
-      "community": 129,
-      "community_name": "@base-ui/react",
+      "community": 34,
+      "community_name": "two-factor-recovery-codes.tsx Domain (34)",
       "norm_label": "axios"
     },
     {
@@ -16216,8 +16216,8 @@
       "source_location": "L91",
       "_origin": "ast",
       "id": "xlsx",
-      "community": 28,
-      "community_name": "API Controllers & Endpoints (28)",
+      "community": 116,
+      "community_name": "@dnd-kit/sortable Domain (116)",
       "norm_label": "xlsx"
     },
     {
@@ -26501,8 +26501,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_feature_profitwallet_apiprofitwalletcontrollertest",
-      "community": 116,
-      "community_name": "@dnd-kit/sortable Domain (116)",
+      "community": 0,
+      "community_name": "API Controllers & Endpoints (0)",
       "norm_label": "apiprofitwalletcontrollertest.php"
     },
     {
@@ -26534,8 +26534,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_feature_profitwallet_profitwalletpermissiontest",
-      "community": 116,
-      "community_name": "@dnd-kit/sortable Domain (116)",
+      "community": 0,
+      "community_name": "API Controllers & Endpoints (0)",
       "norm_label": "profitwalletpermissiontest.php"
     },
     {
@@ -26600,8 +26600,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_feature_profitwallet_profitwalletwebtest",
-      "community": 116,
-      "community_name": "@dnd-kit/sortable Domain (116)",
+      "community": 0,
+      "community_name": "API Controllers & Endpoints (0)",
       "norm_label": "profitwalletwebtest.php"
     },
     {
@@ -26688,8 +26688,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_feature_transaction_transactionrepositorytest",
-      "community": 7,
-      "community_name": "Transaction Management (7)",
+      "community": 56,
+      "community_name": "RoleService.php Domain (56)",
       "norm_label": "transactionrepositorytest.php"
     },
     {
@@ -26710,8 +26710,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_feature_transaction_transactionservicetest",
-      "community": 7,
-      "community_name": "Transaction Management (7)",
+      "community": 56,
+      "community_name": "RoleService.php Domain (56)",
       "norm_label": "transactionservicetest.php"
     },
     {
@@ -29196,8 +29196,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "illuminate_http_jsonresponse",
-      "community": 0,
-      "community_name": "API Controllers & Endpoints (0)",
+      "community": 111,
+      "community_name": "ApiCategoryController",
       "norm_label": "illuminate\\http\\jsonresponse"
     },
     {
@@ -29262,8 +29262,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "closure",
-      "community": 34,
-      "community_name": "two-factor-recovery-codes.tsx Domain (34)",
+      "community": 7,
+      "community_name": "Transaction Management (7)",
       "norm_label": "closure"
     },
     {
@@ -29273,8 +29273,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "symfony_component_httpfoundation_response",
-      "community": 34,
-      "community_name": "two-factor-recovery-codes.tsx Domain (34)",
+      "community": 7,
+      "community_name": "Transaction Management (7)",
       "norm_label": "symfony\\component\\httpfoundation\\response"
     },
     {
@@ -29339,8 +29339,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "maatwebsite_excel_concerns_tocollection",
-      "community": 28,
-      "community_name": "API Controllers & Endpoints (28)",
+      "community": 131,
+      "community_name": "clsx",
       "norm_label": "maatwebsite\\excel\\concerns\\tocollection"
     },
     {
@@ -29350,8 +29350,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "maatwebsite_excel_concerns_withheadingrow",
-      "community": 28,
-      "community_name": "API Controllers & Endpoints (28)",
+      "community": 131,
+      "community_name": "clsx",
       "norm_label": "maatwebsite\\excel\\concerns\\withheadingrow"
     },
     {
@@ -29361,8 +29361,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "maatwebsite_excel_concerns_toarray",
-      "community": 28,
-      "community_name": "API Controllers & Endpoints (28)",
+      "community": 131,
+      "community_name": "clsx",
       "norm_label": "maatwebsite\\excel\\concerns\\toarray"
     },
     {
@@ -29526,8 +29526,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "illuminate_database_eloquent_relations_hasone",
-      "community": 43,
-      "community_name": "Category Data & Repositories (43)",
+      "community": 13,
+      "community_name": "Transaction Management (13)",
       "norm_label": "illuminate\\database\\eloquent\\relations\\hasone"
     },
     {
@@ -29537,8 +29537,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "illuminate_database_eloquent_relations_morphone",
-      "community": 43,
-      "community_name": "Category Data & Repositories (43)",
+      "community": 13,
+      "community_name": "Transaction Management (13)",
       "norm_label": "illuminate\\database\\eloquent\\relations\\morphone"
     },
     {
@@ -29614,8 +29614,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "illuminate_http_uploadedfile",
-      "community": 12,
-      "community_name": "Category Data & Repositories (12)",
+      "community": 116,
+      "community_name": "@dnd-kit/sortable Domain (116)",
       "norm_label": "illuminate\\http\\uploadedfile"
     },
     {
@@ -29647,8 +29647,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "illuminate_pagination_lengthawarepaginator",
-      "community": 7,
-      "community_name": "Transaction Management (7)",
+      "community": 111,
+      "community_name": "ApiCategoryController",
       "norm_label": "illuminate\\pagination\\lengthawarepaginator"
     },
     {
@@ -29658,8 +29658,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "illuminate_foundation_configuration_middleware",
-      "community": 34,
-      "community_name": "two-factor-recovery-codes.tsx Domain (34)",
+      "community": 7,
+      "community_name": "Transaction Management (7)",
       "norm_label": "illuminate\\foundation\\configuration\\middleware"
     },
     {
@@ -102653,7 +102653,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "resources/js/pages/transaction/dialog-modal/detail-dialog.tsx",
-      "source_location": "L318",
+      "source_location": "L316",
       "weight": 1.0,
       "_origin": "ast",
       "source": "resources_js_pages_transaction_dialog_modal_detail_dialog_detaildialog",
@@ -121530,5 +121530,5 @@
       "source_file": ".github/skills/laravel-best-practices/rules/security.md"
     }
   ],
-  "built_at_commit": "0a7151c886b8cd18c55cd99d958651b8fa52b9f0"
+  "built_at_commit": "4d5b90fd351361d07db6f1e77a52280686176a97"
 }

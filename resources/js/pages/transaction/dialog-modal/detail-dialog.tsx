@@ -1,10 +1,18 @@
 import dayjs from 'dayjs';
-import { CreditCard, Calendar, User, Printer, ShoppingBag } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { CreditCard, Calendar, User, Printer, ShoppingBag, Package, Hash, Wallet, TrendingUp, Landmark, PercentCircle } from 'lucide-react';
+import { useMemo, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Pie, PieChart, Cell, Label } from 'recharts';
 import ReceiptCard from '@/components/receipt-card';
 import type { StoreSetting } from '@/components/receipt-modal';
 import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import {
+    ChartContainer,
+    ChartTooltip,
+    ChartTooltipContent,
+    type ChartConfig,
+} from '@/components/ui/chart';
 import {
     Dialog,
     DialogContent,
@@ -27,6 +35,12 @@ import { handleApiError } from '@/lib/utils';
 import { show as apiShowTransaction } from '@/routes/apiTransactions';
 import type { ResponseApi } from '@/support/interfaces/response/Response';
 import type { Transaction } from '@/support/models/transaction';
+
+const BREAKDOWN_COLORS = {
+    profit: 'hsl(152, 57%, 48%)',
+    cost: 'hsl(217, 71%, 53%)',
+    discount: 'hsl(346, 77%, 55%)',
+} as const;
 
 interface DetailDialogProps {
     isOpen: boolean;
@@ -114,6 +128,61 @@ export function DetailDialog({
         )
         : Number(currentTransaction.total_amount) + discountAmount;
 
+    const totalItems = details.length;
+    const totalQuantity = details.reduce((sum, item) => sum + item.quantity, 0);
+    const totalItemDiscount = details.reduce(
+        (sum, item) => sum + Number(item.discount || 0) * item.quantity,
+        0,
+    );
+
+    const totalCost = details.reduce(
+        (sum, item) => sum + Number(item.cost_price || 0) * item.quantity,
+        0,
+    );
+    const totalAllDiscount = totalItemDiscount + discountAmount;
+    const totalProfit = netSubtotal - totalCost - discountAmount;
+
+    const pieData = useMemo(() => {
+        if (!details.length) return [];
+        const grossTotal = totalCost + Math.max(totalProfit, 0) + totalAllDiscount;
+        if (grossTotal <= 0) return [];
+        const data: { name: string; value: number; fill: string }[] = [
+            {
+                name: t('page.transaction.dialog_modal.detail_dialog.profit_label', 'Keuntungan'),
+                value: Math.max(totalProfit, 0),
+                fill: BREAKDOWN_COLORS.profit,
+            },
+            {
+                name: t('page.transaction.dialog_modal.detail_dialog.cost_label', 'Biaya Modal'),
+                value: totalCost,
+                fill: BREAKDOWN_COLORS.cost,
+            },
+        ];
+        if (totalAllDiscount > 0) {
+            data.push({
+                name: t('page.transaction.dialog_modal.detail_dialog.discount_label', 'Diskon'),
+                value: totalAllDiscount,
+                fill: BREAKDOWN_COLORS.discount,
+            });
+        }
+        return data;
+    }, [details, totalCost, totalProfit, totalAllDiscount, discountAmount, t]);
+
+    const chartConfig: ChartConfig = {
+        profit: {
+            label: t('page.transaction.dialog_modal.detail_dialog.profit_label', 'Keuntungan'),
+            color: BREAKDOWN_COLORS.profit,
+        },
+        cost: {
+            label: t('page.transaction.dialog_modal.detail_dialog.cost_label', 'Biaya Modal'),
+            color: BREAKDOWN_COLORS.cost,
+        },
+        discount: {
+            label: t('page.transaction.dialog_modal.detail_dialog.discount_label', 'Diskon'),
+            color: BREAKDOWN_COLORS.discount,
+        },
+    };
+
     const handlePrint = () => {
         window.print();
     };
@@ -179,63 +248,310 @@ export function DetailDialog({
                             value="details"
                             className="space-y-6 border-none p-0 pt-4 outline-none"
                         >
-                            {/* Summary Info Cards */}
-                            <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
-                                <div className="rounded-lg border bg-card p-3 shadow-xs">
-                                    <div className="mb-1 flex items-center gap-2 text-xs text-muted-foreground">
-                                        <User className="h-3.5 w-3.5" />
-                                        {t(
-                                            'page.transaction.dialog_modal.detail_dialog.cashier_label',
-                                            'Kasir / Petugas',
+                            {/* Section: Informasi Umum */}
+                            <div className="space-y-3">
+                                <h4 className="text-sm font-semibold">
+                                    {t(
+                                        'page.transaction.dialog_modal.detail_dialog.general_info',
+                                        'Informasi Umum',
+                                    )}
+                                </h4>
+                                <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
+                                    <div className="rounded-lg border bg-card p-3 shadow-xs">
+                                        <div className="mb-1 flex items-center gap-2 text-xs text-muted-foreground">
+                                            <User className="h-3.5 w-3.5" />
+                                            {t(
+                                                'page.transaction.dialog_modal.detail_dialog.cashier_label',
+                                                'Kasir / Petugas',
+                                            )}
+                                        </div>
+                                        {loading ? (
+                                            <Skeleton className="mt-1 h-5 w-24" />
+                                        ) : (
+                                            <p className="text-sm font-semibold">
+                                                {currentTransaction.user_name ||
+                                                    '-'}
+                                            </p>
                                         )}
                                     </div>
-                                    {loading ? (
-                                        <Skeleton className="mt-1 h-5 w-24" />
-                                    ) : (
-                                        <p className="text-sm font-semibold">
-                                            {currentTransaction.user_name ||
-                                                '-'}
-                                        </p>
-                                    )}
-                                </div>
-                                <div className="rounded-lg border bg-card p-3 shadow-xs">
-                                    <div className="mb-1 flex items-center gap-2 text-xs text-muted-foreground">
-                                        <CreditCard className="h-3.5 w-3.5" />
-                                        {t(
-                                            'page.transaction.dialog_modal.detail_dialog.payment_method_label',
-                                            'Metode Pembayaran',
+                                    <div className="rounded-lg border bg-card p-3 shadow-xs">
+                                        <div className="mb-1 flex items-center gap-2 text-xs text-muted-foreground">
+                                            <CreditCard className="h-3.5 w-3.5" />
+                                            {t(
+                                                'page.transaction.dialog_modal.detail_dialog.payment_method_label',
+                                                'Metode Pembayaran',
+                                            )}
+                                        </div>
+                                        {loading ? (
+                                            <Skeleton className="mt-1 h-5 w-20" />
+                                        ) : (
+                                            <p className="text-sm font-semibold">
+                                                {currentTransaction.payment_method_name
+                                                    ? t(
+                                                        `payment_method_name.${currentTransaction.payment_method_name}`,
+                                                        currentTransaction.payment_method_name,
+                                                    )
+                                                    : '-'}
+                                            </p>
                                         )}
                                     </div>
-                                    {loading ? (
-                                        <Skeleton className="mt-1 h-5 w-20" />
-                                    ) : (
-                                        <p className="text-sm font-semibold">
-                                            {currentTransaction.payment_method_name
-                                                ? t(
-                                                    `payment_method_name.${currentTransaction.payment_method_name}`,
-                                                    currentTransaction.payment_method_name,
-                                                )
-                                                : '-'}
-                                        </p>
-                                    )}
-                                </div>
-                                <div className="rounded-lg border bg-card p-3 shadow-xs">
-                                    <div className="mb-1 flex items-center gap-2 text-xs text-muted-foreground">
-                                        <Calendar className="h-3.5 w-3.5" />
-                                        {t(
-                                            'page.transaction.dialog_modal.detail_dialog.date_label',
-                                            'Waktu Transaksi',
+                                    <div className="rounded-lg border bg-card p-3 shadow-xs">
+                                        <div className="mb-1 flex items-center gap-2 text-xs text-muted-foreground">
+                                            <Calendar className="h-3.5 w-3.5" />
+                                            {t(
+                                                'page.transaction.dialog_modal.detail_dialog.date_label',
+                                                'Waktu Transaksi',
+                                            )}
+                                        </div>
+                                        {loading ? (
+                                            <Skeleton className="mt-1 h-5 w-28" />
+                                        ) : (
+                                            <p className="text-xs font-medium text-foreground">
+                                                {formattedDate}
+                                            </p>
                                         )}
                                     </div>
-                                    {loading ? (
-                                        <Skeleton className="mt-1 h-5 w-28" />
-                                    ) : (
-                                        <p className="text-xs font-medium text-foreground">
-                                            {formattedDate}
-                                        </p>
-                                    )}
                                 </div>
                             </div>
+
+                            {/* Section: Analisis & Ringkasan Keuangan */}
+                            <div className="space-y-3">
+                                <h4 className="text-sm font-semibold">
+                                    {t(
+                                        'page.transaction.dialog_modal.detail_dialog.analysis_summary',
+                                        'Analisis & Ringkasan Keuangan',
+                                    )}
+                                </h4>
+                                <div className="grid grid-cols-2 gap-3 md:grid-cols-3">
+                                    {/* 1. Total Transaksi */}
+                                    <Card className="gap-2 py-3">
+                                        <CardContent className="flex items-center gap-3 px-4">
+                                            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-emerald-500/10">
+                                                <Wallet className="h-4.5 w-4.5 text-emerald-600 dark:text-emerald-400" />
+                                            </div>
+                                            <div className="min-w-0">
+                                                <p className="truncate text-xs text-muted-foreground">
+                                                    {t('page.transaction.dialog_modal.detail_dialog.total_amount_card', 'Total Transaksi')}
+                                                </p>
+                                                {loading ? (
+                                                    <Skeleton className="mt-1 h-5 w-20" />
+                                                ) : (
+                                                    <p className="text-base font-bold tabular-nums text-emerald-600 dark:text-emerald-400">
+                                                        {formatRupiah(currentTransaction.total_amount)}
+                                                    </p>
+                                                )}
+                                            </div>
+                                        </CardContent>
+                                    </Card>
+
+                                    {/* 2. Total Modal */}
+                                    <Card className="gap-2 py-3">
+                                        <CardContent className="flex items-center gap-3 px-4">
+                                            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-blue-500/10">
+                                                <Landmark className="h-4.5 w-4.5 text-blue-600 dark:text-blue-400" />
+                                            </div>
+                                            <div className="min-w-0">
+                                                <p className="truncate text-xs text-muted-foreground">
+                                                    {t('page.transaction.dialog_modal.detail_dialog.total_cost_card', 'Total Modal')}
+                                                </p>
+                                                {loading ? (
+                                                    <Skeleton className="mt-1 h-5 w-16" />
+                                                ) : (
+                                                    <p className="text-base font-bold tabular-nums text-blue-600 dark:text-blue-400">
+                                                        {formatRupiah(totalCost)}
+                                                    </p>
+                                                )}
+                                            </div>
+                                        </CardContent>
+                                    </Card>
+
+                                    {/* 3. Total Keuntungan */}
+                                    <Card className="gap-2 py-3">
+                                        <CardContent className="flex items-center gap-3 px-4">
+                                            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-teal-500/10">
+                                                <TrendingUp className="h-4.5 w-4.5 text-teal-600 dark:text-teal-400" />
+                                            </div>
+                                            <div className="min-w-0">
+                                                <p className="truncate text-xs text-muted-foreground">
+                                                    {t('page.transaction.dialog_modal.detail_dialog.total_profit_card', 'Total Keuntungan')}
+                                                </p>
+                                                {loading ? (
+                                                    <Skeleton className="mt-1 h-5 w-16" />
+                                                ) : (
+                                                    <p className="text-base font-bold tabular-nums text-teal-600 dark:text-teal-400">
+                                                        {formatRupiah(Math.max(totalProfit, 0))}
+                                                    </p>
+                                                )}
+                                            </div>
+                                        </CardContent>
+                                    </Card>
+
+                                    {/* 4. Total Diskon */}
+                                    <Card className="gap-2 py-3">
+                                        <CardContent className="flex items-center gap-3 px-4">
+                                            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-rose-500/10">
+                                                <PercentCircle className="h-4.5 w-4.5 text-rose-600 dark:text-rose-400" />
+                                            </div>
+                                            <div className="min-w-0">
+                                                <p className="truncate text-xs text-muted-foreground">
+                                                    {t('page.transaction.dialog_modal.detail_dialog.total_discount_card', 'Total Diskon')}
+                                                </p>
+                                                {loading ? (
+                                                    <Skeleton className="mt-1 h-5 w-16" />
+                                                ) : (
+                                                    <p className="text-base font-bold tabular-nums text-rose-600 dark:text-rose-400">
+                                                        {formatRupiah(totalAllDiscount)}
+                                                    </p>
+                                                )}
+                                            </div>
+                                        </CardContent>
+                                    </Card>
+
+                                    {/* 5. Total Produk */}
+                                    <Card className="gap-2 py-3">
+                                        <CardContent className="flex items-center gap-3 px-4">
+                                            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary/10">
+                                                <Package className="h-4.5 w-4.5 text-primary" />
+                                            </div>
+                                            <div className="min-w-0">
+                                                <p className="truncate text-xs text-muted-foreground">
+                                                    {t('page.transaction.dialog_modal.detail_dialog.total_items', 'Total Produk')}
+                                                </p>
+                                                {loading ? (
+                                                    <Skeleton className="mt-1 h-5 w-10" />
+                                                ) : (
+                                                    <p className="text-lg font-bold tabular-nums text-primary">
+                                                        {totalItems}
+                                                    </p>
+                                                )}
+                                            </div>
+                                        </CardContent>
+                                    </Card>
+
+                                    {/* 6. Total Kuantitas */}
+                                    <Card className="gap-2 py-3">
+                                        <CardContent className="flex items-center gap-3 px-4">
+                                            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-blue-500/10">
+                                                <Hash className="h-4.5 w-4.5 text-blue-600 dark:text-blue-400" />
+                                            </div>
+                                            <div className="min-w-0">
+                                                <p className="truncate text-xs text-muted-foreground">
+                                                    {t('page.transaction.dialog_modal.detail_dialog.total_quantity', 'Total Kuantitas')}
+                                                </p>
+                                                {loading ? (
+                                                    <Skeleton className="mt-1 h-5 w-10" />
+                                                ) : (
+                                                    <p className="text-lg font-bold tabular-nums text-blue-600 dark:text-blue-400">
+                                                        {totalQuantity}
+                                                    </p>
+                                                )}
+                                            </div>
+                                        </CardContent>
+                                    </Card>
+                                </div>
+                            </div>
+
+                            {/* Pie Chart - Cost / Profit / Discount Breakdown */}
+                            {!loading && pieData.length > 0 && (
+                                <div className="rounded-lg border bg-card p-4 shadow-xs">
+                                    <h4 className="mb-3 text-sm text-muted-foreground">
+                                        {t(
+                                            'page.transaction.dialog_modal.detail_dialog.chart_title',
+                                            'Komposisi Transaksi',
+                                        )}
+                                    </h4>
+                                    <div className="flex flex-col items-center gap-4 md:flex-row">
+                                        <ChartContainer
+                                            config={chartConfig}
+                                            className="aspect-square h-50 w-full max-w-50 shrink-0"
+                                        >
+                                            <PieChart>
+                                                <ChartTooltip
+                                                    content={
+                                                        <ChartTooltipContent
+                                                            formatter={(value) => formatRupiah(Number(value))}
+                                                            hideLabel
+                                                        />
+                                                    }
+                                                />
+                                                <Pie
+                                                    data={pieData}
+                                                    dataKey="value"
+                                                    nameKey="name"
+                                                    innerRadius={50}
+                                                    outerRadius={80}
+                                                    strokeWidth={2}
+                                                    stroke="hsl(var(--background))"
+                                                >
+                                                    {pieData.map((entry, index) => (
+                                                        <Cell
+                                                            key={`cell-${index}`}
+                                                            fill={entry.fill}
+                                                        />
+                                                    ))}
+                                                    <Label
+                                                        content={({ viewBox }) => {
+                                                            if (viewBox && 'cx' in viewBox && 'cy' in viewBox) {
+                                                                return (
+                                                                    <text
+                                                                        x={viewBox.cx}
+                                                                        y={viewBox.cy}
+                                                                        textAnchor="middle"
+                                                                        dominantBaseline="middle"
+                                                                    >
+                                                                        <tspan
+                                                                            x={viewBox.cx}
+                                                                            y={(viewBox.cy || 0) - 8}
+                                                                            className="fill-foreground text-sm font-bold"
+                                                                        >
+                                                                            {formatRupiah(netSubtotal)}
+                                                                        </tspan>
+                                                                        <tspan
+                                                                            x={viewBox.cx}
+                                                                            y={(viewBox.cy || 0) + 10}
+                                                                            className="fill-muted-foreground text-xs"
+                                                                        >
+                                                                            {t('page.transaction.dialog_modal.detail_dialog.chart_center_label', 'Total')}
+                                                                        </tspan>
+                                                                    </text>
+                                                                );
+                                                            }
+                                                        }}
+                                                    />
+                                                </Pie>
+                                            </PieChart>
+                                        </ChartContainer>
+                                        <div className="flex-1 space-y-2 overflow-hidden">
+                                            {pieData.map((item, index) => {
+                                                const grossTotal = totalCost + Math.max(totalProfit, 0) + totalAllDiscount;
+                                                const percentage = grossTotal > 0
+                                                    ? ((item.value / grossTotal) * 100).toFixed(1)
+                                                    : '0';
+                                                return (
+                                                    <div
+                                                        key={index}
+                                                        className="flex items-center gap-3 rounded-md px-3 py-2 text-sm transition-colors hover:bg-muted/50"
+                                                    >
+                                                        <div
+                                                            className="h-3 w-3 shrink-0 rounded-full"
+                                                            style={{ backgroundColor: item.fill }}
+                                                        />
+                                                        <span className="min-w-0 flex-1 font-medium">
+                                                            {item.name}
+                                                        </span>
+                                                        <span className="shrink-0 rounded-full bg-muted px-2 py-0.5 font-mono text-xs tabular-nums">
+                                                            {percentage}%
+                                                        </span>
+                                                        <span className="shrink-0 font-mono text-xs font-semibold tabular-nums">
+                                                            {formatRupiah(item.value)}
+                                                        </span>
+                                                    </div>
+                                                );
+                                            })}
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
 
                             {/* Transaction Items Table */}
                             <div>
@@ -245,42 +561,27 @@ export function DetailDialog({
                                         'Rincian Produk',
                                     )}
                                 </h4>
-                                <div className="w-full overflow-x-auto overflow-y-auto max-h-[320px] rounded-md border">
+                                <div className="w-full overflow-x-auto overflow-y-auto max-h-80 rounded-md border">
                                     <Table>
                                         <TableHeader className="sticky top-0 z-10 bg-muted">
                                             <TableRow>
-                                                <TableHead className="w-[25%]">
+                                                <TableHead className="min-w-40">
                                                     {t('page.transaction.dialog_modal.detail_dialog.product_header', 'Produk')}
                                                 </TableHead>
-                                                <TableHead className="text-center">
+                                                <TableHead className="min-w-17.5 text-center">
                                                     {t('page.transaction.dialog_modal.detail_dialog.unit_header', 'Satuan')}
                                                 </TableHead>
-                                                <TableHead className="text-right">
-                                                    {t('page.transaction.dialog_modal.detail_dialog.cost_price_header', 'Harga Modal')}
+                                                <TableHead className="min-w-27.5 text-right">
+                                                    {t('page.transaction.dialog_modal.detail_dialog.price_header', 'Harga')}
                                                 </TableHead>
-                                                <TableHead className="text-right">
-                                                    {t('page.transaction.dialog_modal.detail_dialog.price_header', 'Harga Jual')}
+                                                <TableHead className="min-w-27.5 text-right">
+                                                    {t('page.transaction.dialog_modal.detail_dialog.discount_header', 'Diskon / Item')}
                                                 </TableHead>
-                                                <TableHead className="text-right">
-                                                    {t('page.transaction.dialog_modal.detail_dialog.discount_header', 'Diskon / Satuan')}
-                                                </TableHead>
-                                                <TableHead className="text-right">
-                                                    {t('page.transaction.dialog_modal.detail_dialog.margin_unit_header', 'Margin / Satuan')}
-                                                </TableHead>
-                                                <TableHead className="text-center">
+                                                <TableHead className="min-w-15 text-center">
                                                     {t('page.transaction.dialog_modal.detail_dialog.qty_header', 'Jumlah')}
                                                 </TableHead>
-                                                <TableHead className="text-right">
-                                                    {t('page.transaction.dialog_modal.detail_dialog.gross_subtotal_header', 'Subtotal Kotor')}
-                                                </TableHead>
-                                                <TableHead className="text-right">
-                                                    {t('page.transaction.dialog_modal.detail_dialog.total_discount_header', 'Total Diskon')}
-                                                </TableHead>
-                                                <TableHead className="text-right">
+                                                <TableHead className="min-w-30 text-right">
                                                     {t('page.transaction.dialog_modal.detail_dialog.subtotal_header', 'Subtotal')}
-                                                </TableHead>
-                                                <TableHead className="text-right">
-                                                    {t('page.transaction.dialog_modal.detail_dialog.margin_total_header', 'Margin Total')}
                                                 </TableHead>
                                             </TableRow>
                                         </TableHeader>
@@ -299,28 +600,13 @@ export function DetailDialog({
                                                                 <Skeleton className="ml-auto h-5 w-16" />
                                                             </TableCell>
                                                             <TableCell>
-                                                                <Skeleton className="ml-auto h-5 w-16" />
-                                                            </TableCell>
-                                                            <TableCell>
                                                                 <Skeleton className="ml-auto h-5 w-14" />
-                                                            </TableCell>
-                                                            <TableCell>
-                                                                <Skeleton className="ml-auto h-5 w-16" />
                                                             </TableCell>
                                                             <TableCell>
                                                                 <Skeleton className="mx-auto h-5 w-8" />
                                                             </TableCell>
                                                             <TableCell>
                                                                 <Skeleton className="ml-auto h-5 w-20" />
-                                                            </TableCell>
-                                                            <TableCell>
-                                                                <Skeleton className="ml-auto h-5 w-16" />
-                                                            </TableCell>
-                                                            <TableCell>
-                                                                <Skeleton className="ml-auto h-5 w-20" />
-                                                            </TableCell>
-                                                            <TableCell>
-                                                                <Skeleton className="ml-auto h-5 w-16" />
                                                             </TableCell>
                                                         </TableRow>
                                                     ),
@@ -338,9 +624,6 @@ export function DetailDialog({
                                                                 {item.unit_name || '-'}
                                                             </TableCell>
                                                             <TableCell className="text-right text-xs">
-                                                                {formatRupiah(item.cost_price)}
-                                                            </TableCell>
-                                                            <TableCell className="text-right text-xs">
                                                                 {formatRupiah(item.price)}
                                                             </TableCell>
                                                             <TableCell className="text-right text-xs">
@@ -352,28 +635,8 @@ export function DetailDialog({
                                                                     '-'
                                                                 )}
                                                             </TableCell>
-                                                            <TableCell className="text-right text-xs font-semibold">
-                                                                {(() => {
-                                                                    const marginUnit = Number(item.price) - Number(item.discount || 0) - Number(item.cost_price);
-                                                                    if (marginUnit > 0) return <span className="text-emerald-600 dark:text-emerald-400">+{formatRupiah(marginUnit)}</span>;
-                                                                    if (marginUnit < 0) return <span className="text-rose-600 dark:text-rose-400">{formatRupiah(marginUnit)}</span>;
-                                                                    return <span className="text-muted-foreground">Rp 0</span>;
-                                                                })()}
-                                                            </TableCell>
                                                             <TableCell className="text-center font-semibold">
                                                                 {item.quantity}
-                                                            </TableCell>
-                                                            <TableCell className="text-right text-xs">
-                                                                {formatRupiah(Number(item.price) * item.quantity)}
-                                                            </TableCell>
-                                                            <TableCell className="text-right text-xs">
-                                                                {item.discount && Number(item.discount) > 0 ? (
-                                                                    <span className="font-semibold text-rose-600 dark:text-rose-400">
-                                                                        -{formatRupiah(Number(item.discount) * item.quantity)}
-                                                                    </span>
-                                                                ) : (
-                                                                    '-'
-                                                                )}
                                                             </TableCell>
                                                             <TableCell className="text-right font-medium">
                                                                 {formatRupiah(
@@ -382,21 +645,13 @@ export function DetailDialog({
                                                                     item.quantity,
                                                                 )}
                                                             </TableCell>
-                                                            <TableCell className="text-right text-xs font-semibold">
-                                                                {(() => {
-                                                                    const margin = (Number(item.price) - Number(item.discount || 0) - Number(item.cost_price)) * item.quantity;
-                                                                    if (margin > 0) return <span className="text-emerald-600 dark:text-emerald-400">+{formatRupiah(margin)}</span>;
-                                                                    if (margin < 0) return <span className="text-rose-600 dark:text-rose-400">{formatRupiah(margin)}</span>;
-                                                                    return <span className="text-muted-foreground">Rp 0</span>;
-                                                                })()}
-                                                            </TableCell>
                                                         </TableRow>
                                                     ),
                                                 )
                                             ) : (
                                                 <TableRow>
                                                     <TableCell
-                                                        colSpan={11}
+                                                        colSpan={6}
                                                         className="h-20 text-center text-muted-foreground"
                                                     >
                                                         {t('page.transaction.dialog_modal.detail_dialog.empty_items', 'Detail produk tidak tersedia.')}

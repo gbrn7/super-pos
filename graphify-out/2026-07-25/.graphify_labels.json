@@ -303,5 +303,6 @@
   "302": "@radix-ui/react-navigation-menu",
   "303": "react-dom",
   "304": "sweetalert2",
-  "305": "@radix-ui/react-avatar"
+  "305": "@radix-ui/react-avatar",
+  "306": "typescript-eslint"
 }

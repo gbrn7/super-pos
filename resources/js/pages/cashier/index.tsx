@@ -6,9 +6,11 @@ import { index as cashierRoute } from '@/routes/cashier';
 import { index as apiGetProducts } from '@/routes/apiProducts';
 import { index as apiGetPaymentMethods } from '@/routes/apiPaymentMethods';
 import { index as apiGetCategories } from '@/routes/apiCategories';
+import { index as apiGetUnits } from '@/routes/apiUnits';
 import { checkout as apiCheckout } from '@/routes/apiTransactions';
 import type { Product } from '@/support/models/product';
 import type { Category } from '@/support/models/category';
+import type { Unit } from '@/support/models/unit';
 import type { PaymentMethod } from '@/support/models/paymentMethod';
 import type { Transaction } from '@/support/models/transaction';
 import type { ResponseApi } from '@/support/interfaces/response/Response';
@@ -53,12 +55,14 @@ import {
     Printer,
     Check,
     Info,
+    PlusCircle,
 } from 'lucide-react';
 import ProductRow from './components/product-row';
 import CartItemRow from './components/cart-item-row';
 import ReceiptModal, { StoreSetting } from '@/components/receipt-modal';
 import PaymentMethodDetailDialog from './components/payment-method-detail-dialog';
 import UpdateStockDialog from './components/update-stock-dialog';
+import { CreateDialog as CreateProductDialog } from '../product/dialog-modal/create-dialog';
 
 export interface CartItem {
     product: Product;
@@ -86,6 +90,7 @@ export default function CashierIndex({ storeSetting }: { storeSetting?: StoreSet
 
     // ── Categories & Payment methods state ──────────────────────────────────────
     const [categories, setCategories] = useState<Category[]>([]);
+    const [units, setUnits] = useState<Unit[]>([]);
     const [paymentMethods, setPaymentMethods] = useState<PaymentMethod[]>([]);
 
     // ── Cart & Discount state ───────────────────────────────────────────────────
@@ -114,7 +119,20 @@ export default function CashierIndex({ storeSetting }: { storeSetting?: StoreSet
     const [mobileTab, setMobileTab] = useState<'products' | 'cart'>('products');
 
     const searchRef = useRef<HTMLInputElement>(null);
-    const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+    const triggerSearch = useCallback(() => {
+        if (searchRef.current) {
+            setSearch(searchRef.current.value);
+            setPage(1);
+        }
+    }, []);
+
+    const clearSearchInput = useCallback(() => {
+        setSearch('');
+        if (searchRef.current) {
+            searchRef.current.value = '';
+        }
+    }, []);
 
     // ── Computed values ─────────────────────────────────────────────────────────
     const grossSubtotal = cart.reduce(
@@ -215,18 +233,11 @@ export default function CashierIndex({ storeSetting }: { storeSetting?: StoreSet
         [fetchProducts, search, page, selectedCategory],
     );
 
+
+
+    // Fetch products immediately when search query, page, or category changes
     useEffect(() => {
-        if (debounceRef.current) {
-            clearTimeout(debounceRef.current);
-        }
-        debounceRef.current = setTimeout(() => {
-            fetchProducts(search, page, selectedCategory);
-        }, 300);
-        return () => {
-            if (debounceRef.current) {
-                clearTimeout(debounceRef.current);
-            }
-        };
+        fetchProducts(search, page, selectedCategory);
     }, [search, page, selectedCategory, fetchProducts]);
 
     // ── Fetch categories & payment methods ──────────────────────────────────────
@@ -239,6 +250,14 @@ export default function CashierIndex({ storeSetting }: { storeSetting?: StoreSet
                 );
                 if (catRes.data.success) {
                     setCategories(catRes.data.data);
+                }
+
+                // Fetch Units
+                const unitRes = await axiosInstance.get<ResponseApi<Unit[]>>(
+                    apiGetUnits().url,
+                );
+                if (unitRes.data.success) {
+                    setUnits(unitRes.data.data);
                 }
 
                 // Fetch Payment Methods
@@ -321,7 +340,7 @@ export default function CashierIndex({ storeSetting }: { storeSetting?: StoreSet
                 if (data.success && data.data) {
                     const success = addToCart(data.data);
                     if (success) {
-                        setSearch('');
+                        clearSearchInput();
                     }
                     return;
                 }
@@ -340,23 +359,31 @@ export default function CashierIndex({ storeSetting }: { storeSetting?: StoreSet
                 if (exactMatch) {
                     const success = addToCart(exactMatch);
                     if (success) {
-                        setSearch('');
+                        clearSearchInput();
                     }
                 } else if (products.length === 1) {
                     const success = addToCart(products[0]);
                     if (success) {
-                        setSearch('');
+                        clearSearchInput();
                     }
+                } else {
+                    setSearch(barcodeQuery);
+                    setPage(1);
                 }
+            } else {
+                setSearch(barcodeQuery);
+                setPage(1);
             }
         },
-        [addToCart, products],
+        [addToCart, products, clearSearchInput],
     );
 
     const handleSearchKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'Enter') {
             e.preventDefault();
-            handleBarcodeSearch(search);
+            if (searchRef.current) {
+                handleBarcodeSearch(searchRef.current.value);
+            }
         }
     };
 
@@ -373,8 +400,8 @@ export default function CashierIndex({ storeSetting }: { storeSetting?: StoreSet
             } else if (e.key === 'Escape') {
                 if (confirmOpen) {
                     setConfirmOpen(false);
-                } else if (search) {
-                    setSearch('');
+                } else {
+                    clearSearchInput();
                 }
             } else if (e.key === 'F9') {
                 e.preventDefault();
@@ -392,7 +419,7 @@ export default function CashierIndex({ storeSetting }: { storeSetting?: StoreSet
 
         window.addEventListener('keydown', handleKeyDown);
         return () => window.removeEventListener('keydown', handleKeyDown);
-    }, [cart, paymentMethodId, paymentAmount, grandTotal, search, confirmOpen]);
+    }, [cart, paymentMethodId, paymentAmount, grandTotal, confirmOpen, clearSearchInput]);
 
     // ── Cart operations ─────────────────────────────────────────────────────────
     const updateQty = useCallback((productId: number, qty: number) => {
@@ -645,34 +672,39 @@ export default function CashierIndex({ storeSetting }: { storeSetting?: StoreSet
                                     <Search className="pointer-events-none absolute top-1/2 left-3.5 h-5 w-5 -translate-y-1/2 text-muted-foreground" />
                                     <Input
                                         ref={searchRef}
-                                        value={search}
-                                        onChange={(e) => {
-                                            setSearch(e.target.value);
-                                            setPage(1);
-                                        }}
                                         onKeyDown={handleSearchKeyDown}
                                         placeholder={t(
                                             'page.kasir.search_placeholder',
                                             'Scan Barcode / Ketik Kode / Nama Barang (Enter)...',
                                         )}
-                                        className="h-11 border-primary/40 pr-10 pl-11 text-base font-bold shadow-xs focus-visible:ring-primary sm:h-12"
+                                        className="peer h-11 border-primary/40 pr-10 pl-11 text-base font-bold shadow-xs focus-visible:ring-primary sm:h-12"
                                         autoFocus
                                     />
-                                    {search ? (
-                                        <button
-                                            type="button"
-                                            onClick={() => {
-                                                setSearch('');
-                                                searchRef.current?.focus();
-                                            }}
-                                            className="absolute top-1/2 right-3.5 -translate-y-1/2 p-1 text-sm font-extrabold text-muted-foreground hover:text-foreground"
-                                        >
-                                            ✕
-                                        </button>
-                                    ) : (
-                                        <ScanBarcode className="pointer-events-none absolute top-1/2 right-3.5 h-5 w-5 -translate-y-1/2 text-muted-foreground" />
-                                    )}
+                                    <button
+                                        type="button"
+                                        onClick={clearSearchInput}
+                                        className="peer-placeholder-shown:hidden absolute top-1/2 right-3.5 -translate-y-1/2 p-1 text-sm font-extrabold text-muted-foreground hover:text-foreground"
+                                    >
+                                        ✕
+                                    </button>
+                                    <ScanBarcode className="peer-placeholder-shown:block hidden pointer-events-none absolute top-1/2 right-3.5 h-5 w-5 -translate-y-1/2 text-muted-foreground" />
                                 </div>
+                                <Button
+                                    type="button"
+                                    onClick={triggerSearch}
+                                    className="h-11 font-black px-5 sm:h-12 border-primary/40 border bg-primary text-primary-foreground hover:bg-primary/90"
+                                >
+                                    <Search className="mr-1.5 h-4 w-4" />
+                                    {t('common.search', 'Cari')}
+                                </Button>
+                                <Button
+                                    type="button"
+                                    onClick={clearSearchInput}
+                                    variant="outline"
+                                    className="h-11 font-black px-4 sm:h-12 border-muted-foreground/30 hover:bg-muted text-muted-foreground hover:text-foreground"
+                                >
+                                    {t('common.clear', 'Reset')}
+                                </Button>
                             </div>
 
                             {/* Category Filter Pills */}
@@ -752,12 +784,17 @@ export default function CashierIndex({ storeSetting }: { storeSetting?: StoreSet
                                             'Barang tidak ditemukan',
                                         )}
                                     </p>
-                                    <p className="mt-1 max-w-xs text-sm font-medium text-muted-foreground">
+                                    <p className="mt-1 max-w-xs text-sm font-medium text-muted-foreground mb-4">
                                         {t(
                                             'page.kasir.no_products_desc',
                                             'Coba ketik kata kunci lain atau scan ulang barcode barang',
                                         )}
                                     </p>
+                                    <CreateProductDialog
+                                        onSuccess={() => fetchProducts(search, page, selectedCategory)}
+                                        units={units}
+                                        categories={categories}
+                                    />
                                 </div>
                             ) : (
                                 <table className="w-full border-collapse text-left">

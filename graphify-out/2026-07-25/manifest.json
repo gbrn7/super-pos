@@ -1565,13 +1565,13 @@
     "semantic_hash": ""
   },
   "resources/js/locales/en/translation.json": {
-    "mtime": 1784962661.0778956,
-    "ast_hash": "689347045d3123f0447e09ab22be3e8f",
+    "mtime": 1784960795.7170818,
+    "ast_hash": "1dd80389ef74c5b409f3d8b32a2719e8",
     "semantic_hash": ""
   },
   "resources/js/locales/id/translation.json": {
-    "mtime": 1784962675.303229,
-    "ast_hash": "fe4d136e580c3089604585081d77b143",
+    "mtime": 1784960797.826532,
+    "ast_hash": "38511faa50576d0151070e2c9529e8f3",
     "semantic_hash": ""
   },
   "resources/js/pages/auth/confirm-password.tsx": {
@@ -1965,8 +1965,8 @@
     "semantic_hash": ""
   },
   "resources/js/pages/transaction/data-table.tsx": {
-    "mtime": 1784962694.1939218,
-    "ast_hash": "f1f8889213024f598d222242badf5e04",
+    "mtime": 1784823318.2741878,
+    "ast_hash": "3c6cbe173d7735d35e959d48c6db6435",
     "semantic_hash": ""
   },
   "resources/js/pages/transaction/dialog-modal/bulk-delete-dialog.tsx": {
@@ -1980,8 +1980,8 @@
     "semantic_hash": ""
   },
   "resources/js/pages/transaction/dialog-modal/detail-dialog.tsx": {
-    "mtime": 1784962300.291361,
-    "ast_hash": "b6a035c25775406f5433df3046b5d901",
+    "mtime": 1784961212.5980828,
+    "ast_hash": "414a37225a02824445430d4b25a02d99",
     "semantic_hash": ""
   },
   "resources/js/pages/transaction/index.tsx": {
