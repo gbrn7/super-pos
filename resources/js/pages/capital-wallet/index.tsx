@@ -124,7 +124,7 @@ export default function CapitalWalletIndex({ storeSetting }: { storeSetting?: St
                                 {formatRupiah(summary.current_balance)}
                             </CardTitle>
                         </CardHeader>
-                        <div className="p-4 pt-0 grid grid-cols-3 gap-2">
+                        <div className="p-4 pt-0 grid grid-cols-1 xl:grid-cols-3 gap-2">
                             <Can permission={PERMISSIONENUMS.CAPITAL_WALLET.INJECT}>
                                 <InjectDialog onSuccess={fetchCapitalWalletData} />
                             </Can>
