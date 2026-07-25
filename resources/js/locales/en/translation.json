@@ -1017,6 +1017,7 @@
                     "price_header": "Selling Price",
                     "discount_header": "Discount / Unit",
                     "total_discount_header": "Total Discount",
+                    "gross_subtotal_header": "Gross Subtotal",
                     "margin_header": "Margin",
                     "subtotal_header": "Subtotal",
                     "product_discount": "Product Discount",
