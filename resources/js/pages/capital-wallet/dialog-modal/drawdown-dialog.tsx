@@ -30,9 +30,10 @@ import ErrorFormInfo from '@/components/errorFormInfo';
 
 interface DrawdownDialogProps {
     onSuccess: () => void;
+    currentBalance?: number;
 }
 
-export function DrawdownDialog({ onSuccess }: DrawdownDialogProps) {
+export function DrawdownDialog({ onSuccess, currentBalance = 0 }: DrawdownDialogProps) {
     const { t } = useTranslation();
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState<boolean>(false);
@@ -150,6 +151,21 @@ export function DrawdownDialog({ onSuccess }: DrawdownDialogProps) {
                                         {formatRupiah(val)}
                                     </Button>
                                 ))}
+                                {currentBalance > 0 && (
+                                    <Button
+                                        type="button"
+                                        variant="outline"
+                                        size="sm"
+                                        onClick={() => {
+                                            setFormData((prev) => ({ ...prev, amount: currentBalance }));
+                                            setErrorForm((prev) => ({ ...prev, amount: '' }));
+                                        }}
+                                        className="h-7 text-[10px] font-semibold px-2.5 rounded-lg border-solid border-rose-600 text-rose-600 dark:border-rose-500 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/20"
+                                        disabled={loading}
+                                    >
+                                        {t('page.capital_wallet.dialog_modal.drawdown.all_preset', 'Semua ({{balance}})', { balance: formatRupiah(currentBalance) })}
+                                    </Button>
+                                )}
                             </div>
                             {errorForm.amount && <ErrorFormInfo message={errorForm.amount} />}
                         </Field>

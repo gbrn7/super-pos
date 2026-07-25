@@ -126,10 +126,10 @@ export default function ProfitWalletIndex({ storeSetting }: { storeSetting?: Sto
                         </CardHeader>
                         <div className="p-4 pt-0 grid grid-cols-2 gap-2">
                             <Can permission={PERMISSIONENUMS.PROFIT_WALLET.DISBURSE}>
-                                <DisburseDialog onSuccess={fetchProfitWalletData} />
+                                <DisburseDialog onSuccess={fetchProfitWalletData} currentBalance={Number(summary.current_balance)} />
                             </Can>
                             <Can permission={PERMISSIONENUMS.PROFIT_WALLET.WITHDRAW_CAPITAL}>
-                                <WithdrawCapitalDialog onSuccess={fetchProfitWalletData} />
+                                <WithdrawCapitalDialog onSuccess={fetchProfitWalletData} currentBalance={Number(summary.current_balance)} />
                             </Can>
                         </div>
                     </Card>

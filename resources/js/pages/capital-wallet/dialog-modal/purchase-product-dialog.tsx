@@ -30,9 +30,10 @@ import ErrorFormInfo from '@/components/errorFormInfo';
 
 interface PurchaseProductDialogProps {
     onSuccess: () => void;
+    currentBalance?: number;
 }
 
-export function PurchaseProductDialog({ onSuccess }: PurchaseProductDialogProps) {
+export function PurchaseProductDialog({ onSuccess, currentBalance = 0 }: PurchaseProductDialogProps) {
     const { t } = useTranslation();
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState<boolean>(false);
@@ -150,6 +151,21 @@ export function PurchaseProductDialog({ onSuccess }: PurchaseProductDialogProps)
                                         {formatRupiah(val)}
                                     </Button>
                                 ))}
+                                {currentBalance > 0 && (
+                                    <Button
+                                        type="button"
+                                        variant="outline"
+                                        size="sm"
+                                        onClick={() => {
+                                            setFormData((prev) => ({ ...prev, amount: currentBalance }));
+                                            setErrorForm((prev) => ({ ...prev, amount: '' }));
+                                        }}
+                                        className="h-7 text-[10px] font-semibold px-2.5 rounded-lg border-solid border-sky-600 text-sky-600 dark:border-sky-500 dark:text-sky-400 hover:bg-sky-50 dark:hover:bg-sky-950/20"
+                                        disabled={loading}
+                                    >
+                                        {t('page.capital_wallet.dialog_modal.purchase_product.all_preset', 'Semua ({{balance}})', { balance: formatRupiah(currentBalance) })}
+                                    </Button>
+                                )}
                             </div>
                             {errorForm.amount && <ErrorFormInfo message={errorForm.amount} />}
                         </Field>

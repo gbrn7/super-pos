@@ -30,9 +30,10 @@ import ErrorFormInfo from '@/components/errorFormInfo';
 
 interface DisburseDialogProps {
     onSuccess: () => void;
+    currentBalance?: number;
 }
 
-export function DisburseDialog({ onSuccess }: DisburseDialogProps) {
+export function DisburseDialog({ onSuccess, currentBalance = 0 }: DisburseDialogProps) {
     const { t } = useTranslation();
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState<boolean>(false);
@@ -150,6 +151,21 @@ export function DisburseDialog({ onSuccess }: DisburseDialogProps) {
                                         {formatRupiah(val)}
                                     </Button>
                                 ))}
+                                {currentBalance > 0 && (
+                                    <Button
+                                        type="button"
+                                        variant="outline"
+                                        size="sm"
+                                        onClick={() => {
+                                            setFormData((prev) => ({ ...prev, amount: currentBalance }));
+                                            setErrorForm((prev) => ({ ...prev, amount: '' }));
+                                        }}
+                                        className="h-7 text-[10px] font-semibold px-2.5 rounded-lg border-solid border-emerald-600 text-emerald-600 dark:border-emerald-500 dark:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-950/20"
+                                        disabled={loading}
+                                    >
+                                        {t('page.profit_wallet.dialog_modal.disburse.all_preset', 'Semua ({{balance}})', { balance: formatRupiah(currentBalance) })}
+                                    </Button>
+                                )}
                             </div>
                             {errorForm.amount && <ErrorFormInfo message={errorForm.amount} />}
                         </Field>

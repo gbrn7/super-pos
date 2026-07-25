@@ -30,9 +30,10 @@ import ErrorFormInfo from '@/components/errorFormInfo';
 
 interface WithdrawCapitalDialogProps {
     onSuccess: () => void;
+    currentBalance?: number;
 }
 
-export function WithdrawCapitalDialog({ onSuccess }: WithdrawCapitalDialogProps) {
+export function WithdrawCapitalDialog({ onSuccess, currentBalance = 0 }: WithdrawCapitalDialogProps) {
     const { t } = useTranslation();
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState<boolean>(false);
@@ -150,6 +151,21 @@ export function WithdrawCapitalDialog({ onSuccess }: WithdrawCapitalDialogProps)
                                         {formatRupiah(val)}
                                     </Button>
                                 ))}
+                                {currentBalance > 0 && (
+                                    <Button
+                                        type="button"
+                                        variant="outline"
+                                        size="sm"
+                                        onClick={() => {
+                                            setFormData((prev) => ({ ...prev, amount: currentBalance }));
+                                            setErrorForm((prev) => ({ ...prev, amount: '' }));
+                                        }}
+                                        className="h-7 text-[10px] font-semibold px-2.5 rounded-lg border-solid border-slate-600 text-slate-600 dark:border-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-950/20"
+                                        disabled={loading}
+                                    >
+                                        {t('page.profit_wallet.dialog_modal.withdraw_capital.all_preset', 'Semua ({{balance}})', { balance: formatRupiah(currentBalance) })}
+                                    </Button>
+                                )}
                             </div>
                             {errorForm.amount && <ErrorFormInfo message={errorForm.amount} />}
                         </Field>

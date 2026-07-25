@@ -129,10 +129,10 @@ export default function CapitalWalletIndex({ storeSetting }: { storeSetting?: St
                                 <InjectDialog onSuccess={fetchCapitalWalletData} />
                             </Can>
                             <Can permission={PERMISSIONENUMS.CAPITAL_WALLET.DRAWDOWN}>
-                                <DrawdownDialog onSuccess={fetchCapitalWalletData} />
+                                <DrawdownDialog onSuccess={fetchCapitalWalletData} currentBalance={Number(summary.current_balance)} />
                             </Can>
                             <Can permission={PERMISSIONENUMS.CAPITAL_WALLET.PURCHASE_PRODUCT}>
-                                <PurchaseProductDialog onSuccess={fetchCapitalWalletData} />
+                                <PurchaseProductDialog onSuccess={fetchCapitalWalletData} currentBalance={Number(summary.current_balance)} />
                             </Can>
                         </div>
                     </Card>
