@@ -345,7 +345,7 @@ export function DetailDialog({
                                                             </TableCell>
                                                             <TableCell className="text-right text-xs">
                                                                 {item.discount && Number(item.discount) > 0 ? (
-                                                                    <span className="font-semibold">
+                                                                    <span className="font-semibold text-rose-600 dark:text-rose-400">
                                                                         -{formatRupiah(Number(item.discount))}
                                                                     </span>
                                                                 ) : (
