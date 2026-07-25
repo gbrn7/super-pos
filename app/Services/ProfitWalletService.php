@@ -103,14 +103,14 @@ class ProfitWalletService implements ProfitWalletServiceInterface
         try {
             return DB::transaction(function () use ($request) {
                 if ($request->amount <= 0) {
-                    throw new Exception('Amount must be greater than zero.', Response::HTTP_UNPROCESSABLE_ENTITY);
+                    throw new Exception(trans('message.error.profit_wallet.amount_must_be_greater_than_zero'), Response::HTTP_UNPROCESSABLE_ENTITY);
                 }
 
                 $wallet = $this->getOrCreateWallet();
 
                 $before = (float) $wallet->balance;
                 if ($before < $request->amount) {
-                    throw new Exception('Insufficient wallet balance for disbursement.', Response::HTTP_UNPROCESSABLE_ENTITY);
+                    throw new Exception(trans('message.error.profit_wallet.insufficient_balance_for_disbursement'), Response::HTTP_UNPROCESSABLE_ENTITY);
                 }
 
                 $after = $before - $request->amount;
@@ -139,14 +139,14 @@ class ProfitWalletService implements ProfitWalletServiceInterface
         try {
             return DB::transaction(function () use ($request) {
                 if ($request->amount <= 0) {
-                    throw new Exception('Amount must be greater than zero.', Response::HTTP_UNPROCESSABLE_ENTITY);
+                    throw new Exception(trans('message.error.profit_wallet.amount_must_be_greater_than_zero'), Response::HTTP_UNPROCESSABLE_ENTITY);
                 }
 
                 $wallet = $this->getOrCreateWallet();
 
                 $before = (float) $wallet->balance;
                 if ($before < $request->amount) {
-                    throw new Exception('Insufficient wallet balance for capital withdrawal.', Response::HTTP_UNPROCESSABLE_ENTITY);
+                    throw new Exception(trans('message.error.profit_wallet.insufficient_balance_for_capital_withdrawal'), Response::HTTP_UNPROCESSABLE_ENTITY);
                 }
 
                 $after = $before - $request->amount;

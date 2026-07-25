@@ -33,5 +33,10 @@ return [
         'blank_unit_template_validation' => 'Terdapat unit kosong pada templat, silakan periksa kembali templat Anda.',
         'product_not_active' => 'Produk tidak aktif',
         'out_of_stock' => 'Stok produk :product tidak mencukupi',
+        'profit_wallet' => [
+            'amount_must_be_greater_than_zero' => 'Jumlah nominal harus lebih besar dari nol.',
+            'insufficient_balance_for_disbursement' => 'Saldo dompet profit tidak mencukupi untuk pencairan.',
+            'insufficient_balance_for_capital_withdrawal' => 'Saldo dompet profit tidak mencukupi untuk penarikan modal.',
+        ],
     ],
 ];
