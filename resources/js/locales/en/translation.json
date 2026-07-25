@@ -1000,7 +1000,10 @@
                     "discount_header": "Discount / Unit",
                     "subtotal_header": "Subtotal",
                     "product_discount": "Product Discount",
-                    "transaction_discount": "Transaction Discount"
+                    "transaction_discount": "Transaction Discount",
+                    "profit_label": "Profit",
+                    "loss_label": "Loss",
+                    "at_cost_label": "At Cost"
                 }
             }
         },

@@ -305,8 +305,34 @@ export function DetailDialog({
                                                     (item) => (
                                                         <TableRow key={item.id}>
                                                             <TableCell className="font-medium">
-                                                                {item.product_name ||
-                                                                    `Produk #${item.product_id}`}
+                                                                <div>
+                                                                    <span>
+                                                                        {item.product_name || `Produk #${item.product_id}`}
+                                                                    </span>
+                                                                    {(() => {
+                                                                        const netPrice = Number(item.price) - Number(item.discount || 0);
+                                                                        const margin = netPrice - Number(item.cost_price);
+                                                                        if (margin > 0) {
+                                                                            return (
+                                                                                <span className="block text-[10px] font-semibold text-emerald-600 dark:text-emerald-400">
+                                                                                    {t('page.transaction.dialog_modal.detail_dialog.profit_label', 'Untung')}: +{formatRupiah(margin)}
+                                                                                </span>
+                                                                            );
+                                                                        } else if (margin < 0) {
+                                                                            return (
+                                                                                <span className="block text-[10px] font-semibold text-destructive">
+                                                                                    {t('page.transaction.dialog_modal.detail_dialog.loss_label', 'Rugi')}: {formatRupiah(margin)}
+                                                                                </span>
+                                                                            );
+                                                                        } else {
+                                                                            return (
+                                                                                <span className="block text-[10px] font-medium text-muted-foreground">
+                                                                                    {t('page.transaction.dialog_modal.detail_dialog.at_cost_label', 'Sesuai Modal')} (Rp 0)
+                                                                                </span>
+                                                                            );
+                                                                        }
+                                                                    })()}
+                                                                </div>
                                                             </TableCell>
                                                             <TableCell className="text-center text-xs text-muted-foreground">
                                                                 {item.unit_name ||
