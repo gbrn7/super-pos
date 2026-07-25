@@ -12,6 +12,7 @@ import type { Category } from '@/support/models/category';
 import type { PaymentMethod } from '@/support/models/paymentMethod';
 import type { Transaction } from '@/support/models/transaction';
 import type { ResponseApi } from '@/support/interfaces/response/Response';
+import type { PaginationResponse } from '@/support/interfaces/resource/resource-response';
 import axiosInstance from '@/lib/axios';
 import { formatRupiah } from '@/lib/format-money';
 import {
@@ -182,22 +183,14 @@ export default function CashierIndex({ storeSetting }: { storeSetting?: StoreSet
                 if (catId) {
                     params.category_id = catId;
                 }
-                const { data } = await axiosInstance.get<ResponseApi<any>>(
+                const { data } = await axiosInstance.get<ResponseApi<PaginationResponse<Product>>>(
                     apiGetProducts().url,
                     { params },
                 );
                 if (data.success) {
-                    const payload = data.data;
-                    const itemsList = Array.isArray(payload)
-                        ? payload
-                        : (payload?.items ?? payload?.data ?? []);
-                    const paginationObj =
-                        payload?.pagination ?? payload?.meta ?? payload;
-                    setProducts(itemsList);
-                    setTotalPages(paginationObj?.last_page ?? 1);
-                    setTotalProducts(
-                        paginationObj?.total ?? itemsList.length ?? 0,
-                    );
+                    setProducts(data.data.items);
+                    setTotalPages(data.data.pagination.last_page);
+                    setTotalProducts(data.data.pagination.total);
                 }
             } catch (e) {
                 handleApiError(e);
@@ -241,29 +234,19 @@ export default function CashierIndex({ storeSetting }: { storeSetting?: StoreSet
         const loadInitialData = async () => {
             try {
                 // Fetch Categories
-                const catRes = await axiosInstance.get<ResponseApi<any>>(
+                const catRes = await axiosInstance.get<ResponseApi<Category[]>>(
                     apiGetCategories().url,
                 );
                 if (catRes.data.success) {
-                    const raw = catRes.data.data;
-                    setCategories(
-                        Array.isArray(raw)
-                            ? raw
-                            : (raw?.items ?? raw?.data ?? []),
-                    );
+                    setCategories(catRes.data.data);
                 }
 
                 // Fetch Payment Methods
-                const pmRes = await axiosInstance.get<ResponseApi<any>>(
+                const pmRes = await axiosInstance.get<ResponseApi<PaymentMethod[]>>(
                     apiGetPaymentMethods().url,
                 );
                 if (pmRes.data.success) {
-                    const raw = pmRes.data.data;
-                    setPaymentMethods(
-                        Array.isArray(raw)
-                            ? raw
-                            : (raw?.items ?? raw?.data ?? []),
-                    );
+                    setPaymentMethods(pmRes.data.data);
                 }
             } catch (e) {
                 handleApiError(e);
