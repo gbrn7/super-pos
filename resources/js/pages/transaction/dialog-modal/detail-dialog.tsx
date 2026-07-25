@@ -197,7 +197,7 @@ export function DetailDialog({
 
     return (
         <Dialog open={isOpen} onOpenChange={onOpenChange}>
-            <DialogContent className="max-h-[90vh] overflow-y-auto p-6 sm:max-w-4xl">
+            <DialogContent className="max-h-[80vh] overflow-y-auto p-6 sm:max-w-4xl">
                 <div className="space-y-6 print:hidden">
                     <DialogHeader className="border-b pb-4">
                         <div className="flex items-center justify-between">
