@@ -105,13 +105,13 @@ export function DetailDialog({
     const details = currentTransaction.details ?? [];
     const netSubtotal = details.length > 0
         ? details.reduce(
-              (sum, item) =>
-                  sum +
-                  (item.subtotal ??
-                      (Number(item.price) - Number(item.discount || 0)) *
-                          item.quantity),
-              0,
-          )
+            (sum, item) =>
+                sum +
+                (item.subtotal ??
+                    (Number(item.price) - Number(item.discount || 0)) *
+                    item.quantity),
+            0,
+        )
         : Number(currentTransaction.total_amount) + discountAmount;
 
     const handlePrint = () => {
@@ -121,8 +121,8 @@ export function DetailDialog({
     const formattedDate = currentTransaction.created_at
         ? typeof currentTransaction.created_at === 'number'
             ? dayjs
-                  .unix(currentTransaction.created_at)
-                  .format('DD/MM/YYYY, HH:mm')
+                .unix(currentTransaction.created_at)
+                .format('DD/MM/YYYY, HH:mm')
             : dayjs(currentTransaction.created_at).format('DD/MM/YYYY, HH:mm')
         : '-';
 
@@ -212,9 +212,9 @@ export function DetailDialog({
                                         <p className="text-sm font-semibold">
                                             {currentTransaction.payment_method_name
                                                 ? t(
-                                                      `payment_method_name.${currentTransaction.payment_method_name}`,
-                                                      currentTransaction.payment_method_name,
-                                                  )
+                                                    `payment_method_name.${currentTransaction.payment_method_name}`,
+                                                    currentTransaction.payment_method_name,
+                                                )
                                                 : '-'}
                                         </p>
                                     )}
@@ -245,9 +245,9 @@ export function DetailDialog({
                                         'Rincian Produk',
                                     )}
                                 </h4>
-                                <div className="overflow-x-auto rounded-md border">
+                                <div className="max-h-[320px] overflow-y-auto rounded-md border">
                                     <Table>
-                                        <TableHeader className="bg-muted">
+                                        <TableHeader className="sticky top-0 z-10 bg-muted">
                                             <TableRow>
                                                 <TableHead className="w-[25%]">
                                                     {t('page.transaction.dialog_modal.detail_dialog.product_header', 'Produk')}
@@ -320,8 +320,8 @@ export function DetailDialog({
                                                     ),
                                                 )
                                             ) : currentTransaction.details &&
-                                              currentTransaction.details
-                                                  .length > 0 ? (
+                                                currentTransaction.details
+                                                    .length > 0 ? (
                                                 currentTransaction.details.map(
                                                     (item) => (
                                                         <TableRow key={item.id}>
@@ -364,13 +364,13 @@ export function DetailDialog({
                                                             <TableCell className="text-right font-medium">
                                                                 {formatRupiah(
                                                                     item.subtotal ??
-                                                                        (Number(item.price) - Number(item.discount || 0)) *
-                                                                            item.quantity,
+                                                                    (Number(item.price) - Number(item.discount || 0)) *
+                                                                    item.quantity,
                                                                 )}
                                                             </TableCell>
                                                             <TableCell className="text-right text-xs font-semibold">
                                                                 {(() => {
-                                                                    const margin = Number(item.price) - Number(item.discount || 0) - Number(item.cost_price);
+                                                                    const margin = (Number(item.price) - Number(item.discount || 0) - Number(item.cost_price)) * item.quantity;
                                                                     if (margin > 0) return <span className="text-emerald-600 dark:text-emerald-400">+{formatRupiah(margin)}</span>;
                                                                     if (margin < 0) return <span className="text-rose-600 dark:text-rose-400">{formatRupiah(margin)}</span>;
                                                                     return <span className="text-muted-foreground">Rp 0</span>;
