@@ -1185,6 +1185,7 @@ trans('message.error.internal_server_error') // "Internal server error" / "Kesal
 5. **Use `:placeholder` syntax** for dynamic values (e.g., `:count`, `:resource`), **NOT `%s`** for new messages (some legacy messages still use `%s` with `sprintf`).
 6. **When adding new model attributes**, add the human-readable name to `validation.php` → `attributes` in BOTH languages.
 7. **Do NOT hardcode messages** in controllers or services — always use `trans()`.
+8. **Exception and Error Messages**: All custom exception messages thrown in services, repositories, or form requests MUST be localized using `trans()` with keys under `message.error.*` to prevent exposing hardcoded string messages to clients.
 
 ### 5.7 New Feature Message Checklist
 
