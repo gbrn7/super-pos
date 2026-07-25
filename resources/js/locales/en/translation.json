@@ -1018,6 +1018,8 @@
                     "discount_header": "Discount / Unit",
                     "total_discount_header": "Total Discount",
                     "gross_subtotal_header": "Gross Subtotal",
+                    "margin_unit_header": "Margin / Unit",
+                    "margin_total_header": "Total Margin",
                     "margin_header": "Margin",
                     "subtotal_header": "Subtotal",
                     "product_discount": "Product Discount",

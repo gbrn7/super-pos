@@ -262,6 +262,9 @@ export function DetailDialog({
                                                     {t('page.transaction.dialog_modal.detail_dialog.price_header', 'Harga Jual')}
                                                 </TableHead>
                                                 <TableHead className="text-right">
+                                                    {t('page.transaction.dialog_modal.detail_dialog.margin_unit_header', 'Margin / Satuan')}
+                                                </TableHead>
+                                                <TableHead className="text-right">
                                                     {t('page.transaction.dialog_modal.detail_dialog.discount_header', 'Diskon / Satuan')}
                                                 </TableHead>
                                                 <TableHead className="text-center">
@@ -277,7 +280,7 @@ export function DetailDialog({
                                                     {t('page.transaction.dialog_modal.detail_dialog.subtotal_header', 'Subtotal')}
                                                 </TableHead>
                                                 <TableHead className="text-right">
-                                                    {t('page.transaction.dialog_modal.detail_dialog.margin_header', 'Margin')}
+                                                    {t('page.transaction.dialog_modal.detail_dialog.margin_total_header', 'Margin Total')}
                                                 </TableHead>
                                             </TableRow>
                                         </TableHeader>
@@ -291,6 +294,9 @@ export function DetailDialog({
                                                             </TableCell>
                                                             <TableCell>
                                                                 <Skeleton className="mx-auto h-5 w-12" />
+                                                            </TableCell>
+                                                            <TableCell>
+                                                                <Skeleton className="ml-auto h-5 w-16" />
                                                             </TableCell>
                                                             <TableCell>
                                                                 <Skeleton className="ml-auto h-5 w-16" />
@@ -337,6 +343,14 @@ export function DetailDialog({
                                                             <TableCell className="text-right text-xs">
                                                                 {formatRupiah(item.price)}
                                                             </TableCell>
+                                                            <TableCell className="text-right text-xs font-semibold">
+                                                                {(() => {
+                                                                    const marginUnit = Number(item.price) - Number(item.discount || 0) - Number(item.cost_price);
+                                                                    if (marginUnit > 0) return <span className="text-emerald-600 dark:text-emerald-400">+{formatRupiah(marginUnit)}</span>;
+                                                                    if (marginUnit < 0) return <span className="text-rose-600 dark:text-rose-400">{formatRupiah(marginUnit)}</span>;
+                                                                    return <span className="text-muted-foreground">Rp 0</span>;
+                                                                })()}
+                                                            </TableCell>
                                                             <TableCell className="text-right text-xs">
                                                                 {item.discount && Number(item.discount) > 0 ? (
                                                                     <span className="font-semibold">
@@ -382,7 +396,7 @@ export function DetailDialog({
                                             ) : (
                                                 <TableRow>
                                                     <TableCell
-                                                        colSpan={10}
+                                                        colSpan={11}
                                                         className="h-20 text-center text-muted-foreground"
                                                     >
                                                         {t('page.transaction.dialog_modal.detail_dialog.empty_items', 'Detail produk tidak tersedia.')}

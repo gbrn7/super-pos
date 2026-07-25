@@ -1017,6 +1017,8 @@
                         "discount_header": "Diskon / Satuan",
                         "total_discount_header": "Total Diskon",
                         "gross_subtotal_header": "Subtotal Kotor",
+                        "margin_unit_header": "Margin / Satuan",
+                        "margin_total_header": "Margin Total",
                         "margin_header": "Margin",
                         "subtotal_header": "Subtotal",
                         "product_discount": "Diskon Produk",
