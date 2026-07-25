@@ -8,6 +8,7 @@ import { formatRupiah } from '@/lib/format-money';
 import axiosInstance from '@/lib/axios';
 import { handleApiError } from '@/lib/utils';
 import { index as profitWalletRoute } from '@/routes/profit-wallet';
+import { index as apiGetProfitWallet } from '@/routes/apiProfitWallet';
 import { columns } from './columns';
 import { DataTable } from './data-table';
 import { Can } from '@/components/auth/can';
@@ -54,7 +55,7 @@ export default function ProfitWalletIndex({ storeSetting }: { storeSetting?: Sto
         try {
             setProcessing(true);
             const params: Record<string, any> = { ...queryParam };
-            const res = await axiosInstance.get<ResponseApi<{ summary: ProfitWalletSummary; transactions: PaginationResponse<ProfitWalletTransaction> }>>('/api/profit-wallet', { params });
+            const res = await axiosInstance.get<ResponseApi<{ summary: ProfitWalletSummary; transactions: PaginationResponse<ProfitWalletTransaction> }>>(apiGetProfitWallet().url, { params });
             if (res.data.success) {
                 setLedgerData(res.data.data.transactions.items);
                 setSummary(res.data.data.summary);

@@ -15,6 +15,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { useTranslation } from 'react-i18next';
 import { Spinner } from '@/components/ui/spinner';
 import axiosInstance from '@/lib/axios';
+import { withdrawCapital as apiWithdrawCapital } from '@/routes/apiProfitWallet';
 import { NumericFormat } from 'react-number-format';
 import { Input } from '@/components/ui/input';
 import {
@@ -71,7 +72,7 @@ export function WithdrawCapitalDialog({ onSuccess }: WithdrawCapitalDialogProps)
 
         try {
             setLoading(true);
-            const res = await axiosInstance.post('/api/profit-wallet/withdraw-capital', formData);
+            const res = await axiosInstance.post(apiWithdrawCapital().url, formData);
 
             if (!res.data.success) {
                 showWarningToast(res.data.message);
