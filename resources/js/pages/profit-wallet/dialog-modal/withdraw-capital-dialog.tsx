@@ -135,7 +135,7 @@ export function WithdrawCapitalDialog({ onSuccess, currentBalance = 0 }: Withdra
                                 className={`${errorForm.amount && 'border-red-500'}`}
                             />
                             <div className="flex flex-wrap gap-1.5 mt-2">
-                                {[50000, 100000, 250000, 500000, 1000000, 5000000].map((val) => (
+                                {[500000, 1000000, 3000000].map((val) => (
                                     <Button
                                         key={val}
                                         type="button"
@@ -160,7 +160,7 @@ export function WithdrawCapitalDialog({ onSuccess, currentBalance = 0 }: Withdra
                                             setFormData((prev) => ({ ...prev, amount: currentBalance }));
                                             setErrorForm((prev) => ({ ...prev, amount: '' }));
                                         }}
-                                        className="h-7 text-[10px] font-semibold px-2.5 rounded-lg border-solid border-slate-600 text-slate-600 dark:border-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-950/20"
+                                        className="h-7 text-[10px] font-normal px-2.5 rounded-lg border-dashed hover:bg-muted"
                                         disabled={loading}
                                     >
                                         {t('page.profit_wallet.dialog_modal.withdraw_capital.all_preset', 'Semua ({{balance}})', { balance: formatRupiah(currentBalance) })}
