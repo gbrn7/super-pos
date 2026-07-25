@@ -252,17 +252,17 @@ export function DetailDialog({
                                                 <TableHead className="text-center">
                                                     {t('page.transaction.dialog_modal.detail_dialog.unit_header', 'Satuan')}
                                                 </TableHead>
-                                                <TableHead className="text-center">
-                                                    {t('page.transaction.dialog_modal.detail_dialog.qty_header', 'Jumlah')}
-                                                </TableHead>
                                                 <TableHead className="text-right">
                                                     {t('page.transaction.dialog_modal.detail_dialog.cost_price_header', 'Harga Modal')}
                                                 </TableHead>
                                                 <TableHead className="text-right">
                                                     {t('page.transaction.dialog_modal.detail_dialog.price_header', 'Harga Jual')}
                                                 </TableHead>
+                                                <TableHead className="text-center">
+                                                    {t('page.transaction.dialog_modal.detail_dialog.qty_header', 'Jumlah')}
+                                                </TableHead>
                                                 <TableHead className="text-right">
-                                                    {t('page.transaction.dialog_modal.detail_dialog.discount_header', 'Diskon')}
+                                                    {t('page.transaction.dialog_modal.detail_dialog.discount_header', 'Diskon / Satuan')}
                                                 </TableHead>
                                                 <TableHead className="text-right">
                                                     {t('page.transaction.dialog_modal.detail_dialog.subtotal_header', 'Subtotal')}
@@ -281,13 +281,13 @@ export function DetailDialog({
                                                                 <Skeleton className="mx-auto h-5 w-12" />
                                                             </TableCell>
                                                             <TableCell>
+                                                                <Skeleton className="ml-auto h-5 w-16" />
+                                                            </TableCell>
+                                                            <TableCell>
+                                                                <Skeleton className="ml-auto h-5 w-16" />
+                                                            </TableCell>
+                                                            <TableCell>
                                                                 <Skeleton className="mx-auto h-5 w-8" />
-                                                            </TableCell>
-                                                            <TableCell>
-                                                                <Skeleton className="ml-auto h-5 w-16" />
-                                                            </TableCell>
-                                                            <TableCell>
-                                                                <Skeleton className="ml-auto h-5 w-16" />
                                                             </TableCell>
                                                             <TableCell>
                                                                 <Skeleton className="ml-auto h-5 w-16" />
@@ -312,9 +312,6 @@ export function DetailDialog({
                                                                 {item.unit_name ||
                                                                     '-'}
                                                             </TableCell>
-                                                            <TableCell className="text-center font-semibold">
-                                                                {item.quantity}
-                                                            </TableCell>
                                                             <TableCell className="text-right text-xs">
                                                                 {formatRupiah(
                                                                     item.cost_price,
@@ -324,6 +321,9 @@ export function DetailDialog({
                                                                 {formatRupiah(
                                                                     item.price,
                                                                 )}
+                                                            </TableCell>
+                                                            <TableCell className="text-center font-semibold">
+                                                                {item.quantity}
                                                             </TableCell>
                                                             <TableCell className="text-right text-xs">
                                                                 {item.discount &&
