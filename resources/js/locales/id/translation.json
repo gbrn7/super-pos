@@ -132,7 +132,7 @@
             "read": "Baca Dompet Modal",
             "inject": "Suntik Modal",
             "drawdown": "Tarik Modal",
-            "purchase_product": "Kulakan Produk"
+            "purchase_product": "Belanja Stok"
         }
     },
     "component": {
@@ -320,13 +320,13 @@
                     "confirm_btn": "Tarik"
                 },
                 "purchase_product": {
-                    "dialog_button": "Kulakan Produk",
-                    "dialog_title": "Kulakan Produk",
-                    "dialog_desc": "Gunakan saldo dompet modal untuk membiayai pembelian stok produk (kulakan).",
+                    "dialog_button": "Belanja Stok",
+                    "dialog_title": "Belanja Stok",
+                    "dialog_desc": "Gunakan saldo dompet modal untuk membiayai belanja stok/pembelian produk.",
                     "amount_label": "Nominal Pembelian",
                     "amount_placeholder": "Masukkan nominal pembelian produk",
                     "notes_label": "Catatan",
-                    "notes_placeholder": "Masukkan catatan kulakan (misal: Kulakan Sembako Supplier A)",
+                    "notes_placeholder": "Masukkan catatan belanja stok (misal: Belanja Sembako Supplier A)",
                     "cancel_btn": "Batal",
                     "confirm_btn": "Bayar"
                 }
@@ -343,7 +343,7 @@
                     "tx_type_placeholder": "Semua Jenis",
                     "tx_capital_injection": "Suntik Modal",
                     "tx_capital_drawdown": "Tarik Modal",
-                    "tx_product_purchase": "Kulakan Produk",
+                    "tx_product_purchase": "Belanja Stok",
                     "tx_sales_recovery": "Pemulihan Modal",
                     "tx_reinvestment": "Reinvestasi",
                     "start_date_label": "Mulai",

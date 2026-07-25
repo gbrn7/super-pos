@@ -96,17 +96,17 @@ export function PurchaseProductDialog({ onSuccess }: PurchaseProductDialogProps)
             <DialogTrigger asChild>
                 <Button className="w-full bg-sky-600 hover:bg-sky-700 text-white font-medium rounded-xl py-2.5 flex items-center justify-center gap-2 cursor-pointer">
                     <ShoppingBag className="h-4 w-4" />
-                    {t('page.capital_wallet.dialog_modal.purchase_product.dialog_button', 'Kulakan Produk')}
+                    {t('page.capital_wallet.dialog_modal.purchase_product.dialog_button', 'Belanja Stok')}
                 </Button>
             </DialogTrigger>
             <DialogContent>
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <DialogHeader>
                         <DialogTitle>
-                            {t('page.capital_wallet.dialog_modal.purchase_product.dialog_title', 'Kulakan Produk')}
+                            {t('page.capital_wallet.dialog_modal.purchase_product.dialog_title', 'Belanja Stok')}
                         </DialogTitle>
                         <DialogDescription>
-                            {t('page.capital_wallet.dialog_modal.purchase_product.dialog_desc', 'Gunakan saldo dompet modal untuk membiayai pembelian stok produk (kulakan).')}
+                            {t('page.capital_wallet.dialog_modal.purchase_product.dialog_desc', 'Gunakan saldo dompet modal untuk membiayai belanja stok/pembelian produk.')}
                         </DialogDescription>
                     </DialogHeader>
                     <FieldGroup>
@@ -141,7 +141,7 @@ export function PurchaseProductDialog({ onSuccess }: PurchaseProductDialogProps)
                             <Textarea
                                 id="notes"
                                 name="notes"
-                                placeholder={t('page.capital_wallet.dialog_modal.purchase_product.notes_placeholder', 'Masukkan catatan kulakan (misal: Kulakan Sembako Supplier A)')}
+                                placeholder={t('page.capital_wallet.dialog_modal.purchase_product.notes_placeholder', 'Masukkan catatan belanja stok (misal: Belanja Sembako Supplier A)')}
                                 value={formData.notes}
                                 onChange={handleNotesChange}
                                 disabled={loading}

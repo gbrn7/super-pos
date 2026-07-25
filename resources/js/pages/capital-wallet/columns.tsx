@@ -34,7 +34,7 @@ export const columns = ({ onInvoiceClick, onSortChange, orderBy, order }: Column
             } else if (txType === 'capital_drawdown') {
                 label = i18next.t('page.capital_wallet.data_table.filters.tx_capital_drawdown', 'Tarik Modal');
             } else if (txType === 'product_purchase') {
-                label = i18next.t('page.capital_wallet.data_table.filters.tx_product_purchase', 'Kulakan Produk');
+                label = i18next.t('page.capital_wallet.data_table.filters.tx_product_purchase', 'Belanja Stok');
             } else if (txType === 'sales_recovery') {
                 label = i18next.t('page.capital_wallet.data_table.filters.tx_sales_recovery', 'Pemulihan Modal');
             } else if (txType === 'reinvestment') {

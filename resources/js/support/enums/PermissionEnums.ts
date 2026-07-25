@@ -356,7 +356,7 @@ export const PERMISSIONLIST = (): Permission[] => {
                     VALUE: CapitalWalletPermissionEnums.DRAWDOWN,
                 },
                 {
-                    LABEL: t('permission_label.capital_wallet.purchase_product', 'Kulakan Produk'),
+                    LABEL: t('permission_label.capital_wallet.purchase_product', 'Belanja Stok'),
                     VALUE: CapitalWalletPermissionEnums.PURCHASE_PRODUCT,
                 },
             ],

@@ -189,7 +189,7 @@ export function DataTable<TData, TValue>({
                             <SelectItem value="all">{t('page.capital_wallet.data_table.filters.tx_type_placeholder', 'Semua Jenis')}</SelectItem>
                             <SelectItem value="capital_injection">{t('page.capital_wallet.data_table.filters.tx_capital_injection', 'Suntik Modal')}</SelectItem>
                             <SelectItem value="capital_drawdown">{t('page.capital_wallet.data_table.filters.tx_capital_drawdown', 'Tarik Modal')}</SelectItem>
-                            <SelectItem value="product_purchase">{t('page.capital_wallet.data_table.filters.tx_product_purchase', 'Kulakan Produk')}</SelectItem>
+                            <SelectItem value="product_purchase">{t('page.capital_wallet.data_table.filters.tx_product_purchase', 'Belanja Stok')}</SelectItem>
                             <SelectItem value="sales_recovery">{t('page.capital_wallet.data_table.filters.tx_sales_recovery', 'Pemulihan Modal')}</SelectItem>
                             <SelectItem value="reinvestment">{t('page.capital_wallet.data_table.filters.tx_reinvestment', 'Reinvestasi')}</SelectItem>
                         </SelectContent>
@@ -264,7 +264,7 @@ export function DataTable<TData, TValue>({
                                 : queryParam.transaction_type === 'capital_drawdown'
                                 ? t('page.capital_wallet.data_table.filters.tx_capital_drawdown', 'Tarik Modal')
                                 : queryParam.transaction_type === 'product_purchase'
-                                ? t('page.capital_wallet.data_table.filters.tx_product_purchase', 'Kulakan Produk')
+                                ? t('page.capital_wallet.data_table.filters.tx_product_purchase', 'Belanja Stok')
                                 : queryParam.transaction_type === 'sales_recovery'
                                 ? t('page.capital_wallet.data_table.filters.tx_sales_recovery', 'Pemulihan Modal')
                                 : t('page.capital_wallet.data_table.filters.tx_reinvestment', 'Reinvestasi')}

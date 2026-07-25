@@ -321,7 +321,7 @@
                 },
                 "purchase_product": {
                     "dialog_button": "Product Purchase",
-                    "dialog_title": "Purchase Products (Kulakan)",
+                    "dialog_title": "Purchase Products",
                     "dialog_desc": "Use capital wallet balance to finance buying product stock.",
                     "amount_label": "Purchase Amount",
                     "amount_placeholder": "Enter product purchase amount",
