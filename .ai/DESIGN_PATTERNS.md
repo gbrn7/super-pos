@@ -1500,3 +1500,22 @@ Keep page modules clean by splitting dialogs into `dialog-modal/`:
 - [ ] Implement `columns.tsx`, `data-table.tsx`, and `index.tsx` inside `resources/js/pages/{entity}/`
 - [ ] Run `npm run build` or `npx tsc --noEmit` to verify type safety
 
+---
+
+## 10. Conventions for Static Values & Constants
+
+To maintain clean code and avoid hardcoded values across the codebase:
+
+### 10.1 Non-multi-value Static Constants
+*   **Definition**: Values that are singular or standalone settings (e.g. image upload paths, default pagination limits, special flags, empty values).
+*   **Convention**: Store these values in `App\Support\Constants\Constants.php`.
+*   **Rule**: Never use raw hardcoded string or numeric constants inside controller or service classes.
+
+### 10.2 Multi-value Static Enums
+*   **Definition**: Database columns, status codes, or state conditions that can have multiple distinct static values (e.g. status: `active`/`inactive`, transaction type: `sales_profit`/`disbursement`/`capital_withdrawal`, transaction direction: `in`/`out`).
+*   **Convention**: Always create a dedicated backed enum file under `app/Support/Enums/`.
+*   **Rule**:
+    1. Enums must be string-backed (e.g. `enum ProfitWalletStatusEnums: string`).
+    2. Enum file and class names must use plural naming convention (e.g. `ProfitWalletStatusEnums`, not `ProfitWalletStatus`).
+
+
