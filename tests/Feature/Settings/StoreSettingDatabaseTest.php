@@ -1,12 +1,13 @@
 <?php
 
 use App\Models\StoreSetting;
+use Database\Seeders\StoreSettingSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
 test('store settings table is seeded with default values', function () {
-    $this->seed(\Database\Seeders\StoreSettingSeeder::class);
+    $this->seed(StoreSettingSeeder::class);
 
     $this->assertDatabaseHas('store_settings', [
         'name' => 'Super POS',

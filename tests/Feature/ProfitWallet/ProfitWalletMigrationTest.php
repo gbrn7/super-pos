@@ -14,4 +14,9 @@ test('profit_wallets and profit_wallet_transactions tables have correct schema',
         'id', 'profit_wallet_id', 'amount', 'type', 'transaction_type',
         'reference_type', 'reference_id', 'balance_before', 'balance_after', 'notes', 'created_at', 'updated_at',
     ]))->toBeTrue();
+
+    $this->assertDatabaseHas('profit_wallets', [
+        'balance' => 0.00,
+        'status' => 'active',
+    ]);
 });

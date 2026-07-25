@@ -42,8 +42,7 @@ class ProfitWalletService implements ProfitWalletServiceInterface
     {
         try {
             return DB::transaction(function () use ($profit, $transactionId) {
-                $baseWallet = $this->getOrCreateWallet();
-                $wallet = $this->profitWalletRepository->lockWalletForUpdate($baseWallet->id);
+                $wallet = $this->getOrCreateWallet();
 
                 $before = (float) $wallet->balance;
                 $after = $before + $profit;
@@ -79,8 +78,7 @@ class ProfitWalletService implements ProfitWalletServiceInterface
             }
 
             return DB::transaction(function () use ($amount, $notes) {
-                $baseWallet = $this->getOrCreateWallet();
-                $wallet = $this->profitWalletRepository->lockWalletForUpdate($baseWallet->id);
+                $wallet = $this->getOrCreateWallet();
 
                 $before = (float) $wallet->balance;
                 if ($before < $amount) {
@@ -116,8 +114,7 @@ class ProfitWalletService implements ProfitWalletServiceInterface
             }
 
             return DB::transaction(function () use ($amount, $notes) {
-                $baseWallet = $this->getOrCreateWallet();
-                $wallet = $this->profitWalletRepository->lockWalletForUpdate($baseWallet->id);
+                $wallet = $this->getOrCreateWallet();
 
                 $before = (float) $wallet->balance;
                 if ($before < $amount) {

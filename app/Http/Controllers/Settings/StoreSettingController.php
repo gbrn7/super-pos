@@ -29,8 +29,8 @@ class StoreSettingController extends Controller
     {
         $storeSetting = StoreSetting::first();
 
-        if (!$storeSetting) {
-            $storeSetting = new StoreSetting();
+        if (! $storeSetting) {
+            $storeSetting = new StoreSetting;
         }
 
         $storeSetting->fill($request->validated());

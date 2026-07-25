@@ -12,25 +12,26 @@ beforeEach(function () {
 });
 
 test('repository handles wallet retrieval, creation, locking and updates', function () {
-    $wallet = $this->repository->createWallet(['balance' => 0.00, 'status' => 'active']);
-    expect($wallet)->toBeInstanceOf(ProfitWallet::class);
-
     $found = $this->repository->getActiveWallet();
-    expect($found->id)->toBe($wallet->id);
+    expect($found)->toBeInstanceOf(ProfitWallet::class);
 
-    $locked = $this->repository->lockWalletForUpdate($wallet->id);
-    expect($locked->id)->toBe($wallet->id);
+    $locked = $this->repository->lockWalletForUpdate($found->id);
+    expect($locked->id)->toBe($found->id);
 
     $lockedActive = $this->repository->lockActiveWalletForUpdate();
-    expect($lockedActive->id)->toBe($wallet->id);
+    expect($lockedActive->id)->toBe($found->id);
 
-    $updated = $this->repository->updateWalletBalance($wallet, 5000.00);
+    $updated = $this->repository->updateWalletBalance($found, 5000.00);
     expect($updated)->toBeTrue()
-        ->and($wallet->fresh()->balance)->toEqual(5000.00);
+        ->and($found->fresh()->balance)->toEqual(5000.00);
+
+    $newWallet = $this->repository->createWallet(['balance' => 100.00, 'status' => 'inactive']);
+    expect($newWallet)->toBeInstanceOf(ProfitWallet::class)
+        ->and($newWallet->status)->toBe('inactive');
 });
 
 test('repository creates transactions correctly', function () {
-    $wallet = $this->repository->createWallet(['balance' => 1000.00, 'status' => 'active']);
+    $wallet = $this->repository->getActiveWallet();
 
     $tx = $this->repository->createTransaction([
         'profit_wallet_id' => $wallet->id,
