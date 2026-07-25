@@ -1015,6 +1015,7 @@
                         "cost_price_header": "Harga Modal",
                         "price_header": "Harga Jual",
                         "discount_header": "Diskon / Satuan",
+                        "margin_header": "Margin",
                         "subtotal_header": "Subtotal",
                         "product_discount": "Diskon Produk",
                         "transaction_discount": "Diskon Transaksi",

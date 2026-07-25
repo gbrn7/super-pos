@@ -270,6 +270,9 @@ export function DetailDialog({
                                                 <TableHead className="text-right">
                                                     {t('page.transaction.dialog_modal.detail_dialog.discount_header', 'Diskon / Satuan')}
                                                 </TableHead>
+                                                <TableHead className="text-right">
+                                                    {t('page.transaction.dialog_modal.detail_dialog.margin_header', 'Margin')}
+                                                </TableHead>
                                             </TableRow>
                                         </TableHeader>
                                         <TableBody>
@@ -298,6 +301,9 @@ export function DetailDialog({
                                                             <TableCell>
                                                                 <Skeleton className="ml-auto h-5 w-16" />
                                                             </TableCell>
+                                                            <TableCell>
+                                                                <Skeleton className="ml-auto h-5 w-16" />
+                                                            </TableCell>
                                                         </TableRow>
                                                     ),
                                                 )
@@ -308,34 +314,7 @@ export function DetailDialog({
                                                     (item) => (
                                                         <TableRow key={item.id}>
                                                             <TableCell className="font-medium">
-                                                                <div>
-                                                                    <span>
-                                                                        {item.product_name || t('page.transaction.dialog_modal.detail_dialog.default_product_name', 'Produk #{{id}}', { id: item.product_id })}
-                                                                    </span>
-                                                                    {(() => {
-                                                                        const netPrice = Number(item.price) - Number(item.discount || 0);
-                                                                        const margin = netPrice - Number(item.cost_price);
-                                                                        if (margin > 0) {
-                                                                            return (
-                                                                                <span className="block text-[10px] font-semibold text-emerald-600 dark:text-emerald-400">
-                                                                                    {t('page.transaction.dialog_modal.detail_dialog.profit_label', 'Untung')}: +{formatRupiah(margin)}
-                                                                                </span>
-                                                                            );
-                                                                        } else if (margin < 0) {
-                                                                            return (
-                                                                                <span className="block text-[10px] font-semibold text-destructive">
-                                                                                    {t('page.transaction.dialog_modal.detail_dialog.loss_label', 'Rugi')}: {formatRupiah(margin)}
-                                                                                </span>
-                                                                            );
-                                                                        } else {
-                                                                            return (
-                                                                                <span className="block text-[10px] font-medium text-muted-foreground">
-                                                                                    {t('page.transaction.dialog_modal.detail_dialog.at_cost_label', 'Sesuai Modal')} (Rp 0)
-                                                                                </span>
-                                                                            );
-                                                                        }
-                                                                    })()}
-                                                                </div>
+                                                                {item.product_name || t('page.transaction.dialog_modal.detail_dialog.default_product_name', 'Produk #{{id}}', { id: item.product_id })}
                                                             </TableCell>
                                                             <TableCell className="text-center text-xs text-muted-foreground">
                                                                 {item.unit_name ||
@@ -384,13 +363,21 @@ export function DetailDialog({
                                                                     '-'
                                                                 )}
                                                             </TableCell>
+                                                            <TableCell className="text-right text-xs font-semibold">
+                                                                {(() => {
+                                                                    const margin = Number(item.price) - Number(item.discount || 0) - Number(item.cost_price);
+                                                                    if (margin > 0) return <span className="text-emerald-600 dark:text-emerald-400">+{formatRupiah(margin)}</span>;
+                                                                    if (margin < 0) return <span className="text-rose-600 dark:text-rose-400">{formatRupiah(margin)}</span>;
+                                                                    return <span className="text-muted-foreground">Rp 0</span>;
+                                                                })()}
+                                                            </TableCell>
                                                         </TableRow>
                                                     ),
                                                 )
                                             ) : (
                                                 <TableRow>
                                                     <TableCell
-                                                        colSpan={7}
+                                                        colSpan={8}
                                                         className="h-20 text-center text-muted-foreground"
                                                     >
                                                         {t('page.transaction.dialog_modal.detail_dialog.empty_items', 'Detail produk tidak tersedia.')}
