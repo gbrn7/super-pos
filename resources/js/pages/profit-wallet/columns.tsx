@@ -4,18 +4,7 @@ import { ServerSideDataTableHeader } from '@/components/server-side-data-table-h
 import { Badge } from '@/components/ui/badge';
 import { formatRupiah } from '@/lib/format-money';
 import dayjs from 'dayjs';
-
-export interface ProfitWalletRecord {
-    id: number;
-    amount: number;
-    type: 'in' | 'out';
-    transaction_type: 'sales_profit' | 'disbursement' | 'capital_withdrawal';
-    balance_before: number;
-    balance_after: number;
-    notes: string;
-    invoice_number: string | null;
-    created_at: number;
-}
+import type { ProfitWalletTransaction } from '@/support/models/profitWallet';
 
 interface ColumnProps {
     onInvoiceClick: (invoiceNumber: string) => void;
@@ -24,7 +13,7 @@ interface ColumnProps {
     order?: string;
 }
 
-export const columns = ({ onInvoiceClick, onSortChange, orderBy, order }: ColumnProps): ColumnDef<ProfitWalletRecord>[] => [
+export const columns = ({ onInvoiceClick, onSortChange, orderBy, order }: ColumnProps): ColumnDef<ProfitWalletTransaction>[] => [
     {
         accessorKey: 'created_at',
         header: () => i18next.t('page.profit_wallet.data_table.columns.created_at', 'Waktu Mutasi'),

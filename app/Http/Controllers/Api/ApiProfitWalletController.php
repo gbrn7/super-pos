@@ -6,12 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ProfitWallet\DisburseProfitWalletRequest;
 use App\Http\Requests\ProfitWallet\IndexProfitWalletRequest;
 use App\Http\Requests\ProfitWallet\WithdrawCapitalProfitWalletRequest;
-use App\Models\Transaction;
+use App\Http\Resources\ProfitWalletTransactionResource;
 use App\Support\Enums\ProfitWalletPermissionEnums;
 use App\Support\Interfaces\Services\ProfitWalletServiceInterface;
 use App\Support\Models\ProfitWallet\DisburseProfitWalletReqModel;
 use App\Support\Models\ProfitWallet\GetProfitWalletTransactionReqModel;
 use App\Support\Models\ProfitWallet\WithdrawCapitalProfitWalletReqModel;
+use App\Support\Utils\PaginationResource;
 use App\Support\Utils\ResponseApi;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controllers\HasMiddleware;
@@ -40,30 +41,14 @@ class ApiProfitWalletController extends Controller implements HasMiddleware
             $summary = $this->profitWalletService->getTransactionSummary($reqModel);
             $paginated = $this->profitWalletService->getTransactions($reqModel);
 
-            $mappedData = collect($paginated->items())->map(function ($item) {
-                return [
-                    'id' => $item->id,
-                    'amount' => (float) $item->amount,
-                    'type' => $item->type,
-                    'transaction_type' => $item->transaction_type,
-                    'balance_before' => (float) $item->balance_before,
-                    'balance_after' => (float) $item->balance_after,
-                    'notes' => $item->notes,
-                    'invoice_number' => $item->reference_type === Transaction::class ? ($item->reference->invoice_number ?? '-') : '-',
-                    'created_at' => $item->created_at instanceof \DateTimeInterface ? $item->created_at->getTimestamp() : (int) $item->created_at,
-                ];
-            });
+            $items = ProfitWalletTransactionResource::collection($paginated->items());
+            $paginationData = PaginationResource::make($items, $paginated);
 
             return ResponseApi::make(true, trans('message.success.success'), [
                 'summary' => $summary,
                 'transactions' => [
-                    'data' => $mappedData,
-                    'meta' => [
-                        'current_page' => $paginated->currentPage(),
-                        'last_page' => $paginated->lastPage(),
-                        'per_page' => $paginated->perPage(),
-                        'total' => $paginated->total(),
-                    ],
+                    'items' => $items,
+                    'pagination' => $paginationData['pagination'],
                 ],
             ]);
         } catch (\Throwable $th) {

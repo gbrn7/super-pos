@@ -33,7 +33,7 @@ test('api index returns wallet transactions and summary', function () {
     $response = $this->getJson(route('apiProfitWallet.index', ['limit' => 10]));
     $response->assertStatus(200)
         ->assertJsonPath('data.summary.current_balance', 1200)
-        ->assertJsonCount(1, 'data.transactions.data');
+        ->assertJsonCount(1, 'data.transactions.items');
 });
 
 test('api disburse executes payout successfully', function () {

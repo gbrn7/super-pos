@@ -8,7 +8,7 @@ import { formatRupiah } from '@/lib/format-money';
 import axiosInstance from '@/lib/axios';
 import { handleApiError } from '@/lib/utils';
 import { index as profitWalletRoute } from '@/routes/profit-wallet';
-import { columns, type ProfitWalletRecord } from './columns';
+import { columns } from './columns';
 import { DataTable } from './data-table';
 import { Can } from '@/components/auth/can';
 import { PERMISSIONENUMS } from '@/support/enums/PermissionEnums';
@@ -16,18 +16,15 @@ import { DisburseDialog } from './dialog-modal/disburse-dialog';
 import { WithdrawCapitalDialog } from './dialog-modal/withdraw-capital-dialog';
 import { DetailDialog } from '@/pages/transaction/dialog-modal/detail-dialog';
 import type { StoreSetting } from '@/components/receipt-modal';
-
-interface SummaryData {
-    current_balance: number;
-    total_inflow: number;
-    total_outflow: number;
-}
+import type { ResponseApi } from '@/support/interfaces/response/Response';
+import type { PaginationResponse } from '@/support/interfaces/resource/resource-response';
+import type { ProfitWalletTransaction, ProfitWalletSummary } from '@/support/models/profitWallet';
 
 export default function ProfitWalletIndex({ storeSetting }: { storeSetting?: StoreSetting | null }) {
     const { t } = useTranslation();
 
-    const [ledgerData, setLedgerData] = useState<ProfitWalletRecord[]>([]);
-    const [summary, setSummary] = useState<SummaryData>({
+    const [ledgerData, setLedgerData] = useState<ProfitWalletTransaction[]>([]);
+    const [summary, setSummary] = useState<ProfitWalletSummary>({
         current_balance: 0,
         total_inflow: 0,
         total_outflow: 0,
@@ -57,12 +54,12 @@ export default function ProfitWalletIndex({ storeSetting }: { storeSetting?: Sto
         try {
             setProcessing(true);
             const params: Record<string, any> = { ...queryParam };
-            const res = await axiosInstance.get('/api/profit-wallet', { params });
+            const res = await axiosInstance.get<ResponseApi<{ summary: ProfitWalletSummary; transactions: PaginationResponse<ProfitWalletTransaction> }>>('/api/profit-wallet', { params });
             if (res.data.success) {
-                setLedgerData(res.data.data.transactions.data);
+                setLedgerData(res.data.data.transactions.items);
                 setSummary(res.data.data.summary);
-                if (res.data.data.transactions.meta) {
-                    setPagination(res.data.data.transactions.meta);
+                if (res.data.data.transactions.pagination) {
+                    setPagination(res.data.data.transactions.pagination);
                 }
             }
         } catch (error) {
