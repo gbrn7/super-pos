@@ -13,6 +13,11 @@ interface ProfitWalletRepositoryInterface
     public function getActiveWallet(): ?ProfitWallet;
 
     /**
+     * Lock and get active profit wallet for update.
+     */
+    public function lockActiveWalletForUpdate(): ?ProfitWallet;
+
+    /**
      * Lock the wallet for update.
      */
     public function lockWalletForUpdate(int $id): ?ProfitWallet;

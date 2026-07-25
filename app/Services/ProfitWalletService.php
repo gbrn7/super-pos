@@ -21,16 +21,18 @@ class ProfitWalletService implements ProfitWalletServiceInterface
     public function getOrCreateWallet(): ProfitWallet
     {
         try {
-            $wallet = $this->profitWalletRepository->getActiveWallet();
+            return DB::transaction(function () {
+                $wallet = $this->profitWalletRepository->lockActiveWalletForUpdate();
 
-            if (! $wallet) {
-                $wallet = $this->profitWalletRepository->createWallet([
-                    'balance' => 0.00,
-                    'status' => 'active',
-                ]);
-            }
+                if (! $wallet) {
+                    $wallet = $this->profitWalletRepository->createWallet([
+                        'balance' => 0.00,
+                        'status' => 'active',
+                    ]);
+                }
 
-            return $wallet;
+                return $wallet;
+            });
         } catch (\Throwable $th) {
             throw CheckException::Check($th);
         }
@@ -45,11 +47,13 @@ class ProfitWalletService implements ProfitWalletServiceInterface
 
                 $before = (float) $wallet->balance;
                 $after = $before + $profit;
+                $type = $profit >= 0 ? 'in' : 'out';
+                $amount = abs($profit);
 
                 $transaction = $this->profitWalletRepository->createTransaction([
                     'profit_wallet_id' => $wallet->id,
-                    'amount' => $profit,
-                    'type' => 'in',
+                    'amount' => $amount,
+                    'type' => $type,
                     'transaction_type' => 'sales_profit',
                     'reference_id' => $transactionId,
                     'reference_type' => Transaction::class,
@@ -70,6 +74,10 @@ class ProfitWalletService implements ProfitWalletServiceInterface
     public function disburse(float $amount, ?string $notes = null): ProfitWalletTransaction
     {
         try {
+            if ($amount <= 0) {
+                throw new Exception('Disbursement amount must be greater than zero.', Response::HTTP_UNPROCESSABLE_ENTITY);
+            }
+
             return DB::transaction(function () use ($amount, $notes) {
                 $baseWallet = $this->getOrCreateWallet();
                 $wallet = $this->profitWalletRepository->lockWalletForUpdate($baseWallet->id);
@@ -103,6 +111,10 @@ class ProfitWalletService implements ProfitWalletServiceInterface
     public function withdrawCapital(float $amount, ?string $notes = null): ProfitWalletTransaction
     {
         try {
+            if ($amount <= 0) {
+                throw new Exception('Capital withdrawal amount must be greater than zero.', Response::HTTP_UNPROCESSABLE_ENTITY);
+            }
+
             return DB::transaction(function () use ($amount, $notes) {
                 $baseWallet = $this->getOrCreateWallet();
                 $wallet = $this->profitWalletRepository->lockWalletForUpdate($baseWallet->id);

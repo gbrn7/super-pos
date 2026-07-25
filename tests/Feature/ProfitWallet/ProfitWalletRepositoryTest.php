@@ -21,6 +21,9 @@ test('repository handles wallet retrieval, creation, locking and updates', funct
     $locked = $this->repository->lockWalletForUpdate($wallet->id);
     expect($locked->id)->toBe($wallet->id);
 
+    $lockedActive = $this->repository->lockActiveWalletForUpdate();
+    expect($lockedActive->id)->toBe($wallet->id);
+
     $updated = $this->repository->updateWalletBalance($wallet, 5000.00);
     expect($updated)->toBeTrue()
         ->and($wallet->fresh()->balance)->toEqual(5000.00);

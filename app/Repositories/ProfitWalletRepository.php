@@ -13,6 +13,11 @@ class ProfitWalletRepository implements ProfitWalletRepositoryInterface
         return ProfitWallet::where('status', 'active')->first();
     }
 
+    public function lockActiveWalletForUpdate(): ?ProfitWallet
+    {
+        return ProfitWallet::where('status', 'active')->lockForUpdate()->first();
+    }
+
     public function lockWalletForUpdate(int $id): ?ProfitWallet
     {
         return ProfitWallet::where('id', $id)->lockForUpdate()->first();
