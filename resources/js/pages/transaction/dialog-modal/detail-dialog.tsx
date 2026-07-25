@@ -356,7 +356,7 @@ export function DetailDialog({
                                                                 Number(
                                                                     item.discount,
                                                                 ) > 0 ? (
-                                                                    <span className="font-semibold text-emerald-600 dark:text-emerald-400">
+                                                                    <span className="font-semibold">
                                                                         -
                                                                         {formatRupiah(
                                                                             Number(
