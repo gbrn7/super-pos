@@ -16,6 +16,7 @@ use App\Services\CategoryService;
 use App\Services\MasterProductService;
 use App\Services\PaymentMethodService;
 use App\Services\ProductService;
+use App\Services\ProfitWalletService;
 use App\Services\RoleService;
 use App\Services\TransactionDetailService;
 use App\Services\TransactionService;
@@ -36,6 +37,7 @@ use App\Support\Interfaces\Services\CategoryServiceInterface;
 use App\Support\Interfaces\Services\MasterProductServiceInterface;
 use App\Support\Interfaces\Services\PaymentMethodServiceInterface;
 use App\Support\Interfaces\Services\ProductServiceInterface;
+use App\Support\Interfaces\Services\ProfitWalletServiceInterface;
 use App\Support\Interfaces\Services\RoleServiceInterface;
 use App\Support\Interfaces\Services\TransactionDetailServiceInterface;
 use App\Support\Interfaces\Services\TransactionServiceInterface;
@@ -93,6 +95,7 @@ class AppServiceProvider extends ServiceProvider
 
         // Profit wallet service repository
         $this->app->bind(ProfitWalletRepositoryInterface::class, ProfitWalletRepository::class);
+        $this->app->bind(ProfitWalletServiceInterface::class, ProfitWalletService::class);
     }
 
     /**
