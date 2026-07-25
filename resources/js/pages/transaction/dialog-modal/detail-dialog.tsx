@@ -307,7 +307,7 @@ export function DetailDialog({
                                                             <TableCell className="font-medium">
                                                                 <div>
                                                                     <span>
-                                                                        {item.product_name || `Produk #${item.product_id}`}
+                                                                        {item.product_name || t('page.transaction.dialog_modal.detail_dialog.default_product_name', 'Produk #{{id}}', { id: item.product_id })}
                                                                     </span>
                                                                     {(() => {
                                                                         const netPrice = Number(item.price) - Number(item.discount || 0);
@@ -390,8 +390,7 @@ export function DetailDialog({
                                                         colSpan={7}
                                                         className="h-20 text-center text-muted-foreground"
                                                     >
-                                                        Detail produk tidak
-                                                        tersedia.
+                                                        {t('page.transaction.dialog_modal.detail_dialog.empty_items', 'Detail produk tidak tersedia.')}
                                                     </TableCell>
                                                 </TableRow>
                                             )}
@@ -444,7 +443,7 @@ export function DetailDialog({
                                 )}
                                 <div className="flex items-center justify-between border-t pt-2 text-sm">
                                     <span className="font-medium text-muted-foreground">
-                                        Total Transaksi
+                                        {t('page.transaction.dialog_modal.detail_dialog.total_transaction', 'Total Transaksi')}
                                     </span>
                                     {loading ? (
                                         <Skeleton className="h-6 w-24" />
@@ -458,7 +457,7 @@ export function DetailDialog({
                                 </div>
                                 <div className="flex items-center justify-between text-sm">
                                     <span className="text-muted-foreground">
-                                        Nominal Pembayaran
+                                        {t('page.transaction.dialog_modal.detail_dialog.payment_amount', 'Nominal Pembayaran')}
                                     </span>
                                     {loading ? (
                                         <Skeleton className="h-5 w-20" />
@@ -472,7 +471,7 @@ export function DetailDialog({
                                 </div>
                                 <div className="flex items-center justify-between border-t pt-2 text-sm">
                                     <span className="text-muted-foreground">
-                                        Kembalian
+                                        {t('page.transaction.dialog_modal.detail_dialog.change_amount', 'Kembalian')}
                                     </span>
                                     {loading ? (
                                         <Skeleton className="h-5 w-20" />

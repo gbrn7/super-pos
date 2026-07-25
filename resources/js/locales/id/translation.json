@@ -1002,7 +1002,12 @@
                         "transaction_discount": "Diskon Transaksi",
                         "profit_label": "Untung",
                         "loss_label": "Rugi",
-                        "at_cost_label": "Sesuai Modal"
+                        "at_cost_label": "Sesuai Modal",
+                        "empty_items": "Detail produk tidak tersedia.",
+                        "total_transaction": "Total Transaksi",
+                        "payment_amount": "Nominal Pembayaran",
+                        "change_amount": "Kembalian",
+                        "default_product_name": "Produk #{{id}}"
                     }
                 }
             }

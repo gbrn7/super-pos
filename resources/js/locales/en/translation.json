@@ -1003,7 +1003,12 @@
                     "transaction_discount": "Transaction Discount",
                     "profit_label": "Profit",
                     "loss_label": "Loss",
-                    "at_cost_label": "At Cost"
+                    "at_cost_label": "At Cost",
+                    "empty_items": "Product details not available.",
+                    "total_transaction": "Total Transaction",
+                    "payment_amount": "Paid Amount",
+                    "change_amount": "Change",
+                    "default_product_name": "Product #{{id}}"
                 }
             }
         },
