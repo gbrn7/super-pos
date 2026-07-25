@@ -31,8 +31,14 @@ import {
     TableHeader,
     TableRow,
 } from '@/components/ui/table';
+import {
+    DropdownMenu,
+    DropdownMenuTrigger,
+    DropdownMenuContent,
+    DropdownMenuCheckboxItem,
+} from '@/components/ui/dropdown-menu';
 import { Badge } from '@/components/ui/badge';
-import { X } from 'lucide-react';
+import { RotateCcw, Search, Calendar, CreditCard, ArrowUpDown, X, Table as TableIcon } from 'lucide-react';
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[];
@@ -88,163 +94,248 @@ export function DataTable<TData, TValue>({
         queryParam.end_date !== '';
 
     return (
-        <div className="space-y-4">
-            <div className="rounded-2xl border p-3 bg-card">
-                <div className="flex justify-between items-center gap-2 overflow-auto mb-3">
-                    <h3 className="font-semibold text-lg">{t('page.profit_wallet.data_table.table_title', 'Mutasi Dompet')}</h3>
-                    <Button variant="outline" size="sm" onClick={onResetFilter} disabled={processing}>
-                        {t('page.profit.filters.reset', 'Reset Filter')}
+        <div className="rounded-2xl border bg-card p-3 space-y-4">
+            {/* Top Action Bar */}
+            <div className="flex justify-end gap-2 items-center">
+                {isFilterActive && (
+                    <Button variant="outline" onClick={onResetFilter} size="sm" className="h-8" disabled={processing}>
+                        <RotateCcw className="mr-1.5 h-3.5 w-3.5" />
+                        {t('component.data_table.reset_filter', 'Reset Filter')}
                     </Button>
-                </div>
-                <div className="second-row grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-4 border p-3 rounded-md mb-3">
-                    <div>
-                        <Label className="text-xs font-medium text-muted-foreground">
-                            {t('page.profit_wallet.data_table.filters.keyword', 'Kata Kunci')}
-                        </Label>
+                )}
+
+                <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                        <Button variant="outline" size="sm" className="h-8">
+                            <TableIcon className="mr-1.5 h-4 w-4" />
+                            {t('component.data_table.columns.label', 'Kolom')}
+                        </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end">
+                        {table
+                            .getAllColumns()
+                            .filter((column) => column.getCanHide())
+                            .map((column) => (
+                                <DropdownMenuCheckboxItem
+                                    key={column.id}
+                                    className="capitalize"
+                                    checked={column.getIsVisible()}
+                                    onCheckedChange={(value) => column.toggleVisibility(!!value)}
+                                >
+                                    {column.id}
+                                </DropdownMenuCheckboxItem>
+                            ))}
+                    </DropdownMenuContent>
+                </DropdownMenu>
+            </div>
+
+            {/* Filter and Search Section */}
+            <div className="second-row grid grid-cols-1 gap-2 gap-y-3 rounded-md border p-3 md:grid-cols-2 lg:grid-cols-3">
+                {/* Keyword Search */}
+                <div className="space-y-1.5">
+                    <Label className="text-xs font-medium text-muted-foreground">
+                        {t('component.data_table.search_component.search_label', 'Pencarian')}
+                    </Label>
+                    <div className="relative w-full">
+                        <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
                         <Input
-                            placeholder={t('page.profit.filters.keyword_placeholder', 'Cari Catatan / Invoice...')}
-                            value={queryParam.keyword}
+                            placeholder={t('page.profit.filters.keyword_placeholder', 'Cari Catatan / Rujukan...')}
+                            value={queryParam.keyword || ''}
                             onChange={(e) => onQueryParamChange('keyword', e.target.value)}
                             disabled={processing}
-                            className="mt-1"
+                            className="pl-8 w-full"
                         />
                     </div>
-                    <div>
-                        <Label className="text-xs font-medium text-muted-foreground">
-                            {t('page.profit_wallet.data_table.filters.type_label', 'Arah Aliran')}
-                        </Label>
-                        <Select
-                            value={queryParam.type || 'all'}
-                            onValueChange={(val) => onQueryParamChange('type', val === 'all' ? '' : val)}
-                            disabled={processing}
-                        >
-                            <SelectTrigger className="mt-1">
-                                <SelectValue placeholder={t('page.profit_wallet.data_table.filters.type_placeholder', 'Semua Arah')} />
-                            </SelectTrigger>
-                            <SelectContent>
-                                <SelectItem value="all">{t('page.profit_wallet.data_table.filters.type_placeholder', 'Semua Arah')}</SelectItem>
-                                <SelectItem value="in">{t('page.profit_wallet.data_table.filters.direction_in', 'Uang Masuk')}</SelectItem>
-                                <SelectItem value="out">{t('page.profit_wallet.data_table.filters.direction_out', 'Uang Keluar')}</SelectItem>
-                            </SelectContent>
-                        </Select>
-                    </div>
-                    <div>
-                        <Label className="text-xs font-medium text-muted-foreground">
-                            {t('page.profit_wallet.data_table.filters.tx_type_label', 'Jenis Transaksi')}
-                        </Label>
-                        <Select
-                            value={queryParam.transaction_type || 'all'}
-                            onValueChange={(val) => onQueryParamChange('transaction_type', val === 'all' ? '' : val)}
-                            disabled={processing}
-                        >
-                            <SelectTrigger className="mt-1">
-                                <SelectValue placeholder={t('page.profit_wallet.data_table.filters.tx_type_placeholder', 'Semua Jenis')} />
-                            </SelectTrigger>
-                            <SelectContent>
-                                <SelectItem value="all">{t('page.profit_wallet.data_table.filters.tx_type_placeholder', 'Semua Jenis')}</SelectItem>
-                                <SelectItem value="sales_profit">{t('page.profit_wallet.data_table.filters.tx_sales_profit', 'Keuntungan Penjualan')}</SelectItem>
-                                <SelectItem value="disbursement">{t('page.profit_wallet.data_table.filters.tx_disbursement', 'Pencairan Profit')}</SelectItem>
-                                <SelectItem value="capital_withdrawal">{t('page.profit_wallet.data_table.filters.tx_capital_withdrawal', 'Penarikan Modal')}</SelectItem>
-                            </SelectContent>
-                        </Select>
-                    </div>
-                    <div className="grid grid-cols-2 gap-2">
-                        <div>
-                            <Label className="text-xs font-medium text-muted-foreground">{t('page.profit.filters.start_date', 'Mulai')}</Label>
-                            <Input
-                                type="date"
-                                value={queryParam.start_date}
-                                onChange={(e) => onQueryParamChange('start_date', e.target.value)}
-                                disabled={processing}
-                                className="mt-1"
-                            />
-                        </div>
-                        <div>
-                            <Label className="text-xs font-medium text-muted-foreground">{t('page.profit.filters.end_date', 'Hingga')}</Label>
-                            <Input
-                                type="date"
-                                value={queryParam.end_date}
-                                onChange={(e) => onQueryParamChange('end_date', e.target.value)}
-                                disabled={processing}
-                                className="mt-1"
-                            />
-                        </div>
-                    </div>
+                </div>
 
-                    {isFilterActive && (
-                        <div className="col-span-full flex flex-wrap items-center gap-1.5 pt-2 border-t text-xs">
-                            <span className="text-muted-foreground">{t('page.profit.filters.active_filters', 'Filter Aktif:')}</span>
-                            {queryParam.keyword && (
-                                <Badge variant="secondary" className="gap-1 font-normal py-0.5 px-2 bg-muted/50 hover:bg-muted">
-                                    "{queryParam.keyword}"
-                                    <X className="h-3 w-3 cursor-pointer" onClick={() => onQueryParamChange('keyword', '')} />
-                                </Badge>
-                            )}
-                            {queryParam.type && (
-                                <Badge variant="secondary" className="gap-1 font-normal py-0.5 px-2 bg-muted/50 hover:bg-muted">
-                                    {queryParam.type === 'in' ? t('page.profit_wallet.data_table.filters.direction_in', 'Uang Masuk') : t('page.profit_wallet.data_table.filters.direction_out', 'Uang Keluar')}
-                                    <X className="h-3 w-3 cursor-pointer" onClick={() => onQueryParamChange('type', '')} />
-                                </Badge>
-                            )}
-                            {queryParam.transaction_type && (
-                                <Badge variant="secondary" className="gap-1 font-normal py-0.5 px-2 bg-muted/50 hover:bg-muted">
-                                    {queryParam.transaction_type === 'sales_profit' ? t('page.profit_wallet.data_table.filters.tx_sales_profit', 'Keuntungan') : queryParam.transaction_type === 'disbursement' ? t('page.profit_wallet.data_table.filters.tx_disbursement', 'Pencairan') : t('page.profit_wallet.data_table.filters.tx_capital_withdrawal', 'Modal')}
-                                    <X className="h-3 w-3 cursor-pointer" onClick={() => onQueryParamChange('transaction_type', '')} />
-                                </Badge>
-                            )}
-                            {(queryParam.start_date || queryParam.end_date) && (
-                                <Badge variant="secondary" className="gap-1 font-normal py-0.5 px-2 bg-muted/50 hover:bg-muted">
-                                    {queryParam.start_date || '*'} s/d {queryParam.end_date || '*'}
-                                    <X className="h-3 w-3 cursor-pointer" onClick={() => {
-                                        onQueryParamChange('start_date', '');
-                                        onQueryParamChange('end_date', '');
-                                    }} />
-                                </Badge>
-                            )}
-                        </div>
+                {/* Arah Aliran (Type) */}
+                <div className="space-y-1.5">
+                    <Label className="flex items-center gap-1 text-xs font-medium text-muted-foreground">
+                        <ArrowUpDown className="h-3.5 w-3.5" />
+                        {t('page.profit_wallet.data_table.filters.type_label', 'Arah Aliran')}
+                    </Label>
+                    <Select
+                        value={queryParam.type || 'all'}
+                        onValueChange={(val) => onQueryParamChange('type', val === 'all' ? '' : val)}
+                        disabled={processing}
+                    >
+                        <SelectTrigger className="w-full">
+                            <SelectValue placeholder={t('page.profit_wallet.data_table.filters.type_placeholder', 'Semua Arah')} />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectItem value="all">{t('page.profit_wallet.data_table.filters.type_placeholder', 'Semua Arah')}</SelectItem>
+                            <SelectItem value="in">{t('page.profit_wallet.data_table.filters.direction_in', 'Uang Masuk')}</SelectItem>
+                            <SelectItem value="out">{t('page.profit_wallet.data_table.filters.direction_out', 'Uang Keluar')}</SelectItem>
+                        </SelectContent>
+                    </Select>
+                </div>
+
+                {/* Jenis Transaksi */}
+                <div className="space-y-1.5">
+                    <Label className="flex items-center gap-1 text-xs font-medium text-muted-foreground">
+                        <CreditCard className="h-3.5 w-3.5" />
+                        {t('page.profit_wallet.data_table.filters.tx_type_label', 'Jenis Transaksi')}
+                    </Label>
+                    <Select
+                        value={queryParam.transaction_type || 'all'}
+                        onValueChange={(val) => onQueryParamChange('transaction_type', val === 'all' ? '' : val)}
+                        disabled={processing}
+                    >
+                        <SelectTrigger className="w-full">
+                            <SelectValue placeholder={t('page.profit_wallet.data_table.filters.tx_type_placeholder', 'Semua Jenis')} />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectItem value="all">{t('page.profit_wallet.data_table.filters.tx_type_placeholder', 'Semua Jenis')}</SelectItem>
+                            <SelectItem value="sales_profit">{t('page.profit_wallet.data_table.filters.tx_sales_profit', 'Keuntungan Penjualan')}</SelectItem>
+                            <SelectItem value="disbursement">{t('page.profit_wallet.data_table.filters.tx_disbursement', 'Pencairan Profit')}</SelectItem>
+                            <SelectItem value="capital_withdrawal">{t('page.profit_wallet.data_table.filters.tx_capital_withdrawal', 'Penarikan Modal')}</SelectItem>
+                        </SelectContent>
+                    </Select>
+                </div>
+
+                {/* Tanggal Mulai */}
+                <div className="space-y-1.5">
+                    <Label className="flex items-center gap-1 text-xs font-medium text-muted-foreground">
+                        <Calendar className="h-3.5 w-3.5" />
+                        Mulai
+                    </Label>
+                    <Input
+                        type="date"
+                        value={queryParam.start_date || ''}
+                        onChange={(e) => onQueryParamChange('start_date', e.target.value)}
+                        disabled={processing}
+                        className="w-full"
+                    />
+                </div>
+
+                {/* Tanggal Akhir */}
+                <div className="space-y-1.5">
+                    <Label className="flex items-center gap-1 text-xs font-medium text-muted-foreground">
+                        <Calendar className="h-3.5 w-3.5" />
+                        Hingga
+                    </Label>
+                    <Input
+                        type="date"
+                        value={queryParam.end_date || ''}
+                        onChange={(e) => onQueryParamChange('end_date', e.target.value)}
+                        disabled={processing}
+                        className="w-full"
+                    />
+                </div>
+            </div>
+
+            {/* Active Filter Badges */}
+            {isFilterActive && (
+                <div className="col-span-full flex flex-wrap items-center gap-1.5 pt-2 text-xs">
+                    <span className="text-muted-foreground">{t('page.profit.filters.active_filters', 'Filter Aktif:')}</span>
+                    {queryParam.keyword && (
+                        <Badge variant="secondary" className="gap-1 font-normal py-0.5 px-2 bg-muted/50 hover:bg-muted">
+                            "{queryParam.keyword}"
+                            <button
+                                type="button"
+                                onClick={() => onQueryParamChange('keyword', '')}
+                                className="ml-0.5 rounded-full p-0.5 text-muted-foreground transition-colors hover:bg-muted-foreground/20 hover:text-foreground"
+                            >
+                                <X className="h-3 w-3" />
+                                <span className="sr-only">Hapus filter pencarian</span>
+                            </button>
+                        </Badge>
+                    )}
+                    {queryParam.type && (
+                        <Badge variant="secondary" className="gap-1 font-normal py-0.5 px-2 bg-muted/50 hover:bg-muted">
+                            {queryParam.type === 'in' ? t('page.profit_wallet.data_table.filters.direction_in', 'Uang Masuk') : t('page.profit_wallet.data_table.filters.direction_out', 'Uang Keluar')}
+                            <button
+                                type="button"
+                                onClick={() => onQueryParamChange('type', '')}
+                                className="ml-0.5 rounded-full p-0.5 text-muted-foreground transition-colors hover:bg-muted-foreground/20 hover:text-foreground"
+                            >
+                                <X className="h-3 w-3" />
+                                <span className="sr-only">Hapus filter arah aliran</span>
+                            </button>
+                        </Badge>
+                    )}
+                    {queryParam.transaction_type && (
+                        <Badge variant="secondary" className="gap-1 font-normal py-0.5 px-2 bg-muted/50 hover:bg-muted">
+                            {queryParam.transaction_type === 'sales_profit' ? t('page.profit_wallet.data_table.filters.tx_sales_profit', 'Keuntungan') : queryParam.transaction_type === 'disbursement' ? t('page.profit_wallet.data_table.filters.tx_disbursement', 'Pencairan') : t('page.profit_wallet.data_table.filters.tx_capital_withdrawal', 'Modal')}
+                            <button
+                                type="button"
+                                onClick={() => onQueryParamChange('transaction_type', '')}
+                                className="ml-0.5 rounded-full p-0.5 text-muted-foreground transition-colors hover:bg-muted-foreground/20 hover:text-foreground"
+                            >
+                                <X className="h-3 w-3" />
+                                <span className="sr-only">Hapus filter jenis transaksi</span>
+                            </button>
+                        </Badge>
+                    )}
+                    {queryParam.start_date && (
+                        <Badge variant="secondary" className="gap-1 font-normal py-0.5 px-2 bg-muted/50 hover:bg-muted">
+                            Mulai: {queryParam.start_date}
+                            <button
+                                type="button"
+                                onClick={() => onQueryParamChange('start_date', '')}
+                                className="ml-0.5 rounded-full p-0.5 text-muted-foreground transition-colors hover:bg-muted-foreground/20 hover:text-foreground"
+                            >
+                                <X className="h-3 w-3" />
+                                <span className="sr-only">Hapus filter tanggal mulai</span>
+                            </button>
+                        </Badge>
+                    )}
+                    {queryParam.end_date && (
+                        <Badge variant="secondary" className="gap-1 font-normal py-0.5 px-2 bg-muted/50 hover:bg-muted">
+                            Akhir: {queryParam.end_date}
+                            <button
+                                type="button"
+                                onClick={() => onQueryParamChange('end_date', '')}
+                                className="ml-0.5 rounded-full p-0.5 text-muted-foreground transition-colors hover:bg-muted-foreground/20 hover:text-foreground"
+                            >
+                                <X className="h-3 w-3" />
+                                <span className="sr-only">Hapus filter tanggal akhir</span>
+                            </button>
+                        </Badge>
                     )}
                 </div>
+            )}
 
-                <div className="rounded-md border bg-card">
-                    <Table>
-                        <TableHeader>
-                            {table.getHeaderGroups().map((headerGroup) => (
-                                <TableRow key={headerGroup.id}>
-                                    {headerGroup.headers.map((header) => (
-                                        <TableHead key={header.id}>
-                                            {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
-                                        </TableHead>
+            {/* Table */}
+            <div className="overflow-x-auto rounded-md border">
+                <Table>
+                    <TableHeader>
+                        {table.getHeaderGroups().map((headerGroup) => (
+                            <TableRow key={headerGroup.id}>
+                                {headerGroup.headers.map((header) => (
+                                    <TableHead key={header.id}>
+                                        {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
+                                    </TableHead>
+                                ))}
+                            </TableRow>
+                        ))}
+                    </TableHeader>
+                    <TableBody>
+                        {processing ? (
+                            <TableRow>
+                                <TableCell colSpan={columns.length} className="h-24 text-center text-muted-foreground">
+                                    {t('component.data_table.loading', 'Memuat...')}
+                                </TableCell>
+                            </TableRow>
+                        ) : data.length > 0 ? (
+                            table.getRowModel().rows.map((row) => (
+                                <TableRow key={row.id}>
+                                    {row.getVisibleCells().map((cell) => (
+                                        <TableCell key={cell.id}>
+                                            {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                                        </TableCell>
                                     ))}
                                 </TableRow>
-                            ))}
-                        </TableHeader>
-                        <TableBody>
-                            {processing ? (
-                                <TableRow>
-                                    <TableCell colSpan={columns.length} className="h-24 text-center text-muted-foreground">
-                                        {t('component.data_table.loading', 'Memuat...')}
-                                    </TableCell>
-                                </TableRow>
-                            ) : data.length > 0 ? (
-                                table.getRowModel().rows.map((row) => (
-                                    <TableRow key={row.id}>
-                                        {row.getVisibleCells().map((cell) => (
-                                            <TableCell key={cell.id}>
-                                                {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                                            </TableCell>
-                                        ))}
-                                    </TableRow>
-                                ))
-                            ) : (
-                                <TableRow>
-                                    <TableCell colSpan={columns.length} className="h-24 text-center text-muted-foreground">
-                                        {t('component.data_table.no_data', 'Tidak ada data.')}
-                                    </TableCell>
-                                </TableRow>
-                            )}
-                        </TableBody>
-                    </Table>
-                </div>
+                            ))
+                        ) : (
+                            <TableRow>
+                                <TableCell colSpan={columns.length} className="h-24 text-center text-muted-foreground">
+                                    {t('component.data_table.no_data', 'Tidak ada data.')}
+                                </TableCell>
+                            </TableRow>
+                        )}
+                    </TableBody>
+                </Table>
             </div>
 
             {/* Pagination Footer */}
