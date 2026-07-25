@@ -6,6 +6,7 @@ use App\Models\Transaction;
 use App\Support\Interfaces\Repositories\ProductRepositoryInterface;
 use App\Support\Interfaces\Repositories\TransactionDetailRepositoryInterface;
 use App\Support\Interfaces\Repositories\TransactionRepositoryInterface;
+use App\Support\Interfaces\Services\CapitalWalletServiceInterface;
 use App\Support\Interfaces\Services\ProfitWalletServiceInterface;
 use App\Support\Interfaces\Services\TransactionServiceInterface;
 use App\Support\Models\Transaction\GetTransactionReqModel;
@@ -24,7 +25,8 @@ class TransactionService implements TransactionServiceInterface
         protected TransactionRepositoryInterface $transactionRepository,
         protected TransactionDetailRepositoryInterface $transactionDetailRepository,
         protected ProductRepositoryInterface $productRepository,
-        protected ProfitWalletServiceInterface $profitWalletService
+        protected ProfitWalletServiceInterface $profitWalletService,
+        protected CapitalWalletServiceInterface $capitalWalletService
     ) {}
 
     public function getAllByIndex(GetTransactionReqModel $request): Paginator|Collection
@@ -198,15 +200,15 @@ class TransactionService implements TransactionServiceInterface
 
                 $profit = $transaction->total_amount - $totalCost;
 
-                // Save net profit to cash_profits table
-                $transaction->cashProfit()->create([
-                    'profit' => $profit,
-                ]);
-
                 // Record sales profit to the store's profit wallet
                 $this->profitWalletService->recordSalesProfit($profit, $transaction->id);
 
-                return $transaction->fresh(['transactionDetails.product', 'paymentMethod', 'user', 'cashProfit']);
+                // Record sales capital recovery to the capital wallet
+                if ($totalCost > 0) {
+                    $this->capitalWalletService->recordSalesCapital($totalCost, $transaction->id);
+                }
+
+                return $transaction->fresh(['transactionDetails.product', 'paymentMethod', 'user']);
             });
         } catch (\Throwable $th) {
             throw CheckException::Check($th);

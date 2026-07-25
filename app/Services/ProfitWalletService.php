@@ -9,6 +9,7 @@ use App\Support\Enums\ProfitWalletStatusEnums;
 use App\Support\Enums\ProfitWalletTransactionDirectionEnums;
 use App\Support\Enums\ProfitWalletTransactionTypeEnums;
 use App\Support\Interfaces\Repositories\ProfitWalletRepositoryInterface;
+use App\Support\Interfaces\Services\CapitalWalletServiceInterface;
 use App\Support\Interfaces\Services\ProfitWalletServiceInterface;
 use App\Support\Models\ProfitWallet\DisburseProfitWalletReqModel;
 use App\Support\Models\ProfitWallet\GetProfitWalletTransactionReqModel;
@@ -23,7 +24,8 @@ use Illuminate\Support\Facades\DB;
 class ProfitWalletService implements ProfitWalletServiceInterface
 {
     public function __construct(
-        protected ProfitWalletRepositoryInterface $profitWalletRepository
+        protected ProfitWalletRepositoryInterface $profitWalletRepository,
+        protected CapitalWalletServiceInterface $capitalWalletService
     ) {}
 
     public function getOrCreateWallet(): ProfitWallet
@@ -166,6 +168,9 @@ class ProfitWalletService implements ProfitWalletServiceInterface
 
                 $outflowUpdate = (float) $wallet->total_outflow + $request->amount;
                 $this->profitWalletRepository->updateWalletBalance($wallet, $after, (float) $wallet->total_inflow, $outflowUpdate);
+
+                // Trigger automatic reinvestment into CapitalWallet:
+                $this->capitalWalletService->recordReinvestment($request->amount, $transaction->id);
 
                 return $transaction;
             });
