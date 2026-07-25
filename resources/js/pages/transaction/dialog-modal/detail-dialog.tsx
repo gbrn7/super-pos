@@ -245,9 +245,9 @@ export function DetailDialog({
                                         'Rincian Produk',
                                     )}
                                 </h4>
-                                <div className="max-h-[320px] overflow-y-auto rounded-md border">
+                                <div className="overflow-x-auto rounded-md border">
                                     <Table>
-                                        <TableHeader className="sticky top-0 z-10 bg-muted">
+                                        <TableHeader className="bg-muted">
                                             <TableRow>
                                                 <TableHead className="w-[25%]">
                                                     {t('page.transaction.dialog_modal.detail_dialog.product_header', 'Produk')}
