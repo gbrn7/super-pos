@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Api\ApiCashProfitController;
+use App\Http\Controllers\Api\ApiCapitalWalletController;
 use App\Http\Controllers\Api\ApiCategoryController;
 use App\Http\Controllers\Api\ApiMasterProductController;
 use App\Http\Controllers\Api\ApiPaymentMethodController;
@@ -12,18 +12,17 @@ use App\Http\Controllers\Api\ApiTransactionDetailController;
 use App\Http\Controllers\Api\ApiUnitController;
 use App\Http\Controllers\Api\ApiUserController;
 use App\Http\Controllers\CashierController;
-use App\Http\Controllers\CashProfitController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ExampleController;
 use App\Http\Controllers\MasterProductController;
 use App\Http\Controllers\PaymentMethodController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProfitWalletController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\TransactionDetailController;
 use App\Http\Controllers\UnitController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\ProfitWalletController;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
 
@@ -56,7 +55,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::resource('example', ExampleController::class);
 
-    Route::resource('cash-profit', CashProfitController::class)->only('index');
     Route::resource('profit-wallet', ProfitWalletController::class)->only('index');
 
     Route::group(['prefix' => 'api'], function () {
@@ -153,13 +151,16 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::get('/transaction/{transactionId}', [ApiTransactionDetailController::class, 'getByTransactionId'])->name('apiTransactionDetails.getByTransactionId');
         });
 
-        // profit report
-        Route::get('/cash-profit', [ApiCashProfitController::class, 'index'])->name('apiCashProfit.index');
-
         // profit wallet
         Route::get('/profit-wallet', [ApiProfitWalletController::class, 'index'])->name('apiProfitWallet.index');
         Route::post('/profit-wallet/disburse', [ApiProfitWalletController::class, 'disburse'])->name('apiProfitWallet.disburse');
         Route::post('/profit-wallet/withdraw-capital', [ApiProfitWalletController::class, 'withdrawCapital'])->name('apiProfitWallet.withdrawCapital');
+
+        // capital wallet
+        Route::get('/capital-wallet', [ApiCapitalWalletController::class, 'index'])->name('apiCapitalWallet.index');
+        Route::post('/capital-wallet/inject', [ApiCapitalWalletController::class, 'inject'])->name('apiCapitalWallet.inject');
+        Route::post('/capital-wallet/drawdown', [ApiCapitalWalletController::class, 'drawdown'])->name('apiCapitalWallet.drawdown');
+        Route::post('/capital-wallet/purchase-product', [ApiCapitalWalletController::class, 'purchaseProduct'])->name('apiCapitalWallet.purchaseProduct');
     });
 });
 

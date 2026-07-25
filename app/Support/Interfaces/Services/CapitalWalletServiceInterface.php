@@ -4,7 +4,10 @@ namespace App\Support\Interfaces\Services;
 
 use App\Models\CapitalWallet;
 use App\Models\CapitalWalletTransaction;
+use App\Support\Models\CapitalWallet\DrawdownCapitalWalletReqModel;
 use App\Support\Models\CapitalWallet\GetCapitalWalletTransactionReqModel;
+use App\Support\Models\CapitalWallet\InjectCapitalWalletReqModel;
+use App\Support\Models\CapitalWallet\PurchaseProductCapitalWalletReqModel;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Support\Collection;
 
@@ -28,17 +31,17 @@ interface CapitalWalletServiceInterface
     /**
      * Inject capital into the wallet.
      */
-    public function inject(float $amount, ?string $notes): CapitalWalletTransaction;
+    public function inject(InjectCapitalWalletReqModel $request): CapitalWalletTransaction;
 
     /**
      * Drawdown/withdraw capital from the wallet.
      */
-    public function drawdown(float $amount, ?string $notes): CapitalWalletTransaction;
+    public function drawdown(DrawdownCapitalWalletReqModel $request): CapitalWalletTransaction;
 
     /**
      * Spend capital to purchase product stock.
      */
-    public function purchaseProduct(float $amount, ?string $notes): CapitalWalletTransaction;
+    public function purchaseProduct(PurchaseProductCapitalWalletReqModel $request): CapitalWalletTransaction;
 
     /**
      * Get transactions based on filter model.

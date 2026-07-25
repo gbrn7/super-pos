@@ -3,7 +3,10 @@
 use App\Models\ProfitWalletTransaction;
 use App\Models\Transaction;
 use App\Support\Interfaces\Services\CapitalWalletServiceInterface;
+use App\Support\Models\CapitalWallet\DrawdownCapitalWalletReqModel;
 use App\Support\Models\CapitalWallet\GetCapitalWalletTransactionReqModel;
+use App\Support\Models\CapitalWallet\InjectCapitalWalletReqModel;
+use App\Support\Models\CapitalWallet\PurchaseProductCapitalWalletReqModel;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Request;
 
@@ -18,7 +21,10 @@ test('service handles wallet creation and basic operations correctly', function 
     expect($wallet->balance)->toEqual(0.00);
 
     // 1. Inject
-    $tx1 = $this->service->inject(1000.00, 'Injection test');
+    $tx1 = $this->service->inject(new InjectCapitalWalletReqModel(new Request([
+        'amount' => 1000.00,
+        'notes' => 'Injection test',
+    ])));
     expect($tx1->balance_before)->toEqual(0.00)
         ->and($tx1->balance_after)->toEqual(1000.00)
         ->and($tx1->type)->toBe('in')
@@ -50,7 +56,10 @@ test('service handles wallet creation and basic operations correctly', function 
     expect($wallet->fresh()->balance)->toEqual(1800.00);
 
     // 4. Drawdown
-    $tx4 = $this->service->drawdown(200.00, 'Drawdown notes');
+    $tx4 = $this->service->drawdown(new DrawdownCapitalWalletReqModel(new Request([
+        'amount' => 200.00,
+        'notes' => 'Drawdown notes',
+    ])));
     expect($tx4->balance_before)->toEqual(1800.00)
         ->and($tx4->balance_after)->toEqual(1600.00)
         ->and($tx4->type)->toBe('out')
@@ -60,7 +69,10 @@ test('service handles wallet creation and basic operations correctly', function 
     expect($wallet->fresh()->balance)->toEqual(1600.00);
 
     // 5. Purchase Product
-    $tx5 = $this->service->purchaseProduct(400.00, 'Purchase product notes');
+    $tx5 = $this->service->purchaseProduct(new PurchaseProductCapitalWalletReqModel(new Request([
+        'amount' => 400.00,
+        'notes' => 'Purchase product notes',
+    ])));
     expect($tx5->balance_before)->toEqual(1600.00)
         ->and($tx5->balance_after)->toEqual(1200.00)
         ->and($tx5->type)->toBe('out')
@@ -72,29 +84,50 @@ test('service handles wallet creation and basic operations correctly', function 
 
 test('drawdown throws exception on insufficient balance', function () {
     $this->service->getOrCreateWallet();
-    $this->service->drawdown(100.00, 'Insufficient drawdown');
+    $this->service->drawdown(new DrawdownCapitalWalletReqModel(new Request([
+        'amount' => 100.00,
+        'notes' => 'Insufficient drawdown',
+    ])));
 })->throws(Exception::class);
 
 test('purchaseProduct throws exception on insufficient balance', function () {
     $this->service->getOrCreateWallet();
-    $this->service->purchaseProduct(100.00, 'Insufficient purchase');
+    $this->service->purchaseProduct(new PurchaseProductCapitalWalletReqModel(new Request([
+        'amount' => 100.00,
+        'notes' => 'Insufficient purchase',
+    ])));
 })->throws(Exception::class);
 
 test('inject throws exception on zero or negative amount', function (float $amount) {
     $this->service->getOrCreateWallet();
-    $this->service->inject($amount, 'Invalid inject');
+    $this->service->inject(new InjectCapitalWalletReqModel(new Request([
+        'amount' => $amount,
+        'notes' => 'Invalid inject',
+    ])));
 })->with([0.0, -10.0])->throws(Exception::class);
 
 test('drawdown throws exception on zero or negative amount', function (float $amount) {
     $this->service->getOrCreateWallet();
-    $this->service->inject(100.00, 'Setup');
-    $this->service->drawdown($amount, 'Invalid drawdown');
+    $this->service->inject(new InjectCapitalWalletReqModel(new Request([
+        'amount' => 100.00,
+        'notes' => 'Setup',
+    ])));
+    $this->service->drawdown(new DrawdownCapitalWalletReqModel(new Request([
+        'amount' => $amount,
+        'notes' => 'Invalid drawdown',
+    ])));
 })->with([0.0, -10.0])->throws(Exception::class);
 
 test('purchaseProduct throws exception on zero or negative amount', function (float $amount) {
     $this->service->getOrCreateWallet();
-    $this->service->inject(100.00, 'Setup');
-    $this->service->purchaseProduct($amount, 'Invalid purchase');
+    $this->service->inject(new InjectCapitalWalletReqModel(new Request([
+        'amount' => 100.00,
+        'notes' => 'Setup',
+    ])));
+    $this->service->purchaseProduct(new PurchaseProductCapitalWalletReqModel(new Request([
+        'amount' => $amount,
+        'notes' => 'Invalid purchase',
+    ])));
 })->with([0.0, -10.0])->throws(Exception::class);
 
 test('recordSalesCapital throws exception on zero or negative amount', function (float $amount) {
@@ -109,8 +142,14 @@ test('recordReinvestment throws exception on zero or negative amount', function 
 
 test('transactions can be listed and summarized', function () {
     $this->service->getOrCreateWallet();
-    $this->service->inject(1000.00, 'Injection matching keyword ABC');
-    $this->service->drawdown(200.00, 'Drawdown matching keyword XYZ');
+    $this->service->inject(new InjectCapitalWalletReqModel(new Request([
+        'amount' => 1000.00,
+        'notes' => 'Injection matching keyword ABC',
+    ])));
+    $this->service->drawdown(new DrawdownCapitalWalletReqModel(new Request([
+        'amount' => 200.00,
+        'notes' => 'Drawdown matching keyword XYZ',
+    ])));
 
     $reqModel = new GetCapitalWalletTransactionReqModel(new Request([
         'keyword' => 'ABC',

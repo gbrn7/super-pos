@@ -11,7 +11,10 @@ use App\Support\Enums\CapitalWalletTransactionDirectionEnums;
 use App\Support\Enums\CapitalWalletTransactionTypeEnums;
 use App\Support\Interfaces\Repositories\CapitalWalletRepositoryInterface;
 use App\Support\Interfaces\Services\CapitalWalletServiceInterface;
+use App\Support\Models\CapitalWallet\DrawdownCapitalWalletReqModel;
 use App\Support\Models\CapitalWallet\GetCapitalWalletTransactionReqModel;
+use App\Support\Models\CapitalWallet\InjectCapitalWalletReqModel;
+use App\Support\Models\CapitalWallet\PurchaseProductCapitalWalletReqModel;
 use App\Support\Utils\CheckException;
 use Exception;
 use Illuminate\Contracts\Pagination\Paginator;
@@ -115,30 +118,30 @@ class CapitalWalletService implements CapitalWalletServiceInterface
         }
     }
 
-    public function inject(float $amount, ?string $notes): CapitalWalletTransaction
+    public function inject(InjectCapitalWalletReqModel $request): CapitalWalletTransaction
     {
         try {
-            return DB::transaction(function () use ($amount, $notes) {
-                if ($amount <= 0) {
+            return DB::transaction(function () use ($request) {
+                if ($request->amount <= 0) {
                     throw new Exception(trans('message.error.capital_wallet.amount_must_be_greater_than_zero'), Response::HTTP_UNPROCESSABLE_ENTITY);
                 }
 
                 $wallet = $this->getOrCreateWallet();
 
                 $before = (float) $wallet->balance;
-                $after = $before + $amount;
+                $after = $before + $request->amount;
 
                 $transaction = $this->capitalWalletRepository->createTransaction([
                     'capital_wallet_id' => $wallet->id,
-                    'amount' => $amount,
+                    'amount' => $request->amount,
                     'type' => CapitalWalletTransactionDirectionEnums::IN->value,
                     'transaction_type' => CapitalWalletTransactionTypeEnums::CAPITAL_INJECTION->value,
                     'balance_before' => $before,
                     'balance_after' => $after,
-                    'notes' => $notes ?? 'Capital injection',
+                    'notes' => $request->notes ?? 'Capital injection',
                 ]);
 
-                $inflowUpdate = (float) $wallet->total_inflow + $amount;
+                $inflowUpdate = (float) $wallet->total_inflow + $request->amount;
                 $this->capitalWalletRepository->updateWalletBalance($wallet, $after, $inflowUpdate, (float) $wallet->total_outflow);
 
                 return $transaction;
@@ -148,34 +151,34 @@ class CapitalWalletService implements CapitalWalletServiceInterface
         }
     }
 
-    public function drawdown(float $amount, ?string $notes): CapitalWalletTransaction
+    public function drawdown(DrawdownCapitalWalletReqModel $request): CapitalWalletTransaction
     {
         try {
-            return DB::transaction(function () use ($amount, $notes) {
-                if ($amount <= 0) {
+            return DB::transaction(function () use ($request) {
+                if ($request->amount <= 0) {
                     throw new Exception(trans('message.error.capital_wallet.amount_must_be_greater_than_zero'), Response::HTTP_UNPROCESSABLE_ENTITY);
                 }
 
                 $wallet = $this->getOrCreateWallet();
 
                 $before = (float) $wallet->balance;
-                if ($before < $amount) {
+                if ($before < $request->amount) {
                     throw new Exception(trans('message.error.capital_wallet.insufficient_balance_for_drawdown'), Response::HTTP_UNPROCESSABLE_ENTITY);
                 }
 
-                $after = $before - $amount;
+                $after = $before - $request->amount;
 
                 $transaction = $this->capitalWalletRepository->createTransaction([
                     'capital_wallet_id' => $wallet->id,
-                    'amount' => $amount,
+                    'amount' => $request->amount,
                     'type' => CapitalWalletTransactionDirectionEnums::OUT->value,
                     'transaction_type' => CapitalWalletTransactionTypeEnums::CAPITAL_DRAWDOWN->value,
                     'balance_before' => $before,
                     'balance_after' => $after,
-                    'notes' => $notes ?? 'Capital drawdown',
+                    'notes' => $request->notes ?? 'Capital drawdown',
                 ]);
 
-                $outflowUpdate = (float) $wallet->total_outflow + $amount;
+                $outflowUpdate = (float) $wallet->total_outflow + $request->amount;
                 $this->capitalWalletRepository->updateWalletBalance($wallet, $after, (float) $wallet->total_inflow, $outflowUpdate);
 
                 return $transaction;
@@ -185,34 +188,34 @@ class CapitalWalletService implements CapitalWalletServiceInterface
         }
     }
 
-    public function purchaseProduct(float $amount, ?string $notes): CapitalWalletTransaction
+    public function purchaseProduct(PurchaseProductCapitalWalletReqModel $request): CapitalWalletTransaction
     {
         try {
-            return DB::transaction(function () use ($amount, $notes) {
-                if ($amount <= 0) {
+            return DB::transaction(function () use ($request) {
+                if ($request->amount <= 0) {
                     throw new Exception(trans('message.error.capital_wallet.amount_must_be_greater_than_zero'), Response::HTTP_UNPROCESSABLE_ENTITY);
                 }
 
                 $wallet = $this->getOrCreateWallet();
 
                 $before = (float) $wallet->balance;
-                if ($before < $amount) {
+                if ($before < $request->amount) {
                     throw new Exception(trans('message.error.capital_wallet.insufficient_balance_for_purchase'), Response::HTTP_UNPROCESSABLE_ENTITY);
                 }
 
-                $after = $before - $amount;
+                $after = $before - $request->amount;
 
                 $transaction = $this->capitalWalletRepository->createTransaction([
                     'capital_wallet_id' => $wallet->id,
-                    'amount' => $amount,
+                    'amount' => $request->amount,
                     'type' => CapitalWalletTransactionDirectionEnums::OUT->value,
                     'transaction_type' => CapitalWalletTransactionTypeEnums::PRODUCT_PURCHASE->value,
                     'balance_before' => $before,
                     'balance_after' => $after,
-                    'notes' => $notes ?? 'Product purchase',
+                    'notes' => $request->notes ?? 'Product purchase',
                 ]);
 
-                $outflowUpdate = (float) $wallet->total_outflow + $amount;
+                $outflowUpdate = (float) $wallet->total_outflow + $request->amount;
                 $this->capitalWalletRepository->updateWalletBalance($wallet, $after, (float) $wallet->total_inflow, $outflowUpdate);
 
                 return $transaction;

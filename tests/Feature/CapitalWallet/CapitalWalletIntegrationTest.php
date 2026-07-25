@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Support\Interfaces\Services\CapitalWalletServiceInterface;
 use App\Support\Interfaces\Services\ProfitWalletServiceInterface;
 use App\Support\Interfaces\Services\TransactionServiceInterface;
+use App\Support\Models\CapitalWallet\InjectCapitalWalletReqModel;
 use App\Support\Models\ProfitWallet\WithdrawCapitalProfitWalletReqModel;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Request;
@@ -99,7 +100,10 @@ test('withdrawing capital from profit wallet triggers reinvestment in capital wa
     expect($profitWallet->balance)->toEqual(10000.00);
 
     // 2. Setup initial balance in Capital Wallet (e.g. 5000.00)
-    $this->capitalWalletService->inject(5000.00, 'Initial capital');
+    $this->capitalWalletService->inject(new InjectCapitalWalletReqModel(new Request([
+        'amount' => 5000.00,
+        'notes' => 'Initial capital',
+    ])));
     $capitalWallet = $this->capitalWalletService->getOrCreateWallet();
     expect($capitalWallet->balance)->toEqual(5000.00);
 
