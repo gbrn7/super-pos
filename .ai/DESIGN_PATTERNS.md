@@ -1316,12 +1316,12 @@ const res = await axiosInstance.get(apiUrl);
 Whenever new routes or controllers are added or modified, run the Wayfinder generator artisan command to regenerate typed TypeScript helper functions:
 
 ```bash
-# Standard generation for actions & routes
-php artisan wayfinder:generate
-
-# Generate route helpers including form helper objects (.form())
+# Generate route helpers including form helper objects (.form()) - RECOMMENDED
 php artisan wayfinder:generate --with-form
 ```
+
+> [!IMPORTANT]
+> **ALWAYS use the `--with-form` flag.** Running standard `php artisan wayfinder:generate` without this flag will wipe out the `.form()` helper functions across all route files. Since these helpers are heavily relied upon by authentication and profile settings forms, omitting this flag will cause TypeScript type checking errors in unrelated files.
 
 **Key Points:**
 - The `--with-form` flag generates `.form()` helper functions alongside `.url()`, `.get()`, `.post()`, `.put()`, `.delete()`, making it easy to integrate with Inertia forms and requests.
