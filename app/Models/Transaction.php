@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 class Transaction extends Model
 {
@@ -40,5 +41,10 @@ class Transaction extends Model
     public function cashProfit(): HasOne
     {
         return $this->hasOne(CashProfit::class);
+    }
+
+    public function profitWalletTransaction(): MorphOne
+    {
+        return $this->morphOne(ProfitWalletTransaction::class, 'reference');
     }
 }
