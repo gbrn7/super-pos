@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\ApiCategoryController;
 use App\Http\Controllers\Api\ApiMasterProductController;
 use App\Http\Controllers\Api\ApiPaymentMethodController;
 use App\Http\Controllers\Api\ApiProductController;
+use App\Http\Controllers\Api\ApiProfitWalletController;
 use App\Http\Controllers\Api\ApiRoleController;
 use App\Http\Controllers\Api\ApiTransactionController;
 use App\Http\Controllers\Api\ApiTransactionDetailController;
@@ -152,6 +153,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
         // profit report
         Route::get('/cash-profit', [ApiCashProfitController::class, 'index'])->name('apiCashProfit.index');
+
+        // profit wallet
+        Route::get('/profit-wallet', [ApiProfitWalletController::class, 'index'])->name('apiProfitWallet.index');
+        Route::post('/profit-wallet/disburse', [ApiProfitWalletController::class, 'disburse'])->name('apiProfitWallet.disburse');
+        Route::post('/profit-wallet/withdraw-capital', [ApiProfitWalletController::class, 'withdrawCapital'])->name('apiProfitWallet.withdrawCapital');
     });
 });
 
