@@ -245,8 +245,7 @@ export function DetailDialog({
                                         'Rincian Produk',
                                     )}
                                 </h4>
-                                <div className="max-h-[320px] min-w-0 overflow-auto rounded-md border">
-                                    <div className="min-w-[1100px]">
+                                <div className="w-full overflow-x-auto overflow-y-auto max-h-[320px] rounded-md border">
                                     <Table>
                                         <TableHeader className="sticky top-0 z-10 bg-muted">
                                             <TableRow>
@@ -406,7 +405,6 @@ export function DetailDialog({
                                             )}
                                         </TableBody>
                                     </Table>
-                                    </div>
                                 </div>
                             </div>
 
