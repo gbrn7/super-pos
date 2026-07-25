@@ -1519,4 +1519,49 @@ To maintain clean code and avoid hardcoded values across the codebase:
     1. Enums must be string-backed (e.g. `enum ProfitWalletStatusEnums: string`).
     2. Enum file and class names must use plural naming convention (e.g. `ProfitWalletStatusEnums`, not `ProfitWalletStatus`).
 
+---
+
+## 11. Conventions for API Responses & Paginated Lists
+
+To ensure consistency between the backend API responses and frontend TypeScript models:
+
+### 11.1 API Response Formats
+*   **Standard API Response**: Wrap all JSON responses using the `ResponseApi` utility.
+*   **Pagination Wrapper**: For paginated lists returned from controllers, always format items using an Eloquent Resource and wrap the collection with `App\Support\Utils\PaginationResource::make($items, $paginator)`.
+*   **Response Payload Structure**:
+    ```php
+    return ResponseApi::make(true, trans('message.success.success'), [
+        'items' => $resourceCollection,
+        'pagination' => $paginationMetadata,
+    ]);
+    ```
+
+### 11.2 Frontend Response Model Mapping
+*   **Type Safety**: Avoid using generic `any` or raw objects for paginated payloads.
+*   **TypeScript Interfaces**:
+    1. Define individual item types inside `resources/js/support/models/`.
+    2. Import `PaginationResponse` from `@/support/interfaces/resource/resource-response`.
+    3. Import `ResponseApi` from `@/support/interfaces/response/Response`.
+*   **Axios Generic Types**: Type the Axios response object with the generic response wrapper:
+    ```typescript
+    const res = await axiosInstance.get<ResponseApi<PaginationResponse<YourEntity>>>('/api/your-endpoint');
+    if (res.data.success) {
+        setItems(res.data.data.items);
+        setPagination(res.data.data.pagination);
+    }
+    ```
+
+---
+
+## 12. Conventions for Financial Ledger Denormalization
+
+When building ledger-style financial tables (e.g. cash flow, transaction history, profit wallet):
+
+### 12.1 Performance Strategy
+*   **Reads**: Fetching lifetime sums or current balances should be done using pre-calculated/denormalized summary columns on the parent table (e.g. `balance`, `total_inflow`, `total_outflow` in `profit_wallets` table) to achieve **O(1)** read performance.
+*   **Writes**: Increment/decrement the cumulative summary columns in the same transaction block that creates the transaction log in the ledger.
+*   **Pessimistic Locking**: Always wrap balance updates inside database transactions using pessimistic locks (`lockForUpdate()`) to prevent race conditions during concurrent write operations.
+*   **Date Filters**: If a date filter is active, fallback to running aggregation queries (`SUM(amount)`) on the transaction ledger table for accurate filtered data.
+
+
 
