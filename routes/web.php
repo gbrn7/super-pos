@@ -23,6 +23,7 @@ use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\TransactionDetailController;
 use App\Http\Controllers\UnitController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ProfitWalletController;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
 
@@ -56,6 +57,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('example', ExampleController::class);
 
     Route::resource('cash-profit', CashProfitController::class)->only('index');
+    Route::resource('profit-wallet', ProfitWalletController::class)->only('index');
 
     Route::group(['prefix' => 'api'], function () {
         // categories
