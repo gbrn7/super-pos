@@ -696,9 +696,15 @@ export function DataTable<TData, TValue>({
                         <Button
                             variant="outline"
                             className="hidden h-8 w-8 p-0 lg:flex"
-                            onClick={() => onChangePaginationPage(1)}
+                            onClick={() => {
+                                setQueryParam((prev) => ({
+                                    ...prev,
+                                    page: 1,
+                                }));
+                                onChangePaginationPage(1);
+                            }}
                             disabled={
-                                pagination.current_page <= 1 || processing
+                                (pagination.current_page || 1) <= 1 || processing
                             }
                         >
                             <span className="sr-only">{t('component.data_table.pagination.first_page', 'Halaman Pertama')}</span>
@@ -709,14 +715,17 @@ export function DataTable<TData, TValue>({
                             className="size-8"
                             size="icon"
                             onClick={() => {
-                                if (pagination.current_page - 1 > 0) {
-                                    onChangePaginationPage(
-                                        pagination.current_page - 1,
-                                    );
+                                const prevPage = (pagination.current_page || 1) - 1;
+                                if (prevPage > 0) {
+                                    setQueryParam((prev) => ({
+                                        ...prev,
+                                        page: prevPage,
+                                    }));
+                                    onChangePaginationPage(prevPage);
                                 }
                             }}
                             disabled={
-                                pagination.current_page <= 1 || processing
+                                (pagination.current_page || 1) <= 1 || processing
                             }
                         >
                             <span className="sr-only">{t('component.data_table.pagination.prev_page', 'Halaman Sebelumnya')}</span>
@@ -727,18 +736,19 @@ export function DataTable<TData, TValue>({
                             className="size-8"
                             size="icon"
                             onClick={() => {
-                                if (
-                                    pagination.current_page <
-                                    pagination.last_page
-                                ) {
-                                    onChangePaginationPage(
-                                        pagination.current_page + 1,
-                                    );
+                                const nextPage = (pagination.current_page || 1) + 1;
+                                const lastPage = pagination.last_page || 1;
+                                if (nextPage <= lastPage) {
+                                    setQueryParam((prev) => ({
+                                        ...prev,
+                                        page: nextPage,
+                                    }));
+                                    onChangePaginationPage(nextPage);
                                 }
                             }}
                             disabled={
-                                pagination.current_page >=
-                                    pagination.last_page || processing
+                                (pagination.current_page || 1) >=
+                                    (pagination.last_page || 1) || processing
                             }
                         >
                             <span className="sr-only">{t('component.data_table.pagination.next_page', 'Halaman Selanjutnya')}</span>
@@ -748,12 +758,17 @@ export function DataTable<TData, TValue>({
                             variant="outline"
                             className="hidden size-8 lg:flex"
                             size="icon"
-                            onClick={() =>
-                                onChangePaginationPage(pagination.last_page)
-                            }
+                            onClick={() => {
+                                const lastPage = pagination.last_page || 1;
+                                setQueryParam((prev) => ({
+                                    ...prev,
+                                    page: lastPage,
+                                }));
+                                onChangePaginationPage(lastPage);
+                            }}
                             disabled={
-                                pagination.current_page >=
-                                    pagination.last_page || processing
+                                (pagination.current_page || 1) >=
+                                    (pagination.last_page || 1) || processing
                             }
                         >
                             <span className="sr-only">{t('component.data_table.pagination.last_page', 'Halaman Terakhir')}</span>

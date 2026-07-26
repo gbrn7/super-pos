@@ -11,8 +11,10 @@ use App\Http\Resources\TransactionResource;
 use App\Support\Enums\TransactionPermissionEnums;
 use App\Support\Interfaces\Services\TransactionServiceInterface;
 use App\Support\Models\Transaction\GetTransactionReqModel;
+use App\Support\Utils\PaginationResource;
 use App\Support\Utils\ResponseApi;
 use Exception;
+use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
@@ -51,7 +53,12 @@ class ApiTransactionController extends Controller implements HasMiddleware
     {
         try {
             $transactions = $this->transactionService->getAllByIndex(new GetTransactionReqModel($request));
-            $data = TransactionResource::collection($transactions);
+            if ($transactions instanceof Paginator) {
+                $items = TransactionResource::collection($transactions->items());
+                $data = PaginationResource::make($items, $transactions);
+            } else {
+                $data = TransactionResource::collection($transactions);
+            }
 
             return ResponseApi::make(true, trans('message.success.success'), $data);
         } catch (\Throwable $th) {

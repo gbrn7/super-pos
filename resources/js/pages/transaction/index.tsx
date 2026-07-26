@@ -171,6 +171,14 @@ export default function Index({ storeSetting }: { storeSetting?: StoreSetting | 
             if (
                 resData &&
                 typeof resData === 'object' &&
+                'items' in resData &&
+                'pagination' in resData
+            ) {
+                setTransactionsData(resData.items);
+                setPagination(resData.pagination);
+            } else if (
+                resData &&
+                typeof resData === 'object' &&
                 'data' in resData &&
                 Array.isArray(resData.data)
             ) {
