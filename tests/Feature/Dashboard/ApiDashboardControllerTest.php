@@ -41,6 +41,7 @@ test('authenticated admin user can fetch dashboard api', function () {
                 'trend_chart',
                 'top_products',
                 'recent_transactions',
+                'transactions_by_payment_method',
                 'filter' => [
                     'start_date',
                     'end_date',

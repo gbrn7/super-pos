@@ -38,7 +38,8 @@ class DashboardRepository implements DashboardRepositoryInterface
         return Transaction::select(
             DB::raw('DATE(transactions.created_at) as date'),
             DB::raw('SUM(transactions.total_amount) as revenue'),
-            DB::raw('SUM(transaction_detail.quantity * (transaction_detail.price - transaction_detail.cost_price)) as profit')
+            DB::raw('SUM(transaction_detail.quantity * (transaction_detail.price - transaction_detail.cost_price)) as profit'),
+            DB::raw('SUM(transaction_detail.quantity) as quantity')
         )
             ->join('transaction_detail', 'transactions.id', '=', 'transaction_detail.transaction_id')
             ->whereBetween('transactions.created_at', [$startDate.' 00:00:00', $endDate.' 23:59:59'])
@@ -50,6 +51,7 @@ class DashboardRepository implements DashboardRepositoryInterface
                     'date' => $item->date,
                     'revenue' => (float) $item->revenue,
                     'profit' => (float) $item->profit,
+                    'quantity' => (int) $item->quantity,
                 ];
             });
     }
@@ -90,5 +92,47 @@ class DashboardRepository implements DashboardRepositoryInterface
             ->orderBy('stock', 'asc')
             ->limit($limit)
             ->get();
+    }
+
+    public function getTransactionsByPaymentMethod(string $startDate, string $endDate): Collection
+    {
+        return Transaction::select(
+            'payment_methods.name as payment_method_name',
+            DB::raw('COUNT(transactions.id) as transactions_count'),
+            DB::raw('SUM(transactions.total_amount) as total_amount')
+        )
+            ->join('payment_methods', 'transactions.payment_method_id', '=', 'payment_methods.id')
+            ->whereBetween('transactions.created_at', [$startDate.' 00:00:00', $endDate.' 23:59:59'])
+            ->groupBy('transactions.payment_method_id', 'payment_methods.name')
+            ->get()
+            ->map(function ($item) {
+                return [
+                    'payment_method_name' => $item->payment_method_name,
+                    'transactions_count' => (int) $item->transactions_count,
+                    'total_amount' => (float) $item->total_amount,
+                ];
+            });
+    }
+
+    public function getTransactionsByCategory(string $startDate, string $endDate): Collection
+    {
+        return TransactionDetail::select(
+            'categories.name as category_name',
+            DB::raw('SUM(transaction_detail.quantity * transaction_detail.price) as total_amount'),
+            DB::raw('SUM(transaction_detail.quantity) as products_count')
+        )
+            ->join('products', 'transaction_detail.product_id', '=', 'products.id')
+            ->join('categories', 'products.category_id', '=', 'categories.id')
+            ->join('transactions', 'transaction_detail.transaction_id', '=', 'transactions.id')
+            ->whereBetween('transactions.created_at', [$startDate.' 00:00:00', $endDate.' 23:59:59'])
+            ->groupBy('products.category_id', 'categories.name')
+            ->get()
+            ->map(function ($item) {
+                return [
+                    'category_name' => $item->category_name,
+                    'total_amount' => (float) $item->total_amount,
+                    'products_count' => (int) $item->products_count,
+                ];
+            });
     }
 }

@@ -449,7 +449,91 @@
             }
         },
         "dashboard": {
-            "title": "Dashboard"
+            "title": "Dashboard",
+            "header_title": "Sales Dashboard",
+            "header_subtitle": "Monitor your financial performance, store profitability, and sales statistics.",
+            "filter_placeholder": "Select Date Filter",
+            "presets": {
+                "today": "Today",
+                "yesterday": "Yesterday",
+                "this_week": "This Week",
+                "this_month": "This Month",
+                "last_month": "Last Month",
+                "this_year": "This Year",
+                "custom": "Custom Date",
+                "to": "to",
+                "apply": "Apply"
+            },
+            "metrics": {
+                "gross_revenue": "Gross Revenue",
+                "gross_revenue_desc": "Total of all incoming invoices",
+                "net_profit": "Net Profit",
+                "net_profit_desc": "Difference between selling price and cost",
+                "transactions_count": "Transactions",
+                "transactions_count_desc": "Total completed checkout receipts",
+                "products_sold": "Products Sold",
+                "products_sold_desc": "Items sold out of the store",
+                "total_products": "Total Products",
+                "total_products_desc": "Total active product inventory",
+                "out_of_stock_products": "Out of Stock",
+                "out_of_stock_products_desc": "Products that need restocking"
+            },
+            "charts": {
+                "revenue_label": "Gross Revenue",
+                "profit_label": "Net Profit",
+                "quantity_label": "Qty Sold",
+                "transactions_label": "Transactions",
+                "products_sold_label": "Qty Sold",
+                "others_label": "Others",
+                "daily_quantity_label": "Item",
+                "daily_quantity_title": "Daily Product Sales Trend",
+                "daily_quantity_desc": "Number of product items sold each day in the selected period",
+                "sales_trend_title": "Daily Financial Trend",
+                "sales_trend_desc": "Comparison of gross revenue and net profit in the selected period",
+                "payment_methods_title": "Payment Methods",
+                "payment_methods_desc": "Transaction amount percentage per payment method",
+                "categories_title": "Transaction Amount by Category",
+                "categories_desc": "Transaction amount percentage by product category for the selected period",
+                "top_products_title": "Best Sellers",
+                "top_products_desc": "Top 5 best-selling products for the selected period",
+                "no_data": "No data available for this period",
+                "no_transaction_data": "No transaction data",
+                "no_category_data": "No category data",
+                "no_product_data": "No product data"
+            },
+            "tables": {
+                "recent_transactions_title": "Recent Transactions",
+                "recent_transactions_desc": "List of completed sales receipts in the selected date range",
+                "low_stock_title": "Low Stock",
+                "low_stock_desc": "Products with the lowest stock levels (non-unlimited)",
+                "best_sellers_title": "Best Sellers",
+                "best_sellers_desc": "Products with the highest all-time sales",
+                "no_transactions": "No transactions in this date range.",
+                "sufficient_stock": "All product stock levels are sufficient.",
+                "no_best_sellers": "No product sales data yet.",
+                "columns": {
+                    "time": "Time",
+                    "invoice_no": "Invoice No.",
+                    "cashier": "Cashier",
+                    "payment": "Payment",
+                    "total": "Total",
+                    "sku": "SKU",
+                    "product_name": "Product Name",
+                    "price": "Price",
+                    "remaining_stock": "Remaining Stock",
+                    "rank": "#",
+                    "sold_qty": "Sold"
+                }
+            },
+            "pagination": {
+                "showing": "Showing {{start}} to {{end}} of {{total}} entries",
+                "rows_per_page": "Rows per page",
+                "page_of": "Page {{page}} of {{totalPages}}",
+                "first_page": "First Page",
+                "prev_page": "Previous Page",
+                "next_page": "Next Page",
+                "last_page": "Last Page"
+            }
         },
         "unit": {
             "page_name": "Unit",

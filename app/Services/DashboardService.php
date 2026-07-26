@@ -2,18 +2,23 @@
 
 namespace App\Services;
 
+use App\Models\Product;
 use App\Support\Interfaces\Repositories\DashboardRepositoryInterface;
+use App\Support\Interfaces\Repositories\TransactionRepositoryInterface;
 use App\Support\Interfaces\Services\DashboardServiceInterface;
+use App\Support\Models\Transaction\GetTransactionReqModel;
 use App\Support\Utils\CheckException;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 
 class DashboardService implements DashboardServiceInterface
 {
     public function __construct(
-        protected DashboardRepositoryInterface $dashboardRepository
+        protected DashboardRepositoryInterface $dashboardRepository,
+        protected TransactionRepositoryInterface $transactionRepository
     ) {}
 
-    public function getDashboardData(?string $startDate = null, ?string $endDate = null): array
+    public function getDashboardData(?string $startDate = null, ?string $endDate = null, int $txPage = 1, int $txLimit = 10, bool $onlyTransactions = false): array
     {
         try {
             // Default to this month (Bulan Ini) if not specified
@@ -22,14 +27,18 @@ class DashboardService implements DashboardServiceInterface
                 $endDate = Carbon::now()->endOfMonth()->toDateString();
             }
 
-            $metrics = $this->dashboardRepository->getMetrics($startDate, $endDate);
-            $trendChart = $this->dashboardRepository->getTrendChart($startDate, $endDate);
-            $topProducts = $this->dashboardRepository->getTopProducts($startDate, $endDate);
-            $recentTransactions = $this->dashboardRepository->getRecentTransactions($startDate, $endDate);
-            $lowStockProducts = $this->dashboardRepository->getLowStockProducts(10);
+            // Fetch recent transactions using TransactionRepository with server-side pagination
+            $txRequest = new Request([
+                'start_date' => $startDate,
+                'end_date' => $endDate,
+                'page' => $txPage,
+                'limit' => $txLimit,
+            ]);
+            $txReqModel = new GetTransactionReqModel($txRequest);
+            $recentTransactionsPaginator = $this->transactionRepository->getAllByIndex($txReqModel);
 
             // Format recent transactions
-            $formattedTransactions = $recentTransactions->map(function ($tx) {
+            $formattedTransactions = collect($recentTransactionsPaginator->items())->map(function ($tx) {
                 return [
                     'id' => $tx->id,
                     'invoice_number' => $tx->invoice_number,
@@ -40,11 +49,55 @@ class DashboardService implements DashboardServiceInterface
                 ];
             });
 
+            if ($onlyTransactions) {
+                return [
+                    'recent_transactions' => [
+                        'data' => $formattedTransactions,
+                        'total' => $recentTransactionsPaginator->total(),
+                        'current_page' => $recentTransactionsPaginator->currentPage(),
+                        'per_page' => $recentTransactionsPaginator->perPage(),
+                        'last_page' => $recentTransactionsPaginator->lastPage(),
+                    ],
+                ];
+            }
+
+            $metrics = $this->dashboardRepository->getMetrics($startDate, $endDate);
+            $metrics['total_products'] = (int) Product::count();
+            $metrics['out_of_stock_products'] = (int) Product::where('is_unlimited', false)->where('stock', '<=', 0)->count();
+
+            $trendChart = $this->dashboardRepository->getTrendChart($startDate, $endDate);
+            $topProducts = $this->dashboardRepository->getTopProducts($startDate, $endDate);
+            $lowStockProducts = $this->dashboardRepository->getLowStockProducts(50);
+            $transactionsByPaymentMethod = $this->dashboardRepository->getTransactionsByPaymentMethod($startDate, $endDate);
+            $transactionsByCategory = $this->dashboardRepository->getTransactionsByCategory($startDate, $endDate);
+
+            $bestSellers = Product::select('id', 'name', 'sku', 'price', 'sold_quantity')
+                ->orderBy('sold_quantity', 'desc')
+                ->limit(50)
+                ->get()
+                ->map(function ($product) {
+                    return [
+                        'id' => $product->id,
+                        'name' => $product->name,
+                        'sku' => $product->sku,
+                        'price' => (float) $product->price,
+                        'sold_quantity' => (int) $product->sold_quantity,
+                    ];
+                });
+
             return [
                 'metrics' => $metrics,
                 'trend_chart' => $trendChart,
                 'top_products' => $topProducts,
-                'recent_transactions' => $formattedTransactions,
+                'recent_transactions' => [
+                    'data' => $formattedTransactions,
+                    'total' => $recentTransactionsPaginator->total(),
+                    'current_page' => $recentTransactionsPaginator->currentPage(),
+                    'per_page' => $recentTransactionsPaginator->perPage(),
+                    'last_page' => $recentTransactionsPaginator->lastPage(),
+                ],
+                'transactions_by_payment_method' => $transactionsByPaymentMethod,
+                'transactions_by_category' => $transactionsByCategory,
                 'low_stock_products' => $lowStockProducts->map(function ($product) {
                     return [
                         'id' => $product->id,
@@ -54,6 +107,7 @@ class DashboardService implements DashboardServiceInterface
                         'price' => (float) $product->price,
                     ];
                 }),
+                'best_sellers' => $bestSellers,
                 'filter' => [
                     'start_date' => $startDate,
                     'end_date' => $endDate,

@@ -449,7 +449,91 @@
             }
         },
         "dashboard": {
-            "title": "Dasbor"
+            "title": "Dasbor",
+            "header_title": "Dasbor Penjualan",
+            "header_subtitle": "Monitor performa keuangan, profitabilitas toko, dan statistik penjualan.",
+            "filter_placeholder": "Pilih Filter Tanggal",
+            "presets": {
+                "today": "Hari Ini",
+                "yesterday": "Kemarin",
+                "this_week": "Minggu Ini",
+                "this_month": "Bulan Ini",
+                "last_month": "Bulan Lalu",
+                "this_year": "Tahun Ini",
+                "custom": "Kustom Tanggal",
+                "to": "s/d",
+                "apply": "Terapkan"
+            },
+            "metrics": {
+                "gross_revenue": "Pendapatan Kotor",
+                "gross_revenue_desc": "Total seluruh invoice masuk",
+                "net_profit": "Keuntungan Bersih",
+                "net_profit_desc": "Selisih harga jual dengan modal",
+                "transactions_count": "Jumlah Transaksi",
+                "transactions_count_desc": "Total nota checkout lunas",
+                "products_sold": "Produk Terjual",
+                "products_sold_desc": "Item barang keluar toko",
+                "total_products": "Total Produk",
+                "total_products_desc": "Total inventori produk aktif",
+                "out_of_stock_products": "Stok Habis",
+                "out_of_stock_products_desc": "Produk perlu segera diisi"
+            },
+            "charts": {
+                "revenue_label": "Pendapatan Kotor",
+                "profit_label": "Keuntungan Bersih",
+                "quantity_label": "Jumlah Terjual",
+                "transactions_label": "Transaksi",
+                "products_sold_label": "Jumlah Terjual",
+                "others_label": "Lainnya",
+                "daily_quantity_label": "Item",
+                "daily_quantity_title": "Tren Harian banyak produk terjual",
+                "daily_quantity_desc": "Jumlah item produk yang terjual setiap hari pada periode terpilih",
+                "sales_trend_title": "Tren Keuangan Harian",
+                "sales_trend_desc": "Visualisasi perbandingan pendapatan kotor dan laba bersih pada periode terpilih",
+                "payment_methods_title": "Metode Pembayaran",
+                "payment_methods_desc": "Persentase nominal transaksi per metode pembayaran pada periode terpilih",
+                "categories_title": "Nominal Transaksi per Kategori",
+                "categories_desc": "Persentase nominal transaksi berdasarkan kategori produk pada periode terpilih",
+                "top_products_title": "Produk Terlaris",
+                "top_products_desc": "Top 5 produk terjual terbanyak pada periode terpilih",
+                "no_data": "Tidak ada data untuk periode ini",
+                "no_transaction_data": "Tidak ada data transaksi",
+                "no_category_data": "Tidak ada data kategori",
+                "no_product_data": "Tidak ada data produk"
+            },
+            "tables": {
+                "recent_transactions_title": "Transaksi Terbaru",
+                "recent_transactions_desc": "Daftar nota penjualan lunas di rentang filter terpilih",
+                "low_stock_title": "Stok Menipis",
+                "low_stock_desc": "Daftar produk dengan jumlah stok paling sedikit (non-unlimited)",
+                "best_sellers_title": "Produk Terlaris",
+                "best_sellers_desc": "Produk dengan total penjualan terbanyak sepanjang masa",
+                "no_transactions": "Tidak ada transaksi di rentang tanggal ini.",
+                "sufficient_stock": "Semua stok produk mencukupi.",
+                "no_best_sellers": "Belum ada data penjualan produk.",
+                "columns": {
+                    "time": "Waktu",
+                    "invoice_no": "No. Invoice",
+                    "cashier": "Kasir",
+                    "payment": "Pembayaran",
+                    "total": "Total",
+                    "sku": "SKU",
+                    "product_name": "Nama Produk",
+                    "price": "Harga",
+                    "remaining_stock": "Sisa Stok",
+                    "rank": "#",
+                    "sold_qty": "Terjual"
+                }
+            },
+            "pagination": {
+                "showing": "Menampilkan {{start}} s/d {{end}} dari {{total}} data",
+                "rows_per_page": "Baris per halaman",
+                "page_of": "Halaman {{page}} dari {{totalPages}}",
+                "first_page": "Halaman Pertama",
+                "prev_page": "Halaman Sebelumnya",
+                "next_page": "Halaman Selanjutnya",
+                "last_page": "Halaman Terakhir"
+            }
         },
         "unit": {
             "page_name": "Satuan",

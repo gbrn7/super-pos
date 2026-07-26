@@ -30,4 +30,14 @@ interface DashboardRepositoryInterface
      * Get products with the lowest stock (where not unlimited)
      */
     public function getLowStockProducts(int $limit = 10): Collection;
+
+    /**
+     * Get transactions grouped by payment method
+     */
+    public function getTransactionsByPaymentMethod(string $startDate, string $endDate): Collection;
+
+    /**
+     * Get transactions grouped by product category
+     */
+    public function getTransactionsByCategory(string $startDate, string $endDate): Collection;
 }
