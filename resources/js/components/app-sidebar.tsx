@@ -9,7 +9,6 @@ import {
     ShoppingCart,
     Tags,
     User,
-    Users,
     Weight,
     TrendingUp,
     Wallet,
@@ -105,52 +104,43 @@ export function AppSidebar() {
             items: [
                 {
                     title: t(
-                        'component.sidebar.product_management_menu_label',
-                        'Manajemen Produk',
+                        'component.sidebar.product_menu_label',
+                        'Produk',
                     ),
+                    href: products(),
                     icon: Package,
-                    items: [
-                        {
-                            title: t(
-                                'component.sidebar.product_menu_label',
-                                'Produk',
-                            ),
-                            href: products(),
-                            icon: Package,
-                            permission: PERMISSIONENUMS.PRODUCT.READ,
-                            role: [],
-                        },
-                        {
-                            title: t(
-                                'component.sidebar.master_product_menu_label',
-                                'Master Produk',
-                            ),
-                            href: masterProducts(),
-                            icon: PackageSearch,
-                            permission: PERMISSIONENUMS.MASTER_PRODUCT.READ,
-                            role: [],
-                        },
-                        {
-                            title: t(
-                                'component.sidebar.category_menu_label',
-                                'Kategori',
-                            ),
-                            href: categories(),
-                            icon: Tags,
-                            permission: PERMISSIONENUMS.CATEGORY.READ,
-                            role: [],
-                        },
-                        {
-                            title: t(
-                                'component.sidebar.unit_menu_label',
-                                'Satuan',
-                            ),
-                            href: units(),
-                            icon: Weight,
-                            permission: PERMISSIONENUMS.UNIT.READ,
-                            role: [],
-                        },
-                    ],
+                    permission: PERMISSIONENUMS.PRODUCT.READ,
+                    role: [],
+                },
+                {
+                    title: t(
+                        'component.sidebar.master_product_menu_label',
+                        'Master Produk',
+                    ),
+                    href: masterProducts(),
+                    icon: PackageSearch,
+                    permission: PERMISSIONENUMS.MASTER_PRODUCT.READ,
+                    role: [],
+                },
+                {
+                    title: t(
+                        'component.sidebar.category_menu_label',
+                        'Kategori',
+                    ),
+                    href: categories(),
+                    icon: Tags,
+                    permission: PERMISSIONENUMS.CATEGORY.READ,
+                    role: [],
+                },
+                {
+                    title: t(
+                        'component.sidebar.unit_menu_label',
+                        'Satuan',
+                    ),
+                    href: units(),
+                    icon: Weight,
+                    permission: PERMISSIONENUMS.UNIT.READ,
+                    role: [],
                 },
             ],
         },
@@ -178,32 +168,23 @@ export function AppSidebar() {
             items: [
                 {
                     title: t(
-                        'component.sidebar.user_management_menu_label',
-                        'Manajemen Pengguna',
+                        'component.sidebar.user_menu_label',
+                        'Pengguna',
                     ),
-                    icon: Users,
-                    items: [
-                        {
-                            title: t(
-                                'component.sidebar.user_menu_label',
-                                'Pengguna',
-                            ),
-                            href: users(),
-                            icon: User,
-                            permission: PERMISSIONENUMS.USER.READ,
-                            role: [],
-                        },
-                        {
-                            title: t(
-                                'component.sidebar.role_menu_label',
-                                'Peran',
-                            ),
-                            href: roles(),
-                            icon: IconUserKey,
-                            permission: PERMISSIONENUMS.ROLE.READ,
-                            role: [],
-                        },
-                    ],
+                    href: users(),
+                    icon: User,
+                    permission: PERMISSIONENUMS.USER.READ,
+                    role: [],
+                },
+                {
+                    title: t(
+                        'component.sidebar.role_menu_label',
+                        'Peran',
+                    ),
+                    href: roles(),
+                    icon: IconUserKey,
+                    permission: PERMISSIONENUMS.ROLE.READ,
+                    role: [],
                 },
                 {
                     title: t(
