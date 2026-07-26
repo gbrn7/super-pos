@@ -34,6 +34,7 @@ interface ColumnsProps {
     onEditClick: (product: Product) => void;
     onDeleteClick: (product: Product) => void;
     onUpdateStockClick?: (product: Product) => void;
+    onUpdateSoldQuantityClick?: (product: Product) => void;
     onSortChange: (orderBy: string | null, order: string | null) => void;
     orderBy: string | null;
     order: string | null;
@@ -386,6 +387,15 @@ export const columns = (props?: ColumnsProps): ColumnDef<Product>[] => {
                                 {t(
                                     'component.data_table.action_menu.update_stock_btn',
                                     'Update stok',
+                                )}
+                            </DropdownMenuItem>
+                            <DropdownMenuItem
+                                onClick={() => props?.onUpdateSoldQuantityClick?.(row.original)}
+                            >
+                                <Boxes className="mr-0.5 h-4 w-4" />
+                                {t(
+                                    'component.data_table.action_menu.update_sold_quantity_btn',
+                                    'Update terjual',
                                 )}
                             </DropdownMenuItem>
                         </Can>
