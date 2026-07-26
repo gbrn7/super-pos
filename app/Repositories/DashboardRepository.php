@@ -31,25 +31,26 @@ class DashboardRepository implements DashboardRepositoryInterface
         $start = $this->parseStartTimestamp($startDate);
         $end = $this->parseEndTimestamp($endDate);
 
-        $txStats = Transaction::whereBetween('created_at', [$start, $end])
-            ->selectRaw('COUNT(id) as transactions_count, COALESCE(SUM(total_amount), 0) as total_revenue')
-            ->first();
-
-        $detailStats = TransactionDetail::join('transactions', 'transaction_detail.transaction_id', '=', 'transactions.id')
+        $stats = DB::table('transactions')
+            ->leftJoin('transaction_detail', function ($join) {
+                $join->on('transactions.id', '=', 'transaction_detail.transaction_id')
+                    ->whereNull('transaction_detail.deleted_at');
+            })
             ->whereBetween('transactions.created_at', [$start, $end])
             ->whereNull('transactions.deleted_at')
-            ->whereNull('transaction_detail.deleted_at')
             ->selectRaw('
+                COUNT(DISTINCT transactions.id) as transactions_count,
+                COALESCE(SUM(DISTINCT transactions.total_amount), 0) as total_revenue,
                 COALESCE(SUM(transaction_detail.quantity * (transaction_detail.price - transaction_detail.cost_price)), 0) as total_net_profit,
                 COALESCE(SUM(transaction_detail.quantity), 0) as products_sold
             ')
             ->first();
 
         return [
-            'total_revenue' => (float) ($txStats->total_revenue ?? 0),
-            'total_net_profit' => (float) ($detailStats->total_net_profit ?? 0),
-            'transactions_count' => (int) ($txStats->transactions_count ?? 0),
-            'products_sold' => (int) ($detailStats->products_sold ?? 0),
+            'total_revenue' => (float) ($stats->total_revenue ?? 0),
+            'total_net_profit' => (float) ($stats->total_net_profit ?? 0),
+            'transactions_count' => (int) ($stats->transactions_count ?? 0),
+            'products_sold' => (int) ($stats->products_sold ?? 0),
         ];
     }
 
