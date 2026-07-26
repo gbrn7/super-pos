@@ -100,18 +100,4 @@ class TransactionRepository implements TransactionRepositoryInterface
     {
         return Transaction::insert($data);
     }
-
-    public function getTransactionsForDashboard(string $startDate, string $endDate): Collection
-    {
-        $start = is_numeric($startDate)
-            ? Carbon::createFromTimestamp((int) $startDate)->startOfDay()->getTimestamp()
-            : Carbon::parse($startDate)->startOfDay()->getTimestamp();
-        $end = is_numeric($endDate)
-            ? Carbon::createFromTimestamp((int) $endDate)->endOfDay()->getTimestamp()
-            : Carbon::parse($endDate)->endOfDay()->getTimestamp();
-
-        return Transaction::with(['user', 'paymentMethod', 'transactionDetails.product.category'])
-            ->whereBetween('created_at', [$start, $end])
-            ->get();
-    }
 }
