@@ -388,7 +388,7 @@ export default function Dashboard() {
                 </div>
 
                 {/* Key Metrics Cards */}
-                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
+                <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
                     {/* Revenue Card */}
                     <Card className="bg-gradient-to-br from-primary/10 via-card to-card">
                         <CardHeader className="flex flex-row items-center justify-between pb-2">

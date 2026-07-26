@@ -17,9 +17,9 @@ class TransactionResource extends JsonResource
         return [
             'id' => $this->id,
             'user_id' => $this->user_id,
-            'user_name' => $this->whenLoaded('user', fn() => $this->user->name),
+            'user_name' => $this->whenLoaded('user', fn () => $this->user->name),
             'payment_method_id' => $this->payment_method_id,
-            'payment_method_name' => $this->whenLoaded('paymentMethod', fn() => $this->paymentMethod->name),
+            'payment_method_name' => $this->whenLoaded('paymentMethod', fn () => $this->paymentMethod->name),
             'invoice_number' => $this->invoice_number,
             'total_amount' => $this->total_amount,
             'discount_amount' => $this->discount_amount,

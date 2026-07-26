@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\User;
+use App\Support\Enums\RoleEnums;
 use Database\Seeders\PermissionSeeder;
 use Database\Seeders\RoleSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -26,7 +27,7 @@ test('profit-wallet page requires read-profit-wallet permission', function () {
 
 test('profit-wallet page renders for admin user', function () {
     $admin = User::factory()->create();
-    $admin->assignRole(\App\Support\Enums\RoleEnums::ADMIN->value);
+    $admin->assignRole(RoleEnums::ADMIN->value);
 
     $this->actingAs($admin)
         ->get(route('profit-wallet.index'))

@@ -14,7 +14,7 @@ class ProfitWalletController extends Controller implements HasMiddleware
     {
         return [
             new Middleware(
-                'permission:' . ProfitWalletPermissionEnums::READ_PROFIT_WALLET->value,
+                'permission:'.ProfitWalletPermissionEnums::READ_PROFIT_WALLET->value,
                 only: ['index']
             ),
         ];
