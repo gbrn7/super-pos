@@ -48,4 +48,9 @@ interface TransactionRepositoryInterface
      * Insert new transactions.
      */
     public function insert(array $data): bool;
+
+    /**
+     * Get transactions with details for dashboard processing.
+     */
+    public function getTransactionsForDashboard(string $startDate, string $endDate): Collection;
 }
