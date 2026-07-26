@@ -31,23 +31,25 @@ class DashboardRepository implements DashboardRepositoryInterface
         $start = $this->parseStartTimestamp($startDate);
         $end = $this->parseEndTimestamp($endDate);
 
-        $revenue = Transaction::whereBetween('created_at', [$start, $end])
-            ->sum('total_amount');
+        $txStats = Transaction::whereBetween('created_at', [$start, $end])
+            ->selectRaw('COUNT(id) as transactions_count, COALESCE(SUM(total_amount), 0) as total_revenue')
+            ->first();
 
-        $transactionsCount = Transaction::whereBetween('created_at', [$start, $end])
-            ->count();
-
-        $detailsQuery = TransactionDetail::join('transactions', 'transaction_detail.transaction_id', '=', 'transactions.id')
-            ->whereBetween('transactions.created_at', [$start, $end]);
-
-        $netProfit = $detailsQuery->sum(DB::raw('transaction_detail.quantity * (transaction_detail.price - transaction_detail.cost_price)'));
-        $productsSold = $detailsQuery->sum('transaction_detail.quantity');
+        $detailStats = TransactionDetail::join('transactions', 'transaction_detail.transaction_id', '=', 'transactions.id')
+            ->whereBetween('transactions.created_at', [$start, $end])
+            ->whereNull('transactions.deleted_at')
+            ->whereNull('transaction_detail.deleted_at')
+            ->selectRaw('
+                COALESCE(SUM(transaction_detail.quantity * (transaction_detail.price - transaction_detail.cost_price)), 0) as total_net_profit,
+                COALESCE(SUM(transaction_detail.quantity), 0) as products_sold
+            ')
+            ->first();
 
         return [
-            'total_revenue' => (float) $revenue,
-            'total_net_profit' => (float) $netProfit,
-            'transactions_count' => (int) $transactionsCount,
-            'products_sold' => (int) $productsSold,
+            'total_revenue' => (float) ($txStats->total_revenue ?? 0),
+            'total_net_profit' => (float) ($detailStats->total_net_profit ?? 0),
+            'transactions_count' => (int) ($txStats->transactions_count ?? 0),
+            'products_sold' => (int) ($detailStats->products_sold ?? 0),
         ];
     }
 
