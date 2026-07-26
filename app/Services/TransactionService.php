@@ -196,6 +196,8 @@ class TransactionService implements TransactionServiceInterface
                     if (! $product->is_unlimited) {
                         $this->productRepository->decrementStock($product, $item['quantity']);
                     }
+
+                    $this->productRepository->incrementSoldQuantity($product, $item['quantity']);
                 }
 
                 $profit = $transaction->total_amount - $totalCost;

@@ -1,30 +1,19 @@
 <?php
 
 use App\Models\Product;
-use App\Models\Transaction;
-use App\Models\TransactionDetail;
+use App\Repositories\ProductRepository;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 uses(TestCase::class, RefreshDatabase::class);
 
-test('it calculates the correct sold quantity from transaction details', function () {
-    $product = Product::factory()->create();
+test('it increments sold quantity via repository', function () {
+    $product = Product::factory()->create(['sold_quantity' => 0]);
+    $repository = new ProductRepository;
 
-    $transaction1 = Transaction::factory()->create();
-    $transaction2 = Transaction::factory()->create();
+    $repository->incrementSoldQuantity($product, 5);
+    expect($product->fresh()->sold_quantity)->toBe(5);
 
-    TransactionDetail::factory()->create([
-        'product_id' => $product->id,
-        'transaction_id' => $transaction1->id,
-        'quantity' => 5,
-    ]);
-
-    TransactionDetail::factory()->create([
-        'product_id' => $product->id,
-        'transaction_id' => $transaction2->id,
-        'quantity' => 3,
-    ]);
-
+    $repository->incrementSoldQuantity($product, 3);
     expect($product->fresh()->sold_quantity)->toBe(8);
 });

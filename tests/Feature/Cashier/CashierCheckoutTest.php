@@ -88,6 +88,32 @@ test('checkout decrements stock for non-unlimited product', function () {
     expect($product->fresh()->stock)->toBe(7);
 });
 
+test('checkout increments sold_quantity for products', function () {
+    $user = cashierSetupUser();
+    $paymentMethod = PaymentMethod::create(['name' => 'Cash', 'desc' => '', 'image' => '']);
+    $product = Product::factory()->create(['price' => 5000, 'cost_price' => 3000, 'stock' => 10, 'sold_quantity' => 0, 'is_unlimited' => false, 'is_active' => true]);
+
+    $this->actingAs($user)->postJson('/api/transactions/checkout', [
+        'payment_method_id' => $paymentMethod->id,
+        'total_amount' => 15000,
+        'discount_amount' => 0,
+        'payment_amount' => 20000,
+        'change_amount' => 5000,
+        'items' => [
+            [
+                'product_id' => $product->id,
+                'unit_name' => $product->unit->name,
+                'quantity' => 3,
+                'price' => $product->price,
+                'cost_price' => $product->cost_price,
+                'discount' => 0,
+            ],
+        ],
+    ]);
+
+    expect($product->fresh()->sold_quantity)->toBe(3);
+});
+
 test('checkout does not decrement stock for unlimited product', function () {
     $user = cashierSetupUser();
     $paymentMethod = PaymentMethod::create(['name' => 'Cash', 'desc' => '', 'image' => '']);
