@@ -14,6 +14,7 @@ import { all as apiGetAllUsers } from '@/routes/apiUsers';
 import { index as transactions } from '@/routes/transactions';
 import type { TransactionQueryParam } from '@/support/interfaces/request/transaction';
 import type { Pagination } from '@/support/interfaces/resource/pagination';
+import type { PaginationResponse } from '@/support/interfaces/resource/resource-response';
 import type { ResponseApi } from '@/support/interfaces/response/Response';
 import type { PaymentMethod } from '@/support/models/paymentMethod';
 import type { Transaction } from '@/support/models/transaction';
@@ -157,7 +158,7 @@ export default function Index({ storeSetting }: { storeSetting?: StoreSetting | 
             const apiUrl = apiGetTransactions({ query: params }).url;
             const res =
                 await axiosInstance.get<
-                    ResponseApi<PaginatedData<Transaction> | Transaction[]>
+                    ResponseApi<PaginationResponse<Transaction> | PaginatedData<Transaction> | Transaction[]>
                 >(apiUrl);
 
             if (!res.data.success) {
@@ -172,10 +173,12 @@ export default function Index({ storeSetting }: { storeSetting?: StoreSetting | 
                 resData &&
                 typeof resData === 'object' &&
                 'items' in resData &&
-                'pagination' in resData
+                Array.isArray(resData.items)
             ) {
                 setTransactionsData(resData.items);
-                setPagination(resData.pagination);
+                if ('pagination' in resData && resData.pagination) {
+                    setPagination(resData.pagination);
+                }
             } else if (
                 resData &&
                 typeof resData === 'object' &&
