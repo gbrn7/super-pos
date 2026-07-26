@@ -55,7 +55,6 @@ export default function Index() {
         null,
     );
     const [updateStockOpen, setUpdateStockOpen] = useState(false);
-    const [updateSoldQuantityOpen, setUpdateSoldQuantityOpen] = useState(false);
     const [selectedProducts, setSelectedProducts] = useState<Product[]>([]);
     const hasMountedQueryEffect = useRef(false);
     const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
@@ -158,11 +157,6 @@ export default function Index() {
     const handleUpdateStockClick = (product: Product) => {
         setSelectedProduct(product);
         setUpdateStockOpen(true);
-    };
-
-    const handleUpdateSoldQuantityClick = (product: Product) => {
-        setSelectedProduct(product);
-        setUpdateSoldQuantityOpen(true);
     };
 
     const handleBulkDeleteClick = (products: Product[]) => {
@@ -269,17 +263,14 @@ export default function Index() {
                     editOpen={editOpen}
                     deleteOpen={deleteOpen}
                     updateStockOpen={updateStockOpen}
-                    updateSoldQuantityOpen={updateSoldQuantityOpen}
                     setDetailOpen={setDetailOpen}
                     setEditOpen={setEditOpen}
                     setDeleteOpen={setDeleteOpen}
                     setUpdateStockOpen={setUpdateStockOpen}
-                    setUpdateSoldQuantityOpen={setUpdateSoldQuantityOpen}
                     onDetailClick={handleDetailClick}
                     onEditClick={handleEditClick}
                     onDeleteClick={handleDeleteClick}
                     onUpdateStockClick={handleUpdateStockClick}
-                    onUpdateSoldQuantityClick={handleUpdateSoldQuantityClick}
                     onBulkDeleteClick={handleBulkDeleteClick}
                     isBulkDeleteDialogOpen={bulkDeleteOpen}
                     setOpenBulkDeleteDialogOpen={setBulkDeleteOpen}

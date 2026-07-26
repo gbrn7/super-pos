@@ -302,12 +302,5 @@
   "300": "dayjs",
   "301": "@inertiajs/vite",
   "302": "@radix-ui/react-navigation-menu",
-  "303": "react-dom",
-  "304": "sweetalert2",
-  "305": "@tailwindcss/vite",
-  "306": "@tanstack/react-table",
-  "307": "index.tsx",
-  "308": "prettier-plugin-tailwindcss",
-  "309": "@types/sprintf-js",
-  "310": "typescript-eslint"
+  "307": "index.tsx"
 }

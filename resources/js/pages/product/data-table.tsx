@@ -71,7 +71,6 @@ import { EditDialog } from './dialog-modal/edit-dialog';
 import { ExportDropdownMenu } from './export-data-menu/export-dropdown-menu';
 import { ImportExcelDialog } from './dialog-modal/import-excel-dialog';
 import UpdateStockDialog from '@/pages/cashier/components/update-stock-dialog';
-import UpdateSoldQuantityDialog from '@/pages/cashier/components/update-sold-quantity-dialog';
 
 interface DataTableProps<TData, TValue> {
     columns:
@@ -93,9 +92,6 @@ interface DataTableProps<TData, TValue> {
     onUpdateStockClick: (data: TData) => void;
     updateStockOpen: boolean;
     setUpdateStockOpen: (open: boolean) => void;
-    onUpdateSoldQuantityClick: (data: TData) => void;
-    updateSoldQuantityOpen: boolean;
-    setUpdateSoldQuantityOpen: (open: boolean) => void;
     onBulkDeleteClick?: (data: TData[]) => void;
     isBulkDeleteDialogOpen: boolean;
     setOpenBulkDeleteDialogOpen: (open: boolean) => void;
@@ -132,9 +128,6 @@ export function DataTable<TData, TValue>({
     onUpdateStockClick,
     updateStockOpen,
     setUpdateStockOpen,
-    onUpdateSoldQuantityClick,
-    updateSoldQuantityOpen,
-    setUpdateSoldQuantityOpen,
     onBulkDeleteClick,
     isBulkDeleteDialogOpen,
     setOpenBulkDeleteDialogOpen,
@@ -162,7 +155,6 @@ export function DataTable<TData, TValue>({
                   onEditClick,
                   onDeleteClick,
                   onUpdateStockClick,
-                  onUpdateSoldQuantityClick,
                   onSortChange: (
                       orderBy: string | null,
                       order: string | null,
@@ -985,13 +977,6 @@ export function DataTable<TData, TValue>({
                     open={updateStockOpen}
                     product={selectedProduct}
                     onClose={() => setUpdateStockOpen(false)}
-                    onSuccess={onRefresh}
-                />
-
-                <UpdateSoldQuantityDialog
-                    open={updateSoldQuantityOpen}
-                    product={selectedProduct}
-                    onClose={() => setUpdateSoldQuantityOpen(false)}
                     onSuccess={onRefresh}
                 />
             </div>
