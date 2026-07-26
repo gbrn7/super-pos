@@ -34,6 +34,7 @@ class TransactionService implements TransactionServiceInterface
         try {
             return $this->transactionRepository->getAllByIndex($request);
         } catch (\Throwable $th) {
+            dd($th->getMessage());
             throw CheckException::Check($th);
         }
     }

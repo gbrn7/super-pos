@@ -53,8 +53,8 @@ export default function Index({ storeSetting }: { storeSetting?: StoreSetting | 
         field: 'default',
         user_id: null,
         payment_method_id: null,
-        start_date: '',
-        end_date: '',
+        start_date: null,
+        end_date: null,
         order_by: null,
         order: null,
     });
@@ -254,8 +254,8 @@ export default function Index({ storeSetting }: { storeSetting?: StoreSetting | 
             field: 'default',
             user_id: null,
             payment_method_id: null,
-            start_date: '',
-            end_date: '',
+            start_date: null,
+            end_date: null,
             order_by: null,
             order: null,
         });

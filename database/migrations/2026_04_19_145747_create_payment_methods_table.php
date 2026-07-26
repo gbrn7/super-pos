@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('image')->nullable();
             $table->unsignedBigInteger('created_at');
             $table->unsignedBigInteger('updated_at');
+            $table->softDeletes();
         });
     }
 

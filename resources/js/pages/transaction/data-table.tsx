@@ -92,8 +92,8 @@ interface DataTableProps<TData, TValue> {
     onChangeUser?: (userId: number | null) => void;
     onChangePaymentMethod?: (paymentMethodId: number | null) => void;
     onChangeKeyword: (keyword: string) => void;
-    onChangeStartDate: (date: string) => void;
-    onChangeEndDate: (date: string) => void;
+    onChangeStartDate: (date: number | null) => void;
+    onChangeEndDate: (date: number | null) => void;
     setQueryParam: React.Dispatch<React.SetStateAction<TransactionQueryParam>>;
     rowSelection: RowSelectionState;
     setRowSelection: React.Dispatch<React.SetStateAction<RowSelectionState>>;
@@ -392,8 +392,22 @@ export function DataTable<TData, TValue>({
                         </Label>
                         <Input
                             type="date"
-                            value={queryParam.start_date || ''}
-                            onChange={(e) => onChangeStartDate(e.target.value)}
+                            value={
+                                queryParam.start_date
+                                    ? new Date(queryParam.start_date * 1000)
+                                          .toISOString()
+                                          .slice(0, 10)
+                                    : ''
+                            }
+                            onChange={(e) =>
+                                onChangeStartDate(
+                                    e.target.value
+                                        ? Math.floor(
+                                              new Date(e.target.value).getTime() / 1000,
+                                          )
+                                        : null,
+                                )
+                            }
                             className="w-full"
                         />
                     </div>
@@ -406,8 +420,22 @@ export function DataTable<TData, TValue>({
                         </Label>
                         <Input
                             type="date"
-                            value={queryParam.end_date || ''}
-                            onChange={(e) => onChangeEndDate(e.target.value)}
+                            value={
+                                queryParam.end_date
+                                    ? new Date(queryParam.end_date * 1000)
+                                          .toISOString()
+                                          .slice(0, 10)
+                                    : ''
+                            }
+                            onChange={(e) =>
+                                onChangeEndDate(
+                                    e.target.value
+                                        ? Math.floor(
+                                              new Date(e.target.value).getTime() / 1000,
+                                          )
+                                        : null,
+                                )
+                            }
                             className="w-full"
                         />
                     </div>
@@ -516,11 +544,12 @@ export function DataTable<TData, TValue>({
                                     className="gap-1.5 bg-muted/50 px-2 py-0.5 text-xs font-normal hover:bg-muted"
                                 >
                                     <span>
-                                        {t('component.data_table.filter.start_date_label', 'Tanggal Mulai')}: {queryParam.start_date}
+                                        {t('component.data_table.filter.start_date_label', 'Tanggal Mulai')}:{' '}
+                                        {new Date(queryParam.start_date * 1000).toLocaleDateString()}
                                     </span>
                                     <button
                                         type="button"
-                                        onClick={() => onChangeStartDate('')}
+                                        onClick={() => onChangeStartDate(null)}
                                         className="ml-0.5 rounded-full p-0.5 text-muted-foreground transition-colors hover:bg-muted-foreground/20 hover:text-foreground"
                                     >
                                         <X className="h-3 w-3" />
@@ -537,11 +566,12 @@ export function DataTable<TData, TValue>({
                                     className="gap-1.5 bg-muted/50 px-2 py-0.5 text-xs font-normal hover:bg-muted"
                                 >
                                     <span>
-                                        {t('component.data_table.filter.end_date_label', 'Tanggal Akhir')}: {queryParam.end_date}
+                                        {t('component.data_table.filter.end_date_label', 'Tanggal Akhir')}:{' '}
+                                        {new Date(queryParam.end_date * 1000).toLocaleDateString()}
                                     </span>
                                     <button
                                         type="button"
-                                        onClick={() => onChangeEndDate('')}
+                                        onClick={() => onChangeEndDate(null)}
                                         className="ml-0.5 rounded-full p-0.5 text-muted-foreground transition-colors hover:bg-muted-foreground/20 hover:text-foreground"
                                     >
                                         <X className="h-3 w-3" />

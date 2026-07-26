@@ -20,7 +20,9 @@ return new class extends Migration
             $table->decimal('cost_price', 10, 2);
             $table->decimal('price', 10, 2);
             $table->decimal('discount', 10, 2)->default(0);
-            $table->timestamps();
+            $table->unsignedBigInteger('created_at');
+            $table->unsignedBigInteger('updated_at');
+            $table->softDeletes();
         });
     }
 

@@ -62,6 +62,9 @@ class ApiTransactionController extends Controller implements HasMiddleware
 
             return ResponseApi::make(true, trans('message.success.success'), $data);
         } catch (\Throwable $th) {
+
+            dd($th->getMessage());
+
             return ResponseApi::make(false, $th->getMessage(), null, $th->getCode());
         }
     }

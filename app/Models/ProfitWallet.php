@@ -7,11 +7,12 @@ use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ProfitWallet extends Model
 {
     /** @use HasFactory<ProfitWalletFactory> */
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $fillable = ['balance', 'status', 'total_inflow', 'total_outflow'];
 

@@ -12,36 +12,37 @@ class TransactionRepository implements TransactionRepositoryInterface
 {
     public function getAllByIndex(GetTransactionReqModel $request): Paginator|Collection
     {
+        // dd($request);
         $query = Transaction::query()
             ->with(['user', 'paymentMethod'])
             ->when($request->keyword, function ($query) use ($request) {
                 if ($request->field && $request->field !== 'default') {
                     if ($request->field === 'payment_method_name') {
-                        $query->whereHas('paymentMethod', fn ($pm) => $pm->where('name', 'ilike', "%{$request->keyword}%"));
+                        $query->whereHas('paymentMethod', fn($pm) => $pm->where('name', 'ilike', "%{$request->keyword}%"));
                     } elseif ($request->field === 'user_name') {
-                        $query->whereHas('user', fn ($u) => $u->where('name', 'ilike', "%{$request->keyword}%"));
+                        $query->whereHas('user', fn($u) => $u->where('name', 'ilike', "%{$request->keyword}%"));
                     } else {
-                        $query->where('transactions.'.$request->field, 'ilike', "%{$request->keyword}%");
+                        $query->where('transactions.' . $request->field, 'ilike', "%{$request->keyword}%");
                     }
                 } else {
                     $query->where(function ($q) use ($request) {
                         $q->where('transactions.invoice_number', 'ilike', "%{$request->keyword}%")
-                            ->orWhereHas('paymentMethod', fn ($pm) => $pm->where('name', 'ilike', "%{$request->keyword}%"))
-                            ->orWhereHas('user', fn ($u) => $u->where('name', 'ilike', "%{$request->keyword}%"));
+                            ->orWhereHas('paymentMethod', fn($pm) => $pm->where('name', 'ilike', "%{$request->keyword}%"))
+                            ->orWhereHas('user', fn($u) => $u->where('name', 'ilike', "%{$request->keyword}%"));
                     });
                 }
             })
-            ->when($request->invoice_number, fn ($query) => $query->where('transactions.invoice_number', 'ilike', "%{$request->invoice_number}%"))
-            ->when($request->user_id, fn ($query) => $query->where('transactions.user_id', $request->user_id))
-            ->when($request->payment_method_id, fn ($query) => $query->where('transactions.payment_method_id', $request->payment_method_id))
-            ->when($request->start_date, fn ($query) => $query->whereDate('transactions.created_at', '>=', $request->start_date))
-            ->when($request->end_date, fn ($query) => $query->whereDate('transactions.created_at', '<=', $request->end_date));
+            ->when($request->invoice_number, fn($query) => $query->where('transactions.invoice_number', 'ilike', "%{$request->invoice_number}%"))
+            ->when($request->user_id, fn($query) => $query->where('transactions.user_id', $request->user_id))
+            ->when($request->payment_method_id, fn($query) => $query->where('transactions.payment_method_id', $request->payment_method_id))
+            ->when($request->start_date, fn($query) => $query->where('transactions.created_at', '>=', $request->start_date))
+            ->when($request->end_date, fn($query) => $query->where('transactions.created_at', '<=', $request->end_date));
 
         if (isset($request->order_by) && isset($request->order)) {
             if ($request->order_by === 'payment_method_name') {
                 $query->orderBy('payment_method_id', $request->order);
             } else {
-                $query->orderBy('transactions.'.$request->order_by, $request->order);
+                $query->orderBy('transactions.' . $request->order_by, $request->order);
             }
         } else {
             $query->orderBy('transactions.id', 'desc');

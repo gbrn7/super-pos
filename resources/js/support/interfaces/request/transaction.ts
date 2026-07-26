@@ -5,8 +5,8 @@ export interface TransactionQueryParam {
     field: string;
     user_id?: number | null;
     payment_method_id?: number | null;
-    start_date?: string;
-    end_date?: string;
+    start_date?: number | null;
+    end_date?: number | null;
     order_by: string | null;
     order: 'asc' | 'desc' | null;
 }

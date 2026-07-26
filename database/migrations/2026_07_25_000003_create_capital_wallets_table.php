@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('status')->default('active');
             $table->unsignedBigInteger('created_at');
             $table->unsignedBigInteger('updated_at');
+            $table->softDeletes();
         });
 
         $now = time();
