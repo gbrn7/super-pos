@@ -22,6 +22,7 @@ return new class extends Migration
             $table->boolean('is_unlimited')->default(false);
             $table->text('desc')->nullable();
             $table->integer('stock')->default(0);
+            $table->integer('sold_quantity')->default(0);
             $table->string('image')->nullable();
             $table->decimal('price', 10, 2);
             $table->decimal('cost_price', 10, 2);

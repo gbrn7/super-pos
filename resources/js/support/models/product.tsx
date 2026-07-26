@@ -14,6 +14,7 @@ export interface Product {
     is_active: boolean;
     is_unlimited: boolean;
     desc: string;
+    sold_quantity: number;
     created_at: number;
     updated_at: number;
 }

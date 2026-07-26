@@ -360,8 +360,8 @@
     "semantic_hash": ""
   },
   "app/Http/Resources/ProductResource.php": {
-    "mtime": 1785034630.0506697,
-    "ast_hash": "32f9082f1bc7dbf59049c0f68d68cd01",
+    "mtime": 1784593276.8661768,
+    "ast_hash": "1d5c94657aa1b5205b292324fccc8a86",
     "semantic_hash": ""
   },
   "app/Http/Resources/RoleResource.php": {
@@ -425,8 +425,8 @@
     "semantic_hash": "d2507758e01dbced38089e93fee366c3"
   },
   "app/Models/Product.php": {
-    "mtime": 1785034669.4066508,
-    "ast_hash": "aefc240718606762e9fc5faf51a612f4",
+    "mtime": 1784593288.1850147,
+    "ast_hash": "1ab30e60ec0904f61d1c8d1c6f554510",
     "semantic_hash": ""
   },
   "app/Models/Role.php": {
@@ -455,8 +455,8 @@
     "semantic_hash": "feea0627583a16eb20bd15bc51db0b1a"
   },
   "app/Providers/AppServiceProvider.php": {
-    "mtime": 1785034668.99022,
-    "ast_hash": "a7c72256de3fd24bcb3fb5e19ac72418",
+    "mtime": 1784998441.34897,
+    "ast_hash": "625f6c27799533e4090d4d0d89fe7372",
     "semantic_hash": ""
   },
   "app/Providers/FortifyServiceProvider.php": {
@@ -2185,8 +2185,8 @@
     "semantic_hash": ""
   },
   "resources/js/support/models/product.tsx": {
-    "mtime": 1785034637.6946924,
-    "ast_hash": "c983382fc50b30b73f562b3b8804035d",
+    "mtime": 1784729618.5681767,
+    "ast_hash": "861e7e1a0dbf2f599dbbdfd5342b40f7",
     "semantic_hash": ""
   },
   "resources/js/support/models/role.tsx": {
@@ -2280,8 +2280,8 @@
     "semantic_hash": ""
   },
   "routes/web.php": {
-    "mtime": 1785034668.4015765,
-    "ast_hash": "f8d403de4a24a6f66bd442347ff41730",
+    "mtime": 1784998456.7573764,
+    "ast_hash": "c1a7edc3cf904d3d58fdfc2569a10d02",
     "semantic_hash": ""
   },
   "src/@types/i18next.d.ts": {
@@ -3200,13 +3200,13 @@
     "semantic_hash": ""
   },
   "app/Http/Controllers/Api/ApiDashboardController.php": {
-    "mtime": 1785034669.1811955,
-    "ast_hash": "515edbb28e31ca06b7d3de0258786e9c",
+    "mtime": 1784998448.5067444,
+    "ast_hash": "cb85cb879bf59b9b6e0fad390aaadaaf",
     "semantic_hash": ""
   },
   "app/Repositories/DashboardRepository.php": {
-    "mtime": 1785034669.697245,
-    "ast_hash": "567c07329e5881ccce192512af198743",
+    "mtime": 1784999369.304011,
+    "ast_hash": "7b13674bfd9eef1a6b5de7bf496b4ed7",
     "semantic_hash": ""
   },
   "app/Services/DashboardService.php": {
@@ -3225,13 +3225,8 @@
     "semantic_hash": ""
   },
   "tests/Feature/Dashboard/ApiDashboardControllerTest.php": {
-    "mtime": 1785034669.848416,
-    "ast_hash": "a40f05e55b3a771c83cb9cc535a34989",
-    "semantic_hash": ""
-  },
-  "tests/Unit/ProductTest.php": {
-    "mtime": 1785034651.8066704,
-    "ast_hash": "fa80c43983c9946c3ba98f1145b92f16",
+    "mtime": 1784998474.3212197,
+    "ast_hash": "94167d1af3b549fd5bf13500896c748c",
     "semantic_hash": ""
   }
 }

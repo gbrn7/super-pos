@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\ApiCapitalWalletController;
 use App\Http\Controllers\Api\ApiCategoryController;
+use App\Http\Controllers\Api\ApiDashboardController;
 use App\Http\Controllers\Api\ApiMasterProductController;
 use App\Http\Controllers\Api\ApiPaymentMethodController;
 use App\Http\Controllers\Api\ApiProductController;
@@ -163,6 +164,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/capital-wallet/inject', [ApiCapitalWalletController::class, 'inject'])->name('apiCapitalWallet.inject');
         Route::post('/capital-wallet/drawdown', [ApiCapitalWalletController::class, 'drawdown'])->name('apiCapitalWallet.drawdown');
         Route::post('/capital-wallet/purchase-product', [ApiCapitalWalletController::class, 'purchaseProduct'])->name('apiCapitalWallet.purchaseProduct');
+
+        // dashboard api
+        Route::get('/dashboard', [ApiDashboardController::class, 'index'])->name('apiDashboard.index');
     });
 });
 

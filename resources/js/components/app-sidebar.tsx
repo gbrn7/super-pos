@@ -75,13 +75,6 @@ export function AppSidebar() {
                     permission: PERMISSIONENUMS.DASHBOARD.READ,
                     role: [],
                 },
-                {
-                    title: t('component.sidebar.example_menu_label', 'Example'),
-                    href: '/example',
-                    icon: Book,
-                    permission: PERMISSIONENUMS.DASHBOARD.READ,
-                    role: [],
-                },
             ],
         },
         {

@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Repositories\CapitalWalletRepository;
 use App\Repositories\CategoryRepository;
+use App\Repositories\DashboardRepository;
 use App\Repositories\MasterProductRepository;
 use App\Repositories\PaymentMethodRepository;
 use App\Repositories\ProductRepository;
@@ -15,6 +16,7 @@ use App\Repositories\UnitRepository;
 use App\Repositories\UserRepository;
 use App\Services\CapitalWalletService;
 use App\Services\CategoryService;
+use App\Services\DashboardService;
 use App\Services\MasterProductService;
 use App\Services\PaymentMethodService;
 use App\Services\ProductService;
@@ -27,6 +29,7 @@ use App\Services\UserService;
 use App\Support\Enums\RoleEnums;
 use App\Support\Interfaces\Repositories\CapitalWalletRepositoryInterface;
 use App\Support\Interfaces\Repositories\CategoryRepositoryInterface;
+use App\Support\Interfaces\Repositories\DashboardRepositoryInterface;
 use App\Support\Interfaces\Repositories\MasterProductRepositoryInterface;
 use App\Support\Interfaces\Repositories\PaymentMethodRepositoryInterface;
 use App\Support\Interfaces\Repositories\ProductRepositoryInterface;
@@ -38,6 +41,7 @@ use App\Support\Interfaces\Repositories\UnitRepositoryInterface;
 use App\Support\Interfaces\Repositories\UserRepositoryInterface;
 use App\Support\Interfaces\Services\CapitalWalletServiceInterface;
 use App\Support\Interfaces\Services\CategoryServiceInterface;
+use App\Support\Interfaces\Services\DashboardServiceInterface;
 use App\Support\Interfaces\Services\MasterProductServiceInterface;
 use App\Support\Interfaces\Services\PaymentMethodServiceInterface;
 use App\Support\Interfaces\Services\ProductServiceInterface;
@@ -104,6 +108,10 @@ class AppServiceProvider extends ServiceProvider
         // Capital wallet service repository
         $this->app->bind(CapitalWalletRepositoryInterface::class, CapitalWalletRepository::class);
         $this->app->bind(CapitalWalletServiceInterface::class, CapitalWalletService::class);
+
+        // Dashboard service repository
+        $this->app->bind(DashboardRepositoryInterface::class, DashboardRepository::class);
+        $this->app->bind(DashboardServiceInterface::class, DashboardService::class);
     }
 
     /**
