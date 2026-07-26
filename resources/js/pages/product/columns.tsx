@@ -202,6 +202,31 @@ export const columns = (props?: ColumnsProps): ColumnDef<Product>[] => {
         },
         {
             id: t(
+                'page.product.data_table.columns.sold_quantity_column_label',
+                'Terjual',
+            ),
+            accessorKey: 'sold_quantity',
+            header: ({ column }) => (
+                <ServerSideDataTableHeader
+                    column={column}
+                    title={t(
+                        'page.product.data_table.columns.sold_quantity_column_label',
+                        'Terjual',
+                    )}
+                    sortKey="sold_quantity"
+                    orderBy={props?.orderBy}
+                    order={props?.order}
+                    onSortChange={props?.onSortChange}
+                />
+            ),
+            cell: ({ row }) => (
+                <Badge className="bg-slate-100 text-slate-800 dark:bg-slate-800 dark:text-slate-300">
+                    {row.original.sold_quantity ?? 0}
+                </Badge>
+            ),
+        },
+        {
+            id: t(
                 'page.product.data_table.columns.cost_price_column_label',
                 'Harga Modal',
             ),

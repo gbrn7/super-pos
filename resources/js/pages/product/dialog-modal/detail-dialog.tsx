@@ -158,6 +158,17 @@ export function DetailDialog({
                         <div>
                             <p className="text-sm font-medium text-muted-foreground">
                                 {t(
+                                    'page.product.dialog_modal.detail_dialog.sold_quantity_label',
+                                    'Terjual',
+                                )}
+                            </p>
+                            <p className="mt-1 text-base">
+                                {product.sold_quantity ?? 0}
+                            </p>
+                        </div>
+                        <div>
+                            <p className="text-sm font-medium text-muted-foreground">
+                                {t(
                                     'page.product.dialog_modal.detail_dialog.is_active_label',
                                     'Status',
                                 )}
