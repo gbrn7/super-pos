@@ -50,8 +50,8 @@ test('withdraw capital request validates amount requirements', function () {
 
 test('request models map request inputs correctly', function () {
     $indexReq = Request::create('/api/profit-wallet', 'GET', [
-        'start_date' => '2026-01-01',
-        'end_date' => '2026-01-31',
+        'start_date' => '1767225600',
+        'end_date' => '1769817600',
         'type' => 'in',
         'transaction_type' => 'sales_profit',
         'keyword' => 'test',
@@ -60,8 +60,8 @@ test('request models map request inputs correctly', function () {
     ]);
     $getReqModel = new GetProfitWalletTransactionReqModel($indexReq);
 
-    expect($getReqModel->start_date)->toBe('2026-01-01')
-        ->and($getReqModel->end_date)->toBe('2026-01-31')
+    expect($getReqModel->start_date)->toBe(1767225600)
+        ->and($getReqModel->end_date)->toBe(1769817600)
         ->and($getReqModel->type)->toBe('in')
         ->and($getReqModel->transaction_type)->toBe('sales_profit')
         ->and($getReqModel->keyword)->toBe('test')

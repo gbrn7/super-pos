@@ -34,14 +34,22 @@ export default function ProfitWalletIndex({ storeSetting }: { storeSetting?: Sto
     const [detailOpen, setDetailOpen] = useState(false);
     const [selectedTransaction, setSelectedTransaction] = useState<any>(null);
 
-    const [queryParam, setQueryParam] = useState({
+    const [queryParam, setQueryParam] = useState<{
+        page: number;
+        limit: number;
+        keyword: string;
+        type: string;
+        transaction_type: string;
+        start_date: number | null;
+        end_date: number | null;
+    }>({
         page: 1,
         limit: 10,
         keyword: '',
         type: '',
         transaction_type: '',
-        start_date: '',
-        end_date: '',
+        start_date: null,
+        end_date: null,
     });
 
     const [pagination, setPagination] = useState({
@@ -104,8 +112,8 @@ export default function ProfitWalletIndex({ storeSetting }: { storeSetting?: Sto
             keyword: '',
             type: '',
             transaction_type: '',
-            start_date: '',
-            end_date: '',
+            start_date: null,
+            end_date: null,
         });
     };
 

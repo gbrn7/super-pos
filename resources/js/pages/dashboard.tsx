@@ -181,9 +181,9 @@ export default function Dashboard() {
     const [activeTab, setActiveTab] = React.useState<'transactions' | 'low_stock' | 'best_sellers'>('transactions');
     const [page, setPage] = React.useState(1);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
-    const [currentRange, setCurrentRange] = React.useState<{ start_date: string; end_date: string }>({
-        start_date: '',
-        end_date: '',
+    const [currentRange, setCurrentRange] = React.useState<{ start_date: number | null; end_date: number | null }>({
+        start_date: null,
+        end_date: null,
     });
 
     const totalRows = React.useMemo(() => {
@@ -216,7 +216,7 @@ export default function Dashboard() {
         }
     }, [dashboardData, activeTab, page, rowsPerPage]);
 
-    // Helper to calculate pre-defined date ranges
+    // Helper to calculate pre-defined date ranges in Unix timestamps (seconds)
     const getRangeDates = (type: string) => {
         const today = new Date();
         let start = new Date();
@@ -251,10 +251,9 @@ export default function Dashboard() {
                 break;
         }
 
-        const formatDate = (d: Date) => d.toISOString().split('T')[0];
         return {
-            start_date: formatDate(start),
-            end_date: formatDate(end),
+            start_date: Math.floor(new Date(start.setHours(0, 0, 0, 0)).getTime() / 1000),
+            end_date: Math.floor(new Date(end.setHours(23, 59, 59, 999)).getTime() / 1000),
         };
     };
 
@@ -262,7 +261,7 @@ export default function Dashboard() {
     const lastLoadedLimit = React.useRef(10);
     const lastLoadedRange = React.useRef('');
 
-    const fetchDashboardData = async (start: string, end: string, txPageNum = 1, txLimitNum = 10, onlyTransactions = false) => {
+    const fetchDashboardData = async (start: number, end: number, txPageNum = 1, txLimitNum = 10, onlyTransactions = false) => {
         if (onlyTransactions) {
             setIsTableLoading(true);
         } else {
@@ -325,7 +324,9 @@ export default function Dashboard() {
     const handleCustomRangeSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         if (customRange.start_date && customRange.end_date) {
-            setCurrentRange(customRange);
+            const startTs = Math.floor(new Date(`${customRange.start_date}T00:00:00`).getTime() / 1000);
+            const endTs = Math.floor(new Date(`${customRange.end_date}T23:59:59`).getTime() / 1000);
+            setCurrentRange({ start_date: startTs, end_date: endTs });
             setPage(1);
         }
     };

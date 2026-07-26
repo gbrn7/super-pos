@@ -54,12 +54,16 @@ class CapitalWalletRepository implements CapitalWalletRepositoryInterface
         $query = CapitalWalletTransaction::query()->with('reference');
 
         if ($request->start_date) {
-            $startTimestamp = Carbon::parse($request->start_date)->startOfDay()->getTimestamp();
-            $query->where('created_at', '>=', $startTimestamp);
+            $startDate = is_numeric($request->start_date)
+                ? Carbon::createFromTimestamp((int) $request->start_date)->startOfDay()->getTimestamp()
+                : Carbon::parse($request->start_date)->startOfDay()->getTimestamp();
+            $query->where('created_at', '>=', $startDate);
         }
         if ($request->end_date) {
-            $endTimestamp = Carbon::parse($request->end_date)->endOfDay()->getTimestamp();
-            $query->where('created_at', '<=', $endTimestamp);
+            $endDate = is_numeric($request->end_date)
+                ? Carbon::createFromTimestamp((int) $request->end_date)->endOfDay()->getTimestamp()
+                : Carbon::parse($request->end_date)->endOfDay()->getTimestamp();
+            $query->where('created_at', '<=', $endDate);
         }
         if ($request->type) {
             $query->where('type', $request->type);

@@ -6,9 +6,9 @@ use Illuminate\Http\Request;
 
 class GetCapitalWalletTransactionReqModel
 {
-    public ?string $start_date;
+    public ?int $start_date;
 
-    public ?string $end_date;
+    public ?int $end_date;
 
     public ?string $type;
 
@@ -22,8 +22,8 @@ class GetCapitalWalletTransactionReqModel
 
     public function __construct(Request $request)
     {
-        $this->start_date = $request->query('start_date');
-        $this->end_date = $request->query('end_date');
+        $this->start_date = $request->query('start_date') !== null && $request->query('start_date') !== '' ? (int) $request->query('start_date') : null;
+        $this->end_date = $request->query('end_date') !== null && $request->query('end_date') !== '' ? (int) $request->query('end_date') : null;
         $this->type = $request->query('type');
         $this->transaction_type = $request->query('transaction_type');
         $this->keyword = $request->query('keyword');

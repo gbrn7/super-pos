@@ -51,8 +51,8 @@ interface DataTableProps<TData, TValue> {
         keyword: string;
         type: string;
         transaction_type: string;
-        start_date: string;
-        end_date: string;
+        start_date: number | null;
+        end_date: number | null;
     };
     pagination: {
         current_page: number;
@@ -91,8 +91,8 @@ export function DataTable<TData, TValue>({
         queryParam.keyword !== '' ||
         queryParam.type !== '' ||
         queryParam.transaction_type !== '' ||
-        queryParam.start_date !== '' ||
-        queryParam.end_date !== '';
+        queryParam.start_date !== null ||
+        queryParam.end_date !== null;
 
     return (
         <div className="rounded-2xl border bg-card p-3 space-y-4">
@@ -204,8 +204,23 @@ export function DataTable<TData, TValue>({
                     </Label>
                     <Input
                         type="date"
-                        value={queryParam.start_date || ''}
-                        onChange={(e) => onQueryParamChange('start_date', e.target.value)}
+                        value={
+                            queryParam.start_date
+                                ? new Date(queryParam.start_date * 1000)
+                                      .toISOString()
+                                      .slice(0, 10)
+                                : ''
+                        }
+                        onChange={(e) =>
+                            onQueryParamChange(
+                                'start_date',
+                                e.target.value
+                                    ? Math.floor(
+                                          new Date(e.target.value).getTime() / 1000,
+                                      )
+                                    : null,
+                            )
+                        }
                         disabled={processing}
                         className="w-full"
                     />
@@ -219,8 +234,23 @@ export function DataTable<TData, TValue>({
                     </Label>
                     <Input
                         type="date"
-                        value={queryParam.end_date || ''}
-                        onChange={(e) => onQueryParamChange('end_date', e.target.value)}
+                        value={
+                            queryParam.end_date
+                                ? new Date(queryParam.end_date * 1000)
+                                      .toISOString()
+                                      .slice(0, 10)
+                                : ''
+                        }
+                        onChange={(e) =>
+                            onQueryParamChange(
+                                'end_date',
+                                e.target.value
+                                    ? Math.floor(
+                                          new Date(e.target.value).getTime() / 1000,
+                                      )
+                                    : null,
+                            )
+                        }
                         disabled={processing}
                         className="w-full"
                     />
@@ -280,10 +310,10 @@ export function DataTable<TData, TValue>({
                     )}
                     {queryParam.start_date && (
                         <Badge variant="secondary" className="gap-1 font-normal py-0.5 px-2 bg-muted/50 hover:bg-muted">
-                            {t('page.capital_wallet.data_table.filters.start_date_label', 'Mulai')}: {queryParam.start_date}
+                            {t('page.capital_wallet.data_table.filters.start_date_label', 'Mulai')}: {new Date(queryParam.start_date * 1000).toISOString().slice(0, 10)}
                             <button
                                 type="button"
-                                onClick={() => onQueryParamChange('start_date', '')}
+                                onClick={() => onQueryParamChange('start_date', null)}
                                 className="ml-0.5 rounded-full p-0.5 text-muted-foreground transition-colors hover:bg-muted-foreground/20 hover:text-foreground"
                             >
                                 <X className="h-3 w-3" />
@@ -293,10 +323,10 @@ export function DataTable<TData, TValue>({
                     )}
                     {queryParam.end_date && (
                         <Badge variant="secondary" className="gap-1 font-normal py-0.5 px-2 bg-muted/50 hover:bg-muted">
-                            {t('page.capital_wallet.data_table.filters.end_date_badge_label', 'Akhir')}: {queryParam.end_date}
+                            {t('page.capital_wallet.data_table.filters.end_date_badge_label', 'Akhir')}: {new Date(queryParam.end_date * 1000).toISOString().slice(0, 10)}
                             <button
                                 type="button"
-                                onClick={() => onQueryParamChange('end_date', '')}
+                                onClick={() => onQueryParamChange('end_date', null)}
                                 className="ml-0.5 rounded-full p-0.5 text-muted-foreground transition-colors hover:bg-muted-foreground/20 hover:text-foreground"
                             >
                                 <X className="h-3 w-3" />

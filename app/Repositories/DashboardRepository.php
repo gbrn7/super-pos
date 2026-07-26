@@ -6,21 +6,39 @@ use App\Models\Product;
 use App\Models\Transaction;
 use App\Models\TransactionDetail;
 use App\Support\Interfaces\Repositories\DashboardRepositoryInterface;
+use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
 class DashboardRepository implements DashboardRepositoryInterface
 {
+    private function parseStartTimestamp(string $startDate): int
+    {
+        return is_numeric($startDate)
+            ? Carbon::createFromTimestamp((int) $startDate)->startOfDay()->getTimestamp()
+            : Carbon::parse($startDate)->startOfDay()->getTimestamp();
+    }
+
+    private function parseEndTimestamp(string $endDate): int
+    {
+        return is_numeric($endDate)
+            ? Carbon::createFromTimestamp((int) $endDate)->endOfDay()->getTimestamp()
+            : Carbon::parse($endDate)->endOfDay()->getTimestamp();
+    }
+
     public function getMetrics(string $startDate, string $endDate): array
     {
-        $revenue = Transaction::whereBetween('created_at', [$startDate.' 00:00:00', $endDate.' 23:59:59'])
+        $start = $this->parseStartTimestamp($startDate);
+        $end = $this->parseEndTimestamp($endDate);
+
+        $revenue = Transaction::whereBetween('created_at', [$start, $end])
             ->sum('total_amount');
 
-        $transactionsCount = Transaction::whereBetween('created_at', [$startDate.' 00:00:00', $endDate.' 23:59:59'])
+        $transactionsCount = Transaction::whereBetween('created_at', [$start, $end])
             ->count();
 
         $detailsQuery = TransactionDetail::join('transactions', 'transaction_detail.transaction_id', '=', 'transactions.id')
-            ->whereBetween('transactions.created_at', [$startDate.' 00:00:00', $endDate.' 23:59:59']);
+            ->whereBetween('transactions.created_at', [$start, $end]);
 
         $netProfit = $detailsQuery->sum(DB::raw('transaction_detail.quantity * (transaction_detail.price - transaction_detail.cost_price)'));
         $productsSold = $detailsQuery->sum('transaction_detail.quantity');
@@ -35,15 +53,18 @@ class DashboardRepository implements DashboardRepositoryInterface
 
     public function getTrendChart(string $startDate, string $endDate): Collection
     {
+        $start = $this->parseStartTimestamp($startDate);
+        $end = $this->parseEndTimestamp($endDate);
+
         return Transaction::select(
-            DB::raw('DATE(transactions.created_at) as date'),
+            DB::raw("to_char(to_timestamp(transactions.created_at), 'YYYY-MM-DD') as date"),
             DB::raw('SUM(transactions.total_amount) as revenue'),
             DB::raw('SUM(transaction_detail.quantity * (transaction_detail.price - transaction_detail.cost_price)) as profit'),
             DB::raw('SUM(transaction_detail.quantity) as quantity')
         )
             ->join('transaction_detail', 'transactions.id', '=', 'transaction_detail.transaction_id')
-            ->whereBetween('transactions.created_at', [$startDate.' 00:00:00', $endDate.' 23:59:59'])
-            ->groupBy(DB::raw('DATE(transactions.created_at)'))
+            ->whereBetween('transactions.created_at', [$start, $end])
+            ->groupBy(DB::raw("to_char(to_timestamp(transactions.created_at), 'YYYY-MM-DD')"))
             ->orderBy('date', 'asc')
             ->get()
             ->map(function ($item) {
@@ -58,13 +79,16 @@ class DashboardRepository implements DashboardRepositoryInterface
 
     public function getTopProducts(string $startDate, string $endDate, int $limit = 5): Collection
     {
+        $start = $this->parseStartTimestamp($startDate);
+        $end = $this->parseEndTimestamp($endDate);
+
         return TransactionDetail::select(
             'products.name',
             DB::raw('SUM(transaction_detail.quantity) as quantity')
         )
             ->join('products', 'transaction_detail.product_id', '=', 'products.id')
             ->join('transactions', 'transaction_detail.transaction_id', '=', 'transactions.id')
-            ->whereBetween('transactions.created_at', [$startDate.' 00:00:00', $endDate.' 23:59:59'])
+            ->whereBetween('transactions.created_at', [$start, $end])
             ->groupBy('transaction_detail.product_id', 'products.name')
             ->orderBy('quantity', 'desc')
             ->limit($limit)
@@ -79,8 +103,11 @@ class DashboardRepository implements DashboardRepositoryInterface
 
     public function getRecentTransactions(string $startDate, string $endDate, int $limit = 10): Collection
     {
+        $start = $this->parseStartTimestamp($startDate);
+        $end = $this->parseEndTimestamp($endDate);
+
         return Transaction::with(['user', 'paymentMethod'])
-            ->whereBetween('created_at', [$startDate.' 00:00:00', $endDate.' 23:59:59'])
+            ->whereBetween('created_at', [$start, $end])
             ->orderBy('created_at', 'desc')
             ->limit($limit)
             ->get();
@@ -96,13 +123,16 @@ class DashboardRepository implements DashboardRepositoryInterface
 
     public function getTransactionsByPaymentMethod(string $startDate, string $endDate): Collection
     {
+        $start = $this->parseStartTimestamp($startDate);
+        $end = $this->parseEndTimestamp($endDate);
+
         return Transaction::select(
             'payment_methods.name as payment_method_name',
             DB::raw('COUNT(transactions.id) as transactions_count'),
             DB::raw('SUM(transactions.total_amount) as total_amount')
         )
             ->join('payment_methods', 'transactions.payment_method_id', '=', 'payment_methods.id')
-            ->whereBetween('transactions.created_at', [$startDate.' 00:00:00', $endDate.' 23:59:59'])
+            ->whereBetween('transactions.created_at', [$start, $end])
             ->groupBy('transactions.payment_method_id', 'payment_methods.name')
             ->get()
             ->map(function ($item) {
@@ -116,6 +146,9 @@ class DashboardRepository implements DashboardRepositoryInterface
 
     public function getTransactionsByCategory(string $startDate, string $endDate): Collection
     {
+        $start = $this->parseStartTimestamp($startDate);
+        $end = $this->parseEndTimestamp($endDate);
+
         return TransactionDetail::select(
             'categories.name as category_name',
             DB::raw('SUM(transaction_detail.quantity * transaction_detail.price) as total_amount'),
@@ -124,7 +157,7 @@ class DashboardRepository implements DashboardRepositoryInterface
             ->join('products', 'transaction_detail.product_id', '=', 'products.id')
             ->join('categories', 'products.category_id', '=', 'categories.id')
             ->join('transactions', 'transaction_detail.transaction_id', '=', 'transactions.id')
-            ->whereBetween('transactions.created_at', [$startDate.' 00:00:00', $endDate.' 23:59:59'])
+            ->whereBetween('transactions.created_at', [$start, $end])
             ->groupBy('products.category_id', 'categories.name')
             ->get()
             ->map(function ($item) {
