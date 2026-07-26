@@ -134,4 +134,9 @@ class ProductRepository implements ProductRepositoryInterface
     {
         return (bool) $product->increment('stock', $quantity);
     }
+
+    public function incrementSoldQuantity(Product $product, int $quantity = 1): bool
+    {
+        return (bool) $product->increment('sold_quantity', $quantity);
+    }
 }

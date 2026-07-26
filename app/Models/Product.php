@@ -21,6 +21,7 @@ class Product extends Model
         'is_unlimited',
         'desc',
         'stock',
+        'sold_quantity',
         'image',
         'price',
         'cost_price',

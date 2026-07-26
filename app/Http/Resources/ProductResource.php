@@ -26,6 +26,7 @@ class ProductResource extends JsonResource
             'is_active' => $this->is_active,
             'is_unlimited' => $this->is_unlimited,
             'stock' => $this->stock,
+            'sold_quantity' => $this->sold_quantity,
             'price' => $this->price,
             'cost_price' => $this->cost_price,
             'desc' => $this->desc,
