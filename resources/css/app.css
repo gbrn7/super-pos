@@ -143,21 +143,63 @@
 }
 
 @media print {
-    /* Hide the entire background application to prevent layout shifts and blank pages */
+    @page {
+        size: 58mm auto;
+        margin: 0;
+    }
+
+    /* Box model reset */
+    * {
+        box-sizing: border-box !important;
+    }
+
+    /* Hide the entire background application */
     #app {
         display: none !important;
     }
 
-    /* Force page background to white and text to black to prevent dark mode color inversion bugs */
+    /* Hide ALL direct body children by default (portals, toasts, etc.) */
+    body > * {
+        display: none !important;
+    }
+
+    /* Then selectively show only the portal/dialog that contains the receipt */
+    body > *:has(#printable-receipt),
+    body > *:has(#printable-receipt) div[data-radix-portal],
+    div[data-radix-portal]:has(#printable-receipt),
+    [data-slot='dialog-content']:has(#printable-receipt),
+    div[role='dialog']:has(#printable-receipt) {
+        display: block !important;
+        position: static !important;
+        width: 44mm !important;
+        max-width: 44mm !important;
+        height: auto !important;
+        min-height: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        background: white !important;
+        border: none !important;
+        box-shadow: none !important;
+        transform: none !important;
+        translate: none !important;
+        left: 0 !important;
+        top: 0 !important;
+        inset: unset !important;
+        overflow: visible !important;
+    }
+
+    /* Strip all margin/padding from root elements */
     html,
     body {
         background-color: white !important;
         background-image: none !important;
         color: black !important;
-        width: 100% !important;
+        width: 44mm !important;
+        max-width: 44mm !important;
         height: auto !important;
         margin: 0 !important;
         padding: 0 !important;
+        overflow: visible !important;
     }
 
     /* Force crisp black text color and transparent background inside the printable receipt */
@@ -178,32 +220,39 @@
         display: none !important;
     }
 
-    /* Reset the modal content container layout to a block centered horizontally at the top */
+    /* Reset portal/dialog positioning only */
+    div[data-radix-portal],
+    [data-radix-portal],
     [data-slot='dialog-content'],
     div[role='dialog'] {
         display: block !important;
-        position: relative !important;
-        left: auto !important;
-        right: auto !important;
-        top: 0 !important;
+        position: static !important;
+        width: 44mm !important;
+        max-width: 44mm !important;
+        height: auto !important;
+        min-height: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        background: white !important;
+        border: none !important;
+        box-shadow: none !important;
         transform: none !important;
         translate: none !important;
-        width: 80mm !important;
-        max-width: 80mm !important;
-        border: none !important;
-        box-shadow: none !important;
-        background: white !important;
-        padding: 0 !important;
-        margin: 0 auto !important;
+        left: 0 !important;
+        top: 0 !important;
+        inset: unset !important;
+        overflow: visible !important;
     }
 
-    /* Scale the actual printable card to fit the 80mm container */
+    /* Strictly bounded print width: 44mm total width */
     #printable-receipt {
+        display: block !important;
         border: none !important;
         box-shadow: none !important;
-        padding: 0 !important;
+        padding: 0 0.5mm !important;
         margin: 0 !important;
-        width: 100% !important;
-        max-width: 80mm !important;
+        width: 44mm !important;
+        max-width: 44mm !important;
+        box-sizing: border-box !important;
     }
 }

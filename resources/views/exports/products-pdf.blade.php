@@ -85,8 +85,8 @@
                 <td>{{ $product->category?->name ?? '-' }}</td>
                 <td>{{ $product->unit?->name ?? '-' }}</td>
                 <td>{{ $product->stock }}</td>
-                <td>Rp {{ number_format((float) $product->cost_price, 0, ',', '.') }}</td>
-                <td>Rp {{ number_format((float) $product->price, 0, ',', '.') }}</td>
+                <td>Rp {{ number_format((float) $product->cost_price, 2, ',', '.') }}</td>
+                <td>Rp {{ number_format((float) $product->price, 2, ',', '.') }}</td>
                 <td>{{ $product->desc }}</td>
             </tr>
             @empty

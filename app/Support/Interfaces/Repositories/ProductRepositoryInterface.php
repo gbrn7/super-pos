@@ -40,6 +40,21 @@ interface ProductRepositoryInterface
     public function deleteMany(array $ids): int;
 
     /**
+     * Get total number of products.
+     */
+    public function getTotalProductsCount(): int;
+
+    /**
+     * Get count of out-of-stock products (stock <= 0 and not unlimited).
+     */
+    public function getOutOfStockProductsCount(): int;
+
+    /**
+     * Get best‑selling products limited by count.
+     */
+    public function getBestSellers(int $limit): Collection;
+
+    /**
      * Insert new products.
      */
     public function insert(array $data): bool;

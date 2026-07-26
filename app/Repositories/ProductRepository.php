@@ -125,6 +125,29 @@ class ProductRepository implements ProductRepositoryInterface
         return Product::where('barcode', $barcode)->first();
     }
 
+    // Added methods for product counts
+    public function getTotalProductsCount(): int
+    {
+        return Product::count();
+    }
+
+    public function getOutOfStockProductsCount(): int
+    {
+        return Product::where('is_unlimited', false)->where('stock', '<=', 0)->count();
+    }
+
+    /**
+     * Get best‑selling products limited by count.
+     */
+    public function getBestSellers(int $limit): Collection
+    {
+        return Product::select('id', 'name', 'sku', 'price', 'sold_quantity')
+            ->orderBy('sold_quantity', 'desc')
+            ->limit($limit)
+            ->get();
+    }
+
+    // Existing decrementStock method
     public function decrementStock(Product $product, int $quantity = 1): bool
     {
         return (bool) $product->decrement('stock', $quantity);

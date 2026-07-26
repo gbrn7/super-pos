@@ -59,17 +59,17 @@ export default function ReceiptCard({
     return (
         <div
             id="printable-receipt"
-            className="w-full max-w-xs mx-auto space-y-4 rounded-xl border bg-card p-5 font-sans text-xs leading-relaxed shadow-xs"
+            className="w-full max-w-[260px] mx-auto space-y-4 rounded-xl border bg-card p-4 font-sans text-[11px] leading-relaxed shadow-xs"
         >
             {/* Store Header */}
             <div className="space-y-1 text-center">
-                <h3 className="text-sm font-extrabold tracking-tight text-foreground uppercase truncate">
+                <h3 className="text-xs font-extrabold tracking-tight text-foreground uppercase truncate">
                     {storeName || t('page.settings.store.receipt_preview.mock_name', 'NAMA TOKO')}
                 </h3>
-                <p className="text-[10px] leading-normal text-muted-foreground/80 whitespace-pre-line">
+                <p className="text-[9px] leading-normal text-muted-foreground/80 whitespace-pre-line">
                     {storeAddress || t('page.settings.store.receipt_preview.mock_address', 'Alamat Toko')}
                 </p>
-                <div className="text-[10px] font-bold text-foreground tabular-nums tracking-wide mt-1">
+                <div className="text-[9px] font-bold text-foreground tabular-nums tracking-wide mt-1">
                     {invoiceNumber}
                 </div>
             </div>
@@ -77,7 +77,7 @@ export default function ReceiptCard({
             <div className="my-1 border-t border-border/50 select-none" />
 
             {/* Transaction Details */}
-            <div className="space-y-1.5 text-xs text-muted-foreground">
+            <div className="space-y-1 text-[11px] text-muted-foreground">
                 <div className="flex items-center justify-between">
                     <span>
                         {t('page.kasir.receipt_date', 'Tanggal')}
@@ -100,7 +100,7 @@ export default function ReceiptCard({
                     <span>
                         {t('page.kasir.receipt_payment_method', 'Metode Pembayaran')}
                     </span>
-                    <span className="rounded bg-secondary px-1.5 py-0.5 text-[10px] font-semibold text-foreground uppercase">
+                    <span className="rounded bg-secondary px-1.5 py-0.5 text-[9px] font-semibold text-foreground uppercase">
                         {paymentMethodName}
                     </span>
                 </div>
@@ -109,17 +109,11 @@ export default function ReceiptCard({
             <div className="my-1 border-t border-border/50 select-none" />
 
             {/* Table Column Headers */}
-            <div className="flex justify-between text-[10px] font-bold tracking-wider text-muted-foreground uppercase">
-                <span className="flex-1 text-left">
-                    {t('page.kasir.receipt_item_name', 'Nama Barang')}
+            <div className="flex justify-between text-[9px] font-bold tracking-wider text-muted-foreground uppercase">
+                <span className="text-left">
+                    {t('page.kasir.receipt_item_name', 'Barang / Qty x Harga')}
                 </span>
-                <span className="w-8 text-right">
-                    {t('page.kasir.receipt_qty', 'Qty')}
-                </span>
-                <span className="w-16 text-right">
-                    {t('page.kasir.receipt_price', 'Harga')}
-                </span>
-                <span className="w-20 text-right">
+                <span className="text-right">
                     {t('page.kasir.receipt_total', 'Total')}
                 </span>
             </div>
@@ -127,7 +121,7 @@ export default function ReceiptCard({
             <div className="my-1 border-t border-dashed border-border/50 select-none" />
 
             {/* Items List */}
-            <div className="scrollbar-thin max-h-[35vh] space-y-3 overflow-y-auto py-0.5 pr-1.5 print:max-h-none print:overflow-visible print:pr-0">
+            <div className="scrollbar-thin max-h-[35vh] space-y-2.5 overflow-y-auto py-0.5 pr-1.5 print:max-h-none print:overflow-visible print:pr-0">
                 {details.map((detail: any, index: number) => {
                     const disc = Number(detail.discount) || 0;
                     const unitPrice = Number(detail.price) || 0;
@@ -135,32 +129,36 @@ export default function ReceiptCard({
                     const netSubtotal = netUnitPrice * detail.quantity;
 
                     return (
-                        <div key={detail.id || index} className="space-y-0.5">
-                            <div className="flex items-start justify-between gap-2 text-xs">
-                                <div className="min-w-0 flex-1">
-                                    <span className="block leading-snug font-semibold break-words text-foreground">
-                                        {detail.product_name || `Barang #${detail.product_id}`}
+                        <div key={detail.id || index} className="space-y-0.5 text-[11px]">
+                            {/* Line 1: Product Name */}
+                            <div className="font-semibold leading-snug break-words text-foreground">
+                                {detail.product_name || `Barang #${detail.product_id}`}
+                            </div>
+
+                            {/* Line 2 (If Discount): Original Price coret & Info Diskon */}
+                            {disc > 0 && (
+                                <div className="flex items-center gap-1.5 text-[10px] text-muted-foreground">
+                                    <span className="line-through decoration-black decoration-1" style={{ textDecoration: 'line-through' }}>
+                                        Rp {formatPrice(unitPrice)}
                                     </span>
-                                    {disc > 0 && (
-                                        <div className="mt-0.5 flex items-center text-[10px] text-muted-foreground">
-                                            <span className="mr-1.5 line-through">
-                                                {formatPrice(unitPrice)}
-                                            </span>
-                                            <span className="font-semibold text-emerald-600 dark:text-emerald-400">
-                                                {t('page.kasir.receipt_saved', 'Hemat')}{' '}
-                                                {formatPrice(disc)}/
-                                                {detail.unit_name || 'pcs'}
-                                            </span>
-                                        </div>
-                                    )}
+                                    <span className="font-medium text-emerald-600 dark:text-emerald-400">
+                                        (Diskon -{formatPrice(disc)})
+                                    </span>
                                 </div>
-                                <span className="w-8 pt-0.5 text-right font-medium text-muted-foreground tabular-nums">
-                                    {detail.quantity}
-                                </span>
-                                <span className="w-16 pt-0.5 text-right font-medium text-muted-foreground tabular-nums">
-                                    {formatPrice(netUnitPrice)}
-                                </span>
-                                <span className="w-20 pt-0.5 text-right font-bold text-foreground tabular-nums">
+                            )}
+
+                            {/* Line 3: Qty x Price = Subtotal */}
+                            <div className="flex items-center justify-between text-muted-foreground">
+                                <div className="flex items-center gap-1">
+                                    <span className="tabular-nums font-medium text-foreground">
+                                        {detail.quantity}
+                                    </span>
+                                    <span>x</span>
+                                    <span className="tabular-nums">
+                                        {formatPrice(netUnitPrice)}
+                                    </span>
+                                </div>
+                                <span className="font-bold text-foreground tabular-nums">
                                     {formatPrice(netSubtotal)}
                                 </span>
                             </div>
@@ -172,7 +170,7 @@ export default function ReceiptCard({
             <div className="my-1 border-t border-dashed border-border/50 select-none" />
 
             {/* Totals Summary */}
-            <div className="space-y-2 border-t border-border/50 pt-3 text-xs">
+            <div className="space-y-2 border-t border-border/50 pt-3 text-[11px]">
                 {hasTransactionDiscount ? (
                     <>
                         <div className="flex items-center justify-between text-muted-foreground">
@@ -197,7 +195,7 @@ export default function ReceiptCard({
                             <span className="font-bold text-foreground">
                                 {t('page.kasir.receipt_total', 'TOTAL')}
                             </span>
-                            <span className="text-sm font-extrabold text-foreground tabular-nums">
+                            <span className="text-xs font-extrabold text-foreground tabular-nums">
                                 {formatPrice(totalAmount)}
                             </span>
                         </div>
@@ -207,7 +205,7 @@ export default function ReceiptCard({
                         <span className="font-bold text-foreground">
                             {t('page.kasir.receipt_total', 'TOTAL')}
                         </span>
-                        <span className="text-sm font-extrabold text-foreground tabular-nums">
+                        <span className="text-xs font-extrabold text-foreground tabular-nums">
                             {formatPrice(totalAmount)}
                         </span>
                     </div>
@@ -224,13 +222,13 @@ export default function ReceiptCard({
                     <span className="font-bold text-foreground">
                         {t('page.kasir.receipt_change', 'Kembalian')}
                     </span>
-                    <span className="text-sm font-extrabold text-foreground tabular-nums">
+                    <span className="text-xs font-extrabold text-foreground tabular-nums">
                         {formatPrice(changeAmount)}
                     </span>
                 </div>
 
                 {totalSavings > 0 && (
-                    <div className="mt-1.5 flex items-center justify-between rounded-lg bg-emerald-50 px-2 py-1.5 text-[11px] font-bold text-emerald-600 dark:bg-emerald-950/30 dark:text-emerald-400">
+                    <div className="mt-1.5 flex items-center justify-between rounded-lg bg-emerald-50 px-2 py-1.5 text-[10px] font-bold text-emerald-600 dark:bg-emerald-950/30 dark:text-emerald-400">
                         <span>
                             {t('page.kasir.receipt_total_savings', 'TOTAL HEMAT')}
                         </span>

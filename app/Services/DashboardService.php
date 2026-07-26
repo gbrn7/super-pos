@@ -2,8 +2,8 @@
 
 namespace App\Services;
 
-use App\Models\Product;
 use App\Support\Interfaces\Repositories\DashboardRepositoryInterface;
+use App\Support\Interfaces\Repositories\ProductRepositoryInterface;
 use App\Support\Interfaces\Repositories\TransactionRepositoryInterface;
 use App\Support\Interfaces\Services\DashboardServiceInterface;
 use App\Support\Models\Transaction\GetTransactionReqModel;
@@ -15,7 +15,8 @@ class DashboardService implements DashboardServiceInterface
 {
     public function __construct(
         protected DashboardRepositoryInterface $dashboardRepository,
-        protected TransactionRepositoryInterface $transactionRepository
+        protected TransactionRepositoryInterface $transactionRepository,
+        protected ProductRepositoryInterface $productRepository
     ) {}
 
     public function getDashboardData(?string $startDate = null, ?string $endDate = null, int $txPage = 1, int $txLimit = 10, bool $onlyTransactions = false): array
@@ -62,8 +63,8 @@ class DashboardService implements DashboardServiceInterface
             }
 
             $metrics = $this->dashboardRepository->getMetrics($startDate, $endDate);
-            $metrics['total_products'] = (int) Product::count();
-            $metrics['out_of_stock_products'] = (int) Product::where('is_unlimited', false)->where('stock', '<=', 0)->count();
+            $metrics['total_products'] = $this->productRepository->getTotalProductsCount();
+            $metrics['out_of_stock_products'] = $this->productRepository->getOutOfStockProductsCount();
 
             $trendChart = $this->dashboardRepository->getTrendChart($startDate, $endDate);
             $topProducts = $this->dashboardRepository->getTopProducts($startDate, $endDate);
@@ -71,10 +72,8 @@ class DashboardService implements DashboardServiceInterface
             $transactionsByPaymentMethod = $this->dashboardRepository->getTransactionsByPaymentMethod($startDate, $endDate);
             $transactionsByCategory = $this->dashboardRepository->getTransactionsByCategory($startDate, $endDate);
 
-            $bestSellers = Product::select('id', 'name', 'sku', 'price', 'sold_quantity')
-                ->orderBy('sold_quantity', 'desc')
-                ->limit(50)
-                ->get()
+            // Retrieve best‑selling products via repository
+            $bestSellers = $this->productRepository->getBestSellers(50)
                 ->map(function ($product) {
                     return [
                         'id' => $product->id,
