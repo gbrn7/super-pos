@@ -422,16 +422,18 @@ export default function Dashboard() {
                         </CardContent>
                     </Card>
 
-                    {/* Net Profit Card */}
-                    <Card className="bg-gradient-to-br from-emerald-500/10 via-card to-card">
+                    {/* Margin / Net Profit Card */}
+                    <Card className={`bg-gradient-to-br ${dashboardData?.metrics?.total_net_profit < 0 ? 'from-rose-500/10' : 'from-emerald-500/10'} via-card to-card`}>
                         <CardHeader className="flex flex-row items-center justify-between pb-2">
-                            <span className="text-base font-bold text-muted-foreground">{i18next.t('page.dashboard.metrics.net_profit', 'Keuntungan Bersih')}</span>
-                            <IconTrendingUp className="h-4 w-4 text-emerald-500" />
+                            <span className="text-base font-bold text-muted-foreground">{i18next.t('page.dashboard.metrics.net_profit', 'Margin')}</span>
+                            <IconTrendingUp className={`h-4 w-4 ${dashboardData?.metrics?.total_net_profit < 0 ? 'text-rose-500' : 'text-emerald-500'}`} />
                         </CardHeader>
                         <CardContent>
-                            <div className="text-2xl font-bold tracking-tight">
+                            <div className={`text-2xl font-bold tracking-tight ${dashboardData?.metrics?.total_net_profit < 0 ? 'text-rose-600 dark:text-rose-400' : 'text-emerald-600 dark:text-emerald-400'}`}>
                                 {isLoading || !dashboardData ? (
                                     <div className="h-7 w-32 bg-muted animate-pulse rounded" />
+                                ) : dashboardData.metrics.total_net_profit < 0 ? (
+                                    `-${formatCurrency(Math.abs(dashboardData.metrics.total_net_profit))}`
                                 ) : (
                                     formatCurrency(dashboardData.metrics.total_net_profit)
                                 )}
