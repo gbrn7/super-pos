@@ -399,15 +399,15 @@ export function DataTable<TData, TValue>({
                                           .slice(0, 10)
                                     : ''
                             }
-                            onChange={(e) =>
-                                onChangeStartDate(
-                                    e.target.value
-                                        ? Math.floor(
-                                              new Date(e.target.value).getTime() / 1000,
-                                          )
-                                        : null,
-                                )
-                            }
+                            onChange={(e) => {
+                                if (e.target.value) {
+                                    const [year, month, day] = e.target.value.split('-').map(Number);
+                                    const startDate = new Date(year, month - 1, day, 0, 0, 0, 0);
+                                    onChangeStartDate(Math.floor(startDate.getTime() / 1000));
+                                } else {
+                                    onChangeStartDate(null);
+                                }
+                            }}
                             className="w-full"
                         />
                     </div>
@@ -427,15 +427,15 @@ export function DataTable<TData, TValue>({
                                           .slice(0, 10)
                                     : ''
                             }
-                            onChange={(e) =>
-                                onChangeEndDate(
-                                    e.target.value
-                                        ? Math.floor(
-                                              new Date(e.target.value).getTime() / 1000,
-                                          )
-                                        : null,
-                                )
-                            }
+                            onChange={(e) => {
+                                if (e.target.value) {
+                                    const [year, month, day] = e.target.value.split('-').map(Number);
+                                    const endDate = new Date(year, month - 1, day, 23, 59, 59, 999);
+                                    onChangeEndDate(Math.floor(endDate.getTime() / 1000));
+                                } else {
+                                    onChangeEndDate(null);
+                                }
+                            }}
                             className="w-full"
                         />
                     </div>

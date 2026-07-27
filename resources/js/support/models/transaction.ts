@@ -9,8 +9,8 @@ export interface TransactionDetail {
     price: number;
     discount?: number;
     subtotal: number;
-    created_at: string;
-    updated_at: string;
+    created_at: number;
+    updated_at: number;
 }
 
 export interface Transaction {
@@ -25,6 +25,6 @@ export interface Transaction {
     payment_amount: number;
     change_amount: number;
     details?: TransactionDetail[];
-    created_at: string;
-    updated_at: string;
+    created_at: number;
+    updated_at: number;
 }

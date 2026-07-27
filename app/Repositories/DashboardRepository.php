@@ -15,15 +15,15 @@ class DashboardRepository implements DashboardRepositoryInterface
     private function parseStartTimestamp(string $startDate): int
     {
         return is_numeric($startDate)
-            ? Carbon::createFromTimestamp((int) $startDate)->startOfDay()->getTimestamp()
-            : Carbon::parse($startDate)->startOfDay()->getTimestamp();
+            ? (int) $startDate
+            : Carbon::parse($startDate)->startOfDay()->unix();
     }
 
     private function parseEndTimestamp(string $endDate): int
     {
         return is_numeric($endDate)
-            ? Carbon::createFromTimestamp((int) $endDate)->endOfDay()->getTimestamp()
-            : Carbon::parse($endDate)->endOfDay()->getTimestamp();
+            ? (int) $endDate
+            : Carbon::parse($endDate)->endOfDay()->unix();
     }
 
     public function getMetrics(string $startDate, string $endDate): array
@@ -31,17 +31,22 @@ class DashboardRepository implements DashboardRepositoryInterface
         $start = $this->parseStartTimestamp($startDate);
         $end = $this->parseEndTimestamp($endDate);
 
-        $stats = DB::table('transactions')
-            ->leftJoin('transaction_detail', function ($join) {
-                $join->on('transactions.id', '=', 'transaction_detail.transaction_id')
-                    ->whereNull('transaction_detail.deleted_at');
-            })
+        $txStats = DB::table('transactions')
+            ->whereBetween('created_at', [$start, $end])
+            ->whereNull('deleted_at')
+            ->selectRaw('
+                COUNT(id) as transactions_count,
+                COALESCE(SUM(total_amount), 0) as total_revenue,
+                COALESCE(SUM(discount_amount), 0) as total_transaction_discount
+            ')
+            ->first();
+
+        $detailStats = DB::table('transaction_detail')
+            ->join('transactions', 'transaction_detail.transaction_id', '=', 'transactions.id')
             ->whereBetween('transactions.created_at', [$start, $end])
             ->whereNull('transactions.deleted_at')
+            ->whereNull('transaction_detail.deleted_at')
             ->selectRaw('
-                COUNT(DISTINCT transactions.id) as transactions_count,
-                COALESCE(SUM(DISTINCT transactions.total_amount), 0) as total_revenue,
-                COALESCE(SUM(DISTINCT transactions.discount_amount), 0) as total_transaction_discount,
                 COALESCE(SUM(transaction_detail.quantity * (transaction_detail.price - transaction_detail.cost_price)), 0) as total_net_profit,
                 COALESCE(SUM(transaction_detail.quantity * transaction_detail.cost_price), 0) as total_cost,
                 COALESCE(SUM(transaction_detail.discount), 0) as total_detail_discount,
@@ -49,16 +54,16 @@ class DashboardRepository implements DashboardRepositoryInterface
             ')
             ->first();
 
-        $totalRevenue = (float) ($stats->total_revenue ?? 0);
-        $totalCost = (float) ($stats->total_cost ?? 0);
+        $totalRevenue = (float) ($txStats->total_revenue ?? 0);
+        $totalCost = (float) ($detailStats->total_cost ?? 0);
         $totalProfit = $totalRevenue - $totalCost;
-        $totalDiscount = (float) ($stats->total_transaction_discount ?? 0) + (float) ($stats->total_detail_discount ?? 0);
+        $totalDiscount = (float) ($txStats->total_transaction_discount ?? 0) + (float) ($detailStats->total_detail_discount ?? 0);
 
         return [
             'total_revenue' => $totalRevenue,
             'total_net_profit' => $totalProfit,
-            'transactions_count' => (int) ($stats->transactions_count ?? 0),
-            'products_sold' => (int) ($stats->products_sold ?? 0),
+            'transactions_count' => (int) ($txStats->transactions_count ?? 0),
+            'products_sold' => (int) ($detailStats->products_sold ?? 0),
             'revenue_breakdown' => [
                 'profit' => $totalProfit,
                 'cost' => $totalCost,

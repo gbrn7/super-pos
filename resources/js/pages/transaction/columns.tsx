@@ -220,11 +220,19 @@ export const columns = (props?: ColumnsProps): ColumnDef<Transaction>[] => {
             cell: ({ row }) => {
                 const dateVal = row.original.created_at;
                 if (!dateVal) return '-';
-                const formatted =
-                    typeof dateVal === 'number'
-                        ? dayjs.unix(dateVal).format('DD/MM/YYYY HH:mm')
-                        : dayjs(dateVal).format('DD/MM/YYYY HH:mm');
-                return <span className="whitespace-nowrap">{formatted}</span>;
+                let parsed: dayjs.Dayjs;
+                if (typeof dateVal === 'number' || !isNaN(Number(dateVal))) {
+                    const num = Number(dateVal);
+                    // Check if timestamp is in seconds (10 digits) or milliseconds (13 digits)
+                    parsed = num > 1e11 ? dayjs(num) : dayjs.unix(num);
+                } else {
+                    parsed = dayjs(dateVal);
+                }
+                return (
+                    <span className="whitespace-nowrap">
+                        {parsed.isValid() ? parsed.format('DD/MM/YYYY, HH:mm') : '-'}
+                    </span>
+                );
             },
         },
         {

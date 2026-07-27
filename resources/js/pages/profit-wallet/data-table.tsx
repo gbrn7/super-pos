@@ -209,16 +209,15 @@ export function DataTable<TData, TValue>({
                                       .slice(0, 10)
                                 : ''
                         }
-                        onChange={(e) =>
-                            onQueryParamChange(
-                                'start_date',
-                                e.target.value
-                                    ? Math.floor(
-                                          new Date(e.target.value).getTime() / 1000,
-                                      )
-                                    : null,
-                            )
-                        }
+                        onChange={(e) => {
+                            if (e.target.value) {
+                                const [year, month, day] = e.target.value.split('-').map(Number);
+                                const startDate = new Date(year, month - 1, day, 0, 0, 0, 0);
+                                onQueryParamChange('start_date', Math.floor(startDate.getTime() / 1000));
+                            } else {
+                                onQueryParamChange('start_date', null);
+                            }
+                        }}
                         disabled={processing}
                         className="w-full"
                     />
@@ -239,16 +238,15 @@ export function DataTable<TData, TValue>({
                                       .slice(0, 10)
                                 : ''
                         }
-                        onChange={(e) =>
-                            onQueryParamChange(
-                                'end_date',
-                                e.target.value
-                                    ? Math.floor(
-                                          new Date(e.target.value).getTime() / 1000,
-                                      )
-                                    : null,
-                            )
-                        }
+                        onChange={(e) => {
+                            if (e.target.value) {
+                                const [year, month, day] = e.target.value.split('-').map(Number);
+                                const endDate = new Date(year, month - 1, day, 23, 59, 59, 999);
+                                onQueryParamChange('end_date', Math.floor(endDate.getTime() / 1000));
+                            } else {
+                                onQueryParamChange('end_date', null);
+                            }
+                        }}
                         disabled={processing}
                         className="w-full"
                     />

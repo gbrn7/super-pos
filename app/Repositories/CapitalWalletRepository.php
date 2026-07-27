@@ -55,13 +55,13 @@ class CapitalWalletRepository implements CapitalWalletRepositoryInterface
 
         if ($request->start_date) {
             $startDate = is_numeric($request->start_date)
-                ? Carbon::createFromTimestamp((int) $request->start_date)->startOfDay()->getTimestamp()
+                ? (int) $request->start_date
                 : Carbon::parse($request->start_date)->startOfDay()->getTimestamp();
             $query->where('created_at', '>=', $startDate);
         }
         if ($request->end_date) {
             $endDate = is_numeric($request->end_date)
-                ? Carbon::createFromTimestamp((int) $request->end_date)->endOfDay()->getTimestamp()
+                ? (int) $request->end_date
                 : Carbon::parse($request->end_date)->endOfDay()->getTimestamp();
             $query->where('created_at', '<=', $endDate);
         }

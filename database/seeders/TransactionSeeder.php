@@ -71,8 +71,8 @@ class TransactionSeeder extends Seeder
                     'quantity' => $qty,
                     'cost_price' => $costPrice,
                     'price' => $price,
-                    'created_at' => $createdAt,
-                    'updated_at' => $createdAt,
+                    'created_at' => $createdAt->unix(),
+                    'updated_at' => $createdAt->unix(),
                 ];
             }
 
@@ -96,8 +96,8 @@ class TransactionSeeder extends Seeder
                 'total_amount' => $totalAmount,
                 'payment_amount' => $paymentAmount,
                 'change_amount' => $changeAmount,
-                'created_at' => $createdAt,
-                'updated_at' => $createdAt,
+                'created_at' => $createdAt->unix(),
+                'updated_at' => $createdAt->unix(),
             ]);
 
             $totalCost = 0;
@@ -113,11 +113,11 @@ class TransactionSeeder extends Seeder
 
             $profit = $totalAmount - $totalCost;
             $profitTx = $profitService->recordSalesProfit($profit, $transaction->id);
-            $profitTx->update(['created_at' => $createdAt->getTimestamp(), 'updated_at' => $createdAt->getTimestamp()]);
+            $profitTx->update(['created_at' => $createdAt->unix(), 'updated_at' => $createdAt->unix()]);
 
             if ($totalCost > 0) {
                 $capitalTx = $capitalService->recordSalesCapital($totalCost, $transaction->id);
-                $capitalTx->update(['created_at' => $createdAt->getTimestamp(), 'updated_at' => $createdAt->getTimestamp()]);
+                $capitalTx->update(['created_at' => $createdAt->unix(), 'updated_at' => $createdAt->unix()]);
             }
         }
     }

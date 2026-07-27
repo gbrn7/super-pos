@@ -237,38 +237,51 @@ export default function Dashboard() {
         let start = new Date();
         let end = new Date();
 
+        const startOfDay = (d: Date) => new Date(d.getFullYear(), d.getMonth(), d.getDate(), 0, 0, 0, 0);
+        const endOfDay = (d: Date) => new Date(d.getFullYear(), d.getMonth(), d.getDate(), 23, 59, 59, 999);
+
         switch (type) {
             case 'today':
+                start = startOfDay(today);
+                end = endOfDay(today);
                 break;
-            case 'yesterday':
-                start.setDate(today.getDate() - 1);
-                end.setDate(today.getDate() - 1);
+            case 'yesterday': {
+                const prev = new Date(today);
+                prev.setDate(today.getDate() - 1);
+                start = startOfDay(prev);
+                end = endOfDay(prev);
                 break;
-            case 'this_week':
+            }
+            case 'this_week': {
                 const day = today.getDay();
                 const diff = today.getDate() - day + (day === 0 ? -6 : 1); // adjust when day is sunday
-                start = new Date(today.setDate(diff));
-                end = new Date();
+                const monday = new Date(today);
+                monday.setDate(diff);
+                start = startOfDay(monday);
+                end = endOfDay(today);
                 break;
+            }
             case 'this_month':
-                start = new Date(today.getFullYear(), today.getMonth(), 1);
-                end = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+                start = startOfDay(new Date(today.getFullYear(), today.getMonth(), 1));
+                end = endOfDay(new Date(today.getFullYear(), today.getMonth() + 1, 0));
                 break;
             case 'last_month':
-                start = new Date(today.getFullYear(), today.getMonth() - 1, 1);
-                end = new Date(today.getFullYear(), today.getMonth(), 0);
+                start = startOfDay(new Date(today.getFullYear(), today.getMonth() - 1, 1));
+                end = endOfDay(new Date(today.getFullYear(), today.getMonth(), 0));
                 break;
             case 'this_year':
-                start = new Date(today.getFullYear(), 0, 1);
-                end = new Date(today.getFullYear(), 11, 31);
+                start = startOfDay(new Date(today.getFullYear(), 0, 1));
+                end = endOfDay(new Date(today.getFullYear(), 11, 31));
                 break;
             default:
+                start = startOfDay(today);
+                end = endOfDay(today);
                 break;
         }
 
         return {
-            start_date: Math.floor(new Date(start.setHours(0, 0, 0, 0)).getTime() / 1000),
-            end_date: Math.floor(new Date(end.setHours(23, 59, 59, 999)).getTime() / 1000),
+            start_date: Math.floor(start.getTime() / 1000),
+            end_date: Math.floor(end.getTime() / 1000),
         };
     };
 
