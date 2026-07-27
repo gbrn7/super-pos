@@ -561,40 +561,38 @@ export default function Dashboard() {
                         </CardContent>
                     </Card>
 
-                    {/* Pie Chart: Revenue Breakdown (Profit, Modal, Diskon) */}
+                    {/* Pie Chart: Revenue Breakdown (Profit vs Modal) */}
                     <Card className="lg:col-span-1 flex flex-col justify-between">
                         <CardHeader>
-                            <CardTitle>{i18next.t('page.dashboard.charts.revenue_breakdown_title', 'Pembagian Omzet')}</CardTitle>
-                            <CardDescription>{i18next.t('page.dashboard.charts.revenue_breakdown_desc', 'Proporsi profit, modal, dan diskon')}</CardDescription>
+                            <CardTitle>{i18next.t('page.dashboard.charts.revenue_breakdown_title', 'Pembagian Uang Masuk')}</CardTitle>
+                            <CardDescription>{i18next.t('page.dashboard.charts.revenue_breakdown_desc', 'Alokasi pendapatan kotor untuk modal & laba')}</CardDescription>
                         </CardHeader>
                         <CardContent className="flex-1 flex flex-col justify-center">
                             {isLoading || !dashboardData ? (
                                 <div className="h-[200px] w-full bg-muted animate-pulse rounded-lg" />
-                            ) : !dashboardData.metrics?.revenue_breakdown || (dashboardData.metrics.revenue_breakdown.profit === 0 && dashboardData.metrics.revenue_breakdown.cost === 0 && dashboardData.metrics.revenue_breakdown.discount === 0) ? (
+                            ) : !dashboardData.metrics?.revenue_breakdown || (dashboardData.metrics.revenue_breakdown.profit === 0 && dashboardData.metrics.revenue_breakdown.cost === 0) ? (
                                 <div className="h-[200px] w-full flex items-center justify-center border border-dashed rounded-lg text-muted-foreground text-xs">
                                     {i18next.t('page.dashboard.charts.no_data', 'Tidak ada data untuk periode ini')}
                                 </div>
                             ) : (
                                 <div className="space-y-4">
-                                    <ChartContainer config={revenueBreakdownConfig} className="mx-auto aspect-square h-[180px]">
+                                    <ChartContainer config={revenueBreakdownConfig} className="mx-auto aspect-square h-[170px]">
                                         <PieChart>
                                             <ChartTooltip cursor={false} content={<ChartTooltipContent nameKey="name" indicator="line" formatFormatter={(value: any) => formatCurrency(Number(value))} />} />
                                             <Pie
                                                 data={[
-                                                    { name: i18next.t('page.dashboard.charts.breakdown_profit', 'Profit'), value: dashboardData.metrics.revenue_breakdown.profit, fill: 'var(--primary)' },
-                                                    { name: i18next.t('page.dashboard.charts.breakdown_cost', 'Modal'), value: dashboardData.metrics.revenue_breakdown.cost, fill: 'color-mix(in oklch, var(--primary) 55%, transparent)' },
-                                                    { name: i18next.t('page.dashboard.charts.breakdown_discount', 'Diskon'), value: dashboardData.metrics.revenue_breakdown.discount, fill: 'color-mix(in oklch, var(--primary) 25%, transparent)' },
+                                                    { name: i18next.t('page.dashboard.charts.breakdown_profit', 'Profit Bersih'), value: dashboardData.metrics.revenue_breakdown.profit, fill: 'var(--primary)' },
+                                                    { name: i18next.t('page.dashboard.charts.breakdown_cost', 'Modal Produk'), value: dashboardData.metrics.revenue_breakdown.cost, fill: 'color-mix(in oklch, var(--primary) 40%, transparent)' },
                                                 ].filter(item => item.value > 0)}
                                                 dataKey="value"
                                                 nameKey="name"
-                                                innerRadius={45}
-                                                outerRadius={70}
+                                                innerRadius={42}
+                                                outerRadius={68}
                                                 strokeWidth={2}
                                             >
                                                 {[
                                                     { name: 'profit', fill: 'var(--primary)' },
-                                                    { name: 'cost', fill: 'color-mix(in oklch, var(--primary) 55%, transparent)' },
-                                                    { name: 'discount', fill: 'color-mix(in oklch, var(--primary) 25%, transparent)' },
+                                                    { name: 'cost', fill: 'color-mix(in oklch, var(--primary) 40%, transparent)' },
                                                 ].map((entry, index) => (
                                                     <Cell key={`cell-${index}`} fill={entry.fill} />
                                                 ))}
@@ -602,12 +600,12 @@ export default function Dashboard() {
                                         </PieChart>
                                     </ChartContainer>
 
-                                    {/* Legend */}
-                                    <div className="grid grid-cols-1 gap-2 text-xs">
+                                    {/* Legend & Summary */}
+                                    <div className="grid grid-cols-1 gap-2 text-xs pt-1 border-t">
                                         <div className="flex items-center justify-between">
                                             <span className="flex items-center gap-1.5 font-medium">
                                                 <span className="size-2.5 rounded-full bg-primary" />
-                                                {i18next.t('page.dashboard.charts.breakdown_profit', 'Profit')}
+                                                {i18next.t('page.dashboard.charts.breakdown_profit', 'Profit Bersih')}
                                             </span>
                                             <span className="font-semibold text-primary">
                                                 {formatCurrency(dashboardData.metrics.revenue_breakdown.profit)}
@@ -615,19 +613,18 @@ export default function Dashboard() {
                                         </div>
                                         <div className="flex items-center justify-between">
                                             <span className="flex items-center gap-1.5 font-medium">
-                                                <span className="size-2.5 rounded-full bg-primary/60" />
-                                                {i18next.t('page.dashboard.charts.breakdown_cost', 'Modal')}
+                                                <span className="size-2.5 rounded-full bg-primary/40" />
+                                                {i18next.t('page.dashboard.charts.breakdown_cost', 'Modal Produk')}
                                             </span>
                                             <span className="font-semibold text-foreground/80">
                                                 {formatCurrency(dashboardData.metrics.revenue_breakdown.cost)}
                                             </span>
                                         </div>
-                                        <div className="flex items-center justify-between">
-                                            <span className="flex items-center gap-1.5 font-medium">
-                                                <span className="size-2.5 rounded-full bg-primary/30" />
-                                                {i18next.t('page.dashboard.charts.breakdown_discount', 'Diskon')}
+                                        <div className="flex items-center justify-between pt-1 mt-1 border-t border-dashed">
+                                            <span className="text-muted-foreground font-medium">
+                                                {i18next.t('page.dashboard.charts.breakdown_discount', 'Total Diskon Diberikan')}
                                             </span>
-                                            <span className="font-semibold text-foreground/60">
+                                            <span className="font-medium text-muted-foreground">
                                                 {formatCurrency(dashboardData.metrics.revenue_breakdown.discount)}
                                             </span>
                                         </div>
