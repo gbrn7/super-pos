@@ -125,11 +125,11 @@ export default function ProfitWalletIndex({ storeSetting }: { storeSetting?: Sto
 
                 {/* Summary Cards */}
                 <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-                    <Card className="bg-gradient-to-tr from-primary/5 to-card border-l-4 border-l-emerald-500 shadow-xs flex flex-col justify-between">
+                    <Card className={`bg-gradient-to-tr from-primary/5 to-card border-l-4 ${summary.current_balance < 0 ? 'border-l-rose-500' : 'border-l-emerald-500'} shadow-xs flex flex-col justify-between`}>
                         <CardHeader className="py-4">
                             <CardDescription>{t('page.profit_wallet.cards.balance', 'Saldo Berjalan')}</CardDescription>
-                            <CardTitle className="text-2xl font-bold text-emerald-600 dark:text-emerald-400">
-                                {formatRupiah(summary.current_balance)}
+                            <CardTitle className={`text-2xl font-bold ${summary.current_balance < 0 ? 'text-rose-600 dark:text-rose-400' : 'text-emerald-600 dark:text-emerald-400'}`}>
+                                {summary.current_balance < 0 ? `-${formatRupiah(Math.abs(summary.current_balance))}` : formatRupiah(summary.current_balance)}
                             </CardTitle>
                         </CardHeader>
                         <div className="p-4 pt-0 grid grid-cols-2 gap-2">
