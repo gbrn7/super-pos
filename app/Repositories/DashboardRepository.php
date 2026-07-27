@@ -59,14 +59,27 @@ class DashboardRepository implements DashboardRepositoryInterface
         $start = $this->parseStartTimestamp($startDate);
         $end = $this->parseEndTimestamp($endDate);
 
-        return Transaction::select(
-            DB::raw("to_char(to_timestamp(transactions.created_at), 'YYYY-MM-DD') as date"),
-            DB::raw('SUM(transactions.total_amount) as revenue'),
-            DB::raw('SUM(transaction_detail.quantity * (transaction_detail.price - transaction_detail.cost_price)) as profit'),
-            DB::raw('SUM(transaction_detail.quantity) as quantity')
-        )
-            ->join('transaction_detail', 'transactions.id', '=', 'transaction_detail.transaction_id')
+        $detailSubquery = DB::table('transaction_detail')
+            ->whereNull('deleted_at')
+            ->select(
+                'transaction_id',
+                DB::raw('SUM(quantity * (price - cost_price)) as profit'),
+                DB::raw('SUM(quantity) as quantity')
+            )
+            ->groupBy('transaction_id');
+
+        return DB::table('transactions')
+            ->leftJoinSub($detailSubquery, 'details', function ($join) {
+                $join->on('transactions.id', '=', 'details.transaction_id');
+            })
             ->whereBetween('transactions.created_at', [$start, $end])
+            ->whereNull('transactions.deleted_at')
+            ->select(
+                DB::raw("to_char(to_timestamp(transactions.created_at), 'YYYY-MM-DD') as date"),
+                DB::raw('COALESCE(SUM(transactions.total_amount), 0) as revenue'),
+                DB::raw('COALESCE(SUM(details.profit), 0) as profit'),
+                DB::raw('COALESCE(SUM(details.quantity), 0) as quantity')
+            )
             ->groupBy(DB::raw("to_char(to_timestamp(transactions.created_at), 'YYYY-MM-DD')"))
             ->orderBy('date', 'asc')
             ->get()
