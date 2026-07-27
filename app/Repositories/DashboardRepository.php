@@ -41,16 +41,29 @@ class DashboardRepository implements DashboardRepositoryInterface
             ->selectRaw('
                 COUNT(DISTINCT transactions.id) as transactions_count,
                 COALESCE(SUM(DISTINCT transactions.total_amount), 0) as total_revenue,
+                COALESCE(SUM(DISTINCT transactions.discount_amount), 0) as total_transaction_discount,
                 COALESCE(SUM(transaction_detail.quantity * (transaction_detail.price - transaction_detail.cost_price)), 0) as total_net_profit,
+                COALESCE(SUM(transaction_detail.quantity * transaction_detail.cost_price), 0) as total_cost,
+                COALESCE(SUM(transaction_detail.discount), 0) as total_detail_discount,
                 COALESCE(SUM(transaction_detail.quantity), 0) as products_sold
             ')
             ->first();
 
+        $totalRevenue = (float) ($stats->total_revenue ?? 0);
+        $totalCost = (float) ($stats->total_cost ?? 0);
+        $totalProfit = max(0, $totalRevenue - $totalCost);
+        $totalDiscount = (float) ($stats->total_transaction_discount ?? 0) + (float) ($stats->total_detail_discount ?? 0);
+
         return [
-            'total_revenue' => (float) ($stats->total_revenue ?? 0),
-            'total_net_profit' => (float) ($stats->total_net_profit ?? 0),
+            'total_revenue' => $totalRevenue,
+            'total_net_profit' => $totalProfit,
             'transactions_count' => (int) ($stats->transactions_count ?? 0),
             'products_sold' => (int) ($stats->products_sold ?? 0),
+            'revenue_breakdown' => [
+                'profit' => $totalProfit,
+                'cost' => $totalCost,
+                'discount' => $totalDiscount,
+            ],
         ];
     }
 
@@ -63,7 +76,7 @@ class DashboardRepository implements DashboardRepositoryInterface
             ->whereNull('deleted_at')
             ->select(
                 'transaction_id',
-                DB::raw('SUM(quantity * (price - cost_price)) as profit'),
+                DB::raw('SUM(quantity * cost_price) as cost'),
                 DB::raw('SUM(quantity) as quantity')
             )
             ->groupBy('transaction_id');
@@ -77,17 +90,20 @@ class DashboardRepository implements DashboardRepositoryInterface
             ->select(
                 DB::raw("to_char(to_timestamp(transactions.created_at), 'YYYY-MM-DD') as date"),
                 DB::raw('COALESCE(SUM(transactions.total_amount), 0) as revenue'),
-                DB::raw('COALESCE(SUM(details.profit), 0) as profit'),
+                DB::raw('COALESCE(SUM(details.cost), 0) as cost'),
                 DB::raw('COALESCE(SUM(details.quantity), 0) as quantity')
             )
             ->groupBy(DB::raw("to_char(to_timestamp(transactions.created_at), 'YYYY-MM-DD')"))
             ->orderBy('date', 'asc')
             ->get()
             ->map(function ($item) {
+                $revenue = (float) $item->revenue;
+                $cost = (float) $item->cost;
+
                 return [
                     'date' => $item->date,
-                    'revenue' => (float) $item->revenue,
-                    'profit' => (float) $item->profit,
+                    'revenue' => $revenue,
+                    'profit' => max(0, $revenue - $cost),
                     'quantity' => (int) $item->quantity,
                 ];
             });
