@@ -51,7 +51,7 @@ class DashboardRepository implements DashboardRepositoryInterface
 
         $totalRevenue = (float) ($stats->total_revenue ?? 0);
         $totalCost = (float) ($stats->total_cost ?? 0);
-        $totalProfit = max(0, $totalRevenue - $totalCost);
+        $totalProfit = $totalRevenue - $totalCost;
         $totalDiscount = (float) ($stats->total_transaction_discount ?? 0) + (float) ($stats->total_detail_discount ?? 0);
 
         return [
@@ -103,7 +103,7 @@ class DashboardRepository implements DashboardRepositoryInterface
                 return [
                     'date' => $item->date,
                     'revenue' => $revenue,
-                    'profit' => max(0, $revenue - $cost),
+                    'profit' => $revenue - $cost,
                     'quantity' => (int) $item->quantity,
                 ];
             });
