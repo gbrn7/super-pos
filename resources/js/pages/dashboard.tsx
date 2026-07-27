@@ -65,6 +65,21 @@ const chartConfig = {
     },
 } satisfies ChartConfig;
 
+const revenueBreakdownConfig = {
+    profit: {
+        label: i18next.t('page.dashboard.charts.breakdown_profit', 'Profit'),
+        color: 'var(--primary)',
+    },
+    cost: {
+        label: i18next.t('page.dashboard.charts.breakdown_cost', 'Modal'),
+        color: 'color-mix(in oklch, var(--primary) 55%, transparent)',
+    },
+    discount: {
+        label: i18next.t('page.dashboard.charts.breakdown_discount', 'Diskon'),
+        color: 'color-mix(in oklch, var(--primary) 25%, transparent)',
+    },
+} satisfies ChartConfig;
+
 const topProductsConfig = {
     quantity: {
         label: i18next.t('page.dashboard.charts.quantity_label', 'Jumlah Terjual'),
@@ -502,7 +517,7 @@ export default function Dashboard() {
                 <div className="grid grid-cols-1 gap-6 lg:grid-cols-4">
 
                     {/* Area Chart: Sales Trend (Revenue & profit) */}
-                    <Card className="lg:col-span-4">
+                    <Card className="lg:col-span-3">
                         <CardHeader>
                             <CardTitle>{i18next.t('page.dashboard.charts.sales_trend_title', 'Tren Keuangan Harian')}</CardTitle>
                             <CardDescription>{i18next.t('page.dashboard.charts.sales_trend_desc', 'Visualisasi perbandingan pendapatan kotor dan laba bersih')}</CardDescription>
@@ -542,6 +557,82 @@ export default function Dashboard() {
                                         <Area dataKey="profit" type="monotone" fill="url(#fillProfit)" stroke="var(--color-profit)" name="profit" />
                                     </AreaChart>
                                 </ChartContainer>
+                            )}
+                        </CardContent>
+                    </Card>
+
+                    {/* Pie Chart: Revenue Breakdown (Profit, Modal, Diskon) */}
+                    <Card className="lg:col-span-1 flex flex-col justify-between">
+                        <CardHeader>
+                            <CardTitle>{i18next.t('page.dashboard.charts.revenue_breakdown_title', 'Pembagian Omzet')}</CardTitle>
+                            <CardDescription>{i18next.t('page.dashboard.charts.revenue_breakdown_desc', 'Proporsi profit, modal, dan diskon')}</CardDescription>
+                        </CardHeader>
+                        <CardContent className="flex-1 flex flex-col justify-center">
+                            {isLoading || !dashboardData ? (
+                                <div className="h-[200px] w-full bg-muted animate-pulse rounded-lg" />
+                            ) : !dashboardData.metrics?.revenue_breakdown || (dashboardData.metrics.revenue_breakdown.profit === 0 && dashboardData.metrics.revenue_breakdown.cost === 0 && dashboardData.metrics.revenue_breakdown.discount === 0) ? (
+                                <div className="h-[200px] w-full flex items-center justify-center border border-dashed rounded-lg text-muted-foreground text-xs">
+                                    {i18next.t('page.dashboard.charts.no_data', 'Tidak ada data untuk periode ini')}
+                                </div>
+                            ) : (
+                                <div className="space-y-4">
+                                    <ChartContainer config={revenueBreakdownConfig} className="mx-auto aspect-square h-[180px]">
+                                        <PieChart>
+                                            <ChartTooltip cursor={false} content={<ChartTooltipContent nameKey="name" indicator="line" formatFormatter={(value: any) => formatCurrency(Number(value))} />} />
+                                            <Pie
+                                                data={[
+                                                    { name: i18next.t('page.dashboard.charts.breakdown_profit', 'Profit'), value: dashboardData.metrics.revenue_breakdown.profit, fill: 'var(--primary)' },
+                                                    { name: i18next.t('page.dashboard.charts.breakdown_cost', 'Modal'), value: dashboardData.metrics.revenue_breakdown.cost, fill: 'color-mix(in oklch, var(--primary) 55%, transparent)' },
+                                                    { name: i18next.t('page.dashboard.charts.breakdown_discount', 'Diskon'), value: dashboardData.metrics.revenue_breakdown.discount, fill: 'color-mix(in oklch, var(--primary) 25%, transparent)' },
+                                                ].filter(item => item.value > 0)}
+                                                dataKey="value"
+                                                nameKey="name"
+                                                innerRadius={45}
+                                                outerRadius={70}
+                                                strokeWidth={2}
+                                            >
+                                                {[
+                                                    { name: 'profit', fill: 'var(--primary)' },
+                                                    { name: 'cost', fill: 'color-mix(in oklch, var(--primary) 55%, transparent)' },
+                                                    { name: 'discount', fill: 'color-mix(in oklch, var(--primary) 25%, transparent)' },
+                                                ].map((entry, index) => (
+                                                    <Cell key={`cell-${index}`} fill={entry.fill} />
+                                                ))}
+                                            </Pie>
+                                        </PieChart>
+                                    </ChartContainer>
+
+                                    {/* Legend */}
+                                    <div className="grid grid-cols-1 gap-2 text-xs">
+                                        <div className="flex items-center justify-between">
+                                            <span className="flex items-center gap-1.5 font-medium">
+                                                <span className="size-2.5 rounded-full bg-primary" />
+                                                {i18next.t('page.dashboard.charts.breakdown_profit', 'Profit')}
+                                            </span>
+                                            <span className="font-semibold text-primary">
+                                                {formatCurrency(dashboardData.metrics.revenue_breakdown.profit)}
+                                            </span>
+                                        </div>
+                                        <div className="flex items-center justify-between">
+                                            <span className="flex items-center gap-1.5 font-medium">
+                                                <span className="size-2.5 rounded-full bg-primary/60" />
+                                                {i18next.t('page.dashboard.charts.breakdown_cost', 'Modal')}
+                                            </span>
+                                            <span className="font-semibold text-foreground/80">
+                                                {formatCurrency(dashboardData.metrics.revenue_breakdown.cost)}
+                                            </span>
+                                        </div>
+                                        <div className="flex items-center justify-between">
+                                            <span className="flex items-center gap-1.5 font-medium">
+                                                <span className="size-2.5 rounded-full bg-primary/30" />
+                                                {i18next.t('page.dashboard.charts.breakdown_discount', 'Diskon')}
+                                            </span>
+                                            <span className="font-semibold text-foreground/60">
+                                                {formatCurrency(dashboardData.metrics.revenue_breakdown.discount)}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
                             )}
                         </CardContent>
                     </Card>
