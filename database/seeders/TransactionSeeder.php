@@ -7,6 +7,8 @@ use App\Models\Product;
 use App\Models\Transaction;
 use App\Models\TransactionDetail;
 use App\Models\User;
+use App\Support\Interfaces\Services\CapitalWalletServiceInterface;
+use App\Support\Interfaces\Services\ProfitWalletServiceInterface;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Carbon;
 
@@ -98,9 +100,24 @@ class TransactionSeeder extends Seeder
                 'updated_at' => $createdAt,
             ]);
 
+            $totalCost = 0;
             foreach ($detailsData as $detail) {
                 $detail['transaction_id'] = $transaction->id;
                 TransactionDetail::create($detail);
+                $totalCost += $detail['cost_price'] * $detail['quantity'];
+            }
+
+            // Record mutations in Profit Wallet & Capital Wallet
+            $profitService = app(ProfitWalletServiceInterface::class);
+            $capitalService = app(CapitalWalletServiceInterface::class);
+
+            $profit = $totalAmount - $totalCost;
+            $profitTx = $profitService->recordSalesProfit($profit, $transaction->id);
+            $profitTx->update(['created_at' => $createdAt->getTimestamp(), 'updated_at' => $createdAt->getTimestamp()]);
+
+            if ($totalCost > 0) {
+                $capitalTx = $capitalService->recordSalesCapital($totalCost, $transaction->id);
+                $capitalTx->update(['created_at' => $createdAt->getTimestamp(), 'updated_at' => $createdAt->getTimestamp()]);
             }
         }
     }
