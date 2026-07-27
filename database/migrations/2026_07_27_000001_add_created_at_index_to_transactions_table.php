@@ -10,12 +10,22 @@ return new class extends Migration
     {
         Schema::table('transactions', function (Blueprint $table) {
             $table->index('created_at');
+            $table->index(['created_at', 'payment_method_id']);
+        });
+
+        Schema::table('transaction_detail', function (Blueprint $table) {
+            $table->index(['transaction_id', 'product_id']);
         });
     }
 
     public function down(): void
     {
+        Schema::table('transaction_detail', function (Blueprint $table) {
+            $table->dropIndex(['transaction_id', 'product_id']);
+        });
+
         Schema::table('transactions', function (Blueprint $table) {
+            $table->dropIndex(['created_at', 'payment_method_id']);
             $table->dropIndex(['created_at']);
         });
     }
