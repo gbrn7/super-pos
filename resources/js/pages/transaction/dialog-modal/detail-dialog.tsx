@@ -365,21 +365,21 @@ export function DetailDialog({
                                         </CardContent>
                                     </Card>
 
-                                    {/* 3. Total Keuntungan */}
+                                    {/* 3. Margin / Keuntungan Bersih */}
                                     <Card className="gap-2 py-3">
                                         <CardContent className="flex items-center gap-3 px-4">
-                                            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-teal-500/10">
-                                                <TrendingUp className="h-4.5 w-4.5 text-teal-600 dark:text-teal-400" />
+                                            <div className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-lg ${totalProfit >= 0 ? 'bg-teal-500/10' : 'bg-red-500/10'}`}>
+                                                <TrendingUp className={`h-4.5 w-4.5 ${totalProfit >= 0 ? 'text-teal-600 dark:text-teal-400' : 'text-red-600 dark:text-red-400'}`} />
                                             </div>
                                             <div className="min-w-0">
                                                 <p className="truncate text-xs text-muted-foreground">
-                                                    {t('page.transaction.dialog_modal.detail_dialog.total_profit_card', 'Total Keuntungan')}
+                                                    {t('page.transaction.dialog_modal.detail_dialog.total_profit_card', 'Margin / Keuntungan')}
                                                 </p>
                                                 {loading ? (
                                                     <Skeleton className="mt-1 h-5 w-16" />
                                                 ) : (
-                                                    <p className="text-base font-bold tabular-nums text-teal-600 dark:text-teal-400">
-                                                        {formatRupiah(Math.max(totalProfit, 0))}
+                                                    <p className={`text-base font-bold tabular-nums ${totalProfit >= 0 ? 'text-teal-600 dark:text-teal-400' : 'text-red-600 dark:text-red-400'}`}>
+                                                        {totalProfit > 0 ? `+${formatRupiah(totalProfit)}` : totalProfit < 0 ? `-${formatRupiah(Math.abs(totalProfit))}` : formatRupiah(0)}
                                                     </p>
                                                 )}
                                             </div>
