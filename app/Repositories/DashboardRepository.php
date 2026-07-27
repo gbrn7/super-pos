@@ -183,13 +183,15 @@ class DashboardRepository implements DashboardRepositoryInterface
 
         return TransactionDetail::select(
             'categories.name as category_name',
-            DB::raw('SUM(transaction_detail.quantity * transaction_detail.price) as total_amount'),
+            DB::raw('SUM(transaction_detail.quantity * (transaction_detail.price - transaction_detail.discount)) as total_amount'),
             DB::raw('SUM(transaction_detail.quantity) as products_count')
         )
             ->join('products', 'transaction_detail.product_id', '=', 'products.id')
             ->join('categories', 'products.category_id', '=', 'categories.id')
             ->join('transactions', 'transaction_detail.transaction_id', '=', 'transactions.id')
             ->whereBetween('transactions.created_at', [$start, $end])
+            ->whereNull('transactions.deleted_at')
+            ->whereNull('transaction_detail.deleted_at')
             ->groupBy('products.category_id', 'categories.name')
             ->get()
             ->map(function ($item) {
