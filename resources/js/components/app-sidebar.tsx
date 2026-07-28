@@ -12,6 +12,7 @@ import {
     Weight,
     TrendingUp,
     Wallet,
+    RotateCcw,
 } from 'lucide-react';
 import AppLogo from '@/components/app-logo';
 import { NavFooter } from '@/components/nav-footer';
@@ -94,6 +95,15 @@ export function AppSidebar() {
                     href: transactions(),
                     icon: Receipt,
                     permission: PERMISSIONENUMS.TRANSACTION.READ,
+                    role: [],
+                },
+                {
+                    title: t(
+                        'component.sidebar.return_menu_label',
+                        'Retur Barang',
+                    ),
+                    href: '/returns',
+                    icon: RotateCcw,
                     role: [],
                 },
 
