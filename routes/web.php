@@ -20,6 +20,7 @@ use App\Http\Controllers\MasterProductController;
 use App\Http\Controllers\PaymentMethodController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfitWalletController;
+use App\Http\Controllers\ReturnController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\TransactionDetailController;
@@ -59,6 +60,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::resource('profit-wallet', ProfitWalletController::class)->only('index');
     Route::resource('capital-wallet', CapitalWalletController::class)->only('index');
+
+    Route::get('/returns', [ReturnController::class, 'index'])->name('returns.index');
+    Route::post('/returns', [ReturnController::class, 'store'])->name('returns.store');
 
     Route::group(['prefix' => 'api'], function () {
         // categories
