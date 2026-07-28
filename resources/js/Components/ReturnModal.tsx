@@ -153,7 +153,7 @@ export default function ReturnModal({ isOpen, onClose, transaction }: Props) {
                                     variant="outline"
                                     size="sm"
                                     onClick={handleSelectAllTransaction}
-                                    className="h-7 text-xs"
+                                    className="h-8 text-xs font-semibold"
                                 >
                                     {isAllTransactionSelected
                                         ? 'Batal Pilih Semua'
@@ -167,7 +167,7 @@ export default function ReturnModal({ isOpen, onClose, transaction }: Props) {
                                     <TableRow>
                                         <TableHead>Produk</TableHead>
                                         <TableHead className="text-right">Harga Satuan</TableHead>
-                                        <TableHead className="text-center w-48">Kuantitas Retur</TableHead>
+                                        <TableHead className="text-center w-52">Kuantitas Retur</TableHead>
                                         <TableHead className="text-right">Subtotal</TableHead>
                                     </TableRow>
                                 </TableHeader>
@@ -217,10 +217,10 @@ export default function ReturnModal({ isOpen, onClose, transaction }: Props) {
                                                             </span>
                                                             <Button
                                                                 type="button"
-                                                                variant={isMaxSelected ? "secondary" : "ghost"}
+                                                                variant={isMaxSelected ? "secondary" : "outline"}
                                                                 size="sm"
                                                                 onClick={() => handleSelectAllProduct(detail.product_id, maxQty)}
-                                                                className="h-7 px-1.5 text-[10px] whitespace-nowrap"
+                                                                className="h-7 px-2 text-xs font-medium whitespace-nowrap"
                                                             >
                                                                 {isMaxSelected ? 'Batal' : 'Semua'}
                                                             </Button>
