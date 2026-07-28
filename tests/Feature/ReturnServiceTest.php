@@ -24,9 +24,9 @@ test('return service processes partial return and updates product stock correctl
         'discount' => 0,
     ]);
 
-    $service = new ReturnService;
+    $service = resolve(ReturnService::class);
     $return = $service->processReturn(
-        transaction: $transaction,
+        transactionId: $transaction->id,
         items: [
             ['product_id' => $product->id, 'quantity' => 2],
         ],

@@ -19,5 +19,5 @@ interface ReturnServiceInterface
     /**
      * Process return transaction and update product stocks atomically.
      */
-    public function processReturn(Transaction $transaction, array $items, ?string $reason, User $user): ProductReturn;
+    public function processReturn(int $transactionId, array $items, ?string $reason, User $user): ProductReturn;
 }

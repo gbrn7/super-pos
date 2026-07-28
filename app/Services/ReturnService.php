@@ -7,9 +7,11 @@ use App\Models\Transaction;
 use App\Models\User;
 use App\Support\Interfaces\Repositories\ProductRepositoryInterface;
 use App\Support\Interfaces\Repositories\ReturnRepositoryInterface;
+use App\Support\Interfaces\Repositories\TransactionRepositoryInterface;
 use App\Support\Interfaces\Services\ReturnServiceInterface;
 use App\Support\Models\ProductReturn\GetProductReturnReqModel;
 use App\Support\Utils\CheckException;
+use Exception;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
@@ -21,7 +23,8 @@ class ReturnService implements ReturnServiceInterface
 {
     public function __construct(
         protected ReturnRepositoryInterface $returnRepository,
-        protected ProductRepositoryInterface $productRepository
+        protected ProductRepositoryInterface $productRepository,
+        protected TransactionRepositoryInterface $transactionRepository
     ) {}
 
     public function getAll(GetProductReturnReqModel $request): Paginator|Collection
@@ -33,9 +36,17 @@ class ReturnService implements ReturnServiceInterface
         }
     }
 
-    public function processReturn(Transaction $transaction, array $items, ?string $reason, User $user): ProductReturn
+    public function processReturn(int $transactionId, array $items, ?string $reason, User $user): ProductReturn
     {
         try {
+            $transaction = $this->transactionRepository->getById($transactionId);
+            if (! $transaction) {
+                throw new Exception(
+                    trans('message.error.data_not_found'),
+                    Response::HTTP_NOT_FOUND
+                );
+            }
+
             return DB::transaction(function () use ($transaction, $items, $reason, $user) {
                 $totalRefund = 0;
                 $returnDetailsData = [];

@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductReturn\StoreProductReturnRequest;
-use App\Models\Transaction;
 use App\Support\Interfaces\Services\ReturnServiceInterface;
 use App\Support\Models\ProductReturn\GetProductReturnReqModel;
 use App\Support\Utils\ResponseApi;
@@ -37,10 +36,8 @@ class ApiReturnController extends Controller
         try {
             $validated = $request->validated();
 
-            $transaction = Transaction::findOrFail($validated['transaction_id']);
-
             $return = $this->returnService->processReturn(
-                transaction: $transaction,
+                transactionId: (int) $validated['transaction_id'],
                 items: $validated['items'],
                 reason: $validated['reason'] ?? null,
                 user: $request->user()
