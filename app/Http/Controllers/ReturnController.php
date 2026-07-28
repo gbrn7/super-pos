@@ -18,7 +18,7 @@ class ReturnController extends Controller
             ->latest()
             ->paginate(10);
 
-        return Inertia::render('Returns/Index', [
+        return Inertia::render('returns/index', [
             'returns' => $returns,
         ]);
     }
