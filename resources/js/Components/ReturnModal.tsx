@@ -73,6 +73,30 @@ export default function ReturnModal({ isOpen, onClose, transaction }: Props) {
         setQuantities((prev) => ({ ...prev, [productId]: validQty }));
     };
 
+    const handleSelectAllProduct = (productId: number, maxQty: number) => {
+        setQuantities((prev) => {
+            const currentQty = prev[productId] || 0;
+            const newQty = currentQty === maxQty ? 0 : maxQty;
+            return { ...prev, [productId]: newQty };
+        });
+    };
+
+    const isAllTransactionSelected = details.length > 0 && details.every(
+        (detail) => (quantities[detail.product_id] || 0) === detail.quantity,
+    );
+
+    const handleSelectAllTransaction = () => {
+        if (isAllTransactionSelected) {
+            setQuantities({});
+        } else {
+            const allSelected: { [productId: number]: number } = {};
+            details.forEach((detail) => {
+                allSelected[detail.product_id] = detail.quantity;
+            });
+            setQuantities(allSelected);
+        }
+    };
+
     const calculateTotalRefund = () => {
         return details.reduce((sum, detail) => {
             const qty = quantities[detail.product_id] || 0;
@@ -118,17 +142,32 @@ export default function ReturnModal({ isOpen, onClose, transaction }: Props) {
                 <form onSubmit={handleSubmit} className="space-y-6 pt-2">
                     {/* Item List Table */}
                     <div className="space-y-2">
-                        <Label className="text-sm font-semibold flex items-center gap-1.5">
-                            <Package className="h-4 w-4 text-primary" />
-                            Pilih Produk & Kuantitas Retur
-                        </Label>
+                        <div className="flex items-center justify-between">
+                            <Label className="text-sm font-semibold flex items-center gap-1.5">
+                                <Package className="h-4 w-4 text-primary" />
+                                Pilih Produk & Kuantitas Retur
+                            </Label>
+                            {details.length > 0 && !loading && (
+                                <Button
+                                    type="button"
+                                    variant="outline"
+                                    size="sm"
+                                    onClick={handleSelectAllTransaction}
+                                    className="h-7 text-xs"
+                                >
+                                    {isAllTransactionSelected
+                                        ? 'Batal Pilih Semua'
+                                        : 'Pilih Semua Transaksi'}
+                                </Button>
+                            )}
+                        </div>
                         <div className="w-full overflow-x-auto rounded-md border">
                             <Table>
                                 <TableHeader className="bg-muted/50">
                                     <TableRow>
                                         <TableHead>Produk</TableHead>
                                         <TableHead className="text-right">Harga Satuan</TableHead>
-                                        <TableHead className="text-center w-36">Kuantitas Retur</TableHead>
+                                        <TableHead className="text-center w-48">Kuantitas Retur</TableHead>
                                         <TableHead className="text-right">Subtotal</TableHead>
                                     </TableRow>
                                 </TableHeader>
@@ -147,6 +186,7 @@ export default function ReturnModal({ isOpen, onClose, transaction }: Props) {
                                             const qty = quantities[detail.product_id] || 0;
                                             const subtotal = qty * Number(detail.price);
                                             const maxQty = detail.quantity;
+                                            const isMaxSelected = qty === maxQty;
 
                                             return (
                                                 <TableRow key={detail.id}>
@@ -170,11 +210,20 @@ export default function ReturnModal({ isOpen, onClose, transaction }: Props) {
                                                                         maxQty,
                                                                     )
                                                                 }
-                                                                className="h-8 w-16 text-center text-xs font-medium"
+                                                                className="h-8 w-14 text-center text-xs font-medium"
                                                             />
-                                                            <span className="text-xs text-muted-foreground">
+                                                            <span className="text-xs text-muted-foreground whitespace-nowrap">
                                                                 / {maxQty}
                                                             </span>
+                                                            <Button
+                                                                type="button"
+                                                                variant={isMaxSelected ? "secondary" : "ghost"}
+                                                                size="sm"
+                                                                onClick={() => handleSelectAllProduct(detail.product_id, maxQty)}
+                                                                className="h-7 px-1.5 text-[10px] whitespace-nowrap"
+                                                            >
+                                                                {isMaxSelected ? 'Batal' : 'Semua'}
+                                                            </Button>
                                                         </div>
                                                     </TableCell>
                                                     <TableCell className="text-right font-medium text-xs">
