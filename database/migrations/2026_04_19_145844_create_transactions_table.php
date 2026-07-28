@@ -15,14 +15,17 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('payment_method_id')->constrained('payment_methods')->onDelete('cascade');
-            $table->string('invoice_number')->unique();
+            $table->string('invoice_number')->unique()->index();
             $table->decimal('total_amount', 10, 2);
             $table->decimal('payment_amount', 10, 2);
             $table->decimal('change_amount', 10, 2);
             $table->decimal('discount_amount', 10, 2)->default(0);
-            $table->unsignedBigInteger('created_at');
+            $table->unsignedBigInteger('created_at')->index();
             $table->unsignedBigInteger('updated_at');
             $table->softDeletes();
+
+            $table->index(['created_at', 'payment_method_id']);
+            $table->index(['created_at', 'user_id']);
         });
     }
 

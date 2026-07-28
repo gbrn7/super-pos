@@ -57,7 +57,6 @@ import {
     IconChevronsLeft,
     IconChevronsRight,
 } from '@tabler/icons-react';
-import { ExportDropdownMenu } from './export-data-menu/export-dropdown-menu';
 import { TableIcon, RotateCcw, X } from 'lucide-react';
 import { Can } from '@/components/auth/can';
 import { Badge } from '@/components/ui/badge';
@@ -175,9 +174,6 @@ export function DataTable<TData, TValue>({
                     )}
                     <Can permission={PERMISSIONENUMS.CATEGORY.CREATE}>
                         <ImportExcelDialog onSuccess={onRefresh} />
-                    </Can>
-                    <Can permission={PERMISSIONENUMS.CATEGORY.READ}>
-                        <ExportDropdownMenu data={data} />
                     </Can>
                     <Can permission={PERMISSIONENUMS.CATEGORY.DELETE}>
                         <BulkDeleteDialog

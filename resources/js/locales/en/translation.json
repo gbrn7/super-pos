@@ -200,7 +200,7 @@
             },
             "export": {
                 "label": "Export",
-                "export_excel_btn": "Export Excel",
+                "export_excel_btn": "Export",
                 "export_pdf_btn": "Export PDF"
             },
             "columns": {

@@ -1,62 +1,68 @@
+import { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuGroup,
-    DropdownMenuItem,
-    DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
 import { useTranslation } from 'react-i18next';
 import { DownloadCloud } from 'lucide-react';
+import { Spinner } from '@/components/ui/spinner';
+import axiosInstance from '@/lib/axios';
 import apiMasterProducts from '@/routes/apiMasterProducts';
+import { handleApiError } from '@/lib/utils';
 
 interface ExportDropdownMenuProps<TData> {
-    data: TData[];
+    data?: TData[];
 }
 
 export function ExportDropdownMenu<TData>({
-    data: data,
+    data: _data,
 }: ExportDropdownMenuProps<TData>) {
     const { t } = useTranslation();
+    const [loading, setLoading] = useState(false);
+
+    const handleExport = async () => {
+        try {
+            setLoading(true);
+            const route = apiMasterProducts.exportMasterProductsExcelData();
+            const response = await axiosInstance.get(route.url, {
+                responseType: 'blob',
+            });
+
+            const blob = new Blob([response.data], {
+                type: response.headers['content-type'] || 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+            });
+            const url = window.URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+
+            const contentDisposition = response.headers['content-disposition'];
+            let fileName = `master-products_${new Date().toISOString().split('T')[0]}.xlsx`;
+            if (contentDisposition) {
+                const match = contentDisposition.match(/filename="?([^";]+)"?/);
+                if (match && match[1]) {
+                    fileName = match[1];
+                }
+            }
+
+            link.setAttribute('download', fileName);
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
+            window.URL.revokeObjectURL(url);
+        } catch (error) {
+            handleApiError(error);
+        } finally {
+            setLoading(false);
+        }
+    };
 
     return (
-        <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-                <Button variant="outline">
-                    <DownloadCloud className="h-4" />
-                    {t('component.data_table.export.label', 'Ekspor')}
-                </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent>
-                <DropdownMenuGroup>
-                    <DropdownMenuItem>
-                        <a
-                            href={
-                                apiMasterProducts.exportMasterProductsExcelData()
-                                    .url
-                            }
-                        >
-                            {t(
-                                'component.data_table.export.export_excel_btn',
-                                'Ekspor Excel',
-                            )}
-                        </a>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem>
-                        <a
-                            href={
-                                apiMasterProducts.exportMasterProductsPdfData()
-                                    .url
-                            }
-                        >
-                            {t(
-                                'component.data_table.export.export_pdf_btn',
-                                'Ekspor Pdf',
-                            )}
-                        </a>
-                    </DropdownMenuItem>
-                </DropdownMenuGroup>
-            </DropdownMenuContent>
-        </DropdownMenu>
+        <Button variant="outline" onClick={handleExport} disabled={loading}>
+            {loading ? (
+                <Spinner className="mr-1.5 h-4 w-4" />
+            ) : (
+                <DownloadCloud className="mr-1.5 h-4 w-4" />
+            )}
+            {t('component.data_table.export.export_excel_btn', 'Ekspor')}
+        </Button>
     );
 }
+
+

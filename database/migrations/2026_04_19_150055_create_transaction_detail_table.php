@@ -23,6 +23,8 @@ return new class extends Migration
             $table->unsignedBigInteger('created_at');
             $table->unsignedBigInteger('updated_at');
             $table->softDeletes();
+
+            $table->index(['transaction_id', 'product_id']);
         });
     }
 

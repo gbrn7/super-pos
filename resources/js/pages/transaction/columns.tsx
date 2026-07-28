@@ -264,7 +264,7 @@ export const columns = (props?: ColumnsProps): ColumnDef<Transaction>[] => {
                         <DropdownMenuItem
                             onClick={() => props?.onDetailClick(row.original)}
                         >
-                            <FileText className="mr-2 h-4 w-4 text-blue-500" />
+                            <FileText className="mr-2 h-4 w-4" />
                             {t(
                                 'component.data_table.action_menu.detail_data_btn',
                                 'Detail data',
