@@ -32,6 +32,12 @@ class ReturnRepository implements ReturnRepositoryInterface
                             ->orWhereHas('user', fn ($u) => $u->where('name', 'ilike', "%{$request->keyword}%"));
                     });
                 }
+            })
+            ->when($request->start_date, function ($query) use ($request) {
+                $query->where('created_at', '>=', date('Y-m-d H:i:s', $request->start_date));
+            })
+            ->when($request->end_date, function ($query) use ($request) {
+                $query->where('created_at', '<=', date('Y-m-d H:i:s', $request->end_date));
             });
 
         if ($request->order_by && $request->order) {

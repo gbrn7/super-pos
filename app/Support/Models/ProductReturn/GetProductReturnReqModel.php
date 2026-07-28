@@ -18,6 +18,10 @@ class GetProductReturnReqModel
 
     public ?string $field;
 
+    public ?int $start_date;
+
+    public ?int $end_date;
+
     public function __construct(Request $request)
     {
         $this->page = $request->query('page') !== null ? (int) $request->query('page') : null;
@@ -26,5 +30,7 @@ class GetProductReturnReqModel
         $this->order = $request->query('order');
         $this->keyword = $request->query('keyword');
         $this->field = $request->query('field');
+        $this->start_date = $request->query('start_date') !== null ? (int) $request->query('start_date') : null;
+        $this->end_date = $request->query('end_date') !== null ? (int) $request->query('end_date') : null;
     }
 }

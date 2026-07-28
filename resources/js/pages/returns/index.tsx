@@ -69,6 +69,8 @@ export default function Index() {
         page: 1,
         field: 'default',
         keyword: '',
+        start_date: null as number | null,
+        end_date: null as number | null,
     });
 
     const fetchReturns = async (paramsToSend = queryParam) => {
@@ -95,10 +97,10 @@ export default function Index() {
         }
     };
 
-    // Trigger fetch on page/limit/field changes
+    // Trigger fetch on page/limit/field/date changes
     useEffect(() => {
         fetchReturns(queryParam);
-    }, [queryParam.page, queryParam.limit, queryParam.field]);
+    }, [queryParam.page, queryParam.limit, queryParam.field, queryParam.start_date, queryParam.end_date]);
 
     // Debounce keyword search
     useEffect(() => {
@@ -145,17 +147,38 @@ export default function Index() {
         }));
     };
 
+    const handleChangeStartDate = (date: number | null) => {
+        setQueryParam((prev) => ({
+            ...prev,
+            start_date: date,
+            page: 1,
+        }));
+    };
+
+    const handleChangeEndDate = (date: number | null) => {
+        setQueryParam((prev) => ({
+            ...prev,
+            end_date: date,
+            page: 1,
+        }));
+    };
+
     const handleResetFilter = () => {
         setQueryParam({
             limit: PAGINATIONLIMITDEFAULT,
             page: 1,
             field: 'default',
             keyword: '',
+            start_date: null,
+            end_date: null,
         });
     };
 
     const isFilterActive = Boolean(
-        queryParam.keyword || (queryParam.field && queryParam.field !== 'default')
+        queryParam.keyword ||
+        queryParam.start_date ||
+        queryParam.end_date ||
+        (queryParam.field && queryParam.field !== 'default')
     );
 
     const tableColumns = columns({ onDetailClick: handleDetailClick });
@@ -229,6 +252,60 @@ export default function Index() {
                                 </div>
                             </div>
 
+                            {/* Start Date Filter */}
+                            <div className="space-y-1.5">
+                                <Label className="text-xs font-medium text-muted-foreground">
+                                    {t('component.data_table.filter.start_date_label', 'Tanggal Mulai')}
+                                </Label>
+                                <Input
+                                    type="date"
+                                    value={
+                                        queryParam.start_date
+                                            ? new Date(queryParam.start_date * 1000)
+                                                  .toISOString()
+                                                  .slice(0, 10)
+                                            : ''
+                                    }
+                                    onChange={(e) => {
+                                        if (e.target.value) {
+                                            const [year, month, day] = e.target.value.split('-').map(Number);
+                                            const startDate = new Date(year, month - 1, day, 0, 0, 0, 0);
+                                            handleChangeStartDate(Math.floor(startDate.getTime() / 1000));
+                                        } else {
+                                            handleChangeStartDate(null);
+                                        }
+                                    }}
+                                    className="w-full"
+                                />
+                            </div>
+
+                            {/* End Date Filter */}
+                            <div className="space-y-1.5">
+                                <Label className="text-xs font-medium text-muted-foreground">
+                                    {t('component.data_table.filter.end_date_label', 'Tanggal Akhir')}
+                                </Label>
+                                <Input
+                                    type="date"
+                                    value={
+                                        queryParam.end_date
+                                            ? new Date(queryParam.end_date * 1000)
+                                                  .toISOString()
+                                                  .slice(0, 10)
+                                            : ''
+                                    }
+                                    onChange={(e) => {
+                                        if (e.target.value) {
+                                            const [year, month, day] = e.target.value.split('-').map(Number);
+                                            const endDate = new Date(year, month - 1, day, 23, 59, 59, 999);
+                                            handleChangeEndDate(Math.floor(endDate.getTime() / 1000));
+                                        } else {
+                                            handleChangeEndDate(null);
+                                        }
+                                    }}
+                                    className="w-full"
+                                />
+                            </div>
+
                             {/* Active Filter Badges */}
                             {isFilterActive && (
                                 <div className="col-span-full flex flex-wrap items-center gap-1.5 border-t pt-2 text-xs">
@@ -250,6 +327,46 @@ export default function Index() {
                                             >
                                                 <X className="h-3 w-3" />
                                                 <span className="sr-only">Hapus filter pencarian</span>
+                                            </button>
+                                        </Badge>
+                                    )}
+
+                                    {queryParam.start_date && (
+                                        <Badge
+                                            variant="secondary"
+                                            className="gap-1.5 bg-muted/50 px-2 py-0.5 text-xs font-normal hover:bg-muted"
+                                        >
+                                            <span>
+                                                {t('component.data_table.filter.start_date_label', 'Tanggal Mulai')}:{' '}
+                                                {new Date(queryParam.start_date * 1000).toLocaleDateString()}
+                                            </span>
+                                            <button
+                                                type="button"
+                                                onClick={() => handleChangeStartDate(null)}
+                                                className="ml-0.5 rounded-full p-0.5 text-muted-foreground transition-colors hover:bg-muted-foreground/20 hover:text-foreground"
+                                            >
+                                                <X className="h-3 w-3" />
+                                                <span className="sr-only">Hapus filter tanggal mulai</span>
+                                            </button>
+                                        </Badge>
+                                    )}
+
+                                    {queryParam.end_date && (
+                                        <Badge
+                                            variant="secondary"
+                                            className="gap-1.5 bg-muted/50 px-2 py-0.5 text-xs font-normal hover:bg-muted"
+                                        >
+                                            <span>
+                                                {t('component.data_table.filter.end_date_label', 'Tanggal Akhir')}:{' '}
+                                                {new Date(queryParam.end_date * 1000).toLocaleDateString()}
+                                            </span>
+                                            <button
+                                                type="button"
+                                                onClick={() => handleChangeEndDate(null)}
+                                                className="ml-0.5 rounded-full p-0.5 text-muted-foreground transition-colors hover:bg-muted-foreground/20 hover:text-foreground"
+                                            >
+                                                <X className="h-3 w-3" />
+                                                <span className="sr-only">Hapus filter tanggal akhir</span>
                                             </button>
                                         </Badge>
                                     )}
