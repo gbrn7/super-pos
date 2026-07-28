@@ -22,7 +22,10 @@ class ApiReturnController extends Controller
         try {
             $returns = $this->returnService->getAll(new GetProductReturnReqModel($request));
 
-            return ResponseApi::make(true, trans('message.success.returns.success_get'), $returns);
+            $items = \App\Http\Resources\ProductReturnResource::collection($returns->items());
+            $data = \App\Support\Utils\PaginationResource::make($items, $returns);
+
+            return ResponseApi::make(true, trans('message.success.returns.success_get'), $data);
         } catch (\Throwable $th) {
             return ResponseApi::make(false, $th->getMessage(), null, (int) $th->getCode() ?: 500);
         }
