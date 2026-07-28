@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\ProductReturn;
 use App\Models\ReturnDetail;
+use App\Support\Interfaces\Repositories\ReturnRepositoryInterface;
 use App\Support\Models\ProductReturn\GetProductReturnReqModel;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Support\Collection;
