@@ -274,7 +274,7 @@ export default function ReturnModal({ isOpen, onClose, transaction }: Props) {
                         )}
                     </div>
 
-                    <DialogFooter className="gap-2 sm:gap-0">
+                    <DialogFooter className="flex items-center justify-end gap-3 sm:gap-3">
                         <Button type="button" variant="outline" onClick={onClose}>
                             Batal
                         </Button>
