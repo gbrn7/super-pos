@@ -1,5 +1,4 @@
-import type { ColumnDef } from '@tanstack/react-table';
-import { FileText, MoreHorizontal } from 'lucide-react';
+import { FileText, MoreHorizontal, RotateCcw } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { ServerSideDataTableHeader } from '@/components/server-side-data-table-header';
 import { Button } from '@/components/ui/button';
@@ -17,6 +16,7 @@ import dayjs from 'dayjs';
 
 interface ColumnsProps {
     onDetailClick: (transaction: Transaction) => void;
+    onReturnClick?: (transaction: Transaction) => void;
     onSortChange: (orderBy: string | null, order: string | null) => void;
     orderBy: string | null;
     order: string | null;
@@ -270,6 +270,15 @@ export const columns = (props?: ColumnsProps): ColumnDef<Transaction>[] => {
                                 'Detail data',
                             )}
                         </DropdownMenuItem>
+                        {props?.onReturnClick && (
+                            <DropdownMenuItem
+                                onClick={() => props.onReturnClick!(row.original)}
+                                className="text-rose-600 focus:text-rose-600 focus:bg-rose-50 dark:focus:bg-rose-950/20"
+                            >
+                                <RotateCcw className="mr-2 h-4 w-4" />
+                                Retur Barang
+                            </DropdownMenuItem>
+                        )}
                     </DropdownMenuContent>
                 </DropdownMenu>
             ),

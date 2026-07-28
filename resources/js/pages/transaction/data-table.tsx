@@ -78,6 +78,7 @@ interface DataTableProps<TData, TValue> {
     detailDataOpen: boolean;
     setDetailOpen: (open: boolean) => void;
     onDetailClick: (data: TData) => void;
+    onReturnClick?: (data: TData) => void;
     selectedTransaction: Transaction | null;
     queryParam: TransactionQueryParam;
     pagination: Pagination;
@@ -110,6 +111,7 @@ export function DataTable<TData, TValue>({
     detailDataOpen,
     setDetailOpen,
     onDetailClick,
+    onReturnClick,
     selectedTransaction,
     queryParam,
     pagination,
@@ -133,6 +135,7 @@ export function DataTable<TData, TValue>({
         typeof columnsOrFn === 'function'
             ? columnsOrFn({
                   onDetailClick,
+                  onReturnClick,
                   onSortChange: (
                       orderBy: string | null,
                       order: string | null,

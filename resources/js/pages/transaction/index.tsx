@@ -19,6 +19,8 @@ import type { ResponseApi } from '@/support/interfaces/response/Response';
 import type { PaymentMethod } from '@/support/models/paymentMethod';
 import type { Transaction } from '@/support/models/transaction';
 import type { User } from '@/support/models/user';
+import { RotateCcw } from 'lucide-react';
+import ReturnModal from '@/Components/ReturnModal';
 import { columns } from './columns';
 import { DataTable } from './data-table';
 
@@ -42,6 +44,7 @@ export default function Index({ storeSetting }: { storeSetting?: StoreSetting | 
     const [users, setUsers] = useState<User[]>([]);
     const [processing, setProcessing] = useState(false);
     const [detailOpen, setDetailOpen] = useState(false);
+    const [returnModalOpen, setReturnModalOpen] = useState(false);
     const [selectedTransaction, setSelectedTransaction] =
         useState<Transaction | null>(null);
     const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
@@ -261,6 +264,11 @@ export default function Index({ storeSetting }: { storeSetting?: StoreSetting | 
         });
     }, []);
 
+    const handleReturnClick = (transactionItem: Transaction) => {
+        setSelectedTransaction(transactionItem);
+        setReturnModalOpen(true);
+    };
+
     return (
         <>
             <Head title={t('page.transaction.page_name', 'Transaksi')} />
@@ -280,6 +288,7 @@ export default function Index({ storeSetting }: { storeSetting?: StoreSetting | 
                     detailDataOpen={detailOpen}
                     setDetailOpen={setDetailOpen}
                     onDetailClick={handleDetailClick}
+                    onReturnClick={handleReturnClick}
                     selectedTransaction={selectedTransaction}
                     queryParam={queryParam}
                     pagination={pagination}
@@ -313,6 +322,12 @@ export default function Index({ storeSetting }: { storeSetting?: StoreSetting | 
                     rowSelection={rowSelection}
                     setRowSelection={setRowSelection}
                     storeSetting={storeSetting}
+                />
+
+                <ReturnModal
+                    isOpen={returnModalOpen}
+                    onClose={() => setReturnModalOpen(false)}
+                    transaction={selectedTransaction}
                 />
             </div>
         </>
