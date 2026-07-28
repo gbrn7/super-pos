@@ -28,15 +28,49 @@ interface Props {
     transaction: Transaction | null;
 }
 
+import React, { useState, useEffect } from 'react';
+import { useForm } from '@inertiajs/react';
+import { RotateCcw, Package, AlertCircle } from 'lucide-react';
+import axiosInstance from '@/lib/axios';
+import { show as apiShowTransaction } from '@/routes/apiTransactions';
+import type { ResponseApi } from '@/support/interfaces/response/Response';
+import { Skeleton } from '@/components/ui/skeleton';
+
 export default function ReturnModal({ isOpen, onClose, transaction }: Props) {
     if (!transaction) return null;
 
     const [quantities, setQuantities] = useState<{ [productId: number]: number }>({});
     const [reason, setReason] = useState('');
+    const [txDetails, setTxDetails] = useState<any[]>([]);
+    const [loading, setLoading] = useState(false);
 
     const { post, processing } = useForm();
 
-    const details = transaction.details || transaction.transactionDetails || [];
+    useEffect(() => {
+        if (isOpen && transaction?.id) {
+            setQuantities({});
+            setReason('');
+            
+            const existing = transaction.details || (transaction as any).transactionDetails || (transaction as any).transaction_details;
+            if (existing && existing.length > 0) {
+                setTxDetails(existing);
+            } else {
+                setLoading(true);
+                const apiUrl = apiShowTransaction(transaction.id).url;
+                axiosInstance
+                    .get<ResponseApi<Transaction>>(apiUrl)
+                    .then((res) => {
+                        if (res.data.success && res.data.data) {
+                            const fetched = res.data.data.details || (res.data.data as any).transactionDetails || (res.data.data as any).transaction_details || [];
+                            setTxDetails(fetched);
+                        }
+                    })
+                    .finally(() => setLoading(false));
+            }
+        }
+    }, [isOpen, transaction?.id]);
+
+    const details = txDetails;
 
     const handleQtyChange = (productId: number, qty: number, max: number) => {
         const validQty = Math.max(0, Math.min(qty, max));
@@ -103,7 +137,16 @@ export default function ReturnModal({ isOpen, onClose, transaction }: Props) {
                                     </TableRow>
                                 </TableHeader>
                                 <TableBody>
-                                    {details.length > 0 ? (
+                                    {loading ? (
+                                        Array.from({ length: 2 }).map((_, idx) => (
+                                            <TableRow key={idx}>
+                                                <TableCell><Skeleton className="h-5 w-32" /></TableCell>
+                                                <TableCell><Skeleton className="h-5 w-16 ml-auto" /></TableCell>
+                                                <TableCell><Skeleton className="h-5 w-16 mx-auto" /></TableCell>
+                                                <TableCell><Skeleton className="h-5 w-20 ml-auto" /></TableCell>
+                                            </TableRow>
+                                        ))
+                                    ) : details.length > 0 ? (
                                         details.map((detail) => {
                                             const qty = quantities[detail.product_id] || 0;
                                             const subtotal = qty * Number(detail.price);
