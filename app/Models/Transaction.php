@@ -52,4 +52,9 @@ class Transaction extends Model
     {
         return $this->morphOne(ProfitWalletTransaction::class, 'reference');
     }
+
+    public function returns()
+    {
+        return $this->hasMany(ReturnModel::class);
+    }
 }
