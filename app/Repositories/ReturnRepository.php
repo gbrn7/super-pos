@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Models\ReturnDetail;
 use App\Models\ReturnModel;
 use App\Support\Interfaces\Repositories\ReturnRepositoryInterface;
 use Illuminate\Contracts\Pagination\Paginator;
@@ -29,5 +30,10 @@ class ReturnRepository implements ReturnRepositoryInterface
     public function getByTransactionId(int $transactionId): Collection
     {
         return ReturnModel::where('transaction_id', $transactionId)->with('details')->get();
+    }
+
+    public function createDetail(array $data): ReturnDetail
+    {
+        return ReturnDetail::create($data);
     }
 }

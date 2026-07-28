@@ -2,11 +2,10 @@
 
 namespace App\Services;
 
-use App\Models\Product;
-use App\Models\ReturnDetail;
 use App\Models\ReturnModel;
 use App\Models\Transaction;
 use App\Models\User;
+use App\Support\Interfaces\Repositories\ProductRepositoryInterface;
 use App\Support\Interfaces\Repositories\ReturnRepositoryInterface;
 use App\Support\Interfaces\Services\ReturnServiceInterface;
 use Illuminate\Contracts\Pagination\Paginator;
@@ -17,7 +16,10 @@ use InvalidArgumentException;
 
 class ReturnService implements ReturnServiceInterface
 {
-    public function __construct(protected ReturnRepositoryInterface $returnRepository) {}
+    public function __construct(
+        protected ReturnRepositoryInterface $returnRepository,
+        protected ProductRepositoryInterface $productRepository
+    ) {}
 
     public function getAll(int $limit = 10): Paginator|Collection
     {
@@ -83,7 +85,7 @@ class ReturnService implements ReturnServiceInterface
             ]);
 
             foreach ($returnDetailsData as $detail) {
-                ReturnDetail::create([
+                $this->returnRepository->createDetail([
                     'return_id' => $returnModel->id,
                     'product_id' => $detail['product_id'],
                     'quantity' => $detail['quantity'],
@@ -91,8 +93,11 @@ class ReturnService implements ReturnServiceInterface
                     'subtotal' => $detail['subtotal'],
                 ]);
 
-                // Restore Product Stock
-                Product::where('id', $detail['product_id'])->increment('stock', $detail['quantity']);
+                // Restore Product Stock via ProductRepositoryInterface
+                $productObj = $this->productRepository->getById($detail['product_id']);
+                if ($productObj) {
+                    $this->productRepository->incrementStock($productObj, $detail['quantity']);
+                }
             }
 
             return $returnModel;

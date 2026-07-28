@@ -2,6 +2,7 @@
 
 namespace App\Support\Interfaces\Repositories;
 
+use App\Models\ReturnDetail;
 use App\Models\ReturnModel;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Support\Collection;
@@ -27,4 +28,9 @@ interface ReturnRepositoryInterface
      * Get returns by transaction ID.
      */
     public function getByTransactionId(int $transactionId): Collection;
+
+    /**
+     * Create a return detail record.
+     */
+    public function createDetail(array $data): ReturnDetail;
 }
