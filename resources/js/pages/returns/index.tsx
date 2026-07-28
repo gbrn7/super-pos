@@ -22,6 +22,9 @@ import type { ResponseApi } from '@/support/interfaces/response/Response';
 import { handleApiError, showWarningToast } from '@/lib/utils';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Badge } from '@/components/ui/badge';
 import {
     Select,
     SelectContent,
@@ -37,9 +40,10 @@ import {
     IconChevronsLeft,
     IconChevronsRight,
 } from '@tabler/icons-react';
+import { RotateCcw, X, TableIcon } from 'lucide-react';
 import { sprintf } from 'sprintf-js';
 import type { Pagination } from '@/support/interfaces/resource/pagination';
-import { PAGINATIONLIMITDEFAULT, PAGINATIONLIMITOPTIONDEFAULT } from '@/constants/Index';
+import { PAGINATIONLIMITDEFAULT, PAGINATIONLIMITOPTIONDEFAULT, DEBOUNCEDEFAULTDURATION } from '@/constants/Index';
 
 export default function Index() {
     const { t } = useTranslation();
@@ -63,13 +67,15 @@ export default function Index() {
     const [queryParam, setQueryParam] = useState({
         limit: PAGINATIONLIMITDEFAULT,
         page: 1,
+        field: 'default',
+        keyword: '',
     });
 
-    const fetchReturns = async () => {
+    const fetchReturns = async (paramsToSend = queryParam) => {
         try {
             setLoading(true);
             const res = await axiosInstance.get<ResponseApi<any>>('/api/returns', {
-                params: queryParam,
+                params: paramsToSend,
             });
             if (res.data.success) {
                 const dataVal = res.data.data;
@@ -89,9 +95,19 @@ export default function Index() {
         }
     };
 
+    // Trigger fetch on page/limit/field changes
     useEffect(() => {
-        fetchReturns();
-    }, [queryParam.page, queryParam.limit]);
+        fetchReturns(queryParam);
+    }, [queryParam.page, queryParam.limit, queryParam.field]);
+
+    // Debounce keyword search
+    useEffect(() => {
+        const timeout = setTimeout(() => {
+            fetchReturns(queryParam);
+        }, DEBOUNCEDEFAULTDURATION);
+
+        return () => clearTimeout(timeout);
+    }, [queryParam.keyword]);
 
     const handleDetailClick = (item: ReturnItem) => {
         setSelectedReturn(item);
@@ -113,6 +129,35 @@ export default function Index() {
         }));
     };
 
+    const handleChangeField = (field: string) => {
+        setQueryParam((prev) => ({
+            ...prev,
+            field: field,
+            page: 1,
+        }));
+    };
+
+    const handleChangeKeyword = (keyword: string) => {
+        setQueryParam((prev) => ({
+            ...prev,
+            keyword: keyword,
+            page: 1,
+        }));
+    };
+
+    const handleResetFilter = () => {
+        setQueryParam({
+            limit: PAGINATIONLIMITDEFAULT,
+            page: 1,
+            field: 'default',
+            keyword: '',
+        });
+    };
+
+    const isFilterActive = Boolean(
+        queryParam.keyword || (queryParam.field && queryParam.field !== 'default')
+    );
+
     const tableColumns = columns({ onDetailClick: handleDetailClick });
 
     const table = useReactTable({
@@ -130,6 +175,88 @@ export default function Index() {
                 </HeaderContent>
 
                 <div className="rounded-2xl border bg-card p-3 mt-4">
+                    {/* Header Filter Actions */}
+                    <div className="flex flex-col justify-between gap-3 pb-4">
+                        <div className="flex items-center justify-end gap-2">
+                            {isFilterActive && (
+                                <Button variant="outline" onClick={handleResetFilter}>
+                                    <RotateCcw className="mr-1.5 h-4 w-4" />
+                                    {t('component.data_table.reset_filter', 'Reset Filter')}
+                                </Button>
+                            )}
+                        </div>
+
+                        {/* Search and Filters grid */}
+                        <div className="second-row grid grid-cols-1 gap-2 gap-y-3 rounded-md border p-3 md:grid-cols-2 lg:grid-cols-3">
+                            <div className="space-y-1.5 col-span-1 md:col-span-2">
+                                <Label className="text-xs font-medium text-muted-foreground">
+                                    {t('component.data_table.search_component.search_label', 'Pencarian')}
+                                </Label>
+                                <div className="keyword-filter flex w-full gap-1">
+                                    <Select
+                                        value={queryParam.field}
+                                        onValueChange={handleChangeField}
+                                    >
+                                        <SelectTrigger className="w-48">
+                                            <SelectValue />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            <SelectGroup>
+                                                <SelectLabel>
+                                                    {t('component.data_table.search_component.search_by', 'Pencarian berdasarkan')}
+                                                </SelectLabel>
+                                                <SelectItem value="default">
+                                                    {t('component.data_table.search_component.default', 'Bawaan')}
+                                                </SelectItem>
+                                                <SelectItem value="return_number">
+                                                    {t('component.data_table.search_component.return_number', 'No. Retur')}
+                                                </SelectItem>
+                                                <SelectItem value="invoice_number">
+                                                    {t('component.data_table.search_component.invoice_number', 'No. Invoice')}
+                                                </SelectItem>
+                                                <SelectItem value="user_name">
+                                                    {t('component.data_table.search_component.user_name', 'Kasir / Petugas')}
+                                                </SelectItem>
+                                            </SelectGroup>
+                                        </SelectContent>
+                                    </Select>
+                                    <Input
+                                        placeholder={t('component.data_table.search_component.placeholder', 'Telusuri...')}
+                                        value={queryParam.keyword}
+                                        onChange={(event) => handleChangeKeyword(event.target.value)}
+                                        className="w-full"
+                                    />
+                                </div>
+                            </div>
+
+                            {/* Active Filter Badges */}
+                            {isFilterActive && (
+                                <div className="col-span-full flex flex-wrap items-center gap-1.5 border-t pt-2 text-xs">
+                                    <span className="mr-1 font-medium text-muted-foreground">
+                                        {t('component.data_table.active_filters', 'Filter Aktif:')}
+                                    </span>
+                                    {queryParam.keyword && (
+                                        <Badge
+                                            variant="secondary"
+                                            className="gap-1.5 bg-muted/50 px-2 py-0.5 text-xs font-normal hover:bg-muted"
+                                        >
+                                            <span>
+                                                {t('component.data_table.search_component.search_label', 'Pencarian')}: "{queryParam.keyword}"
+                                            </span>
+                                            <button
+                                                type="button"
+                                                onClick={() => handleChangeKeyword('')}
+                                                className="ml-0.5 rounded-full p-0.5 text-muted-foreground transition-colors hover:bg-muted-foreground/20 hover:text-foreground"
+                                            >
+                                                <X className="h-3 w-3" />
+                                                <span className="sr-only">Hapus filter pencarian</span>
+                                            </button>
+                                        </Badge>
+                                    )}
+                                </div>
+                            )}
+                        </div>
+                    </div>
                     <div className="overflow-x-auto rounded-md border">
                         <Table>
                             <TableHeader>
