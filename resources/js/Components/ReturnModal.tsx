@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useForm } from '@inertiajs/react';
 import { RotateCcw, Package, AlertCircle } from 'lucide-react';
 import {
@@ -21,20 +21,16 @@ import {
 } from '@/components/ui/table';
 import { formatRupiah } from '@/lib/format-money';
 import type { Transaction } from '@/support/models/transaction';
+import axiosInstance from '@/lib/axios';
+import { show as apiShowTransaction } from '@/routes/apiTransactions';
+import type { ResponseApi } from '@/support/interfaces/response/Response';
+import { Skeleton } from '@/components/ui/skeleton';
 
 interface Props {
     isOpen: boolean;
     onClose: () => void;
     transaction: Transaction | null;
 }
-
-import React, { useState, useEffect } from 'react';
-import { useForm } from '@inertiajs/react';
-import { RotateCcw, Package, AlertCircle } from 'lucide-react';
-import axiosInstance from '@/lib/axios';
-import { show as apiShowTransaction } from '@/routes/apiTransactions';
-import type { ResponseApi } from '@/support/interfaces/response/Response';
-import { Skeleton } from '@/components/ui/skeleton';
 
 export default function ReturnModal({ isOpen, onClose, transaction }: Props) {
     if (!transaction) return null;
