@@ -4,17 +4,19 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Transaction;
-use App\Services\ReturnService;
+use App\Support\Interfaces\Services\ReturnServiceInterface;
 use App\Support\Utils\ResponseApi;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class ApiReturnController extends Controller
 {
+    public function __construct(protected ReturnServiceInterface $returnService) {}
+
     /**
      * Store a newly created return in storage.
      */
-    public function store(Request $request, ReturnService $returnService)
+    public function store(Request $request)
     {
         try {
             $validated = $request->validate([
@@ -27,7 +29,7 @@ class ApiReturnController extends Controller
 
             $transaction = Transaction::findOrFail($validated['transaction_id']);
 
-            $return = $returnService->processReturn(
+            $return = $this->returnService->processReturn(
                 transaction: $transaction,
                 items: $validated['items'],
                 reason: $validated['reason'] ?? null,

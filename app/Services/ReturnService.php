@@ -7,12 +7,23 @@ use App\Models\ReturnDetail;
 use App\Models\ReturnModel;
 use App\Models\Transaction;
 use App\Models\User;
+use App\Support\Interfaces\Repositories\ReturnRepositoryInterface;
+use App\Support\Interfaces\Services\ReturnServiceInterface;
+use Illuminate\Contracts\Pagination\Paginator;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use InvalidArgumentException;
 
-class ReturnService
+class ReturnService implements ReturnServiceInterface
 {
+    public function __construct(protected ReturnRepositoryInterface $returnRepository) {}
+
+    public function getAll(int $limit = 10): Paginator|Collection
+    {
+        return $this->returnRepository->getAll($limit);
+    }
+
     public function processReturn(Transaction $transaction, array $items, ?string $reason, User $user): ReturnModel
     {
         return DB::transaction(function () use ($transaction, $items, $reason, $user) {
@@ -21,7 +32,7 @@ class ReturnService
 
             // Load transaction details
             $transaction->load('transactionDetails');
-            $existingReturns = ReturnModel::where('transaction_id', $transaction->id)->with('details')->get();
+            $existingReturns = $this->returnRepository->getByTransactionId($transaction->id);
 
             foreach ($items as $item) {
                 $productId = $item['product_id'];
@@ -63,7 +74,7 @@ class ReturnService
                 throw new InvalidArgumentException('No valid items to return.');
             }
 
-            $returnModel = ReturnModel::create([
+            $returnModel = $this->returnRepository->create([
                 'return_number' => 'RET-'.date('Ymd').'-'.strtoupper(Str::random(4)),
                 'transaction_id' => $transaction->id,
                 'user_id' => $user->id,

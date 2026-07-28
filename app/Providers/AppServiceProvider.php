@@ -9,6 +9,7 @@ use App\Repositories\MasterProductRepository;
 use App\Repositories\PaymentMethodRepository;
 use App\Repositories\ProductRepository;
 use App\Repositories\ProfitWalletRepository;
+use App\Repositories\ReturnRepository;
 use App\Repositories\RoleRepository;
 use App\Repositories\TransactionDetailRepository;
 use App\Repositories\TransactionRepository;
@@ -21,6 +22,7 @@ use App\Services\MasterProductService;
 use App\Services\PaymentMethodService;
 use App\Services\ProductService;
 use App\Services\ProfitWalletService;
+use App\Services\ReturnService;
 use App\Services\RoleService;
 use App\Services\TransactionDetailService;
 use App\Services\TransactionService;
@@ -34,6 +36,7 @@ use App\Support\Interfaces\Repositories\MasterProductRepositoryInterface;
 use App\Support\Interfaces\Repositories\PaymentMethodRepositoryInterface;
 use App\Support\Interfaces\Repositories\ProductRepositoryInterface;
 use App\Support\Interfaces\Repositories\ProfitWalletRepositoryInterface;
+use App\Support\Interfaces\Repositories\ReturnRepositoryInterface;
 use App\Support\Interfaces\Repositories\RoleRepositoryInterface;
 use App\Support\Interfaces\Repositories\TransactionDetailRepositoryInterface;
 use App\Support\Interfaces\Repositories\TransactionRepositoryInterface;
@@ -46,6 +49,7 @@ use App\Support\Interfaces\Services\MasterProductServiceInterface;
 use App\Support\Interfaces\Services\PaymentMethodServiceInterface;
 use App\Support\Interfaces\Services\ProductServiceInterface;
 use App\Support\Interfaces\Services\ProfitWalletServiceInterface;
+use App\Support\Interfaces\Services\ReturnServiceInterface;
 use App\Support\Interfaces\Services\RoleServiceInterface;
 use App\Support\Interfaces\Services\TransactionDetailServiceInterface;
 use App\Support\Interfaces\Services\TransactionServiceInterface;
@@ -112,6 +116,10 @@ class AppServiceProvider extends ServiceProvider
         // Dashboard service repository
         $this->app->bind(DashboardRepositoryInterface::class, DashboardRepository::class);
         $this->app->bind(DashboardServiceInterface::class, DashboardService::class);
+
+        // Return service repository
+        $this->app->bind(ReturnRepositoryInterface::class, ReturnRepository::class);
+        $this->app->bind(ReturnServiceInterface::class, ReturnService::class);
     }
 
     /**

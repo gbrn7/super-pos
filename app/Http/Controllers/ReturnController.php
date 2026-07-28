@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ReturnModel;
+use App\Support\Interfaces\Services\ReturnServiceInterface;
 use Inertia\Inertia;
 use Inertia\Response;
 
 class ReturnController extends Controller
 {
+    public function __construct(protected ReturnServiceInterface $returnService) {}
+
     public function index(): Response
     {
-        $returns = ReturnModel::with(['transaction', 'user', 'details.product'])
-            ->latest()
-            ->paginate(10);
+        $returns = $this->returnService->getAll(10);
 
         return Inertia::render('returns/index', [
             'returns' => $returns,
