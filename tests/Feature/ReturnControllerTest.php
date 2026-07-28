@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Product;
+use App\Models\ProductReturn;
 use App\Models\Transaction;
 use App\Models\TransactionDetail;
 use App\Models\User;
@@ -38,4 +39,23 @@ test('authenticated user can store return transaction', function () {
         'transaction_id' => $transaction->id,
         'total_refund_amount' => 15000,
     ]);
+});
+
+test('authenticated user can index returns', function () {
+    $user = User::factory()->create();
+    $transaction = Transaction::factory()->create();
+    ProductReturn::create([
+        'return_number' => 'RET-20260728-TEST',
+        'transaction_id' => $transaction->id,
+        'user_id' => $user->id,
+        'total_refund_amount' => 30000,
+        'reason' => 'Tes filter index',
+    ]);
+
+    $response = $this->actingAs($user)->getJson(route('apiReturns.index', ['keyword' => 'RET-20260728-TEST']));
+
+    $response->assertStatus(200)
+        ->assertJson([
+            'success' => true,
+        ]);
 });

@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Support\Interfaces\Repositories\ProductRepositoryInterface;
 use App\Support\Interfaces\Repositories\ReturnRepositoryInterface;
 use App\Support\Interfaces\Services\ReturnServiceInterface;
+use App\Support\Models\ProductReturn\GetProductReturnReqModel;
 use App\Support\Utils\CheckException;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Support\Collection;
@@ -23,10 +24,10 @@ class ReturnService implements ReturnServiceInterface
         protected ProductRepositoryInterface $productRepository
     ) {}
 
-    public function getAll(int $limit = 10): Paginator|Collection
+    public function getAll(GetProductReturnReqModel $request): Paginator|Collection
     {
         try {
-            return $this->returnRepository->getAll($limit);
+            return $this->returnRepository->getAll($request);
         } catch (\Throwable $th) {
             throw CheckException::Check($th);
         }

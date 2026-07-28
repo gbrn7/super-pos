@@ -4,6 +4,7 @@ namespace App\Support\Interfaces\Repositories;
 
 use App\Models\ProductReturn;
 use App\Models\ReturnDetail;
+use App\Support\Models\ProductReturn\GetProductReturnReqModel;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Support\Collection;
 
@@ -12,7 +13,7 @@ interface ReturnRepositoryInterface
     /**
      * Get all return records.
      */
-    public function getAll(int $limit = 10): Paginator|Collection;
+    public function getAll(GetProductReturnReqModel $request): Paginator|Collection;
 
     /**
      * Get a return record by ID.

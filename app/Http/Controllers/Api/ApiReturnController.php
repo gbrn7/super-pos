@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Transaction;
 use App\Support\Interfaces\Services\ReturnServiceInterface;
+use App\Support\Models\ProductReturn\GetProductReturnReqModel;
 use App\Support\Utils\ResponseApi;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,8 +20,7 @@ class ApiReturnController extends Controller
     public function index(Request $request)
     {
         try {
-            $limit = $request->input('limit', 10);
-            $returns = $this->returnService->getAll((int) $limit);
+            $returns = $this->returnService->getAll(new GetProductReturnReqModel($request));
 
             return ResponseApi::make(true, 'Berhasil mengambil data retur.', $returns);
         } catch (\Throwable $th) {
