@@ -23,7 +23,7 @@ class ApiReturnController extends Controller
         try {
             $returns = $this->returnService->getAll(new GetProductReturnReqModel($request));
 
-            return ResponseApi::make(true, 'Berhasil mengambil data retur.', $returns);
+            return ResponseApi::make(true, trans('message.success.returns.success_get'), $returns);
         } catch (\Throwable $th) {
             return ResponseApi::make(false, $th->getMessage(), null, (int) $th->getCode() ?: 500);
         }
@@ -48,7 +48,7 @@ class ApiReturnController extends Controller
 
             return ResponseApi::make(
                 true,
-                'Retur barang berhasil diproses.',
+                trans('message.success.returns.success_process'),
                 $return,
                 Response::HTTP_CREATED
             );

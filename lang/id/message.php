@@ -20,6 +20,10 @@ return [
             'sales_recovery_notes' => 'Pemulihan modal dari penjualan POS',
             'reinvestment_notes' => 'Reinvestasi dari dompet profit',
         ],
+        'returns' => [
+            'success_get' => 'Berhasil mengambil data retur.',
+            'success_process' => 'Retur barang berhasil diproses.',
+        ],
     ],
     'error' => [
         'data_not_found' => 'Data tidak ditemukan',

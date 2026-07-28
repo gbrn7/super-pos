@@ -20,6 +20,10 @@ return [
             'sales_recovery_notes' => 'Sales capital recovery from POS checkout',
             'reinvestment_notes' => 'Reinvestment from profit wallet',
         ],
+        'returns' => [
+            'success_get' => 'Returns data retrieved successfully.',
+            'success_process' => 'Product return processed successfully.',
+        ],
     ],
 
     'error' => [
