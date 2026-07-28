@@ -273,7 +273,6 @@ export const columns = (props?: ColumnsProps): ColumnDef<Transaction>[] => {
                         {props?.onReturnClick && (
                             <DropdownMenuItem
                                 onClick={() => props.onReturnClick!(row.original)}
-                                className="text-rose-600 focus:text-rose-600 focus:bg-rose-50 dark:focus:bg-rose-950/20"
                             >
                                 <RotateCcw className="mr-2 h-4 w-4" />
                                 Retur Barang
