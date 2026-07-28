@@ -328,6 +328,7 @@ export default function Index({ storeSetting }: { storeSetting?: StoreSetting | 
                     isOpen={returnModalOpen}
                     onClose={() => setReturnModalOpen(false)}
                     transaction={selectedTransaction}
+                    onSuccess={fetchTransactions}
                 />
             </div>
         </>

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { router } from '@inertiajs/react';
-import { RotateCcw, Package, AlertCircle } from 'lucide-react';
+import { Package, AlertCircle } from 'lucide-react';
 import {
     Dialog,
     DialogContent,
@@ -25,14 +24,17 @@ import axiosInstance from '@/lib/axios';
 import { show as apiShowTransaction } from '@/routes/apiTransactions';
 import type { ResponseApi } from '@/support/interfaces/response/Response';
 import { Skeleton } from '@/components/ui/skeleton';
+import { handleApiError } from '@/support/utils/handleApiError';
+import { showSuccessToast, showWarningToast } from '@/support/utils/toast';
 
 interface Props {
     isOpen: boolean;
     onClose: () => void;
     transaction: Transaction | null;
+    onSuccess?: () => void;
 }
 
-export default function ReturnModal({ isOpen, onClose, transaction }: Props) {
+export default function ReturnModal({ isOpen, onClose, transaction, onSuccess }: Props) {
     if (!transaction) return null;
 
     const [quantities, setQuantities] = useState<{ [productId: number]: number }>({});
@@ -103,7 +105,7 @@ export default function ReturnModal({ isOpen, onClose, transaction }: Props) {
         }, 0);
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         const items = Object.entries(quantities)
             .filter(([_, qty]) => qty > 0)
@@ -114,19 +116,27 @@ export default function ReturnModal({ isOpen, onClose, transaction }: Props) {
 
         if (items.length === 0) return;
 
-        setSubmitting(true);
-        router.post('/returns', {
-            transaction_id: transaction.id,
-            items,
-            reason,
-        }, {
-            onSuccess: () => {
+        try {
+            setSubmitting(true);
+            const res = await axiosInstance.post<ResponseApi<any>>('/returns', {
+                transaction_id: transaction.id,
+                items,
+                reason,
+            });
+
+            if (res.data.success) {
+                showSuccessToast(res.data.message || 'Retur barang berhasil diproses.');
                 onClose();
-            },
-            onFinish: () => {
-                setSubmitting(false);
-            },
-        });
+                if (onSuccess) onSuccess();
+            } else {
+                showWarningToast(res.data.message || 'Gagal memproses retur.');
+            }
+        } catch (error) {
+            console.error('Error processing return:', error);
+            handleApiError(error);
+        } finally {
+            setSubmitting(false);
+        }
     };
 
     const totalRefund = calculateTotalRefund();
