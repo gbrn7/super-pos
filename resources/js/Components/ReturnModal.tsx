@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useForm } from '@inertiajs/react';
+import { router } from '@inertiajs/react';
 import { RotateCcw, Package, AlertCircle } from 'lucide-react';
 import {
     Dialog,
@@ -39,8 +39,7 @@ export default function ReturnModal({ isOpen, onClose, transaction }: Props) {
     const [reason, setReason] = useState('');
     const [txDetails, setTxDetails] = useState<any[]>([]);
     const [loading, setLoading] = useState(false);
-
-    const { post, processing } = useForm();
+    const [submitting, setSubmitting] = useState(false);
 
     useEffect(() => {
         if (isOpen && transaction?.id) {
@@ -115,14 +114,17 @@ export default function ReturnModal({ isOpen, onClose, transaction }: Props) {
 
         if (items.length === 0) return;
 
-        post('/returns', {
-            data: {
-                transaction_id: transaction.id,
-                items,
-                reason,
-            },
+        setSubmitting(true);
+        router.post('/returns', {
+            transaction_id: transaction.id,
+            items,
+            reason,
+        }, {
             onSuccess: () => {
                 onClose();
+            },
+            onFinish: () => {
+                setSubmitting(false);
             },
         });
     };
@@ -280,10 +282,10 @@ export default function ReturnModal({ isOpen, onClose, transaction }: Props) {
                         <Button
                             type="submit"
                             variant="destructive"
-                            disabled={processing || totalRefund === 0}
+                            disabled={submitting || totalRefund === 0}
                             className="bg-rose-600 hover:bg-rose-700 text-white"
                         >
-                            Proses Retur
+                            {submitting ? 'Memproses...' : 'Proses Retur'}
                         </Button>
                     </DialogFooter>
                 </form>
