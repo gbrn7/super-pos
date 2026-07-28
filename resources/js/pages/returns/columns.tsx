@@ -1,7 +1,7 @@
-import React from 'react';
 import type { ColumnDef } from '@tanstack/react-table';
-import { RotateCcw } from 'lucide-react';
+import { Eye } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { formatRupiah } from '@/lib/format-money';
 
 export interface ReturnDetail {
     id: number;
@@ -22,59 +22,73 @@ export interface ReturnItem {
     details: ReturnDetail[];
 }
 
-export const columns = (
-    onDetailClick: (item: ReturnItem) => void,
-): ColumnDef<ReturnItem>[] => [
+export const columns = ({
+    onDetailClick,
+}: {
+    onDetailClick: (item: ReturnItem) => void;
+}): ColumnDef<ReturnItem>[] => [
     {
         accessorKey: 'return_number',
         header: 'No. Retur',
         cell: ({ row }) => (
-            <span className="font-semibold text-gray-900 dark:text-white">
+            <span className="font-semibold text-foreground font-mono">
                 {row.original.return_number}
             </span>
         ),
     },
     {
         accessorKey: 'transaction.invoice_number',
-        header: 'No. Struk',
-        cell: ({ row }) => row.original.transaction?.invoice_number || '-',
+        header: 'No. Invoice Struk',
+        cell: ({ row }) => (
+            <span className="font-mono text-xs">
+                {row.original.transaction?.invoice_number || '-'}
+            </span>
+        ),
     },
     {
         accessorKey: 'user.name',
-        header: 'Kasir',
+        header: 'Kasir / Petugas',
         cell: ({ row }) => row.original.user?.name || '-',
     },
     {
         accessorKey: 'total_refund_amount',
         header: 'Total Refund',
         cell: ({ row }) => (
-            <span className="font-bold text-rose-600 dark:text-rose-400">
-                Rp {Number(row.original.total_refund_amount).toLocaleString('id-ID')}
+            <span className="font-bold text-rose-600 dark:text-rose-400 tabular-nums">
+                {formatRupiah(row.original.total_refund_amount)}
             </span>
         ),
     },
     {
         accessorKey: 'reason',
         header: 'Alasan Retur',
-        cell: ({ row }) => row.original.reason || '-',
+        cell: ({ row }) => (
+            <span className="truncate max-w-48 block text-muted-foreground text-xs">
+                {row.original.reason || '-'}
+            </span>
+        ),
     },
     {
         accessorKey: 'created_at',
-        header: 'Tanggal',
-        cell: ({ row }) => new Date(row.original.created_at).toLocaleString('id-ID'),
+        header: 'Waktu Retur',
+        cell: ({ row }) => (
+            <span className="text-xs text-muted-foreground">
+                {new Date(row.original.created_at).toLocaleString('id-ID')}
+            </span>
+        ),
     },
     {
         id: 'actions',
         header: 'Aksi',
         cell: ({ row }) => (
             <Button
-                variant="outline"
-                size="sm"
+                variant="ghost"
+                size="icon"
                 onClick={() => onDetailClick(row.original)}
-                className="flex items-center gap-1 text-xs"
+                title="Lihat Detail Retur"
             >
-                <RotateCcw className="h-3.5 w-3.5" />
-                Detail
+                <Eye className="h-4 w-4 text-muted-foreground hover:text-foreground" />
+                <span className="sr-only">Detail</span>
             </Button>
         ),
     },

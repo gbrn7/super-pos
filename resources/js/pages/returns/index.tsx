@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
 import { Head } from '@inertiajs/react';
 import {
     flexRender,
     getCoreRowModel,
     useReactTable,
 } from '@tanstack/react-table';
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import HeaderContent from '@/components/header-content';
 import {
     Table,
@@ -14,13 +15,8 @@ import {
     TableHeader,
     TableRow,
 } from '@/components/ui/table';
-import {
-    Dialog,
-    DialogContent,
-    DialogHeader,
-    DialogTitle,
-} from '@/components/ui/dialog';
 import { columns, type ReturnItem } from './columns';
+import { DetailDialog } from './dialog-modal/detail-dialog';
 
 interface Props {
     returns: {
@@ -32,6 +28,7 @@ interface Props {
 }
 
 export default function Index({ returns }: Props) {
+    const { t } = useTranslation();
     const [selectedReturn, setSelectedReturn] = useState<ReturnItem | null>(null);
     const [detailOpen, setDetailOpen] = useState(false);
 
@@ -40,7 +37,7 @@ export default function Index({ returns }: Props) {
         setDetailOpen(true);
     };
 
-    const tableColumns = columns(handleDetailClick);
+    const tableColumns = columns({ onDetailClick: handleDetailClick });
 
     const table = useReactTable({
         data: returns?.data || [],
@@ -50,114 +47,69 @@ export default function Index({ returns }: Props) {
 
     return (
         <>
-            <Head title="Retur Barang" />
+            <Head title={t('page.return.page_name', 'Retur Barang')} />
             <div className="mb-16 flex h-full flex-1 flex-col overflow-x-auto rounded-xl p-4">
                 <HeaderContent>
-                    Retur Barang
+                    {t('page.return.page_name', 'Retur Barang')}
                 </HeaderContent>
 
-                <div className="rounded-md border bg-white dark:bg-gray-800 shadow-sm mt-4">
-                    <Table>
-                        <TableHeader>
-                            {table.getHeaderGroups().map((headerGroup) => (
-                                <TableRow key={headerGroup.id}>
-                                    {headerGroup.headers.map((header) => (
-                                        <TableHead key={header.id}>
-                                            {header.isPlaceholder
-                                                ? null
-                                                : flexRender(
-                                                      header.column.columnDef.header,
-                                                      header.getContext(),
-                                                  )}
-                                        </TableHead>
-                                    ))}
-                                </TableRow>
-                            ))}
-                        </TableHeader>
-                        <TableBody>
-                            {table.getRowModel().rows?.length ? (
-                                table.getRowModel().rows.map((row) => (
-                                    <TableRow
-                                        key={row.id}
-                                        data-state={row.getIsSelected() && 'selected'}
-                                    >
-                                        {row.getVisibleCells().map((cell) => (
-                                            <TableCell key={cell.id}>
-                                                {flexRender(
-                                                    cell.column.columnDef.cell,
-                                                    cell.getContext(),
-                                                )}
-                                            </TableCell>
+                <div className="rounded-2xl border bg-card p-3 mt-4">
+                    <div className="overflow-x-auto rounded-md border">
+                        <Table>
+                            <TableHeader>
+                                {table.getHeaderGroups().map((headerGroup) => (
+                                    <TableRow key={headerGroup.id}>
+                                        {headerGroup.headers.map((header) => (
+                                            <TableHead key={header.id}>
+                                                {header.isPlaceholder
+                                                    ? null
+                                                    : flexRender(
+                                                          header.column.columnDef.header,
+                                                          header.getContext(),
+                                                      )}
+                                            </TableHead>
                                         ))}
                                     </TableRow>
-                                ))
-                            ) : (
-                                <TableRow>
-                                    <TableCell
-                                        colSpan={tableColumns.length}
-                                        className="h-24 text-center text-gray-500"
-                                    >
-                                        Belum ada riwayat retur barang.
-                                    </TableCell>
-                                </TableRow>
-                            )}
-                        </TableBody>
-                    </Table>
-                </div>
-
-                {/* Detail Dialog Modal */}
-                <Dialog open={detailOpen} onOpenChange={setDetailOpen}>
-                    <DialogContent className="max-w-md">
-                        <DialogHeader>
-                            <DialogTitle>Detail Retur {selectedReturn?.return_number}</DialogTitle>
-                        </DialogHeader>
-
-                        {selectedReturn && (
-                            <div className="space-y-4 text-sm mt-2">
-                                <div className="grid grid-cols-2 gap-2 border-b pb-3">
-                                    <div>
-                                        <p className="text-xs text-gray-500">No. Struk</p>
-                                        <p className="font-semibold">{selectedReturn.transaction?.invoice_number || '-'}</p>
-                                    </div>
-                                    <div>
-                                        <p className="text-xs text-gray-500">Kasir</p>
-                                        <p className="font-semibold">{selectedReturn.user?.name || '-'}</p>
-                                    </div>
-                                    <div>
-                                        <p className="text-xs text-gray-500">Tanggal</p>
-                                        <p className="font-semibold">{new Date(selectedReturn.created_at).toLocaleString('id-ID')}</p>
-                                    </div>
-                                    <div>
-                                        <p className="text-xs text-gray-500">Total Refund</p>
-                                        <p className="font-bold text-rose-600">Rp {Number(selectedReturn.total_refund_amount).toLocaleString('id-ID')}</p>
-                                    </div>
-                                </div>
-
-                                <div>
-                                    <p className="font-semibold mb-2">Item Dikembalikan:</p>
-                                    <div className="space-y-2 max-h-48 overflow-y-auto">
-                                        {(selectedReturn.details || []).map((detail) => (
-                                            <div key={detail.id} className="flex justify-between items-center text-xs bg-gray-50 dark:bg-gray-700/50 p-2 rounded">
-                                                <div>
-                                                    <p className="font-medium text-gray-800 dark:text-gray-200">{detail.product?.name || 'Produk'}</p>
-                                                    <p className="text-gray-500">{detail.quantity} x Rp {Number(detail.price_per_unit).toLocaleString('id-ID')}</p>
-                                                </div>
-                                                <span className="font-semibold">Rp {Number(detail.subtotal).toLocaleString('id-ID')}</span>
-                                            </div>
-                                        ))}
-                                    </div>
-                                </div>
-
-                                {selectedReturn.reason && (
-                                    <div className="border-t pt-2">
-                                        <p className="text-xs text-gray-500">Alasan Retur:</p>
-                                        <p className="text-gray-700 dark:text-gray-300 italic">{selectedReturn.reason}</p>
-                                    </div>
+                                ))}
+                            </TableHeader>
+                            <TableBody>
+                                {table.getRowModel().rows?.length ? (
+                                    table.getRowModel().rows.map((row) => (
+                                        <TableRow
+                                            key={row.id}
+                                            data-state={row.getIsSelected() && 'selected'}
+                                        >
+                                            {row.getVisibleCells().map((cell) => (
+                                                <TableCell key={cell.id}>
+                                                    {flexRender(
+                                                        cell.column.columnDef.cell,
+                                                        cell.getContext(),
+                                                    )}
+                                                </TableCell>
+                                            ))}
+                                        </TableRow>
+                                    ))
+                                ) : (
+                                    <TableRow>
+                                        <TableCell
+                                            colSpan={tableColumns.length}
+                                            className="h-28 text-center text-muted-foreground"
+                                        >
+                                            {t('page.return.no_data', 'Belum ada riwayat retur barang.')}
+                                        </TableCell>
+                                    </TableRow>
                                 )}
-                            </div>
-                        )}
-                    </DialogContent>
-                </Dialog>
+                            </TableBody>
+                        </Table>
+                    </div>
+
+                    {/* Detail Modal */}
+                    <DetailDialog
+                        isOpen={detailOpen}
+                        returnItem={selectedReturn}
+                        onOpenChange={setDetailOpen}
+                    />
+                </div>
             </div>
         </>
     );
