@@ -23,7 +23,7 @@ test('authenticated user can store return transaction', function () {
         'discount' => 0,
     ]);
 
-    $response = $this->actingAs($user)->post(route('returns.store'), [
+    $response = $this->actingAs($user)->postJson(route('apiReturns.store'), [
         'transaction_id' => $transaction->id,
         'items' => [
             ['product_id' => $product->id, 'quantity' => 1],
@@ -31,7 +31,9 @@ test('authenticated user can store return transaction', function () {
         'reason' => 'Barang cacat ringan',
     ]);
 
-    $response->assertRedirect();
+    $response->assertStatus(201)
+        ->assertJson(['success' => true]);
+
     $this->assertDatabaseHas('returns', [
         'transaction_id' => $transaction->id,
         'total_refund_amount' => 15000,

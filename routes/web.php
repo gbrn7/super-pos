@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\ApiMasterProductController;
 use App\Http\Controllers\Api\ApiPaymentMethodController;
 use App\Http\Controllers\Api\ApiProductController;
 use App\Http\Controllers\Api\ApiProfitWalletController;
+use App\Http\Controllers\Api\ApiReturnController;
 use App\Http\Controllers\Api\ApiRoleController;
 use App\Http\Controllers\Api\ApiTransactionController;
 use App\Http\Controllers\Api\ApiTransactionDetailController;
@@ -62,7 +63,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('capital-wallet', CapitalWalletController::class)->only('index');
 
     Route::get('/returns', [ReturnController::class, 'index'])->name('returns.index');
-    Route::post('/returns', [ReturnController::class, 'store'])->name('returns.store');
 
     Route::group(['prefix' => 'api'], function () {
         // categories
@@ -171,6 +171,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
         // dashboard api
         Route::get('/dashboard', [ApiDashboardController::class, 'index'])->name('apiDashboard.index');
+
+        // returns api
+        Route::post('/returns', [ApiReturnController::class, 'store'])->name('apiReturns.store');
     });
 });
 

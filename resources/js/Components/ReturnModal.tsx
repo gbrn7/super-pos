@@ -117,7 +117,7 @@ export default function ReturnModal({ isOpen, onClose, transaction, onSuccess }:
 
         try {
             setSubmitting(true);
-            const res = await axiosInstance.post<ResponseApi<any>>('/returns', {
+            const res = await axiosInstance.post<ResponseApi<any>>('/api/returns', {
                 transaction_id: transaction.id,
                 items,
                 reason,
