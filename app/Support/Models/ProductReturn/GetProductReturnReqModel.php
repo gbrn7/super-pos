@@ -20,8 +20,8 @@ class GetProductReturnReqModel
 
     public function __construct(Request $request)
     {
-        $this->page = $request->query('page');
-        $this->limit = $request->query('limit');
+        $this->page = $request->query('page') !== null ? (int) $request->query('page') : null;
+        $this->limit = $request->query('limit') !== null ? (int) $request->query('limit') : 10;
         $this->order_by = $request->query('order_by');
         $this->order = $request->query('order');
         $this->keyword = $request->query('keyword');
