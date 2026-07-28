@@ -15,7 +15,8 @@ return new class extends Migration
             $table->integer('quantity');
             $table->decimal('price_per_unit', 15, 2);
             $table->decimal('subtotal', 15, 2);
-            $table->timestamps();
+            $table->unsignedBigInteger('created_at');
+            $table->unsignedBigInteger('updated_at');
         });
     }
 
