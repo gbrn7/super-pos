@@ -133,8 +133,7 @@ export default function ReturnModal({ isOpen, onClose, transaction }: Props) {
         <Dialog open={isOpen} onOpenChange={onClose}>
             <DialogContent className="max-h-[85vh] overflow-y-auto p-6 sm:max-w-2xl">
                 <DialogHeader className="border-b pb-4">
-                    <DialogTitle className="flex items-center gap-2 text-xl font-bold">
-                        <RotateCcw className="h-5 w-5 text-rose-600 dark:text-rose-400" />
+                    <DialogTitle className="text-xl font-bold">
                         Form Retur Barang #{transaction.invoice_number}
                     </DialogTitle>
                 </DialogHeader>
