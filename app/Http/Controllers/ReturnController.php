@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\ReturnModel;
 use App\Models\Transaction;
 use App\Services\ReturnService;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -23,7 +22,7 @@ class ReturnController extends Controller
         ]);
     }
 
-    public function store(Request $request, ReturnService $returnService): RedirectResponse
+    public function store(Request $request, ReturnService $returnService)
     {
         $validated = $request->validate([
             'transaction_id' => ['required', 'exists:transactions,id'],
@@ -35,12 +34,20 @@ class ReturnController extends Controller
 
         $transaction = Transaction::findOrFail($validated['transaction_id']);
 
-        $returnService->processReturn(
+        $return = $returnService->processReturn(
             transaction: $transaction,
             items: $validated['items'],
             reason: $validated['reason'] ?? null,
             user: $request->user()
         );
+
+        if ($request->wantsJson() || $request->ajax()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Retur barang berhasil diproses.',
+                'data' => $return,
+            ]);
+        }
 
         return redirect()->back()->with('success', 'Retur barang berhasil diproses.');
     }
