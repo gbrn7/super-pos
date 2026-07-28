@@ -12,10 +12,6 @@ class ReturnController extends Controller
 
     public function index(): Response
     {
-        $returns = $this->returnService->getAll(10);
-
-        return Inertia::render('returns/index', [
-            'returns' => $returns,
-        ]);
+        return Inertia::render('returns/index');
     }
 }

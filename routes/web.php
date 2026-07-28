@@ -173,6 +173,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/dashboard', [ApiDashboardController::class, 'index'])->name('apiDashboard.index');
 
         // returns api
+        Route::get('/returns', [ApiReturnController::class, 'index'])->name('apiReturns.index');
         Route::post('/returns', [ApiReturnController::class, 'store'])->name('apiReturns.store');
     });
 });

@@ -4,7 +4,7 @@ import {
     getCoreRowModel,
     useReactTable,
 } from '@tanstack/react-table';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import HeaderContent from '@/components/header-content';
 import {
@@ -17,20 +17,44 @@ import {
 } from '@/components/ui/table';
 import { columns, type ReturnItem } from './columns';
 import { DetailDialog } from './dialog-modal/detail-dialog';
+import axiosInstance from '@/lib/axios';
+import type { ResponseApi } from '@/support/interfaces/response/Response';
+import { handleApiError, showWarningToast } from '@/lib/utils';
+import { Skeleton } from '@/components/ui/skeleton';
 
-interface Props {
-    returns: {
-        data: ReturnItem[];
-        current_page: number;
-        last_page: number;
-        total: number;
-    };
-}
-
-export default function Index({ returns }: Props) {
+export default function Index() {
     const { t } = useTranslation();
+    const [returnsData, setReturnsData] = useState<ReturnItem[]>([]);
+    const [loading, setLoading] = useState(true);
     const [selectedReturn, setSelectedReturn] = useState<ReturnItem | null>(null);
     const [detailOpen, setDetailOpen] = useState(false);
+
+    const fetchReturns = async () => {
+        try {
+            setLoading(true);
+            const res = await axiosInstance.get<ResponseApi<any>>('/api/returns');
+            if (res.data.success) {
+                const dataVal = res.data.data;
+                if (Array.isArray(dataVal)) {
+                    setReturnsData(dataVal);
+                } else if (dataVal && Array.isArray(dataVal.data)) {
+                    setReturnsData(dataVal.data);
+                } else {
+                    setReturnsData([]);
+                }
+            } else {
+                showWarningToast(res.data.message);
+            }
+        } catch (error) {
+            handleApiError(error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        fetchReturns();
+    }, []);
 
     const handleDetailClick = (item: ReturnItem) => {
         setSelectedReturn(item);
@@ -40,7 +64,7 @@ export default function Index({ returns }: Props) {
     const tableColumns = columns({ onDetailClick: handleDetailClick });
 
     const table = useReactTable({
-        data: returns?.data || [],
+        data: returnsData,
         columns: tableColumns,
         getCoreRowModel: getCoreRowModel(),
     });
@@ -73,7 +97,18 @@ export default function Index({ returns }: Props) {
                                 ))}
                             </TableHeader>
                             <TableBody>
-                                {table.getRowModel().rows?.length ? (
+                                {loading ? (
+                                    Array.from({ length: 3 }).map((_, idx) => (
+                                        <TableRow key={idx}>
+                                            <TableCell><Skeleton className="h-5 w-24" /></TableCell>
+                                            <TableCell><Skeleton className="h-5 w-32" /></TableCell>
+                                            <TableCell><Skeleton className="h-5 w-24" /></TableCell>
+                                            <TableCell><Skeleton className="h-5 w-28" /></TableCell>
+                                            <TableCell><Skeleton className="h-5 w-36" /></TableCell>
+                                            <TableCell><Skeleton className="h-5 w-16" /></TableCell>
+                                        </TableRow>
+                                    ))
+                                ) : table.getRowModel().rows?.length ? (
                                     table.getRowModel().rows.map((row) => (
                                         <TableRow
                                             key={row.id}

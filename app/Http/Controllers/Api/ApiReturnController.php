@@ -14,6 +14,21 @@ class ApiReturnController extends Controller
     public function __construct(protected ReturnServiceInterface $returnService) {}
 
     /**
+     * Display a listing of returns.
+     */
+    public function index(Request $request)
+    {
+        try {
+            $limit = $request->input('limit', 10);
+            $returns = $this->returnService->getAll((int) $limit);
+
+            return ResponseApi::make(true, 'Berhasil mengambil data retur.', $returns);
+        } catch (\Throwable $th) {
+            return ResponseApi::make(false, $th->getMessage(), null, (int) $th->getCode() ?: 500);
+        }
+    }
+
+    /**
      * Store a newly created return in storage.
      */
     public function store(Request $request)
