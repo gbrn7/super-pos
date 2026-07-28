@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ProductReturn\StoreProductReturnRequest;
 use App\Models\Transaction;
 use App\Support\Interfaces\Services\ReturnServiceInterface;
 use App\Support\Models\ProductReturn\GetProductReturnReqModel;
@@ -31,16 +32,10 @@ class ApiReturnController extends Controller
     /**
      * Store a newly created return in storage.
      */
-    public function store(Request $request)
+    public function store(StoreProductReturnRequest $request)
     {
         try {
-            $validated = $request->validate([
-                'transaction_id' => ['required', 'exists:transactions,id'],
-                'items' => ['required', 'array', 'min:1'],
-                'items.*.product_id' => ['required', 'exists:products,id'],
-                'items.*.quantity' => ['required', 'integer', 'min:1'],
-                'reason' => ['nullable', 'string', 'max:500'],
-            ]);
+            $validated = $request->validated();
 
             $transaction = Transaction::findOrFail($validated['transaction_id']);
 
