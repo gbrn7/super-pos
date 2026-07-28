@@ -50,5 +50,10 @@ return [
             'insufficient_balance_for_drawdown' => 'Saldo dompet modal tidak mencukupi untuk penarikan modal.',
             'insufficient_balance_for_purchase' => 'Saldo dompet modal tidak mencukupi untuk pembelian produk.',
         ],
+        'returns' => [
+            'product_not_in_transaction' => 'Produk ID :product_id tidak terdaftar pada transaksi ini.',
+            'return_qty_exceeds_max' => 'Jumlah kuantitas retur (:return_qty) melebihi batas yang dapat diretur (:max_returnable).',
+            'no_valid_items' => 'Tidak ada produk yang valid untuk diretur.',
+        ],
     ],
 ];
