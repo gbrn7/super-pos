@@ -34,10 +34,10 @@ class ReturnRepository implements ReturnRepositoryInterface
                 }
             })
             ->when($request->start_date, function ($query) use ($request) {
-                $query->where('created_at', '>=', date('Y-m-d H:i:s', $request->start_date));
+                $query->where('created_at', '>=', $request->start_date);
             })
             ->when($request->end_date, function ($query) use ($request) {
-                $query->where('created_at', '<=', date('Y-m-d H:i:s', $request->end_date));
+                $query->where('created_at', '<=', $request->end_date);
             });
 
         if ($request->order_by && $request->order) {
