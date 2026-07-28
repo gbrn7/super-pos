@@ -2,7 +2,7 @@
 
 namespace App\Support\Interfaces\Services;
 
-use App\Models\ReturnModel;
+use App\Models\ProductReturn;
 use App\Models\Transaction;
 use App\Models\User;
 use Illuminate\Contracts\Pagination\Paginator;
@@ -18,5 +18,5 @@ interface ReturnServiceInterface
     /**
      * Process return transaction and update product stocks atomically.
      */
-    public function processReturn(Transaction $transaction, array $items, ?string $reason, User $user): ReturnModel;
+    public function processReturn(Transaction $transaction, array $items, ?string $reason, User $user): ProductReturn;
 }

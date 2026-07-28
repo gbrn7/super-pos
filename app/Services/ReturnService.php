@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Models\ReturnModel;
+use App\Models\ProductReturn;
 use App\Models\Transaction;
 use App\Models\User;
 use App\Support\Interfaces\Repositories\ProductRepositoryInterface;
@@ -32,7 +32,7 @@ class ReturnService implements ReturnServiceInterface
         }
     }
 
-    public function processReturn(Transaction $transaction, array $items, ?string $reason, User $user): ReturnModel
+    public function processReturn(Transaction $transaction, array $items, ?string $reason, User $user): ProductReturn
     {
         try {
             return DB::transaction(function () use ($transaction, $items, $reason, $user) {

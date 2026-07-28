@@ -18,9 +18,9 @@ class ReturnDetail extends Model
         'subtotal',
     ];
 
-    public function returnModel(): BelongsTo
+    public function productReturn(): BelongsTo
     {
-        return $this->belongsTo(ReturnModel::class, 'return_id');
+        return $this->belongsTo(ProductReturn::class, 'return_id');
     }
 
     public function product(): BelongsTo

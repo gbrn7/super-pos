@@ -55,6 +55,6 @@ class Transaction extends Model
 
     public function returns()
     {
-        return $this->hasMany(ReturnModel::class);
+        return $this->hasMany(ProductReturn::class);
     }
 }

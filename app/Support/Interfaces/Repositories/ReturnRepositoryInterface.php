@@ -2,8 +2,8 @@
 
 namespace App\Support\Interfaces\Repositories;
 
+use App\Models\ProductReturn;
 use App\Models\ReturnDetail;
-use App\Models\ReturnModel;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Support\Collection;
 
@@ -17,12 +17,12 @@ interface ReturnRepositoryInterface
     /**
      * Get a return record by ID.
      */
-    public function getById(int $id): ?ReturnModel;
+    public function getById(int $id): ?ProductReturn;
 
     /**
      * Create a return record.
      */
-    public function create(array $data): ReturnModel;
+    public function create(array $data): ProductReturn;
 
     /**
      * Get returns by transaction ID.
