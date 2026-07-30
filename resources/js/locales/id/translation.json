@@ -1459,7 +1459,8 @@
                 "total_refund": "Total Refund",
                 "process_btn": "Proses Retur",
                 "success_message": "Retur barang berhasil diproses.",
-                "error_message": "Gagal memproses retur."
+                "error_message": "Gagal memproses retur.",
+                "min_qty_warning": "Masukkan kuantitas produk minimal 1 unit untuk memproses retur."
             }
         }
     },

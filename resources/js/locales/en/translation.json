@@ -1459,7 +1459,8 @@
                 "total_refund": "Total Refund",
                 "process_btn": "Process Return",
                 "success_message": "Product return processed successfully.",
-                "error_message": "Failed to process return."
+                "error_message": "Failed to process return.",
+                "min_qty_warning": "Enter a product quantity of at least 1 unit to process return."
             }
         }
     },
