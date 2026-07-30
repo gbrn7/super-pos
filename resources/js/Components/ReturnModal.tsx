@@ -81,6 +81,11 @@ export default function ReturnModal({ isOpen, onClose, transaction, onSuccess }:
         return (quantities[detail.product_id] || 0) === maxQty;
     });
 
+    const isAllReturned = details.length > 0 && details.every((detail) => {
+        const maxQty = detail.quantity - (detail.returned_quantity || 0);
+        return maxQty <= 0;
+    });
+
     const handleSelectAllTransaction = () => {
         if (isAllTransactionSelected) {
             setQuantities({});
@@ -162,11 +167,10 @@ export default function ReturnModal({ isOpen, onClose, transaction, onSuccess }:
                                     variant="outline"
                                     size="sm"
                                     onClick={handleSelectAllTransaction}
+                                    disabled={isAllReturned}
                                     className="h-8 text-xs font-semibold"
                                 >
-                                    {isAllTransactionSelected
-                                        ? 'Batal Pilih Semua'
-                                        : 'Pilih Semua Produk'}
+                                    Pilih Semua Produk
                                 </Button>
                             )}
                         </div>
