@@ -17,6 +17,7 @@ import {
 } from '@/components/ui/table';
 import { columns, type ReturnItem } from './columns';
 import { DetailDialog } from './dialog-modal/detail-dialog';
+import { DetailDialog as TransactionDetailDialog } from '../transaction/dialog-modal/detail-dialog';
 import axiosInstance from '@/lib/axios';
 import type { ResponseApi } from '@/support/interfaces/response/Response';
 import { handleApiError, showWarningToast } from '@/lib/utils';
@@ -51,6 +52,8 @@ export default function Index() {
     const [loading, setLoading] = useState(true);
     const [selectedReturn, setSelectedReturn] = useState<ReturnItem | null>(null);
     const [detailOpen, setDetailOpen] = useState(false);
+    const [txDetailOpen, setTxDetailOpen] = useState(false);
+    const [selectedTxId, setSelectedTxId] = useState<number | null>(null);
 
     const [pagination, setPagination] = useState<Pagination>({
         current_page: 1,
@@ -114,6 +117,11 @@ export default function Index() {
     const handleDetailClick = (item: ReturnItem) => {
         setSelectedReturn(item);
         setDetailOpen(true);
+    };
+
+    const handleInvoiceClick = (transactionId: number) => {
+        setSelectedTxId(transactionId);
+        setTxDetailOpen(true);
     };
 
     const handleChangePaginationPage = (page: number) => {
@@ -181,7 +189,10 @@ export default function Index() {
         (queryParam.field && queryParam.field !== 'default')
     );
 
-    const tableColumns = columns({ onDetailClick: handleDetailClick });
+    const tableColumns = columns({ 
+        onDetailClick: handleDetailClick,
+        onInvoiceClick: handleInvoiceClick
+    });
 
     const table = useReactTable({
         data: returnsData,
@@ -527,6 +538,12 @@ export default function Index() {
                         isOpen={detailOpen}
                         returnItem={selectedReturn}
                         onOpenChange={setDetailOpen}
+                    />
+
+                    <TransactionDetailDialog
+                        isOpen={txDetailOpen}
+                        transaction={selectedTxId ? { id: selectedTxId } as any : null}
+                        onOpenChange={setTxDetailOpen}
                     />
                 </div>
             </div>
