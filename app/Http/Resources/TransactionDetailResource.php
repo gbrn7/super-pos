@@ -25,6 +25,10 @@ class TransactionDetailResource extends JsonResource
             'price' => $this->price,
             'discount' => $this->discount,
             'subtotal' => ($this->price - $this->discount) * $this->quantity,
+            'returned_quantity' => $this->when(
+                $this->transaction && $this->transaction->relationLoaded('returns'),
+                fn () => $this->transaction->returns->flatMap->details->where('product_id', $this->product_id)->sum('quantity')
+            ),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];
