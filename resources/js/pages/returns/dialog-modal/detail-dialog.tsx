@@ -103,7 +103,7 @@ export function DetailDialog({
                                         returnItem.details.map((detail) => (
                                             <TableRow key={detail.id}>
                                                 <TableCell className="font-medium">
-                                                    {detail.product?.name || 'Produk'}
+                                                    {detail.product_name || detail.product?.name || 'Produk'}
                                                 </TableCell>
                                                 <TableCell className="text-center font-semibold">
                                                     {detail.quantity}

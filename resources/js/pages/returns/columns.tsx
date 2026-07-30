@@ -6,7 +6,8 @@ import i18next from 'i18next';
 
 export interface ReturnDetail {
     id: number;
-    product: { name: string };
+    product?: { name: string };
+    product_name?: string;
     quantity: number;
     price_per_unit: number;
     subtotal: number;
