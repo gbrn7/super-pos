@@ -204,44 +204,52 @@ export default function ReturnModal({ isOpen, onClose, transaction, onSuccess }:
                                                     key={detail.id}
                                                     className={isDisabled ? "opacity-50 bg-muted/20" : ""}
                                                 >
-                                                    <TableCell className="font-medium">
-                                                        {detail.product_name || detail.product?.name || `Produk #${detail.product_id}`}
+                                                    <TableCell className="font-medium py-3">
+                                                        <div className="text-sm font-semibold text-foreground">
+                                                            {detail.product_name || detail.product?.name || `Produk #${detail.product_id}`}
+                                                        </div>
+                                                        <div className="mt-2 flex flex-wrap gap-1.5 font-normal">
+                                                            <span className="inline-flex items-center rounded-md bg-blue-50 dark:bg-blue-900/30 px-2 py-0.5 text-xs font-semibold text-blue-700 dark:text-blue-400 border border-blue-200 dark:border-blue-800">
+                                                                Beli: {detail.quantity}
+                                                            </span>
+                                                            <span className="inline-flex items-center rounded-md bg-amber-50 dark:bg-amber-900/30 px-2 py-0.5 text-xs font-semibold text-amber-700 dark:text-amber-400 border border-amber-200 dark:border-amber-800">
+                                                                Diretur: {returnedQty}
+                                                            </span>
+                                                            <span className="inline-flex items-center rounded-md bg-emerald-50 dark:bg-emerald-900/30 px-2 py-0.5 text-xs font-semibold text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800">
+                                                                Sisa: {maxQty}
+                                                            </span>
+                                                        </div>
                                                     </TableCell>
                                                     <TableCell className="text-right text-xs">
                                                         {formatRupiah(detail.price)}
                                                     </TableCell>
                                                     <TableCell className="text-center">
-                                                        <div className="flex flex-col items-center gap-1">
-                                                            <div className="flex items-center justify-center gap-1.5">
-                                                                <Input
-                                                                    type="number"
-                                                                    min="0"
-                                                                    max={maxQty}
-                                                                    value={qty}
-                                                                    disabled={isDisabled}
-                                                                    onChange={(e) =>
-                                                                        handleQtyChange(
-                                                                            detail.product_id,
-                                                                            parseInt(e.target.value) || 0,
-                                                                            maxQty,
-                                                                        )
-                                                                    }
-                                                                    className="h-8 w-14 text-center text-xs font-medium"
-                                                                />
-                                                                <Button
-                                                                    type="button"
-                                                                    variant={isMaxSelected ? "secondary" : "outline"}
-                                                                    size="sm"
-                                                                    disabled={isDisabled}
-                                                                    onClick={() => handleSelectAllProduct(detail.product_id, maxQty)}
-                                                                    className="h-7 px-2 text-xs font-medium whitespace-nowrap"
-                                                                >
-                                                                    {isMaxSelected ? 'Batal' : 'Semua'}
-                                                                </Button>
-                                                            </div>
-                                                            <div className="text-[10px] text-muted-foreground whitespace-nowrap">
-                                                                Beli: {detail.quantity} | Diretur: {returnedQty} | Sisa: {maxQty}
-                                                            </div>
+                                                        <div className="flex items-center justify-center gap-1.5">
+                                                            <Input
+                                                                type="number"
+                                                                min="0"
+                                                                max={maxQty}
+                                                                value={qty}
+                                                                disabled={isDisabled}
+                                                                onChange={(e) =>
+                                                                    handleQtyChange(
+                                                                        detail.product_id,
+                                                                        parseInt(e.target.value) || 0,
+                                                                        maxQty,
+                                                                    )
+                                                                }
+                                                                className="h-9 w-16 text-center text-sm font-semibold"
+                                                            />
+                                                            <Button
+                                                                type="button"
+                                                                variant={isMaxSelected ? "secondary" : "outline"}
+                                                                size="sm"
+                                                                disabled={isDisabled}
+                                                                onClick={() => handleSelectAllProduct(detail.product_id, maxQty)}
+                                                                className="h-8 px-2.5 text-xs font-semibold whitespace-nowrap"
+                                                            >
+                                                                {isMaxSelected ? 'Batal' : 'Semua'}
+                                                            </Button>
                                                         </div>
                                                     </TableCell>
                                                     <TableCell className="text-right font-medium text-xs">
