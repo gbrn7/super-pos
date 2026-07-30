@@ -68,12 +68,12 @@ class TransactionRepository implements TransactionRepositoryInterface
 
     public function getById(int $id): ?Transaction
     {
-        return Transaction::with(['user', 'paymentMethod', 'transactionDetails.product'])->find($id);
+        return Transaction::with(['user', 'paymentMethod', 'transactionDetails.product', 'returns.details'])->find($id);
     }
 
     public function getByInvoiceNumber(string $invoiceNumber): ?Transaction
     {
-        return Transaction::with(['user', 'paymentMethod', 'transactionDetails.product'])->where('invoice_number', $invoiceNumber)->first();
+        return Transaction::with(['user', 'paymentMethod', 'transactionDetails.product', 'returns.details'])->where('invoice_number', $invoiceNumber)->first();
     }
 
     public function create(array $data): Transaction
