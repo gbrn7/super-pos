@@ -9,6 +9,7 @@ use App\Support\Enums\CategoryPermissionEnums;
 use App\Support\Enums\DashboardPermissionEnums;
 use App\Support\Enums\PaymentMethodPermissionEnums;
 use App\Support\Enums\ProfitWalletPermissionEnums;
+use App\Support\Enums\ReturnPermissionEnums;
 use App\Support\Enums\RoleEnums;
 use App\Support\Enums\RolePermissionEnums;
 use App\Support\Enums\TransactionPermissionEnums;
@@ -70,6 +71,12 @@ class PermissionSeeder extends Seeder
             ]);
         }
 
+        foreach (ReturnPermissionEnums::cases() as $permission) {
+            Permission::firstOrCreate([
+                'name' => $permission->value,
+            ]);
+        }
+
         // super admin already have access, the setup gate on appServiceProvider
 
         $admin = Role::findByName(RoleEnums::ADMIN->value);
@@ -98,6 +105,11 @@ class PermissionSeeder extends Seeder
             CapitalWalletPermissionEnums::INJECT_CAPITAL_WALLET->value,
             CapitalWalletPermissionEnums::DRAWDOWN_CAPITAL_WALLET->value,
             CapitalWalletPermissionEnums::PURCHASE_PRODUCT_CAPITAL_WALLET->value,
+
+            ReturnPermissionEnums::CREATE_RETURN->value,
+            ReturnPermissionEnums::READ_RETURN->value,
+            ReturnPermissionEnums::UPDATE_RETURN->value,
+            ReturnPermissionEnums::DELETE_RETURN->value,
         ]);
 
         $user = Role::findByName(RoleEnums::USER->value);
@@ -106,6 +118,7 @@ class PermissionSeeder extends Seeder
             DashboardPermissionEnums::READ_DASHBOARD->value,
             CategoryPermissionEnums::READ_CATEGORY->value,
             UnitPermissionEnums::READ_UNIT->value,
+            ReturnPermissionEnums::READ_RETURN->value,
         ]);
     }
 }

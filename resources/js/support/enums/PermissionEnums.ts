@@ -76,6 +76,13 @@ enum CapitalWalletPermissionEnums {
     PURCHASE_PRODUCT = 'purchase-product-capital-wallet',
 }
 
+enum ReturnPermissionEnums {
+    CREATE = 'create-return',
+    READ = 'read-return',
+    UPDATE = 'update-return',
+    DELETE = 'delete-return',
+}
+
 export const PERMISSIONENUMS = {
     CATEGORY: CategoryPermissionEnums,
     DASHBOARD: DashboardPermissionEnums,
@@ -88,6 +95,7 @@ export const PERMISSIONENUMS = {
     TRANSACTION: TransactionPermissionEnums,
     PROFIT_WALLET: ProfitWalletPermissionEnums,
     CAPITAL_WALLET: CapitalWalletPermissionEnums,
+    RETURN: ReturnPermissionEnums,
 };
 
 export const PERMISSIONLIST = (): Permission[] => {
@@ -358,6 +366,27 @@ export const PERMISSIONLIST = (): Permission[] => {
                 {
                     LABEL: t('permission_label.capital_wallet.purchase_product', 'Belanja Stok'),
                     VALUE: CapitalWalletPermissionEnums.PURCHASE_PRODUCT,
+                },
+            ],
+        },
+        {
+            LABEL: t('permission_label.return.permission', 'Pengembalian'),
+            ACCESSLIST: [
+                {
+                    LABEL: t('permission_label.return.create', 'Buat Pengembalian'),
+                    VALUE: ReturnPermissionEnums.CREATE,
+                },
+                {
+                    LABEL: t('permission_label.return.read', 'Baca Pengembalian'),
+                    VALUE: ReturnPermissionEnums.READ,
+                },
+                {
+                    LABEL: t('permission_label.return.update', 'Update Pengembalian'),
+                    VALUE: ReturnPermissionEnums.UPDATE,
+                },
+                {
+                    LABEL: t('permission_label.return.delete', 'Hapus Pengembalian'),
+                    VALUE: ReturnPermissionEnums.DELETE,
                 },
             ],
         },

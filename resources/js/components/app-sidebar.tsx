@@ -104,6 +104,7 @@ export function AppSidebar() {
                     ),
                     href: '/returns',
                     icon: RotateCcw,
+                    permission: PERMISSIONENUMS.RETURN.READ,
                     role: [],
                 },
 

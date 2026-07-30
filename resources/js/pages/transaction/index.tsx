@@ -23,6 +23,8 @@ import { RotateCcw } from 'lucide-react';
 import ReturnModal from '@/Components/ReturnModal';
 import { columns } from './columns';
 import { DataTable } from './data-table';
+import { useAuth } from '@/hooks/use-auth';
+import { PERMISSIONENUMS } from '@/support/enums/PermissionEnums';
 
 const { url } = transactions();
 
@@ -38,6 +40,7 @@ interface PaginatedData<T> {
 
 export default function Index({ storeSetting }: { storeSetting?: StoreSetting | null }) {
     const { t } = useTranslation();
+    const { hasPermission } = useAuth();
 
     const [transactionsData, setTransactionsData] = useState<Transaction[]>([]);
     const [paymentMethods, setPaymentMethods] = useState<PaymentMethod[]>([]);
@@ -288,7 +291,11 @@ export default function Index({ storeSetting }: { storeSetting?: StoreSetting | 
                     detailDataOpen={detailOpen}
                     setDetailOpen={setDetailOpen}
                     onDetailClick={handleDetailClick}
-                    onReturnClick={handleReturnClick}
+                    onReturnClick={
+                        hasPermission(PERMISSIONENUMS.RETURN.CREATE)
+                            ? handleReturnClick
+                            : undefined
+                    }
                     selectedTransaction={selectedTransaction}
                     queryParam={queryParam}
                     pagination={pagination}

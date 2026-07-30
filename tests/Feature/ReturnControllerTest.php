@@ -5,12 +5,15 @@ use App\Models\ProductReturn;
 use App\Models\Transaction;
 use App\Models\TransactionDetail;
 use App\Models\User;
+use App\Support\Enums\ReturnPermissionEnums;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Spatie\Permission\Models\Permission;
 
 uses(RefreshDatabase::class);
 
 test('authenticated user can store return transaction', function () {
     $user = User::factory()->create();
+    $user->givePermissionTo(Permission::findOrCreate(ReturnPermissionEnums::CREATE_RETURN->value));
     $product = Product::factory()->create(['stock' => 10]);
 
     $transaction = Transaction::factory()->create();
@@ -43,6 +46,7 @@ test('authenticated user can store return transaction', function () {
 
 test('authenticated user can index returns', function () {
     $user = User::factory()->create();
+    $user->givePermissionTo(Permission::findOrCreate(ReturnPermissionEnums::READ_RETURN->value));
     $transaction = Transaction::factory()->create();
     ProductReturn::create([
         'return_number' => 'RET-20260728-TEST',
