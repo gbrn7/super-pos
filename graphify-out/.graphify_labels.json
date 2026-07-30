@@ -325,5 +325,17 @@
   "323": "columns.tsx",
   "324": "Global Constraints",
   "325": "placeholder-pattern.tsx",
-  "326": "concurrently"
+  "326": "concurrently",
+  "327": "Product Return Module i18n Translations Implementation Plan",
+  "328": "Return Menus i18n Localization Implementation Plan",
+  "329": "Global Constraints",
+  "330": "Spesifikasi Desain: Perubahan Label Tombol Pilih Semua di Modal Retur",
+  "331": "Spesifikasi Desain: Penyempurnaan Perilaku Tombol Pilih Semua di Modal Retur",
+  "332": "Spesifikasi Desain: Label Bersyarat Tombol Pilih Semua di Modal Retur",
+  "333": "package.json",
+  "334": "Product Return Modal Button Label Implementation Plan",
+  "335": "Product Return Modal Select All Behavior Implementation Plan",
+  "336": "Product Return Modal Select All Conditional Label Implementation Plan",
+  "337": "@base-ui/react",
+  "338": "@stylistic/eslint-plugin"
 }

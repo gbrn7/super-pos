@@ -54,16 +54,35 @@ class DashboardRepository implements DashboardRepositoryInterface
             ')
             ->first();
 
-        $totalRevenue = (float) ($txStats->total_revenue ?? 0);
-        $totalCost = (float) ($detailStats->total_cost ?? 0);
+        // Calculate returns
+        $totalRefund = (float) DB::table('returns')
+            ->whereBetween('created_at', [$start, $end])
+            ->sum('total_refund_amount');
+
+        $returnDetailsStats = DB::table('return_details')
+            ->join('returns', 'return_details.return_id', '=', 'returns.id')
+            ->join('transaction_detail', function ($join) {
+                $join->on('returns.transaction_id', '=', 'transaction_detail.transaction_id')
+                    ->on('return_details.product_id', '=', 'transaction_detail.product_id');
+            })
+            ->whereBetween('returns.created_at', [$start, $end])
+            ->selectRaw('
+                COALESCE(SUM(return_details.quantity), 0) as returned_qty,
+                COALESCE(SUM(return_details.quantity * transaction_detail.cost_price), 0) as returned_cost
+            ')
+            ->first();
+
+        $totalRevenue = (float) ($txStats->total_revenue ?? 0) - $totalRefund;
+        $totalCost = (float) ($detailStats->total_cost ?? 0) - (float) ($returnDetailsStats->returned_cost ?? 0);
         $totalProfit = $totalRevenue - $totalCost;
         $totalDiscount = (float) ($txStats->total_transaction_discount ?? 0) + (float) ($detailStats->total_detail_discount ?? 0);
+        $productsSold = (int) ($detailStats->products_sold ?? 0) - (int) ($returnDetailsStats->returned_qty ?? 0);
 
         return [
             'total_revenue' => $totalRevenue,
             'total_net_profit' => $totalProfit,
             'transactions_count' => (int) ($txStats->transactions_count ?? 0),
-            'products_sold' => (int) ($detailStats->products_sold ?? 0),
+            'products_sold' => $productsSold,
             'revenue_breakdown' => [
                 'profit' => $totalProfit,
                 'cost' => $totalCost,

@@ -485,8 +485,8 @@
     "semantic_hash": ""
   },
   "app/Repositories/ProductRepository.php": {
-    "mtime": 1785055968.1099167,
-    "ast_hash": "74b7312389da5111952c5f49075b4776",
+    "mtime": 1785432899.9170392,
+    "ast_hash": "d51d20293df13583e4d6acf62db3d1c6",
     "semantic_hash": ""
   },
   "app/Repositories/RoleRepository.php": {
@@ -645,8 +645,8 @@
     "semantic_hash": "29b3785e410ab7cc0f7f1ece051cb00c"
   },
   "app/Support/Interfaces/Repositories/ProductRepositoryInterface.php": {
-    "mtime": 1785055940.5725956,
-    "ast_hash": "0e9af69c3aa48ffac42128f45bdbf538",
+    "mtime": 1785432897.4589643,
+    "ast_hash": "72c5fcfb8c4096f9f1a2ac54b3f09322",
     "semantic_hash": ""
   },
   "app/Support/Interfaces/Repositories/RoleRepositoryInterface.php": {
@@ -1565,13 +1565,13 @@
     "semantic_hash": ""
   },
   "resources/js/locales/en/translation.json": {
-    "mtime": 1785248619.8503618,
-    "ast_hash": "d5093476333c1be076a4992b37654878",
+    "mtime": 1785432218.8287923,
+    "ast_hash": "a8d8bc922bdb3ef921c7a241aac7cf12",
     "semantic_hash": ""
   },
   "resources/js/locales/id/translation.json": {
-    "mtime": 1785248622.9582627,
-    "ast_hash": "c3fe01c7dc1c25c9fed53cbbd0f7df4b",
+    "mtime": 1785432211.6301255,
+    "ast_hash": "a65788f87fb3fd2d2d7034ac91b7403f",
     "semantic_hash": ""
   },
   "resources/js/pages/auth/confirm-password.tsx": {
@@ -1955,8 +1955,8 @@
     "semantic_hash": ""
   },
   "resources/js/pages/transaction/columns.tsx": {
-    "mtime": 1785250476.2262223,
-    "ast_hash": "113d69c974423a2c87c4e78ab168aaf2",
+    "mtime": 1785432061.0997336,
+    "ast_hash": "cb6da7673e8cfb19239b0d04329bcb99",
     "semantic_hash": ""
   },
   "resources/js/pages/transaction/data-table.tsx": {
@@ -3275,8 +3275,8 @@
     "semantic_hash": ""
   },
   "app/Services/ReturnService.php": {
-    "mtime": 1785426128.2252932,
-    "ast_hash": "2921ff7984fdbace9490e75764f4ade1",
+    "mtime": 1785432902.8913865,
+    "ast_hash": "230cf50020fd054e045820d25dad0861",
     "semantic_hash": ""
   },
   "app/Support/Enums/ReturnPermissionEnums.php": {
@@ -3310,8 +3310,8 @@
     "semantic_hash": ""
   },
   "resources/js/Components/ReturnModal.tsx": {
-    "mtime": 1785428150.8104827,
-    "ast_hash": "cc4fad6a40480aaf13e604e813aa123a",
+    "mtime": 1785431690.9755847,
+    "ast_hash": "ad064e32efe05821a2619bd64a9d7ca4",
     "semantic_hash": ""
   },
   "resources/js/pages/returns/columns.tsx": {
@@ -3407,6 +3407,76 @@
   "docs/superpowers/specs/2026-07-30-transaction-detail-returns-tab-design.md": {
     "mtime": 1785429116.5037193,
     "ast_hash": "009e7cc3021f5e9e2d22c5c3aee9cbbb",
+    "semantic_hash": ""
+  },
+  "docs/superpowers/plans/2026-07-30-return-i18n-translations.md": {
+    "mtime": 1785431602.33291,
+    "ast_hash": "994c4a85c5064d3f466cff8875eeed65",
+    "semantic_hash": ""
+  },
+  "docs/superpowers/plans/2026-07-30-return-menus-i18n.md": {
+    "mtime": 1785432009.592391,
+    "ast_hash": "81e84703100b225ab682fbcef41f42e3",
+    "semantic_hash": ""
+  },
+  "docs/superpowers/plans/2026-07-30-return-modal-a11y-badges.md": {
+    "mtime": 1785430544.708925,
+    "ast_hash": "ca3d4ed5c285289fb53102d6e9558c65",
+    "semantic_hash": ""
+  },
+  "docs/superpowers/plans/2026-07-30-return-modal-button-label.md": {
+    "mtime": 1785430729.010902,
+    "ast_hash": "3641234ced72f41b6c09243367c53890",
+    "semantic_hash": ""
+  },
+  "docs/superpowers/plans/2026-07-30-return-modal-select-all-behavior.md": {
+    "mtime": 1785430984.6900094,
+    "ast_hash": "70e3289f9b3079b5a07f7df4b6353fdb",
+    "semantic_hash": ""
+  },
+  "docs/superpowers/plans/2026-07-30-return-modal-select-all-conditional-label.md": {
+    "mtime": 1785431233.0976267,
+    "ast_hash": "387b6f8d405f52b99143c861a2caa48b",
+    "semantic_hash": ""
+  },
+  "docs/superpowers/plans/2026-07-31-dashboard-return-adjustment.md": {
+    "mtime": 1785432829.3047638,
+    "ast_hash": "84427f2e73478532c89da99268cefb20",
+    "semantic_hash": ""
+  },
+  "docs/superpowers/specs/2026-07-30-return-i18n-translations-design.md": {
+    "mtime": 1785431588.4215603,
+    "ast_hash": "93bbedb4094d66b517b93cc0b203a926",
+    "semantic_hash": ""
+  },
+  "docs/superpowers/specs/2026-07-30-return-menus-i18n-design.md": {
+    "mtime": 1785431989.0286055,
+    "ast_hash": "76f5088bd24f7be877a933efd41ce29f",
+    "semantic_hash": ""
+  },
+  "docs/superpowers/specs/2026-07-30-return-modal-a11y-badges-design.md": {
+    "mtime": 1785430532.557243,
+    "ast_hash": "d2e06116b251e5fd3ebc9a17c071fe2e",
+    "semantic_hash": ""
+  },
+  "docs/superpowers/specs/2026-07-30-return-modal-button-label-design.md": {
+    "mtime": 1785430720.071333,
+    "ast_hash": "07d65ec8dfae49a771b419bfd3f36b7f",
+    "semantic_hash": ""
+  },
+  "docs/superpowers/specs/2026-07-30-return-modal-select-all-behavior-design.md": {
+    "mtime": 1785430974.500449,
+    "ast_hash": "524ce3dbce1fa7e46295014772be50ed",
+    "semantic_hash": ""
+  },
+  "docs/superpowers/specs/2026-07-30-return-modal-select-all-conditional-label-design.md": {
+    "mtime": 1785431226.2900536,
+    "ast_hash": "470c5c29d54f5342cb3a05bad2335a31",
+    "semantic_hash": ""
+  },
+  "docs/superpowers/specs/2026-07-31-dashboard-return-adjustment-design.md": {
+    "mtime": 1785432762.1900184,
+    "ast_hash": "f05aa01053f647bc55b09aded60dc602",
     "semantic_hash": ""
   }
 }
