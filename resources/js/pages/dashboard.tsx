@@ -44,6 +44,9 @@ import {
 } from '@/components/ui/table';
 import { Area, AreaChart, CartesianGrid, XAxis, Bar, BarChart, YAxis, Pie, PieChart, Cell } from 'recharts';
 import { useHttp } from '@inertiajs/react';
+import { DetailDialog } from '@/pages/transaction/dialog-modal/detail-dialog';
+import axiosInstance from '@/lib/axios';
+import { handleApiError } from '@/lib/utils';
 
 // Reusable formatters
 const formatCurrency = (val: number) => {
@@ -124,6 +127,21 @@ export default function Dashboard() {
     const [dashboardData, setDashboardData] = React.useState<any>(null);
     const [isLoading, setIsLoading] = React.useState(true);
     const [isTableLoading, setIsTableLoading] = React.useState(false);
+
+    const [selectedTransaction, setSelectedTransaction] = React.useState<any>(null);
+    const [detailOpen, setDetailOpen] = React.useState(false);
+
+    const handleInvoiceClick = async (invoiceNumber: string) => {
+        try {
+            const res = await axiosInstance.get(`/api/transactions/invoice/${invoiceNumber}`);
+            if (res.data.success) {
+                setSelectedTransaction(res.data.data);
+                setDetailOpen(true);
+            }
+        } catch (error) {
+            handleApiError(error);
+        }
+    };
 
     const paymentChartData = React.useMemo(() => {
         if (!dashboardData || !dashboardData.transactions_by_payment_method) return [];
@@ -958,7 +976,12 @@ export default function Dashboard() {
                                                 paginatedData.map((tx: any) => (
                                                     <TableRow key={tx.id}>
                                                         <TableCell className="text-xs">{tx.created_at}</TableCell>
-                                                        <TableCell className="font-semibold text-xs text-primary">{tx.invoice_number}</TableCell>
+                                                        <TableCell
+                                                            className="font-semibold text-xs text-primary cursor-pointer hover:underline"
+                                                            onClick={() => handleInvoiceClick(tx.invoice_number)}
+                                                        >
+                                                            {tx.invoice_number}
+                                                        </TableCell>
                                                         <TableCell className="text-xs">{tx.user_name}</TableCell>
                                                         <TableCell className="text-xs">
                                                             <Badge variant="secondary">{tx.payment_method_name}</Badge>
@@ -1078,6 +1101,13 @@ export default function Dashboard() {
                     </CardContent>
                 </Card>
 
+                {selectedTransaction && (
+                    <DetailDialog
+                        isOpen={detailOpen}
+                        transaction={selectedTransaction}
+                        onOpenChange={setDetailOpen}
+                    />
+                )}
             </div>
         </>
     );
