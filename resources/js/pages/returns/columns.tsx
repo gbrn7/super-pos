@@ -26,26 +26,42 @@ export interface ReturnItem {
 
 export const columns = ({
     onDetailClick,
+    onInvoiceClick,
 }: {
     onDetailClick: (item: ReturnItem) => void;
+    onInvoiceClick: (transactionId: number) => void;
 }): ColumnDef<ReturnItem>[] => [
     {
         accessorKey: 'return_number',
         header: i18next.t('page.return.data_table.columns.return_number', 'No. Retur'),
         cell: ({ row }) => (
-            <span className="font-semibold text-foreground font-mono">
+            <button
+                type="button"
+                onClick={() => onDetailClick(row.original)}
+                className="font-semibold text-primary hover:underline font-mono text-left bg-transparent border-0 p-0 cursor-pointer"
+            >
                 {row.original.return_number}
-            </span>
+            </button>
         ),
     },
     {
         accessorKey: 'transaction.invoice_number',
         header: i18next.t('page.return.data_table.columns.invoice_number', 'No. Invoice Struk'),
-        cell: ({ row }) => (
-            <span className="font-mono text-xs">
-                {row.original.transaction?.invoice_number || '-'}
-            </span>
-        ),
+        cell: ({ row }) => {
+            const invoiceNumber = row.original.transaction?.invoice_number;
+            const transactionId = row.original.transaction_id;
+            return invoiceNumber ? (
+                <button
+                    type="button"
+                    onClick={() => onInvoiceClick(transactionId)}
+                    className="font-mono text-xs text-primary hover:underline text-left bg-transparent border-0 p-0 cursor-pointer"
+                >
+                    {invoiceNumber}
+                </button>
+            ) : (
+                <span className="font-mono text-xs text-muted-foreground">-</span>
+            );
+        },
     },
     {
         accessorKey: 'user.name',
