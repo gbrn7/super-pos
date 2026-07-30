@@ -4,7 +4,6 @@ namespace App\Repositories;
 
 use App\Models\Product;
 use App\Models\Transaction;
-use App\Models\TransactionDetail;
 use App\Support\Interfaces\Repositories\DashboardRepositoryInterface;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
@@ -105,7 +104,7 @@ class DashboardRepository implements DashboardRepositoryInterface
             )
             ->groupBy('transaction_id');
 
-        return DB::table('transactions')
+        $txData = DB::table('transactions')
             ->leftJoinSub($detailSubquery, 'details', function ($join) {
                 $join->on('transactions.id', '=', 'details.transaction_id');
             })
@@ -118,19 +117,50 @@ class DashboardRepository implements DashboardRepositoryInterface
                 DB::raw('COALESCE(SUM(details.quantity), 0) as quantity')
             )
             ->groupBy(DB::raw("to_char(to_timestamp(transactions.created_at), 'YYYY-MM-DD')"))
-            ->orderBy('date', 'asc')
-            ->get()
-            ->map(function ($item) {
-                $revenue = (float) $item->revenue;
-                $cost = (float) $item->cost;
+            ->get();
 
-                return [
-                    'date' => $item->date,
-                    'revenue' => $revenue,
-                    'profit' => $revenue - $cost,
-                    'quantity' => (int) $item->quantity,
-                ];
-            });
+        $returnData = DB::table('returns')
+            ->join('return_details', 'returns.id', '=', 'return_details.return_id')
+            ->join('transaction_detail', function ($join) {
+                $join->on('returns.transaction_id', '=', 'transaction_detail.transaction_id')
+                    ->on('return_details.product_id', '=', 'transaction_detail.product_id');
+            })
+            ->whereBetween('returns.created_at', [$start, $end])
+            ->select(
+                DB::raw("to_char(to_timestamp(returns.created_at), 'YYYY-MM-DD') as date"),
+                DB::raw('COALESCE(SUM(returns.total_refund_amount), 0) as refund'),
+                DB::raw('COALESCE(SUM(return_details.quantity * transaction_detail.cost_price), 0) as returned_cost'),
+                DB::raw('COALESCE(SUM(return_details.quantity), 0) as returned_qty')
+            )
+            ->groupBy(DB::raw("to_char(to_timestamp(returns.created_at), 'YYYY-MM-DD')"))
+            ->get()
+            ->keyBy('date');
+
+        $allDates = $txData->pluck('date')->merge($returnData->keys())->unique()->sort()->values();
+        $txDataMap = $txData->keyBy('date');
+
+        return $allDates->map(function ($date) use ($txDataMap, $returnData) {
+            $tx = $txDataMap->get($date);
+            $ret = $returnData->get($date);
+
+            $txRevenue = $tx ? (float) $tx->revenue : 0.0;
+            $txCost = $tx ? (float) $tx->cost : 0.0;
+            $txQty = $tx ? (int) $tx->quantity : 0;
+
+            $retRefund = $ret ? (float) $ret->refund : 0.0;
+            $retCost = $ret ? (float) $ret->returned_cost : 0.0;
+            $retQty = $ret ? (int) $ret->returned_qty : 0;
+
+            $revenue = $txRevenue - $retRefund;
+            $cost = $txCost - $retCost;
+
+            return [
+                'date' => $date,
+                'revenue' => $revenue,
+                'profit' => $revenue - $cost,
+                'quantity' => $txQty - $retQty,
+            ];
+        });
     }
 
     public function getTopProducts(string $startDate, string $endDate, int $limit = 5): Collection
@@ -138,14 +168,25 @@ class DashboardRepository implements DashboardRepositoryInterface
         $start = $this->parseStartTimestamp($startDate);
         $end = $this->parseEndTimestamp($endDate);
 
-        return TransactionDetail::select(
-            'products.name',
-            DB::raw('SUM(transaction_detail.quantity) as quantity')
-        )
+        $sales = DB::table('transaction_detail')
             ->join('products', 'transaction_detail.product_id', '=', 'products.id')
             ->join('transactions', 'transaction_detail.transaction_id', '=', 'transactions.id')
             ->whereBetween('transactions.created_at', [$start, $end])
-            ->groupBy('transaction_detail.product_id', 'products.name')
+            ->whereNull('transactions.deleted_at')
+            ->whereNull('transaction_detail.deleted_at')
+            ->select('transaction_detail.product_id', 'products.name', DB::raw('SUM(transaction_detail.quantity) as qty'))
+            ->groupBy('transaction_detail.product_id', 'products.name');
+
+        $returns = DB::table('return_details')
+            ->join('returns', 'return_details.return_id', '=', 'returns.id')
+            ->whereBetween('returns.created_at', [$start, $end])
+            ->select('return_details.product_id', DB::raw('SUM(return_details.quantity) as qty'))
+            ->groupBy('return_details.product_id');
+
+        return DB::table('products')
+            ->joinSub($sales, 's', 'products.id', '=', 's.product_id')
+            ->leftJoinSub($returns, 'r', 'products.id', '=', 'r.product_id')
+            ->select('s.name', DB::raw('(s.qty - COALESCE(r.qty, 0)) as quantity'))
             ->orderBy('quantity', 'desc')
             ->limit($limit)
             ->get()
@@ -182,14 +223,22 @@ class DashboardRepository implements DashboardRepositoryInterface
         $start = $this->parseStartTimestamp($startDate);
         $end = $this->parseEndTimestamp($endDate);
 
-        return Transaction::select(
-            'payment_methods.name as payment_method_name',
-            DB::raw('COUNT(transactions.id) as transactions_count'),
-            DB::raw('SUM(transactions.total_amount) as total_amount')
-        )
-            ->join('payment_methods', 'transactions.payment_method_id', '=', 'payment_methods.id')
-            ->whereBetween('transactions.created_at', [$start, $end])
-            ->groupBy('transactions.payment_method_id', 'payment_methods.name')
+        $sales = DB::table('transactions')
+            ->whereBetween('created_at', [$start, $end])
+            ->whereNull('deleted_at')
+            ->select('payment_method_id', DB::raw('COUNT(id) as count'), DB::raw('SUM(total_amount) as total'))
+            ->groupBy('payment_method_id');
+
+        $returns = DB::table('returns')
+            ->join('transactions', 'returns.transaction_id', '=', 'transactions.id')
+            ->whereBetween('returns.created_at', [$start, $end])
+            ->select('transactions.payment_method_id', DB::raw('SUM(returns.total_refund_amount) as refund'))
+            ->groupBy('transactions.payment_method_id');
+
+        return DB::table('payment_methods')
+            ->joinSub($sales, 's', 'payment_methods.id', '=', 's.payment_method_id')
+            ->leftJoinSub($returns, 'r', 'payment_methods.id', '=', 'r.payment_method_id')
+            ->select('payment_methods.name as payment_method_name', 's.count as transactions_count', DB::raw('(s.total - COALESCE(r.refund, 0)) as total_amount'))
             ->get()
             ->map(function ($item) {
                 return [
@@ -205,18 +254,26 @@ class DashboardRepository implements DashboardRepositoryInterface
         $start = $this->parseStartTimestamp($startDate);
         $end = $this->parseEndTimestamp($endDate);
 
-        return TransactionDetail::select(
-            'categories.name as category_name',
-            DB::raw('SUM(transaction_detail.quantity * (transaction_detail.price - transaction_detail.discount)) as total_amount'),
-            DB::raw('SUM(transaction_detail.quantity) as products_count')
-        )
+        $sales = DB::table('transaction_detail')
             ->join('products', 'transaction_detail.product_id', '=', 'products.id')
-            ->join('categories', 'products.category_id', '=', 'categories.id')
             ->join('transactions', 'transaction_detail.transaction_id', '=', 'transactions.id')
             ->whereBetween('transactions.created_at', [$start, $end])
             ->whereNull('transactions.deleted_at')
             ->whereNull('transaction_detail.deleted_at')
-            ->groupBy('products.category_id', 'categories.name')
+            ->select('products.category_id', DB::raw('SUM(transaction_detail.quantity * (transaction_detail.price - transaction_detail.discount)) as total'), DB::raw('SUM(transaction_detail.quantity) as qty'))
+            ->groupBy('products.category_id');
+
+        $returns = DB::table('return_details')
+            ->join('returns', 'return_details.return_id', '=', 'returns.id')
+            ->join('products', 'return_details.product_id', '=', 'products.id')
+            ->whereBetween('returns.created_at', [$start, $end])
+            ->select('products.category_id', DB::raw('SUM(return_details.subtotal) as refund'), DB::raw('SUM(return_details.quantity) as qty'))
+            ->groupBy('products.category_id');
+
+        return DB::table('categories')
+            ->joinSub($sales, 's', 'categories.id', '=', 's.category_id')
+            ->leftJoinSub($returns, 'r', 'categories.id', '=', 'r.category_id')
+            ->select('categories.name as category_name', DB::raw('(s.total - COALESCE(r.refund, 0)) as total_amount'), DB::raw('(s.qty - COALESCE(r.qty, 0)) as products_count'))
             ->get()
             ->map(function ($item) {
                 return [
