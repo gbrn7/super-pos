@@ -275,7 +275,10 @@ export const columns = (props?: ColumnsProps): ColumnDef<Transaction>[] => {
                                 onClick={() => props.onReturnClick!(row.original)}
                             >
                                 <RotateCcw className="mr-2 h-4 w-4" />
-                                Retur Barang
+                                {t(
+                                    'component.data_table.action_menu.return_btn',
+                                    'Retur Barang',
+                                )}
                             </DropdownMenuItem>
                         )}
                     </DropdownMenuContent>
