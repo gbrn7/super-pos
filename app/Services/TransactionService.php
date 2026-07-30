@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use App\Exports\TransactionsExport;
+use App\Models\StoreSetting;
 use App\Models\Transaction;
 use App\Support\Interfaces\Repositories\ProductRepositoryInterface;
 use App\Support\Interfaces\Repositories\TransactionDetailRepositoryInterface;
@@ -11,6 +13,7 @@ use App\Support\Interfaces\Services\ProfitWalletServiceInterface;
 use App\Support\Interfaces\Services\TransactionServiceInterface;
 use App\Support\Models\Transaction\GetTransactionReqModel;
 use App\Support\Utils\CheckException;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Exception;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Http\Response;
@@ -18,6 +21,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Maatwebsite\Excel\Facades\Excel;
 
 class TransactionService implements TransactionServiceInterface
 {
@@ -213,6 +217,39 @@ class TransactionService implements TransactionServiceInterface
 
                 return $transaction->fresh(['transactionDetails.product', 'paymentMethod', 'user']);
             });
+        } catch (\Throwable $th) {
+            throw CheckException::Check($th);
+        }
+    }
+
+    public function export(GetTransactionReqModel $request, string $format)
+    {
+        try {
+            $request->limit = null;
+            $transactions = $this->transactionRepository->getAllByIndex($request);
+            $transactions->load('returns');
+
+            if ($format === 'excel') {
+                return Excel::download(
+                    new TransactionsExport($transactions),
+                    'laporan-transaksi-'.date('Y-m-d-His').'.xlsx'
+                );
+            }
+
+            $printedAt = date('d/m/Y H:i:s');
+            $startDate = $request->start_date ? date('d/m/Y', $request->start_date) : null;
+            $endDate = $request->end_date ? date('d/m/Y', $request->end_date) : null;
+            $storeSetting = StoreSetting::first();
+
+            $pdf = Pdf::loadView('pdf.transactions', [
+                'transactions' => $transactions,
+                'startDate' => $startDate,
+                'endDate' => $endDate,
+                'printedAt' => $printedAt,
+                'storeSetting' => $storeSetting,
+            ])->setPaper('a4', 'portrait');
+
+            return $pdf->download('laporan-transaksi-'.date('Y-m-d-His').'.pdf');
         } catch (\Throwable $th) {
             throw CheckException::Check($th);
         }

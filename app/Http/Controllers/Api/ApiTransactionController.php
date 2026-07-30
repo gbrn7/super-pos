@@ -29,7 +29,7 @@ class ApiTransactionController extends Controller implements HasMiddleware
         return [
             new Middleware(
                 'permission:'.TransactionPermissionEnums::READ_TRANSACTION->value,
-                only: ['index', 'show', 'getByInvoiceNumber']
+                only: ['index', 'show', 'getByInvoiceNumber', 'export']
             ),
             new Middleware(
                 'permission:'.TransactionPermissionEnums::CREATE_TRANSACTION->value,
@@ -166,6 +166,21 @@ class ApiTransactionController extends Controller implements HasMiddleware
             $transaction = $this->transactionService->checkout($request->validated());
 
             return ResponseApi::make(true, trans('message.success.created'), new TransactionResource($transaction), Response::HTTP_CREATED);
+        } catch (\Throwable $th) {
+            return ResponseApi::make(false, $th->getMessage(), null, $th->getCode());
+        }
+    }
+
+    /**
+     * Export transactions as PDF or Excel.
+     */
+    public function export(Request $request)
+    {
+        try {
+            $format = $request->query('format', 'pdf');
+            $reqModel = new GetTransactionReqModel($request);
+
+            return $this->transactionService->export($reqModel, $format);
         } catch (\Throwable $th) {
             return ResponseApi::make(false, $th->getMessage(), null, $th->getCode());
         }

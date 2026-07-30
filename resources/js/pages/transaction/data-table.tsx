@@ -25,6 +25,7 @@ import {
     User as UserIcon,
     RotateCcw,
     X,
+    DownloadCloud,
 } from 'lucide-react';
 import * as React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -64,6 +65,7 @@ import type { PaymentMethod } from '@/support/models/paymentMethod';
 import type { Transaction } from '@/support/models/transaction';
 import type { User } from '@/support/models/user';
 import { DetailDialog } from './dialog-modal/detail-dialog';
+import { ExportModal } from './dialog-modal/export-modal';
 
 interface DataTableProps<TData, TValue> {
     columns:
@@ -157,6 +159,7 @@ export function DataTable<TData, TValue>({
         React.useState<ColumnFiltersState>([]);
     const [columnVisibility, setColumnVisibility] =
         React.useState<VisibilityState>({});
+    const [exportModalOpen, setExportModalOpen] = React.useState(false);
 
     const table = useReactTable({
         data,
@@ -200,6 +203,13 @@ export function DataTable<TData, TValue>({
                             )}
                         </Button>
                     )}
+                    <Button
+                        variant="outline"
+                        onClick={() => setExportModalOpen(true)}
+                    >
+                        <DownloadCloud className="mr-1.5 h-4 w-4" />
+                        {t('common.export', 'Ekspor')}
+                    </Button>
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                             <Button variant="outline">
@@ -671,6 +681,14 @@ export function DataTable<TData, TValue>({
                     transaction={selectedTransaction}
                     onOpenChange={setDetailOpen}
                     storeSetting={storeSetting}
+                />
+
+                {/* Export Modal */}
+                <ExportModal
+                    isOpen={exportModalOpen}
+                    onClose={() => setExportModalOpen(false)}
+                    defaultStartDate={queryParam.start_date}
+                    defaultEndDate={queryParam.end_date}
                 />
             </div>
 

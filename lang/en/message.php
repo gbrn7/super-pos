@@ -15,12 +15,12 @@ return [
         'store_settings_updated' => 'Store settings successfully updated',
         'profit_wallet' => [
             'sales_notes' => 'Sales from POS checkout',
-            'return_notes' => 'Deduction due to product return ID: :id',
+            'return_notes' => 'Deduction due to return (:invoice)',
         ],
         'capital_wallet' => [
             'sales_recovery_notes' => 'Sales capital recovery from POS checkout',
             'reinvestment_notes' => 'Reinvestment from profit wallet',
-            'return_notes' => 'Capital deduction due to product return ID: :id',
+            'return_notes' => 'Deduction due to return (:invoice)',
         ],
         'returns' => [
             'success_get' => 'Returns data retrieved successfully.',

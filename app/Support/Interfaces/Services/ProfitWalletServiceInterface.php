@@ -45,5 +45,5 @@ interface ProfitWalletServiceInterface
     /**
      * Record profit deduction due to product return.
      */
-    public function recordReturnProfitDeduction(float $amount, int $returnId): ProfitWalletTransaction;
+    public function recordReturnProfitDeduction(float $amount, int $returnId, ?string $invoiceNumber = null): ProfitWalletTransaction;
 }

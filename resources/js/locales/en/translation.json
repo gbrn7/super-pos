@@ -1177,6 +1177,9 @@
                 "detail_dialog": {
                     "dialog_title": "Transaction Details",
                     "print_btn": "Print Receipt",
+                    "tab_details": "Transaction Details",
+                    "tab_receipt": "Receipt",
+                    "tab_returns": "Returned Items",
                     "cashier_label": "Cashier / Staff",
                     "payment_method_label": "Payment Method",
                     "date_label": "Transaction Time",
@@ -1198,11 +1201,18 @@
                     "profit_label": "Profit",
                     "loss_label": "Loss",
                     "at_cost_label": "At Cost",
+                    "default_product_name": "Product #{{id}}",
+                    "returns_total_refund_title": "Total Return Amount",
+                    "returns_total_refund_desc": "Total {{count}} items returned for this transaction",
+                    "returns_table_total_refund": "Total Refund",
+                    "returns_table_reason": "Reason",
+                    "returns_table_time": "Return Time",
+                    "default_product": "Product",
+                    "returns_empty": "No items returned for this transaction yet.",
                     "empty_items": "Product details not available.",
                     "total_transaction": "Total Transaction",
                     "payment_amount": "Paid Amount",
-                    "change_amount": "Change",
-                    "default_product_name": "Product #{{id}}"
+                    "change_amount": "Change"
                 }
             }
         },
@@ -1403,7 +1413,8 @@
             "receipt_saved": "Saved",
             "receipt_item_placeholder": "Item #{{id}}",
             "receipt_pcs_fallback": "pcs",
-            "receipt_phone_label": "Phone"
+            "receipt_phone_label": "Phone",
+            "receipt_item_discount": "Discount -{{disc}}"
         },
         "return": {
             "page_name": "Product Returns",

@@ -1176,6 +1176,9 @@
                     "detail_dialog": {
                         "dialog_title": "Detail Transaksi",
                         "print_btn": "Cetak Nota",
+                        "tab_details": "Rincian Transaksi",
+                        "tab_receipt": "Struk / Nota",
+                        "tab_returns": "Barang Diretur",
                         "cashier_label": "Kasir / Petugas",
                         "payment_method_label": "Metode Pembayaran",
                         "date_label": "Waktu Transaksi",
@@ -1197,11 +1200,14 @@
                         "profit_label": "Untung",
                         "loss_label": "Rugi",
                         "at_cost_label": "Sesuai Modal",
-                        "empty_items": "Detail produk tidak tersedia.",
-                        "total_transaction": "Total Transaksi",
-                        "payment_amount": "Nominal Pembayaran",
-                        "change_amount": "Kembalian",
-                        "default_product_name": "Produk #{{id}}"
+                        "default_product_name": "Produk #{{id}}",
+                        "returns_total_refund_title": "Total Nominal Retur",
+                        "returns_total_refund_desc": "Total {{count}} barang dikembalikan untuk transaksi ini",
+                        "returns_table_total_refund": "Total Refund",
+                        "returns_table_reason": "Alasan",
+                        "returns_table_time": "Waktu Retur",
+                        "default_product": "Produk",
+                        "returns_empty": "Belum ada barang yang diretur untuk transaksi ini."
                     }
                 }
             }
@@ -1400,10 +1406,10 @@
             "receipt_pay": "Bayar",
             "receipt_change": "Kembalian",
             "receipt_total_savings": "TOTAL HEMAT",
-            "receipt_saved": "Hemat",
             "receipt_item_placeholder": "Barang #{{id}}",
             "receipt_pcs_fallback": "pcs",
-            "receipt_phone_label": "Telp"
+            "receipt_phone_label": "Telp",
+            "receipt_item_discount": "Diskon -{{disc}}"
         },
         "return": {
             "page_name": "Retur Barang",

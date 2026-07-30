@@ -246,10 +246,10 @@ class CapitalWalletService implements CapitalWalletServiceInterface
         }
     }
 
-    public function recordReturnCapitalDeduction(float $amount, int $returnId): CapitalWalletTransaction
+    public function recordReturnCapitalDeduction(float $amount, int $returnId, ?string $invoiceNumber = null): CapitalWalletTransaction
     {
         try {
-            return DB::transaction(function () use ($amount, $returnId) {
+            return DB::transaction(function () use ($amount, $returnId, $invoiceNumber) {
                 if ($amount <= 0) {
                     throw new Exception(trans('message.error.capital_wallet.amount_must_be_greater_than_zero'), Response::HTTP_UNPROCESSABLE_ENTITY);
                 }
@@ -268,7 +268,7 @@ class CapitalWalletService implements CapitalWalletServiceInterface
                     'reference_type' => ProductReturn::class,
                     'balance_before' => $before,
                     'balance_after' => $after,
-                    'notes' => trans('message.success.capital_wallet.return_notes', ['id' => $returnId]),
+                    'notes' => trans('message.success.capital_wallet.return_notes', ['invoice' => $invoiceNumber ?? ('#'.$returnId)]),
                 ]);
 
                 $outflowUpdate = (float) $wallet->total_outflow + $amount;

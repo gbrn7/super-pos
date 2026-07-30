@@ -15,7 +15,7 @@ class TransactionRepository implements TransactionRepositoryInterface
     {
         // dd($request);
         $query = Transaction::query()
-            ->with(['user', 'paymentMethod'])
+            ->with(['user', 'paymentMethod', 'transactionDetails'])
             ->when($request->keyword, function ($query) use ($request) {
                 if ($request->field && $request->field !== 'default') {
                     if ($request->field === 'payment_method_name') {

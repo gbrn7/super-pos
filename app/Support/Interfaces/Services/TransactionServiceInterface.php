@@ -48,4 +48,9 @@ interface TransactionServiceInterface
      * Process atomic checkout: create transaction + details + update stock.
      */
     public function checkout(array $data): Transaction;
+
+    /**
+     * Export transactions to PDF or Excel format.
+     */
+    public function export(GetTransactionReqModel $request, string $format);
 }

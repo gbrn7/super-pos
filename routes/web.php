@@ -142,13 +142,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
         });
 
         // transactions
-        Route::resource('transactions', ApiTransactionController::class)->names('apiTransactions')->only(['index', 'store', 'show', 'update', 'destroy']);
-
         Route::group(['prefix' => 'transactions'], function () {
+            Route::get('/export', [ApiTransactionController::class, 'export'])->name('apiTransactions.exportData');
             Route::post('/bulk-delete', [ApiTransactionController::class, 'bulkDelete'])->name('apiTransactions.bulkDelete');
             Route::get('/invoice/{invoiceNumber}', [ApiTransactionController::class, 'getByInvoiceNumber'])->name('apiTransactions.getByInvoiceNumber');
             Route::post('/checkout', [ApiTransactionController::class, 'checkout'])->name('apiTransactions.checkout');
         });
+
+        Route::resource('transactions', ApiTransactionController::class)->names('apiTransactions')->only(['index', 'store', 'show', 'update', 'destroy']);
 
         // transaction-details
         Route::resource('transaction-details', ApiTransactionDetailController::class)->names('apiTransactionDetails')->only(['index', 'store', 'show', 'update', 'destroy']);

@@ -142,7 +142,7 @@ export default function ReceiptCard({
                                         Rp {formatPrice(unitPrice)}
                                     </span>
                                     <span className="font-medium text-emerald-600 dark:text-emerald-400">
-                                        (Diskon -{formatPrice(disc)})
+                                        ({t('page.kasir.receipt_item_discount', 'Diskon -{{disc}}', { disc: formatPrice(disc) })})
                                     </span>
                                 </div>
                             )}

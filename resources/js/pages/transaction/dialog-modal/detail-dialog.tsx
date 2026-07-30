@@ -888,12 +888,12 @@ export function DetailDialog({
                                 <Table>
                                     <TableHeader className="bg-muted/50">
                                         <TableRow>
-                                            <TableHead>Produk</TableHead>
-                                            <TableHead className="text-center">Jumlah</TableHead>
-                                            <TableHead className="text-right">Harga Satuan</TableHead>
-                                            <TableHead className="text-right">Total Refund</TableHead>
-                                            <TableHead>Alasan</TableHead>
-                                            <TableHead className="text-right">Waktu Retur</TableHead>
+                                            <TableHead>{t('page.transaction.dialog_modal.detail_dialog.product_header', 'Produk')}</TableHead>
+                                            <TableHead className="text-center">{t('page.transaction.dialog_modal.detail_dialog.qty_header', 'Jumlah')}</TableHead>
+                                            <TableHead className="text-right">{t('page.transaction.dialog_modal.detail_dialog.price_header', 'Harga Satuan')}</TableHead>
+                                            <TableHead className="text-right">{t('page.transaction.dialog_modal.detail_dialog.returns_table_total_refund', 'Total Refund')}</TableHead>
+                                            <TableHead>{t('page.transaction.dialog_modal.detail_dialog.returns_table_reason', 'Alasan')}</TableHead>
+                                            <TableHead className="text-right">{t('page.transaction.dialog_modal.detail_dialog.returns_table_time', 'Waktu Retur')}</TableHead>
                                         </TableRow>
                                     </TableHeader>
                                     <TableBody>
@@ -908,7 +908,7 @@ export function DetailDialog({
                                             ).map((detail: any, idx: number) => (
                                                 <TableRow key={`${detail.id}-${idx}`}>
                                                     <TableCell className="font-medium">
-                                                        {detail.product_name || 'Produk'}
+                                                        {detail.product_name || t('page.transaction.dialog_modal.detail_dialog.default_product', 'Produk')}
                                                     </TableCell>
                                                     <TableCell className="text-center font-semibold">
                                                         {detail.quantity}
@@ -930,7 +930,7 @@ export function DetailDialog({
                                         ) : (
                                             <TableRow>
                                                 <TableCell colSpan={6} className="h-16 text-center text-muted-foreground text-xs">
-                                                    Belum ada barang yang diretur untuk transaksi ini.
+                                                    {t('page.transaction.dialog_modal.detail_dialog.returns_empty', 'Belum ada barang yang diretur untuk transaksi ini.')}
                                                 </TableCell>
                                             </TableRow>
                                         )}

@@ -56,5 +56,5 @@ interface CapitalWalletServiceInterface
     /**
      * Record capital deduction due to product return.
      */
-    public function recordReturnCapitalDeduction(float $amount, int $returnId): CapitalWalletTransaction;
+    public function recordReturnCapitalDeduction(float $amount, int $returnId, ?string $invoiceNumber = null): CapitalWalletTransaction;
 }

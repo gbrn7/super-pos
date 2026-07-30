@@ -180,10 +180,10 @@ class ProfitWalletService implements ProfitWalletServiceInterface
         }
     }
 
-    public function recordReturnProfitDeduction(float $amount, int $returnId): ProfitWalletTransaction
+    public function recordReturnProfitDeduction(float $amount, int $returnId, ?string $invoiceNumber = null): ProfitWalletTransaction
     {
         try {
-            return DB::transaction(function () use ($amount, $returnId) {
+            return DB::transaction(function () use ($amount, $returnId, $invoiceNumber) {
                 if ($amount <= 0) {
                     throw new Exception(trans('message.error.profit_wallet.amount_must_be_greater_than_zero'), Response::HTTP_UNPROCESSABLE_ENTITY);
                 }
@@ -202,7 +202,7 @@ class ProfitWalletService implements ProfitWalletServiceInterface
                     'reference_type' => ProductReturn::class,
                     'balance_before' => $before,
                     'balance_after' => $after,
-                    'notes' => trans('message.success.profit_wallet.return_notes', ['id' => $returnId]),
+                    'notes' => trans('message.success.profit_wallet.return_notes', ['invoice' => $invoiceNumber ?? ('#'.$returnId)]),
                 ]);
 
                 $outflowUpdate = (float) $wallet->total_outflow + $amount;

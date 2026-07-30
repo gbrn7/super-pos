@@ -150,11 +150,11 @@ class ReturnService implements ReturnServiceInterface
                 }
 
                 if ($totalCapitalDeduction > 0) {
-                    $this->capitalWalletService->recordReturnCapitalDeduction($totalCapitalDeduction, $returnModel->id);
+                    $this->capitalWalletService->recordReturnCapitalDeduction($totalCapitalDeduction, $returnModel->id, $transaction->invoice_number);
                 }
 
                 if ($totalProfitDeduction > 0) {
-                    $this->profitWalletService->recordReturnProfitDeduction($totalProfitDeduction, $returnModel->id);
+                    $this->profitWalletService->recordReturnProfitDeduction($totalProfitDeduction, $returnModel->id, $transaction->invoice_number);
                 }
 
                 return $returnModel;
