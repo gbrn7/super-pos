@@ -28,6 +28,7 @@ class TransactionResource extends JsonResource
             'details' => TransactionDetailResource::collection($this->whenLoaded('transactionDetails', function () {
                 return $this->transactionDetails->each(fn ($detail) => $detail->setRelation('transaction', $this));
             })),
+            'returns' => ProductReturnResource::collection($this->whenLoaded('returns')),
             'created_at' => $this->getRawOriginal('created_at'),
             'updated_at' => $this->getRawOriginal('updated_at'),
         ];
