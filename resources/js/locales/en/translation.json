@@ -1402,6 +1402,63 @@
             "receipt_item_placeholder": "Item #{{id}}",
             "receipt_pcs_fallback": "pcs",
             "receipt_phone_label": "Phone"
+        },
+        "return": {
+            "page_name": "Product Returns",
+            "no_data": "No return history found.",
+            "invoice_label": "Invoice / Receipt No.",
+            "cashier_label": "Cashier / Staff",
+            "date_label": "Return Time",
+            "items_title": "Returned Products",
+            "product_name": "Product",
+            "qty": "Quantity",
+            "price_per_unit": "Unit Price",
+            "subtotal": "Subtotal",
+            "no_items": "No product details available.",
+            "reason_label": "Return Reason Notes:",
+            "total_refund_label": "Total Refund Amount",
+            "data_table": {
+                "columns": {
+                    "return_number": "Return No.",
+                    "invoice_number": "Invoice / Receipt No.",
+                    "user_name": "Cashier / Staff",
+                    "total_refund": "Total Refund",
+                    "reason": "Return Reason",
+                    "created_at": "Date & Time",
+                    "actions": "Actions"
+                },
+                "actions": {
+                    "view_detail": "View Return Details"
+                }
+            },
+            "dialog_modal": {
+                "detail_title": "Product Return Details"
+            },
+            "modal": {
+                "title": "Return Product",
+                "search_invoice_placeholder": "Search Invoice Number...",
+                "search_btn": "Search",
+                "transaction_detail": "Transaction Details",
+                "product_col": "Product",
+                "price_col": "Unit Price",
+                "qty_col": "Return Qty",
+                "subtotal_col": "Refund Subtotal",
+                "select_products_label": "Select Products & Return Quantity",
+                "select_all_btn": "Select All Products",
+                "deselect_all_btn": "Cancel Select All",
+                "buy_label": "Buy",
+                "returned_label": "Returned",
+                "remaining_label": "Remaining",
+                "cancel_btn": "Cancel",
+                "cancel_all_item_btn": "Cancel",
+                "all_item_btn": "All",
+                "reason_label": "Return Reason",
+                "reason_placeholder": "Enter return reason...",
+                "total_refund": "Total Refund",
+                "process_btn": "Process Return",
+                "success_message": "Product return processed successfully.",
+                "error_message": "Failed to process return."
+            }
         }
     },
     "error": {

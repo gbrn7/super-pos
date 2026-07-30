@@ -1402,6 +1402,63 @@
             "receipt_item_placeholder": "Barang #{{id}}",
             "receipt_pcs_fallback": "pcs",
             "receipt_phone_label": "Telp"
+        },
+        "return": {
+            "page_name": "Retur Barang",
+            "no_data": "Belum ada riwayat retur barang.",
+            "invoice_label": "No. Invoice Struk",
+            "cashier_label": "Kasir / Petugas",
+            "date_label": "Waktu Retur",
+            "items_title": "Produk yang Dikembalikan",
+            "product_name": "Produk",
+            "qty": "Jumlah",
+            "price_per_unit": "Harga Satuan",
+            "subtotal": "Subtotal",
+            "no_items": "Tidak ada rincian produk.",
+            "reason_label": "Catatan Alasan Retur:",
+            "total_refund_label": "Total Dana Refund",
+            "data_table": {
+                "columns": {
+                    "return_number": "No. Retur",
+                    "invoice_number": "No. Invoice Struk",
+                    "user_name": "Kasir / Petugas",
+                    "total_refund": "Total Refund",
+                    "reason": "Alasan Retur",
+                    "created_at": "Tanggal & Waktu",
+                    "actions": "Aksi"
+                },
+                "actions": {
+                    "view_detail": "Lihat Detail Retur"
+                }
+            },
+            "dialog_modal": {
+                "detail_title": "Detail Retur Barang"
+            },
+            "modal": {
+                "title": "Retur Barang",
+                "search_invoice_placeholder": "Cari Nomor Invoice...",
+                "search_btn": "Cari",
+                "transaction_detail": "Detail Transaksi",
+                "product_col": "Produk",
+                "price_col": "Harga Satuan",
+                "qty_col": "Kuantitas Retur",
+                "subtotal_col": "Subtotal Refund",
+                "select_products_label": "Pilih Produk & Kuantitas Retur",
+                "select_all_btn": "Pilih Semua Produk",
+                "deselect_all_btn": "Batal Pilih Semua",
+                "buy_label": "Beli",
+                "returned_label": "Diretur",
+                "remaining_label": "Sisa",
+                "cancel_btn": "Batal",
+                "cancel_all_item_btn": "Batal",
+                "all_item_btn": "Semua",
+                "reason_label": "Alasan Retur",
+                "reason_placeholder": "Masukkan alasan retur...",
+                "total_refund": "Total Refund",
+                "process_btn": "Proses Retur",
+                "success_message": "Retur barang berhasil diproses.",
+                "error_message": "Gagal memproses retur."
+            }
         }
     },
     "error": {
