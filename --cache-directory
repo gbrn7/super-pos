@@ -1,0 +1,4 @@
+##teamcity[testCount count='1' flowId='100295']
+##teamcity[testSuiteStarted name='CLI Arguments' flowId='100295']
+##teamcity[testSuiteStarted name='P\Tests\Feature\ReturnServiceTest' locationHint='php_qn:///home/raygbrn/project/laravel/super-pos/vendor/pestphp/pest/src/Factories/TestCaseFactory.php(175) : eval()|'d code::\P\Tests\Feature\ReturnServiceTest' flowId='100295']
+##teamcity[testStarted name='__pest_evaluable_return_service_processes_partial_return_and_updates_product_stock_correctly' locationHint='php_qn:///home/raygbrn/project/laravel/super-pos/vendor/pestphp/pest/src/Factories/TestCaseFactory.php(175) : eval()|'d code::\P\Tests\Feature\ReturnServiceTest::__pest_evaluable_return_service_processes_partial_return_and_updates_product_stock_correctly' flowId='100295']

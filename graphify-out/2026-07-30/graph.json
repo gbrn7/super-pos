@@ -860,8 +860,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_http_controllers_api_apicapitalwalletcontroller",
-      "community": 7,
-      "community_name": "Transaction Management (7)",
+      "community": 18,
+      "community_name": "alert-dialog.tsx Domain (18)",
       "norm_label": "apicapitalwalletcontroller.php"
     },
     {
@@ -871,8 +871,8 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "app_http_controllers_api_apicapitalwalletcontroller_apicapitalwalletcontroller",
-      "community": 43,
-      "community_name": "Category Data & Repositories (43)",
+      "community": 18,
+      "community_name": "alert-dialog.tsx Domain (18)",
       "norm_label": "apicapitalwalletcontroller"
     },
     {
@@ -882,8 +882,8 @@
       "source_location": "L25",
       "_origin": "ast",
       "id": "app_http_controllers_api_apicapitalwalletcontroller_apicapitalwalletcontroller_construct",
-      "community": 25,
-      "community_name": "Category Data & Repositories (25)",
+      "community": 18,
+      "community_name": "alert-dialog.tsx Domain (18)",
       "norm_label": ".__construct()"
     },
     {
@@ -893,8 +893,8 @@
       "source_location": "L29",
       "_origin": "ast",
       "id": "app_http_controllers_api_apicapitalwalletcontroller_apicapitalwalletcontroller_middleware",
-      "community": 43,
-      "community_name": "Category Data & Repositories (43)",
+      "community": 18,
+      "community_name": "alert-dialog.tsx Domain (18)",
       "norm_label": ".middleware()"
     },
     {
@@ -904,8 +904,8 @@
       "source_location": "L39",
       "_origin": "ast",
       "id": "app_http_controllers_api_apicapitalwalletcontroller_apicapitalwalletcontroller_index",
-      "community": 43,
-      "community_name": "Category Data & Repositories (43)",
+      "community": 7,
+      "community_name": "Transaction Management (7)",
       "norm_label": ".index()"
     },
     {
@@ -915,8 +915,8 @@
       "source_location": "L62",
       "_origin": "ast",
       "id": "app_http_controllers_api_apicapitalwalletcontroller_apicapitalwalletcontroller_inject",
-      "community": 43,
-      "community_name": "Category Data & Repositories (43)",
+      "community": 18,
+      "community_name": "alert-dialog.tsx Domain (18)",
       "norm_label": ".inject()"
     },
     {
@@ -926,8 +926,8 @@
       "source_location": "L78",
       "_origin": "ast",
       "id": "app_http_controllers_api_apicapitalwalletcontroller_apicapitalwalletcontroller_drawdown",
-      "community": 43,
-      "community_name": "Category Data & Repositories (43)",
+      "community": 18,
+      "community_name": "alert-dialog.tsx Domain (18)",
       "norm_label": ".drawdown()"
     },
     {
@@ -937,8 +937,8 @@
       "source_location": "L94",
       "_origin": "ast",
       "id": "app_http_controllers_api_apicapitalwalletcontroller_apicapitalwalletcontroller_purchaseproduct",
-      "community": 43,
-      "community_name": "Category Data & Repositories (43)",
+      "community": 18,
+      "community_name": "alert-dialog.tsx Domain (18)",
       "norm_label": ".purchaseproduct()"
     },
     {
@@ -992,8 +992,8 @@
       "source_location": "L53",
       "_origin": "ast",
       "id": "app_http_controllers_api_apicategorycontroller_apicategorycontroller_index",
-      "community": 7,
-      "community_name": "Transaction Management (7)",
+      "community": 111,
+      "community_name": "ApiCategoryController",
       "norm_label": ".index()"
     },
     {
@@ -1410,8 +1410,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_http_controllers_api_apiproductcontroller",
-      "community": 0,
-      "community_name": "API Controllers & Endpoints (0)",
+      "community": 37,
+      "community_name": "API Controllers & Endpoints (37)",
       "norm_label": "apiproductcontroller.php"
     },
     {
@@ -1465,8 +1465,8 @@
       "source_location": "L73",
       "_origin": "ast",
       "id": "app_http_controllers_api_apiproductcontroller_apiproductcontroller_store",
-      "community": 29,
-      "community_name": "separator.tsx Domain (29)",
+      "community": 37,
+      "community_name": "API Controllers & Endpoints (37)",
       "norm_label": ".store()"
     },
     {
@@ -1509,8 +1509,8 @@
       "source_location": "L131",
       "_origin": "ast",
       "id": "app_http_controllers_api_apiproductcontroller_apiproductcontroller_update",
-      "community": 29,
-      "community_name": "separator.tsx Domain (29)",
+      "community": 37,
+      "community_name": "API Controllers & Endpoints (37)",
       "norm_label": ".update()"
     },
     {
@@ -1531,8 +1531,8 @@
       "source_location": "L163",
       "_origin": "ast",
       "id": "app_http_controllers_api_apiproductcontroller_apiproductcontroller_bulkdelete",
-      "community": 29,
-      "community_name": "separator.tsx Domain (29)",
+      "community": 37,
+      "community_name": "API Controllers & Endpoints (37)",
       "norm_label": ".bulkdelete()"
     },
     {
@@ -1630,8 +1630,8 @@
       "source_location": "L36",
       "_origin": "ast",
       "id": "app_http_controllers_api_apiprofitwalletcontroller_apiprofitwalletcontroller_index",
-      "community": 43,
-      "community_name": "Category Data & Repositories (43)",
+      "community": 7,
+      "community_name": "Transaction Management (7)",
       "norm_label": ".index()"
     },
     {
@@ -1707,8 +1707,8 @@
       "source_location": "L39",
       "_origin": "ast",
       "id": "app_http_controllers_api_apireturncontroller_apireturncontroller_index",
-      "community": 315,
-      "community_name": "getUser",
+      "community": 7,
+      "community_name": "Transaction Management (7)",
       "norm_label": ".index()"
     },
     {
@@ -1861,8 +1861,8 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "app_http_controllers_api_apitransactioncontroller_apitransactioncontroller",
-      "community": 37,
-      "community_name": "API Controllers & Endpoints (37)",
+      "community": 29,
+      "community_name": "separator.tsx Domain (29)",
       "norm_label": "apitransactioncontroller"
     },
     {
@@ -1872,8 +1872,8 @@
       "source_location": "L25",
       "_origin": "ast",
       "id": "app_http_controllers_api_apitransactioncontroller_apitransactioncontroller_construct",
-      "community": 37,
-      "community_name": "API Controllers & Endpoints (37)",
+      "community": 29,
+      "community_name": "separator.tsx Domain (29)",
       "norm_label": ".__construct()"
     },
     {
@@ -1883,8 +1883,8 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "app_http_controllers_api_apitransactioncontroller_apitransactioncontroller_middleware",
-      "community": 37,
-      "community_name": "API Controllers & Endpoints (37)",
+      "community": 29,
+      "community_name": "separator.tsx Domain (29)",
       "norm_label": ".middleware()"
     },
     {
@@ -1916,8 +1916,8 @@
       "source_location": "L89",
       "_origin": "ast",
       "id": "app_http_controllers_api_apitransactioncontroller_apitransactioncontroller_show",
-      "community": 37,
-      "community_name": "API Controllers & Endpoints (37)",
+      "community": 29,
+      "community_name": "separator.tsx Domain (29)",
       "norm_label": ".show()"
     },
     {
@@ -1927,8 +1927,8 @@
       "source_location": "L103",
       "_origin": "ast",
       "id": "app_http_controllers_api_apitransactioncontroller_apitransactioncontroller_getbyinvoicenumber",
-      "community": 37,
-      "community_name": "API Controllers & Endpoints (37)",
+      "community": 29,
+      "community_name": "separator.tsx Domain (29)",
       "norm_label": ".getbyinvoicenumber()"
     },
     {
@@ -1938,8 +1938,8 @@
       "source_location": "L117",
       "_origin": "ast",
       "id": "app_http_controllers_api_apitransactioncontroller_apitransactioncontroller_update",
-      "community": 37,
-      "community_name": "API Controllers & Endpoints (37)",
+      "community": 29,
+      "community_name": "separator.tsx Domain (29)",
       "norm_label": ".update()"
     },
     {
@@ -1949,8 +1949,8 @@
       "source_location": "L131",
       "_origin": "ast",
       "id": "app_http_controllers_api_apitransactioncontroller_apitransactioncontroller_destroy",
-      "community": 37,
-      "community_name": "API Controllers & Endpoints (37)",
+      "community": 29,
+      "community_name": "separator.tsx Domain (29)",
       "norm_label": ".destroy()"
     },
     {
@@ -1960,8 +1960,8 @@
       "source_location": "L149",
       "_origin": "ast",
       "id": "app_http_controllers_api_apitransactioncontroller_apitransactioncontroller_bulkdelete",
-      "community": 37,
-      "community_name": "API Controllers & Endpoints (37)",
+      "community": 29,
+      "community_name": "separator.tsx Domain (29)",
       "norm_label": ".bulkdelete()"
     },
     {
@@ -2147,8 +2147,8 @@
       "source_location": "L52",
       "_origin": "ast",
       "id": "app_http_controllers_api_apiunitcontroller_apiunitcontroller_index",
-      "community": 46,
-      "community_name": "API Controllers & Endpoints (46)",
+      "community": 7,
+      "community_name": "Transaction Management (7)",
       "norm_label": ".index()"
     },
     {
@@ -2323,8 +2323,8 @@
       "source_location": "L157",
       "_origin": "ast",
       "id": "app_http_controllers_api_apiusercontroller_apiusercontroller_bulkdelete",
-      "community": 56,
-      "community_name": "RoleService.php Domain (56)",
+      "community": 29,
+      "community_name": "separator.tsx Domain (29)",
       "norm_label": ".bulkdelete()"
     },
     {
@@ -2334,8 +2334,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_http_controllers_capitalwalletcontroller",
-      "community": 0,
-      "community_name": "API Controllers & Endpoints (0)",
+      "community": 40,
+      "community_name": "Fortify Auth Strategy (40)",
       "norm_label": "capitalwalletcontroller.php"
     },
     {
@@ -2345,8 +2345,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "app_http_controllers_capitalwalletcontroller_capitalwalletcontroller",
-      "community": 0,
-      "community_name": "API Controllers & Endpoints (0)",
+      "community": 40,
+      "community_name": "Fortify Auth Strategy (40)",
       "norm_label": "capitalwalletcontroller"
     },
     {
@@ -2356,8 +2356,8 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "app_http_controllers_capitalwalletcontroller_capitalwalletcontroller_middleware",
-      "community": 0,
-      "community_name": "API Controllers & Endpoints (0)",
+      "community": 40,
+      "community_name": "Fortify Auth Strategy (40)",
       "norm_label": ".middleware()"
     },
     {
@@ -2367,8 +2367,8 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "app_http_controllers_capitalwalletcontroller_capitalwalletcontroller_index",
-      "community": 0,
-      "community_name": "API Controllers & Endpoints (0)",
+      "community": 40,
+      "community_name": "Fortify Auth Strategy (40)",
       "norm_label": ".index()"
     },
     {
@@ -2664,8 +2664,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_http_controllers_profitwalletcontroller",
-      "community": 0,
-      "community_name": "API Controllers & Endpoints (0)",
+      "community": 40,
+      "community_name": "Fortify Auth Strategy (40)",
       "norm_label": "profitwalletcontroller.php"
     },
     {
@@ -2675,8 +2675,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "app_http_controllers_profitwalletcontroller_profitwalletcontroller",
-      "community": 0,
-      "community_name": "API Controllers & Endpoints (0)",
+      "community": 40,
+      "community_name": "Fortify Auth Strategy (40)",
       "norm_label": "profitwalletcontroller"
     },
     {
@@ -2686,8 +2686,8 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "app_http_controllers_profitwalletcontroller_profitwalletcontroller_middleware",
-      "community": 0,
-      "community_name": "API Controllers & Endpoints (0)",
+      "community": 40,
+      "community_name": "Fortify Auth Strategy (40)",
       "norm_label": ".middleware()"
     },
     {
@@ -2697,8 +2697,8 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "app_http_controllers_profitwalletcontroller_profitwalletcontroller_index",
-      "community": 0,
-      "community_name": "API Controllers & Endpoints (0)",
+      "community": 40,
+      "community_name": "Fortify Auth Strategy (40)",
       "norm_label": ".index()"
     },
     {
@@ -2774,8 +2774,8 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "app_http_controllers_rolecontroller_rolecontroller",
-      "community": 116,
-      "community_name": "RoleRepositoryInterface.php",
+      "community": 0,
+      "community_name": "API Controllers & Endpoints (0)",
       "norm_label": "rolecontroller"
     },
     {
@@ -2785,8 +2785,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "app_http_controllers_rolecontroller_rolecontroller_middleware",
-      "community": 116,
-      "community_name": "RoleRepositoryInterface.php",
+      "community": 0,
+      "community_name": "API Controllers & Endpoints (0)",
       "norm_label": ".middleware()"
     },
     {
@@ -2796,8 +2796,8 @@
       "source_location": "L29",
       "_origin": "ast",
       "id": "app_http_controllers_rolecontroller_rolecontroller_index",
-      "community": 116,
-      "community_name": "RoleRepositoryInterface.php",
+      "community": 0,
+      "community_name": "API Controllers & Endpoints (0)",
       "norm_label": ".index()"
     },
     {
@@ -2807,8 +2807,8 @@
       "source_location": "L34",
       "_origin": "ast",
       "id": "app_http_controllers_rolecontroller_rolecontroller_create",
-      "community": 116,
-      "community_name": "RoleRepositoryInterface.php",
+      "community": 0,
+      "community_name": "API Controllers & Endpoints (0)",
       "norm_label": ".create()"
     },
     {
@@ -2818,8 +2818,8 @@
       "source_location": "L39",
       "_origin": "ast",
       "id": "app_http_controllers_rolecontroller_rolecontroller_show",
-      "community": 116,
-      "community_name": "RoleRepositoryInterface.php",
+      "community": 0,
+      "community_name": "API Controllers & Endpoints (0)",
       "norm_label": ".show()"
     },
     {
@@ -2829,8 +2829,8 @@
       "source_location": "L44",
       "_origin": "ast",
       "id": "app_http_controllers_rolecontroller_rolecontroller_edit",
-      "community": 116,
-      "community_name": "RoleRepositoryInterface.php",
+      "community": 0,
+      "community_name": "API Controllers & Endpoints (0)",
       "norm_label": ".edit()"
     },
     {
@@ -2840,8 +2840,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_http_controllers_settings_profilecontroller",
-      "community": 0,
-      "community_name": "API Controllers & Endpoints (0)",
+      "community": 40,
+      "community_name": "Fortify Auth Strategy (40)",
       "norm_label": "profilecontroller.php"
     },
     {
@@ -2851,8 +2851,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "app_http_controllers_settings_profilecontroller_profilecontroller",
-      "community": 0,
-      "community_name": "API Controllers & Endpoints (0)",
+      "community": 40,
+      "community_name": "Fortify Auth Strategy (40)",
       "norm_label": "profilecontroller"
     },
     {
@@ -2862,8 +2862,8 @@
       "source_location": "L20",
       "_origin": "ast",
       "id": "app_http_controllers_settings_profilecontroller_profilecontroller_edit",
-      "community": 0,
-      "community_name": "API Controllers & Endpoints (0)",
+      "community": 40,
+      "community_name": "Fortify Auth Strategy (40)",
       "norm_label": ".edit()"
     },
     {
@@ -2873,8 +2873,8 @@
       "source_location": "L31",
       "_origin": "ast",
       "id": "app_http_controllers_settings_profilecontroller_profilecontroller_update",
-      "community": 0,
-      "community_name": "API Controllers & Endpoints (0)",
+      "community": 40,
+      "community_name": "Fortify Auth Strategy (40)",
       "norm_label": ".update()"
     },
     {
@@ -2884,8 +2884,8 @@
       "source_location": "L49",
       "_origin": "ast",
       "id": "app_http_controllers_settings_profilecontroller_profilecontroller_destroy",
-      "community": 0,
-      "community_name": "API Controllers & Endpoints (0)",
+      "community": 40,
+      "community_name": "Fortify Auth Strategy (40)",
       "norm_label": ".destroy()"
     },
     {
@@ -2895,8 +2895,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_http_controllers_settings_securitycontroller",
-      "community": 0,
-      "community_name": "API Controllers & Endpoints (0)",
+      "community": 40,
+      "community_name": "Fortify Auth Strategy (40)",
       "norm_label": "securitycontroller.php"
     },
     {
@@ -2906,8 +2906,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "app_http_controllers_settings_securitycontroller_securitycontroller",
-      "community": 0,
-      "community_name": "API Controllers & Endpoints (0)",
+      "community": 40,
+      "community_name": "Fortify Auth Strategy (40)",
       "norm_label": "securitycontroller"
     },
     {
@@ -2917,8 +2917,8 @@
       "source_location": "L20",
       "_origin": "ast",
       "id": "app_http_controllers_settings_securitycontroller_securitycontroller_middleware",
-      "community": 0,
-      "community_name": "API Controllers & Endpoints (0)",
+      "community": 40,
+      "community_name": "Fortify Auth Strategy (40)",
       "norm_label": ".middleware()"
     },
     {
@@ -2928,8 +2928,8 @@
       "source_location": "L31",
       "_origin": "ast",
       "id": "app_http_controllers_settings_securitycontroller_securitycontroller_edit",
-      "community": 29,
-      "community_name": "separator.tsx Domain (29)",
+      "community": 40,
+      "community_name": "Fortify Auth Strategy (40)",
       "norm_label": ".edit()"
     },
     {
@@ -2939,8 +2939,8 @@
       "source_location": "L50",
       "_origin": "ast",
       "id": "app_http_controllers_settings_securitycontroller_securitycontroller_update",
-      "community": 0,
-      "community_name": "API Controllers & Endpoints (0)",
+      "community": 40,
+      "community_name": "Fortify Auth Strategy (40)",
       "norm_label": ".update()"
     },
     {
@@ -2950,8 +2950,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_http_controllers_settings_storesettingcontroller",
-      "community": 0,
-      "community_name": "API Controllers & Endpoints (0)",
+      "community": 40,
+      "community_name": "Fortify Auth Strategy (40)",
       "norm_label": "storesettingcontroller.php"
     },
     {
@@ -2961,8 +2961,8 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "app_http_controllers_settings_storesettingcontroller_storesettingcontroller",
-      "community": 0,
-      "community_name": "API Controllers & Endpoints (0)",
+      "community": 40,
+      "community_name": "Fortify Auth Strategy (40)",
       "norm_label": "storesettingcontroller"
     },
     {
@@ -2972,8 +2972,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "app_http_controllers_settings_storesettingcontroller_storesettingcontroller_edit",
-      "community": 0,
-      "community_name": "API Controllers & Endpoints (0)",
+      "community": 40,
+      "community_name": "Fortify Auth Strategy (40)",
       "norm_label": ".edit()"
     },
     {
@@ -2983,8 +2983,8 @@
       "source_location": "L28",
       "_origin": "ast",
       "id": "app_http_controllers_settings_storesettingcontroller_storesettingcontroller_update",
-      "community": 0,
-      "community_name": "API Controllers & Endpoints (0)",
+      "community": 40,
+      "community_name": "Fortify Auth Strategy (40)",
       "norm_label": ".update()"
     },
     {
@@ -3379,8 +3379,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_http_requests_capitalwallet_drawdowncapitalwalletrequest",
-      "community": 29,
-      "community_name": "separator.tsx Domain (29)",
+      "community": 18,
+      "community_name": "alert-dialog.tsx Domain (18)",
       "norm_label": "drawdowncapitalwalletrequest.php"
     },
     {
@@ -3390,8 +3390,8 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "app_http_requests_capitalwallet_drawdowncapitalwalletrequest_drawdowncapitalwalletrequest",
-      "community": 29,
-      "community_name": "separator.tsx Domain (29)",
+      "community": 18,
+      "community_name": "alert-dialog.tsx Domain (18)",
       "norm_label": "drawdowncapitalwalletrequest"
     },
     {
@@ -3401,8 +3401,8 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "app_http_requests_capitalwallet_drawdowncapitalwalletrequest_drawdowncapitalwalletrequest_authorize",
-      "community": 29,
-      "community_name": "separator.tsx Domain (29)",
+      "community": 18,
+      "community_name": "alert-dialog.tsx Domain (18)",
       "norm_label": ".authorize()"
     },
     {
@@ -3412,8 +3412,8 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "app_http_requests_capitalwallet_drawdowncapitalwalletrequest_drawdowncapitalwalletrequest_rules",
-      "community": 29,
-      "community_name": "separator.tsx Domain (29)",
+      "community": 18,
+      "community_name": "alert-dialog.tsx Domain (18)",
       "norm_label": ".rules()"
     },
     {
@@ -3467,8 +3467,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_http_requests_capitalwallet_injectcapitalwalletrequest",
-      "community": 29,
-      "community_name": "separator.tsx Domain (29)",
+      "community": 18,
+      "community_name": "alert-dialog.tsx Domain (18)",
       "norm_label": "injectcapitalwalletrequest.php"
     },
     {
@@ -3478,8 +3478,8 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "app_http_requests_capitalwallet_injectcapitalwalletrequest_injectcapitalwalletrequest",
-      "community": 29,
-      "community_name": "separator.tsx Domain (29)",
+      "community": 18,
+      "community_name": "alert-dialog.tsx Domain (18)",
       "norm_label": "injectcapitalwalletrequest"
     },
     {
@@ -3489,8 +3489,8 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "app_http_requests_capitalwallet_injectcapitalwalletrequest_injectcapitalwalletrequest_authorize",
-      "community": 29,
-      "community_name": "separator.tsx Domain (29)",
+      "community": 18,
+      "community_name": "alert-dialog.tsx Domain (18)",
       "norm_label": ".authorize()"
     },
     {
@@ -3500,8 +3500,8 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "app_http_requests_capitalwallet_injectcapitalwalletrequest_injectcapitalwalletrequest_rules",
-      "community": 29,
-      "community_name": "separator.tsx Domain (29)",
+      "community": 18,
+      "community_name": "alert-dialog.tsx Domain (18)",
       "norm_label": ".rules()"
     },
     {
@@ -3511,8 +3511,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_http_requests_capitalwallet_purchaseproductcapitalwalletrequest",
-      "community": 29,
-      "community_name": "separator.tsx Domain (29)",
+      "community": 18,
+      "community_name": "alert-dialog.tsx Domain (18)",
       "norm_label": "purchaseproductcapitalwalletrequest.php"
     },
     {
@@ -3522,8 +3522,8 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "app_http_requests_capitalwallet_purchaseproductcapitalwalletrequest_purchaseproductcapitalwalletrequest",
-      "community": 29,
-      "community_name": "separator.tsx Domain (29)",
+      "community": 18,
+      "community_name": "alert-dialog.tsx Domain (18)",
       "norm_label": "purchaseproductcapitalwalletrequest"
     },
     {
@@ -3533,8 +3533,8 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "app_http_requests_capitalwallet_purchaseproductcapitalwalletrequest_purchaseproductcapitalwalletrequest_authorize",
-      "community": 29,
-      "community_name": "separator.tsx Domain (29)",
+      "community": 18,
+      "community_name": "alert-dialog.tsx Domain (18)",
       "norm_label": ".authorize()"
     },
     {
@@ -3544,8 +3544,8 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "app_http_requests_capitalwallet_purchaseproductcapitalwalletrequest_purchaseproductcapitalwalletrequest_rules",
-      "community": 29,
-      "community_name": "separator.tsx Domain (29)",
+      "community": 18,
+      "community_name": "alert-dialog.tsx Domain (18)",
       "norm_label": ".rules()"
     },
     {
@@ -4182,8 +4182,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_http_requests_product_storeproductrequest",
-      "community": 29,
-      "community_name": "separator.tsx Domain (29)",
+      "community": 37,
+      "community_name": "API Controllers & Endpoints (37)",
       "norm_label": "storeproductrequest.php"
     },
     {
@@ -4193,8 +4193,8 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "app_http_requests_product_storeproductrequest_storeproductrequest",
-      "community": 29,
-      "community_name": "separator.tsx Domain (29)",
+      "community": 37,
+      "community_name": "API Controllers & Endpoints (37)",
       "norm_label": "storeproductrequest"
     },
     {
@@ -4204,8 +4204,8 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "app_http_requests_product_storeproductrequest_storeproductrequest_authorize",
-      "community": 29,
-      "community_name": "separator.tsx Domain (29)",
+      "community": 37,
+      "community_name": "API Controllers & Endpoints (37)",
       "norm_label": ".authorize()"
     },
     {
@@ -4215,8 +4215,8 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "app_http_requests_product_storeproductrequest_storeproductrequest_rules",
-      "community": 29,
-      "community_name": "separator.tsx Domain (29)",
+      "community": 37,
+      "community_name": "API Controllers & Endpoints (37)",
       "norm_label": ".rules()"
     },
     {
@@ -4226,8 +4226,8 @@
       "source_location": "L45",
       "_origin": "ast",
       "id": "app_http_requests_product_storeproductrequest_storeproductrequest_messages",
-      "community": 29,
-      "community_name": "separator.tsx Domain (29)",
+      "community": 37,
+      "community_name": "API Controllers & Endpoints (37)",
       "norm_label": ".messages()"
     },
     {
@@ -4237,8 +4237,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_http_requests_product_updateproductrequest",
-      "community": 29,
-      "community_name": "separator.tsx Domain (29)",
+      "community": 37,
+      "community_name": "API Controllers & Endpoints (37)",
       "norm_label": "updateproductrequest.php"
     },
     {
@@ -4248,8 +4248,8 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "app_http_requests_product_updateproductrequest_updateproductrequest",
-      "community": 29,
-      "community_name": "separator.tsx Domain (29)",
+      "community": 37,
+      "community_name": "API Controllers & Endpoints (37)",
       "norm_label": "updateproductrequest"
     },
     {
@@ -4259,8 +4259,8 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "app_http_requests_product_updateproductrequest_updateproductrequest_authorize",
-      "community": 29,
-      "community_name": "separator.tsx Domain (29)",
+      "community": 37,
+      "community_name": "API Controllers & Endpoints (37)",
       "norm_label": ".authorize()"
     },
     {
@@ -4270,8 +4270,8 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "app_http_requests_product_updateproductrequest_updateproductrequest_rules",
-      "community": 29,
-      "community_name": "separator.tsx Domain (29)",
+      "community": 37,
+      "community_name": "API Controllers & Endpoints (37)",
       "norm_label": ".rules()"
     },
     {
@@ -4281,8 +4281,8 @@
       "source_location": "L45",
       "_origin": "ast",
       "id": "app_http_requests_product_updateproductrequest_updateproductrequest_messages",
-      "community": 29,
-      "community_name": "separator.tsx Domain (29)",
+      "community": 37,
+      "community_name": "API Controllers & Endpoints (37)",
       "norm_label": ".messages()"
     },
     {
@@ -4699,8 +4699,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_http_requests_settings_storesettingupdaterequest",
-      "community": 29,
-      "community_name": "separator.tsx Domain (29)",
+      "community": 40,
+      "community_name": "Fortify Auth Strategy (40)",
       "norm_label": "storesettingupdaterequest.php"
     },
     {
@@ -4710,8 +4710,8 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "app_http_requests_settings_storesettingupdaterequest_storesettingupdaterequest",
-      "community": 29,
-      "community_name": "separator.tsx Domain (29)",
+      "community": 40,
+      "community_name": "Fortify Auth Strategy (40)",
       "norm_label": "storesettingupdaterequest"
     },
     {
@@ -4721,8 +4721,8 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "app_http_requests_settings_storesettingupdaterequest_storesettingupdaterequest_authorize",
-      "community": 29,
-      "community_name": "separator.tsx Domain (29)",
+      "community": 40,
+      "community_name": "Fortify Auth Strategy (40)",
       "norm_label": ".authorize()"
     },
     {
@@ -4732,8 +4732,8 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "app_http_requests_settings_storesettingupdaterequest_storesettingupdaterequest_rules",
-      "community": 29,
-      "community_name": "separator.tsx Domain (29)",
+      "community": 40,
+      "community_name": "Fortify Auth Strategy (40)",
       "norm_label": ".rules()"
     },
     {
@@ -4743,8 +4743,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_http_requests_settings_twofactorauthenticationrequest",
-      "community": 29,
-      "community_name": "separator.tsx Domain (29)",
+      "community": 40,
+      "community_name": "Fortify Auth Strategy (40)",
       "norm_label": "twofactorauthenticationrequest.php"
     },
     {
@@ -4754,8 +4754,8 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "app_http_requests_settings_twofactorauthenticationrequest_twofactorauthenticationrequest",
-      "community": 29,
-      "community_name": "separator.tsx Domain (29)",
+      "community": 40,
+      "community_name": "Fortify Auth Strategy (40)",
       "norm_label": "twofactorauthenticationrequest"
     },
     {
@@ -4765,8 +4765,8 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "app_http_requests_settings_twofactorauthenticationrequest_twofactorauthenticationrequest_rules",
-      "community": 29,
-      "community_name": "separator.tsx Domain (29)",
+      "community": 40,
+      "community_name": "Fortify Auth Strategy (40)",
       "norm_label": ".rules()"
     },
     {
@@ -4776,8 +4776,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_http_requests_transaction_bulkdeletetransactionrequest",
-      "community": 37,
-      "community_name": "API Controllers & Endpoints (37)",
+      "community": 29,
+      "community_name": "separator.tsx Domain (29)",
       "norm_label": "bulkdeletetransactionrequest.php"
     },
     {
@@ -4787,8 +4787,8 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "app_http_requests_transaction_bulkdeletetransactionrequest_bulkdeletetransactionrequest",
-      "community": 37,
-      "community_name": "API Controllers & Endpoints (37)",
+      "community": 29,
+      "community_name": "separator.tsx Domain (29)",
       "norm_label": "bulkdeletetransactionrequest"
     },
     {
@@ -4798,8 +4798,8 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "app_http_requests_transaction_bulkdeletetransactionrequest_bulkdeletetransactionrequest_authorize",
-      "community": 37,
-      "community_name": "API Controllers & Endpoints (37)",
+      "community": 29,
+      "community_name": "separator.tsx Domain (29)",
       "norm_label": ".authorize()"
     },
     {
@@ -4809,8 +4809,8 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "app_http_requests_transaction_bulkdeletetransactionrequest_bulkdeletetransactionrequest_rules",
-      "community": 37,
-      "community_name": "API Controllers & Endpoints (37)",
+      "community": 29,
+      "community_name": "separator.tsx Domain (29)",
       "norm_label": ".rules()"
     },
     {
@@ -4908,8 +4908,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_http_requests_transaction_updatetransactionrequest",
-      "community": 37,
-      "community_name": "API Controllers & Endpoints (37)",
+      "community": 29,
+      "community_name": "separator.tsx Domain (29)",
       "norm_label": "updatetransactionrequest.php"
     },
     {
@@ -4919,8 +4919,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "app_http_requests_transaction_updatetransactionrequest_updatetransactionrequest",
-      "community": 37,
-      "community_name": "API Controllers & Endpoints (37)",
+      "community": 29,
+      "community_name": "separator.tsx Domain (29)",
       "norm_label": "updatetransactionrequest"
     },
     {
@@ -4930,8 +4930,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "app_http_requests_transaction_updatetransactionrequest_updatetransactionrequest_authorize",
-      "community": 37,
-      "community_name": "API Controllers & Endpoints (37)",
+      "community": 29,
+      "community_name": "separator.tsx Domain (29)",
       "norm_label": ".authorize()"
     },
     {
@@ -4941,8 +4941,8 @@
       "source_location": "L25",
       "_origin": "ast",
       "id": "app_http_requests_transaction_updatetransactionrequest_updatetransactionrequest_rules",
-      "community": 37,
-      "community_name": "API Controllers & Endpoints (37)",
+      "community": 29,
+      "community_name": "separator.tsx Domain (29)",
       "norm_label": ".rules()"
     },
     {
@@ -5216,8 +5216,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_http_requests_user_bulkdeleteuserrequest",
-      "community": 56,
-      "community_name": "RoleService.php Domain (56)",
+      "community": 29,
+      "community_name": "separator.tsx Domain (29)",
       "norm_label": "bulkdeleteuserrequest.php"
     },
     {
@@ -5227,8 +5227,8 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "app_http_requests_user_bulkdeleteuserrequest_bulkdeleteuserrequest",
-      "community": 56,
-      "community_name": "RoleService.php Domain (56)",
+      "community": 29,
+      "community_name": "separator.tsx Domain (29)",
       "norm_label": "bulkdeleteuserrequest"
     },
     {
@@ -5238,8 +5238,8 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "app_http_requests_user_bulkdeleteuserrequest_bulkdeleteuserrequest_authorize",
-      "community": 56,
-      "community_name": "RoleService.php Domain (56)",
+      "community": 29,
+      "community_name": "separator.tsx Domain (29)",
       "norm_label": ".authorize()"
     },
     {
@@ -5249,8 +5249,8 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "app_http_requests_user_bulkdeleteuserrequest_bulkdeleteuserrequest_rules",
-      "community": 56,
-      "community_name": "RoleService.php Domain (56)",
+      "community": 29,
+      "community_name": "separator.tsx Domain (29)",
       "norm_label": ".rules()"
     },
     {
@@ -5546,8 +5546,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_http_resources_profitwallettransactionresource",
-      "community": 43,
-      "community_name": "Category Data & Repositories (43)",
+      "community": 7,
+      "community_name": "Transaction Management (7)",
       "norm_label": "profitwallettransactionresource.php"
     },
     {
@@ -5557,8 +5557,8 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "app_http_resources_profitwallettransactionresource_profitwallettransactionresource",
-      "community": 43,
-      "community_name": "Category Data & Repositories (43)",
+      "community": 7,
+      "community_name": "Transaction Management (7)",
       "norm_label": "profitwallettransactionresource"
     },
     {
@@ -5568,8 +5568,8 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "app_http_resources_profitwallettransactionresource_profitwallettransactionresource_toarray",
-      "community": 43,
-      "community_name": "Category Data & Repositories (43)",
+      "community": 7,
+      "community_name": "Transaction Management (7)",
       "norm_label": ".toarray()"
     },
     {
@@ -5744,8 +5744,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_imports_categoryimport",
-      "community": 35,
-      "community_name": "Category Data & Repositories (35)",
+      "community": 129,
+      "community_name": "@base-ui/react",
       "norm_label": "categoryimport.php"
     },
     {
@@ -5755,8 +5755,8 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "app_imports_categoryimport_categoryimport",
-      "community": 35,
-      "community_name": "Category Data & Repositories (35)",
+      "community": 129,
+      "community_name": "@base-ui/react",
       "norm_label": "categoryimport"
     },
     {
@@ -5766,8 +5766,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "app_imports_categoryimport_categoryimport_collection",
-      "community": 35,
-      "community_name": "Category Data & Repositories (35)",
+      "community": 129,
+      "community_name": "@base-ui/react",
       "norm_label": ".collection()"
     },
     {
@@ -5777,8 +5777,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_imports_masterproductimport",
-      "community": 35,
-      "community_name": "Category Data & Repositories (35)",
+      "community": 129,
+      "community_name": "@base-ui/react",
       "norm_label": "masterproductimport.php"
     },
     {
@@ -5788,8 +5788,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "app_imports_masterproductimport_masterproductimport",
-      "community": 35,
-      "community_name": "Category Data & Repositories (35)",
+      "community": 129,
+      "community_name": "@base-ui/react",
       "norm_label": "masterproductimport"
     },
     {
@@ -5799,8 +5799,8 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "app_imports_masterproductimport_masterproductimport_collection",
-      "community": 35,
-      "community_name": "Category Data & Repositories (35)",
+      "community": 129,
+      "community_name": "@base-ui/react",
       "norm_label": ".collection()"
     },
     {
@@ -5810,8 +5810,8 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "app_imports_masterproductimport_masterproductimport_array",
-      "community": 35,
-      "community_name": "Category Data & Repositories (35)",
+      "community": 129,
+      "community_name": "@base-ui/react",
       "norm_label": ".array()"
     },
     {
@@ -5821,8 +5821,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_imports_productimport",
-      "community": 35,
-      "community_name": "Category Data & Repositories (35)",
+      "community": 129,
+      "community_name": "@base-ui/react",
       "norm_label": "productimport.php"
     },
     {
@@ -5832,8 +5832,8 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "app_imports_productimport_productimport",
-      "community": 35,
-      "community_name": "Category Data & Repositories (35)",
+      "community": 129,
+      "community_name": "@base-ui/react",
       "norm_label": "productimport"
     },
     {
@@ -5843,8 +5843,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "app_imports_productimport_productimport_collection",
-      "community": 35,
-      "community_name": "Category Data & Repositories (35)",
+      "community": 129,
+      "community_name": "@base-ui/react",
       "norm_label": ".collection()"
     },
     {
@@ -5887,8 +5887,8 @@
       "source_location": "L32",
       "_origin": "ast",
       "id": "app_models_capitalwallet_capitalwallet_transactions",
-      "community": 25,
-      "community_name": "Category Data & Repositories (25)",
+      "community": 61,
+      "community_name": "app-logo.tsx Domain (61)",
       "norm_label": ".transactions()"
     },
     {
@@ -5920,8 +5920,8 @@
       "source_location": "L32",
       "_origin": "ast",
       "id": "app_models_capitalwallettransaction_capitalwallettransaction_serializedate",
-      "community": 61,
-      "community_name": "app-logo.tsx Domain (61)",
+      "community": 25,
+      "community_name": "Category Data & Repositories (25)",
       "norm_label": ".serializedate()"
     },
     {
@@ -5931,8 +5931,8 @@
       "source_location": "L37",
       "_origin": "ast",
       "id": "app_models_capitalwallettransaction_capitalwallettransaction_wallet",
-      "community": 25,
-      "community_name": "Category Data & Repositories (25)",
+      "community": 61,
+      "community_name": "app-logo.tsx Domain (61)",
       "norm_label": ".wallet()"
     },
     {
@@ -6030,8 +6030,8 @@
       "source_location": "L37",
       "_origin": "ast",
       "id": "app_models_masterproduct_masterproduct_product",
-      "community": 22,
-      "community_name": "Product Catalog & Inventory (22)",
+      "community": 61,
+      "community_name": "app-logo.tsx Domain (61)",
       "norm_label": ".product()"
     },
     {
@@ -6239,8 +6239,8 @@
       "source_location": "L40",
       "_origin": "ast",
       "id": "app_models_product_product_category",
-      "community": 21,
-      "community_name": "Product Catalog & Inventory (21)",
+      "community": 61,
+      "community_name": "app-logo.tsx Domain (61)",
       "norm_label": ".category()"
     },
     {
@@ -6250,8 +6250,8 @@
       "source_location": "L45",
       "_origin": "ast",
       "id": "app_models_product_product_unit",
-      "community": 21,
-      "community_name": "Product Catalog & Inventory (21)",
+      "community": 61,
+      "community_name": "app-logo.tsx Domain (61)",
       "norm_label": ".unit()"
     },
     {
@@ -6272,8 +6272,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "app_models_productreturn_productreturn",
-      "community": 61,
-      "community_name": "app-logo.tsx Domain (61)",
+      "community": 110,
+      "community_name": "lucide-react",
       "norm_label": "productreturn"
     },
     {
@@ -6283,8 +6283,8 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "app_models_productreturn_productreturn_serializedate",
-      "community": 61,
-      "community_name": "app-logo.tsx Domain (61)",
+      "community": 110,
+      "community_name": "lucide-react",
       "norm_label": ".serializedate()"
     },
     {
@@ -6294,8 +6294,8 @@
       "source_location": "L32",
       "_origin": "ast",
       "id": "app_models_productreturn_productreturn_transaction",
-      "community": 61,
-      "community_name": "app-logo.tsx Domain (61)",
+      "community": 110,
+      "community_name": "lucide-react",
       "norm_label": ".transaction()"
     },
     {
@@ -6360,8 +6360,8 @@
       "source_location": "L32",
       "_origin": "ast",
       "id": "app_models_profitwallet_profitwallet_transactions",
-      "community": 102,
-      "community_name": "package.json",
+      "community": 61,
+      "community_name": "app-logo.tsx Domain (61)",
       "norm_label": ".transactions()"
     },
     {
@@ -6382,8 +6382,8 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "app_models_profitwallettransaction_profitwallettransaction",
-      "community": 61,
-      "community_name": "app-logo.tsx Domain (61)",
+      "community": 102,
+      "community_name": "package.json",
       "norm_label": "profitwallettransaction"
     },
     {
@@ -6393,8 +6393,8 @@
       "source_location": "L32",
       "_origin": "ast",
       "id": "app_models_profitwallettransaction_profitwallettransaction_serializedate",
-      "community": 61,
-      "community_name": "app-logo.tsx Domain (61)",
+      "community": 102,
+      "community_name": "package.json",
       "norm_label": ".serializedate()"
     },
     {
@@ -6404,8 +6404,8 @@
       "source_location": "L37",
       "_origin": "ast",
       "id": "app_models_profitwallettransaction_profitwallettransaction_wallet",
-      "community": 61,
-      "community_name": "app-logo.tsx Domain (61)",
+      "community": 102,
+      "community_name": "package.json",
       "norm_label": ".wallet()"
     },
     {
@@ -6481,8 +6481,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_models_role",
-      "community": 38,
-      "community_name": "Permission Domain (38)",
+      "community": 39,
+      "community_name": "Role Domain (39)",
       "norm_label": "role.php"
     },
     {
@@ -7284,8 +7284,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_repositories_dashboardrepository",
-      "community": 9,
-      "community_name": "Transaction Management (9)",
+      "community": 116,
+      "community_name": "RoleRepositoryInterface.php",
       "norm_label": "dashboardrepository.php"
     },
     {
@@ -7295,8 +7295,8 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "app_repositories_dashboardrepository_dashboardrepository",
-      "community": 9,
-      "community_name": "Transaction Management (9)",
+      "community": 116,
+      "community_name": "RoleRepositoryInterface.php",
       "norm_label": "dashboardrepository"
     },
     {
@@ -7306,8 +7306,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "app_repositories_dashboardrepository_dashboardrepository_parsestarttimestamp",
-      "community": 9,
-      "community_name": "Transaction Management (9)",
+      "community": 116,
+      "community_name": "RoleRepositoryInterface.php",
       "norm_label": ".parsestarttimestamp()"
     },
     {
@@ -7317,8 +7317,8 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "app_repositories_dashboardrepository_dashboardrepository_parseendtimestamp",
-      "community": 9,
-      "community_name": "Transaction Management (9)",
+      "community": 116,
+      "community_name": "RoleRepositoryInterface.php",
       "norm_label": ".parseendtimestamp()"
     },
     {
@@ -7328,8 +7328,8 @@
       "source_location": "L29",
       "_origin": "ast",
       "id": "app_repositories_dashboardrepository_dashboardrepository_getmetrics",
-      "community": 9,
-      "community_name": "Transaction Management (9)",
+      "community": 116,
+      "community_name": "RoleRepositoryInterface.php",
       "norm_label": ".getmetrics()"
     },
     {
@@ -7339,8 +7339,8 @@
       "source_location": "L75",
       "_origin": "ast",
       "id": "app_repositories_dashboardrepository_dashboardrepository_gettrendchart",
-      "community": 9,
-      "community_name": "Transaction Management (9)",
+      "community": 116,
+      "community_name": "RoleRepositoryInterface.php",
       "norm_label": ".gettrendchart()"
     },
     {
@@ -7350,8 +7350,8 @@
       "source_location": "L117",
       "_origin": "ast",
       "id": "app_repositories_dashboardrepository_dashboardrepository_gettopproducts",
-      "community": 9,
-      "community_name": "Transaction Management (9)",
+      "community": 116,
+      "community_name": "RoleRepositoryInterface.php",
       "norm_label": ".gettopproducts()"
     },
     {
@@ -7361,8 +7361,8 @@
       "source_location": "L141",
       "_origin": "ast",
       "id": "app_repositories_dashboardrepository_dashboardrepository_getrecenttransactions",
-      "community": 9,
-      "community_name": "Transaction Management (9)",
+      "community": 116,
+      "community_name": "RoleRepositoryInterface.php",
       "norm_label": ".getrecenttransactions()"
     },
     {
@@ -7372,8 +7372,8 @@
       "source_location": "L153",
       "_origin": "ast",
       "id": "app_repositories_dashboardrepository_dashboardrepository_getlowstockproducts",
-      "community": 9,
-      "community_name": "Transaction Management (9)",
+      "community": 116,
+      "community_name": "RoleRepositoryInterface.php",
       "norm_label": ".getlowstockproducts()"
     },
     {
@@ -7383,8 +7383,8 @@
       "source_location": "L161",
       "_origin": "ast",
       "id": "app_repositories_dashboardrepository_dashboardrepository_gettransactionsbypaymentmethod",
-      "community": 9,
-      "community_name": "Transaction Management (9)",
+      "community": 116,
+      "community_name": "RoleRepositoryInterface.php",
       "norm_label": ".gettransactionsbypaymentmethod()"
     },
     {
@@ -7394,8 +7394,8 @@
       "source_location": "L184",
       "_origin": "ast",
       "id": "app_repositories_dashboardrepository_dashboardrepository_gettransactionsbycategory",
-      "community": 9,
-      "community_name": "Transaction Management (9)",
+      "community": 116,
+      "community_name": "RoleRepositoryInterface.php",
       "norm_label": ".gettransactionsbycategory()"
     },
     {
@@ -7966,8 +7966,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_repositories_returnrepository",
-      "community": 61,
-      "community_name": "app-logo.tsx Domain (61)",
+      "community": 110,
+      "community_name": "lucide-react",
       "norm_label": "returnrepository.php"
     },
     {
@@ -7977,8 +7977,8 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "app_repositories_returnrepository_returnrepository",
-      "community": 61,
-      "community_name": "app-logo.tsx Domain (61)",
+      "community": 110,
+      "community_name": "lucide-react",
       "norm_label": "returnrepository"
     },
     {
@@ -7988,8 +7988,8 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "app_repositories_returnrepository_returnrepository_getall",
-      "community": 61,
-      "community_name": "app-logo.tsx Domain (61)",
+      "community": 110,
+      "community_name": "lucide-react",
       "norm_label": ".getall()"
     },
     {
@@ -7999,8 +7999,8 @@
       "source_location": "L56",
       "_origin": "ast",
       "id": "app_repositories_returnrepository_returnrepository_getbyid",
-      "community": 61,
-      "community_name": "app-logo.tsx Domain (61)",
+      "community": 110,
+      "community_name": "lucide-react",
       "norm_label": ".getbyid()"
     },
     {
@@ -8010,8 +8010,8 @@
       "source_location": "L61",
       "_origin": "ast",
       "id": "app_repositories_returnrepository_returnrepository_create",
-      "community": 61,
-      "community_name": "app-logo.tsx Domain (61)",
+      "community": 110,
+      "community_name": "lucide-react",
       "norm_label": ".create()"
     },
     {
@@ -8021,8 +8021,8 @@
       "source_location": "L66",
       "_origin": "ast",
       "id": "app_repositories_returnrepository_returnrepository_getbytransactionid",
-      "community": 61,
-      "community_name": "app-logo.tsx Domain (61)",
+      "community": 110,
+      "community_name": "lucide-react",
       "norm_label": ".getbytransactionid()"
     },
     {
@@ -8637,8 +8637,8 @@
       "source_location": "L25",
       "_origin": "ast",
       "id": "app_services_capitalwalletservice_capitalwalletservice",
-      "community": 25,
-      "community_name": "Category Data & Repositories (25)",
+      "community": 98,
+      "community_name": "2026_07_18_193239_add_discount_to_transaction_detail_table.php Domain (98)",
       "norm_label": "capitalwalletservice"
     },
     {
@@ -8659,8 +8659,8 @@
       "source_location": "L31",
       "_origin": "ast",
       "id": "app_services_capitalwalletservice_capitalwalletservice_getorcreatewallet",
-      "community": 25,
-      "community_name": "Category Data & Repositories (25)",
+      "community": 98,
+      "community_name": "2026_07_18_193239_add_discount_to_transaction_detail_table.php Domain (98)",
       "norm_label": ".getorcreatewallet()"
     },
     {
@@ -8670,8 +8670,8 @@
       "source_location": "L51",
       "_origin": "ast",
       "id": "app_services_capitalwalletservice_capitalwalletservice_recordsalescapital",
-      "community": 25,
-      "community_name": "Category Data & Repositories (25)",
+      "community": 98,
+      "community_name": "2026_07_18_193239_add_discount_to_transaction_detail_table.php Domain (98)",
       "norm_label": ".recordsalescapital()"
     },
     {
@@ -8681,8 +8681,8 @@
       "source_location": "L86",
       "_origin": "ast",
       "id": "app_services_capitalwalletservice_capitalwalletservice_recordreinvestment",
-      "community": 25,
-      "community_name": "Category Data & Repositories (25)",
+      "community": 98,
+      "community_name": "2026_07_18_193239_add_discount_to_transaction_detail_table.php Domain (98)",
       "norm_label": ".recordreinvestment()"
     },
     {
@@ -8692,8 +8692,8 @@
       "source_location": "L121",
       "_origin": "ast",
       "id": "app_services_capitalwalletservice_capitalwalletservice_inject",
-      "community": 25,
-      "community_name": "Category Data & Repositories (25)",
+      "community": 98,
+      "community_name": "2026_07_18_193239_add_discount_to_transaction_detail_table.php Domain (98)",
       "norm_label": ".inject()"
     },
     {
@@ -8703,8 +8703,8 @@
       "source_location": "L154",
       "_origin": "ast",
       "id": "app_services_capitalwalletservice_capitalwalletservice_drawdown",
-      "community": 25,
-      "community_name": "Category Data & Repositories (25)",
+      "community": 98,
+      "community_name": "2026_07_18_193239_add_discount_to_transaction_detail_table.php Domain (98)",
       "norm_label": ".drawdown()"
     },
     {
@@ -8714,8 +8714,8 @@
       "source_location": "L191",
       "_origin": "ast",
       "id": "app_services_capitalwalletservice_capitalwalletservice_purchaseproduct",
-      "community": 25,
-      "community_name": "Category Data & Repositories (25)",
+      "community": 98,
+      "community_name": "2026_07_18_193239_add_discount_to_transaction_detail_table.php Domain (98)",
       "norm_label": ".purchaseproduct()"
     },
     {
@@ -8725,8 +8725,8 @@
       "source_location": "L228",
       "_origin": "ast",
       "id": "app_services_capitalwalletservice_capitalwalletservice_gettransactions",
-      "community": 25,
-      "community_name": "Category Data & Repositories (25)",
+      "community": 98,
+      "community_name": "2026_07_18_193239_add_discount_to_transaction_detail_table.php Domain (98)",
       "norm_label": ".gettransactions()"
     },
     {
@@ -8736,8 +8736,8 @@
       "source_location": "L237",
       "_origin": "ast",
       "id": "app_services_capitalwalletservice_capitalwalletservice_gettransactionsummary",
-      "community": 25,
-      "community_name": "Category Data & Repositories (25)",
+      "community": 98,
+      "community_name": "2026_07_18_193239_add_discount_to_transaction_detail_table.php Domain (98)",
       "norm_label": ".gettransactionsummary()"
     },
     {
@@ -8879,8 +8879,8 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "app_services_dashboardservice_dashboardservice",
-      "community": 13,
-      "community_name": "Transaction Management (13)",
+      "community": 116,
+      "community_name": "RoleRepositoryInterface.php",
       "norm_label": "dashboardservice"
     },
     {
@@ -8890,8 +8890,8 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "app_services_dashboardservice_dashboardservice_construct",
-      "community": 13,
-      "community_name": "Transaction Management (13)",
+      "community": 116,
+      "community_name": "RoleRepositoryInterface.php",
       "norm_label": ".__construct()"
     },
     {
@@ -8901,8 +8901,8 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "app_services_dashboardservice_dashboardservice_getdashboarddata",
-      "community": 13,
-      "community_name": "Transaction Management (13)",
+      "community": 116,
+      "community_name": "RoleRepositoryInterface.php",
       "norm_label": ".getdashboarddata()"
     },
     {
@@ -9198,8 +9198,8 @@
       "source_location": "L35",
       "_origin": "ast",
       "id": "app_services_productservice_productservice_construct",
-      "community": 17,
-      "community_name": "Unit Domain (17)",
+      "community": 98,
+      "community_name": "2026_07_18_193239_add_discount_to_transaction_detail_table.php Domain (98)",
       "norm_label": ".__construct()"
     },
     {
@@ -9363,8 +9363,8 @@
       "source_location": "L26",
       "_origin": "ast",
       "id": "app_services_profitwalletservice_profitwalletservice_construct",
-      "community": 25,
-      "community_name": "Category Data & Repositories (25)",
+      "community": 102,
+      "community_name": "package.json",
       "norm_label": ".__construct()"
     },
     {
@@ -9451,8 +9451,8 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "app_services_returnservice_returnservice",
-      "community": 61,
-      "community_name": "app-logo.tsx Domain (61)",
+      "community": 110,
+      "community_name": "lucide-react",
       "norm_label": "returnservice"
     },
     {
@@ -9462,8 +9462,8 @@
       "source_location": "L24",
       "_origin": "ast",
       "id": "app_services_returnservice_returnservice_construct",
-      "community": 61,
-      "community_name": "app-logo.tsx Domain (61)",
+      "community": 110,
+      "community_name": "lucide-react",
       "norm_label": ".__construct()"
     },
     {
@@ -9473,8 +9473,8 @@
       "source_location": "L30",
       "_origin": "ast",
       "id": "app_services_returnservice_returnservice_getall",
-      "community": 61,
-      "community_name": "app-logo.tsx Domain (61)",
+      "community": 110,
+      "community_name": "lucide-react",
       "norm_label": ".getall()"
     },
     {
@@ -9484,8 +9484,8 @@
       "source_location": "L39",
       "_origin": "ast",
       "id": "app_services_returnservice_returnservice_processreturn",
-      "community": 61,
-      "community_name": "app-logo.tsx Domain (61)",
+      "community": 110,
+      "community_name": "lucide-react",
       "norm_label": ".processreturn()"
     },
     {
@@ -9528,8 +9528,8 @@
       "source_location": "L21",
       "_origin": "ast",
       "id": "app_services_roleservice_roleservice_getallbyindex",
-      "community": 110,
-      "community_name": "lucide-react",
+      "community": 109,
+      "community_name": "cart-item-row.tsx",
       "norm_label": ".getallbyindex()"
     },
     {
@@ -9704,8 +9704,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_services_transactionservice",
-      "community": 110,
-      "community_name": "lucide-react",
+      "community": 13,
+      "community_name": "Transaction Management (13)",
       "norm_label": "transactionservice.php"
     },
     {
@@ -9715,8 +9715,8 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "app_services_transactionservice_transactionservice",
-      "community": 98,
-      "community_name": "2026_07_18_193239_add_discount_to_transaction_detail_table.php Domain (98)",
+      "community": 13,
+      "community_name": "Transaction Management (13)",
       "norm_label": "transactionservice"
     },
     {
@@ -9726,8 +9726,8 @@
       "source_location": "L24",
       "_origin": "ast",
       "id": "app_services_transactionservice_transactionservice_construct",
-      "community": 13,
-      "community_name": "Transaction Management (13)",
+      "community": 102,
+      "community_name": "package.json",
       "norm_label": ".__construct()"
     },
     {
@@ -9737,8 +9737,8 @@
       "source_location": "L32",
       "_origin": "ast",
       "id": "app_services_transactionservice_transactionservice_getallbyindex",
-      "community": 98,
-      "community_name": "2026_07_18_193239_add_discount_to_transaction_detail_table.php Domain (98)",
+      "community": 13,
+      "community_name": "Transaction Management (13)",
       "norm_label": ".getallbyindex()"
     },
     {
@@ -9748,8 +9748,8 @@
       "source_location": "L42",
       "_origin": "ast",
       "id": "app_services_transactionservice_transactionservice_getbyid",
-      "community": 98,
-      "community_name": "2026_07_18_193239_add_discount_to_transaction_detail_table.php Domain (98)",
+      "community": 13,
+      "community_name": "Transaction Management (13)",
       "norm_label": ".getbyid()"
     },
     {
@@ -9759,8 +9759,8 @@
       "source_location": "L57",
       "_origin": "ast",
       "id": "app_services_transactionservice_transactionservice_getbyinvoicenumber",
-      "community": 98,
-      "community_name": "2026_07_18_193239_add_discount_to_transaction_detail_table.php Domain (98)",
+      "community": 13,
+      "community_name": "Transaction Management (13)",
       "norm_label": ".getbyinvoicenumber()"
     },
     {
@@ -9770,8 +9770,8 @@
       "source_location": "L72",
       "_origin": "ast",
       "id": "app_services_transactionservice_transactionservice_create",
-      "community": 98,
-      "community_name": "2026_07_18_193239_add_discount_to_transaction_detail_table.php Domain (98)",
+      "community": 13,
+      "community_name": "Transaction Management (13)",
       "norm_label": ".create()"
     },
     {
@@ -9781,8 +9781,8 @@
       "source_location": "L81",
       "_origin": "ast",
       "id": "app_services_transactionservice_transactionservice_update",
-      "community": 98,
-      "community_name": "2026_07_18_193239_add_discount_to_transaction_detail_table.php Domain (98)",
+      "community": 13,
+      "community_name": "Transaction Management (13)",
       "norm_label": ".update()"
     },
     {
@@ -9792,8 +9792,8 @@
       "source_location": "L102",
       "_origin": "ast",
       "id": "app_services_transactionservice_transactionservice_delete",
-      "community": 98,
-      "community_name": "2026_07_18_193239_add_discount_to_transaction_detail_table.php Domain (98)",
+      "community": 13,
+      "community_name": "Transaction Management (13)",
       "norm_label": ".delete()"
     },
     {
@@ -9803,8 +9803,8 @@
       "source_location": "L123",
       "_origin": "ast",
       "id": "app_services_transactionservice_transactionservice_bulkdelete",
-      "community": 98,
-      "community_name": "2026_07_18_193239_add_discount_to_transaction_detail_table.php Domain (98)",
+      "community": 13,
+      "community_name": "Transaction Management (13)",
       "norm_label": ".bulkdelete()"
     },
     {
@@ -9814,8 +9814,8 @@
       "source_location": "L132",
       "_origin": "ast",
       "id": "app_services_transactionservice_transactionservice_checkout",
-      "community": 98,
-      "community_name": "2026_07_18_193239_add_discount_to_transaction_detail_table.php Domain (98)",
+      "community": 13,
+      "community_name": "Transaction Management (13)",
       "norm_label": ".checkout()"
     },
     {
@@ -10144,8 +10144,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_support_enums_dashboardpermissionenums",
-      "community": 298,
-      "community_name": "PermissionSeeder.php",
+      "community": 18,
+      "community_name": "alert-dialog.tsx Domain (18)",
       "norm_label": "dashboardpermissionenums.php"
     },
     {
@@ -10177,8 +10177,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_support_enums_productpermissionenums",
-      "community": 0,
-      "community_name": "API Controllers & Endpoints (0)",
+      "community": 37,
+      "community_name": "API Controllers & Endpoints (37)",
       "norm_label": "productpermissionenums.php"
     },
     {
@@ -10518,8 +10518,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_support_interfaces_repositories_dashboardrepositoryinterface",
-      "community": 9,
-      "community_name": "Transaction Management (9)",
+      "community": 116,
+      "community_name": "RoleRepositoryInterface.php",
       "norm_label": "dashboardrepositoryinterface.php"
     },
     {
@@ -10529,8 +10529,8 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "app_support_interfaces_repositories_dashboardrepositoryinterface_getmetrics",
-      "community": 9,
-      "community_name": "Transaction Management (9)",
+      "community": 116,
+      "community_name": "RoleRepositoryInterface.php",
       "norm_label": "getmetrics()"
     },
     {
@@ -10540,8 +10540,8 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "app_support_interfaces_repositories_dashboardrepositoryinterface_gettrendchart",
-      "community": 9,
-      "community_name": "Transaction Management (9)",
+      "community": 116,
+      "community_name": "RoleRepositoryInterface.php",
       "norm_label": "gettrendchart()"
     },
     {
@@ -10551,8 +10551,8 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "app_support_interfaces_repositories_dashboardrepositoryinterface_gettopproducts",
-      "community": 9,
-      "community_name": "Transaction Management (9)",
+      "community": 116,
+      "community_name": "RoleRepositoryInterface.php",
       "norm_label": "gettopproducts()"
     },
     {
@@ -10562,8 +10562,8 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "app_support_interfaces_repositories_dashboardrepositoryinterface_getrecenttransactions",
-      "community": 9,
-      "community_name": "Transaction Management (9)",
+      "community": 116,
+      "community_name": "RoleRepositoryInterface.php",
       "norm_label": "getrecenttransactions()"
     },
     {
@@ -10573,8 +10573,8 @@
       "source_location": "L32",
       "_origin": "ast",
       "id": "app_support_interfaces_repositories_dashboardrepositoryinterface_getlowstockproducts",
-      "community": 9,
-      "community_name": "Transaction Management (9)",
+      "community": 116,
+      "community_name": "RoleRepositoryInterface.php",
       "norm_label": "getlowstockproducts()"
     },
     {
@@ -10584,8 +10584,8 @@
       "source_location": "L37",
       "_origin": "ast",
       "id": "app_support_interfaces_repositories_dashboardrepositoryinterface_gettransactionsbypaymentmethod",
-      "community": 9,
-      "community_name": "Transaction Management (9)",
+      "community": 116,
+      "community_name": "RoleRepositoryInterface.php",
       "norm_label": "gettransactionsbypaymentmethod()"
     },
     {
@@ -10595,8 +10595,8 @@
       "source_location": "L42",
       "_origin": "ast",
       "id": "app_support_interfaces_repositories_dashboardrepositoryinterface_gettransactionsbycategory",
-      "community": 9,
-      "community_name": "Transaction Management (9)",
+      "community": 116,
+      "community_name": "RoleRepositoryInterface.php",
       "norm_label": "gettransactionsbycategory()"
     },
     {
@@ -11123,8 +11123,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_support_interfaces_repositories_returnrepositoryinterface",
-      "community": 61,
-      "community_name": "app-logo.tsx Domain (61)",
+      "community": 110,
+      "community_name": "lucide-react",
       "norm_label": "returnrepositoryinterface.php"
     },
     {
@@ -11134,8 +11134,8 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "app_support_interfaces_repositories_returnrepositoryinterface_getall",
-      "community": 61,
-      "community_name": "app-logo.tsx Domain (61)",
+      "community": 110,
+      "community_name": "lucide-react",
       "norm_label": "getall()"
     },
     {
@@ -11145,8 +11145,8 @@
       "source_location": "L21",
       "_origin": "ast",
       "id": "app_support_interfaces_repositories_returnrepositoryinterface_getbyid",
-      "community": 61,
-      "community_name": "app-logo.tsx Domain (61)",
+      "community": 110,
+      "community_name": "lucide-react",
       "norm_label": "getbyid()"
     },
     {
@@ -11156,8 +11156,8 @@
       "source_location": "L26",
       "_origin": "ast",
       "id": "app_support_interfaces_repositories_returnrepositoryinterface_create",
-      "community": 61,
-      "community_name": "app-logo.tsx Domain (61)",
+      "community": 110,
+      "community_name": "lucide-react",
       "norm_label": "create()"
     },
     {
@@ -11167,8 +11167,8 @@
       "source_location": "L31",
       "_origin": "ast",
       "id": "app_support_interfaces_repositories_returnrepositoryinterface_getbytransactionid",
-      "community": 61,
-      "community_name": "app-logo.tsx Domain (61)",
+      "community": 110,
+      "community_name": "lucide-react",
       "norm_label": "getbytransactionid()"
     },
     {
@@ -12333,8 +12333,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_support_interfaces_services_returnserviceinterface",
-      "community": 61,
-      "community_name": "app-logo.tsx Domain (61)",
+      "community": 110,
+      "community_name": "lucide-react",
       "norm_label": "returnserviceinterface.php"
     },
     {
@@ -12344,8 +12344,8 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "app_support_interfaces_services_returnserviceinterface_getall",
-      "community": 61,
-      "community_name": "app-logo.tsx Domain (61)",
+      "community": 110,
+      "community_name": "lucide-react",
       "norm_label": "getall()"
     },
     {
@@ -12355,8 +12355,8 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "app_support_interfaces_services_returnserviceinterface_processreturn",
-      "community": 61,
-      "community_name": "app-logo.tsx Domain (61)",
+      "community": 110,
+      "community_name": "lucide-react",
       "norm_label": "processreturn()"
     },
     {
@@ -12377,8 +12377,8 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "app_support_interfaces_services_roleserviceinterface_getallbyindex",
-      "community": 110,
-      "community_name": "lucide-react",
+      "community": 109,
+      "community_name": "cart-item-row.tsx",
       "norm_label": "getallbyindex()"
     },
     {
@@ -12707,8 +12707,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_support_interfaces_services_userserviceinterface",
-      "community": 110,
-      "community_name": "lucide-react",
+      "community": 113,
+      "community_name": "PaymentMethod",
       "norm_label": "userserviceinterface.php"
     },
     {
@@ -12729,8 +12729,8 @@
       "source_location": "L20",
       "_origin": "ast",
       "id": "app_support_interfaces_services_userserviceinterface_getbyid",
-      "community": 8,
-      "community_name": "User & Auth Management (8)",
+      "community": 113,
+      "community_name": "PaymentMethod",
       "norm_label": "getbyid()"
     },
     {
@@ -12740,8 +12740,8 @@
       "source_location": "L25",
       "_origin": "ast",
       "id": "app_support_interfaces_services_userserviceinterface_create",
-      "community": 8,
-      "community_name": "User & Auth Management (8)",
+      "community": 113,
+      "community_name": "PaymentMethod",
       "norm_label": "create()"
     },
     {
@@ -12751,8 +12751,8 @@
       "source_location": "L30",
       "_origin": "ast",
       "id": "app_support_interfaces_services_userserviceinterface_update",
-      "community": 8,
-      "community_name": "User & Auth Management (8)",
+      "community": 113,
+      "community_name": "PaymentMethod",
       "norm_label": "update()"
     },
     {
@@ -12762,8 +12762,8 @@
       "source_location": "L35",
       "_origin": "ast",
       "id": "app_support_interfaces_services_userserviceinterface_delete",
-      "community": 110,
-      "community_name": "lucide-react",
+      "community": 113,
+      "community_name": "PaymentMethod",
       "norm_label": "delete()"
     },
     {
@@ -12773,8 +12773,8 @@
       "source_location": "L40",
       "_origin": "ast",
       "id": "app_support_interfaces_services_userserviceinterface_bulkdelete",
-      "community": 110,
-      "community_name": "lucide-react",
+      "community": 113,
+      "community_name": "PaymentMethod",
       "norm_label": "bulkdelete()"
     },
     {
@@ -12784,8 +12784,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_support_models_capitalwallet_drawdowncapitalwalletreqmodel",
-      "community": 7,
-      "community_name": "Transaction Management (7)",
+      "community": 18,
+      "community_name": "alert-dialog.tsx Domain (18)",
       "norm_label": "drawdowncapitalwalletreqmodel.php"
     },
     {
@@ -12817,8 +12817,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_support_models_capitalwallet_getcapitalwallettransactionreqmodel",
-      "community": 7,
-      "community_name": "Transaction Management (7)",
+      "community": 18,
+      "community_name": "alert-dialog.tsx Domain (18)",
       "norm_label": "getcapitalwallettransactionreqmodel.php"
     },
     {
@@ -12839,8 +12839,8 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "app_support_models_capitalwallet_getcapitalwallettransactionreqmodel_getcapitalwallettransactionreqmodel_construct",
-      "community": 25,
-      "community_name": "Category Data & Repositories (25)",
+      "community": 7,
+      "community_name": "Transaction Management (7)",
       "norm_label": ".__construct()"
     },
     {
@@ -12850,8 +12850,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_support_models_capitalwallet_injectcapitalwalletreqmodel",
-      "community": 7,
-      "community_name": "Transaction Management (7)",
+      "community": 18,
+      "community_name": "alert-dialog.tsx Domain (18)",
       "norm_label": "injectcapitalwalletreqmodel.php"
     },
     {
@@ -12883,8 +12883,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_support_models_capitalwallet_purchaseproductcapitalwalletreqmodel",
-      "community": 7,
-      "community_name": "Transaction Management (7)",
+      "community": 18,
+      "community_name": "alert-dialog.tsx Domain (18)",
       "norm_label": "purchaseproductcapitalwalletreqmodel.php"
     },
     {
@@ -13015,8 +13015,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_support_models_product_getproductreqmodel",
-      "community": 7,
-      "community_name": "Transaction Management (7)",
+      "community": 37,
+      "community_name": "API Controllers & Endpoints (37)",
       "norm_label": "getproductreqmodel.php"
     },
     {
@@ -13059,8 +13059,8 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "app_support_models_productreturn_getproductreturnreqmodel_getproductreturnreqmodel",
-      "community": 61,
-      "community_name": "app-logo.tsx Domain (61)",
+      "community": 110,
+      "community_name": "lucide-react",
       "norm_label": "getproductreturnreqmodel"
     },
     {
@@ -13455,8 +13455,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_support_utils_paginationresource",
-      "community": 0,
-      "community_name": "API Controllers & Endpoints (0)",
+      "community": 7,
+      "community_name": "Transaction Management (7)",
       "norm_label": "paginationresource.php"
     },
     {
@@ -13466,8 +13466,8 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "app_support_utils_paginationresource_paginationresource",
-      "community": 43,
-      "community_name": "Category Data & Repositories (43)",
+      "community": 7,
+      "community_name": "Transaction Management (7)",
       "norm_label": "paginationresource"
     },
     {
@@ -13477,8 +13477,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "app_support_utils_paginationresource_paginationresource_make",
-      "community": 43,
-      "community_name": "Category Data & Repositories (43)",
+      "community": 7,
+      "community_name": "Transaction Management (7)",
       "norm_label": ".make()"
     },
     {
@@ -13510,8 +13510,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "app_support_utils_responseapi_responseapi_make",
-      "community": 43,
-      "community_name": "Category Data & Repositories (43)",
+      "community": 18,
+      "community_name": "alert-dialog.tsx Domain (18)",
       "norm_label": ".make()"
     },
     {
@@ -14797,8 +14797,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "config_inertia",
-      "community": 0,
-      "community_name": "API Controllers & Endpoints (0)",
+      "community": 40,
+      "community_name": "Fortify Auth Strategy (40)",
       "norm_label": "inertia.php"
     },
     {
@@ -16194,8 +16194,8 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "database_seeders_permissionseeder_permissionseeder",
-      "community": 23,
-      "community_name": "Product Catalog & Inventory (23)",
+      "community": 35,
+      "community_name": "Category Data & Repositories (35)",
       "norm_label": "permissionseeder"
     },
     {
@@ -16205,8 +16205,8 @@
       "source_location": "L24",
       "_origin": "ast",
       "id": "database_seeders_permissionseeder_permissionseeder_run",
-      "community": 23,
-      "community_name": "Product Catalog & Inventory (23)",
+      "community": 35,
+      "community_name": "Category Data & Repositories (35)",
       "norm_label": ".run()"
     },
     {
@@ -16326,8 +16326,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "database_seeders_transactionseeder_transactionseeder",
-      "community": 16,
-      "community_name": "PaymentMethod Domain (16)",
+      "community": 61,
+      "community_name": "app-logo.tsx Domain (61)",
       "norm_label": "transactionseeder"
     },
     {
@@ -16337,8 +16337,8 @@
       "source_location": "L20",
       "_origin": "ast",
       "id": "database_seeders_transactionseeder_transactionseeder_run",
-      "community": 16,
-      "community_name": "PaymentMethod Domain (16)",
+      "community": 61,
+      "community_name": "app-logo.tsx Domain (61)",
       "norm_label": ".run()"
     },
     {
@@ -16502,8 +16502,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "package",
-      "community": 58,
-      "community_name": "package.json Domain (58)",
+      "community": 275,
+      "community_name": "vaul",
       "norm_label": "package.json"
     },
     {
@@ -16513,8 +16513,8 @@
       "source_location": "L2",
       "_origin": "ast",
       "id": "package_schema",
-      "community": 58,
-      "community_name": "package.json Domain (58)",
+      "community": 275,
+      "community_name": "vaul",
       "norm_label": "$schema"
     },
     {
@@ -16524,8 +16524,8 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "package_private",
-      "community": 58,
-      "community_name": "package.json Domain (58)",
+      "community": 275,
+      "community_name": "vaul",
       "norm_label": "private"
     },
     {
@@ -16535,8 +16535,8 @@
       "source_location": "L4",
       "_origin": "ast",
       "id": "package_type",
-      "community": 58,
-      "community_name": "package.json Domain (58)",
+      "community": 275,
+      "community_name": "vaul",
       "norm_label": "type"
     },
     {
@@ -16744,8 +16744,8 @@
       "source_location": "L20",
       "_origin": "ast",
       "id": "package_devdependencies_types_sprintf_js",
-      "community": 153,
-      "community_name": "clsx",
+      "community": 53,
+      "community_name": "eslint Domain (53)",
       "norm_label": "@types/sprintf-js"
     },
     {
@@ -16755,8 +16755,8 @@
       "source_location": "L20",
       "_origin": "ast",
       "id": "types_sprintf_js",
-      "community": 153,
-      "community_name": "clsx",
+      "community": 53,
+      "community_name": "eslint Domain (53)",
       "norm_label": "@types/sprintf-js"
     },
     {
@@ -16876,8 +16876,8 @@
       "source_location": "L26",
       "_origin": "ast",
       "id": "package_devdependencies_eslint_plugin_react",
-      "community": 53,
-      "community_name": "eslint Domain (53)",
+      "community": 301,
+      "community_name": "@inertiajs/vite",
       "norm_label": "eslint-plugin-react"
     },
     {
@@ -16887,8 +16887,8 @@
       "source_location": "L26",
       "_origin": "ast",
       "id": "eslint_plugin_react",
-      "community": 53,
-      "community_name": "eslint Domain (53)",
+      "community": 301,
+      "community_name": "@inertiajs/vite",
       "norm_label": "eslint-plugin-react"
     },
     {
@@ -18526,8 +18526,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "resources_js_components_alert_error",
-      "community": 114,
-      "community_name": "PermissionEnums.ts",
+      "community": 27,
+      "community_name": "app-header.tsx Domain (27)",
       "norm_label": "alert-error.tsx"
     },
     {
@@ -18537,8 +18537,8 @@
       "source_location": "L4",
       "_origin": "ast",
       "id": "resources_js_components_alert_error_alerterror",
-      "community": 114,
-      "community_name": "PermissionEnums.ts",
+      "community": 27,
+      "community_name": "app-header.tsx Domain (27)",
       "norm_label": "alerterror()"
     },
     {
@@ -19098,8 +19098,8 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "resources_js_components_nav_footer_navfooter",
-      "community": 19,
-      "community_name": "app-sidebar.tsx Domain (19)",
+      "community": 135,
+      "community_name": "RoleController",
       "norm_label": "navfooter()"
     },
     {
@@ -19120,8 +19120,8 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "resources_js_components_nav_main_sidebarnavitem",
-      "community": 135,
-      "community_name": "RoleController",
+      "community": 19,
+      "community_name": "app-sidebar.tsx Domain (19)",
       "norm_label": "sidebarnavitem()"
     },
     {
@@ -19230,8 +19230,8 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "resources_js_components_receipt_modal_storesetting",
-      "community": 139,
-      "community_name": "post-create-project-cmd",
+      "community": 81,
+      "community_name": "User & Auth Management (81)",
       "norm_label": "storesetting"
     },
     {
@@ -19571,8 +19571,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "resources_js_components_ui_alert",
-      "community": 114,
-      "community_name": "PermissionEnums.ts",
+      "community": 27,
+      "community_name": "app-header.tsx Domain (27)",
       "norm_label": "alert.tsx"
     },
     {
@@ -19582,8 +19582,8 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "resources_js_components_ui_alert_alertvariants",
-      "community": 114,
-      "community_name": "PermissionEnums.ts",
+      "community": 27,
+      "community_name": "app-header.tsx Domain (27)",
       "norm_label": "alertvariants"
     },
     {
@@ -19593,8 +19593,8 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "resources_js_components_ui_alert_alert",
-      "community": 114,
-      "community_name": "PermissionEnums.ts",
+      "community": 27,
+      "community_name": "app-header.tsx Domain (27)",
       "norm_label": "alert()"
     },
     {
@@ -19604,8 +19604,8 @@
       "source_location": "L37",
       "_origin": "ast",
       "id": "resources_js_components_ui_alert_alerttitle",
-      "community": 114,
-      "community_name": "PermissionEnums.ts",
+      "community": 27,
+      "community_name": "app-header.tsx Domain (27)",
       "norm_label": "alerttitle()"
     },
     {
@@ -19615,8 +19615,8 @@
       "source_location": "L50",
       "_origin": "ast",
       "id": "resources_js_components_ui_alert_alertdescription",
-      "community": 114,
-      "community_name": "PermissionEnums.ts",
+      "community": 27,
+      "community_name": "app-header.tsx Domain (27)",
       "norm_label": "alertdescription()"
     },
     {
@@ -19956,8 +19956,8 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "resources_js_components_ui_chart_chartconfig",
-      "community": 15,
-      "community_name": "User & Auth Management (15)",
+      "community": 24,
+      "community_name": "Data Table UI Components (24)",
       "norm_label": "chartconfig"
     },
     {
@@ -20000,8 +20000,8 @@
       "source_location": "L40",
       "_origin": "ast",
       "id": "resources_js_components_ui_chart_chartcontainer",
-      "community": 15,
-      "community_name": "User & Auth Management (15)",
+      "community": 24,
+      "community_name": "Data Table UI Components (24)",
       "norm_label": "chartcontainer()"
     },
     {
@@ -20539,8 +20539,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "resources_js_components_ui_drawer",
-      "community": 2,
-      "community_name": "Data Table UI Components (2)",
+      "community": 24,
+      "community_name": "Data Table UI Components (24)",
       "norm_label": "drawer.tsx"
     },
     {
@@ -20550,8 +20550,8 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "resources_js_components_ui_drawer_drawer",
-      "community": 2,
-      "community_name": "Data Table UI Components (2)",
+      "community": 24,
+      "community_name": "Data Table UI Components (24)",
       "norm_label": "drawer()"
     },
     {
@@ -20561,8 +20561,8 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "resources_js_components_ui_drawer_drawertrigger",
-      "community": 2,
-      "community_name": "Data Table UI Components (2)",
+      "community": 24,
+      "community_name": "Data Table UI Components (24)",
       "norm_label": "drawertrigger()"
     },
     {
@@ -20572,8 +20572,8 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "resources_js_components_ui_drawer_drawerportal",
-      "community": 2,
-      "community_name": "Data Table UI Components (2)",
+      "community": 24,
+      "community_name": "Data Table UI Components (24)",
       "norm_label": "drawerportal()"
     },
     {
@@ -20583,8 +20583,8 @@
       "source_location": "L24",
       "_origin": "ast",
       "id": "resources_js_components_ui_drawer_drawerclose",
-      "community": 2,
-      "community_name": "Data Table UI Components (2)",
+      "community": 24,
+      "community_name": "Data Table UI Components (24)",
       "norm_label": "drawerclose()"
     },
     {
@@ -20594,8 +20594,8 @@
       "source_location": "L30",
       "_origin": "ast",
       "id": "resources_js_components_ui_drawer_draweroverlay",
-      "community": 2,
-      "community_name": "Data Table UI Components (2)",
+      "community": 24,
+      "community_name": "Data Table UI Components (24)",
       "norm_label": "draweroverlay()"
     },
     {
@@ -20605,8 +20605,8 @@
       "source_location": "L46",
       "_origin": "ast",
       "id": "resources_js_components_ui_drawer_drawercontent",
-      "community": 2,
-      "community_name": "Data Table UI Components (2)",
+      "community": 24,
+      "community_name": "Data Table UI Components (24)",
       "norm_label": "drawercontent()"
     },
     {
@@ -20616,8 +20616,8 @@
       "source_location": "L73",
       "_origin": "ast",
       "id": "resources_js_components_ui_drawer_drawerheader",
-      "community": 2,
-      "community_name": "Data Table UI Components (2)",
+      "community": 24,
+      "community_name": "Data Table UI Components (24)",
       "norm_label": "drawerheader()"
     },
     {
@@ -20627,8 +20627,8 @@
       "source_location": "L86",
       "_origin": "ast",
       "id": "resources_js_components_ui_drawer_drawerfooter",
-      "community": 2,
-      "community_name": "Data Table UI Components (2)",
+      "community": 24,
+      "community_name": "Data Table UI Components (24)",
       "norm_label": "drawerfooter()"
     },
     {
@@ -20638,8 +20638,8 @@
       "source_location": "L96",
       "_origin": "ast",
       "id": "resources_js_components_ui_drawer_drawertitle",
-      "community": 2,
-      "community_name": "Data Table UI Components (2)",
+      "community": 24,
+      "community_name": "Data Table UI Components (24)",
       "norm_label": "drawertitle()"
     },
     {
@@ -20649,8 +20649,8 @@
       "source_location": "L109",
       "_origin": "ast",
       "id": "resources_js_components_ui_drawer_drawerdescription",
-      "community": 2,
-      "community_name": "Data Table UI Components (2)",
+      "community": 24,
+      "community_name": "Data Table UI Components (24)",
       "norm_label": "drawerdescription()"
     },
     {
@@ -21727,8 +21727,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "resources_js_components_ui_separator",
-      "community": 135,
-      "community_name": "RoleController",
+      "community": 81,
+      "community_name": "User & Auth Management (81)",
       "norm_label": "separator.tsx"
     },
     {
@@ -21738,8 +21738,8 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "resources_js_components_ui_separator_separator",
-      "community": 135,
-      "community_name": "RoleController",
+      "community": 81,
+      "community_name": "User & Auth Management (81)",
       "norm_label": "separator()"
     },
     {
@@ -21925,8 +21925,8 @@
       "source_location": "L249",
       "_origin": "ast",
       "id": "resources_js_components_ui_sidebar_sidebartrigger",
-      "community": 19,
-      "community_name": "app-sidebar.tsx Domain (19)",
+      "community": 26,
+      "community_name": "app-content.tsx Domain (26)",
       "norm_label": "sidebartrigger()"
     },
     {
@@ -21958,8 +21958,8 @@
       "source_location": "L314",
       "_origin": "ast",
       "id": "resources_js_components_ui_sidebar_sidebarinput",
-      "community": 2,
-      "community_name": "Data Table UI Components (2)",
+      "community": 19,
+      "community_name": "app-sidebar.tsx Domain (19)",
       "norm_label": "sidebarinput()"
     },
     {
@@ -21991,8 +21991,8 @@
       "source_location": "L350",
       "_origin": "ast",
       "id": "resources_js_components_ui_sidebar_sidebarseparator",
-      "community": 2,
-      "community_name": "Data Table UI Components (2)",
+      "community": 19,
+      "community_name": "app-sidebar.tsx Domain (19)",
       "norm_label": "sidebarseparator()"
     },
     {
@@ -22035,8 +22035,8 @@
       "source_location": "L410",
       "_origin": "ast",
       "id": "resources_js_components_ui_sidebar_sidebargroupaction",
-      "community": 2,
-      "community_name": "Data Table UI Components (2)",
+      "community": 19,
+      "community_name": "app-sidebar.tsx Domain (19)",
       "norm_label": "sidebargroupaction()"
     },
     {
@@ -22101,8 +22101,8 @@
       "source_location": "L541",
       "_origin": "ast",
       "id": "resources_js_components_ui_sidebar_sidebarmenuaction",
-      "community": 2,
-      "community_name": "Data Table UI Components (2)",
+      "community": 19,
+      "community_name": "app-sidebar.tsx Domain (19)",
       "norm_label": "sidebarmenuaction()"
     },
     {
@@ -22112,8 +22112,8 @@
       "source_location": "L573",
       "_origin": "ast",
       "id": "resources_js_components_ui_sidebar_sidebarmenubadge",
-      "community": 2,
-      "community_name": "Data Table UI Components (2)",
+      "community": 19,
+      "community_name": "app-sidebar.tsx Domain (19)",
       "norm_label": "sidebarmenubadge()"
     },
     {
@@ -22354,8 +22354,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "resources_js_components_ui_tabs",
-      "community": 40,
-      "community_name": "Fortify Auth Strategy (40)",
+      "community": 2,
+      "community_name": "Data Table UI Components (2)",
       "norm_label": "tabs.tsx"
     },
     {
@@ -22365,8 +22365,8 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "resources_js_components_ui_tabs_tabs",
-      "community": 40,
-      "community_name": "Fortify Auth Strategy (40)",
+      "community": 2,
+      "community_name": "Data Table UI Components (2)",
       "norm_label": "tabs()"
     },
     {
@@ -22376,8 +22376,8 @@
       "source_location": "L26",
       "_origin": "ast",
       "id": "resources_js_components_ui_tabs_tabslistvariants",
-      "community": 40,
-      "community_name": "Fortify Auth Strategy (40)",
+      "community": 2,
+      "community_name": "Data Table UI Components (2)",
       "norm_label": "tabslistvariants"
     },
     {
@@ -22387,8 +22387,8 @@
       "source_location": "L41",
       "_origin": "ast",
       "id": "resources_js_components_ui_tabs_tabslist",
-      "community": 40,
-      "community_name": "Fortify Auth Strategy (40)",
+      "community": 2,
+      "community_name": "Data Table UI Components (2)",
       "norm_label": "tabslist()"
     },
     {
@@ -22398,8 +22398,8 @@
       "source_location": "L57",
       "_origin": "ast",
       "id": "resources_js_components_ui_tabs_tabstrigger",
-      "community": 40,
-      "community_name": "Fortify Auth Strategy (40)",
+      "community": 2,
+      "community_name": "Data Table UI Components (2)",
       "norm_label": "tabstrigger()"
     },
     {
@@ -22409,8 +22409,8 @@
       "source_location": "L76",
       "_origin": "ast",
       "id": "resources_js_components_ui_tabs_tabscontent",
-      "community": 40,
-      "community_name": "Fortify Auth Strategy (40)",
+      "community": 2,
+      "community_name": "Data Table UI Components (2)",
       "norm_label": "tabscontent()"
     },
     {
@@ -22662,8 +22662,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "resources_js_constants_index_languagecode",
-      "community": 15,
-      "community_name": "User & Auth Management (15)",
+      "community": 318,
+      "community_name": "language.tsx",
       "norm_label": "languagecode"
     },
     {
@@ -22673,8 +22673,8 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "resources_js_constants_index_localstoragekey",
-      "community": 15,
-      "community_name": "User & Auth Management (15)",
+      "community": 318,
+      "community_name": "language.tsx",
       "norm_label": "localstoragekey"
     },
     {
@@ -22871,8 +22871,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "resources_js_hooks_use_auth",
-      "community": 129,
-      "community_name": "@base-ui/react",
+      "community": 19,
+      "community_name": "app-sidebar.tsx Domain (19)",
       "norm_label": "use-auth.tsx"
     },
     {
@@ -22882,8 +22882,8 @@
       "source_location": "L4",
       "_origin": "ast",
       "id": "resources_js_hooks_use_auth_user",
-      "community": 129,
-      "community_name": "@base-ui/react",
+      "community": 19,
+      "community_name": "app-sidebar.tsx Domain (19)",
       "norm_label": "user"
     },
     {
@@ -22893,8 +22893,8 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "resources_js_hooks_use_auth_useauth",
-      "community": 3,
-      "community_name": "react Domain (3)",
+      "community": 19,
+      "community_name": "app-sidebar.tsx Domain (19)",
       "norm_label": "useauth()"
     },
     {
@@ -23025,8 +23025,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "resources_js_hooks_use_flash_toast",
-      "community": 30,
-      "community_name": "UI Notification & Error Handling (30)",
+      "community": 26,
+      "community_name": "app-content.tsx Domain (26)",
       "norm_label": "use-flash-toast.ts"
     },
     {
@@ -23355,8 +23355,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "resources_js_layouts_settings_layout",
-      "community": 135,
-      "community_name": "RoleController",
+      "community": 49,
+      "community_name": "Data Table UI Components (49)",
       "norm_label": "layout.tsx"
     },
     {
@@ -23421,8 +23421,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "resources_js_lib_format_money",
-      "community": 1,
-      "community_name": "User & Auth Management (1)",
+      "community": 81,
+      "community_name": "User & Auth Management (81)",
       "norm_label": "format-money.ts"
     },
     {
@@ -23432,8 +23432,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "resources_js_lib_format_money_formatrupiah",
-      "community": 140,
-      "community_name": "@inertiajs/react",
+      "community": 81,
+      "community_name": "User & Auth Management (81)",
       "norm_label": "formatrupiah()"
     },
     {
@@ -23454,8 +23454,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "resources_js_lib_utils",
-      "community": 54,
-      "community_name": "drawer.tsx Domain (54)",
+      "community": 20,
+      "community_name": "API Controllers & Endpoints (20)",
       "norm_label": "utils.ts"
     },
     {
@@ -23509,8 +23509,8 @@
       "source_location": "L57",
       "_origin": "ast",
       "id": "resources_js_lib_utils_showtoast",
-      "community": 54,
-      "community_name": "drawer.tsx Domain (54)",
+      "community": 20,
+      "community_name": "API Controllers & Endpoints (20)",
       "norm_label": "showtoast()"
     },
     {
@@ -23520,8 +23520,8 @@
       "source_location": "L61",
       "_origin": "ast",
       "id": "resources_js_lib_utils_showinfotoast",
-      "community": 54,
-      "community_name": "drawer.tsx Domain (54)",
+      "community": 20,
+      "community_name": "API Controllers & Endpoints (20)",
       "norm_label": "showinfotoast()"
     },
     {
@@ -23784,8 +23784,8 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "resources_js_pages_capital_wallet_columns_columns",
-      "community": 140,
-      "community_name": "@inertiajs/react",
+      "community": 81,
+      "community_name": "User & Auth Management (81)",
       "norm_label": "columns()"
     },
     {
@@ -23927,8 +23927,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "resources_js_pages_capital_wallet_index",
-      "community": 20,
-      "community_name": "API Controllers & Endpoints (20)",
+      "community": 81,
+      "community_name": "User & Auth Management (81)",
       "norm_label": "index.tsx"
     },
     {
@@ -23938,8 +23938,8 @@
       "source_location": "L24",
       "_origin": "ast",
       "id": "resources_js_pages_capital_wallet_index_capitalwalletindex",
-      "community": 140,
-      "community_name": "@inertiajs/react",
+      "community": 81,
+      "community_name": "User & Auth Management (81)",
       "norm_label": "capitalwalletindex()"
     },
     {
@@ -23949,8 +23949,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "resources_js_pages_cashier_components_cart_item_row",
-      "community": 32,
-      "community_name": "Category",
+      "community": 81,
+      "community_name": "User & Auth Management (81)",
       "norm_label": "cart-item-row.tsx"
     },
     {
@@ -23960,8 +23960,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "resources_js_pages_cashier_components_cart_item_row_cartitemrowprops",
-      "community": 32,
-      "community_name": "Category",
+      "community": 81,
+      "community_name": "User & Auth Management (81)",
       "norm_label": "cartitemrowprops"
     },
     {
@@ -23971,8 +23971,8 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "resources_js_pages_cashier_components_cart_item_row_cartitemrow",
-      "community": 140,
-      "community_name": "@inertiajs/react",
+      "community": 81,
+      "community_name": "User & Auth Management (81)",
       "norm_label": "cartitemrow()"
     },
     {
@@ -23993,8 +23993,8 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "resources_js_pages_cashier_components_payment_method_detail_dialog_paymentmethoddetaildialogprops",
-      "community": 81,
-      "community_name": "User & Auth Management (81)",
+      "community": 1,
+      "community_name": "User & Auth Management (1)",
       "norm_label": "paymentmethoddetaildialogprops"
     },
     {
@@ -24015,8 +24015,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "resources_js_pages_cashier_components_product_card",
-      "community": 32,
-      "community_name": "Category",
+      "community": 81,
+      "community_name": "User & Auth Management (81)",
       "norm_label": "product-card.tsx"
     },
     {
@@ -24026,8 +24026,8 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "resources_js_pages_cashier_components_product_card_productcardprops",
-      "community": 32,
-      "community_name": "Category",
+      "community": 81,
+      "community_name": "User & Auth Management (81)",
       "norm_label": "productcardprops"
     },
     {
@@ -24037,8 +24037,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "resources_js_pages_cashier_components_product_card_productcard",
-      "community": 32,
-      "community_name": "Category",
+      "community": 81,
+      "community_name": "User & Auth Management (81)",
       "norm_label": "productcard()"
     },
     {
@@ -24048,8 +24048,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "resources_js_pages_cashier_components_product_row",
-      "community": 32,
-      "community_name": "Category",
+      "community": 81,
+      "community_name": "User & Auth Management (81)",
       "norm_label": "product-row.tsx"
     },
     {
@@ -24059,8 +24059,8 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "resources_js_pages_cashier_components_product_row_productrowprops",
-      "community": 32,
-      "community_name": "Category",
+      "community": 81,
+      "community_name": "User & Auth Management (81)",
       "norm_label": "productrowprops"
     },
     {
@@ -24070,8 +24070,8 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "resources_js_pages_cashier_components_product_row_productrow",
-      "community": 140,
-      "community_name": "@inertiajs/react",
+      "community": 81,
+      "community_name": "User & Auth Management (81)",
       "norm_label": "productrow()"
     },
     {
@@ -24114,8 +24114,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "resources_js_pages_cashier_index",
-      "community": 32,
-      "community_name": "Category",
+      "community": 81,
+      "community_name": "User & Auth Management (81)",
       "norm_label": "index.tsx"
     },
     {
@@ -24125,8 +24125,8 @@
       "source_location": "L67",
       "_origin": "ast",
       "id": "resources_js_pages_cashier_index_cartitem",
-      "community": 32,
-      "community_name": "Category",
+      "community": 81,
+      "community_name": "User & Auth Management (81)",
       "norm_label": "cartitem"
     },
     {
@@ -24136,8 +24136,8 @@
       "source_location": "L74",
       "_origin": "ast",
       "id": "resources_js_pages_cashier_index_url",
-      "community": 32,
-      "community_name": "Category",
+      "community": 81,
+      "community_name": "User & Auth Management (81)",
       "norm_label": "{ url }"
     },
     {
@@ -24367,8 +24367,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "resources_js_pages_category_dialog_modal_detail_sheet_detailsheetprops",
-      "community": 36,
-      "community_name": "command.tsx Domain (36)",
+      "community": 32,
+      "community_name": "Category",
       "norm_label": "detailsheetprops"
     },
     {
@@ -24565,8 +24565,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "resources_js_pages_data_table",
-      "community": 40,
-      "community_name": "Fortify Auth Strategy (40)",
+      "community": 24,
+      "community_name": "Data Table UI Components (24)",
       "norm_label": "data-table.tsx"
     },
     {
@@ -24576,8 +24576,8 @@
       "source_location": "L104",
       "_origin": "ast",
       "id": "resources_js_pages_data_table_schema",
-      "community": 40,
-      "community_name": "Fortify Auth Strategy (40)",
+      "community": 24,
+      "community_name": "Data Table UI Components (24)",
       "norm_label": "schema"
     },
     {
@@ -24587,8 +24587,8 @@
       "source_location": "L115",
       "_origin": "ast",
       "id": "resources_js_pages_data_table_draghandle",
-      "community": 40,
-      "community_name": "Fortify Auth Strategy (40)",
+      "community": 24,
+      "community_name": "Data Table UI Components (24)",
       "norm_label": "draghandle()"
     },
     {
@@ -24598,8 +24598,8 @@
       "source_location": "L134",
       "_origin": "ast",
       "id": "resources_js_pages_data_table_columns",
-      "community": 40,
-      "community_name": "Fortify Auth Strategy (40)",
+      "community": 24,
+      "community_name": "Data Table UI Components (24)",
       "norm_label": "columns"
     },
     {
@@ -24609,8 +24609,8 @@
       "source_location": "L330",
       "_origin": "ast",
       "id": "resources_js_pages_data_table_draggablerow",
-      "community": 40,
-      "community_name": "Fortify Auth Strategy (40)",
+      "community": 24,
+      "community_name": "Data Table UI Components (24)",
       "norm_label": "draggablerow()"
     },
     {
@@ -24631,8 +24631,8 @@
       "source_location": "L685",
       "_origin": "ast",
       "id": "resources_js_pages_data_table_chartdata",
-      "community": 40,
-      "community_name": "Fortify Auth Strategy (40)",
+      "community": 24,
+      "community_name": "Data Table UI Components (24)",
       "norm_label": "chartdata"
     },
     {
@@ -24664,8 +24664,8 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "resources_js_pages_example_columns_payment",
-      "community": 15,
-      "community_name": "User & Auth Management (15)",
+      "community": 114,
+      "community_name": "PermissionEnums.ts",
       "norm_label": "payment"
     },
     {
@@ -24675,8 +24675,8 @@
       "source_location": "L24",
       "_origin": "ast",
       "id": "resources_js_pages_example_columns_columns",
-      "community": 15,
-      "community_name": "User & Auth Management (15)",
+      "community": 114,
+      "community_name": "PermissionEnums.ts",
       "norm_label": "columns"
     },
     {
@@ -24686,8 +24686,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "resources_js_pages_example_data_table",
-      "community": 15,
-      "community_name": "User & Auth Management (15)",
+      "community": 114,
+      "community_name": "PermissionEnums.ts",
       "norm_label": "data-table.tsx"
     },
     {
@@ -24697,8 +24697,8 @@
       "source_location": "L33",
       "_origin": "ast",
       "id": "resources_js_pages_example_data_table_datatableprops",
-      "community": 15,
-      "community_name": "User & Auth Management (15)",
+      "community": 114,
+      "community_name": "PermissionEnums.ts",
       "norm_label": "datatableprops"
     },
     {
@@ -24708,8 +24708,8 @@
       "source_location": "L40",
       "_origin": "ast",
       "id": "resources_js_pages_example_data_table_datatable",
-      "community": 15,
-      "community_name": "User & Auth Management (15)",
+      "community": 114,
+      "community_name": "PermissionEnums.ts",
       "norm_label": "datatable()"
     },
     {
@@ -24719,8 +24719,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "resources_js_pages_example_index",
-      "community": 15,
-      "community_name": "User & Auth Management (15)",
+      "community": 114,
+      "community_name": "PermissionEnums.ts",
       "norm_label": "index.tsx"
     },
     {
@@ -24730,8 +24730,8 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "resources_js_pages_example_index_getdata",
-      "community": 15,
-      "community_name": "User & Auth Management (15)",
+      "community": 114,
+      "community_name": "PermissionEnums.ts",
       "norm_label": "getdata()"
     },
     {
@@ -24741,8 +24741,8 @@
       "source_location": "L29",
       "_origin": "ast",
       "id": "resources_js_pages_example_index_index",
-      "community": 15,
-      "community_name": "User & Auth Management (15)",
+      "community": 114,
+      "community_name": "PermissionEnums.ts",
       "norm_label": "index()"
     },
     {
@@ -24763,8 +24763,8 @@
       "source_location": "L31",
       "_origin": "ast",
       "id": "resources_js_pages_master_product_columns_columnsprops",
-      "community": 3,
-      "community_name": "react Domain (3)",
+      "community": 32,
+      "community_name": "Category",
       "norm_label": "columnsprops"
     },
     {
@@ -24774,8 +24774,8 @@
       "source_location": "L41",
       "_origin": "ast",
       "id": "resources_js_pages_master_product_columns_columns",
-      "community": 140,
-      "community_name": "@inertiajs/react",
+      "community": 81,
+      "community_name": "User & Auth Management (81)",
       "norm_label": "columns()"
     },
     {
@@ -24796,8 +24796,8 @@
       "source_location": "L71",
       "_origin": "ast",
       "id": "resources_js_pages_master_product_data_table_datatableprops",
-      "community": 139,
-      "community_name": "post-create-project-cmd",
+      "community": 32,
+      "community_name": "Category",
       "norm_label": "datatableprops"
     },
     {
@@ -25027,8 +25027,8 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "resources_js_pages_master_product_dialog_modal_detail_dialog_detaildialog",
-      "community": 140,
-      "community_name": "@inertiajs/react",
+      "community": 81,
+      "community_name": "User & Auth Management (81)",
       "norm_label": "detaildialog()"
     },
     {
@@ -25126,8 +25126,8 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "resources_js_pages_master_product_export_data_menu_export_dropdown_menu_exportdropdownmenu",
-      "community": 6,
-      "community_name": "API Controllers & Endpoints (6)",
+      "community": 54,
+      "community_name": "drawer.tsx Domain (54)",
       "norm_label": "exportdropdownmenu()"
     },
     {
@@ -25181,8 +25181,8 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "resources_js_pages_payment_method_columns_columnsprops",
-      "community": 81,
-      "community_name": "User & Auth Management (81)",
+      "community": 1,
+      "community_name": "User & Auth Management (1)",
       "norm_label": "columnsprops"
     },
     {
@@ -25214,8 +25214,8 @@
       "source_location": "L65",
       "_origin": "ast",
       "id": "resources_js_pages_payment_method_data_table_datatableprops",
-      "community": 81,
-      "community_name": "User & Auth Management (81)",
+      "community": 1,
+      "community_name": "User & Auth Management (1)",
       "norm_label": "datatableprops"
     },
     {
@@ -25247,8 +25247,8 @@
       "source_location": "L29",
       "_origin": "ast",
       "id": "resources_js_pages_payment_method_dialog_modal_bulk_delete_dialog_bulkdeletedialogprops",
-      "community": 81,
-      "community_name": "User & Auth Management (81)",
+      "community": 1,
+      "community_name": "User & Auth Management (1)",
       "norm_label": "bulkdeletedialogprops"
     },
     {
@@ -25313,8 +25313,8 @@
       "source_location": "L26",
       "_origin": "ast",
       "id": "resources_js_pages_payment_method_dialog_modal_delete_dialog_deletedialogprops",
-      "community": 81,
-      "community_name": "User & Auth Management (81)",
+      "community": 1,
+      "community_name": "User & Auth Management (1)",
       "norm_label": "deletedialogprops"
     },
     {
@@ -25335,8 +25335,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "resources_js_pages_payment_method_dialog_modal_detail_dialog",
-      "community": 81,
-      "community_name": "User & Auth Management (81)",
+      "community": 1,
+      "community_name": "User & Auth Management (1)",
       "norm_label": "detail-dialog.tsx"
     },
     {
@@ -25346,8 +25346,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "resources_js_pages_payment_method_dialog_modal_detail_dialog_detailsheetprops",
-      "community": 81,
-      "community_name": "User & Auth Management (81)",
+      "community": 1,
+      "community_name": "User & Auth Management (1)",
       "norm_label": "detailsheetprops"
     },
     {
@@ -25379,8 +25379,8 @@
       "source_location": "L34",
       "_origin": "ast",
       "id": "resources_js_pages_payment_method_dialog_modal_edit_dialog_editdialogprops",
-      "community": 81,
-      "community_name": "User & Auth Management (81)",
+      "community": 1,
+      "community_name": "User & Auth Management (1)",
       "norm_label": "editdialogprops"
     },
     {
@@ -25489,8 +25489,8 @@
       "source_location": "L42",
       "_origin": "ast",
       "id": "resources_js_pages_product_columns_columns",
-      "community": 140,
-      "community_name": "@inertiajs/react",
+      "community": 81,
+      "community_name": "User & Auth Management (81)",
       "norm_label": "columns()"
     },
     {
@@ -25654,8 +25654,8 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "resources_js_pages_product_dialog_modal_detail_dialog_detaildialog",
-      "community": 140,
-      "community_name": "@inertiajs/react",
+      "community": 81,
+      "community_name": "User & Auth Management (81)",
       "norm_label": "detaildialog()"
     },
     {
@@ -25753,8 +25753,8 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "resources_js_pages_product_export_data_menu_export_dropdown_menu_exportdropdownmenu",
-      "community": 6,
-      "community_name": "API Controllers & Endpoints (6)",
+      "community": 54,
+      "community_name": "drawer.tsx Domain (54)",
       "norm_label": "exportdropdownmenu()"
     },
     {
@@ -25797,8 +25797,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "resources_js_pages_profit_wallet_columns",
-      "community": 140,
-      "community_name": "@inertiajs/react",
+      "community": 153,
+      "community_name": "clsx",
       "norm_label": "columns.tsx"
     },
     {
@@ -25808,8 +25808,8 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "resources_js_pages_profit_wallet_columns_columnprops",
-      "community": 140,
-      "community_name": "@inertiajs/react",
+      "community": 153,
+      "community_name": "clsx",
       "norm_label": "columnprops"
     },
     {
@@ -25819,8 +25819,8 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "resources_js_pages_profit_wallet_columns_columns",
-      "community": 140,
-      "community_name": "@inertiajs/react",
+      "community": 81,
+      "community_name": "User & Auth Management (81)",
       "norm_label": "columns()"
     },
     {
@@ -25852,8 +25852,8 @@
       "source_location": "L70",
       "_origin": "ast",
       "id": "resources_js_pages_profit_wallet_data_table_datatable",
-      "community": 140,
-      "community_name": "@inertiajs/react",
+      "community": 15,
+      "community_name": "User & Auth Management (15)",
       "norm_label": "datatable()"
     },
     {
@@ -25929,8 +25929,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "resources_js_pages_profit_wallet_index",
-      "community": 140,
-      "community_name": "@inertiajs/react",
+      "community": 20,
+      "community_name": "API Controllers & Endpoints (20)",
       "norm_label": "index.tsx"
     },
     {
@@ -25940,8 +25940,8 @@
       "source_location": "L24",
       "_origin": "ast",
       "id": "resources_js_pages_profit_wallet_index_profitwalletindex",
-      "community": 140,
-      "community_name": "@inertiajs/react",
+      "community": 81,
+      "community_name": "User & Auth Management (81)",
       "norm_label": "profitwalletindex()"
     },
     {
@@ -25951,8 +25951,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "resources_js_pages_returns_columns",
-      "community": 15,
-      "community_name": "User & Auth Management (15)",
+      "community": 81,
+      "community_name": "User & Auth Management (81)",
       "norm_label": "columns.tsx"
     },
     {
@@ -25962,8 +25962,8 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "resources_js_pages_returns_columns_returndetail",
-      "community": 15,
-      "community_name": "User & Auth Management (15)",
+      "community": 81,
+      "community_name": "User & Auth Management (81)",
       "norm_label": "returndetail"
     },
     {
@@ -25984,8 +25984,8 @@
       "source_location": "L26",
       "_origin": "ast",
       "id": "resources_js_pages_returns_columns_columns",
-      "community": 15,
-      "community_name": "User & Auth Management (15)",
+      "community": 81,
+      "community_name": "User & Auth Management (81)",
       "norm_label": "columns()"
     },
     {
@@ -26039,8 +26039,8 @@
       "source_location": "L48",
       "_origin": "ast",
       "id": "resources_js_pages_returns_index_index",
-      "community": 15,
-      "community_name": "User & Auth Management (15)",
+      "community": 6,
+      "community_name": "API Controllers & Endpoints (6)",
       "norm_label": "index()"
     },
     {
@@ -26391,8 +26391,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "resources_js_pages_settings_language",
-      "community": 15,
-      "community_name": "User & Auth Management (15)",
+      "community": 318,
+      "community_name": "language.tsx",
       "norm_label": "language.tsx"
     },
     {
@@ -26402,8 +26402,8 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "resources_js_pages_settings_language_languageswitcher",
-      "community": 15,
-      "community_name": "User & Auth Management (15)",
+      "community": 318,
+      "community_name": "language.tsx",
       "norm_label": "languageswitcher"
     },
     {
@@ -26413,8 +26413,8 @@
       "source_location": "L21",
       "_origin": "ast",
       "id": "resources_js_pages_settings_language_language",
-      "community": 15,
-      "community_name": "User & Auth Management (15)",
+      "community": 318,
+      "community_name": "language.tsx",
       "norm_label": "language()"
     },
     {
@@ -26534,8 +26534,8 @@
       "source_location": "L25",
       "_origin": "ast",
       "id": "resources_js_pages_transaction_columns_columns",
-      "community": 140,
-      "community_name": "@inertiajs/react",
+      "community": 81,
+      "community_name": "User & Auth Management (81)",
       "norm_label": "columns()"
     },
     {
@@ -26545,8 +26545,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "resources_js_pages_transaction_data_table",
-      "community": 139,
-      "community_name": "post-create-project-cmd",
+      "community": 15,
+      "community_name": "User & Auth Management (15)",
       "norm_label": "data-table.tsx"
     },
     {
@@ -26644,8 +26644,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "resources_js_pages_transaction_dialog_modal_detail_dialog",
-      "community": 15,
-      "community_name": "User & Auth Management (15)",
+      "community": 81,
+      "community_name": "User & Auth Management (81)",
       "norm_label": "detail-dialog.tsx"
     },
     {
@@ -26655,8 +26655,8 @@
       "source_location": "L39",
       "_origin": "ast",
       "id": "resources_js_pages_transaction_dialog_modal_detail_dialog_breakdown_colors",
-      "community": 15,
-      "community_name": "User & Auth Management (15)",
+      "community": 81,
+      "community_name": "User & Auth Management (81)",
       "norm_label": "breakdown_colors"
     },
     {
@@ -26666,8 +26666,8 @@
       "source_location": "L45",
       "_origin": "ast",
       "id": "resources_js_pages_transaction_dialog_modal_detail_dialog_detaildialogprops",
-      "community": 139,
-      "community_name": "post-create-project-cmd",
+      "community": 81,
+      "community_name": "User & Auth Management (81)",
       "norm_label": "detaildialogprops"
     },
     {
@@ -26677,8 +26677,8 @@
       "source_location": "L52",
       "_origin": "ast",
       "id": "resources_js_pages_transaction_dialog_modal_detail_dialog_detaildialog",
-      "community": 140,
-      "community_name": "@inertiajs/react",
+      "community": 81,
+      "community_name": "User & Auth Management (81)",
       "norm_label": "detaildialog()"
     },
     {
@@ -26688,26 +26688,26 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "resources_js_pages_transaction_index",
-      "community": 81,
-      "community_name": "User & Auth Management (81)",
+      "community": 20,
+      "community_name": "API Controllers & Endpoints (20)",
       "norm_label": "index.tsx"
     },
     {
       "label": "{ url }",
       "file_type": "code",
       "source_file": "resources/js/pages/transaction/index.tsx",
-      "source_location": "L29",
+      "source_location": "L27",
       "_origin": "ast",
       "id": "resources_js_pages_transaction_index_url",
-      "community": 81,
-      "community_name": "User & Auth Management (81)",
+      "community": 20,
+      "community_name": "API Controllers & Endpoints (20)",
       "norm_label": "{ url }"
     },
     {
       "label": "PaginatedData",
       "file_type": "code",
       "source_file": "resources/js/pages/transaction/index.tsx",
-      "source_location": "L31",
+      "source_location": "L29",
       "_origin": "ast",
       "id": "resources_js_pages_transaction_index_paginateddata",
       "community": 139,
@@ -26718,7 +26718,7 @@
       "label": "Index()",
       "file_type": "code",
       "source_file": "resources/js/pages/transaction/index.tsx",
-      "source_location": "L41",
+      "source_location": "L39",
       "_origin": "ast",
       "id": "resources_js_pages_transaction_index_index",
       "community": 6,
@@ -27441,21 +27441,10 @@
       "norm_label": "capitalwalletpermissionenums"
     },
     {
-      "label": "ReturnPermissionEnums",
-      "file_type": "code",
-      "source_file": "resources/js/support/enums/PermissionEnums.ts",
-      "source_location": "L79",
-      "_origin": "ast",
-      "id": "resources_js_support_enums_permissionenums_returnpermissionenums",
-      "community": 277,
-      "community_name": "PermissionEnums.ts",
-      "norm_label": "returnpermissionenums"
-    },
-    {
       "label": "PERMISSIONENUMS",
       "file_type": "code",
       "source_file": "resources/js/support/enums/PermissionEnums.ts",
-      "source_location": "L86",
+      "source_location": "L79",
       "_origin": "ast",
       "id": "resources_js_support_enums_permissionenums_permissionenums",
       "community": 3,
@@ -27466,7 +27455,7 @@
       "label": "PERMISSIONLIST()",
       "file_type": "code",
       "source_file": "resources/js/support/enums/PermissionEnums.ts",
-      "source_location": "L101",
+      "source_location": "L93",
       "_origin": "ast",
       "id": "resources_js_support_enums_permissionenums_permissionlist",
       "community": 20,
@@ -27480,8 +27469,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "resources_js_support_enums_roleenums",
-      "community": 129,
-      "community_name": "@base-ui/react",
+      "community": 19,
+      "community_name": "app-sidebar.tsx Domain (19)",
       "norm_label": "roleenums.ts"
     },
     {
@@ -27491,8 +27480,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "resources_js_support_enums_roleenums_roleenums",
-      "community": 129,
-      "community_name": "@base-ui/react",
+      "community": 19,
+      "community_name": "app-sidebar.tsx Domain (19)",
       "norm_label": "roleenums"
     },
     {
@@ -27557,8 +27546,8 @@
       "source_location": "L4",
       "_origin": "ast",
       "id": "resources_js_support_interfaces_request_master_product_masterproductqueryparam",
-      "community": 139,
-      "community_name": "post-create-project-cmd",
+      "community": 32,
+      "community_name": "Category",
       "norm_label": "masterproductqueryparam"
     },
     {
@@ -27920,8 +27909,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "resources_js_support_interfaces_response_responseerror",
-      "community": 54,
-      "community_name": "drawer.tsx Domain (54)",
+      "community": 20,
+      "community_name": "API Controllers & Endpoints (20)",
       "norm_label": "responseerror.tsx"
     },
     {
@@ -27931,8 +27920,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "resources_js_support_interfaces_response_responseerror_responseerrorapi",
-      "community": 54,
-      "community_name": "drawer.tsx Domain (54)",
+      "community": 20,
+      "community_name": "API Controllers & Endpoints (20)",
       "norm_label": "responseerrorapi"
     },
     {
@@ -28019,8 +28008,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "resources_js_support_models_paymentmethod",
-      "community": 81,
-      "community_name": "User & Auth Management (81)",
+      "community": 1,
+      "community_name": "User & Auth Management (1)",
       "norm_label": "paymentmethod.tsx"
     },
     {
@@ -28030,8 +28019,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "resources_js_support_models_paymentmethod_paymentmethod",
-      "community": 81,
-      "community_name": "User & Auth Management (81)",
+      "community": 1,
+      "community_name": "User & Auth Management (1)",
       "norm_label": "paymentmethod"
     },
     {
@@ -28063,8 +28052,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "resources_js_support_models_profitwallet",
-      "community": 140,
-      "community_name": "@inertiajs/react",
+      "community": 153,
+      "community_name": "clsx",
       "norm_label": "profitwallet.ts"
     },
     {
@@ -28074,8 +28063,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "resources_js_support_models_profitwallet_profitwallettransaction",
-      "community": 140,
-      "community_name": "@inertiajs/react",
+      "community": 153,
+      "community_name": "clsx",
       "norm_label": "profitwallettransaction"
     },
     {
@@ -28085,8 +28074,8 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "resources_js_support_models_profitwallet_profitwalletsummary",
-      "community": 140,
-      "community_name": "@inertiajs/react",
+      "community": 153,
+      "community_name": "clsx",
       "norm_label": "profitwalletsummary"
     },
     {
@@ -28184,8 +28173,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "resources_js_support_models_user",
-      "community": 81,
-      "community_name": "User & Auth Management (81)",
+      "community": 120,
+      "community_name": "eslint-plugin-react Domain (120)",
       "norm_label": "user.tsx"
     },
     {
@@ -28338,8 +28327,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "resources_js_types_navigation",
-      "community": 19,
-      "community_name": "app-sidebar.tsx Domain (19)",
+      "community": 26,
+      "community_name": "app-content.tsx Domain (26)",
       "norm_label": "navigation.ts"
     },
     {
@@ -28371,8 +28360,8 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "resources_js_types_navigation_navgroup",
-      "community": 19,
-      "community_name": "app-sidebar.tsx Domain (19)",
+      "community": 26,
+      "community_name": "app-content.tsx Domain (26)",
       "norm_label": "navgroup"
     },
     {
@@ -28459,8 +28448,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "resources_js_types_ui_flashtoast",
-      "community": 30,
-      "community_name": "UI Notification & Error Handling (30)",
+      "community": 26,
+      "community_name": "app-content.tsx Domain (26)",
       "norm_label": "flashtoast"
     },
     {
@@ -28470,8 +28459,8 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "resources_js_types_ui_authlayoutprops",
-      "community": 26,
-      "community_name": "app-content.tsx Domain (26)",
+      "community": 66,
+      "community_name": "Data Table UI Components (66)",
       "norm_label": "authlayoutprops"
     },
     {
@@ -28536,8 +28525,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "routes_settings",
-      "community": 0,
-      "community_name": "API Controllers & Endpoints (0)",
+      "community": 40,
+      "community_name": "Fortify Auth Strategy (40)",
       "norm_label": "settings.php"
     },
     {
@@ -28701,8 +28690,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_feature_capitalwallet_capitalwalletintegrationtest",
-      "community": 7,
-      "community_name": "Transaction Management (7)",
+      "community": 102,
+      "community_name": "package.json",
       "norm_label": "capitalwalletintegrationtest.php"
     },
     {
@@ -28723,8 +28712,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_feature_capitalwallet_capitalwalletservicetest",
-      "community": 7,
-      "community_name": "Transaction Management (7)",
+      "community": 18,
+      "community_name": "alert-dialog.tsx Domain (18)",
       "norm_label": "capitalwalletservicetest.php"
     },
     {
@@ -28789,8 +28778,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_feature_dashboard_apidashboardcontrollertest",
-      "community": 298,
-      "community_name": "PermissionSeeder.php",
+      "community": 18,
+      "community_name": "alert-dialog.tsx Domain (18)",
       "norm_label": "apidashboardcontrollertest.php"
     },
     {
@@ -32386,8 +32375,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "illuminate_http_jsonresponse",
-      "community": 43,
-      "community_name": "Category Data & Repositories (43)",
+      "community": 18,
+      "community_name": "alert-dialog.tsx Domain (18)",
       "norm_label": "illuminate\\http\\jsonresponse"
     },
     {
@@ -32430,8 +32419,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "inertia_response",
-      "community": 0,
-      "community_name": "API Controllers & Endpoints (0)",
+      "community": 40,
+      "community_name": "Fortify Auth Strategy (40)",
       "norm_label": "inertia\\response"
     },
     {
@@ -32441,8 +32430,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "illuminate_http_redirectresponse",
-      "community": 0,
-      "community_name": "API Controllers & Endpoints (0)",
+      "community": 40,
+      "community_name": "Fortify Auth Strategy (40)",
       "norm_label": "illuminate\\http\\redirectresponse"
     },
     {
@@ -32496,8 +32485,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "laravel_fortify_interactswithtwofactorstate",
-      "community": 29,
-      "community_name": "separator.tsx Domain (29)",
+      "community": 40,
+      "community_name": "Fortify Auth Strategy (40)",
       "norm_label": "laravel\\fortify\\interactswithtwofactorstate"
     },
     {
@@ -32518,8 +32507,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "illuminate_support_collection",
-      "community": 9,
-      "community_name": "Transaction Management (9)",
+      "community": 116,
+      "community_name": "RoleRepositoryInterface.php",
       "norm_label": "illuminate\\support\\collection"
     },
     {
@@ -32529,8 +32518,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "maatwebsite_excel_concerns_tocollection",
-      "community": 35,
-      "community_name": "Category Data & Repositories (35)",
+      "community": 129,
+      "community_name": "@base-ui/react",
       "norm_label": "maatwebsite\\excel\\concerns\\tocollection"
     },
     {
@@ -32540,8 +32529,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "maatwebsite_excel_concerns_withheadingrow",
-      "community": 35,
-      "community_name": "Category Data & Repositories (35)",
+      "community": 129,
+      "community_name": "@base-ui/react",
       "norm_label": "maatwebsite\\excel\\concerns\\withheadingrow"
     },
     {
@@ -32551,8 +32540,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "maatwebsite_excel_concerns_toarray",
-      "community": 35,
-      "community_name": "Category Data & Repositories (35)",
+      "community": 129,
+      "community_name": "@base-ui/react",
       "norm_label": "maatwebsite\\excel\\concerns\\toarray"
     },
     {
@@ -32672,8 +32661,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "spatie_permission_traits_refreshespermissioncache",
-      "community": 38,
-      "community_name": "Permission Domain (38)",
+      "community": 39,
+      "community_name": "Role Domain (39)",
       "norm_label": "spatie\\permission\\traits\\refreshespermissioncache"
     },
     {
@@ -32694,8 +32683,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "spatie_permission_traits_hasassignedmodels",
-      "community": 38,
-      "community_name": "Permission Domain (38)",
+      "community": 39,
+      "community_name": "Role Domain (39)",
       "norm_label": "spatie\\permission\\traits\\hasassignedmodels"
     },
     {
@@ -32705,8 +32694,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "spatie_permission_traits_haspermissions",
-      "community": 38,
-      "community_name": "Permission Domain (38)",
+      "community": 39,
+      "community_name": "Role Domain (39)",
       "norm_label": "spatie\\permission\\traits\\haspermissions"
     },
     {
@@ -32826,8 +32815,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "illuminate_http_resources_json_anonymousresourcecollection",
-      "community": 110,
-      "community_name": "lucide-react",
+      "community": 109,
+      "community_name": "cart-item-row.tsx",
       "norm_label": "illuminate\\http\\resources\\json\\anonymousresourcecollection"
     },
     {
@@ -32837,8 +32826,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "illuminate_pagination_lengthawarepaginator",
-      "community": 43,
-      "community_name": "Category Data & Repositories (43)",
+      "community": 7,
+      "community_name": "Transaction Management (7)",
       "norm_label": "illuminate\\pagination\\lengthawarepaginator"
     },
     {
@@ -111237,42 +111226,6 @@
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
-      "source_file": "resources/js/pages/transaction/index.tsx",
-      "source_location": "L26",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "resources_js_pages_transaction_index",
-      "target": "resources_js_hooks_use_auth",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "resources/js/pages/transaction/index.tsx",
-      "source_location": "L26",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "resources_js_pages_transaction_index",
-      "target": "resources_js_hooks_use_auth_useauth",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "resources/js/pages/transaction/index.tsx",
-      "source_location": "L43",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "resources_js_pages_transaction_index_index",
-      "target": "resources_js_hooks_use_auth_useauth"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
       "source_file": "resources/js/hooks/use-clipboard.ts",
       "source_location": "L2",
       "weight": 1.0,
@@ -116873,7 +116826,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "resources/js/pages/transaction/index.tsx",
-      "source_location": "L91",
+      "source_location": "L88",
       "weight": 1.0,
       "_origin": "ast",
       "source": "resources_js_pages_transaction_index_index",
@@ -118037,7 +117990,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "resources/js/pages/transaction/index.tsx",
-      "source_location": "L171",
+      "source_location": "L168",
       "weight": 1.0,
       "_origin": "ast",
       "source": "resources_js_pages_transaction_index_index",
@@ -128864,7 +128817,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "resources/js/pages/transaction/index.tsx",
-      "source_location": "L41",
+      "source_location": "L39",
       "weight": 1.0,
       "_origin": "ast",
       "source": "resources_js_pages_transaction_index",
@@ -128875,7 +128828,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "resources/js/pages/transaction/index.tsx",
-      "source_location": "L31",
+      "source_location": "L29",
       "weight": 1.0,
       "_origin": "ast",
       "source": "resources_js_pages_transaction_index",
@@ -128886,35 +128839,11 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "resources/js/pages/transaction/index.tsx",
-      "source_location": "L29",
+      "source_location": "L27",
       "weight": 1.0,
       "_origin": "ast",
       "source": "resources_js_pages_transaction_index",
       "target": "resources_js_pages_transaction_index_url",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "resources/js/pages/transaction/index.tsx",
-      "source_location": "L27",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "resources_js_pages_transaction_index",
-      "target": "resources_js_support_enums_permissionenums",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "resources/js/pages/transaction/index.tsx",
-      "source_location": "L27",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "resources_js_pages_transaction_index",
-      "target": "resources_js_support_enums_permissionenums_permissionenums",
       "confidence_score": 1.0
     },
     {
@@ -129090,7 +129019,7 @@
       "context": "field",
       "confidence": "EXTRACTED",
       "source_file": "resources/js/pages/transaction/index.tsx",
-      "source_location": "L33",
+      "source_location": "L31",
       "weight": 1.0,
       "_origin": "ast",
       "source": "resources_js_pages_transaction_index_paginateddata",
@@ -131082,7 +131011,7 @@
       "relation": "indirect_call",
       "confidence": "INFERRED",
       "source_file": "resources/js/support/enums/PermissionEnums.ts",
-      "source_location": "L97",
+      "source_location": "L90",
       "weight": 1.0,
       "_origin": "ast",
       "context": "collection",
@@ -131094,7 +131023,7 @@
       "relation": "indirect_call",
       "confidence": "INFERRED",
       "source_file": "resources/js/support/enums/PermissionEnums.ts",
-      "source_location": "L87",
+      "source_location": "L80",
       "weight": 1.0,
       "_origin": "ast",
       "context": "collection",
@@ -131106,7 +131035,7 @@
       "relation": "indirect_call",
       "confidence": "INFERRED",
       "source_file": "resources/js/support/enums/PermissionEnums.ts",
-      "source_location": "L88",
+      "source_location": "L81",
       "weight": 1.0,
       "_origin": "ast",
       "context": "collection",
@@ -131118,7 +131047,7 @@
       "relation": "indirect_call",
       "confidence": "INFERRED",
       "source_file": "resources/js/support/enums/PermissionEnums.ts",
-      "source_location": "L94",
+      "source_location": "L87",
       "weight": 1.0,
       "_origin": "ast",
       "context": "collection",
@@ -131130,7 +131059,7 @@
       "relation": "indirect_call",
       "confidence": "INFERRED",
       "source_file": "resources/js/support/enums/PermissionEnums.ts",
-      "source_location": "L92",
+      "source_location": "L85",
       "weight": 1.0,
       "_origin": "ast",
       "context": "collection",
@@ -131142,7 +131071,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "resources/js/support/enums/PermissionEnums.ts",
-      "source_location": "L86",
+      "source_location": "L79",
       "weight": 1.0,
       "_origin": "ast",
       "source": "resources_js_support_enums_permissionenums",
@@ -131153,7 +131082,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "resources/js/support/enums/PermissionEnums.ts",
-      "source_location": "L101",
+      "source_location": "L93",
       "weight": 1.0,
       "_origin": "ast",
       "source": "resources_js_support_enums_permissionenums",
@@ -131164,7 +131093,7 @@
       "relation": "indirect_call",
       "confidence": "INFERRED",
       "source_file": "resources/js/support/enums/PermissionEnums.ts",
-      "source_location": "L93",
+      "source_location": "L86",
       "weight": 1.0,
       "_origin": "ast",
       "context": "collection",
@@ -131176,7 +131105,7 @@
       "relation": "indirect_call",
       "confidence": "INFERRED",
       "source_file": "resources/js/support/enums/PermissionEnums.ts",
-      "source_location": "L96",
+      "source_location": "L89",
       "weight": 1.0,
       "_origin": "ast",
       "context": "collection",
@@ -131188,19 +131117,7 @@
       "relation": "indirect_call",
       "confidence": "INFERRED",
       "source_file": "resources/js/support/enums/PermissionEnums.ts",
-      "source_location": "L98",
-      "weight": 1.0,
-      "_origin": "ast",
-      "context": "collection",
-      "source": "resources_js_support_enums_permissionenums",
-      "target": "resources_js_support_enums_permissionenums_returnpermissionenums",
-      "confidence_score": 0.5
-    },
-    {
-      "relation": "indirect_call",
-      "confidence": "INFERRED",
-      "source_file": "resources/js/support/enums/PermissionEnums.ts",
-      "source_location": "L89",
+      "source_location": "L82",
       "weight": 1.0,
       "_origin": "ast",
       "context": "collection",
@@ -131212,7 +131129,7 @@
       "relation": "indirect_call",
       "confidence": "INFERRED",
       "source_file": "resources/js/support/enums/PermissionEnums.ts",
-      "source_location": "L95",
+      "source_location": "L88",
       "weight": 1.0,
       "_origin": "ast",
       "context": "collection",
@@ -131224,7 +131141,7 @@
       "relation": "indirect_call",
       "confidence": "INFERRED",
       "source_file": "resources/js/support/enums/PermissionEnums.ts",
-      "source_location": "L91",
+      "source_location": "L84",
       "weight": 1.0,
       "_origin": "ast",
       "context": "collection",
@@ -131236,7 +131153,7 @@
       "relation": "indirect_call",
       "confidence": "INFERRED",
       "source_file": "resources/js/support/enums/PermissionEnums.ts",
-      "source_location": "L90",
+      "source_location": "L83",
       "weight": 1.0,
       "_origin": "ast",
       "context": "collection",
