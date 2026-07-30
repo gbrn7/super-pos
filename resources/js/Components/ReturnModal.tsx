@@ -46,23 +46,17 @@ export default function ReturnModal({ isOpen, onClose, transaction, onSuccess }:
         if (isOpen && transaction?.id) {
             setQuantities({});
             setReason('');
-            
-            const existing = transaction.details || (transaction as any).transactionDetails || (transaction as any).transaction_details;
-            if (existing && existing.length > 0) {
-                setTxDetails(existing);
-            } else {
-                setLoading(true);
-                const apiUrl = apiShowTransaction(transaction.id).url;
-                axiosInstance
-                    .get<ResponseApi<Transaction>>(apiUrl)
-                    .then((res) => {
-                        if (res.data.success && res.data.data) {
-                            const fetched = res.data.data.details || (res.data.data as any).transactionDetails || (res.data.data as any).transaction_details || [];
-                            setTxDetails(fetched);
-                        }
-                    })
-                    .finally(() => setLoading(false));
-            }
+            setLoading(true);
+            const apiUrl = apiShowTransaction(transaction.id).url;
+            axiosInstance
+                .get<ResponseApi<Transaction>>(apiUrl)
+                .then((res) => {
+                    if (res.data.success && res.data.data) {
+                        const fetched = res.data.data.details || (res.data.data as any).transactionDetails || (res.data.data as any).transaction_details || [];
+                        setTxDetails(fetched);
+                    }
+                })
+                .finally(() => setLoading(false));
         }
     }, [isOpen, transaction?.id]);
 
@@ -81,9 +75,11 @@ export default function ReturnModal({ isOpen, onClose, transaction, onSuccess }:
         });
     };
 
-    const isAllTransactionSelected = details.length > 0 && details.every(
-        (detail) => (quantities[detail.product_id] || 0) === detail.quantity,
-    );
+    const isAllTransactionSelected = details.length > 0 && details.every((detail) => {
+        const maxQty = detail.quantity - (detail.returned_quantity || 0);
+        if (maxQty <= 0) return true;
+        return (quantities[detail.product_id] || 0) === maxQty;
+    });
 
     const handleSelectAllTransaction = () => {
         if (isAllTransactionSelected) {
@@ -91,7 +87,10 @@ export default function ReturnModal({ isOpen, onClose, transaction, onSuccess }:
         } else {
             const allSelected: { [productId: number]: number } = {};
             details.forEach((detail) => {
-                allSelected[detail.product_id] = detail.quantity;
+                const maxQty = detail.quantity - (detail.returned_quantity || 0);
+                if (maxQty > 0) {
+                    allSelected[detail.product_id] = maxQty;
+                }
             });
             setQuantities(allSelected);
         }
@@ -195,11 +194,16 @@ export default function ReturnModal({ isOpen, onClose, transaction, onSuccess }:
                                         details.map((detail) => {
                                             const qty = quantities[detail.product_id] || 0;
                                             const subtotal = qty * Number(detail.price);
-                                            const maxQty = detail.quantity;
+                                            const returnedQty = detail.returned_quantity || 0;
+                                            const maxQty = detail.quantity - returnedQty;
                                             const isMaxSelected = qty === maxQty;
+                                            const isDisabled = maxQty <= 0;
 
                                             return (
-                                                <TableRow key={detail.id}>
+                                                <TableRow 
+                                                    key={detail.id}
+                                                    className={isDisabled ? "opacity-50 bg-muted/20" : ""}
+                                                >
                                                     <TableCell className="font-medium">
                                                         {detail.product_name || detail.product?.name || `Produk #${detail.product_id}`}
                                                     </TableCell>
@@ -207,33 +211,37 @@ export default function ReturnModal({ isOpen, onClose, transaction, onSuccess }:
                                                         {formatRupiah(detail.price)}
                                                     </TableCell>
                                                     <TableCell className="text-center">
-                                                        <div className="flex items-center justify-center gap-1.5">
-                                                            <Input
-                                                                type="number"
-                                                                min="0"
-                                                                max={maxQty}
-                                                                value={qty}
-                                                                onChange={(e) =>
-                                                                    handleQtyChange(
-                                                                        detail.product_id,
-                                                                        parseInt(e.target.value) || 0,
-                                                                        maxQty,
-                                                                    )
-                                                                }
-                                                                className="h-8 w-14 text-center text-xs font-medium"
-                                                            />
-                                                            <span className="text-xs text-muted-foreground whitespace-nowrap">
-                                                                / {maxQty}
-                                                            </span>
-                                                            <Button
-                                                                type="button"
-                                                                variant={isMaxSelected ? "secondary" : "outline"}
-                                                                size="sm"
-                                                                onClick={() => handleSelectAllProduct(detail.product_id, maxQty)}
-                                                                className="h-7 px-2 text-xs font-medium whitespace-nowrap"
-                                                            >
-                                                                {isMaxSelected ? 'Batal' : 'Semua'}
-                                                            </Button>
+                                                        <div className="flex flex-col items-center gap-1">
+                                                            <div className="flex items-center justify-center gap-1.5">
+                                                                <Input
+                                                                    type="number"
+                                                                    min="0"
+                                                                    max={maxQty}
+                                                                    value={qty}
+                                                                    disabled={isDisabled}
+                                                                    onChange={(e) =>
+                                                                        handleQtyChange(
+                                                                            detail.product_id,
+                                                                            parseInt(e.target.value) || 0,
+                                                                            maxQty,
+                                                                        )
+                                                                    }
+                                                                    className="h-8 w-14 text-center text-xs font-medium"
+                                                                />
+                                                                <Button
+                                                                    type="button"
+                                                                    variant={isMaxSelected ? "secondary" : "outline"}
+                                                                    size="sm"
+                                                                    disabled={isDisabled}
+                                                                    onClick={() => handleSelectAllProduct(detail.product_id, maxQty)}
+                                                                    className="h-7 px-2 text-xs font-medium whitespace-nowrap"
+                                                                >
+                                                                    {isMaxSelected ? 'Batal' : 'Semua'}
+                                                                </Button>
+                                                            </div>
+                                                            <div className="text-[10px] text-muted-foreground whitespace-nowrap">
+                                                                Beli: {detail.quantity} | Diretur: {returnedQty} | Sisa: {maxQty}
+                                                            </div>
                                                         </div>
                                                     </TableCell>
                                                     <TableCell className="text-right font-medium text-xs">
