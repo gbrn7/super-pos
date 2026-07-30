@@ -170,7 +170,9 @@ export default function ReturnModal({ isOpen, onClose, transaction, onSuccess }:
                                     disabled={isAllReturned}
                                     className="h-8 text-xs font-semibold"
                                 >
-                                    Pilih Semua Produk
+                                    {isAllReturned 
+                                        ? 'Pilih Semua Produk' 
+                                        : (isAllTransactionSelected ? 'Batal Pilih Semua' : 'Pilih Semua Produk')}
                                 </Button>
                             )}
                         </div>
