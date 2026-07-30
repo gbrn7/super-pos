@@ -156,7 +156,8 @@
             "user_management_menu_label": "Manajemen Pengguna",
             "group_finance": "Keuangan",
             "profit_wallet_menu_label": "Dompet Profit",
-            "capital_wallet_menu_label": "Dompet Modal"
+            "capital_wallet_menu_label": "Dompet Modal",
+            "return_menu_label": "Retur Barang"
         },
         "data_table": {
             "search_component": {
@@ -211,7 +212,8 @@
                 "trigger_btn_label": "Buka Menu",
                 "detail_data_btn": "Detail Data",
                 "edit_data_btn": "Edit Data",
-                "delete_data_btn": "Hapus Data"
+                "delete_data_btn": "Hapus Data",
+                "return_btn": "Retur Barang"
             },
             "no_result": "Tidak ada hasil",
             "row_per_page": "Baris per halaman",

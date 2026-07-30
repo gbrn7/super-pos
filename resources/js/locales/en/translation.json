@@ -156,7 +156,8 @@
             "user_management_menu_label": "User Management",
             "group_finance": "Finance",
             "profit_wallet_menu_label": "Profit Wallet",
-            "capital_wallet_menu_label": "Capital Wallet"
+            "capital_wallet_menu_label": "Capital Wallet",
+            "return_menu_label": "Product Returns"
         },
         "data_table": {
             "search_component": {
@@ -211,7 +212,8 @@
                 "trigger_btn_label": "Open Menu",
                 "detail_data_btn": "Detail Data",
                 "edit_data_btn": "Edit Data",
-                "delete_data_btn": "Delete Data"
+                "delete_data_btn": "Delete Data",
+                "return_btn": "Return Items"
             },
             "no_result": "No results found",
             "row_per_page": "Rows per page",
