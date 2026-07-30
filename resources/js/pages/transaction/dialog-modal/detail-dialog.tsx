@@ -243,6 +243,12 @@ export function DetailDialog({
                                     'Struk / Nota',
                                 )}
                             </TabsTrigger>
+                            <TabsTrigger value="returns">
+                                {t(
+                                    'page.transaction.dialog_modal.detail_dialog.tab_returns',
+                                    'Barang Diretur',
+                                )}
+                            </TabsTrigger>
                         </TabsList>
                         <TabsContent
                             value="details"
@@ -750,6 +756,64 @@ export function DetailDialog({
                                     }
                                     transaction={currentTransaction}
                                 />
+                            </div>
+                        </TabsContent>
+                        <TabsContent
+                            value="returns"
+                            className="space-y-4 border-none p-0 pt-4 outline-none"
+                        >
+                            <div className="w-full overflow-x-auto rounded-md border">
+                                <Table>
+                                    <TableHeader className="bg-muted/50">
+                                        <TableRow>
+                                            <TableHead>Produk</TableHead>
+                                            <TableHead className="text-center">Jumlah</TableHead>
+                                            <TableHead className="text-right">Harga Satuan</TableHead>
+                                            <TableHead className="text-right">Total Refund</TableHead>
+                                            <TableHead>Alasan</TableHead>
+                                            <TableHead className="text-right">Waktu Retur</TableHead>
+                                        </TableRow>
+                                    </TableHeader>
+                                    <TableBody>
+                                        {currentTransaction.returns && currentTransaction.returns.length > 0 ? (
+                                            currentTransaction.returns.flatMap((ret: any) => 
+                                                (ret.details || []).map((detail: any) => ({
+                                                    ...detail,
+                                                    return_number: ret.return_number,
+                                                    reason: ret.reason,
+                                                    created_at: ret.created_at
+                                                }))
+                                            ).map((detail: any, idx: number) => (
+                                                <TableRow key={`${detail.id}-${idx}`}>
+                                                    <TableCell className="font-medium">
+                                                        {detail.product_name || 'Produk'}
+                                                    </TableCell>
+                                                    <TableCell className="text-center font-semibold">
+                                                        {detail.quantity}
+                                                    </TableCell>
+                                                    <TableCell className="text-right text-xs">
+                                                        {formatRupiah(detail.price_per_unit)}
+                                                    </TableCell>
+                                                    <TableCell className="text-right font-medium text-xs text-rose-600 dark:text-rose-400">
+                                                        {formatRupiah(detail.subtotal)}
+                                                    </TableCell>
+                                                    <TableCell className="text-xs text-muted-foreground max-w-40 truncate" title={detail.reason}>
+                                                        {detail.reason || '-'}
+                                                    </TableCell>
+                                                    <TableCell className="text-right text-[10px] text-muted-foreground whitespace-nowrap">
+                                                        {detail.created_at ? new Date(detail.created_at * 1000).toLocaleString('id-ID', { dateStyle: 'short', timeStyle: 'short' }) : '-'}
+                                                    </TableCell>
+                                                </TableRow>
+                                            ))
+                                        ) : (
+                                            <TableRow>
+                                                <TableCell colSpan={6} className="h-16 text-center text-muted-foreground text-xs">
+                                                    Belum ada barang yang diretur untuk transaksi ini.
+                                                </TableCell>
+                                            </TableRow>
+                                        )}
+                                    </TableBody>
+                                </Table>
                             </div>
                         </TabsContent>
                     </Tabs>
