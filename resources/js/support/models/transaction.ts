@@ -25,6 +25,7 @@ export interface Transaction {
     payment_amount: number;
     change_amount: number;
     details?: TransactionDetail[];
+    returns?: any[];
     created_at: number;
     updated_at: number;
 }

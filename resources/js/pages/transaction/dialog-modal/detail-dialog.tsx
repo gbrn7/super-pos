@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { CreditCard, Calendar, User, Printer, ShoppingBag, Package, Hash, Wallet, TrendingUp, Landmark, PercentCircle } from 'lucide-react';
+import { CreditCard, Calendar, User, Printer, ShoppingBag, Package, Hash, Wallet, TrendingUp, Landmark, PercentCircle, RotateCcw } from 'lucide-react';
 import { useMemo, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Pie, PieChart, Cell, Label } from 'recharts';
@@ -141,6 +141,31 @@ export function DetailDialog({
     );
     const totalAllDiscount = totalItemDiscount + discountAmount;
     const totalProfit = netSubtotal - totalCost - discountAmount;
+    const totalRefund = useMemo(() => {
+        if (!currentTransaction.returns) return 0;
+        return currentTransaction.returns.reduce(
+            (sum: number, ret: any) => sum + Number(ret.total_refund_amount || 0),
+            0,
+        );
+    }, [currentTransaction.returns]);
+    const totalRefundQuantity = useMemo(() => {
+        if (!currentTransaction.returns) return 0;
+        return currentTransaction.returns.reduce(
+            (sum: number, ret: any) => {
+                const detailsSum = (ret.details || []).reduce(
+                    (dSum: number, d: any) => dSum + Number(d.quantity || 0),
+                    0
+                );
+                return sum + detailsSum;
+            },
+            0,
+        );
+    }, [currentTransaction.returns]);
+    const profitMarginPercentage = useMemo(() => {
+        const totalAmount = Number(currentTransaction.total_amount || 0);
+        if (totalAmount <= 0) return 0;
+        return (totalProfit / totalAmount) * 100;
+    }, [totalProfit, currentTransaction.total_amount]);
 
     const pieData = useMemo(() => {
         if (!details.length) return [];
@@ -392,21 +417,21 @@ export function DetailDialog({
                                         </CardContent>
                                     </Card>
 
-                                    {/* 4. Total Diskon */}
+                                    {/* Persentase Margin Keuntungan */}
                                     <Card className="gap-2 py-3">
                                         <CardContent className="flex items-center gap-3 px-4">
-                                            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-rose-500/10">
-                                                <PercentCircle className="h-4.5 w-4.5 text-rose-600 dark:text-rose-400" />
+                                            <div className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-lg ${profitMarginPercentage >= 0 ? 'bg-teal-500/10' : 'bg-red-500/10'}`}>
+                                                <TrendingUp className={`h-4.5 w-4.5 ${profitMarginPercentage >= 0 ? 'text-teal-600 dark:text-teal-400' : 'text-red-600 dark:text-red-400'}`} />
                                             </div>
                                             <div className="min-w-0">
                                                 <p className="truncate text-xs text-muted-foreground">
-                                                    {t('page.transaction.dialog_modal.detail_dialog.total_discount_card', 'Total Diskon')}
+                                                    {t('page.transaction.dialog_modal.detail_dialog.profit_margin_percentage_card', 'Persentase Margin')}
                                                 </p>
                                                 {loading ? (
                                                     <Skeleton className="mt-1 h-5 w-16" />
                                                 ) : (
-                                                    <p className="text-base font-bold tabular-nums text-rose-600 dark:text-rose-400">
-                                                        {formatRupiah(totalAllDiscount)}
+                                                    <p className={`text-base font-bold tabular-nums ${profitMarginPercentage >= 0 ? 'text-teal-600 dark:text-teal-400' : 'text-red-600 dark:text-red-400'}`}>
+                                                        {profitMarginPercentage > 0 ? `+${profitMarginPercentage.toFixed(1)}%` : `${profitMarginPercentage.toFixed(1)}%`}
                                                     </p>
                                                 )}
                                             </div>
@@ -449,6 +474,69 @@ export function DetailDialog({
                                                 ) : (
                                                     <p className="text-lg font-bold tabular-nums text-blue-600 dark:text-blue-400">
                                                         {totalQuantity}
+                                                    </p>
+                                                )}
+                                            </div>
+                                        </CardContent>
+                                    </Card>
+
+                                    {/* 4. Total Diskon */}
+                                    <Card className="gap-2 py-3">
+                                        <CardContent className="flex items-center gap-3 px-4">
+                                            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-rose-500/10">
+                                                <PercentCircle className="h-4.5 w-4.5 text-rose-600 dark:text-rose-400" />
+                                            </div>
+                                            <div className="min-w-0">
+                                                <p className="truncate text-xs text-muted-foreground">
+                                                    {t('page.transaction.dialog_modal.detail_dialog.total_discount_card', 'Total Diskon')}
+                                                </p>
+                                                {loading ? (
+                                                    <Skeleton className="mt-1 h-5 w-16" />
+                                                ) : (
+                                                    <p className="text-base font-bold tabular-nums text-rose-600 dark:text-rose-400">
+                                                        {formatRupiah(totalAllDiscount)}
+                                                    </p>
+                                                )}
+                                            </div>
+                                        </CardContent>
+                                    </Card>
+
+                                    {/* Total Retur */}
+                                    <Card className="gap-2 py-3">
+                                        <CardContent className="flex items-center gap-3 px-4">
+                                            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-orange-500/10">
+                                                <RotateCcw className="h-4.5 w-4.5 text-orange-600 dark:text-orange-400" />
+                                            </div>
+                                            <div className="min-w-0">
+                                                <p className="truncate text-xs text-muted-foreground">
+                                                    {t('page.transaction.dialog_modal.detail_dialog.total_refund_card', 'Total Nominal Retur')}
+                                                </p>
+                                                {loading ? (
+                                                    <Skeleton className="mt-1 h-5 w-16" />
+                                                ) : (
+                                                    <p className="text-base font-bold tabular-nums text-orange-600 dark:text-orange-400">
+                                                        {formatRupiah(totalRefund)}
+                                                    </p>
+                                                )}
+                                            </div>
+                                        </CardContent>
+                                    </Card>
+
+                                    {/* Total Kuantitas Retur */}
+                                    <Card className="gap-2 py-3">
+                                        <CardContent className="flex items-center gap-3 px-4">
+                                            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-orange-500/10">
+                                                <Hash className="h-4.5 w-4.5 text-orange-600 dark:text-orange-400" />
+                                            </div>
+                                            <div className="min-w-0">
+                                                <p className="truncate text-xs text-muted-foreground">
+                                                    {t('page.transaction.dialog_modal.detail_dialog.total_refund_qty_card', 'Total Barang Diretur')}
+                                                </p>
+                                                {loading ? (
+                                                    <Skeleton className="mt-1 h-5 w-10" />
+                                                ) : (
+                                                    <p className="text-lg font-bold tabular-nums text-orange-600 dark:text-orange-400">
+                                                        {totalRefundQuantity}
                                                     </p>
                                                 )}
                                             </div>
@@ -711,6 +799,20 @@ export function DetailDialog({
                                         </span>
                                     )}
                                 </div>
+                                {totalRefund > 0 && (
+                                    <div className="flex items-center justify-between text-sm text-orange-600 dark:text-orange-400">
+                                        <span className="font-medium">
+                                            {t('page.transaction.dialog_modal.detail_dialog.total_refund', 'Total Nominal Retur')}
+                                        </span>
+                                        {loading ? (
+                                            <Skeleton className="h-5 w-20" />
+                                        ) : (
+                                            <span className="font-bold">
+                                                - {formatRupiah(totalRefund)}
+                                            </span>
+                                        )}
+                                    </div>
+                                )}
                                 <div className="flex items-center justify-between text-sm">
                                     <span className="text-muted-foreground">
                                         {t('page.transaction.dialog_modal.detail_dialog.payment_amount', 'Nominal Pembayaran')}
@@ -762,6 +864,26 @@ export function DetailDialog({
                             value="returns"
                             className="space-y-4 border-none p-0 pt-4 outline-none"
                         >
+                            {totalRefund > 0 && (
+                                <div className="flex items-center justify-between rounded-lg border border-amber-200 bg-amber-50 p-4 dark:border-amber-900/50 dark:bg-amber-950/20">
+                                    <div className="flex items-center gap-3">
+                                        <div className="rounded-full bg-amber-100 p-2 dark:bg-amber-900/30">
+                                            <RotateCcw className="h-5 w-5 text-amber-600 dark:text-amber-400" />
+                                        </div>
+                                        <div>
+                                            <h5 className="font-semibold text-amber-900 dark:text-amber-200">
+                                                {t('page.transaction.dialog_modal.detail_dialog.returns_total_refund_title', 'Total Nominal Retur')}
+                                            </h5>
+                                            <p className="text-xs text-amber-700 dark:text-amber-400">
+                                                {t('page.transaction.dialog_modal.detail_dialog.returns_total_refund_desc', 'Total {{count}} barang dikembalikan untuk transaksi ini', { count: totalRefundQuantity })}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <span className="text-xl font-bold text-amber-600 dark:text-amber-400 font-mono">
+                                        {formatRupiah(totalRefund)}
+                                    </span>
+                                </div>
+                            )}
                             <div className="w-full overflow-x-auto rounded-md border">
                                 <Table>
                                     <TableHeader className="bg-muted/50">
