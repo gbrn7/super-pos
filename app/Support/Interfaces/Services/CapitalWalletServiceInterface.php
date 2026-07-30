@@ -52,4 +52,9 @@ interface CapitalWalletServiceInterface
      * Get transaction summary matching filters.
      */
     public function getTransactionSummary(GetCapitalWalletTransactionReqModel $request): array;
+
+    /**
+     * Record capital deduction due to product return.
+     */
+    public function recordReturnCapitalDeduction(float $amount, int $returnId): CapitalWalletTransaction;
 }

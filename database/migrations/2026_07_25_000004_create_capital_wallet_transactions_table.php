@@ -13,7 +13,7 @@ return new class extends Migration
             $table->foreignId('capital_wallet_id')->constrained('capital_wallets')->cascadeOnDelete();
             $table->decimal('amount', 15, 2);
             $table->enum('type', ['in', 'out']);
-            $table->enum('transaction_type', ['sales_capital_recovery', 'reinvestment', 'capital_injection', 'capital_drawdown', 'product_purchase']);
+            $table->string('transaction_type');
             $table->nullableMorphs('reference');
             $table->decimal('balance_before', 15, 2);
             $table->decimal('balance_after', 15, 2);

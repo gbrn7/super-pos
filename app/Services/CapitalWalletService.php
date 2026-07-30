@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\CapitalWallet;
 use App\Models\CapitalWalletTransaction;
+use App\Models\ProductReturn;
 use App\Models\ProfitWalletTransaction;
 use App\Models\Transaction;
 use App\Support\Enums\CapitalWalletStatusEnums;
@@ -240,6 +241,41 @@ class CapitalWalletService implements CapitalWalletServiceInterface
             $wallet = $this->getOrCreateWallet();
 
             return $this->capitalWalletRepository->getTransactionSummary($request, $wallet);
+        } catch (\Throwable $th) {
+            throw CheckException::Check($th);
+        }
+    }
+
+    public function recordReturnCapitalDeduction(float $amount, int $returnId): CapitalWalletTransaction
+    {
+        try {
+            return DB::transaction(function () use ($amount, $returnId) {
+                if ($amount <= 0) {
+                    throw new Exception(trans('message.error.capital_wallet.amount_must_be_greater_than_zero'), Response::HTTP_UNPROCESSABLE_ENTITY);
+                }
+
+                $wallet = $this->getOrCreateWallet();
+
+                $before = (float) $wallet->balance;
+                $after = $before - $amount;
+
+                $transaction = $this->capitalWalletRepository->createTransaction([
+                    'capital_wallet_id' => $wallet->id,
+                    'amount' => $amount,
+                    'type' => CapitalWalletTransactionDirectionEnums::OUT->value,
+                    'transaction_type' => CapitalWalletTransactionTypeEnums::SALES_RETURN_DEDUCTION->value,
+                    'reference_id' => $returnId,
+                    'reference_type' => ProductReturn::class,
+                    'balance_before' => $before,
+                    'balance_after' => $after,
+                    'notes' => trans('message.success.capital_wallet.return_notes', ['id' => $returnId]),
+                ]);
+
+                $outflowUpdate = (float) $wallet->total_outflow + $amount;
+                $this->capitalWalletRepository->updateWalletBalance($wallet, $after, (float) $wallet->total_inflow, $outflowUpdate);
+
+                return $transaction;
+            });
         } catch (\Throwable $th) {
             throw CheckException::Check($th);
         }

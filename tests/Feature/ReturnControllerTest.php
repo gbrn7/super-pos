@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Permission;
 use App\Models\Product;
 use App\Models\ProductReturn;
 use App\Models\Transaction;
@@ -7,7 +8,6 @@ use App\Models\TransactionDetail;
 use App\Models\User;
 use App\Support\Enums\ReturnPermissionEnums;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Spatie\Permission\Models\Permission;
 
 uses(RefreshDatabase::class);
 

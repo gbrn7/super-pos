@@ -15,10 +15,12 @@ return [
         'store_settings_updated' => 'Pengaturan toko berhasil diperbarui',
         'profit_wallet' => [
             'sales_notes' => 'Penjualan dari POS kasir',
+            'return_notes' => 'Pemotongan karena retur produk ID: :id',
         ],
         'capital_wallet' => [
             'sales_recovery_notes' => 'Pemulihan modal dari penjualan POS',
             'reinvestment_notes' => 'Reinvestasi dari dompet profit',
+            'return_notes' => 'Pemotongan modal karena retur produk ID: :id',
         ],
         'returns' => [
             'success_get' => 'Berhasil mengambil data retur.',

@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\ProductReturn;
 use App\Models\ProfitWallet;
 use App\Models\ProfitWalletTransaction;
 use App\Models\Transaction;
@@ -171,6 +172,41 @@ class ProfitWalletService implements ProfitWalletServiceInterface
 
                 // Trigger automatic reinvestment into CapitalWallet:
                 $this->capitalWalletService->recordReinvestment($request->amount, $transaction->id);
+
+                return $transaction;
+            });
+        } catch (\Throwable $th) {
+            throw CheckException::Check($th);
+        }
+    }
+
+    public function recordReturnProfitDeduction(float $amount, int $returnId): ProfitWalletTransaction
+    {
+        try {
+            return DB::transaction(function () use ($amount, $returnId) {
+                if ($amount <= 0) {
+                    throw new Exception(trans('message.error.profit_wallet.amount_must_be_greater_than_zero'), Response::HTTP_UNPROCESSABLE_ENTITY);
+                }
+
+                $wallet = $this->getOrCreateWallet();
+
+                $before = (float) $wallet->balance;
+                $after = $before - $amount;
+
+                $transaction = $this->profitWalletRepository->createTransaction([
+                    'profit_wallet_id' => $wallet->id,
+                    'amount' => $amount,
+                    'type' => ProfitWalletTransactionDirectionEnums::OUT->value,
+                    'transaction_type' => ProfitWalletTransactionTypeEnums::SALES_RETURN_DEDUCTION->value,
+                    'reference_id' => $returnId,
+                    'reference_type' => ProductReturn::class,
+                    'balance_before' => $before,
+                    'balance_after' => $after,
+                    'notes' => trans('message.success.profit_wallet.return_notes', ['id' => $returnId]),
+                ]);
+
+                $outflowUpdate = (float) $wallet->total_outflow + $amount;
+                $this->profitWalletRepository->updateWalletBalance($wallet, $after, (float) $wallet->total_inflow, $outflowUpdate);
 
                 return $transaction;
             });

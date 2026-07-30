@@ -1060,8 +1060,8 @@
     "semantic_hash": "83c7c8fb076f9ef11c9ce6322b5fdac1"
   },
   "lang/en/message.php": {
-    "mtime": 1785253012.2723742,
-    "ast_hash": "04498abc483ef826497d421a2e6aa9a9",
+    "mtime": 1785426390.1692655,
+    "ast_hash": "6298d9e21a812d1ec9be8db81f943a4b",
     "semantic_hash": ""
   },
   "lang/en/validation.php": {
@@ -1070,8 +1070,8 @@
     "semantic_hash": "dc40dd7c951e98694618a66aeb33a0ad"
   },
   "lang/id/message.php": {
-    "mtime": 1785253006.2892644,
-    "ast_hash": "55f7b4d74e69cd2c129577d3f66854e7",
+    "mtime": 1785426399.1034245,
+    "ast_hash": "55a3553ae69378f0b2fe32d810faa7fe",
     "semantic_hash": ""
   },
   "lang/id/validation.php": {
@@ -1135,8 +1135,8 @@
     "semantic_hash": "0d3a837ac67b8969159f68d3d4310faa"
   },
   "resources/js/components/app-sidebar.tsx": {
-    "mtime": 1785249993.7027357,
-    "ast_hash": "fe36fed4ab49062db3fd3991f7fb0f05",
+    "mtime": 1785424478.6879618,
+    "ast_hash": "5e52ee86bc153ac124592f44d89cca11",
     "semantic_hash": ""
   },
   "resources/js/components/appearance-tabs.tsx": {
@@ -1980,8 +1980,8 @@
     "semantic_hash": ""
   },
   "resources/js/pages/transaction/index.tsx": {
-    "mtime": 1785251354.4058619,
-    "ast_hash": "2a0d4e17f2392f2612ebc049cd4b60e7",
+    "mtime": 1785424548.4909315,
+    "ast_hash": "ab63a1d7919ae371fd07a596e656b564",
     "semantic_hash": ""
   },
   "resources/js/pages/unit/columns.tsx": {
@@ -2075,8 +2075,8 @@
     "semantic_hash": "e8de22d3cfb14be6110a4dd1c81dadf0"
   },
   "resources/js/support/enums/PermissionEnums.ts": {
-    "mtime": 1784995039.6073308,
-    "ast_hash": "61178488edbc3fff6c3ece4e920a82e1",
+    "mtime": 1785424473.6435392,
+    "ast_hash": "e69168c0f63ad58fb960a2eb075661e0",
     "semantic_hash": ""
   },
   "resources/js/support/enums/RoleEnums.ts": {
@@ -2795,8 +2795,8 @@
     "semantic_hash": ""
   },
   "database/migrations/2026_07_25_000002_create_profit_wallet_transactions_table.php": {
-    "mtime": 1785072942.6322546,
-    "ast_hash": "83ece1ca71de0b446457986a29639364",
+    "mtime": 1785426128.2289371,
+    "ast_hash": "c5fffcac046c92ddc93ed9e2424876ec",
     "semantic_hash": ""
   },
   "tests/Feature/ProfitWallet/ProfitWalletMigrationTest.php": {
@@ -2830,8 +2830,8 @@
     "semantic_hash": ""
   },
   "app/Services/ProfitWalletService.php": {
-    "mtime": 1785076793.1754408,
-    "ast_hash": "0d8b576078c97f55e17e8d3184c6b516",
+    "mtime": 1785426416.9400322,
+    "ast_hash": "416cd2b2242cc573d02c85375970783d",
     "semantic_hash": ""
   },
   "app/Support/Interfaces/Repositories/ProfitWalletRepositoryInterface.php": {
@@ -2840,8 +2840,8 @@
     "semantic_hash": ""
   },
   "app/Support/Interfaces/Services/ProfitWalletServiceInterface.php": {
-    "mtime": 1784943912.1594338,
-    "ast_hash": "61c66e23a498d7b92008c7e7dc4832a6",
+    "mtime": 1785426128.228313,
+    "ast_hash": "4b3a343f9cef259973c628762b45d8ae",
     "semantic_hash": ""
   },
   "tests/Feature/ProfitWallet/ProfitWalletRepositoryTest.php": {
@@ -2940,8 +2940,8 @@
     "semantic_hash": ""
   },
   "app/Support/Enums/ProfitWalletTransactionTypeEnums.php": {
-    "mtime": 1784944585.0361671,
-    "ast_hash": "751789553000a0533d094077bc50a3c4",
+    "mtime": 1785426128.2266715,
+    "ast_hash": "4ce4837835eda8db2c25364c1c33e288",
     "semantic_hash": ""
   },
   "app/Http/Controllers/ProfitWalletController.php": {
@@ -3010,8 +3010,8 @@
     "semantic_hash": ""
   },
   "database/migrations/2026_07_25_000004_create_capital_wallet_transactions_table.php": {
-    "mtime": 1785072949.760952,
-    "ast_hash": "c227a8e8c4967213edfbaec7766686cd",
+    "mtime": 1785426128.2289371,
+    "ast_hash": "f08d4b7c3be413f4b443af51f8d41dd3",
     "semantic_hash": ""
   },
   "tests/Feature/CapitalWallet/CapitalWalletPermissionTest.php": {
@@ -3045,8 +3045,8 @@
     "semantic_hash": ""
   },
   "app/Services/CapitalWalletService.php": {
-    "mtime": 1784993374.995839,
-    "ast_hash": "08db6032458513f37f7d69b9c5b9c399",
+    "mtime": 1785426411.2989917,
+    "ast_hash": "722856c9223728fdbad50ae76217818f",
     "semantic_hash": ""
   },
   "app/Support/Enums/CapitalWalletStatusEnums.php": {
@@ -3060,8 +3060,8 @@
     "semantic_hash": ""
   },
   "app/Support/Enums/CapitalWalletTransactionTypeEnums.php": {
-    "mtime": 1784992800.6003032,
-    "ast_hash": "ff2afc9fc6aadaab7a2b943865440225",
+    "mtime": 1785426128.226037,
+    "ast_hash": "17e969ea93412e9274093d7b2d789a7f",
     "semantic_hash": ""
   },
   "app/Support/Interfaces/Repositories/CapitalWalletRepositoryInterface.php": {
@@ -3070,8 +3070,8 @@
     "semantic_hash": ""
   },
   "app/Support/Interfaces/Services/CapitalWalletServiceInterface.php": {
-    "mtime": 1784993375.2291617,
-    "ast_hash": "779d123e631c00ec7f08e59520ef8a63",
+    "mtime": 1785426128.227634,
+    "ast_hash": "456cd243ddaff36d144c5324c3d97bf5",
     "semantic_hash": ""
   },
   "app/Support/Models/CapitalWallet/GetCapitalWalletTransactionReqModel.php": {
@@ -3255,8 +3255,8 @@
     "semantic_hash": ""
   },
   "app/Http/Resources/ProductReturnResource.php": {
-    "mtime": 1785253306.9009383,
-    "ast_hash": "4cab2606ca80c8e7042a2c11b753b4a3",
+    "mtime": 1785426964.1121075,
+    "ast_hash": "1a8dec001a60a078ca9de98c65aeff0a",
     "semantic_hash": ""
   },
   "app/Models/ProductReturn.php": {
@@ -3275,8 +3275,8 @@
     "semantic_hash": ""
   },
   "app/Services/ReturnService.php": {
-    "mtime": 1785253114.863286,
-    "ast_hash": "6f31733a7760cd4fd047cbe9676afd1b",
+    "mtime": 1785426128.2252932,
+    "ast_hash": "2921ff7984fdbace9490e75764f4ade1",
     "semantic_hash": ""
   },
   "app/Support/Enums/ReturnPermissionEnums.php": {
@@ -3330,13 +3330,13 @@
     "semantic_hash": ""
   },
   "tests/Feature/ReturnControllerTest.php": {
-    "mtime": 1785424062.4262195,
-    "ast_hash": "e9219df6a4e76ea23b7d79faf1e9fc5a",
+    "mtime": 1785426423.7690299,
+    "ast_hash": "08f07dc0615d0aa36be309081c2a3ae6",
     "semantic_hash": ""
   },
   "tests/Feature/ReturnServiceTest.php": {
-    "mtime": 1785253143.539528,
-    "ast_hash": "5b8aa962495c6234823128cdcbab76f7",
+    "mtime": 1785426423.7207916,
+    "ast_hash": "0700223c03d12d2538b01116867d5e4e",
     "semantic_hash": ""
   },
   "tests/Unit/ProductReturnTest.php": {
@@ -3362,6 +3362,11 @@
   "docs/superpowers/specs/2026-07-28-product-return-design.md": {
     "mtime": 1785249356.533151,
     "ast_hash": "b00c82abbd55c5a04c87c5ae4b74a938",
+    "semantic_hash": ""
+  },
+  "docs/superpowers/plans/2026-07-30-return-wallet-adjustments-plan.md": {
+    "mtime": 1785425370.4197624,
+    "ast_hash": "d17df0e72b7f40fe2874d8fca81440df",
     "semantic_hash": ""
   }
 }

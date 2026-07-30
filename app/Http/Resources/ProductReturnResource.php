@@ -19,8 +19,14 @@ class ProductReturnResource extends JsonResource
             'return_number' => $this->return_number,
             'transaction_id' => $this->transaction_id,
             'invoice_number' => $this->transaction?->invoice_number,
+            'transaction' => $this->transaction ? [
+                'invoice_number' => $this->transaction->invoice_number,
+            ] : null,
             'user_id' => $this->user_id,
             'user_name' => $this->user?->name,
+            'user' => $this->user ? [
+                'name' => $this->user->name,
+            ] : null,
             'total_refund_amount' => $this->total_refund_amount,
             'reason' => $this->reason,
             'created_at' => $this->created_at ? $this->created_at->timestamp : null,

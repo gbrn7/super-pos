@@ -8,6 +8,8 @@ use App\Models\User;
 use App\Support\Interfaces\Repositories\ProductRepositoryInterface;
 use App\Support\Interfaces\Repositories\ReturnRepositoryInterface;
 use App\Support\Interfaces\Repositories\TransactionRepositoryInterface;
+use App\Support\Interfaces\Services\CapitalWalletServiceInterface;
+use App\Support\Interfaces\Services\ProfitWalletServiceInterface;
 use App\Support\Interfaces\Services\ReturnServiceInterface;
 use App\Support\Models\ProductReturn\GetProductReturnReqModel;
 use App\Support\Utils\CheckException;
@@ -24,7 +26,9 @@ class ReturnService implements ReturnServiceInterface
     public function __construct(
         protected ReturnRepositoryInterface $returnRepository,
         protected ProductRepositoryInterface $productRepository,
-        protected TransactionRepositoryInterface $transactionRepository
+        protected TransactionRepositoryInterface $transactionRepository,
+        protected CapitalWalletServiceInterface $capitalWalletService,
+        protected ProfitWalletServiceInterface $profitWalletService
     ) {}
 
     public function getAll(GetProductReturnReqModel $request): Paginator|Collection
@@ -115,6 +119,9 @@ class ReturnService implements ReturnServiceInterface
                     'reason' => $reason,
                 ]);
 
+                $totalCapitalDeduction = 0;
+                $totalProfitDeduction = 0;
+
                 foreach ($returnDetailsData as $detail) {
                     $this->returnRepository->createDetail([
                         'return_id' => $returnModel->id,
@@ -124,11 +131,29 @@ class ReturnService implements ReturnServiceInterface
                         'subtotal' => $detail['subtotal'],
                     ]);
 
+                    // Get cost price from original transaction details
+                    $txDetail = $transaction->transactionDetails->where('product_id', $detail['product_id'])->first();
+                    $costPrice = $txDetail ? (float) $txDetail->cost_price : 0.0;
+
+                    $capitalCost = $detail['quantity'] * $costPrice;
+                    $profit = $detail['subtotal'] - $capitalCost;
+
+                    $totalCapitalDeduction += $capitalCost;
+                    $totalProfitDeduction += $profit;
+
                     // Restore Product Stock via ProductRepositoryInterface
                     $productObj = $this->productRepository->getById($detail['product_id']);
                     if ($productObj) {
                         $this->productRepository->incrementStock($productObj, $detail['quantity']);
                     }
+                }
+
+                if ($totalCapitalDeduction > 0) {
+                    $this->capitalWalletService->recordReturnCapitalDeduction($totalCapitalDeduction, $returnModel->id);
+                }
+
+                if ($totalProfitDeduction > 0) {
+                    $this->profitWalletService->recordReturnProfitDeduction($totalProfitDeduction, $returnModel->id);
                 }
 
                 return $returnModel;

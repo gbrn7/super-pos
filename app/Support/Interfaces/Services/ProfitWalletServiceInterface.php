@@ -41,4 +41,9 @@ interface ProfitWalletServiceInterface
      * Withdraw money to reinvest as capital.
      */
     public function withdrawCapital(WithdrawCapitalProfitWalletReqModel $request): ProfitWalletTransaction;
+
+    /**
+     * Record profit deduction due to product return.
+     */
+    public function recordReturnProfitDeduction(float $amount, int $returnId): ProfitWalletTransaction;
 }

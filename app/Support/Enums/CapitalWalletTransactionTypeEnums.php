@@ -9,4 +9,5 @@ enum CapitalWalletTransactionTypeEnums: string
     case CAPITAL_INJECTION = 'capital_injection';
     case CAPITAL_DRAWDOWN = 'capital_drawdown';
     case PRODUCT_PURCHASE = 'product_purchase';
+    case SALES_RETURN_DEDUCTION = 'sales_return_deduction';
 }
