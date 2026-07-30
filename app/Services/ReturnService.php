@@ -145,6 +145,7 @@ class ReturnService implements ReturnServiceInterface
                     $productObj = $this->productRepository->getById($detail['product_id']);
                     if ($productObj) {
                         $this->productRepository->incrementStock($productObj, $detail['quantity']);
+                        $this->productRepository->decrementSoldQuantity($productObj, $detail['quantity']);
                     }
                 }
 

@@ -162,4 +162,9 @@ class ProductRepository implements ProductRepositoryInterface
     {
         return (bool) $product->increment('sold_quantity', $quantity);
     }
+
+    public function decrementSoldQuantity(Product $product, int $quantity = 1): bool
+    {
+        return (bool) $product->decrement('sold_quantity', $quantity);
+    }
 }

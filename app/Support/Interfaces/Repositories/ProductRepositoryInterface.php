@@ -88,4 +88,9 @@ interface ProductRepositoryInterface
      * Increment sold quantity of a product.
      */
     public function incrementSoldQuantity(Product $product, int $quantity = 1): bool;
+
+    /**
+     * Decrement sold quantity of a product.
+     */
+    public function decrementSoldQuantity(Product $product, int $quantity = 1): bool;
 }
