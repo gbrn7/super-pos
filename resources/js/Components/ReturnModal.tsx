@@ -166,7 +166,7 @@ export default function ReturnModal({ isOpen, onClose, transaction, onSuccess }:
                                 >
                                     {isAllTransactionSelected
                                         ? 'Batal Pilih Semua'
-                                        : 'Pilih Semua Transaksi'}
+                                        : 'Pilih Semua Produk'}
                                 </Button>
                             )}
                         </div>
