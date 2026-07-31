@@ -1,11 +1,25 @@
 <?php
 
 use App\Models\Category;
+use App\Models\Permission;
+use App\Models\Role;
 use App\Models\User;
+use App\Support\Enums\CategoryPermissionEnums;
+use App\Support\Enums\RoleEnums;
 
 function getUser()
 {
-    return User::factory()->create();
+    $role = Role::firstOrCreate(['name' => RoleEnums::SUPER_ADMIN->value]);
+    $permissions = CategoryPermissionEnums::cases();
+    foreach ($permissions as $permission) {
+        $perm = Permission::firstOrCreate(['name' => $permission->value]);
+        $role->givePermissionTo($perm);
+    }
+
+    $user = User::factory()->create();
+    $user->assignRole($role);
+
+    return $user;
 }
 
 test('category page is displayed', function () {

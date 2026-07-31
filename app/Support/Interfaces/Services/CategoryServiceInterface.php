@@ -7,6 +7,7 @@ use App\Support\Models\Category\GetCategoryReqModel;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Collection;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 interface CategoryServiceInterface
 {
@@ -44,4 +45,9 @@ interface CategoryServiceInterface
      * Import categories by excel file.
      */
     public function importExcel(UploadedFile $file): int;
+
+    /**
+     * Export categories to excel file.
+     */
+    public function exportExcel(): BinaryFileResponse;
 }

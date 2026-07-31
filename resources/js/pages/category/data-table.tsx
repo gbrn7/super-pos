@@ -46,6 +46,7 @@ import { CreateDialog } from './dialog-modal/create-dialog';
 import { BulkDeleteDialog } from './dialog-modal/bulk-delete-dialog';
 import type { Category } from '@/support/models/category';
 import { ImportExcelDialog } from './dialog-modal/import-excel-dialog';
+import { ExportDropdownMenu } from './export-data-menu/export-dropdown-menu';
 import { useTranslation } from 'react-i18next';
 import { sprintf } from 'sprintf-js';
 import { DetailDialog } from './dialog-modal/detail-dialog';
@@ -174,6 +175,9 @@ export function DataTable<TData, TValue>({
                     )}
                     <Can permission={PERMISSIONENUMS.CATEGORY.CREATE}>
                         <ImportExcelDialog onSuccess={onRefresh} />
+                    </Can>
+                    <Can permission={PERMISSIONENUMS.CATEGORY.READ}>
+                        <ExportDropdownMenu data={data} />
                     </Can>
                     <Can permission={PERMISSIONENUMS.CATEGORY.DELETE}>
                         <BulkDeleteDialog

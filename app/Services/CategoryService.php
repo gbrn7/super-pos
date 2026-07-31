@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Exports\CategoryExport;
 use App\Imports\CategoryImport;
 use App\Models\Category;
 use App\Support\Constants\ErrorCode;
@@ -16,6 +17,7 @@ use Illuminate\Http\Response;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Facades\Excel;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class CategoryService implements CategoryServiceInterface
 {
@@ -146,6 +148,18 @@ class CategoryService implements CategoryServiceInterface
                 $th = new Exception(trans('message.error.duplicate_data_error_import'), Response::HTTP_INTERNAL_SERVER_ERROR);
             }
 
+            throw CheckException::Check($th);
+        }
+    }
+
+    public function exportExcel(): BinaryFileResponse
+    {
+        try {
+            set_time_limit(600);
+            ini_set('memory_limit', '512M');
+
+            return Excel::download(new CategoryExport, 'categories-export.xlsx');
+        } catch (\Throwable $th) {
             throw CheckException::Check($th);
         }
     }

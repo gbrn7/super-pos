@@ -27,7 +27,7 @@ class ApiCategoryController extends Controller implements HasMiddleware
         return [
             new Middleware(
                 'permission:'.CategoryPermissionEnums::READ_CATEGORY->value,
-                only: ['index', 'show']
+                only: ['index', 'show', 'exportCategoryExcelData']
             ),
 
             new Middleware(
@@ -157,6 +157,15 @@ class ApiCategoryController extends Controller implements HasMiddleware
             $createdCount = $this->categoryService->importExcel($file);
 
             return ResponseApi::make(true, trans('message.success.bulk_created', ['count' => $createdCount]), null, Response::HTTP_CREATED);
+        } catch (\Throwable $th) {
+            return ResponseApi::make(false, $th->getMessage(), null, $th->getcode());
+        }
+    }
+
+    public function exportCategoryExcelData()
+    {
+        try {
+            return $this->categoryService->exportExcel();
         } catch (\Throwable $th) {
             return ResponseApi::make(false, $th->getMessage(), null, $th->getcode());
         }
