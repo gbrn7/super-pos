@@ -5,7 +5,9 @@ namespace App\Support\Interfaces\Services;
 use App\Models\Unit;
 use App\Support\Models\Unit\GetUnitReqModel;
 use Illuminate\Contracts\Pagination\Paginator;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Collection;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 interface UnitServiceInterface
 {
@@ -38,4 +40,14 @@ interface UnitServiceInterface
      * Bulk delete a units by ids.
      */
     public function bulkDelete(array $ids): int;
+
+    /**
+     * Import units from excel file.
+     */
+    public function importExcel(UploadedFile $file): int;
+
+    /**
+     * Export units to excel file.
+     */
+    public function exportExcel(): BinaryFileResponse;
 }

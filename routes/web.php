@@ -98,6 +98,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
         Route::group(['prefix' => 'unit'], function () {
             Route::post('/bulk-delete', [ApiUnitController::class, 'bulkDelete'])->name('apiUnits.bulkDelete');
+            Route::get('/download/import-template', [ApiUnitController::class, 'getUnitImportTemplate'])->name('apiUnits.getUnitImportTemplate');
+            Route::get('/download/export-excel', [ApiUnitController::class, 'exportUnitExcelData'])->name('apiUnits.exportUnitsExcelData');
+            Route::post('/import', [ApiUnitController::class, 'importUnitExcelData'])->name('apiUnits.importUnitExcelData');
         });
 
         // paymentMethod

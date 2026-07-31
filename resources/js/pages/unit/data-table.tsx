@@ -50,6 +50,7 @@ import { sprintf } from 'sprintf-js';
 import { DetailDialog } from './dialog-modal/detail-dialog';
 import { EditDialog } from './dialog-modal/edit-dialog';
 import { DeleteDialog } from './dialog-modal/delete-dialog';
+import { ImportExcelDialog } from './dialog-modal/import-excel-dialog';
 import {
     IconChevronLeft,
     IconChevronRight,
@@ -172,6 +173,9 @@ export function DataTable<TData, TValue>({
                             )}
                         </Button>
                     )}
+                    <Can permission={PERMISSIONENUMS.UNIT.CREATE}>
+                        <ImportExcelDialog onSuccess={onRefresh} />
+                    </Can>
                     <Can permission={PERMISSIONENUMS.UNIT.READ}>
                         <ExportDropdownMenu data={data} />
                     </Can>

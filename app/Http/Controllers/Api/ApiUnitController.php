@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Unit\BulkDeleteUnitRequest;
+use App\Http\Requests\Unit\ImportUnitRequest;
 use App\Http\Requests\Unit\StoreUnitRequest;
 use App\Http\Requests\Unit\UpdateUnitRequest;
 use App\Http\Resources\UnitResource;
@@ -26,12 +27,12 @@ class ApiUnitController extends Controller implements HasMiddleware
         return [
             new Middleware(
                 'permission:'.UnitPermissionEnums::READ_UNIT->value,
-                only: ['index', 'show']
+                only: ['index', 'show', 'exportUnitExcelData']
             ),
 
             new Middleware(
                 'permission:'.UnitPermissionEnums::CREATE_UNIT->value,
-                only: ['store']
+                only: ['store', 'getUnitImportTemplate', 'importUnitExcelData']
             ),
 
             new Middleware(
@@ -131,6 +132,40 @@ class ApiUnitController extends Controller implements HasMiddleware
             $deletedCount = $this->unitService->bulkDelete($request->validated('ids'));
 
             return ResponseApi::make(true, trans('message.success.bulk_deleted', ['count' => $deletedCount]), null, Response::HTTP_OK);
+        } catch (\Throwable $th) {
+            return ResponseApi::make(false, $th->getMessage(), null, $th->getcode());
+        }
+    }
+
+    public function getUnitImportTemplate()
+    {
+        $fileName = 'import-unit-template.xlsx';
+        $publiFilePath = public_path('template/'.$fileName);
+
+        if (! file_exists($publiFilePath)) {
+            return ResponseApi::make(false, trans('message.error.not_found', ['resource' => 'file']), null, Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+
+        return ResponseApi::download($fileName, 'template/'.$fileName);
+    }
+
+    public function importUnitExcelData(ImportUnitRequest $request)
+    {
+        try {
+            $file = $request->validated('file_import');
+
+            $createdCount = $this->unitService->importExcel($file);
+
+            return ResponseApi::make(true, trans('message.success.bulk_created', ['count' => $createdCount]), null, Response::HTTP_CREATED);
+        } catch (\Throwable $th) {
+            return ResponseApi::make(false, $th->getMessage(), null, $th->getcode());
+        }
+    }
+
+    public function exportUnitExcelData()
+    {
+        try {
+            return $this->unitService->exportExcel();
         } catch (\Throwable $th) {
             return ResponseApi::make(false, $th->getMessage(), null, $th->getcode());
         }
