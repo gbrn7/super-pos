@@ -107,7 +107,16 @@ export function AppSidebar() {
                     permission: PERMISSIONENUMS.RETURN.READ,
                     role: [],
                 },
-
+                {
+                    title: t(
+                        'component.sidebar.payment_method_menu_label',
+                        'Metode Pembayaran',
+                    ),
+                    href: paymentMethods(),
+                    icon: Banknote,
+                    permission: PERMISSIONENUMS.PAYMENT_METHOD.READ,
+                    role: [],
+                },
             ],
         },
         {
@@ -195,16 +204,6 @@ export function AppSidebar() {
                     href: roles(),
                     icon: IconUserKey,
                     permission: PERMISSIONENUMS.ROLE.READ,
-                    role: [],
-                },
-                {
-                    title: t(
-                        'component.sidebar.payment_method_menu_label',
-                        'Metode Pembayaran',
-                    ),
-                    href: paymentMethods(),
-                    icon: Banknote,
-                    permission: PERMISSIONENUMS.PAYMENT_METHOD.READ,
                     role: [],
                 },
             ],
