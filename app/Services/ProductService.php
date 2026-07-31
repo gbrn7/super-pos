@@ -7,6 +7,7 @@ use App\Models\Product;
 use App\Support\Constants\Constants;
 use App\Support\Constants\ErrorCode;
 use App\Support\Interfaces\Repositories\CategoryRepositoryInterface;
+use App\Support\Interfaces\Repositories\MasterProductRepositoryInterface;
 use App\Support\Interfaces\Repositories\ProductRepositoryInterface;
 use App\Support\Interfaces\Repositories\UnitRepositoryInterface;
 use App\Support\Interfaces\Services\ProductServiceInterface;
@@ -35,7 +36,8 @@ class ProductService implements ProductServiceInterface
     public function __construct(
         protected ProductRepositoryInterface $productRepository,
         protected CategoryRepositoryInterface $categoryRepository,
-        protected UnitRepositoryInterface $unitRepository
+        protected UnitRepositoryInterface $unitRepository,
+        protected MasterProductRepositoryInterface $masterProductRepository
     ) {}
 
     public function getAllByIndex(GetProductReqModel $request): Paginator|Collection
@@ -73,6 +75,8 @@ class ProductService implements ProductServiceInterface
 
     public function create(array $data): Product
     {
+        DB::beginTransaction();
+
         try {
             if ($data['cost_price'] > $data['price']) {
                 throw new Exception(
@@ -86,13 +90,15 @@ class ProductService implements ProductServiceInterface
                 ->headline()
                 ->replaceMatches('/[^A-Z]/', '').'-'.strtoupper(Str::random(8));
 
-            $product = $this->productRepository->getByBarcode($data['barcode']);
+            if (! empty($data['barcode'])) {
+                $product = $this->productRepository->getByBarcode($data['barcode']);
 
-            if (isset($product)) {
-                throw new Exception(
-                    sprintf(trans('message.error.product_with_barcode_exist'), $data['barcode']),
-                    Response::HTTP_UNPROCESSABLE_ENTITY
-                );
+                if (isset($product)) {
+                    throw new Exception(
+                        sprintf(trans('message.error.product_with_barcode_exist'), $data['barcode']),
+                        Response::HTTP_UNPROCESSABLE_ENTITY
+                    );
+                }
             }
 
             if (isset($data['image']) && $data['image'] instanceof UploadedFile) {
@@ -101,8 +107,46 @@ class ProductService implements ProductServiceInterface
                 $data['image'] = Constants::PRODUCT_PUBLIC_PATH.$fileName;
             }
 
-            return $this->productRepository->create($data);
+            $createdProduct = $this->productRepository->create($data);
+
+            if (! empty($data['barcode'])) {
+                $masterProduct = $this->masterProductRepository->getByBarcode($data['barcode']);
+                $category = isset($data['category_id']) ? $this->categoryRepository->getById((int) $data['category_id']) : null;
+                $unit = isset($data['unit_id']) ? $this->unitRepository->getById((int) $data['unit_id']) : null;
+
+                if ($masterProduct) {
+                    $masterUpdateData = [
+                        'cost_price' => $data['cost_price'],
+                        'price' => $data['price'],
+                    ];
+
+                    if ($category) {
+                        $masterUpdateData['category_name'] = $category->name;
+                    }
+
+                    if ($unit) {
+                        $masterUpdateData['unit_name'] = $unit->name;
+                    }
+
+                    $this->masterProductRepository->update($masterProduct, $masterUpdateData);
+                } else {
+                    $this->masterProductRepository->create([
+                        'name' => $data['name'],
+                        'barcode' => $data['barcode'],
+                        'cost_price' => $data['cost_price'],
+                        'price' => $data['price'],
+                        'category_name' => $category?->name,
+                        'unit_name' => $unit?->name,
+                    ]);
+                }
+            }
+
+            DB::commit();
+
+            return $createdProduct;
         } catch (\Throwable $th) {
+            DB::rollBack();
+
             throw CheckException::Check($th);
         }
     }
@@ -189,6 +233,8 @@ class ProductService implements ProductServiceInterface
 
     public function update(int $id, array $data): ?Product
     {
+        DB::beginTransaction();
+
         try {
             $product = $this->productRepository->getById($id);
 
@@ -226,8 +272,49 @@ class ProductService implements ProductServiceInterface
                 throw new Exception(trans('message.error.internal_server_error'), Response::HTTP_INTERNAL_SERVER_ERROR);
             }
 
+            $effectiveBarcode = $data['barcode'] ?? $product->barcode;
+
+            if (! empty($effectiveBarcode)) {
+                $masterProduct = $this->masterProductRepository->getByBarcode($effectiveBarcode);
+                $categoryId = $data['category_id'] ?? $product->category_id;
+                $unitId = $data['unit_id'] ?? $product->unit_id;
+
+                $category = $categoryId ? $this->categoryRepository->getById((int) $categoryId) : null;
+                $unit = $unitId ? $this->unitRepository->getById((int) $unitId) : null;
+
+                if ($masterProduct) {
+                    $masterUpdateData = [
+                        'cost_price' => $data['cost_price'],
+                        'price' => $data['price'],
+                    ];
+
+                    if ($category) {
+                        $masterUpdateData['category_name'] = $category->name;
+                    }
+
+                    if ($unit) {
+                        $masterUpdateData['unit_name'] = $unit->name;
+                    }
+
+                    $this->masterProductRepository->update($masterProduct, $masterUpdateData);
+                } else {
+                    $this->masterProductRepository->create([
+                        'name' => $data['name'] ?? $product->name,
+                        'barcode' => $effectiveBarcode,
+                        'cost_price' => $data['cost_price'],
+                        'price' => $data['price'],
+                        'category_name' => $category?->name,
+                        'unit_name' => $unit?->name,
+                    ]);
+                }
+            }
+
+            DB::commit();
+
             return $product;
         } catch (\Throwable $th) {
+            DB::rollBack();
+
             throw CheckException::Check($th);
         }
     }
