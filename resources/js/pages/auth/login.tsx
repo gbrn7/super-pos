@@ -27,16 +27,26 @@ export default function Login({
         <>
             <Head title={t('page.auth.login.title', 'Masuk ke akun Anda')} />
 
+            {status && (
+                <div className="mb-4 rounded-lg bg-green-50 border border-green-200 px-4 py-3 text-center text-sm font-medium text-green-700 dark:bg-green-950/30 dark:border-green-800 dark:text-green-400">
+                    {status}
+                </div>
+            )}
+
             <Form
                 {...store.form()}
                 resetOnSuccess={['password']}
-                className="flex flex-col gap-6"
+                className="flex flex-col gap-5"
             >
                 {({ processing, errors }) => (
                     <>
-                        <div className="grid gap-6">
+                        <div className="grid gap-5">
+                            {/* Email */}
                             <div className="grid gap-2">
-                                <Label htmlFor="email">
+                                <Label
+                                    htmlFor="email"
+                                    className="text-sm font-medium text-foreground"
+                                >
                                     {t(
                                         'page.auth.login.form.email_input_label',
                                         'Email',
@@ -51,13 +61,18 @@ export default function Login({
                                     tabIndex={1}
                                     autoComplete="email"
                                     placeholder="email@example.com"
+                                    className="h-11 transition-shadow focus-visible:ring-orange-500/50"
                                 />
                                 <InputError message={errors.email} />
                             </div>
 
+                            {/* Password */}
                             <div className="grid gap-2">
-                                <div className="flex items-center">
-                                    <Label htmlFor="password">
+                                <div className="flex items-center justify-between">
+                                    <Label
+                                        htmlFor="password"
+                                        className="text-sm font-medium text-foreground"
+                                    >
                                         {t(
                                             'page.auth.login.form.password_input_label',
                                             'Password',
@@ -66,7 +81,7 @@ export default function Login({
                                     {canResetPassword && (
                                         <TextLink
                                             href={request()}
-                                            className="ml-auto text-sm"
+                                            className="text-xs text-orange-500 hover:text-orange-600 transition-colors"
                                             tabIndex={5}
                                         >
                                             {t(
@@ -83,17 +98,23 @@ export default function Login({
                                     tabIndex={2}
                                     autoComplete="current-password"
                                     placeholder="Password"
+                                    className="h-11 transition-shadow focus-visible:ring-orange-500/50"
                                 />
                                 <InputError message={errors.password} />
                             </div>
 
-                            <div className="flex items-center space-x-3">
+                            {/* Remember me */}
+                            <div className="flex items-center space-x-2.5">
                                 <Checkbox
                                     id="remember"
                                     name="remember"
                                     tabIndex={3}
+                                    className="border-border data-[state=checked]:bg-orange-500 data-[state=checked]:border-orange-500"
                                 />
-                                <Label htmlFor="remember">
+                                <Label
+                                    htmlFor="remember"
+                                    className="cursor-pointer text-sm text-muted-foreground select-none"
+                                >
                                     {t(
                                         'page.auth.login.remember_me',
                                         'Ingat saya',
@@ -101,46 +122,46 @@ export default function Login({
                                 </Label>
                             </div>
 
+                            {/* Submit */}
                             <Button
                                 type="submit"
-                                className="mt-4 w-full"
+                                className="mt-2 h-11 w-full bg-orange-500 text-white hover:bg-orange-600 active:bg-orange-700 transition-colors font-semibold shadow-sm cursor-pointer"
                                 tabIndex={4}
                                 disabled={processing}
                                 data-test="login-button"
                             >
-                                {processing && <Spinner />}
-                                {t('page.auth.login.form.login_btn', 'Log in')}
+                                {processing && <Spinner className="mr-2" />}
+                                {t('page.auth.login.form.login_btn', 'Masuk')}
                             </Button>
                         </div>
 
+                        {/* Register link */}
                         {canRegister && (
                             <div className="text-center text-sm text-muted-foreground">
                                 {t(
                                     'page.auth.login.dont_have_account',
-                                    'Tidak punya akun?',
+                                    'Belum punya akun?',
                                 )}{' '}
-                                <TextLink href={register()} tabIndex={5}>
-                                    {t('page.auth.login.signup_btn', 'Daftar')}
+                                <TextLink
+                                    href={register()}
+                                    tabIndex={6}
+                                    className="font-semibold text-orange-500 hover:text-orange-600 transition-colors"
+                                >
+                                    {t('page.auth.login.signup_btn', 'Daftar sekarang')}
                                 </TextLink>
                             </div>
                         )}
                     </>
                 )}
             </Form>
-
-            {status && (
-                <div className="mb-4 text-center text-sm font-medium text-green-600">
-                    {status}
-                </div>
-            )}
         </>
     );
 }
 
 Login.layout = {
-    title: i18next.t('page.auth.register.title', 'Buat akun Anda'),
+    title: i18next.t('page.auth.login.title', 'Selamat datang kembali!'),
     description: i18next.t(
-        'page.auth.register.description',
-        'Masukkan detail Anda di bawah ini untuk membuat akun Anda.',
+        'page.auth.login.description',
+        'Masuk ke akun Anda untuk mengelola transaksi dan laporan bisnis.',
     ),
 };

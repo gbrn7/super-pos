@@ -4,6 +4,7 @@ import { TooltipProvider } from '@/components/ui/tooltip';
 import { initializeTheme } from '@/hooks/use-appearance';
 import AppLayout from '@/layouts/app-layout';
 import AuthLayout from '@/layouts/auth-layout';
+import AuthLoginLayout from '@/layouts/auth/auth-login-layout';
 import SettingsLayout from '@/layouts/settings/layout';
 import './lib/i18n';
 
@@ -15,6 +16,8 @@ createInertiaApp({
         switch (true) {
             case name === 'welcome':
                 return null;
+            case name === 'auth/login':
+                return AuthLoginLayout;
             case name.startsWith('auth/'):
                 return AuthLayout;
             case name.startsWith('settings/'):
