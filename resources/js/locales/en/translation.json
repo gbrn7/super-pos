@@ -588,6 +588,16 @@
                     "dialog_desc": "Are you sure you want to delete %d units?",
                     "cancel_button": "Cancel",
                     "confirm_button": "Delete Units"
+                },
+                "import_excel_dialog": {
+                    "dialog_button": "Import Excel",
+                    "dialog_title": "Import Excel",
+                    "dialog_desc": "Import unit data from Excel file",
+                    "template_label": "Template",
+                    "unit_template_file": "Unit data import template file",
+                    "file_excel_label": "Excel File",
+                    "cancel_button": "Cancel",
+                    "confirm_button": "Import"
                 }
             }
         },
@@ -994,6 +1004,16 @@
                     "dialog_desc": "Are you sure you want to delete %d payment methods?",
                     "cancel_button": "Cancel",
                     "confirm_button": "Delete Methods"
+                },
+                "import_excel_dialog": {
+                    "dialog_button": "Import Excel",
+                    "dialog_title": "Import Excel",
+                    "dialog_desc": "Import payment method data from Excel file",
+                    "template_label": "Template",
+                    "payment_method_template_file": "Payment method data import template file",
+                    "file_excel_label": "Excel File",
+                    "cancel_button": "Cancel",
+                    "confirm_button": "Import"
                 }
             }
         },

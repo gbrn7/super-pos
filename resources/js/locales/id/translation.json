@@ -588,6 +588,16 @@
                     "dialog_desc": "Apakah anda yakin akan menghapus %d satuan ?",
                     "cancel_button": "Batal",
                     "confirm_button": "Hapus Satuan"
+                },
+                "import_excel_dialog": {
+                    "dialog_button": "Impor Excel",
+                    "dialog_title": "Impor Excel",
+                    "dialog_desc": "Impor data satuan dari file Excel",
+                    "template_label": "Templat",
+                    "unit_template_file": "File templat impor data satuan",
+                    "file_excel_label": "File Excel",
+                    "cancel_button": "Batal",
+                    "confirm_button": "Impor"
                 }
             }
         },
@@ -994,6 +1004,16 @@
                     "dialog_desc": "Apakah anda yakin akan menghapus %d metode pembayaran ?",
                     "cancel_button": "Batal",
                     "confirm_button": "Hapus Metode"
+                },
+                "import_excel_dialog": {
+                    "dialog_button": "Impor Excel",
+                    "dialog_title": "Impor Excel",
+                    "dialog_desc": "Impor data metode pembayaran dari file Excel",
+                    "template_label": "Templat",
+                    "payment_method_template_file": "File templat impor data metode pembayaran",
+                    "file_excel_label": "File Excel",
+                    "cancel_button": "Batal",
+                    "confirm_button": "Impor"
                 }
             }
         },
