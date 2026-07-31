@@ -5,7 +5,9 @@ namespace App\Support\Interfaces\Services;
 use App\Models\PaymentMethod;
 use App\Support\Models\PaymentMethod\GetPaymentMethodReqModel;
 use Illuminate\Contracts\Pagination\Paginator;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Collection;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 interface PaymentMethodServiceInterface
 {
@@ -38,4 +40,14 @@ interface PaymentMethodServiceInterface
      * Bulk delete a PaymentMethods by ids.
      */
     public function bulkDelete(array $ids): int;
+
+    /**
+     * Import payment methods from excel file.
+     */
+    public function importExcel(UploadedFile $file): int;
+
+    /**
+     * Export payment methods to excel file.
+     */
+    public function exportExcel(): BinaryFileResponse;
 }

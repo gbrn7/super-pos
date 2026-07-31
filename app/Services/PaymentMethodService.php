@@ -2,12 +2,16 @@
 
 namespace App\Services;
 
+use App\Exports\PaymentMethodExport;
+use App\Imports\PaymentMethodImport;
 use App\Models\PaymentMethod;
 use App\Support\Constants\Constants;
+use App\Support\Constants\ErrorCode;
 use App\Support\Interfaces\Repositories\PaymentMethodRepositoryInterface;
 use App\Support\Interfaces\Services\PaymentMethodServiceInterface;
 use App\Support\Models\PaymentMethod\GetPaymentMethodReqModel;
 use App\Support\Utils\CheckException;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Http\Response;
@@ -15,6 +19,8 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Maatwebsite\Excel\Facades\Excel;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class PaymentMethodService implements PaymentMethodServiceInterface
 {
@@ -139,6 +145,53 @@ class PaymentMethodService implements PaymentMethodServiceInterface
             }
 
             return $deletedCount;
+        } catch (\Throwable $th) {
+            throw CheckException::Check($th);
+        }
+    }
+
+    public function importExcel(UploadedFile $file): int
+    {
+        try {
+            $raws = Excel::toArray(new PaymentMethodImport, $file);
+
+            $newData = Collection::make();
+
+            $unixTime = Carbon::now()->unix();
+
+            foreach ($raws as $raw) {
+                foreach ($raw as $row) {
+                    $newData->push([
+                        'name' => $row['nama'],
+                        'desc' => $row['deskripsi'],
+                        'created_at' => $unixTime,
+                        'updated_at' => $unixTime,
+                    ]);
+                }
+            }
+
+            $isSuccess = $this->paymentMethodRepository->insert($newData->toArray());
+            if (! $isSuccess) {
+                throw new Exception(trans('message.error.internal_server_error'), Response::HTTP_INTERNAL_SERVER_ERROR);
+            }
+
+            return $newData->count();
+        } catch (\Throwable $th) {
+            if ($th->getCode() === ErrorCode::SQL_UNIQUE_VIOLATION) {
+                $th = new Exception(trans('message.error.duplicate_data_error_import'), Response::HTTP_INTERNAL_SERVER_ERROR);
+            }
+
+            throw CheckException::Check($th);
+        }
+    }
+
+    public function exportExcel(): BinaryFileResponse
+    {
+        try {
+            set_time_limit(600);
+            ini_set('memory_limit', '512M');
+
+            return Excel::download(new PaymentMethodExport, 'payment-methods-export.xlsx');
         } catch (\Throwable $th) {
             throw CheckException::Check($th);
         }

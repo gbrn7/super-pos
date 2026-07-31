@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PaymentMethod\BulkDeletePaymentMethodRequest;
+use App\Http\Requests\PaymentMethod\ImportPaymentMethodRequest;
 use App\Http\Requests\PaymentMethod\StorePaymentMethodRequest;
 use App\Http\Requests\PaymentMethod\UpdatePaymentMethodRequest;
 use App\Http\Resources\PaymentMethodResource;
@@ -26,12 +27,12 @@ class ApiPaymentMethodController extends Controller implements HasMiddleware
         return [
             new Middleware(
                 'permission:'.PaymentMethodPermissionEnums::READ_PAYMENT_METHOD->value,
-                only: ['index', 'show']
+                only: ['index', 'show', 'exportPaymentMethodExcelData']
             ),
 
             new Middleware(
                 'permission:'.PaymentMethodPermissionEnums::CREATE_PAYMENT_METHOD->value,
-                only: ['store']
+                only: ['store', 'getPaymentMethodImportTemplate', 'importPaymentMethodExcelData']
             ),
 
             new Middleware(
@@ -132,6 +133,40 @@ class ApiPaymentMethodController extends Controller implements HasMiddleware
             $deletedCount = $this->paymentMethodService->bulkDelete($request->validated('ids'));
 
             return ResponseApi::make(true, trans('message.success.bulk_deleted', ['count' => $deletedCount]), null, Response::HTTP_OK);
+        } catch (\Throwable $th) {
+            return ResponseApi::make(false, $th->getMessage(), null, $th->getcode());
+        }
+    }
+
+    public function getPaymentMethodImportTemplate()
+    {
+        $fileName = 'import-payment-method-template.xlsx';
+        $publiFilePath = public_path('template/'.$fileName);
+
+        if (! file_exists($publiFilePath)) {
+            return ResponseApi::make(false, trans('message.error.not_found', ['resource' => 'file']), null, Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+
+        return ResponseApi::download($fileName, 'template/'.$fileName);
+    }
+
+    public function importPaymentMethodExcelData(ImportPaymentMethodRequest $request)
+    {
+        try {
+            $file = $request->validated('file_import');
+
+            $createdCount = $this->paymentMethodService->importExcel($file);
+
+            return ResponseApi::make(true, trans('message.success.bulk_created', ['count' => $createdCount]), null, Response::HTTP_CREATED);
+        } catch (\Throwable $th) {
+            return ResponseApi::make(false, $th->getMessage(), null, $th->getcode());
+        }
+    }
+
+    public function exportPaymentMethodExcelData()
+    {
+        try {
+            return $this->paymentMethodService->exportExcel();
         } catch (\Throwable $th) {
             return ResponseApi::make(false, $th->getMessage(), null, $th->getcode());
         }

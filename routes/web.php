@@ -108,6 +108,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
         Route::group(['prefix' => 'paymentMethod'], function () {
             Route::post('/bulk-delete', [ApiPaymentMethodController::class, 'bulkDelete'])->name('apiPaymentMethods.bulkDelete');
+            Route::get('/download/import-template', [ApiPaymentMethodController::class, 'getPaymentMethodImportTemplate'])->name('apiPaymentMethods.getPaymentMethodImportTemplate');
+            Route::get('/download/export-excel', [ApiPaymentMethodController::class, 'exportPaymentMethodExcelData'])->name('apiPaymentMethods.exportPaymentMethodsExcelData');
+            Route::post('/import', [ApiPaymentMethodController::class, 'importPaymentMethodExcelData'])->name('apiPaymentMethods.importPaymentMethodsExcelData');
         });
 
         // product
