@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Exports\MasterProductExport;
 use App\Imports\MasterProductImport;
 use App\Models\MasterProduct;
 use App\Support\Constants\Constants;
@@ -21,8 +22,6 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Maatwebsite\Excel\Facades\Excel;
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class MasterProductService implements MasterProductServiceInterface
@@ -212,37 +211,12 @@ class MasterProductService implements MasterProductServiceInterface
     public function exportExcel(): BinaryFileResponse
     {
         try {
-            $request = new GetMasterProductReqModel(new Request(['limit' => null]));
-            $Masterproducts = $this->MasterproductRepository->getAllByIndex($request);
+            set_time_limit(600);
+            ini_set('memory_limit', '512M');
 
-            $spreadsheet = new Spreadsheet;
-            $sheet = $spreadsheet->getActiveSheet();
-
-            $sheet->fromArray([
-                ['Nama',  'Barcode', 'Kategori', 'Satuan', 'Harga Modal', 'Harga Jual', 'Deskripsi'],
-            ], null, 'A1');
-
-            $rows = [];
-            foreach ($Masterproducts as $Masterproduct) {
-                $rows[] = [
-                    $Masterproduct->name,
-                    $Masterproduct->barcode,
-                    $Masterproduct->category_name ?? Constants::EMPTY_STRING_VALUE,
-                    $Masterproduct->unit_name ?? Constants::EMPTY_STRING_VALUE,
-                    $Masterproduct->cost_price,
-                    $Masterproduct->price,
-                    $Masterproduct->desc,
-                ];
-            }
-
-            $sheet->fromArray($rows, null, 'A2');
-
-            $temporaryFilePath = tempnam(sys_get_temp_dir(), 'master-products-export-').'.xlsx';
-            $writer = new Xlsx($spreadsheet);
-            $writer->save($temporaryFilePath);
-
-            return response()->download($temporaryFilePath, 'Masterproducts-export.xlsx')->deleteFileAfterSend(true);
+            return Excel::download(new MasterProductExport, 'Masterproducts-export.xlsx');
         } catch (\Throwable $th) {
+            dd($th->getMessage());
             throw CheckException::Check($th);
         }
     }
@@ -253,7 +227,7 @@ class MasterProductService implements MasterProductServiceInterface
             $request = new GetMasterProductReqModel(new Request(['limit' => null]));
             $Masterproducts = $this->MasterproductRepository->getAllByIndex($request);
 
-            $temporaryFilePath = tempnam(sys_get_temp_dir(), 'MasterProducts-export-').'.pdf';
+            $temporaryFilePath = tempnam(sys_get_temp_dir(), 'MasterProducts-export-') . '.pdf';
 
             Pdf::loadView('exports.master-products-pdf', ['masterproducts' => $Masterproducts])
                 ->setPaper('a4', 'landscape')
