@@ -2,7 +2,7 @@ import dayjs from 'dayjs';
 import { CreditCard, Calendar, User, Printer, ShoppingBag, Package, Hash, Wallet, TrendingUp, Landmark, PercentCircle, RotateCcw } from 'lucide-react';
 import { useMemo, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Pie, PieChart, Cell, Label } from 'recharts';
+import { Doughnut } from 'react-chartjs-2';
 import ReceiptCard from '@/components/receipt-card';
 import type { StoreSetting } from '@/components/receipt-modal';
 import { Button } from '@/components/ui/button';
@@ -557,63 +557,40 @@ export function DetailDialog({
                                     <div className="flex flex-col items-center gap-4 md:flex-row">
                                         <ChartContainer
                                             config={chartConfig}
-                                            className="aspect-square h-50 w-full max-w-50 shrink-0"
+                                            className="relative aspect-square h-50 w-full max-w-50 shrink-0 flex items-center justify-center"
                                         >
-                                            <PieChart>
-                                                <ChartTooltip
-                                                    content={
-                                                        <ChartTooltipContent
-                                                            formatter={(value) => formatRupiah(Number(value))}
-                                                            hideLabel
-                                                        />
-                                                    }
-                                                />
-                                                <Pie
-                                                    data={pieData}
-                                                    dataKey="value"
-                                                    nameKey="name"
-                                                    innerRadius={50}
-                                                    outerRadius={80}
-                                                    strokeWidth={2}
-                                                    stroke="hsl(var(--background))"
-                                                >
-                                                    {pieData.map((entry, index) => (
-                                                        <Cell
-                                                            key={`cell-${index}`}
-                                                            fill={entry.fill}
-                                                        />
-                                                    ))}
-                                                    <Label
-                                                        content={({ viewBox }) => {
-                                                            if (viewBox && 'cx' in viewBox && 'cy' in viewBox) {
-                                                                return (
-                                                                    <text
-                                                                        x={viewBox.cx}
-                                                                        y={viewBox.cy}
-                                                                        textAnchor="middle"
-                                                                        dominantBaseline="middle"
-                                                                    >
-                                                                        <tspan
-                                                                            x={viewBox.cx}
-                                                                            y={(viewBox.cy || 0) - 8}
-                                                                            className="fill-foreground text-sm font-bold"
-                                                                        >
-                                                                            {formatRupiah(netSubtotal)}
-                                                                        </tspan>
-                                                                        <tspan
-                                                                            x={viewBox.cx}
-                                                                            y={(viewBox.cy || 0) + 10}
-                                                                            className="fill-muted-foreground text-xs"
-                                                                        >
-                                                                            {t('page.transaction.dialog_modal.detail_dialog.chart_center_label', 'Total')}
-                                                                        </tspan>
-                                                                    </text>
-                                                                );
-                                                            }
-                                                        }}
-                                                    />
-                                                </Pie>
-                                            </PieChart>
+                                            <Doughnut
+                                                data={{
+                                                    labels: pieData.map((item) => item.name),
+                                                    datasets: [
+                                                        {
+                                                            data: pieData.map((item) => item.value),
+                                                            backgroundColor: pieData.map((item) => item.fill),
+                                                        },
+                                                    ],
+                                                }}
+                                                options={{
+                                                    responsive: true,
+                                                    maintainAspectRatio: false,
+                                                    plugins: {
+                                                        legend: { display: false },
+                                                        tooltip: {
+                                                            callbacks: {
+                                                                label: (context) => `${context.label}: ${formatRupiah(context.raw as number)}`,
+                                                            },
+                                                        },
+                                                    },
+                                                    cutout: '65%',
+                                                }}
+                                            />
+                                            <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none text-center">
+                                                <span className="text-sm font-bold text-foreground tabular-nums">
+                                                    {formatRupiah(netSubtotal)}
+                                                </span>
+                                                <span className="text-xs text-muted-foreground">
+                                                    {t('page.transaction.dialog_modal.detail_dialog.chart_center_label', 'Total')}
+                                                </span>
+                                            </div>
                                         </ChartContainer>
                                         <div className="flex-1 space-y-2 overflow-hidden">
                                             {pieData.map((item, index) => {
