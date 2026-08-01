@@ -196,14 +196,14 @@ export default function Dashboard() {
                 count: item.products_count,
             }));
         } else {
-            const top5 = sortedData.slice(0, 5);
-            result = top5.map((item: any) => ({
+            const top4 = sortedData.slice(0, 4);
+            result = top4.map((item: any) => ({
                 name: item.category_name,
                 value: item.total_amount,
                 count: item.products_count,
             }));
 
-            const others = sortedData.slice(5);
+            const others = sortedData.slice(4);
             const othersValue = others.reduce((sum: number, item: any) => sum + item.total_amount, 0);
             const othersCount = others.reduce((sum: number, item: any) => sum + item.products_count, 0);
 
