@@ -78,18 +78,6 @@ export default function Login({
                                             'Password',
                                         )}
                                     </Label>
-                                    {canResetPassword && (
-                                        <TextLink
-                                            href={request()}
-                                            className="text-xs text-orange-500 hover:text-orange-600 transition-colors"
-                                            tabIndex={5}
-                                        >
-                                            {t(
-                                                'page.auth.login.forgot_password_link',
-                                                'Lupa password?',
-                                            )}
-                                        </TextLink>
-                                    )}
                                 </div>
                                 <PasswordInput
                                     id="password"
@@ -135,22 +123,6 @@ export default function Login({
                             </Button>
                         </div>
 
-                        {/* Register link */}
-                        {canRegister && (
-                            <div className="text-center text-sm text-muted-foreground">
-                                {t(
-                                    'page.auth.login.dont_have_account',
-                                    'Belum punya akun?',
-                                )}{' '}
-                                <TextLink
-                                    href={register()}
-                                    tabIndex={6}
-                                    className="font-semibold text-orange-500 hover:text-orange-600 transition-colors"
-                                >
-                                    {t('page.auth.login.signup_btn', 'Daftar sekarang')}
-                                </TextLink>
-                            </div>
-                        )}
                     </>
                 )}
             </Form>

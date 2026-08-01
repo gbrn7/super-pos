@@ -100,7 +100,7 @@
         <table>
             <tr>
                 <td>
-                    <div class="store-name">{{ $storeSetting->name ?? 'SUPER POS' }}</div>
+                    <div class="store-name">{{ $storeSetting->name ?? 'PRAKTIS POS' }}</div>
                     <div>{{ $storeSetting->address ?? '' }}</div>
                     <div>{{ $storeSetting->phone ?? '' }}</div>
                 </td>
@@ -231,7 +231,7 @@
     </div>
 
     <div class="footer">
-        Dicetak secara otomatis oleh sistem {{ $storeSetting->name ?? 'Super POS' }}
+        Dicetak secara otomatis oleh sistem {{ $storeSetting->name ?? 'PRAKTIS POS' }}
     </div>
 </body>
 </html>

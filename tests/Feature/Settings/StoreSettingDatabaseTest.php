@@ -10,7 +10,7 @@ test('store settings table is seeded with default values', function () {
     $this->seed(StoreSettingSeeder::class);
 
     $this->assertDatabaseHas('store_settings', [
-        'name' => 'Super POS',
+        'name' => 'PRAKTIS POS',
         'address' => 'Jl. Jenderal Sudirman No. 123, Jakarta',
         'phone' => '021-5551234',
         'email' => 'info@superpos.com',
@@ -20,5 +20,5 @@ test('store settings table is seeded with default values', function () {
 
     $setting = StoreSetting::first();
     expect($setting)->not->toBeNull();
-    expect($setting->name)->toBe('Super POS');
+    expect($setting->name)->toBe('PRAKTIS POS');
 });

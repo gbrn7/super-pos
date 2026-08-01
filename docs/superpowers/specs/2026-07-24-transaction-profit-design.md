@@ -1,9 +1,9 @@
 # Spesifikasi Desain: Fitur Laporan Profit Transaksi
 
-Dokumen ini mendefinisikan desain teknis untuk menambahkan fitur Laporan Profit di sistem Super POS, menggunakan tabel database khusus baru untuk menyimpan keuntungan transaksi secara eksplisit.
+Dokumen ini mendefinisikan desain teknis untuk menambahkan fitur Laporan Profit di sistem PRAKTIS POS, menggunakan tabel database khusus baru untuk menyimpan keuntungan transaksi secara eksplisit.
 
 ## 1. Latar Belakang & Tujuan
-Saat ini, sistem Super POS memiliki pencatatan harga beli (`cost_price`) dan harga jual (`price`) per item, namun tidak memiliki penyimpanan atau tampilan khusus yang merangkum keuntungan bersih (profit) per transaksi. Fitur ini bertujuan untuk:
+Saat ini, sistem PRAKTIS POS memiliki pencatatan harga beli (`cost_price`) dan harga jual (`price`) per item, namun tidak memiliki penyimpanan atau tampilan khusus yang merangkum keuntungan bersih (profit) per transaksi. Fitur ini bertujuan untuk:
 - Menyediakan tabel database khusus `transaction_profits` untuk menyimpan data pendapatan, modal, dan profit transaksi secara terpusat dan berkinerja tinggi.
 - Menampilkan halaman "Laporan Profit" khusus dengan kartu ringkasan visual premium (Total Pendapatan, Total Modal/HPP, Total Laba Bersih) dan tabel transaksi lengkap dengan filter tanggal, kasir, dan metode pembayaran.
 - Menjaga kerahasiaan data dengan membatasi akses fitur ini hanya untuk peran **Super Admin** dan **Admin**.

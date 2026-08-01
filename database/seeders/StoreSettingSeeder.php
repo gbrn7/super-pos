@@ -12,7 +12,7 @@ class StoreSettingSeeder extends Seeder
         StoreSetting::firstOrCreate(
             ['id' => 1],
             [
-                'name' => 'Super POS',
+                'name' => 'PRAKTIS POS',
                 'address' => 'Jl. Jenderal Sudirman No. 123, Jakarta',
                 'phone' => '021-5551234',
                 'email' => 'info@superpos.com',

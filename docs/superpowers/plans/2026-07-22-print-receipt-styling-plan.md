@@ -62,7 +62,7 @@ Ubah kode target berikut:
                     {/* Store header */}
                     <div className="space-y-1 border-b border-dashed pb-3 text-center">
                         <p className="text-base font-black tracking-wide uppercase">
-                            Super POS
+                            PRAKTIS POS
                         </p>
                         <p className="text-xs font-semibold text-muted-foreground">
                             {createdAt}

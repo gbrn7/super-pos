@@ -12,7 +12,7 @@ class StoreSettingFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => 'Super POS Store',
+            'name' => 'PRAKTIS POS Store',
             'address' => 'Jl. Jenderal Sudirman No. 123, Jakarta',
             'phone' => '021-5551234',
             'email' => 'store@example.com',

@@ -1,6 +1,6 @@
-# Super POS — Design Pattern & Architecture Guide
+# PRAKTIS POS — Design Pattern & Architecture Guide
 
-> This document is intended for AI Agents / Coding Assistants to understand the architecture, conventions, and design patterns used in the **Super POS** project.  
+> This document is intended for AI Agents / Coding Assistants to understand the architecture, conventions, and design patterns used in the **PRAKTIS POS** project.  
 > **Always follow these patterns when creating new features.**
 
 ---

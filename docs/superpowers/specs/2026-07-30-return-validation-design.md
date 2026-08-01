@@ -1,7 +1,7 @@
 # Spesifikasi Desain: Validasi Kuantitas Retur Barang di Frontend dan Backend
 
 ## 1. Pendahuluan
-Dokumen ini menjelaskan rancangan spesifikasi untuk menambahkan validasi dan informasi kuantitas retur barang pada aplikasi Super POS. Tujuannya adalah agar kasir/pengguna mengetahui kuantitas awal yang dibeli, kuantitas yang sudah diretur sebelumnya, serta sisa kuantitas maksimal yang dapat diretur saat ini secara langsung di dalam antarmuka modal retur.
+Dokumen ini menjelaskan rancangan spesifikasi untuk menambahkan validasi dan informasi kuantitas retur barang pada aplikasi PRAKTIS POS. Tujuannya adalah agar kasir/pengguna mengetahui kuantitas awal yang dibeli, kuantitas yang sudah diretur sebelumnya, serta sisa kuantitas maksimal yang dapat diretur saat ini secara langsung di dalam antarmuka modal retur.
 
 ## 2. Perubahan Backend
 

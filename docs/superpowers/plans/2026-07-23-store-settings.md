@@ -49,7 +49,7 @@ test('store settings table is seeded with default values', function () {
     $this->seed(\Database\Seeders\StoreSettingSeeder::class);
 
     $this->assertDatabaseHas('store_settings', [
-        'name' => 'Super POS',
+        'name' => 'PRAKTIS POS',
         'address' => 'Jl. Jenderal Sudirman No. 123, Jakarta',
         'phone' => '021-5551234',
         'email' => 'info@superpos.com',
@@ -60,7 +60,7 @@ test('store settings table is seeded with default values', function () {
 
     $setting = StoreSetting::first();
     expect($setting)->not->toBeNull();
-    expect($setting->name)->toBe('Super POS');
+    expect($setting->name)->toBe('PRAKTIS POS');
 });
 ```
 
@@ -147,7 +147,7 @@ class StoreSettingFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => 'Super POS Store',
+            'name' => 'PRAKTIS POS Store',
             'address' => 'Jl. Jenderal Sudirman No. 123, Jakarta',
             'phone' => '021-5551234',
             'email' => 'store@example.com',
@@ -176,7 +176,7 @@ class StoreSettingSeeder extends Seeder
         StoreSetting::firstOrCreate(
             ['id' => 1],
             [
-                'name' => 'Super POS',
+                'name' => 'PRAKTIS POS',
                 'address' => 'Jl. Jenderal Sudirman No. 123, Jakarta',
                 'phone' => '021-5551234',
                 'email' => 'info@superpos.com',
@@ -369,7 +369,7 @@ class StoreSettingController extends Controller
     public function edit(Request $request): Response
     {
         $storeSetting = StoreSetting::first() ?? new StoreSetting([
-            'name' => 'Super POS',
+            'name' => 'PRAKTIS POS',
             'address' => '-',
             'phone' => '-',
         ]);

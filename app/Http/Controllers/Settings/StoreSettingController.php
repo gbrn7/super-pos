@@ -15,7 +15,7 @@ class StoreSettingController extends Controller
     public function edit(Request $request): Response
     {
         $storeSetting = StoreSetting::first() ?? new StoreSetting([
-            'name' => 'Super POS',
+            'name' => 'PRAKTIS POS',
             'address' => '-',
             'phone' => '-',
         ]);
