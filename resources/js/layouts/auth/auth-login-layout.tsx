@@ -13,9 +13,9 @@ export default function AuthLoginLayout({
 }: AuthLayoutProps) {
     return (
         <div className="flex min-h-svh w-full items-center justify-center bg-background p-3 sm:p-6 lg:p-8">
-            <div className="flex w-full max-w-7xl flex-col lg:flex-row overflow-hidden rounded-3xl bg-card shadow-2xl border border-border min-h-[600px]">
+            <div className="flex w-full max-w-7xl flex-col lg:flex-row overflow-hidden rounded-3xl bg-card shadow-2xl border border-border min-h-150">
                 {/* ── MOBILE TOP HERO BANNER (hidden on lg) ────────────────── */}
-                <div className="relative lg:hidden w-full h-36 sm:h-48 overflow-hidden bg-muted/40 border-b border-border">
+                <div className="relative lg:hidden w-full h-36 sm:h-48 overflow-hidden bg-muted/40">
                     <TabbiedArtwork
                         artwork={radius}
                         seed="Mcj7"
@@ -26,7 +26,7 @@ export default function AuthLoginLayout({
 
                 {/* ── LEFT: Hero Panel (hidden on mobile) ─────────────────── */}
                 <div className="relative hidden lg:flex lg:w-1/2 flex-col justify-center items-center overflow-hidden p-8 xl:p-12 bg-muted/30">
-                    <div className="w-full h-full min-h-[500px] relative rounded-2xl overflow-hidden bg-background/50 border border-border/40">
+                    <div className="w-full h-full min-h-125 relative rounded-2xl overflow-hidden bg-background/50">
                         <TabbiedArtwork
                             artwork={radius}
                             seed="Mcj7"
