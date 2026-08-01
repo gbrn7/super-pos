@@ -401,7 +401,6 @@ export default function Dashboard() {
                                 <SelectItem value="this_week">{i18next.t('page.dashboard.presets.this_week', 'Minggu Ini')}</SelectItem>
                                 <SelectItem value="this_month">{i18next.t('page.dashboard.presets.this_month', 'Bulan Ini')}</SelectItem>
                                 <SelectItem value="last_month">{i18next.t('page.dashboard.presets.last_month', 'Bulan Lalu')}</SelectItem>
-                                <SelectItem value="this_year">{i18next.t('page.dashboard.presets.this_year', 'Tahun Ini')}</SelectItem>
                                 <SelectItem value="custom">{i18next.t('page.dashboard.presets.custom', 'Kustom Tanggal')}</SelectItem>
                             </SelectContent>
                         </Select>

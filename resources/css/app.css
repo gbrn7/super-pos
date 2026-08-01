@@ -159,13 +159,13 @@
     }
 
     /* Hide ALL direct body children by default (portals, toasts, etc.) */
-    body > * {
+    body>* {
         display: none !important;
     }
 
     /* Then selectively show only the portal/dialog that contains the receipt */
-    body > *:has(#printable-receipt),
-    body > *:has(#printable-receipt) div[data-radix-portal],
+    body>*:has(#printable-receipt),
+    body>*:has(#printable-receipt) div[data-radix-portal],
     div[data-radix-portal]:has(#printable-receipt),
     [data-slot='dialog-content']:has(#printable-receipt),
     div[role='dialog']:has(#printable-receipt) {
