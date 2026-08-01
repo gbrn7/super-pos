@@ -611,7 +611,7 @@ export default function Dashboard() {
                                 <div className="space-y-4">
                                     <ChartContainer config={revenueBreakdownConfig} className="mx-auto aspect-square h-[170px]">
                                         <PieChart>
-                                            <ChartTooltip cursor={false} content={<ChartTooltipContent nameKey="name" indicator="line" formatFormatter={(value: any) => formatCurrency(Number(value))} />} />
+                                            <ChartTooltip cursor={false} content={<ChartTooltipContent nameKey="name" indicator="line" formatter={(value: any) => formatCurrency(Number(value))} />} />
                                             <Pie
                                                 data={[
                                                     { name: i18next.t('page.dashboard.charts.breakdown_profit', 'Profit Bersih'), value: dashboardData.metrics.revenue_breakdown.profit, fill: 'var(--primary)' },

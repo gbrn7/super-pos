@@ -37,9 +37,9 @@ import type { ResponseApi } from '@/support/interfaces/response/Response';
 import type { Transaction } from '@/support/models/transaction';
 
 const BREAKDOWN_COLORS = {
-    profit: 'hsl(152, 57%, 48%)',
-    cost: 'hsl(217, 71%, 53%)',
-    discount: 'hsl(346, 77%, 55%)',
+    profit: 'var(--primary)',
+    cost: 'oklch(from var(--primary) l c h / 0.65)',
+    discount: 'oklch(from var(--primary) l c h / 0.35)',
 } as const;
 
 interface DetailDialogProps {
