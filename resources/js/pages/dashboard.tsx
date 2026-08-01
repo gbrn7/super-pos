@@ -115,13 +115,24 @@ const dailyQuantityConfig = {
     },
 } satisfies ChartConfig;
 
-const paymentChartShades = [
-    'color-mix(in oklch, var(--primary) 100%, transparent)',
-    'color-mix(in oklch, var(--primary) 75%, transparent)',
-    'color-mix(in oklch, var(--primary) 50%, transparent)',
-    'color-mix(in oklch, var(--primary) 30%, transparent)',
-    'color-mix(in oklch, var(--primary) 15%, transparent)',
-];
+const getPrimaryColor = () => {
+    if (typeof window === 'undefined') return '#ea580c';
+    const style = getComputedStyle(document.documentElement);
+    return style.getPropertyValue('--primary').trim() || 'oklch(0.6225 0.1878 37.8255)';
+};
+
+const getPrimaryShades = () => {
+    if (typeof window === 'undefined') return ['#ea580c', '#f97316', '#fb923c', '#fdba74', '#fed7aa'];
+    const style = getComputedStyle(document.documentElement);
+    const primary = style.getPropertyValue('--primary').trim() || 'oklch(0.6225 0.1878 37.8255)';
+    return [
+        primary,
+        `color-mix(in oklch, ${primary} 80%, transparent)`,
+        `color-mix(in oklch, ${primary} 60%, transparent)`,
+        `color-mix(in oklch, ${primary} 40%, transparent)`,
+        `color-mix(in oklch, ${primary} 25%, transparent)`,
+    ];
+};
 
 export default function Dashboard() {
     const [preset, setPreset] = React.useState('this_month');
@@ -153,13 +164,13 @@ export default function Dashboard() {
     const paymentChartData = React.useMemo(() => {
         if (!dashboardData || !dashboardData.transactions_by_payment_method) return [];
 
-        // Urutkan berdasarkan nominal terbesar agar gradasi warna konsisten dari tebal ke tipis
+        const shades = getPrimaryShades();
         const sortedData = [...dashboardData.transactions_by_payment_method].sort(
             (a: any, b: any) => b.total_amount - a.total_amount
         );
 
         return sortedData.map((item: any, index: number) => {
-            const fill = paymentChartShades[index % paymentChartShades.length];
+            const fill = shades[index % shades.length];
             return {
                 name: item.payment_method_name,
                 value: item.total_amount,
@@ -172,7 +183,7 @@ export default function Dashboard() {
     const categoryChartData = React.useMemo(() => {
         if (!dashboardData || !dashboardData.transactions_by_category) return [];
 
-        // Urutkan berdasarkan nominal terbesar agar gradasi warna konsisten dari tebal ke tipis
+        const shades = getPrimaryShades();
         const sortedData = [...dashboardData.transactions_by_category].sort(
             (a: any, b: any) => b.total_amount - a.total_amount
         );
@@ -185,7 +196,6 @@ export default function Dashboard() {
                 count: item.products_count,
             }));
         } else {
-            // Ambil 5 teratas
             const top5 = sortedData.slice(0, 5);
             result = top5.map((item: any) => ({
                 name: item.category_name,
@@ -193,7 +203,6 @@ export default function Dashboard() {
                 count: item.products_count,
             }));
 
-            // Jumlahkan sisanya ke kelompok "Lainnya"
             const others = sortedData.slice(5);
             const othersValue = others.reduce((sum: number, item: any) => sum + item.total_amount, 0);
             const othersCount = others.reduce((sum: number, item: any) => sum + item.products_count, 0);
@@ -208,7 +217,7 @@ export default function Dashboard() {
         }
 
         return result.map((item: any, index: number) => {
-            const fill = paymentChartShades[index % paymentChartShades.length];
+            const fill = shades[index % shades.length];
             return {
                 ...item,
                 fill: fill,
@@ -449,13 +458,13 @@ export default function Dashboard() {
                 {/* Key Metrics Cards */}
                 <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
                     {/* Revenue Card */}
-                    <Card className="bg-gradient-to-br from-primary/10 via-card to-card">
+                    <Card className="bg-gradient-to-br from-primary/20 via-primary/5 to-card border-primary/20">
                         <CardHeader className="flex flex-row items-center justify-between pb-2">
                             <span className="text-base font-bold text-muted-foreground">{i18next.t('page.dashboard.metrics.gross_revenue', 'Pendapatan Kotor')}</span>
-                            <IconCoin className="h-4 w-4 text-primary" />
+                            <IconCoin className="h-5 w-5 text-primary" />
                         </CardHeader>
                         <CardContent>
-                            <div className="text-2xl font-bold tracking-tight">
+                            <div className="text-2xl font-bold tracking-tight text-primary">
                                 {isLoading || !dashboardData ? (
                                     <div className="h-7 w-32 bg-muted animate-pulse rounded" />
                                 ) : (
@@ -467,10 +476,10 @@ export default function Dashboard() {
                     </Card>
 
                     {/* Margin / Net Profit Card */}
-                    <Card className={`bg-gradient-to-br ${dashboardData?.metrics?.total_net_profit < 0 ? 'from-rose-500/10' : 'from-emerald-500/10'} via-card to-card`}>
+                    <Card className={`bg-gradient-to-br ${dashboardData?.metrics?.total_net_profit < 0 ? 'from-rose-500/20 via-rose-500/5 border-rose-500/20' : 'from-emerald-500/20 via-emerald-500/5 border-emerald-500/20'} to-card`}>
                         <CardHeader className="flex flex-row items-center justify-between pb-2">
                             <span className="text-base font-bold text-muted-foreground">{i18next.t('page.dashboard.metrics.net_profit', 'Margin')}</span>
-                            <IconTrendingUp className={`h-4 w-4 ${dashboardData?.metrics?.total_net_profit < 0 ? 'text-rose-500' : 'text-emerald-500'}`} />
+                            <IconTrendingUp className={`h-5 w-5 ${dashboardData?.metrics?.total_net_profit < 0 ? 'text-rose-500' : 'text-emerald-500'}`} />
                         </CardHeader>
                         <CardContent>
                             <div className={`text-2xl font-bold tracking-tight ${dashboardData?.metrics?.total_net_profit < 0 ? 'text-rose-600 dark:text-rose-400' : 'text-emerald-600 dark:text-emerald-400'}`}>
@@ -487,10 +496,10 @@ export default function Dashboard() {
                     </Card>
 
                     {/* Transactions Count Card */}
-                    <Card className="bg-gradient-to-br from-indigo-500/10 via-card to-card">
+                    <Card className="bg-gradient-to-br from-primary/15 via-primary/5 to-card border-primary/15">
                         <CardHeader className="flex flex-row items-center justify-between pb-2">
                             <span className="text-base font-bold text-muted-foreground">{i18next.t('page.dashboard.metrics.transactions_count', 'Jumlah Transaksi')}</span>
-                            <IconReceipt className="h-4 w-4 text-indigo-500" />
+                            <IconReceipt className="h-5 w-5 text-primary" />
                         </CardHeader>
                         <CardContent>
                             <div className="text-2xl font-bold tracking-tight">
@@ -505,10 +514,10 @@ export default function Dashboard() {
                     </Card>
 
                     {/* Total Products Sold Card */}
-                    <Card className="bg-gradient-to-br from-amber-500/10 via-card to-card">
+                    <Card className="bg-gradient-to-br from-primary/15 via-primary/5 to-card border-primary/15">
                         <CardHeader className="flex flex-row items-center justify-between pb-2">
                             <span className="text-base font-bold text-muted-foreground">{i18next.t('page.dashboard.metrics.products_sold', 'Produk Terjual')}</span>
-                            <IconBox className="h-4 w-4 text-amber-500" />
+                            <IconBox className="h-5 w-5 text-primary" />
                         </CardHeader>
                         <CardContent>
                             <div className="text-2xl font-bold tracking-tight">
@@ -523,10 +532,10 @@ export default function Dashboard() {
                     </Card>
 
                     {/* Total Products Card */}
-                    <Card className="bg-gradient-to-br from-blue-500/10 via-card to-card">
+                    <Card className="bg-gradient-to-br from-primary/15 via-primary/5 to-card border-primary/15">
                         <CardHeader className="flex flex-row items-center justify-between pb-2">
                             <span className="text-base font-bold text-muted-foreground">{i18next.t('page.dashboard.metrics.total_products', 'Total Produk')}</span>
-                            <IconPackage className="h-4 w-4 text-blue-500" />
+                            <IconPackage className="h-5 w-5 text-primary" />
                         </CardHeader>
                         <CardContent>
                             <div className="text-2xl font-bold tracking-tight">
@@ -541,10 +550,10 @@ export default function Dashboard() {
                     </Card>
 
                     {/* Out of Stock Card */}
-                    <Card className="bg-gradient-to-br from-red-500/10 via-card to-card">
+                    <Card className="bg-gradient-to-br from-red-500/20 via-red-500/5 to-card border-red-500/20">
                         <CardHeader className="flex flex-row items-center justify-between pb-2">
                             <span className="text-base font-bold text-muted-foreground">{i18next.t('page.dashboard.metrics.out_of_stock_products', 'Stok Habis')}</span>
-                            <IconAlertTriangle className="h-4 w-4 text-red-500" />
+                            <IconAlertTriangle className="h-5 w-5 text-red-500" />
                         </CardHeader>
                         <CardContent>
                             <div className="text-2xl font-bold tracking-tight text-red-600 dark:text-red-400">
@@ -587,16 +596,16 @@ export default function Dashboard() {
                                                 {
                                                     label: i18next.t('page.dashboard.charts.revenue_label', 'Pendapatan Kotor'),
                                                     data: (dashboardData.trend_chart || []).map((item: any) => item.revenue),
-                                                    borderColor: 'var(--color-revenue, #4f46e5)',
-                                                    backgroundColor: 'rgba(79, 70, 229, 0.1)',
+                                                    borderColor: getPrimaryShades()[0],
+                                                    backgroundColor: getPrimaryShades()[3],
                                                     fill: true,
                                                     tension: 0.4,
                                                 },
                                                 {
                                                     label: i18next.t('page.dashboard.charts.profit_label', 'Keuntungan Bersih'),
                                                     data: (dashboardData.trend_chart || []).map((item: any) => item.profit),
-                                                    borderColor: 'var(--color-profit, #10b981)',
-                                                    backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                                                    borderColor: getPrimaryShades()[2],
+                                                    backgroundColor: getPrimaryShades()[4],
                                                     fill: true,
                                                     tension: 0.4,
                                                 },
@@ -653,8 +662,8 @@ export default function Dashboard() {
                                                             dashboardData.metrics.revenue_breakdown.cost,
                                                         ],
                                                         backgroundColor: [
-                                                            'var(--primary)',
-                                                            'color-mix(in oklch, var(--primary) 40%, transparent)',
+                                                            getPrimaryShades()[0],
+                                                            getPrimaryShades()[3],
                                                         ],
                                                     },
                                                 ],
@@ -734,9 +743,7 @@ export default function Dashboard() {
                                                 {
                                                     label: i18next.t('page.dashboard.charts.daily_quantity_label', 'Banyak Produk'),
                                                     data: (dashboardData.trend_chart || []).map((item: any) => item.quantity),
-                                                    backgroundColor: (dashboardData.trend_chart || []).map((_: any, index: number) =>
-                                                        `color-mix(in oklch, var(--primary) ${Math.max(40, 100 - index * 3)}%, transparent)`
-                                                    ),
+                                                    backgroundColor: getPrimaryColor(),
                                                     borderRadius: 4,
                                                 },
                                             ],
@@ -906,7 +913,7 @@ export default function Dashboard() {
                                                 {
                                                     label: i18next.t('page.dashboard.charts.quantity_label', 'Jumlah Terjual'),
                                                     data: (dashboardData.top_products || []).map((item: any) => item.quantity),
-                                                    backgroundColor: (dashboardData.top_products || []).map((_: any, index: number) => paymentChartShades[index % paymentChartShades.length]),
+                                                    backgroundColor: getPrimaryColor(),
                                                     borderRadius: 4,
                                                 },
                                             ],

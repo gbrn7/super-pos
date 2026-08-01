@@ -34,11 +34,16 @@ import { show as apiShowTransaction } from '@/routes/apiTransactions';
 import type { ResponseApi } from '@/support/interfaces/response/Response';
 import type { Transaction } from '@/support/models/transaction';
 
-const BREAKDOWN_COLORS = {
-    profit: 'var(--primary)',
-    cost: 'oklch(from var(--primary) l c h / 0.65)',
-    discount: 'oklch(from var(--primary) l c h / 0.35)',
-} as const;
+const getBreakdownColors = () => {
+    if (typeof window === 'undefined') return { profit: '#ea580c', cost: '#fdba74', discount: '#fed7aa' };
+    const style = getComputedStyle(document.documentElement);
+    const primary = style.getPropertyValue('--primary').trim() || 'oklch(0.6225 0.1878 37.8255)';
+    return {
+        profit: primary,
+        cost: `color-mix(in oklch, ${primary} 55%, transparent)`,
+        discount: `color-mix(in oklch, ${primary} 25%, transparent)`,
+    };
+};
 
 interface DetailDialogProps {
     isOpen: boolean;
@@ -165,6 +170,8 @@ export function DetailDialog({
         return (totalProfit / totalAmount) * 100;
     }, [totalProfit, currentTransaction.total_amount]);
 
+    const breakdownColors = useMemo(() => getBreakdownColors(), []);
+
     const pieData = useMemo(() => {
         if (!details.length) return [];
         const grossTotal = totalCost + Math.max(totalProfit, 0) + totalAllDiscount;
@@ -173,36 +180,36 @@ export function DetailDialog({
             {
                 name: t('page.transaction.dialog_modal.detail_dialog.profit_label', 'Keuntungan'),
                 value: Math.max(totalProfit, 0),
-                fill: BREAKDOWN_COLORS.profit,
+                fill: breakdownColors.profit,
             },
             {
                 name: t('page.transaction.dialog_modal.detail_dialog.cost_label', 'Biaya Modal'),
                 value: totalCost,
-                fill: BREAKDOWN_COLORS.cost,
+                fill: breakdownColors.cost,
             },
         ];
         if (totalAllDiscount > 0) {
             data.push({
                 name: t('page.transaction.dialog_modal.detail_dialog.discount_label', 'Diskon'),
                 value: totalAllDiscount,
-                fill: BREAKDOWN_COLORS.discount,
+                fill: breakdownColors.discount,
             });
         }
         return data;
-    }, [details, totalCost, totalProfit, totalAllDiscount, discountAmount, t]);
+    }, [details, totalCost, totalProfit, totalAllDiscount, discountAmount, breakdownColors, t]);
 
     const chartConfig: ChartConfig = {
         profit: {
             label: t('page.transaction.dialog_modal.detail_dialog.profit_label', 'Keuntungan'),
-            color: BREAKDOWN_COLORS.profit,
+            color: breakdownColors.profit,
         },
         cost: {
             label: t('page.transaction.dialog_modal.detail_dialog.cost_label', 'Biaya Modal'),
-            color: BREAKDOWN_COLORS.cost,
+            color: breakdownColors.cost,
         },
         discount: {
             label: t('page.transaction.dialog_modal.detail_dialog.discount_label', 'Diskon'),
-            color: BREAKDOWN_COLORS.discount,
+            color: breakdownColors.discount,
         },
     };
 
