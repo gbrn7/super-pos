@@ -50,7 +50,7 @@ import {
     TableHeader,
     TableRow,
 } from '@/components/ui/table';
-import { Area, AreaChart, CartesianGrid, XAxis, Bar, BarChart, YAxis, Pie, PieChart, Cell } from 'recharts';
+import { Line, Bar, Doughnut } from 'react-chartjs-2';
 import { useHttp } from '@inertiajs/react';
 import { DetailDialog } from '@/pages/transaction/dialog-modal/detail-dialog';
 import axiosInstance from '@/lib/axios';
@@ -579,31 +579,48 @@ export default function Dashboard() {
                                 </div>
                             ) : (
                                 <ChartContainer config={chartConfig} className="aspect-auto h-62.5 w-full">
-                                    <AreaChart data={dashboardData.trend_chart}>
-                                        <defs>
-                                            <linearGradient id="fillRevenue" x1="0" y1="0" x2="0" y2="1">
-                                                <stop offset="5%" stopColor="var(--color-revenue)" stopOpacity={0.8} />
-                                                <stop offset="95%" stopColor="var(--color-revenue)" stopOpacity={0.1} />
-                                            </linearGradient>
-                                            <linearGradient id="fillProfit" x1="0" y1="0" x2="0" y2="1">
-                                                <stop offset="5%" stopColor="var(--color-profit)" stopOpacity={0.8} />
-                                                <stop offset="95%" stopColor="var(--color-profit)" stopOpacity={0.1} />
-                                            </linearGradient>
-                                        </defs>
-                                        <CartesianGrid vertical={false} />
-                                        <XAxis
-                                            dataKey="date"
-                                            tickLine={false}
-                                            axisLine={false}
-                                            tickFormatter={(value) => {
-                                                const parts = value.split('-');
+                                    <Line
+                                        data={{
+                                            labels: dashboardData.trend_chart.map((item: any) => {
+                                                const parts = item.date.split('-');
                                                 return `${parts[2]}/${parts[1]}`;
-                                            }}
-                                        />
-                                        <ChartTooltip cursor={false} content={<ChartTooltipContent indicator="dot" />} />
-                                        <Area dataKey="revenue" type="monotone" fill="url(#fillRevenue)" stroke="var(--color-revenue)" name="revenue" />
-                                        <Area dataKey="profit" type="monotone" fill="url(#fillProfit)" stroke="var(--color-profit)" name="profit" />
-                                    </AreaChart>
+                                            }),
+                                            datasets: [
+                                                {
+                                                    label: i18next.t('page.dashboard.charts.revenue_label', 'Pendapatan Kotor'),
+                                                    data: dashboardData.trend_chart.map((item: any) => item.revenue),
+                                                    borderColor: 'var(--color-revenue, #4f46e5)',
+                                                    backgroundColor: 'rgba(79, 70, 229, 0.1)',
+                                                    fill: true,
+                                                    tension: 0.4,
+                                                },
+                                                {
+                                                    label: i18next.t('page.dashboard.charts.profit_label', 'Keuntungan Bersih'),
+                                                    data: dashboardData.trend_chart.map((item: any) => item.profit),
+                                                    borderColor: 'var(--color-profit, #10b981)',
+                                                    backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                                                    fill: true,
+                                                    tension: 0.4,
+                                                },
+                                            ],
+                                        }}
+                                        options={{
+                                            responsive: true,
+                                            maintainAspectRatio: false,
+                                            plugins: {
+                                                legend: { position: 'top' },
+                                                tooltip: {
+                                                    callbacks: {
+                                                        label: (context) => `${context.dataset.label}: ${formatCurrency(context.raw as number)}`,
+                                                    },
+                                                },
+                                            },
+                                            scales: {
+                                                x: { grid: { display: false } },
+                                                y: { grid: { color: 'rgba(150, 150, 150, 0.1)' } },
+                                            },
+                                        }}
+                                    />
                                 </ChartContainer>
                             )}
                         </CardContent>
@@ -625,27 +642,39 @@ export default function Dashboard() {
                             ) : (
                                 <div className="space-y-4">
                                     <ChartContainer config={revenueBreakdownConfig} className="mx-auto aspect-square h-[170px]">
-                                        <PieChart>
-                                            <ChartTooltip cursor={false} content={<ChartTooltipContent nameKey="name" indicator="line" formatter={(value: any) => formatCurrency(Number(value))} />} />
-                                            <Pie
-                                                data={[
-                                                    { name: i18next.t('page.dashboard.charts.breakdown_profit', 'Profit Bersih'), value: dashboardData.metrics.revenue_breakdown.profit, fill: 'var(--primary)' },
-                                                    { name: i18next.t('page.dashboard.charts.breakdown_cost', 'Modal Produk'), value: dashboardData.metrics.revenue_breakdown.cost, fill: 'color-mix(in oklch, var(--primary) 40%, transparent)' },
-                                                ].filter(item => item.value > 0)}
-                                                dataKey="value"
-                                                nameKey="name"
-                                                innerRadius={42}
-                                                outerRadius={68}
-                                                strokeWidth={2}
-                                            >
-                                                {[
-                                                    { name: 'profit', fill: 'var(--primary)' },
-                                                    { name: 'cost', fill: 'color-mix(in oklch, var(--primary) 40%, transparent)' },
-                                                ].map((entry, index) => (
-                                                    <Cell key={`cell-${index}`} fill={entry.fill} />
-                                                ))}
-                                            </Pie>
-                                        </PieChart>
+                                        <Doughnut
+                                            data={{
+                                                labels: [
+                                                    i18next.t('page.dashboard.charts.breakdown_profit', 'Profit Bersih'),
+                                                    i18next.t('page.dashboard.charts.breakdown_cost', 'Modal Produk'),
+                                                ],
+                                                datasets: [
+                                                    {
+                                                        data: [
+                                                            dashboardData.metrics.revenue_breakdown.profit,
+                                                            dashboardData.metrics.revenue_breakdown.cost,
+                                                        ],
+                                                        backgroundColor: [
+                                                            'var(--primary)',
+                                                            'color-mix(in oklch, var(--primary) 40%, transparent)',
+                                                        ],
+                                                    },
+                                                ],
+                                            }}
+                                            options={{
+                                                responsive: true,
+                                                maintainAspectRatio: false,
+                                                plugins: {
+                                                    legend: { display: false },
+                                                    tooltip: {
+                                                        callbacks: {
+                                                            label: (context) => `${context.label}: ${formatCurrency(context.raw as number)}`,
+                                                        },
+                                                    },
+                                                },
+                                                cutout: '65%',
+                                            }}
+                                        />
                                     </ChartContainer>
 
                                     {/* Legend & Summary */}
@@ -697,39 +726,35 @@ export default function Dashboard() {
                                 </div>
                             ) : (
                                 <ChartContainer config={dailyQuantityConfig} className="aspect-auto h-62.5 w-full">
-                                    <BarChart data={dashboardData.trend_chart} margin={{ left: 4, right: 4 }}>
-                                        <CartesianGrid vertical={false} />
-                                        <XAxis
-                                            dataKey="date"
-                                            tickLine={false}
-                                            axisLine={false}
-                                            tickFormatter={(value) => {
-                                                const parts = value.split('-');
+                                    <Bar
+                                        data={{
+                                            labels: dashboardData.trend_chart.map((item: any) => {
+                                                const parts = item.date.split('-');
                                                 return `${parts[2]}/${parts[1]}`;
-                                            }}
-                                        />
-                                        <YAxis tickLine={false} axisLine={false} tickFormatter={(v) => v.toLocaleString()} width={40} />
-                                        <ChartTooltip
-                                            cursor={{ fill: 'var(--muted)', opacity: 0.4 }}
-                                            content={
-                                                <ChartTooltipContent
-                                                    indicator="dot"
-                                                    formatter={(value) =>
-                                                        [
-                                                            `${Number(value).toLocaleString()} `, i18next.t('page.dashboard.charts.daily_quantity_label', 'Produk')
-                                                        ]}
-                                                />
-                                            }
-                                        />
-                                        <Bar dataKey="quantity" name="quantity" radius={[4, 4, 0, 0]}>
-                                            {dashboardData.trend_chart.map((_: any, index: number) => (
-                                                <Cell
-                                                    key={`cell-${index}`}
-                                                    fill={`color-mix(in oklch, var(--primary) ${Math.max(40, 100 - index * 3)}%, transparent)`}
-                                                />
-                                            ))}
-                                        </Bar>
-                                    </BarChart>
+                                            }),
+                                            datasets: [
+                                                {
+                                                    label: i18next.t('page.dashboard.charts.daily_quantity_label', 'Banyak Produk'),
+                                                    data: dashboardData.trend_chart.map((item: any) => item.quantity),
+                                                    backgroundColor: dashboardData.trend_chart.map((_: any, index: number) =>
+                                                        `color-mix(in oklch, var(--primary) ${Math.max(40, 100 - index * 3)}%, transparent)`
+                                                    ),
+                                                    borderRadius: 4,
+                                                },
+                                            ],
+                                        }}
+                                        options={{
+                                            responsive: true,
+                                            maintainAspectRatio: false,
+                                            plugins: {
+                                                legend: { display: false },
+                                            },
+                                            scales: {
+                                                x: { grid: { display: false } },
+                                                y: { grid: { color: 'rgba(150, 150, 150, 0.1)' } },
+                                            },
+                                        }}
+                                    />
                                 </ChartContainer>
                             )}
                         </CardContent>
@@ -752,29 +777,30 @@ export default function Dashboard() {
                                 <>
                                     <div className="mx-auto aspect-square max-h-[170px] w-full">
                                         <ChartContainer config={paymentConfig} className="mx-auto aspect-square max-h-[170px]">
-                                            <PieChart>
-                                                <ChartTooltip
-                                                    cursor={false}
-                                                    content={
-                                                        <ChartTooltipContent
-                                                            hideLabel
-                                                            formatter={(value) => formatCurrency(Number(value))}
-                                                        />
-                                                    }
-                                                />
-                                                <Pie
-                                                    data={paymentChartData}
-                                                    dataKey="value"
-                                                    nameKey="name"
-                                                    innerRadius={40}
-                                                    outerRadius={65}
-                                                    strokeWidth={2}
-                                                >
-                                                    {paymentChartData.map((entry: any, index: number) => (
-                                                        <Cell key={`cell-${index}`} fill={entry.fill} />
-                                                    ))}
-                                                </Pie>
-                                            </PieChart>
+                                            <Doughnut
+                                                data={{
+                                                    labels: paymentChartData.map((item: any) => item.name),
+                                                    datasets: [
+                                                        {
+                                                            data: paymentChartData.map((item: any) => item.value),
+                                                            backgroundColor: paymentChartData.map((item: any) => item.fill),
+                                                        },
+                                                    ],
+                                                }}
+                                                options={{
+                                                    responsive: true,
+                                                    maintainAspectRatio: false,
+                                                    plugins: {
+                                                        legend: { display: false },
+                                                        tooltip: {
+                                                            callbacks: {
+                                                                label: (context) => `${context.label}: ${formatCurrency(context.raw as number)}`,
+                                                            },
+                                                        },
+                                                    },
+                                                    cutout: '60%',
+                                                }}
+                                            />
                                         </ChartContainer>
                                     </div>
                                     <div className="flex flex-col gap-1.5 mt-2">
@@ -814,29 +840,30 @@ export default function Dashboard() {
                                 <>
                                     <div className="mx-auto aspect-square max-h-[170px] w-full">
                                         <ChartContainer config={categoryConfig} className="mx-auto aspect-square max-h-[170px]">
-                                            <PieChart>
-                                                <ChartTooltip
-                                                    cursor={false}
-                                                    content={
-                                                        <ChartTooltipContent
-                                                            hideLabel
-                                                            formatter={(value) => formatCurrency(Number(value))}
-                                                        />
-                                                    }
-                                                />
-                                                <Pie
-                                                    data={categoryChartData}
-                                                    dataKey="value"
-                                                    nameKey="name"
-                                                    innerRadius={40}
-                                                    outerRadius={65}
-                                                    strokeWidth={2}
-                                                >
-                                                    {categoryChartData.map((entry: any, index: number) => (
-                                                        <Cell key={`cell-${index}`} fill={entry.fill} />
-                                                    ))}
-                                                </Pie>
-                                            </PieChart>
+                                            <Doughnut
+                                                data={{
+                                                    labels: categoryChartData.map((item: any) => item.name),
+                                                    datasets: [
+                                                        {
+                                                            data: categoryChartData.map((item: any) => item.value),
+                                                            backgroundColor: categoryChartData.map((item: any) => item.fill),
+                                                        },
+                                                    ],
+                                                }}
+                                                options={{
+                                                    responsive: true,
+                                                    maintainAspectRatio: false,
+                                                    plugins: {
+                                                        legend: { display: false },
+                                                        tooltip: {
+                                                            callbacks: {
+                                                                label: (context) => `${context.label}: ${formatCurrency(context.raw as number)}`,
+                                                            },
+                                                        },
+                                                    },
+                                                    cutout: '60%',
+                                                }}
+                                            />
                                         </ChartContainer>
                                     </div>
                                     <div className="flex flex-col gap-1.5 mt-2">
@@ -874,16 +901,31 @@ export default function Dashboard() {
                                 </div>
                             ) : (
                                 <ChartContainer config={topProductsConfig} className="aspect-auto h-62.5 w-full">
-                                    <BarChart data={dashboardData.top_products} layout="vertical" margin={{ left: 10, right: 10 }}>
-                                        <XAxis type="number" hide />
-                                        <YAxis dataKey="name" type="category" tickLine={false} axisLine={false} width={100} style={{ fontSize: '10px' }} />
-                                        <ChartTooltip cursor={false} content={<ChartTooltipContent indicator="dot" />} />
-                                        <Bar dataKey="quantity" radius={4} name="quantity">
-                                            {dashboardData.top_products.map((entry: any, index: number) => (
-                                                <Cell key={`cell-${index}`} fill={paymentChartShades[index % paymentChartShades.length]} />
-                                            ))}
-                                        </Bar>
-                                    </BarChart>
+                                    <Bar
+                                        data={{
+                                            labels: dashboardData.top_products.map((item: any) => item.name),
+                                            datasets: [
+                                                {
+                                                    label: i18next.t('page.dashboard.charts.quantity_label', 'Jumlah Terjual'),
+                                                    data: dashboardData.top_products.map((item: any) => item.quantity),
+                                                    backgroundColor: dashboardData.top_products.map((_: any, index: number) => paymentChartShades[index % paymentChartShades.length]),
+                                                    borderRadius: 4,
+                                                },
+                                            ],
+                                        }}
+                                        options={{
+                                            indexAxis: 'y',
+                                            responsive: true,
+                                            maintainAspectRatio: false,
+                                            plugins: {
+                                                legend: { display: false },
+                                            },
+                                            scales: {
+                                                x: { grid: { color: 'rgba(150, 150, 150, 0.1)' } },
+                                                y: { grid: { display: false } },
+                                            },
+                                        }}
+                                    />
                                 </ChartContainer>
                             )}
                         </CardContent>
