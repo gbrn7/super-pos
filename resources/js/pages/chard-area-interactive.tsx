@@ -1,7 +1,6 @@
 'use client';
 
-import * as React from 'react';
-import { Area, AreaChart, CartesianGrid, XAxis } from 'recharts';
+import { Line } from 'react-chartjs-2';
 
 import { useIsMobile } from '@/hooks/use-mobile';
 import {
@@ -14,8 +13,6 @@ import {
 } from '@/components/ui/card';
 import {
     ChartContainer,
-    ChartTooltip,
-    ChartTooltipContent,
     type ChartConfig,
 } from '@/components/ui/chart';
 import {
@@ -216,91 +213,46 @@ export function ChartAreaInteractive() {
                     config={chartConfig}
                     className="aspect-auto h-[250px] w-full"
                 >
-                    <AreaChart data={filteredData}>
-                        <defs>
-                            <linearGradient
-                                id="fillDesktop"
-                                x1="0"
-                                y1="0"
-                                x2="0"
-                                y2="1"
-                            >
-                                <stop
-                                    offset="5%"
-                                    stopColor="var(--color-desktop)"
-                                    stopOpacity={1.0}
-                                />
-                                <stop
-                                    offset="95%"
-                                    stopColor="var(--color-desktop)"
-                                    stopOpacity={0.1}
-                                />
-                            </linearGradient>
-                            <linearGradient
-                                id="fillMobile"
-                                x1="0"
-                                y1="0"
-                                x2="0"
-                                y2="1"
-                            >
-                                <stop
-                                    offset="5%"
-                                    stopColor="var(--color-mobile)"
-                                    stopOpacity={0.8}
-                                />
-                                <stop
-                                    offset="95%"
-                                    stopColor="var(--color-mobile)"
-                                    stopOpacity={0.1}
-                                />
-                            </linearGradient>
-                        </defs>
-                        <CartesianGrid vertical={false} />
-                        <XAxis
-                            dataKey="date"
-                            tickLine={false}
-                            axisLine={false}
-                            tickMargin={8}
-                            minTickGap={32}
-                            tickFormatter={(value) => {
-                                const date = new Date(value);
+                    <Line
+                        data={{
+                            labels: filteredData.map((item) => {
+                                const date = new Date(item.date);
                                 return date.toLocaleDateString('en-US', {
                                     month: 'short',
                                     day: 'numeric',
                                 });
-                            }}
-                        />
-                        <ChartTooltip
-                            cursor={false}
-                            content={
-                                <ChartTooltipContent
-                                    labelFormatter={(value) => {
-                                        return new Date(
-                                            value,
-                                        ).toLocaleDateString('en-US', {
-                                            month: 'short',
-                                            day: 'numeric',
-                                        });
-                                    }}
-                                    indicator="dot"
-                                />
-                            }
-                        />
-                        <Area
-                            dataKey="mobile"
-                            type="natural"
-                            fill="url(#fillMobile)"
-                            stroke="var(--color-mobile)"
-                            stackId="a"
-                        />
-                        <Area
-                            dataKey="desktop"
-                            type="natural"
-                            fill="url(#fillDesktop)"
-                            stroke="var(--color-desktop)"
-                            stackId="a"
-                        />
-                    </AreaChart>
+                            }),
+                            datasets: [
+                                {
+                                    label: 'Mobile',
+                                    data: filteredData.map((item) => item.mobile),
+                                    borderColor: 'var(--color-mobile, #6366f1)',
+                                    backgroundColor: 'rgba(99, 102, 241, 0.2)',
+                                    fill: true,
+                                    tension: 0.4,
+                                },
+                                {
+                                    label: 'Desktop',
+                                    data: filteredData.map((item) => item.desktop),
+                                    borderColor: 'var(--color-desktop, #3b82f6)',
+                                    backgroundColor: 'rgba(59, 130, 246, 0.2)',
+                                    fill: true,
+                                    tension: 0.4,
+                                },
+                            ],
+                        }}
+                        options={{
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: {
+                                legend: { position: 'top' },
+                            },
+                            scales: {
+                                x: { grid: { display: false } },
+                                y: { grid: { color: 'rgba(150, 150, 150, 0.1)' } },
+                            },
+                        }}
+                    />
                 </ChartContainer>
             </CardContent>
         </Card>

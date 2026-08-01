@@ -9,8 +9,6 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import {
     ChartContainer,
-    ChartTooltip,
-    ChartTooltipContent,
     type ChartConfig,
 } from '@/components/ui/chart';
 import {

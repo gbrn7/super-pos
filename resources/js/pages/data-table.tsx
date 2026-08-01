@@ -47,9 +47,8 @@ import {
     type ColumnFiltersState,
     type Row,
     type SortingState,
-    type VisibilityState,
 } from '@tanstack/react-table';
-import { Area, AreaChart, CartesianGrid, XAxis } from 'recharts';
+import { Line } from 'react-chartjs-2';
 import { toast } from 'sonner';
 import { z } from 'zod';
 
@@ -58,8 +57,6 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
     ChartContainer,
-    ChartTooltip,
-    ChartTooltipContent,
     type ChartConfig,
 } from '@/components/ui/chart';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -726,48 +723,40 @@ function TableCellViewer({ item }: { item: z.infer<typeof schema> }) {
                     {!isMobile && (
                         <>
                             <ChartContainer config={chartConfig}>
-                                <AreaChart
-                                    accessibilityLayer
-                                    data={chartData}
-                                    margin={{
-                                        left: 0,
-                                        right: 10,
+                                <Line
+                                    data={{
+                                        labels: chartData.map((item) => item.month.slice(0, 3)),
+                                        datasets: [
+                                            {
+                                                label: 'Mobile',
+                                                data: chartData.map((item) => item.mobile),
+                                                borderColor: 'var(--color-mobile, #6366f1)',
+                                                backgroundColor: 'rgba(99, 102, 241, 0.2)',
+                                                fill: true,
+                                                tension: 0.4,
+                                            },
+                                            {
+                                                label: 'Desktop',
+                                                data: chartData.map((item) => item.desktop),
+                                                borderColor: 'var(--color-desktop, #3b82f6)',
+                                                backgroundColor: 'rgba(59, 130, 246, 0.2)',
+                                                fill: true,
+                                                tension: 0.4,
+                                            },
+                                        ],
                                     }}
-                                >
-                                    <CartesianGrid vertical={false} />
-                                    <XAxis
-                                        dataKey="month"
-                                        tickLine={false}
-                                        axisLine={false}
-                                        tickMargin={8}
-                                        tickFormatter={(value) =>
-                                            value.slice(0, 3)
-                                        }
-                                        hide
-                                    />
-                                    <ChartTooltip
-                                        cursor={false}
-                                        content={
-                                            <ChartTooltipContent indicator="dot" />
-                                        }
-                                    />
-                                    <Area
-                                        dataKey="mobile"
-                                        type="natural"
-                                        fill="var(--color-mobile)"
-                                        fillOpacity={0.6}
-                                        stroke="var(--color-mobile)"
-                                        stackId="a"
-                                    />
-                                    <Area
-                                        dataKey="desktop"
-                                        type="natural"
-                                        fill="var(--color-desktop)"
-                                        fillOpacity={0.4}
-                                        stroke="var(--color-desktop)"
-                                        stackId="a"
-                                    />
-                                </AreaChart>
+                                    options={{
+                                        responsive: true,
+                                        maintainAspectRatio: false,
+                                        plugins: {
+                                            legend: { display: false },
+                                        },
+                                        scales: {
+                                            x: { display: false },
+                                            y: { grid: { color: 'rgba(150, 150, 150, 0.1)' } },
+                                        },
+                                    }}
+                                />
                             </ChartContainer>
                             <Separator />
                             <div className="grid gap-2">
