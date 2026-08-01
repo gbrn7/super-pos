@@ -2,6 +2,9 @@ import { Link } from '@inertiajs/react';
 import type { PropsWithChildren } from 'react';
 import { home } from '@/routes';
 import type { AuthLayoutProps } from '@/types';
+import { TabbiedArtwork } from 'tabbied/react';
+import { radius } from 'tabbied/artworks';
+import { t } from 'i18next';
 
 export default function AuthLoginLayout({
     children,
@@ -9,84 +12,73 @@ export default function AuthLoginLayout({
     description,
 }: AuthLayoutProps) {
     return (
-        <div className="flex min-h-svh w-full flex-col lg:flex-row">
-            {/* ── LEFT: Hero Panel (hidden on mobile) ─────────────────── */}
-            <div className="relative hidden lg:flex lg:w-1/2 xl:w-3/5 flex-col overflow-hidden">
-                {/* Gradient overlay for better text legibility */}
-                <div className="absolute inset-0 bg-gradient-to-br from-orange-600/20 via-transparent to-orange-900/30 z-10" />
-
-                {/* Hero Image */}
-                <img
-                    src="/asset/Hero-Login.png"
-                    alt="Praktis POS - Kelola bisnis dengan mudah"
-                    className="absolute inset-0 h-full w-full object-cover object-center"
-                />
-
-                {/* Bottom brand strip */}
-                <div className="absolute bottom-0 left-0 right-0 z-20 bg-gradient-to-t from-black/60 via-black/20 to-transparent p-8">
-                    <div className="flex items-center gap-3">
-                        <div className="h-1 w-8 rounded-full bg-orange-400" />
-                        <p className="text-sm font-medium text-white/80">
-                            Platform POS terpercaya untuk bisnis Anda
-                        </p>
-                    </div>
-                    <div className="mt-3 flex gap-6">
-                        {[
-                            { label: 'Transaksi Cepat', value: '⚡' },
-                            { label: 'Laporan Real-time', value: '📊' },
-                            { label: 'Multi-kasir', value: '👥' },
-                        ].map(({ label, value }) => (
-                            <div key={label} className="flex items-center gap-1.5">
-                                <span className="text-xs text-white/60">{value}</span>
-                                <span className="text-xs font-medium text-white/80">{label}</span>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </div>
-
-            {/* ── RIGHT: Form Panel ────────────────────────────────────── */}
-            <div className="flex flex-1 flex-col items-center justify-center bg-background p-6 sm:p-10 lg:p-12">
-                {/* Mobile hero image (only shown on mobile) */}
-                <div className="mb-6 lg:hidden w-full max-w-sm overflow-hidden rounded-2xl shadow-lg">
-                    <img
-                        src="/asset/Hero-Login.png"
-                        alt="Praktis POS"
-                        className="h-40 w-full object-cover object-top"
+        <div className="flex min-h-svh w-full items-center justify-center bg-background p-3 sm:p-6 lg:p-8">
+            <div className="flex w-full max-w-7xl flex-col lg:flex-row overflow-hidden rounded-3xl bg-card shadow-2xl border border-border min-h-[600px]">
+                {/* ── MOBILE TOP HERO BANNER (hidden on lg) ────────────────── */}
+                <div className="relative lg:hidden w-full h-36 sm:h-48 overflow-hidden bg-muted/40 border-b border-border">
+                    <TabbiedArtwork
+                        artwork={radius}
+                        seed="Mcj7"
+                        palette={['#ffffff00', '#e0511f', '#ff9f1c', '#ffe8c7']}
+                        options={{ grid: '6x2', frequency: 0.7, shadow: false }}
                     />
                 </div>
 
-                <div className="w-full max-w-sm">
-                    {/* Logo */}
-                    <Link
-                        href={home()}
-                        className="mb-8 flex items-center gap-2 transition-opacity hover:opacity-80"
-                        aria-label="Kembali ke halaman utama"
-                    >
-                        <img
-                            src="/asset/Logo-with-text.png"
-                            alt="Logo Praktis POS"
-                            className="h-10 w-auto object-contain"
+                {/* ── LEFT: Hero Panel (hidden on mobile) ─────────────────── */}
+                <div className="relative hidden lg:flex lg:w-1/2 flex-col justify-center items-center overflow-hidden p-8 xl:p-12 bg-muted/30">
+                    <div className="w-full h-full min-h-[500px] relative rounded-2xl overflow-hidden bg-background/50 border border-border/40">
+                        <TabbiedArtwork
+                            artwork={radius}
+                            seed="Mcj7"
+                            palette={['#ffffff00', '#e0511f', '#ff9f1c', '#ffe8c7']}
+                            options={{ grid: '3x4', frequency: 0.7, shadow: false }}
                         />
-                    </Link>
+                    </div>
+                </div>
 
-                    {/* Heading */}
-                    <div className="mb-8 space-y-1.5">
-                        <h1 className="text-2xl font-bold tracking-tight text-foreground">
-                            {title}
-                        </h1>
-                        <p className="text-sm text-muted-foreground leading-relaxed">
-                            {description}
+                {/* ── RIGHT: Form Panel ────────────────────────────────────── */}
+                <div className="flex flex-1 flex-col justify-center bg-card p-6 sm:p-10 lg:p-12 xl:p-16">
+                    <div className="w-full max-w-md mx-auto">
+                        {/* Logo / Back link */}
+                        <Link
+                            href={home()}
+                            className="mb-8 inline-flex items-center gap-2 text-xs font-medium text-muted-foreground hover:text-foreground transition-colors"
+                            aria-label="Kembali ke halaman utama"
+                        >
+                            <img
+                                src="/asset/Logo-with-text-white-bg.png"
+                                alt="Logo Praktis POS"
+                                className="h-7 sm:h-8 w-auto block dark:hidden object-contain"
+                            />
+                            <img
+                                src="/asset/Logo-with-text-dark-bg.png"
+                                alt="Logo Praktis POS"
+                                className="h-7 sm:h-8 w-auto hidden dark:block object-contain"
+                            />
+                        </Link>
+
+                        {/* Heading */}
+                        <div className="mb-8 space-y-1.5">
+                            <h1 className="text-3xl font-bold tracking-tight text-foreground">
+                                {title}
+                            </h1>
+                            <p className="text-sm text-muted-foreground leading-relaxed">
+                                {description}
+                            </p>
+                        </div>
+
+                        {/* Form content */}
+                        {children}
+
+                        {/* Footer */}
+                        <p className="mt-10 text-center text-xs text-muted-foreground/60">
+                            © {new Date().getFullYear()} Praktis POS.{' '}
+                            {t(
+                                'common.all_rights_reserved',
+                                'Seluruh hak dilindungi.',
+                            )}
                         </p>
                     </div>
-
-                    {/* Form content */}
-                    {children}
-
-                    {/* Footer */}
-                    <p className="mt-10 text-center text-xs text-muted-foreground/60">
-                        © {new Date().getFullYear()} Praktis POS. Seluruh hak dilindungi.
-                    </p>
                 </div>
             </div>
         </div>
