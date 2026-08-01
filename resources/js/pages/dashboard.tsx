@@ -571,7 +571,7 @@ export default function Dashboard() {
                         <CardContent>
                             {isLoading || !dashboardData ? (
                                 <div className="h-[250px] w-full bg-muted animate-pulse rounded-lg" />
-                            ) : dashboardData.trend_chart.length === 0 ? (
+                            ) : !dashboardData?.trend_chart || dashboardData.trend_chart.length === 0 ? (
                                 <div className="h-[250px] w-full flex items-center justify-center border border-dashed rounded-lg text-muted-foreground">
                                     {i18next.t('page.dashboard.charts.no_data', 'Tidak ada data untuk periode ini')}
                                 </div>
@@ -579,14 +579,14 @@ export default function Dashboard() {
                                 <ChartContainer config={chartConfig} className="aspect-auto h-62.5 w-full">
                                     <Line
                                         data={{
-                                            labels: dashboardData.trend_chart.map((item: any) => {
-                                                const parts = item.date.split('-');
-                                                return `${parts[2]}/${parts[1]}`;
+                                            labels: (dashboardData.trend_chart || []).map((item: any) => {
+                                                const parts = (item.date || '').split('-');
+                                                return parts.length === 3 ? `${parts[2]}/${parts[1]}` : item.date;
                                             }),
                                             datasets: [
                                                 {
                                                     label: i18next.t('page.dashboard.charts.revenue_label', 'Pendapatan Kotor'),
-                                                    data: dashboardData.trend_chart.map((item: any) => item.revenue),
+                                                    data: (dashboardData.trend_chart || []).map((item: any) => item.revenue),
                                                     borderColor: 'var(--color-revenue, #4f46e5)',
                                                     backgroundColor: 'rgba(79, 70, 229, 0.1)',
                                                     fill: true,
@@ -594,7 +594,7 @@ export default function Dashboard() {
                                                 },
                                                 {
                                                     label: i18next.t('page.dashboard.charts.profit_label', 'Keuntungan Bersih'),
-                                                    data: dashboardData.trend_chart.map((item: any) => item.profit),
+                                                    data: (dashboardData.trend_chart || []).map((item: any) => item.profit),
                                                     borderColor: 'var(--color-profit, #10b981)',
                                                     backgroundColor: 'rgba(16, 185, 129, 0.1)',
                                                     fill: true,
@@ -718,7 +718,7 @@ export default function Dashboard() {
                         <CardContent>
                             {isLoading || !dashboardData ? (
                                 <div className="h-[250px] w-full bg-muted animate-pulse rounded-lg" />
-                            ) : dashboardData.trend_chart.length === 0 ? (
+                            ) : !dashboardData?.trend_chart || dashboardData.trend_chart.length === 0 ? (
                                 <div className="h-[250px] w-full flex items-center justify-center border border-dashed rounded-lg text-muted-foreground">
                                     {i18next.t('page.dashboard.charts.no_data', 'Tidak ada data untuk periode ini')}
                                 </div>
@@ -726,15 +726,15 @@ export default function Dashboard() {
                                 <ChartContainer config={dailyQuantityConfig} className="aspect-auto h-62.5 w-full">
                                     <Bar
                                         data={{
-                                            labels: dashboardData.trend_chart.map((item: any) => {
-                                                const parts = item.date.split('-');
-                                                return `${parts[2]}/${parts[1]}`;
+                                            labels: (dashboardData.trend_chart || []).map((item: any) => {
+                                                const parts = (item.date || '').split('-');
+                                                return parts.length === 3 ? `${parts[2]}/${parts[1]}` : item.date;
                                             }),
                                             datasets: [
                                                 {
                                                     label: i18next.t('page.dashboard.charts.daily_quantity_label', 'Banyak Produk'),
-                                                    data: dashboardData.trend_chart.map((item: any) => item.quantity),
-                                                    backgroundColor: dashboardData.trend_chart.map((_: any, index: number) =>
+                                                    data: (dashboardData.trend_chart || []).map((item: any) => item.quantity),
+                                                    backgroundColor: (dashboardData.trend_chart || []).map((_: any, index: number) =>
                                                         `color-mix(in oklch, var(--primary) ${Math.max(40, 100 - index * 3)}%, transparent)`
                                                     ),
                                                     borderRadius: 4,
@@ -893,7 +893,7 @@ export default function Dashboard() {
                         <CardContent>
                             {isLoading || !dashboardData ? (
                                 <div className="h-[250px] w-full bg-muted animate-pulse rounded-lg" />
-                            ) : dashboardData.top_products.length === 0 ? (
+                            ) : !dashboardData?.top_products || dashboardData.top_products.length === 0 ? (
                                 <div className="h-[250px] w-full flex items-center justify-center border border-dashed rounded-lg text-muted-foreground">
                                     {i18next.t('page.dashboard.charts.no_product_data', 'Tidak ada data produk')}
                                 </div>
@@ -901,12 +901,12 @@ export default function Dashboard() {
                                 <ChartContainer config={topProductsConfig} className="aspect-auto h-62.5 w-full">
                                     <Bar
                                         data={{
-                                            labels: dashboardData.top_products.map((item: any) => item.name),
+                                            labels: (dashboardData.top_products || []).map((item: any) => item.name),
                                             datasets: [
                                                 {
                                                     label: i18next.t('page.dashboard.charts.quantity_label', 'Jumlah Terjual'),
-                                                    data: dashboardData.top_products.map((item: any) => item.quantity),
-                                                    backgroundColor: dashboardData.top_products.map((_: any, index: number) => paymentChartShades[index % paymentChartShades.length]),
+                                                    data: (dashboardData.top_products || []).map((item: any) => item.quantity),
+                                                    backgroundColor: (dashboardData.top_products || []).map((_: any, index: number) => paymentChartShades[index % paymentChartShades.length]),
                                                     borderRadius: 4,
                                                 },
                                             ],
