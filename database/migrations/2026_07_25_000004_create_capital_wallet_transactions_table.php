@@ -20,7 +20,7 @@ return new class extends Migration
             $table->text('notes')->nullable();
             $table->unsignedBigInteger('created_at');
             $table->unsignedBigInteger('updated_at');
-            $table->softDeletes();
+            $table->unsignedBigInteger('deleted_at')->nullable();
         });
     }
 

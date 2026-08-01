@@ -22,7 +22,7 @@ return new class extends Migration
             $table->decimal('discount_amount', 10, 2)->default(0);
             $table->unsignedBigInteger('created_at')->index();
             $table->unsignedBigInteger('updated_at');
-            $table->softDeletes();
+            $table->unsignedBigInteger('deleted_at')->nullable();
 
             $table->index(['created_at', 'payment_method_id']);
             $table->index(['created_at', 'user_id']);
