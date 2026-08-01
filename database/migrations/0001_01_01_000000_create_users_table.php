@@ -20,7 +20,7 @@ return new class extends Migration
             $table->rememberToken();
             $table->unsignedBigInteger('created_at');
             $table->unsignedBigInteger('updated_at');
-            $table->softDeletes();
+            $table->unsignedBigInteger('deleted_at')->nullable();
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
