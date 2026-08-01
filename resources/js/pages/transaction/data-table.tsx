@@ -252,7 +252,7 @@ export function DataTable<TData, TValue>({
                 <div className="second-row grid grid-cols-1 gap-2 gap-y-3 rounded-md border p-3 md:grid-cols-2 lg:grid-cols-3">
                     {/* Keyword Filter */}
                     <div className="space-y-1.5">
-                        <Label className="text-xs font-medium text-muted-foreground">
+                        <Label className="text-sm font-medium text-muted-foreground">
                             {t(
                                 'component.data_table.search_component.search_label',
                                 'Pencarian',
@@ -268,7 +268,7 @@ export function DataTable<TData, TValue>({
                                 </SelectTrigger>
                                 <SelectContent>
                                     <SelectGroup>
-                                        <SelectLabel>
+                                        <SelectLabel className="text-sm">
                                             {t(
                                                 'component.data_table.search_component.search_by',
                                                 'Pencarian berdasarkan',
@@ -308,8 +308,8 @@ export function DataTable<TData, TValue>({
 
                     {/* Cashier / User Filter */}
                     <div className="space-y-1.5">
-                        <Label className="flex items-center gap-1 text-xs font-medium text-muted-foreground">
-                            <UserIcon className="h-3.5 w-3.5" />
+                        <Label className="flex items-center gap-1 text-sm font-medium text-muted-foreground">
+                            <UserIcon className="h-4 w-4" />
                             {t(
                                 'page.transaction.dialog_modal.detail_dialog.cashier_label',
                                 'Kasir / Petugas',
@@ -355,8 +355,8 @@ export function DataTable<TData, TValue>({
 
                     {/* Payment Method Filter */}
                     <div className="space-y-1.5">
-                        <Label className="flex items-center gap-1 text-xs font-medium text-muted-foreground">
-                            <CreditCard className="h-3.5 w-3.5" />
+                        <Label className="flex items-center gap-1 text-sm font-medium text-muted-foreground">
+                            <CreditCard className="h-4 w-4" />
                             {t(
                                 'page.transaction.dialog_modal.detail_dialog.payment_method_label',
                                 'Metode Pembayaran',
@@ -405,13 +405,13 @@ export function DataTable<TData, TValue>({
 
                     {/* Start Date Filter */}
                     <div className="space-y-1.5">
-                        <Label className="flex items-center gap-1 text-xs font-medium text-muted-foreground">
-                            <Calendar className="h-3.5 w-3.5" />
+                        <Label className="flex items-center gap-1 text-sm font-medium text-muted-foreground">
+                            <Calendar className="h-4 w-4" />
                             {t('component.data_table.filter.start_date_label', 'Tanggal Mulai')}
                         </Label>
                         <Popover>
                             <PopoverTrigger asChild>
-                                <Button variant="outline" className="w-full justify-start text-left font-normal text-xs h-9">
+                                <Button variant="outline" className="w-full justify-start text-left font-normal text-sm h-9">
                                     {queryParam.start_date ? (
                                         new Date(queryParam.start_date * 1000).toLocaleDateString('id-ID')
                                     ) : (
@@ -438,13 +438,13 @@ export function DataTable<TData, TValue>({
 
                     {/* End Date Filter */}
                     <div className="space-y-1.5">
-                        <Label className="flex items-center gap-1 text-xs font-medium text-muted-foreground">
-                            <Calendar className="h-3.5 w-3.5" />
+                        <Label className="flex items-center gap-1 text-sm font-medium text-muted-foreground">
+                            <Calendar className="h-4 w-4" />
                             {t('component.data_table.filter.end_date_label', 'Tanggal Akhir')}
                         </Label>
                         <Popover>
                             <PopoverTrigger asChild>
-                                <Button variant="outline" className="w-full justify-start text-left font-normal text-xs h-9">
+                                <Button variant="outline" className="w-full justify-start text-left font-normal text-sm h-9">
                                     {queryParam.end_date ? (
                                         new Date(queryParam.end_date * 1000).toLocaleDateString('id-ID')
                                     ) : (

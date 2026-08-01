@@ -53,7 +53,7 @@ export function ServerSideDataTableHeader<TData, TValue>({
     };
 
     return (
-        <Button variant="ghost" onClick={handleSort} className={className}>
+        <Button variant="ghost" onClick={handleSort} className={cn("text-base font-bold p-0 hover:bg-transparent", className)}>
             {title}
             {sortedOrder === 'asc' ||
             (!sortKey && column.getIsSorted() === 'asc') ? (

@@ -140,7 +140,7 @@ export function DataTable<TData, TValue>({
             <div className="second-row grid grid-cols-1 gap-2 gap-y-3 rounded-md border p-3 md:grid-cols-2 lg:grid-cols-3">
                 {/* Keyword Search */}
                 <div className="space-y-1.5">
-                    <Label className="text-xs font-medium text-muted-foreground">
+                    <Label className="text-sm font-medium text-muted-foreground">
                         {t('component.data_table.search_component.search_label', 'Pencarian')}
                     </Label>
                     <div className="relative w-full">
@@ -157,7 +157,7 @@ export function DataTable<TData, TValue>({
 
                 {/* Arah Aliran (Type) */}
                 <div className="space-y-1.5">
-                    <Label className="flex items-center gap-1 text-xs font-medium text-muted-foreground">
+                    <Label className="flex items-center gap-1 text-sm font-medium text-muted-foreground">
                         <ArrowUpDown className="h-3.5 w-3.5" />
                         {t('page.capital_wallet.data_table.filters.type_label', 'Arah Aliran')}
                     </Label>
@@ -179,7 +179,7 @@ export function DataTable<TData, TValue>({
 
                 {/* Jenis Transaksi */}
                 <div className="space-y-1.5">
-                    <Label className="flex items-center gap-1 text-xs font-medium text-muted-foreground">
+                    <Label className="flex items-center gap-1 text-sm font-medium text-muted-foreground">
                         <CreditCard className="h-3.5 w-3.5" />
                         {t('page.capital_wallet.data_table.filters.tx_type_label', 'Jenis Transaksi')}
                     </Label>
@@ -204,7 +204,7 @@ export function DataTable<TData, TValue>({
 
                 {/* Tanggal Mulai */}
                 <div className="space-y-1.5">
-                    <Label className="flex items-center gap-1 text-xs font-medium text-muted-foreground">
+                    <Label className="flex items-center gap-1 text-sm font-medium text-muted-foreground">
                         <Calendar className="h-3.5 w-3.5" />
                         {t('page.capital_wallet.data_table.filters.start_date_label', 'Mulai')}
                     </Label>
@@ -237,7 +237,7 @@ export function DataTable<TData, TValue>({
 
                 {/* Tanggal Akhir */}
                 <div className="space-y-1.5">
-                    <Label className="flex items-center gap-1 text-xs font-medium text-muted-foreground">
+                    <Label className="flex items-center gap-1 text-sm font-medium text-muted-foreground">
                         <Calendar className="h-3.5 w-3.5" />
                         {t('page.capital_wallet.data_table.filters.end_date_label', 'Hingga')}
                     </Label>

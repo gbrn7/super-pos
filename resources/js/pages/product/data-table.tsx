@@ -337,7 +337,7 @@ export function DataTable<TData, TValue>({
                 </div>
                 <div className="second-row grid grid-cols-1 gap-2 gap-y-3 rounded-md border p-3 md:grid-cols-2 lg:grid-cols-3">
                     <div className="space-y-1.5">
-                        <Label className="text-xs font-medium text-muted-foreground">
+                        <Label className="text-sm font-medium text-muted-foreground">
                             {t(
                                 'component.data_table.search_component.search_label',
                                 'Pencarian',
@@ -412,7 +412,7 @@ export function DataTable<TData, TValue>({
                         </div>
                     </div>
                     <div className="space-y-1.5">
-                        <Label className="text-xs font-medium text-muted-foreground">
+                        <Label className="text-sm font-medium text-muted-foreground">
                             {t(
                                 'component.data_table.filter.category_label',
                                 'Kategori',
@@ -442,7 +442,7 @@ export function DataTable<TData, TValue>({
                         />
                     </div>
                     <div className="space-y-1.5">
-                        <Label className="text-xs font-medium text-muted-foreground">
+                        <Label className="text-sm font-medium text-muted-foreground">
                             {t(
                                 'component.data_table.filter.unit_label',
                                 'Satuan',
@@ -472,7 +472,7 @@ export function DataTable<TData, TValue>({
                         />
                     </div>
                     <div className="space-y-1.5">
-                        <Label className="text-xs font-medium text-muted-foreground">
+                        <Label className="text-sm font-medium text-muted-foreground">
                             {t(
                                 'component.data_table.filter.is_available_stock_label',
                                 'Status Stok',
@@ -528,7 +528,7 @@ export function DataTable<TData, TValue>({
                         </Select>
                     </div>
                     <div className="space-y-1.5">
-                        <Label className="text-xs font-medium text-muted-foreground">
+                        <Label className="text-sm font-medium text-muted-foreground">
                             {t(
                                 'component.data_table.filter.status_label',
                                 'Status',
@@ -582,7 +582,7 @@ export function DataTable<TData, TValue>({
                         </Select>
                     </div>
                     <div className="space-y-1.5">
-                        <Label className="text-xs font-medium text-muted-foreground">
+                        <Label className="text-sm font-medium text-muted-foreground">
                             {t(
                                 'component.data_table.filter.stock_label',
                                 'Tipe Stok',

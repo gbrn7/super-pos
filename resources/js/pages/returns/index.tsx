@@ -229,7 +229,7 @@ export default function Index() {
                         {/* Search and Filters grid */}
                         <div className="second-row grid grid-cols-1 gap-2 gap-y-3 rounded-md border p-3 md:grid-cols-2 lg:grid-cols-3">
                             <div className="space-y-1.5">
-                                <Label className="text-xs font-medium text-muted-foreground">
+                                <Label className="text-sm font-medium text-muted-foreground">
                                     {t('component.data_table.search_component.search_label', 'Pencarian')}
                                 </Label>
                                 <div className="keyword-filter flex w-full gap-1">
@@ -242,7 +242,7 @@ export default function Index() {
                                         </SelectTrigger>
                                         <SelectContent>
                                             <SelectGroup>
-                                                <SelectLabel>
+                                                <SelectLabel className="text-sm">
                                                     {t('component.data_table.search_component.search_by', 'Pencarian berdasarkan')}
                                                 </SelectLabel>
                                                 <SelectItem value="default">
@@ -271,12 +271,13 @@ export default function Index() {
 
                             {/* Start Date Filter */}
                             <div className="space-y-1.5">
-                                <Label className="text-xs font-medium text-muted-foreground">
+                                <Label className="flex items-center gap-1 text-sm font-medium text-muted-foreground">
+                                    <CalendarIcon className="h-4 w-4" />
                                     {t('component.data_table.filter.start_date_label', 'Tanggal Mulai')}
                                 </Label>
                                 <Popover>
                                     <PopoverTrigger asChild>
-                                        <Button variant="outline" className="w-full justify-start text-left font-normal text-xs h-9">
+                                        <Button variant="outline" className="w-full justify-start text-left font-normal text-sm h-9">
                                             {queryParam.start_date ? (
                                                 new Date(queryParam.start_date * 1000).toLocaleDateString('id-ID')
                                             ) : (
@@ -303,12 +304,13 @@ export default function Index() {
 
                             {/* End Date Filter */}
                             <div className="space-y-1.5">
-                                <Label className="text-xs font-medium text-muted-foreground">
+                                <Label className="flex items-center gap-1 text-sm font-medium text-muted-foreground">
+                                    <CalendarIcon className="h-4 w-4" />
                                     {t('component.data_table.filter.end_date_label', 'Tanggal Akhir')}
                                 </Label>
                                 <Popover>
                                     <PopoverTrigger asChild>
-                                        <Button variant="outline" className="w-full justify-start text-left font-normal text-xs h-9">
+                                        <Button variant="outline" className="w-full justify-start text-left font-normal text-sm h-9">
                                             {queryParam.end_date ? (
                                                 new Date(queryParam.end_date * 1000).toLocaleDateString('id-ID')
                                             ) : (

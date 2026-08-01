@@ -458,112 +458,112 @@ export default function Dashboard() {
                 {/* Key Metrics Cards */}
                 <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
                     {/* Revenue Card */}
-                    <Card className="bg-gradient-to-br from-primary/20 via-primary/5 to-card border-primary/20">
+                    <Card>
                         <CardHeader className="flex flex-row items-center justify-between pb-2">
-                            <span className="text-base font-bold text-muted-foreground">{i18next.t('page.dashboard.metrics.gross_revenue', 'Pendapatan Kotor')}</span>
-                            <IconCoin className="h-5 w-5 text-primary" />
+                            <span className="text-lg font-bold text-muted-foreground">{i18next.t('page.dashboard.metrics.gross_revenue', 'Pendapatan Kotor')}</span>
+                            <IconCoin className="h-6 w-6 text-primary" />
                         </CardHeader>
                         <CardContent>
-                            <div className="text-2xl font-bold tracking-tight text-primary">
+                            <div className="text-3xl font-extrabold tracking-tight text-primary">
                                 {isLoading || !dashboardData ? (
-                                    <div className="h-7 w-32 bg-muted animate-pulse rounded" />
+                                    <div className="h-9 w-36 bg-muted animate-pulse rounded" />
                                 ) : (
                                     formatCurrency(dashboardData.metrics.total_revenue)
                                 )}
                             </div>
-                            <p className="text-xs text-muted-foreground mt-1">{i18next.t('page.dashboard.metrics.gross_revenue_desc', 'Total seluruh invoice masuk')}</p>
+                            <p className="text-sm text-muted-foreground mt-1">{i18next.t('page.dashboard.metrics.gross_revenue_desc', 'Total seluruh invoice masuk')}</p>
                         </CardContent>
                     </Card>
 
                     {/* Margin / Net Profit Card */}
-                    <Card className={`bg-gradient-to-br ${dashboardData?.metrics?.total_net_profit < 0 ? 'from-rose-500/20 via-rose-500/5 border-rose-500/20' : 'from-emerald-500/20 via-emerald-500/5 border-emerald-500/20'} to-card`}>
+                    <Card>
                         <CardHeader className="flex flex-row items-center justify-between pb-2">
-                            <span className="text-base font-bold text-muted-foreground">{i18next.t('page.dashboard.metrics.net_profit', 'Margin')}</span>
-                            <IconTrendingUp className={`h-5 w-5 ${dashboardData?.metrics?.total_net_profit < 0 ? 'text-rose-500' : 'text-emerald-500'}`} />
+                            <span className="text-lg font-bold text-muted-foreground">{i18next.t('page.dashboard.metrics.net_profit', 'Margin')}</span>
+                            <IconTrendingUp className={`h-6 w-6 ${dashboardData?.metrics?.total_net_profit < 0 ? 'text-rose-500' : 'text-emerald-500'}`} />
                         </CardHeader>
                         <CardContent>
-                            <div className={`text-2xl font-bold tracking-tight ${dashboardData?.metrics?.total_net_profit < 0 ? 'text-rose-600 dark:text-rose-400' : 'text-emerald-600 dark:text-emerald-400'}`}>
+                            <div className={`text-3xl font-extrabold tracking-tight ${dashboardData?.metrics?.total_net_profit < 0 ? 'text-rose-600 dark:text-rose-400' : 'text-emerald-600 dark:text-emerald-400'}`}>
                                 {isLoading || !dashboardData ? (
-                                    <div className="h-7 w-32 bg-muted animate-pulse rounded" />
+                                    <div className="h-9 w-36 bg-muted animate-pulse rounded" />
                                 ) : dashboardData.metrics.total_net_profit < 0 ? (
                                     `-${formatCurrency(Math.abs(dashboardData.metrics.total_net_profit))}`
                                 ) : (
                                     formatCurrency(dashboardData.metrics.total_net_profit)
                                 )}
                             </div>
-                            <p className="text-xs text-muted-foreground mt-1">{i18next.t('page.dashboard.metrics.net_profit_desc', 'Selisih harga jual dengan modal')}</p>
+                            <p className="text-sm text-muted-foreground mt-1">{i18next.t('page.dashboard.metrics.net_profit_desc', 'Selisih harga jual dengan modal')}</p>
                         </CardContent>
                     </Card>
 
                     {/* Transactions Count Card */}
-                    <Card className="bg-gradient-to-br from-primary/15 via-primary/5 to-card border-primary/15">
+                    <Card>
                         <CardHeader className="flex flex-row items-center justify-between pb-2">
-                            <span className="text-base font-bold text-muted-foreground">{i18next.t('page.dashboard.metrics.transactions_count', 'Jumlah Transaksi')}</span>
-                            <IconReceipt className="h-5 w-5 text-primary" />
+                            <span className="text-lg font-bold text-muted-foreground">{i18next.t('page.dashboard.metrics.transactions_count', 'Jumlah Transaksi')}</span>
+                            <IconReceipt className="h-6 w-6 text-primary" />
                         </CardHeader>
                         <CardContent>
-                            <div className="text-2xl font-bold tracking-tight">
+                            <div className="text-3xl font-extrabold tracking-tight">
                                 {isLoading || !dashboardData ? (
-                                    <div className="h-7 w-20 bg-muted animate-pulse rounded" />
+                                    <div className="h-9 w-24 bg-muted animate-pulse rounded" />
                                 ) : (
                                     dashboardData.metrics.transactions_count.toLocaleString()
                                 )}
                             </div>
-                            <p className="text-xs text-muted-foreground mt-1">{i18next.t('page.dashboard.metrics.transactions_count_desc', 'Total nota checkout lunas')}</p>
+                            <p className="text-sm text-muted-foreground mt-1">{i18next.t('page.dashboard.metrics.transactions_count_desc', 'Total nota checkout lunas')}</p>
                         </CardContent>
                     </Card>
 
                     {/* Total Products Sold Card */}
-                    <Card className="bg-gradient-to-br from-primary/15 via-primary/5 to-card border-primary/15">
+                    <Card>
                         <CardHeader className="flex flex-row items-center justify-between pb-2">
-                            <span className="text-base font-bold text-muted-foreground">{i18next.t('page.dashboard.metrics.products_sold', 'Produk Terjual')}</span>
-                            <IconBox className="h-5 w-5 text-primary" />
+                            <span className="text-lg font-bold text-muted-foreground">{i18next.t('page.dashboard.metrics.products_sold', 'Produk Terjual')}</span>
+                            <IconBox className="h-6 w-6 text-primary" />
                         </CardHeader>
                         <CardContent>
-                            <div className="text-2xl font-bold tracking-tight">
+                            <div className="text-3xl font-extrabold tracking-tight">
                                 {isLoading || !dashboardData ? (
-                                    <div className="h-7 w-20 bg-muted animate-pulse rounded" />
+                                    <div className="h-9 w-24 bg-muted animate-pulse rounded" />
                                 ) : (
                                     dashboardData.metrics.products_sold.toLocaleString()
                                 )}
                             </div>
-                            <p className="text-xs text-muted-foreground mt-1">{i18next.t('page.dashboard.metrics.products_sold_desc', 'Item barang keluar toko')}</p>
+                            <p className="text-sm text-muted-foreground mt-1">{i18next.t('page.dashboard.metrics.products_sold_desc', 'Item barang keluar toko')}</p>
                         </CardContent>
                     </Card>
 
                     {/* Total Products Card */}
-                    <Card className="bg-gradient-to-br from-primary/15 via-primary/5 to-card border-primary/15">
+                    <Card>
                         <CardHeader className="flex flex-row items-center justify-between pb-2">
-                            <span className="text-base font-bold text-muted-foreground">{i18next.t('page.dashboard.metrics.total_products', 'Total Produk')}</span>
-                            <IconPackage className="h-5 w-5 text-primary" />
+                            <span className="text-lg font-bold text-muted-foreground">{i18next.t('page.dashboard.metrics.total_products', 'Total Produk')}</span>
+                            <IconPackage className="h-6 w-6 text-primary" />
                         </CardHeader>
                         <CardContent>
-                            <div className="text-2xl font-bold tracking-tight">
+                            <div className="text-3xl font-extrabold tracking-tight">
                                 {isLoading || !dashboardData ? (
-                                    <div className="h-7 w-20 bg-muted animate-pulse rounded" />
+                                    <div className="h-9 w-24 bg-muted animate-pulse rounded" />
                                 ) : (
                                     dashboardData.metrics.total_products.toLocaleString()
                                 )}
                             </div>
-                            <p className="text-xs text-muted-foreground mt-1">{i18next.t('page.dashboard.metrics.total_products_desc', 'Total inventori produk aktif')}</p>
+                            <p className="text-sm text-muted-foreground mt-1">{i18next.t('page.dashboard.metrics.total_products_desc', 'Total inventori produk aktif')}</p>
                         </CardContent>
                     </Card>
 
                     {/* Out of Stock Card */}
-                    <Card className="bg-gradient-to-br from-red-500/20 via-red-500/5 to-card border-red-500/20">
+                    <Card>
                         <CardHeader className="flex flex-row items-center justify-between pb-2">
-                            <span className="text-base font-bold text-muted-foreground">{i18next.t('page.dashboard.metrics.out_of_stock_products', 'Stok Habis')}</span>
-                            <IconAlertTriangle className="h-5 w-5 text-red-500" />
+                            <span className="text-lg font-bold text-muted-foreground">{i18next.t('page.dashboard.metrics.out_of_stock_products', 'Stok Habis')}</span>
+                            <IconAlertTriangle className="h-6 w-6 text-red-500" />
                         </CardHeader>
                         <CardContent>
-                            <div className="text-2xl font-bold tracking-tight text-red-600 dark:text-red-400">
+                            <div className="text-3xl font-extrabold tracking-tight text-red-600 dark:text-red-400">
                                 {isLoading || !dashboardData ? (
-                                    <div className="h-7 w-20 bg-muted animate-pulse rounded" />
+                                    <div className="h-9 w-24 bg-muted animate-pulse rounded" />
                                 ) : (
                                     dashboardData.metrics.out_of_stock_products.toLocaleString()
                                 )}
                             </div>
-                            <p className="text-xs text-muted-foreground mt-1">{i18next.t('page.dashboard.metrics.out_of_stock_products_desc', 'Produk perlu segera diisi')}</p>
+                            <p className="text-sm text-muted-foreground mt-1">{i18next.t('page.dashboard.metrics.out_of_stock_products_desc', 'Produk perlu segera diisi')}</p>
                         </CardContent>
                     </Card>
                 </div>

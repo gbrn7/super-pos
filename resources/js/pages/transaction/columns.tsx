@@ -79,7 +79,7 @@ export const columns = (props?: ColumnsProps): ColumnDef<Transaction>[] => {
                 <button
                     type="button"
                     onClick={() => props?.onDetailClick(row.original)}
-                    className="cursor-pointer text-left font-mono text-sm font-semibold whitespace-nowrap text-primary transition-colors hover:text-primary/80 hover:underline focus:outline-none"
+                    className="cursor-pointer text-left font-mono text-base font-semibold whitespace-nowrap text-primary transition-colors hover:text-primary/80 hover:underline focus:outline-none"
                     title={t(
                         'component.data_table.action_menu.detail_data_btn',
                         'Detail data',
