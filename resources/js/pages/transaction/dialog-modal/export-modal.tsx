@@ -11,6 +11,13 @@ import {
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
+import {
+    Popover,
+    PopoverContent,
+    PopoverTrigger,
+} from '@/components/ui/popover';
+import { Calendar as CalendarPicker } from '@/components/ui/calendar';
+import { Calendar as CalendarIcon } from 'lucide-react';
 import axiosInstance from '@/lib/axios';
 import { exportData as apiExportTransactions } from '@/routes/apiTransactions';
 import { handleApiError, showSuccessToast } from '@/lib/utils';
@@ -134,21 +141,57 @@ export function ExportModal({
                             <Label className="text-xs font-medium">
                                 {t('component.data_table.filter.start_date_label', 'Tanggal Mulai')}
                             </Label>
-                            <Input
-                                type="date"
-                                value={startDate}
-                                onChange={(e) => setStartDate(e.target.value)}
-                            />
+                            <Popover>
+                                <PopoverTrigger asChild>
+                                    <Button variant="outline" className="w-full justify-start text-left font-normal text-xs h-9">
+                                        {startDate ? (
+                                            new Date(startDate).toLocaleDateString('id-ID')
+                                        ) : (
+                                            <span className="text-muted-foreground">Pilih Tanggal</span>
+                                        )}
+                                    </Button>
+                                </PopoverTrigger>
+                                <PopoverContent className="w-auto p-0" align="start">
+                                    <CalendarPicker
+                                        mode="single"
+                                        selected={startDate ? new Date(startDate) : undefined}
+                                        onSelect={(date) => {
+                                            if (date) {
+                                                const iso = new Date(date.getTime() - date.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+                                                setStartDate(iso);
+                                            }
+                                        }}
+                                    />
+                                </PopoverContent>
+                            </Popover>
                         </div>
                         <div className="space-y-1.5">
                             <Label className="text-xs font-medium">
                                 {t('component.data_table.filter.end_date_label', 'Tanggal Akhir')}
                             </Label>
-                            <Input
-                                type="date"
-                                value={endDate}
-                                onChange={(e) => setEndDate(e.target.value)}
-                            />
+                            <Popover>
+                                <PopoverTrigger asChild>
+                                    <Button variant="outline" className="w-full justify-start text-left font-normal text-xs h-9">
+                                        {endDate ? (
+                                            new Date(endDate).toLocaleDateString('id-ID')
+                                        ) : (
+                                            <span className="text-muted-foreground">Pilih Tanggal</span>
+                                        )}
+                                    </Button>
+                                </PopoverTrigger>
+                                <PopoverContent className="w-auto p-0" align="start">
+                                    <CalendarPicker
+                                        mode="single"
+                                        selected={endDate ? new Date(endDate) : undefined}
+                                        onSelect={(date) => {
+                                            if (date) {
+                                                const iso = new Date(date.getTime() - date.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+                                                setEndDate(iso);
+                                            }
+                                        }}
+                                    />
+                                </PopoverContent>
+                            </Popover>
                         </div>
                     </div>
 

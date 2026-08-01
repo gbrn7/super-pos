@@ -25,6 +25,12 @@ import {
 } from '@/components/ui/select';
 import { Label } from '@/components/ui/label';
 import {
+    Popover,
+    PopoverContent,
+    PopoverTrigger,
+} from '@/components/ui/popover';
+import { Calendar as CalendarPicker } from '@/components/ui/calendar';
+import {
     Table,
     TableBody,
     TableCell,
@@ -200,27 +206,31 @@ export function DataTable<TData, TValue>({
                         <Calendar className="h-3.5 w-3.5" />
                         {t('page.profit_wallet.data_table.filters.start_date_label', 'Mulai')}
                     </Label>
-                    <Input
-                        type="date"
-                        value={
-                            queryParam.start_date
-                                ? new Date(queryParam.start_date * 1000)
-                                      .toISOString()
-                                      .slice(0, 10)
-                                : ''
-                        }
-                        onChange={(e) => {
-                            if (e.target.value) {
-                                const [year, month, day] = e.target.value.split('-').map(Number);
-                                const startDate = new Date(year, month - 1, day, 0, 0, 0, 0);
-                                onQueryParamChange('start_date', Math.floor(startDate.getTime() / 1000));
-                            } else {
-                                onQueryParamChange('start_date', null);
-                            }
-                        }}
-                        disabled={processing}
-                        className="w-full"
-                    />
+                    <Popover>
+                        <PopoverTrigger asChild>
+                            <Button variant="outline" disabled={processing} className="w-full justify-start text-left font-normal text-xs h-9">
+                                {queryParam.start_date ? (
+                                    new Date(queryParam.start_date * 1000).toLocaleDateString('id-ID')
+                                ) : (
+                                    <span className="text-muted-foreground">{t('page.profit_wallet.data_table.filters.start_date_label', 'Mulai')}</span>
+                                )}
+                            </Button>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-auto p-0" align="start">
+                            <CalendarPicker
+                                mode="single"
+                                selected={queryParam.start_date ? new Date(queryParam.start_date * 1000) : undefined}
+                                onSelect={(date) => {
+                                    if (date) {
+                                        const startDate = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0, 0, 0);
+                                        onQueryParamChange('start_date', Math.floor(startDate.getTime() / 1000));
+                                    } else {
+                                        onQueryParamChange('start_date', null);
+                                    }
+                                }}
+                            />
+                        </PopoverContent>
+                    </Popover>
                 </div>
 
                 {/* Tanggal Akhir */}
@@ -229,27 +239,31 @@ export function DataTable<TData, TValue>({
                         <Calendar className="h-3.5 w-3.5" />
                         {t('page.profit_wallet.data_table.filters.end_date_label', 'Hingga')}
                     </Label>
-                    <Input
-                        type="date"
-                        value={
-                            queryParam.end_date
-                                ? new Date(queryParam.end_date * 1000)
-                                      .toISOString()
-                                      .slice(0, 10)
-                                : ''
-                        }
-                        onChange={(e) => {
-                            if (e.target.value) {
-                                const [year, month, day] = e.target.value.split('-').map(Number);
-                                const endDate = new Date(year, month - 1, day, 23, 59, 59, 999);
-                                onQueryParamChange('end_date', Math.floor(endDate.getTime() / 1000));
-                            } else {
-                                onQueryParamChange('end_date', null);
-                            }
-                        }}
-                        disabled={processing}
-                        className="w-full"
-                    />
+                    <Popover>
+                        <PopoverTrigger asChild>
+                            <Button variant="outline" disabled={processing} className="w-full justify-start text-left font-normal text-xs h-9">
+                                {queryParam.end_date ? (
+                                    new Date(queryParam.end_date * 1000).toLocaleDateString('id-ID')
+                                ) : (
+                                    <span className="text-muted-foreground">{t('page.profit_wallet.data_table.filters.end_date_label', 'Hingga')}</span>
+                                )}
+                            </Button>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-auto p-0" align="start">
+                            <CalendarPicker
+                                mode="single"
+                                selected={queryParam.end_date ? new Date(queryParam.end_date * 1000) : undefined}
+                                onSelect={(date) => {
+                                    if (date) {
+                                        const endDate = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 23, 59, 59, 999);
+                                        onQueryParamChange('end_date', Math.floor(endDate.getTime() / 1000));
+                                    } else {
+                                        onQueryParamChange('end_date', null);
+                                    }
+                                }}
+                            />
+                        </PopoverContent>
+                    </Popover>
                 </div>
             </div>
 

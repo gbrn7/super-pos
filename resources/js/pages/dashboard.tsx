@@ -34,6 +34,14 @@ import {
     SelectValue,
 } from '@/components/ui/select';
 import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import {
+    Popover,
+    PopoverContent,
+    PopoverTrigger,
+} from '@/components/ui/popover';
+import { Calendar } from '@/components/ui/calendar';
+import type { DateRange } from 'react-day-picker';
 import {
     Table,
     TableBody,
@@ -119,6 +127,7 @@ const paymentChartShades = [
 
 export default function Dashboard() {
     const [preset, setPreset] = React.useState('this_month');
+    const [dateRange, setDateRange] = React.useState<DateRange | undefined>(undefined);
     const [customRange, setCustomRange] = React.useState({
         start_date: '',
         end_date: '',
@@ -366,12 +375,12 @@ export default function Dashboard() {
         }
     }, [currentRange, activeTab, page, rowsPerPage]);
 
-    // Handle manual apply for custom range
-    const handleCustomRangeSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        if (customRange.start_date && customRange.end_date) {
-            const startTs = Math.floor(new Date(`${customRange.start_date}T00:00:00`).getTime() / 1000);
-            const endTs = Math.floor(new Date(`${customRange.end_date}T23:59:59`).getTime() / 1000);
+    // Handle manual apply for custom range via Shadcn Calendar
+    const handleDateRangeSelect = (range: DateRange | undefined) => {
+        setDateRange(range);
+        if (range?.from && range?.to) {
+            const startTs = Math.floor(new Date(range.from.getFullYear(), range.from.getMonth(), range.from.getDate(), 0, 0, 0, 0).getTime() / 1000);
+            const endTs = Math.floor(new Date(range.to.getFullYear(), range.to.getMonth(), range.to.getDate(), 23, 59, 59, 999).getTime() / 1000);
             setCurrentRange({ start_date: startTs, end_date: endTs });
             setPage(1);
         }
@@ -406,26 +415,33 @@ export default function Dashboard() {
                         </Select>
 
                         {preset === 'custom' && (
-                            <form onSubmit={handleCustomRangeSubmit} className="flex items-center gap-2">
-                                <Input
-                                    type="date"
-                                    value={customRange.start_date}
-                                    onChange={e => setCustomRange(prev => ({ ...prev, start_date: e.target.value }))}
-                                    required
-                                    className="w-36 h-9"
-                                />
-                                <span className="text-muted-foreground text-sm">{i18next.t('page.dashboard.presets.to', 's/d')}</span>
-                                <Input
-                                    type="date"
-                                    value={customRange.end_date}
-                                    onChange={e => setCustomRange(prev => ({ ...prev, end_date: e.target.value }))}
-                                    required
-                                    className="w-36 h-9"
-                                />
-                                <button type="submit" className="px-3 py-1.5 bg-primary text-primary-foreground hover:bg-primary/95 text-xs font-semibold rounded-lg transition-colors cursor-pointer">
-                                    {i18next.t('page.dashboard.presets.apply', 'Terapkan')}
-                                </button>
-                            </form>
+                            <Popover>
+                                <PopoverTrigger asChild>
+                                    <Button variant="outline" className="h-9 min-w-[240px] justify-start text-left font-normal">
+                                        {dateRange?.from ? (
+                                            dateRange.to ? (
+                                                <span>
+                                                    {dateRange.from.toLocaleDateString('id-ID')} - {dateRange.to.toLocaleDateString('id-ID')}
+                                                </span>
+                                            ) : (
+                                                <span>{dateRange.from.toLocaleDateString('id-ID')}</span>
+                                            )
+                                        ) : (
+                                            <span className="text-muted-foreground">{i18next.t('page.dashboard.presets.custom', 'Pilih Rentang Tanggal')}</span>
+                                        )}
+                                    </Button>
+                                </PopoverTrigger>
+                                <PopoverContent className="w-auto p-0" align="end">
+                                    <Calendar
+                                        initialFocus
+                                        mode="range"
+                                        defaultMonth={dateRange?.from}
+                                        selected={dateRange}
+                                        onSelect={handleDateRangeSelect}
+                                        numberOfMonths={2}
+                                    />
+                                </PopoverContent>
+                            </Popover>
                         )}
 
                         {isLoading && <IconLoader className="animate-spin text-primary size-5" />}
