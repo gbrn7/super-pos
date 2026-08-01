@@ -407,7 +407,7 @@ export default function Dashboard() {
 
                     <div className="flex flex-wrap items-center gap-3">
                         <Select value={preset} onValueChange={setPreset}>
-                            <SelectTrigger className="w-[180px]">
+                            <SelectTrigger className="w-45">
                                 <IconCalendar className="mr-2 h-4 w-4 text-muted-foreground" />
                                 <SelectValue placeholder={i18next.t('page.dashboard.filter_placeholder', 'Pilih Filter Tanggal')} />
                             </SelectTrigger>
@@ -424,7 +424,7 @@ export default function Dashboard() {
                         {preset === 'custom' && (
                             <Popover>
                                 <PopoverTrigger asChild>
-                                    <Button variant="outline" className="h-9 min-w-[240px] justify-start text-left font-normal">
+                                    <Button variant="outline" className="h-9 min-w-60 justify-start text-left font-normal">
                                         {dateRange?.from ? (
                                             dateRange.to ? (
                                                 <span>
@@ -440,8 +440,7 @@ export default function Dashboard() {
                                 </PopoverTrigger>
                                 <PopoverContent className="w-auto p-0" align="end">
                                     <Calendar
-                                        initialFocus
-                                        mode="range"
+                                        mode={"range" as any}
                                         defaultMonth={dateRange?.from}
                                         selected={dateRange}
                                         onSelect={handleDateRangeSelect}
@@ -579,9 +578,9 @@ export default function Dashboard() {
                         </CardHeader>
                         <CardContent>
                             {isLoading || !dashboardData ? (
-                                <div className="h-[250px] w-full bg-muted animate-pulse rounded-lg" />
+                                <div className="h-62.5 w-full bg-muted animate-pulse rounded-lg" />
                             ) : !dashboardData?.trend_chart || dashboardData.trend_chart.length === 0 ? (
-                                <div className="h-[250px] w-full flex items-center justify-center border border-dashed rounded-lg text-muted-foreground">
+                                <div className="h-62.5 w-full flex items-center justify-center border border-dashed rounded-lg text-muted-foreground">
                                     {i18next.t('page.dashboard.charts.no_data', 'Tidak ada data untuk periode ini')}
                                 </div>
                             ) : (
@@ -641,14 +640,14 @@ export default function Dashboard() {
                         </CardHeader>
                         <CardContent className="flex-1 flex flex-col justify-center">
                             {isLoading || !dashboardData ? (
-                                <div className="h-[200px] w-full bg-muted animate-pulse rounded-lg" />
+                                <div className="h-50 w-full bg-muted animate-pulse rounded-lg" />
                             ) : !dashboardData.metrics?.revenue_breakdown || (dashboardData.metrics.revenue_breakdown.profit === 0 && dashboardData.metrics.revenue_breakdown.cost === 0) ? (
-                                <div className="h-[200px] w-full flex items-center justify-center border border-dashed rounded-lg text-muted-foreground text-xs">
+                                <div className="h-50 w-full flex items-center justify-center border border-dashed rounded-lg text-muted-foreground text-xs">
                                     {i18next.t('page.dashboard.charts.no_data', 'Tidak ada data untuk periode ini')}
                                 </div>
                             ) : (
                                 <div className="space-y-4">
-                                    <ChartContainer config={revenueBreakdownConfig} className="mx-auto aspect-square h-[170px]">
+                                    <ChartContainer config={revenueBreakdownConfig} className="mx-auto aspect-square h-42.5">
                                         <Doughnut
                                             data={{
                                                 labels: [
@@ -726,9 +725,9 @@ export default function Dashboard() {
                         </CardHeader>
                         <CardContent>
                             {isLoading || !dashboardData ? (
-                                <div className="h-[250px] w-full bg-muted animate-pulse rounded-lg" />
+                                <div className="h-62.5 w-full bg-muted animate-pulse rounded-lg" />
                             ) : !dashboardData?.trend_chart || dashboardData.trend_chart.length === 0 ? (
-                                <div className="h-[250px] w-full flex items-center justify-center border border-dashed rounded-lg text-muted-foreground">
+                                <div className="h-62.5 w-full flex items-center justify-center border border-dashed rounded-lg text-muted-foreground">
                                     {i18next.t('page.dashboard.charts.no_data', 'Tidak ada data untuk periode ini')}
                                 </div>
                             ) : (
@@ -773,15 +772,15 @@ export default function Dashboard() {
                         </CardHeader>
                         <CardContent className="flex-1 flex flex-col justify-between pb-4">
                             {isLoading || !dashboardData ? (
-                                <div className="h-[250px] w-full bg-muted animate-pulse rounded-lg" />
+                                <div className="h-62.5 w-full bg-muted animate-pulse rounded-lg" />
                             ) : paymentChartData.length === 0 ? (
-                                <div className="h-[250px] w-full flex items-center justify-center border border-dashed rounded-lg text-muted-foreground">
+                                <div className="h-62.5 w-full flex items-center justify-center border border-dashed rounded-lg text-muted-foreground">
                                     {i18next.t('page.dashboard.charts.no_transaction_data', 'Tidak ada data transaksi')}
                                 </div>
                             ) : (
                                 <>
-                                    <div className="mx-auto aspect-square max-h-[170px] w-full">
-                                        <ChartContainer config={paymentConfig} className="mx-auto aspect-square max-h-[170px]">
+                                    <div className="mx-auto aspect-square max-h-42.5 w-full">
+                                        <ChartContainer config={paymentConfig} className="mx-auto aspect-square max-h-42.5">
                                             <Doughnut
                                                 data={{
                                                     labels: paymentChartData.map((item: any) => item.name),
@@ -836,15 +835,15 @@ export default function Dashboard() {
                         </CardHeader>
                         <CardContent className="flex-1 flex flex-col justify-between pb-4">
                             {isLoading || !dashboardData ? (
-                                <div className="h-[250px] w-full bg-muted animate-pulse rounded-lg" />
+                                <div className="h-62.5 w-full bg-muted animate-pulse rounded-lg" />
                             ) : categoryChartData.length === 0 ? (
-                                <div className="h-[250px] w-full flex items-center justify-center border border-dashed rounded-lg text-muted-foreground">
+                                <div className="h-62.5 w-full flex items-center justify-center border border-dashed rounded-lg text-muted-foreground">
                                     {i18next.t('page.dashboard.charts.no_category_data', 'Tidak ada data kategori')}
                                 </div>
                             ) : (
                                 <>
-                                    <div className="mx-auto aspect-square max-h-[170px] w-full">
-                                        <ChartContainer config={categoryConfig} className="mx-auto aspect-square max-h-[170px]">
+                                    <div className="mx-auto aspect-square max-h-42.5 w-full">
+                                        <ChartContainer config={categoryConfig} className="mx-auto aspect-square max-h-42.5">
                                             <Doughnut
                                                 data={{
                                                     labels: categoryChartData.map((item: any) => item.name),
@@ -899,9 +898,9 @@ export default function Dashboard() {
                         </CardHeader>
                         <CardContent>
                             {isLoading || !dashboardData ? (
-                                <div className="h-[250px] w-full bg-muted animate-pulse rounded-lg" />
+                                <div className="h-62.5 w-full bg-muted animate-pulse rounded-lg" />
                             ) : !dashboardData?.top_products || dashboardData.top_products.length === 0 ? (
-                                <div className="h-[250px] w-full flex items-center justify-center border border-dashed rounded-lg text-muted-foreground">
+                                <div className="h-62.5 w-full flex items-center justify-center border border-dashed rounded-lg text-muted-foreground">
                                     {i18next.t('page.dashboard.charts.no_product_data', 'Tidak ada data produk')}
                                 </div>
                             ) : (
