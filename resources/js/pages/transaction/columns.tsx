@@ -264,7 +264,7 @@ export const columns = (props?: ColumnsProps): ColumnDef<Transaction>[] => {
                         <DropdownMenuItem
                             onClick={() => props?.onDetailClick(row.original)}
                         >
-                            <FileText className="mr-2 h-4 w-4" />
+                            <FileText className="mr-2 h-4 w-4 text-white" />
                             {t(
                                 'component.data_table.action_menu.detail_data_btn',
                                 'Detail data',
@@ -274,7 +274,7 @@ export const columns = (props?: ColumnsProps): ColumnDef<Transaction>[] => {
                             <DropdownMenuItem
                                 onClick={() => props.onReturnClick!(row.original)}
                             >
-                                <RotateCcw className="mr-2 h-4 w-4" />
+                                <RotateCcw className="mr-2 h-4 w-4 text-white" />
                                 {t(
                                     'component.data_table.action_menu.return_btn',
                                     'Retur Barang',

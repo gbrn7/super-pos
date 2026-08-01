@@ -151,7 +151,7 @@ export const columns = (props?: ColumnsProps): ColumnDef<PaymentMethod>[] => {
                         <DropdownMenuItem
                             onClick={() => props?.onDetailClick(row.original)}
                         >
-                            <FileText className="mr-0.5 h-4 w-4" />
+                            <FileText className="mr-0.5 h-4 w-4 text-white" />
                             {t(
                                 'component.data_table.action_menu.detail_data_btn',
                                 'Detail data',
@@ -161,7 +161,7 @@ export const columns = (props?: ColumnsProps): ColumnDef<PaymentMethod>[] => {
                             <DropdownMenuItem
                                 onClick={() => props?.onEditClick(row.original)}
                             >
-                                <Pencil className="mr-0.5 h-4 w-4" />
+                                <Pencil className="mr-0.5 h-4 w-4 text-white" />
                                 {t(
                                     'component.data_table.action_menu.edit_data_btn',
                                     'Edit data',
