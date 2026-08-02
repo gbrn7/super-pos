@@ -143,7 +143,7 @@ export const columns = (props?: ColumnsProps): ColumnDef<Role>[] => {
                         </DropdownMenuLabel>
                         <Link href={detailRoute(row.original.id).url}>
                             <DropdownMenuItem>
-                                <FileText className="mr-0.5 h-4 w-4 text-white" />
+                                <FileText className="mr-0.5 h-4 w-4" />
                                 {t(
                                     'component.data_table.action_menu.detail_data_btn',
                                     'Detail data',
@@ -153,7 +153,7 @@ export const columns = (props?: ColumnsProps): ColumnDef<Role>[] => {
                         <Can permission={PERMISSIONENUMS.ROLE.UPDATE}>
                             <Link href={editRole(row.original.id).url}>
                                 <DropdownMenuItem>
-                                    <Pencil className="mr-0.5 h-4 w-4 text-white" />
+                                    <Pencil className="mr-0.5 h-4 w-4" />
                                     {t(
                                         'component.data_table.action_menu.edit_data_btn',
                                         'Edit data',

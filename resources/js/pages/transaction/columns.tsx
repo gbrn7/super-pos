@@ -264,22 +264,24 @@ export const columns = (props?: ColumnsProps): ColumnDef<Transaction>[] => {
                         <DropdownMenuItem
                             onClick={() => props?.onDetailClick(row.original)}
                         >
-                            <FileText className="mr-2 h-4 w-4 text-white" />
+                            <FileText className="mr-2 h-4 w-4" />
                             {t(
                                 'component.data_table.action_menu.detail_data_btn',
-                                'Detail data',
+                                'Detail Transaksi',
                             )}
                         </DropdownMenuItem>
                         {props?.onReturnClick && (
-                            <DropdownMenuItem
-                                onClick={() => props.onReturnClick!(row.original)}
-                            >
-                                <RotateCcw className="mr-2 h-4 w-4 text-white" />
-                                {t(
-                                    'component.data_table.action_menu.return_btn',
-                                    'Retur Barang',
-                                )}
-                            </DropdownMenuItem>
+                            <Can permission={PERMISSIONENUMS.RETURN.CREATE}>
+                                <DropdownMenuItem
+                                    onClick={() => props.onReturnClick!(row.original)}
+                                >
+                                    <RotateCcw className="mr-2 h-4 w-4" />
+                                    {t(
+                                        'component.data_table.action_menu.return_btn',
+                                        'Retur Barang',
+                                    )}
+                                </DropdownMenuItem>
+                            </Can>
                         )}
                     </DropdownMenuContent>
                 </DropdownMenu>

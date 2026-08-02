@@ -290,7 +290,7 @@ export const columns = (props?: ColumnsProps): ColumnDef<MasterProduct>[] => {
                         <DropdownMenuItem
                             onClick={() => props?.onDetailClick(row.original)}
                         >
-                            <FileText className="mr-0.5 h-4 w-4 text-white" />
+                            <FileText className="mr-0.5 h-4 w-4" />
                             {t(
                                 'component.data_table.action_menu.detail_data_btn',
                                 'Detail data',
@@ -302,7 +302,7 @@ export const columns = (props?: ColumnsProps): ColumnDef<MasterProduct>[] => {
                                 props?.onAddProductsClick(row.original)
                             }
                         >
-                            <Plus className="mr-0.5 h-4 w-4 text-white" />
+                            <Plus className="mr-0.5 h-4 w-4" />
                             {t(
                                 'page.master_product.dialog_modal.action_menu.add_products_btn',
                                 'Tambah Produk',
@@ -312,7 +312,7 @@ export const columns = (props?: ColumnsProps): ColumnDef<MasterProduct>[] => {
                             <DropdownMenuItem
                                 onClick={() => props?.onEditClick(row.original)}
                             >
-                                <Pencil className="mr-0.5 h-4 w-4 text-white" />
+                                <Pencil className="mr-0.5 h-4 w-4" />
                                 {t(
                                     'component.data_table.action_menu.edit_data_btn',
                                     'Edit data',
