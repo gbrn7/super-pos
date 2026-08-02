@@ -1507,5 +1507,49 @@
     "payment_method_name": {
         "Cash": "Tunai",
         "Qris": "QRIS"
+    },
+    "setup": {
+        "title": "Setup Super POS",
+        "subtitle": "Ikuti panduan setup cepat untuk menginisialisasi aplikasi Anda.",
+        "stepper": {
+            "database": "Database",
+            "store": "Detail Toko",
+            "owner": "Akun Owner"
+        },
+        "step1": {
+            "title": "Langkah 1: Pengaturan Database & Migrasi",
+            "description": "Uji koneksi database dan inisialisasi tabel.",
+            "db_config": "Konfigurasi Database",
+            "driver": "Driver",
+            "host": "Host",
+            "port": "Port",
+            "database_name": "Nama Database",
+            "username": "Username",
+            "password": "Password",
+            "test_connection": "Uji Koneksi Database",
+            "run_migration": "Jalankan Migrasi & Seed Data",
+            "migrated_seeded": "Database Berhasil Di-migrate & Di-seed",
+            "next_step": "Langkah Berikutnya"
+        },
+        "step2": {
+            "title": "Langkah 2: Detail Toko",
+            "description": "Masukkan informasi bisnis/toko Anda.",
+            "store_name": "Nama Toko *",
+            "store_address": "Alamat",
+            "currency": "Simbol Mata Uang",
+            "timezone": "Zona Waktu",
+            "back": "Kembali",
+            "next_step": "Langkah Berikutnya"
+        },
+        "step3": {
+            "title": "Langkah 3: Buat Akun Owner",
+            "description": "Buat akun superadmin untuk akses masuk aplikasi.",
+            "full_name": "Nama Lengkap *",
+            "email": "Alamat Email *",
+            "password": "Password *",
+            "confirm_password": "Konfirmasi Password *",
+            "back": "Kembali",
+            "complete_launch": "Selesaikan Setup & Buka POS"
+        }
     }
 }

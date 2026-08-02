@@ -1512,5 +1512,49 @@
     "payment_method_name": {
         "Cash": "Cash",
         "Qris": "QRIS"
+    },
+    "setup": {
+        "title": "Super POS Setup",
+        "subtitle": "Follow the quick setup guide to initialize your application.",
+        "stepper": {
+            "database": "Database",
+            "store": "Store Details",
+            "owner": "Owner Account"
+        },
+        "step1": {
+            "title": "Step 1: Database Setup & Migration",
+            "description": "Test database connection and initialize tables.",
+            "db_config": "Database Configuration",
+            "driver": "Driver",
+            "host": "Host",
+            "port": "Port",
+            "database_name": "Database Name",
+            "username": "Username",
+            "password": "Password",
+            "test_connection": "Test Database Connection",
+            "run_migration": "Run Migration & Seed Data",
+            "migrated_seeded": "Database Migrated & Seeded",
+            "next_step": "Next Step"
+        },
+        "step2": {
+            "title": "Step 2: Store Details",
+            "description": "Enter your business information.",
+            "store_name": "Store Name *",
+            "store_address": "Address",
+            "currency": "Currency Symbol",
+            "timezone": "Timezone",
+            "back": "Back",
+            "next_step": "Next Step"
+        },
+        "step3": {
+            "title": "Step 3: Create Owner Account",
+            "description": "Setup superadmin account for login access.",
+            "full_name": "Full Name *",
+            "email": "Email Address *",
+            "password": "Password *",
+            "confirm_password": "Confirm Password *",
+            "back": "Back",
+            "complete_launch": "Complete Setup & Launch POS"
+        }
     }
 }
