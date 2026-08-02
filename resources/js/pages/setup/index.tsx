@@ -116,13 +116,13 @@ export default function SetupWizard() {
                 </Button>
             </div>
 
-            <div className="w-full max-w-2xl mb-6 text-center">
-                <h1 className="text-3xl font-bold tracking-tight text-white mb-2">{t('setup.title')}</h1>
+            <div className="w-full max-w-2xl mb-3 text-center">
+                <h1 className="text-3xl font-bold tracking-tight text-white mb-1">{t('setup.title')}</h1>
                 <p className="text-slate-400">{t('setup.subtitle')}</p>
             </div>
 
             {/* Stepper Navigation */}
-            <div className="w-full max-w-2xl flex items-center justify-between mb-8 px-4">
+            <div className="w-full max-w-2xl flex items-center justify-between mb-4 px-4">
                 <div className={`flex items-center space-x-2 ${currentStep >= 1 ? 'text-primary' : 'text-slate-600'}`}>
                     <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold ${currentStep === 1 ? 'bg-primary text-primary-foreground' : currentStep > 1 ? 'bg-emerald-600 text-white' : 'bg-slate-800'}`}>
                         1
