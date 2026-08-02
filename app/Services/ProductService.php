@@ -90,7 +90,13 @@ class ProductService implements ProductServiceInterface
                 ->headline()
                 ->replaceMatches('/[^A-Z]/', '').'-'.strtoupper(Str::random(8));
 
-            if (! empty($data['barcode'])) {
+            if (empty($data['barcode'])) {
+                do {
+                    $generatedBarcode = strtoupper(Str::random(4)).mt_rand(1000000000000, 9999999999999);
+                } while ($this->productRepository->getByBarcode($generatedBarcode) !== null);
+
+                $data['barcode'] = $generatedBarcode;
+            } else {
                 $product = $this->productRepository->getByBarcode($data['barcode']);
 
                 if (isset($product)) {

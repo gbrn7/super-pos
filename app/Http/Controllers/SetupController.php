@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Support\Enums\RoleEnums;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -136,7 +137,7 @@ class SetupController extends Controller
 
             // Ensure superadmin role exists and assign to user
             if (class_exists(Role::class)) {
-                $role = Role::firstOrCreate(['name' => 'superadmin']);
+                $role = Role::firstOrCreate(['name' => RoleEnums::SUPER_ADMIN->value]);
                 if (method_exists($user, 'assignRole')) {
                     $user->assignRole($role);
                 }

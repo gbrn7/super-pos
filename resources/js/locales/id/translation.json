@@ -1509,7 +1509,7 @@
         "Qris": "QRIS"
     },
     "setup": {
-        "title": "Setup Super POS",
+        "title": "Setup Praktis POS",
         "subtitle": "Ikuti panduan setup cepat untuk menginisialisasi aplikasi Anda.",
         "stepper": {
             "database": "Database",

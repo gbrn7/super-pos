@@ -1514,7 +1514,7 @@
         "Qris": "QRIS"
     },
     "setup": {
-        "title": "Super POS Setup",
+        "title": "Praktis POS Setup",
         "subtitle": "Follow the quick setup guide to initialize your application.",
         "stepper": {
             "database": "Database",
