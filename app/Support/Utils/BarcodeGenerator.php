@@ -10,11 +10,11 @@ class BarcodeGenerator
     public static function generateHtml(string $code): string
     {
         $bars = self::code128ToBars($code);
-        $html = '<div style="display: inline-block; white-space: nowrap; height: 36px; background-color: #000000; padding: 0; margin: 0 auto;">';
+        $html = '<div style="display: inline-block; white-space: nowrap; height: 36px; padding: 0; margin: 0 auto;">';
 
         foreach ($bars as $bar) {
             $color = $bar['color'] === 'B' ? '#000000' : '#ffffff';
-            $width = $bar['width'] * 1.5;
+            $width = $bar['width'] * 0.75;
             $html .= sprintf(
                 '<div style="display: inline-block; width: %.1fpx; height: 100%%; background-color: %s;"></div>',
                 $width,

@@ -1,4 +1,4 @@
-import { AlertCircle, Barcode as BarcodeIcon } from 'lucide-react';
+import { AlertCircle, Barcode as BarcodeIcon, Minus, Plus } from 'lucide-react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import ReactBarcode from 'react-barcode';
@@ -129,7 +129,7 @@ export function PrintBarcodeDialog({
                             {product?.name}
                         </span>
                         {hasBarcode ? (
-                            <div className="flex flex-col items-center justify-center rounded-md bg-white p-3 shadow-sm text-black">
+                            <div className="flex flex-col items-center justify-center rounded-md bg-white p-1.5 shadow-sm text-black">
                                 <ReactBarcode
                                     value={product!.barcode}
                                     format="CODE128"
@@ -150,25 +150,45 @@ export function PrintBarcodeDialog({
                         )}
                     </div>
 
-                    <div className="grid grid-cols-4 items-center gap-4">
-                        <Label htmlFor="quantity" className="text-right">
+                    <div className="flex flex-col gap-2">
+                        <Label htmlFor="quantity" className="text-center">
                             {t(
                                 'page.product.dialog_modal.print_barcode_dialog.quantity_label',
                                 'Jumlah Barcode',
                             )}
                         </Label>
-                        <Input
-                            id="quantity"
-                            type="number"
-                            min={1}
-                            max={500}
-                            disabled={!hasBarcode || loading}
-                            value={quantity}
-                            onChange={(e) =>
-                                setQuantity(Number(e.target.value))
-                            }
-                            className="col-span-3"
-                        />
+                        <div className="flex items-center gap-2">
+                            <Button
+                                type="button"
+                                variant="outline"
+                                size="icon"
+                                disabled={!hasBarcode || loading || quantity <= 1}
+                                onClick={() => setQuantity((prev) => Math.max(1, prev - 1))}
+                            >
+                                <Minus className="h-4 w-4" />
+                            </Button>
+                            <Input
+                                id="quantity"
+                                type="number"
+                                min={1}
+                                max={500}
+                                disabled={!hasBarcode || loading}
+                                value={quantity}
+                                onChange={(e) =>
+                                    setQuantity(Math.max(1, Math.min(500, Number(e.target.value) || 1)))
+                                }
+                                className="text-center font-medium"
+                            />
+                            <Button
+                                type="button"
+                                variant="outline"
+                                size="icon"
+                                disabled={!hasBarcode || loading || quantity >= 500}
+                                onClick={() => setQuantity((prev) => Math.min(500, prev + 1))}
+                            >
+                                <Plus className="h-4 w-4" />
+                            </Button>
+                        </div>
                     </div>
                 </div>
 

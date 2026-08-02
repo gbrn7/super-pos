@@ -27,9 +27,9 @@
 
         .barcode-card {
             display: inline-block;
-            width: 30%;
-            margin: 1%;
-            padding: 10px 8px;
+            width: 31%;
+            margin: 0.5%;
+            padding: 4px 2px;
             border: 1px dashed #9ca3af;
             border-radius: 4px;
             box-sizing: border-box;
@@ -39,30 +39,23 @@
 
         .product-name {
             font-weight: bold;
-            font-size: 10px;
-            height: 24px;
-            line-height: 1.2;
+            font-size: 9px;
+            height: 18px;
+            line-height: 1.1;
             overflow: hidden;
             text-overflow: ellipsis;
         }
 
         .barcode-wrapper {
-            margin: 8px auto 4px auto;
+            margin: 2px auto 1px auto;
             text-align: center;
         }
 
         .barcode-code {
-            font-size: 9px;
+            font-size: 8px;
             color: #374151;
             font-family: monospace;
             margin-top: 2px;
-        }
-
-        .product-price {
-            font-weight: bold;
-            font-size: 11px;
-            margin-top: 4px;
-            color: #059669;
         }
     </style>
 </head>
@@ -76,7 +69,6 @@
                     {!! $barcodeHtml !!}
                 </div>
                 <div class="barcode-code">{{ $product->barcode }}</div>
-                <div class="product-price">Rp {{ number_format((float) $product->price, 0, ',', '.') }}</div>
             </div>
         @endfor
     </div>
