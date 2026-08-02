@@ -121,18 +121,19 @@ export function PrintBarcodeDialog({
 
                 <div className="grid gap-4 py-2">
                     <div className="flex flex-col items-center justify-center rounded-lg border p-4 bg-muted/20">
-                        <span className="font-semibold text-base mb-1">
+                        <span className="font-semibold text-base mb-2">
                             {product?.name}
                         </span>
                         {hasBarcode ? (
-                            <div className="flex flex-col items-center">
+                            <div className="flex flex-col items-center justify-center rounded-md bg-white p-3 shadow-sm text-black">
                                 <ReactBarcode
                                     value={product!.barcode}
                                     format="CODE128"
                                     width={1.8}
                                     height={50}
                                     fontSize={12}
-                                    background="transparent"
+                                    lineColor="#000000"
+                                    background="#ffffff"
                                 />
                             </div>
                         ) : (
