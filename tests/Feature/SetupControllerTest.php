@@ -18,6 +18,17 @@ test('test-db endpoint returns database connection status', function () {
     $response->assertOk()->assertJson(['success' => true]);
 });
 
+test('test-db endpoint accepts and updates DB credentials', function () {
+    $payload = [
+        'db_connection' => 'sqlite',
+        'db_database' => ':memory:',
+    ];
+
+    $response = $this->postJson(route('setup.test-db'), $payload);
+
+    $response->assertOk()->assertJson(['success' => true]);
+});
+
 test('complete endpoint creates owner account and marks app installed', function () {
     $payload = [
         'store_name' => 'My POS Store',

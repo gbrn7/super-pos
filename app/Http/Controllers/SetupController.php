@@ -22,14 +22,71 @@ class SetupController extends Controller
         return Inertia::render('setup/index');
     }
 
-    public function testDatabase(): JsonResponse
+    public function testDatabase(Request $request): JsonResponse
     {
+        $validated = $request->validate([
+            'db_connection' => 'nullable|string',
+            'db_host' => 'nullable|string',
+            'db_port' => 'nullable|string',
+            'db_database' => 'nullable|string',
+            'db_username' => 'nullable|string',
+            'db_password' => 'nullable|string',
+        ]);
+
+        $connection = $validated['db_connection'] ?? config('database.default', 'pgsql');
+
+        if ($connection !== 'sqlite') {
+            $host = $validated['db_host'] ?? config("database.connections.{$connection}.host", '127.0.0.1');
+            $port = $validated['db_port'] ?? config("database.connections.{$connection}.port", '5433');
+            $database = $validated['db_database'] ?? config("database.connections.{$connection}.database", 'super_pos');
+            $username = $validated['db_username'] ?? config("database.connections.{$connection}.username", 'postgres');
+            $password = $validated['db_password'] ?? config("database.connections.{$connection}.password", 'admin');
+
+            config([
+                "database.connections.{$connection}.host" => $host,
+                "database.connections.{$connection}.port" => $port,
+                "database.connections.{$connection}.database" => $database,
+                "database.connections.{$connection}.username" => $username,
+                "database.connections.{$connection}.password" => $password,
+            ]);
+        } else {
+            $database = $validated['db_database'] ?? config('database.connections.sqlite.database');
+            config(['database.connections.sqlite.database' => $database]);
+        }
+
         try {
-            DB::connection()->getPdo();
+            DB::purge($connection);
+            DB::connection($connection)->getPdo();
+
+            // Update .env file
+            $envPath = base_path('.env');
+            if (file_exists($envPath)) {
+                $envContent = file_get_contents($envPath);
+                $replacements = [
+                    'DB_CONNECTION' => $connection,
+                ];
+
+                if ($connection !== 'sqlite') {
+                    $replacements['DB_HOST'] = $host;
+                    $replacements['DB_PORT'] = $port;
+                    $replacements['DB_DATABASE'] = $database;
+                    $replacements['DB_USERNAME'] = $username;
+                    $replacements['DB_PASSWORD'] = $password;
+                }
+
+                foreach ($replacements as $key => $val) {
+                    if (str_contains($envContent, "{$key}=")) {
+                        $envContent = preg_replace("/{$key}=.*/", "{$key}={$val}", $envContent);
+                    } else {
+                        $envContent .= "\n{$key}={$val}\n";
+                    }
+                }
+                file_put_contents($envPath, $envContent);
+            }
 
             return response()->json([
                 'success' => true,
-                'message' => 'Database connection successful.',
+                'message' => 'Database connection successful & credentials saved to .env.',
             ]);
         } catch (Exception $e) {
             return response()->json([

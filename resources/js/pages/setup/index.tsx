@@ -5,7 +5,8 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { CheckCircle2, AlertCircle, Loader2, Database, Store, UserCheck, Rocket } from 'lucide-react';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { CheckCircle2, AlertCircle, Loader2, Database, Store, UserCheck, Rocket, ChevronDown, Settings2 } from 'lucide-react';
 
 export default function SetupWizard() {
     const [currentStep, setCurrentStep] = useState<number>(1);
@@ -14,6 +15,17 @@ export default function SetupWizard() {
     const [dbMessage, setDbMessage] = useState<string | null>(null);
     const [isMigrated, setIsMigrated] = useState<boolean>(false);
     const [migrating, setMigrating] = useState<boolean>(false);
+    const [isDbFormOpen, setIsDbFormOpen] = useState<boolean>(false);
+
+    // Database Credentials State with requested defaults
+    const [dbCredentials, setDbCredentials] = useState({
+        db_connection: 'pgsql',
+        db_host: '127.0.0.1',
+        db_port: '5433',
+        db_database: 'super_pos',
+        db_username: 'postgres',
+        db_password: 'admin',
+    });
 
     const { data, setData, post, processing, errors } = useForm({
         store_name: '',
@@ -31,6 +43,10 @@ export default function SetupWizard() {
         return (document.querySelector('meta[name="csrf-token"]') as HTMLMetaElement)?.content || '';
     };
 
+    const handleDbCredentialChange = (field: string, value: string) => {
+        setDbCredentials((prev) => ({ ...prev, [field]: value }));
+    };
+
     const handleTestDb = async () => {
         setDbLoading(true);
         setDbMessage(null);
@@ -41,6 +57,7 @@ export default function SetupWizard() {
                     'Content-Type': 'application/json',
                     'X-CSRF-TOKEN': getCsrfToken(),
                 },
+                body: JSON.stringify(dbCredentials),
             });
             const result = await res.json();
             setDbTested(result.success);
@@ -135,7 +152,53 @@ export default function SetupWizard() {
                                     <AlertDescription>{dbMessage}</AlertDescription>
                                 </Alert>
                             )}
-                            <div className="flex flex-col gap-3">
+
+                            {/* Collapsible Database Credentials Form */}
+                            <Collapsible open={isDbFormOpen} onOpenChange={setIsDbFormOpen} className="border border-slate-800 rounded-lg p-3 bg-slate-950/50">
+                                <CollapsibleTrigger asChild>
+                                    <Button variant="ghost" className="w-full flex justify-between items-center text-sm font-medium text-slate-300 hover:text-white">
+                                        <div className="flex items-center space-x-2">
+                                            <Settings2 className="w-4 h-4 text-primary" />
+                                            <span>Database Configuration</span>
+                                        </div>
+                                        <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${isDbFormOpen ? 'rotate-180' : ''}`} />
+                                    </Button>
+                                </CollapsibleTrigger>
+                                <CollapsibleContent className="space-y-3 pt-3 mt-2 border-t border-slate-800">
+                                    <div className="grid grid-cols-2 gap-3">
+                                        <div className="space-y-1">
+                                            <Label htmlFor="db_connection" className="text-xs">Driver</Label>
+                                            <Input id="db_connection" value={dbCredentials.db_connection} onChange={(e) => handleDbCredentialChange('db_connection', e.target.value)} placeholder="pgsql" />
+                                        </div>
+                                        <div className="space-y-1">
+                                            <Label htmlFor="db_host" className="text-xs">Host</Label>
+                                            <Input id="db_host" value={dbCredentials.db_host} onChange={(e) => handleDbCredentialChange('db_host', e.target.value)} placeholder="127.0.0.1" />
+                                        </div>
+                                    </div>
+                                    <div className="grid grid-cols-2 gap-3">
+                                        <div className="space-y-1">
+                                            <Label htmlFor="db_port" className="text-xs">Port</Label>
+                                            <Input id="db_port" value={dbCredentials.db_port} onChange={(e) => handleDbCredentialChange('db_port', e.target.value)} placeholder="5433" />
+                                        </div>
+                                        <div className="space-y-1">
+                                            <Label htmlFor="db_database" className="text-xs">Database Name</Label>
+                                            <Input id="db_database" value={dbCredentials.db_database} onChange={(e) => handleDbCredentialChange('db_database', e.target.value)} placeholder="super_pos" />
+                                        </div>
+                                    </div>
+                                    <div className="grid grid-cols-2 gap-3">
+                                        <div className="space-y-1">
+                                            <Label htmlFor="db_username" className="text-xs">Username</Label>
+                                            <Input id="db_username" value={dbCredentials.db_username} onChange={(e) => handleDbCredentialChange('db_username', e.target.value)} placeholder="postgres" />
+                                        </div>
+                                        <div className="space-y-1">
+                                            <Label htmlFor="db_password" className="text-xs">Password</Label>
+                                            <Input id="db_password" type="password" value={dbCredentials.db_password} onChange={(e) => handleDbCredentialChange('db_password', e.target.value)} placeholder="admin" />
+                                        </div>
+                                    </div>
+                                </CollapsibleContent>
+                            </Collapsible>
+
+                            <div className="flex flex-col gap-3 pt-2">
                                 <Button onClick={handleTestDb} disabled={dbLoading || migrating} variant="outline">
                                     {dbLoading ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : null}
                                     Test Database Connection
