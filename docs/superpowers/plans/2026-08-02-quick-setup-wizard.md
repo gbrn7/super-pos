@@ -577,24 +577,119 @@ git commit -m "feat: implement Inertia React Setup Wizard UI page component"
 
 ---
 
-### Task 4: Integration & Full Test Verification
+---
+
+### Task 5: Add Collapsible DB Form & Backend `.env` DB Credentials Handler
 
 **Files:**
-- Run: Pest tests for feature & middleware
+- Modify: `app/Http/Controllers/SetupController.php`
+- Modify: `resources/js/pages/setup/index.tsx`
+- Modify: `tests/Feature/SetupControllerTest.php`
 
-- [ ] **Step 1: Run all feature tests**
+**Interfaces:**
+- Consumes: DB credentials (`db_connection`, `db_host`, `db_port`, `db_database`, `db_username`, `db_password`)
+- Produces: Dynamic PDO connection test & `.env` file update for database credentials.
 
-Run: `php artisan test --compact`
-Expected: ALL PASS
+- [ ] **Step 1: Update SetupControllerTest to test DB credentials updating**
 
-- [ ] **Step 2: Wayfinder route generation check**
+```php
+test('test-db endpoint updates env when DB credentials are provided', function () {
+    $payload = [
+        'db_connection' => 'pgsql',
+        'db_host' => '127.0.0.1',
+        'db_port' => '5433',
+        'db_database' => 'super_pos',
+        'db_username' => 'postgres',
+        'db_password' => 'admin',
+    ];
 
-Run: `php artisan wayfinder:generate`
-Expected: Success
+    $response = $this->postJson(route('setup.test-db'), $payload);
 
-- [ ] **Step 3: Commit final setup**
+    $response->assertOk()->assertJson(['success' => true]);
+});
+```
+
+- [ ] **Step 2: Update SetupController testDatabase method**
+
+In `app/Http/Controllers/SetupController.php`:
+```php
+public function testDatabase(Request $request): JsonResponse
+{
+    $validated = $request->validate([
+        'db_connection' => 'nullable|string',
+        'db_host' => 'nullable|string',
+        'db_port' => 'nullable|string',
+        'db_database' => 'nullable|string',
+        'db_username' => 'nullable|string',
+        'db_password' => 'nullable|string',
+    ]);
+
+    $connection = $validated['db_connection'] ?? config('database.default', 'pgsql');
+    $host = $validated['db_host'] ?? config("database.connections.{$connection}.host");
+    $port = $validated['db_port'] ?? config("database.connections.{$connection}.port");
+    $database = $validated['db_database'] ?? config("database.connections.{$connection}.database");
+    $username = $validated['db_username'] ?? config("database.connections.{$connection}.username");
+    $password = $validated['db_password'] ?? config("database.connections.{$connection}.password");
+
+    config([
+        "database.connections.{$connection}.host" => $host,
+        "database.connections.{$connection}.port" => $port,
+        "database.connections.{$connection}.database" => $database,
+        "database.connections.{$connection}.username" => $username,
+        "database.connections.{$connection}.password" => $password,
+    ]);
+
+    try {
+        DB::purge($connection);
+        DB::connection($connection)->getPdo();
+
+        // Update .env file
+        $envPath = base_path('.env');
+        if (file_exists($envPath)) {
+            $envContent = file_get_contents($envPath);
+            $replacements = [
+                'DB_CONNECTION' => $connection,
+                'DB_HOST' => $host,
+                'DB_PORT' => $port,
+                'DB_DATABASE' => $database,
+                'DB_USERNAME' => $username,
+                'DB_PASSWORD' => $password,
+            ];
+
+            foreach ($replacements as $key => $val) {
+                if (str_contains($envContent, "{$key}=")) {
+                    $envContent = preg_replace("/{$key}=.*/", "{$key}={$val}", $envContent);
+                } else {
+                    $envContent .= "\n{$key}={$val}\n";
+                }
+            }
+            file_put_contents($envPath, $envContent);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Database connection successful & credentials saved to .env.',
+        ]);
+    } catch (\Exception $e) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Database connection failed: '.$e->getMessage(),
+        ], 500);
+    }
+}
+```
+
+- [ ] **Step 3: Update React UI Component with Shadcn Collapsible component**
+
+In `resources/js/pages/setup/index.tsx`, import and add `Collapsible`, `CollapsibleContent`, `CollapsibleTrigger` from `@/components/ui/collapsible` with default values:
+`db_connection: 'pgsql'`, `db_host: '127.0.0.1'`, `db_port: '5433'`, `db_database: 'super_pos'`, `db_username: 'postgres'`, `db_password: 'admin'`.
+
+- [ ] **Step 4: Run tests & Commit**
 
 ```bash
-git add .
-git commit -m "feat: complete Quick Setup Wizard feature implementation"
+php artisan test --compact --filter="SetupControllerTest"
+vendor/bin/pint --format agent
+git add app/Http/Controllers/SetupController.php resources/js/pages/setup/index.tsx tests/Feature/SetupControllerTest.php
+git commit -m "feat: add Collapsible DB form and update .env DB credentials on test-db endpoint"
 ```
+
