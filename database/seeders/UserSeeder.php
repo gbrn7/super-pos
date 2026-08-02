@@ -21,18 +21,18 @@ class UserSeeder extends Seeder
 
         $superadmin->assignRole(RoleEnums::SUPER_ADMIN->value);
 
+        $owner = User::factory()->create([
+            'name' => 'owner',
+            'email' => 'owner@example.com',
+        ]);
+
+        $owner->assignRole(RoleEnums::SUPER_ADMIN->value);
+
         $admin = User::factory()->create([
             'name' => 'admin',
             'email' => 'admin@example.com',
         ]);
 
         $admin->assignRole(RoleEnums::ADMIN->value);
-
-        $user = User::factory()->create([
-            'name' => 'user',
-            'email' => 'user@example.com',
-        ]);
-
-        $user->assignRole(RoleEnums::USER->value);
     }
 }

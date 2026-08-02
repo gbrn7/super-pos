@@ -109,44 +109,13 @@ class PermissionSeeder extends Seeder
 
         $admin = Role::findByName(RoleEnums::ADMIN->value);
 
-        $admin->givePermissionTo([
-            DashboardPermissionEnums::READ_DASHBOARD->value,
+        $profitWalletPermissions = array_map(
+            fn (ProfitWalletPermissionEnums $permission) => $permission->value,
+            ProfitWalletPermissionEnums::cases()
+        );
 
-            CategoryPermissionEnums::CREATE_CATEGORY->value,
-            CategoryPermissionEnums::READ_CATEGORY->value,
-            // CategoryPermissionEnums::UPDATE_CATEGORY->value,
-            // CategoryPermissionEnums::DELETE_CATEGORY->value,
+        $allPermissions = Permission::whereNotIn('name', $profitWalletPermissions)->get();
 
-            RolePermissionEnums::READ_ROLE->value,
-            UnitPermissionEnums::CREATE_UNIT->value,
-            UnitPermissionEnums::READ_UNIT->value,
-            UnitPermissionEnums::UPDATE_UNIT->value,
-            UnitPermissionEnums::DELETE_UNIT->value,
-
-            PaymentMethodPermissionEnums::READ_PAYMENT_METHOD->value,
-
-            ProfitWalletPermissionEnums::READ_PROFIT_WALLET->value,
-            ProfitWalletPermissionEnums::DISBURSE_PROFIT_WALLET->value,
-            ProfitWalletPermissionEnums::WITHDRAW_CAPITAL_PROFIT_WALLET->value,
-
-            CapitalWalletPermissionEnums::READ_CAPITAL_WALLET->value,
-            CapitalWalletPermissionEnums::INJECT_CAPITAL_WALLET->value,
-            CapitalWalletPermissionEnums::DRAWDOWN_CAPITAL_WALLET->value,
-            CapitalWalletPermissionEnums::PURCHASE_PRODUCT_CAPITAL_WALLET->value,
-
-            ReturnPermissionEnums::CREATE_RETURN->value,
-            ReturnPermissionEnums::READ_RETURN->value,
-            ReturnPermissionEnums::UPDATE_RETURN->value,
-            ReturnPermissionEnums::DELETE_RETURN->value,
-        ]);
-
-        $user = Role::findByName(RoleEnums::USER->value);
-
-        $user->givePermissionTo([
-            DashboardPermissionEnums::READ_DASHBOARD->value,
-            CategoryPermissionEnums::READ_CATEGORY->value,
-            UnitPermissionEnums::READ_UNIT->value,
-            ReturnPermissionEnums::READ_RETURN->value,
-        ]);
+        $admin->syncPermissions($allPermissions);
     }
 }
