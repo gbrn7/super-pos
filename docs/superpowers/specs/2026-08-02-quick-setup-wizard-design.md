@@ -24,7 +24,14 @@ Setelah setup selesai, sistem menandai aplikasi sebagai "terpasang" (installed) 
 - **Steps**:
   - **Step 1: Database Check & Migration**
     - Pengecekan koneksi DB.
-    - Tombol "Run Migration & Seed".
+    - **Collapsible Form (Shadcn Collapsible)** (Default collapsed):
+      - `db_connection` (Default: `pgsql`)
+      - `db_host` (Default: `127.0.0.1`)
+      - `db_port` (Default: `5433`)
+      - `db_database` (Default: `super_pos`)
+      - `db_username` (Default: `postgres`)
+      - `db_password` (Default: `admin`)
+    - Tombol "Test Database Connection" & "Run Migration & Seed".
     - Progress indicator & status sukses.
   - **Step 2: Store Information**
     - Form Input: Store Name, Address, Phone Number, Currency Symbol (misal: Rp), Timezone.
@@ -40,7 +47,10 @@ Setelah setup selesai, sistem menandai aplikasi sebagai "terpasang" (installed) 
   - `POST /setup/complete` -> `SetupController@complete`
 
 - **Controller (`app/Http/Controllers/SetupController.php`)**:
-  - `testDatabase()`: Memeriksa koneksi PDO DB.
+  - `testDatabase()`:
+    - Menerima credential database opsional.
+    - Mencoba koneksi runtime PDO.
+    - Jika sukses, memperbarui nilai credential DB di file `.env`.
   - `runMigration()`: Menjalankan `Artisan::call('migrate:fresh', ['--force' => true])` dan seeder role dasar.
   - `complete()`:
     - Validasi data Store & Owner.
