@@ -7,7 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import { CheckCircle2, AlertCircle, Loader2, Database, Store, UserCheck, Rocket, ChevronDown, Settings2, Globe } from 'lucide-react';
+import { CheckCircle2, AlertCircle, Loader2, Database, Store, UserCheck, Rocket, ChevronDown, Settings2, Globe, Eye, EyeOff } from 'lucide-react';
 
 export default function SetupWizard() {
     const { t, i18n } = useTranslation();
@@ -18,6 +18,8 @@ export default function SetupWizard() {
     const [isMigrated, setIsMigrated] = useState<boolean>(false);
     const [migrating, setMigrating] = useState<boolean>(false);
     const [isDbFormOpen, setIsDbFormOpen] = useState<boolean>(false);
+    const [showPassword, setShowPassword] = useState<boolean>(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);
 
     // Database Credentials State with requested defaults
     const [dbCredentials, setDbCredentials] = useState({
@@ -286,12 +288,22 @@ export default function SetupWizard() {
                             <div className="grid grid-cols-2 gap-4">
                                 <div className="space-y-2">
                                     <Label htmlFor="password">{t('setup.step3.password')}</Label>
-                                    <Input id="password" type="password" value={data.password} onChange={(e) => setData('password', e.target.value)} placeholder="••••••••" />
+                                    <div className="relative">
+                                        <Input id="password" type={showPassword ? 'text' : 'password'} value={data.password} onChange={(e) => setData('password', e.target.value)} placeholder="••••••••" className="pr-10" />
+                                        <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-200 focus:outline-none">
+                                            {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                                        </button>
+                                    </div>
                                     {errors.password && <p className="text-sm text-destructive">{errors.password}</p>}
                                 </div>
                                 <div className="space-y-2">
                                     <Label htmlFor="password_confirmation">{t('setup.step3.confirm_password')}</Label>
-                                    <Input id="password_confirmation" type="password" value={data.password_confirmation} onChange={(e) => setData('password_confirmation', e.target.value)} placeholder="••••••••" />
+                                    <div className="relative">
+                                        <Input id="password_confirmation" type={showConfirmPassword ? 'text' : 'password'} value={data.password_confirmation} onChange={(e) => setData('password_confirmation', e.target.value)} placeholder="••••••••" className="pr-10" />
+                                        <button type="button" onClick={() => setShowConfirmPassword(!showConfirmPassword)} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-200 focus:outline-none">
+                                            {showConfirmPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </CardContent>
