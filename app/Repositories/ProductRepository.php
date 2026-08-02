@@ -23,12 +23,13 @@ class ProductRepository implements ProductRepositoryInterface
                 } elseif (isset($request->field) && $request->field != 'default') {
                     $query->where('products.'.$request->field, 'ilike', "%{$request->keyword}%");
                 } else {
-                    $query
-                        ->orwhere('products.name', 'ilike', "%{$request->keyword}%")
-                        ->orwhere('products.barcode', 'ilike', "%{$request->keyword}%")
-                        ->orWhere('products.sku', 'ilike', "%{$request->keyword}%")
-                        ->orWhere('categories.name', 'ilike', "%{$request->keyword}%")
-                        ->orWhere('units.name', 'ilike', "%{$request->keyword}%");
+                    $query->where(function ($q) use ($request) {
+                        $q->where('products.name', 'ilike', "%{$request->keyword}%")
+                            ->orWhere('products.barcode', 'ilike', "%{$request->keyword}%")
+                            ->orWhere('products.sku', 'ilike', "%{$request->keyword}%")
+                            ->orWhere('categories.name', 'ilike', "%{$request->keyword}%")
+                            ->orWhere('units.name', 'ilike', "%{$request->keyword}%");
+                    });
                 }
             })
             ->when($request->name, fn ($query) => $query->where('products.name', 'ilike', "%{$request->name}%"))

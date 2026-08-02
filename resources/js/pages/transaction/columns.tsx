@@ -1,5 +1,6 @@
+import type { ColumnDef } from '@tanstack/react-table';
 import { FileText, MoreHorizontal, RotateCcw } from 'lucide-react';
-import { useTranslation } from 'react-i18next';
+import i18next from 'i18next';
 import { ServerSideDataTableHeader } from '@/components/server-side-data-table-header';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -13,6 +14,8 @@ import {
 import { formatRupiah } from '@/lib/format-money';
 import type { Transaction } from '@/support/models/transaction';
 import dayjs from 'dayjs';
+import { Can } from '@/components/auth/can';
+import { PERMISSIONENUMS } from '@/support/enums/PermissionEnums';
 
 interface ColumnsProps {
     onDetailClick: (transaction: Transaction) => void;
@@ -23,8 +26,7 @@ interface ColumnsProps {
 }
 
 export const columns = (props?: ColumnsProps): ColumnDef<Transaction>[] => {
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    const { t } = useTranslation();
+    const t = i18next.t.bind(i18next);
 
     return [
         {
