@@ -61,6 +61,7 @@ return [
             'product_not_in_transaction' => 'Product ID :product_id is not in this transaction.',
             'return_qty_exceeds_max' => 'Return quantity (:return_qty) exceeds maximum returnable quantity (:max_returnable).',
             'no_valid_items' => 'No valid items to return.',
+            'barcode_not_found' => 'Barcode not found for this product.',
         ],
     ],
 

@@ -126,7 +126,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
             Route::get('/download/export-excel', [ApiProductController::class, 'exportProductExcelData'])->name('apiProducts.exportProductsExcelData');
 
-            Route::get('/download/export-pdf', [ApiProductController::class, 'exportProductPdfData'])->name('apiProducts.exportProductsPdfData');
+            Route::post('/download/export-pdf', [ApiProductController::class, 'exportProductPdfData'])->name('apiProducts.exportProductsPdfData');
+
+            Route::post('/{id}/print-barcode', [ApiProductController::class, 'printBarcode'])->name('apiProducts.printBarcode');
 
             Route::post('/import', [ApiProductController::class, 'importProductExcelData'])->name('apiProducts.importProductsExcelData');
         });
