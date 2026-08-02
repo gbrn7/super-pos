@@ -23,15 +23,15 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfitWalletController;
 use App\Http\Controllers\ReturnController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\SetupController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\TransactionDetailController;
 use App\Http\Controllers\UnitController;
-use App\Http\Controllers\UserController;
-use Illuminate\Support\Facades\Route;
 
-Route::get('/setup', function () {
-    return 'setup page';
-})->name('setup.index');
+Route::get('/setup', [SetupController::class, 'index'])->name('setup.index');
+Route::post('/setup/test-db', [SetupController::class, 'testDatabase'])->name('setup.test-db');
+Route::post('/setup/migrate', [SetupController::class, 'runMigration'])->name('setup.migrate');
+Route::post('/setup/complete', [SetupController::class, 'complete'])->name('setup.complete');
 
 Route::get('/', function () {
     return redirect()->route('dashboard');
