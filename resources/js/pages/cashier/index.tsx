@@ -781,7 +781,7 @@ export default function CashierIndex({ storeSetting }: { storeSetting?: StoreSet
                                     <p className="text-base font-extrabold">
                                         {t(
                                             'page.kasir.no_products_found',
-                                            'Barang tidak ditemukan',
+                                            'Barang tidak ditemukan atau tidak aktif',
                                         )}
                                     </p>
                                     <p className="mt-1 max-w-xs text-sm font-medium text-muted-foreground mb-4">

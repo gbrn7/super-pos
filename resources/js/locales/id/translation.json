@@ -1375,7 +1375,7 @@
             "product_data_count": "Data Barang",
             "category_label": "Kategori:",
             "all_categories": "Semua",
-            "no_products_found": "Barang tidak ditemukan",
+            "no_products_found": "Barang tidak ditemukan atau tidak aktif",
             "no_products_desc": "Coba ketik kata kunci lain atau scan ulang barcode barang",
             "table_code": "Kode / Barcode",
             "table_name": "Nama Barang",
