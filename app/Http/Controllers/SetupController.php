@@ -86,12 +86,12 @@ class SetupController extends Controller
 
             return response()->json([
                 'success' => true,
-                'message' => 'Database connection successful & credentials saved to .env.',
+                'message' => __('setup.db_success'),
             ]);
         } catch (Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Database connection failed: '.$e->getMessage(),
+                'message' => __('setup.db_failed', ['error' => $e->getMessage()]),
             ], 500);
         }
     }
@@ -104,12 +104,12 @@ class SetupController extends Controller
 
             return response()->json([
                 'success' => true,
-                'message' => 'Database migrated and seeded successfully.',
+                'message' => __('setup.migrate_success'),
             ]);
         } catch (Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Migration failed: '.$e->getMessage(),
+                'message' => __('setup.migrate_failed', ['error' => $e->getMessage()]),
             ], 500);
         }
     }
