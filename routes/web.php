@@ -29,6 +29,10 @@ use App\Http\Controllers\UnitController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
+Route::get('/setup', function () {
+    return 'setup page';
+})->name('setup.index');
+
 Route::get('/', function () {
     return redirect()->route('dashboard');
 })->name('home');

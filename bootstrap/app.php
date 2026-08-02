@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\EnsureAppIsNotInstalled;
 use App\Http\Middleware\HandleAppearance;
 use App\Http\Middleware\HandleInertiaRequests;
 use App\Http\Middleware\SetLanguage;
@@ -26,12 +27,14 @@ return Application::configure(basePath: dirname(__DIR__))
             HandleInertiaRequests::class,
             AddLinkHeadersForPreloadedAssets::class,
             SetLanguage::class,
+            EnsureAppIsNotInstalled::class,
         ]);
 
         $middleware->alias([
             'role' => RoleMiddleware::class,
             'permission' => PermissionMiddleware::class,
             'role_or_permission' => RoleOrPermissionMiddleware::class,
+            'app.not_installed' => EnsureAppIsNotInstalled::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
