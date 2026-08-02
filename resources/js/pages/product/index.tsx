@@ -55,6 +55,7 @@ export default function Index() {
         null,
     );
     const [updateStockOpen, setUpdateStockOpen] = useState(false);
+    const [printBarcodeOpen, setPrintBarcodeOpen] = useState(false);
     const [selectedProducts, setSelectedProducts] = useState<Product[]>([]);
     const hasMountedQueryEffect = useRef(false);
     const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
@@ -157,6 +158,11 @@ export default function Index() {
     const handleUpdateStockClick = (product: Product) => {
         setSelectedProduct(product);
         setUpdateStockOpen(true);
+    };
+
+    const handlePrintBarcodeClick = (product: Product) => {
+        setSelectedProduct(product);
+        setPrintBarcodeOpen(true);
     };
 
     const handleBulkDeleteClick = (products: Product[]) => {
@@ -263,14 +269,17 @@ export default function Index() {
                     editOpen={editOpen}
                     deleteOpen={deleteOpen}
                     updateStockOpen={updateStockOpen}
+                    printBarcodeOpen={printBarcodeOpen}
                     setDetailOpen={setDetailOpen}
                     setEditOpen={setEditOpen}
                     setDeleteOpen={setDeleteOpen}
                     setUpdateStockOpen={setUpdateStockOpen}
+                    setPrintBarcodeOpen={setPrintBarcodeOpen}
                     onDetailClick={handleDetailClick}
                     onEditClick={handleEditClick}
                     onDeleteClick={handleDeleteClick}
                     onUpdateStockClick={handleUpdateStockClick}
+                    onPrintBarcodeClick={handlePrintBarcodeClick}
                     onBulkDeleteClick={handleBulkDeleteClick}
                     isBulkDeleteDialogOpen={bulkDeleteOpen}
                     setOpenBulkDeleteDialogOpen={setBulkDeleteOpen}

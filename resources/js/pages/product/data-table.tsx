@@ -70,6 +70,7 @@ import { DetailDialog } from './dialog-modal/detail-dialog';
 import { EditDialog } from './dialog-modal/edit-dialog';
 import { ExportDropdownMenu } from './export-data-menu/export-dropdown-menu';
 import { ImportExcelDialog } from './dialog-modal/import-excel-dialog';
+import { PrintBarcodeDialog } from './dialog-modal/print-barcode-dialog';
 import UpdateStockDialog from '@/pages/cashier/components/update-stock-dialog';
 
 interface DataTableProps<TData, TValue> {
@@ -83,13 +84,16 @@ interface DataTableProps<TData, TValue> {
     detailDataOpen: boolean;
     editOpen: boolean;
     deleteOpen: boolean;
+    printBarcodeOpen?: boolean;
     setDetailOpen: (open: boolean) => void;
     setEditOpen: (open: boolean) => void;
     setDeleteOpen: (open: boolean) => void;
+    setPrintBarcodeOpen?: (open: boolean) => void;
     onDetailClick: (data: TData) => void;
     onEditClick: (data: TData) => void;
     onDeleteClick: (data: TData) => void;
     onUpdateStockClick: (data: TData) => void;
+    onPrintBarcodeClick?: (data: TData) => void;
     updateStockOpen: boolean;
     setUpdateStockOpen: (open: boolean) => void;
     onBulkDeleteClick?: (data: TData[]) => void;
@@ -119,13 +123,16 @@ export function DataTable<TData, TValue>({
     detailDataOpen,
     editOpen,
     deleteOpen,
+    printBarcodeOpen = false,
     setDetailOpen,
     setEditOpen,
     setDeleteOpen,
+    setPrintBarcodeOpen,
     onDetailClick,
     onEditClick,
     onDeleteClick,
     onUpdateStockClick,
+    onPrintBarcodeClick,
     updateStockOpen,
     setUpdateStockOpen,
     onBulkDeleteClick,
@@ -155,6 +162,7 @@ export function DataTable<TData, TValue>({
                   onEditClick,
                   onDeleteClick,
                   onUpdateStockClick,
+                  onPrintBarcodeClick,
                   onSortChange: (
                       orderBy: string | null,
                       order: string | null,
@@ -978,6 +986,12 @@ export function DataTable<TData, TValue>({
                     product={selectedProduct}
                     onClose={() => setUpdateStockOpen(false)}
                     onSuccess={onRefresh}
+                />
+
+                <PrintBarcodeDialog
+                    open={printBarcodeOpen}
+                    onOpenChange={(open) => setPrintBarcodeOpen?.(open)}
+                    product={selectedProduct}
                 />
             </div>
             <div className="flex items-center justify-end space-x-4 overflow-auto py-4">

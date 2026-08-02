@@ -212,6 +212,7 @@
                 "trigger_btn_label": "Buka Menu",
                 "detail_data_btn": "Detail Data",
                 "edit_data_btn": "Edit Data",
+                "print_barcode_btn": "Cetak Barcode",
                 "delete_data_btn": "Hapus Data",
                 "return_btn": "Retur Barang"
             },
@@ -796,6 +797,16 @@
                     "file_excel_label": "File Excel",
                     "cancel_button": "Batal",
                     "confirm_button": "Impor"
+                },
+                "print_barcode_dialog": {
+                    "dialog_button": "Cetak Barcode",
+                    "dialog_title": "Cetak Barcode Produk",
+                    "dialog_desc": "Masukkan jumlah barcode yang ingin dicetak.",
+                    "quantity_label": "Jumlah Barcode",
+                    "product_label": "Produk",
+                    "no_barcode_error": "Produk ini belum memiliki kode barcode.",
+                    "cancel_button": "Batal",
+                    "confirm_button": "Cetak PDF"
                 }
             }
         },

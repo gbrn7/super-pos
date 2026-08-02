@@ -21,6 +21,7 @@ import {
     TrendingUp,
     Wallet,
 } from 'lucide-react';
+import BarcodeSVG from 'react-barcode';
 import { useTranslation } from 'react-i18next';
 
 interface DetailSheetProps {
@@ -51,7 +52,7 @@ export function DetailDialog({
             <DialogContent className="max-h-[85vh] overflow-y-auto p-6 sm:max-w-xl">
                 <div className="space-y-5">
                     {/* Header */}
-                    <DialogHeader className="border-b pb-4">
+                    <DialogHeader className="border-b pb-4 pr-6">
                         <div className="flex items-start gap-3">
                             <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary/10">
                                 <Package className="h-5 w-5 text-primary" />
@@ -148,11 +149,25 @@ export function DetailDialog({
                                         'Barcode',
                                     )}
                                 </div>
-                                <p className="font-mono text-sm font-medium">
-                                    {masterProduct.barcode !== ''
-                                        ? masterProduct.barcode
-                                        : '-'}
-                                </p>
+                                {masterProduct.barcode !== '' && masterProduct.barcode !== null ? (
+                                    <div className="flex flex-col items-center justify-center pt-1">
+                                        <div className="overflow-x-auto max-w-full flex justify-center bg-white p-2 rounded border border-slate-100">
+                                            <BarcodeSVG
+                                                value={masterProduct.barcode}
+                                                format="CODE128"
+                                                width={1.5}
+                                                height={45}
+                                                fontSize={12}
+                                                margin={0}
+                                                background="transparent"
+                                            />
+                                        </div>
+                                    </div>
+                                ) : (
+                                    <p className="font-mono text-sm font-medium">
+                                        -
+                                    </p>
+                                )}
                             </div>
 
                             {/* Description */}

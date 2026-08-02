@@ -212,6 +212,7 @@
                 "trigger_btn_label": "Open Menu",
                 "detail_data_btn": "Detail Data",
                 "edit_data_btn": "Edit Data",
+                "print_barcode_btn": "Print Barcode",
                 "delete_data_btn": "Delete Data",
                 "return_btn": "Return Items"
             },
@@ -796,6 +797,16 @@
                     "file_excel_label": "Excel File",
                     "cancel_button": "Cancel",
                     "confirm_button": "Import"
+                },
+                "print_barcode_dialog": {
+                    "dialog_button": "Print Barcode",
+                    "dialog_title": "Print Product Barcode",
+                    "dialog_desc": "Enter the quantity of barcode labels to print.",
+                    "quantity_label": "Barcode Quantity",
+                    "product_label": "Product",
+                    "no_barcode_error": "This product does not have a barcode code.",
+                    "cancel_button": "Cancel",
+                    "confirm_button": "Print PDF"
                 }
             }
         },

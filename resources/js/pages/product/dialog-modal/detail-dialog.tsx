@@ -30,6 +30,7 @@ import {
     Wallet,
     X,
 } from 'lucide-react';
+import BarcodeSVG from 'react-barcode';
 import { useTranslation } from 'react-i18next';
 
 interface DetailSheetProps {
@@ -60,7 +61,7 @@ export function DetailDialog({
             <DialogContent className="max-h-[85vh] overflow-y-auto p-6 sm:max-w-2xl">
                 <div className="space-y-5">
                     {/* Header */}
-                    <DialogHeader className="border-b pb-4">
+                    <DialogHeader className="border-b pb-4 pr-6">
                         <div className="flex items-start gap-4">
                             {product.image ? (
                                 <img
@@ -234,11 +235,25 @@ export function DetailDialog({
                                         'Barcode',
                                     )}
                                 </div>
-                                <p className="font-mono text-sm font-medium">
-                                    {product.barcode !== '' && product.barcode !== null
-                                        ? product.barcode
-                                        : '-'}
-                                </p>
+                                {product.barcode !== '' && product.barcode !== null ? (
+                                    <div className="flex flex-col items-center justify-center pt-1">
+                                        <div className="overflow-x-auto max-w-full flex justify-center bg-white p-2 rounded border border-slate-100">
+                                            <BarcodeSVG
+                                                value={product.barcode}
+                                                format="CODE128"
+                                                width={1.5}
+                                                height={45}
+                                                fontSize={12}
+                                                margin={0}
+                                                background="transparent"
+                                            />
+                                        </div>
+                                    </div>
+                                ) : (
+                                    <p className="font-mono text-sm font-medium">
+                                        -
+                                    </p>
+                                )}
                             </div>
 
                             {/* SKU */}

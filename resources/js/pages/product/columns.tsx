@@ -10,6 +10,7 @@ import {
     Trash,
     X,
     Boxes,
+    Barcode,
 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Can } from '@/components/auth/can';
@@ -34,6 +35,7 @@ interface ColumnsProps {
     onEditClick: (product: Product) => void;
     onDeleteClick: (product: Product) => void;
     onUpdateStockClick?: (product: Product) => void;
+    onPrintBarcodeClick?: (product: Product) => void;
     onSortChange: (orderBy: string | null, order: string | null) => void;
     orderBy: string | null;
     order: string | null;
@@ -386,6 +388,17 @@ export const columns = (props?: ColumnsProps): ColumnDef<Product>[] => {
                                 {t(
                                     'component.data_table.action_menu.update_stock_btn',
                                     'Update stok',
+                                )}
+                            </DropdownMenuItem>
+                        </Can>
+                        <Can permission={PERMISSIONENUMS.PRODUCT.READ}>
+                            <DropdownMenuItem
+                                onClick={() => props?.onPrintBarcodeClick?.(row.original)}
+                            >
+                                <Barcode className="mr-0.5 h-4 w-4" />
+                                {t(
+                                    'component.data_table.action_menu.print_barcode_btn',
+                                    'Cetak Barcode',
                                 )}
                             </DropdownMenuItem>
                         </Can>

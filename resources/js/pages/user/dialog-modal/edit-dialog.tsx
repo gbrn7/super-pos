@@ -1,5 +1,8 @@
-import axios from 'axios';
+import { Eye, EyeOff } from 'lucide-react';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import z from 'zod';
+import ErrorFormInfo from '@/components/errorFormInfo';
 import { Button } from '@/components/ui/button';
 import {
     Dialog,
@@ -12,20 +15,6 @@ import {
 } from '@/components/ui/dialog';
 import { Field, FieldGroup } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
-import { update as updateUser } from '@/routes/apiUsers';
-import type { User } from '@/support/models/user';
-import { useTranslation } from 'react-i18next';
-import { Spinner } from '@/components/ui/spinner';
-import axiosInstance from '@/lib/axios';
-import { ResponseApi } from '@/support/interfaces/response/Response';
-import {
-    handleApiError,
-    showSuccessToast,
-    showWarningToast,
-} from '@/lib/utils';
-import { UserForm } from '@/support/interfaces/request/user';
-import z from 'zod';
-import ErrorFormInfo from '@/components/errorFormInfo';
 import {
     Select,
     SelectContent,
@@ -34,7 +23,18 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@/components/ui/select';
-import { Role } from '@/support/models/role';
+import { Spinner } from '@/components/ui/spinner';
+import axiosInstance from '@/lib/axios';
+import {
+    handleApiError,
+    showSuccessToast,
+    showWarningToast,
+} from '@/lib/utils';
+import { update as updateUser } from '@/routes/apiUsers';
+import type { UserForm } from '@/support/interfaces/request/user';
+import type { ResponseApi } from '@/support/interfaces/response/Response';
+import type { Role } from '@/support/models/role';
+import type { User } from '@/support/models/user';
 
 interface EditDialogProps {
     isOpen: boolean;
@@ -54,6 +54,8 @@ export function EditDialog({
     const { t } = useTranslation();
 
     const [loading, setLoading] = useState<boolean>(false);
+    const [showPassword, setShowPassword] = useState<boolean>(false);
+    const [showPasswordConfirmation, setShowPasswordConfirmation] = useState<boolean>(false);
 
     const [formData, setFormData] = useState({
         name: user?.name || '',
@@ -172,6 +174,7 @@ export function EditDialog({
 
             if (!res.data.success) {
                 showWarningToast(res.data.message);
+
                 return;
             }
 
@@ -260,19 +263,32 @@ export function EditDialog({
                                     'Password',
                                 )}
                             </label>
-                            <Input
-                                id="password"
-                                name="password"
-                                type="password"
-                                placeholder={t(
-                                    'page.user.dialog_modal.edit_dialog.password_input_placeholder',
-                                    'Masukkan password user',
-                                )}
-                                value={formData.password}
-                                onChange={handleChange}
-                                disabled={loading}
-                                className={`${errorForm.password && 'border-red-500'}`}
-                            />
+                            <div className="relative">
+                                <Input
+                                    id="password"
+                                    name="password"
+                                    type={showPassword ? 'text' : 'password'}
+                                    placeholder={t(
+                                        'page.user.dialog_modal.edit_dialog.password_input_placeholder',
+                                        'Masukkan password user',
+                                    )}
+                                    value={formData.password}
+                                    onChange={handleChange}
+                                    disabled={loading}
+                                    className={`pr-10 ${errorForm.password && 'border-red-500'}`}
+                                />
+                                <button
+                                    type="button"
+                                    onClick={() => setShowPassword((prev) => !prev)}
+                                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+                                >
+                                    {showPassword ? (
+                                        <EyeOff className="h-4 w-4" />
+                                    ) : (
+                                        <Eye className="h-4 w-4" />
+                                    )}
+                                </button>
+                            </div>
                             {errorForm.password && (
                                 <ErrorFormInfo message={errorForm.password} />
                             )}
@@ -284,22 +300,35 @@ export function EditDialog({
                             >
                                 {t(
                                     'page.user.dialog_modal.edit_dialog.password_confirmation_input_label',
-                                    'Password_confirmation',
+                                    'Konfirmasi Password',
                                 )}
                             </label>
-                            <Input
-                                id="password_confirmation"
-                                name="password_confirmation"
-                                type="password"
-                                placeholder={t(
-                                    'page.user.dialog_modal.edit_dialog.password_confirmation_input_placeholder',
-                                    'Masukkan password_confirmation user',
-                                )}
-                                value={formData.password_confirmation}
-                                onChange={handleChange}
-                                disabled={loading}
-                                className={`${errorForm.password_confirmation && 'border-red-500'}`}
-                            />
+                            <div className="relative">
+                                <Input
+                                    id="password_confirmation"
+                                    name="password_confirmation"
+                                    type={showPasswordConfirmation ? 'text' : 'password'}
+                                    placeholder={t(
+                                        'page.user.dialog_modal.edit_dialog.password_confirmation_input_placeholder',
+                                        'Masukkan konfirmasi password user',
+                                    )}
+                                    value={formData.password_confirmation}
+                                    onChange={handleChange}
+                                    disabled={loading}
+                                    className={`pr-10 ${errorForm.password_confirmation && 'border-red-500'}`}
+                                />
+                                <button
+                                    type="button"
+                                    onClick={() => setShowPasswordConfirmation((prev) => !prev)}
+                                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+                                >
+                                    {showPasswordConfirmation ? (
+                                        <EyeOff className="h-4 w-4" />
+                                    ) : (
+                                        <Eye className="h-4 w-4" />
+                                    )}
+                                </button>
+                            </div>
                             {errorForm.password_confirmation && (
                                 <ErrorFormInfo
                                     message={errorForm.password_confirmation}
