@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
 import { useForm, Head } from '@inertiajs/react';
+import { useTranslation } from 'react-i18next';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import { CheckCircle2, AlertCircle, Loader2, Database, Store, UserCheck, Rocket, ChevronDown, Settings2 } from 'lucide-react';
+import { CheckCircle2, AlertCircle, Loader2, Database, Store, UserCheck, Rocket, ChevronDown, Settings2, Globe } from 'lucide-react';
 
 export default function SetupWizard() {
+    const { t, i18n } = useTranslation();
     const [currentStep, setCurrentStep] = useState<number>(1);
     const [dbTested, setDbTested] = useState<boolean>(false);
     const [dbLoading, setDbLoading] = useState<boolean>(false);
@@ -45,6 +47,11 @@ export default function SetupWizard() {
 
     const handleDbCredentialChange = (field: string, value: string) => {
         setDbCredentials((prev) => ({ ...prev, [field]: value }));
+    };
+
+    const toggleLanguage = () => {
+        const nextLang = i18n.language === 'id' ? 'en' : 'id';
+        i18n.changeLanguage(nextLang);
     };
 
     const handleTestDb = async () => {
@@ -98,12 +105,20 @@ export default function SetupWizard() {
     };
 
     return (
-        <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col justify-center items-center p-4">
-            <Head title="Initial App Setup Wizard" />
+        <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col justify-center items-center p-4 relative">
+            <Head title={t('setup.title')} />
+
+            {/* Language Switcher */}
+            <div className="absolute top-4 right-4">
+                <Button variant="outline" size="sm" onClick={toggleLanguage} className="bg-slate-900 border-slate-800 text-slate-300 hover:text-white flex items-center space-x-2">
+                    <Globe className="w-4 h-4 text-primary" />
+                    <span className="font-semibold uppercase">{i18n.language === 'id' ? 'ID' : 'EN'}</span>
+                </Button>
+            </div>
 
             <div className="w-full max-w-2xl mb-6 text-center">
-                <h1 className="text-3xl font-bold tracking-tight text-white mb-2">Super POS Setup</h1>
-                <p className="text-slate-400">Follow the quick setup guide to initialize your application.</p>
+                <h1 className="text-3xl font-bold tracking-tight text-white mb-2">{t('setup.title')}</h1>
+                <p className="text-slate-400">{t('setup.subtitle')}</p>
             </div>
 
             {/* Stepper Navigation */}
@@ -112,7 +127,7 @@ export default function SetupWizard() {
                     <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold ${currentStep === 1 ? 'bg-primary text-primary-foreground' : currentStep > 1 ? 'bg-emerald-600 text-white' : 'bg-slate-800'}`}>
                         1
                     </div>
-                    <span className="font-medium hidden sm:inline">Database</span>
+                    <span className="font-medium hidden sm:inline">{t('setup.stepper.database')}</span>
                 </div>
                 <div className="flex-1 h-0.5 mx-4 bg-slate-800">
                     <div className={`h-full bg-primary transition-all ${currentStep > 1 ? 'w-full' : 'w-0'}`} />
@@ -121,7 +136,7 @@ export default function SetupWizard() {
                     <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold ${currentStep === 2 ? 'bg-primary text-primary-foreground' : currentStep > 2 ? 'bg-emerald-600 text-white' : 'bg-slate-800'}`}>
                         2
                     </div>
-                    <span className="font-medium hidden sm:inline">Store Details</span>
+                    <span className="font-medium hidden sm:inline">{t('setup.stepper.store')}</span>
                 </div>
                 <div className="flex-1 h-0.5 mx-4 bg-slate-800">
                     <div className={`h-full bg-primary transition-all ${currentStep > 2 ? 'w-full' : 'w-0'}`} />
@@ -130,7 +145,7 @@ export default function SetupWizard() {
                     <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold ${currentStep === 3 ? 'bg-primary text-primary-foreground' : 'bg-slate-800'}`}>
                         3
                     </div>
-                    <span className="font-medium hidden sm:inline">Owner Account</span>
+                    <span className="font-medium hidden sm:inline">{t('setup.stepper.owner')}</span>
                 </div>
             </div>
 
@@ -140,9 +155,9 @@ export default function SetupWizard() {
                         <CardHeader>
                             <CardTitle className="flex items-center space-x-2">
                                 <Database className="w-5 h-5 text-primary" />
-                                <span>Step 1: Database Setup & Migration</span>
+                                <span>{t('setup.step1.title')}</span>
                             </CardTitle>
-                            <CardDescription className="text-slate-400">Test database connection and initialize tables.</CardDescription>
+                            <CardDescription className="text-slate-400">{t('setup.step1.description')}</CardDescription>
                         </CardHeader>
                         <CardContent className="space-y-4">
                             {dbMessage && (
@@ -159,7 +174,7 @@ export default function SetupWizard() {
                                     <Button variant="ghost" className="w-full flex justify-between items-center text-sm font-medium text-slate-300 hover:text-white">
                                         <div className="flex items-center space-x-2">
                                             <Settings2 className="w-4 h-4 text-primary" />
-                                            <span>Database Configuration</span>
+                                            <span>{t('setup.step1.db_config')}</span>
                                         </div>
                                         <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${isDbFormOpen ? 'rotate-180' : ''}`} />
                                     </Button>
@@ -167,31 +182,31 @@ export default function SetupWizard() {
                                 <CollapsibleContent className="space-y-3 pt-3 mt-2 border-t border-slate-800">
                                     <div className="grid grid-cols-2 gap-3">
                                         <div className="space-y-1">
-                                            <Label htmlFor="db_connection" className="text-xs">Driver</Label>
+                                            <Label htmlFor="db_connection" className="text-xs">{t('setup.step1.driver')}</Label>
                                             <Input id="db_connection" value={dbCredentials.db_connection} onChange={(e) => handleDbCredentialChange('db_connection', e.target.value)} placeholder="pgsql" />
                                         </div>
                                         <div className="space-y-1">
-                                            <Label htmlFor="db_host" className="text-xs">Host</Label>
+                                            <Label htmlFor="db_host" className="text-xs">{t('setup.step1.host')}</Label>
                                             <Input id="db_host" value={dbCredentials.db_host} onChange={(e) => handleDbCredentialChange('db_host', e.target.value)} placeholder="127.0.0.1" />
                                         </div>
                                     </div>
                                     <div className="grid grid-cols-2 gap-3">
                                         <div className="space-y-1">
-                                            <Label htmlFor="db_port" className="text-xs">Port</Label>
+                                            <Label htmlFor="db_port" className="text-xs">{t('setup.step1.port')}</Label>
                                             <Input id="db_port" value={dbCredentials.db_port} onChange={(e) => handleDbCredentialChange('db_port', e.target.value)} placeholder="5433" />
                                         </div>
                                         <div className="space-y-1">
-                                            <Label htmlFor="db_database" className="text-xs">Database Name</Label>
+                                            <Label htmlFor="db_database" className="text-xs">{t('setup.step1.database_name')}</Label>
                                             <Input id="db_database" value={dbCredentials.db_database} onChange={(e) => handleDbCredentialChange('db_database', e.target.value)} placeholder="super_pos" />
                                         </div>
                                     </div>
                                     <div className="grid grid-cols-2 gap-3">
                                         <div className="space-y-1">
-                                            <Label htmlFor="db_username" className="text-xs">Username</Label>
+                                            <Label htmlFor="db_username" className="text-xs">{t('setup.step1.username')}</Label>
                                             <Input id="db_username" value={dbCredentials.db_username} onChange={(e) => handleDbCredentialChange('db_username', e.target.value)} placeholder="postgres" />
                                         </div>
                                         <div className="space-y-1">
-                                            <Label htmlFor="db_password" className="text-xs">Password</Label>
+                                            <Label htmlFor="db_password" className="text-xs">{t('setup.step1.password')}</Label>
                                             <Input id="db_password" type="password" value={dbCredentials.db_password} onChange={(e) => handleDbCredentialChange('db_password', e.target.value)} placeholder="admin" />
                                         </div>
                                     </div>
@@ -201,17 +216,17 @@ export default function SetupWizard() {
                             <div className="flex flex-col gap-3 pt-2">
                                 <Button onClick={handleTestDb} disabled={dbLoading || migrating} variant="outline">
                                     {dbLoading ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : null}
-                                    Test Database Connection
+                                    {t('setup.step1.test_connection')}
                                 </Button>
                                 <Button onClick={handleMigrate} disabled={!dbTested || migrating || isMigrated} className="w-full">
                                     {migrating ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : null}
-                                    {isMigrated ? 'Database Migrated & Seeded' : 'Run Migration & Seed Data'}
+                                    {isMigrated ? t('setup.step1.migrated_seeded') : t('setup.step1.run_migration')}
                                 </Button>
                             </div>
                         </CardContent>
                         <CardFooter className="justify-end pt-6 border-t border-slate-800/50 mt-4">
                             <Button onClick={() => setCurrentStep(2)} disabled={!isMigrated}>
-                                Next Step
+                                {t('setup.step1.next_step')}
                             </Button>
                         </CardFooter>
                     </>
@@ -222,37 +237,37 @@ export default function SetupWizard() {
                         <CardHeader>
                             <CardTitle className="flex items-center space-x-2">
                                 <Store className="w-5 h-5 text-primary" />
-                                <span>Step 2: Store Details</span>
+                                <span>{t('setup.step2.title')}</span>
                             </CardTitle>
-                            <CardDescription className="text-slate-400">Enter your business information.</CardDescription>
+                            <CardDescription className="text-slate-400">{t('setup.step2.description')}</CardDescription>
                         </CardHeader>
                         <CardContent className="space-y-4">
                             <div className="space-y-2">
-                                <Label htmlFor="store_name">Store Name *</Label>
+                                <Label htmlFor="store_name">{t('setup.step2.store_name')}</Label>
                                 <Input id="store_name" value={data.store_name} onChange={(e) => setData('store_name', e.target.value)} placeholder="e.g. Toko Berkah POS" />
                                 {errors.store_name && <p className="text-sm text-destructive">{errors.store_name}</p>}
                             </div>
                             <div className="space-y-2">
-                                <Label htmlFor="store_address">Address</Label>
+                                <Label htmlFor="store_address">{t('setup.step2.store_address')}</Label>
                                 <Input id="store_address" value={data.store_address} onChange={(e) => setData('store_address', e.target.value)} placeholder="Jl. Raya Utama No. 123" />
                             </div>
                             <div className="grid grid-cols-2 gap-4">
                                 <div className="space-y-2">
-                                    <Label htmlFor="currency">Currency Symbol</Label>
+                                    <Label htmlFor="currency">{t('setup.step2.currency')}</Label>
                                     <Input id="currency" value={data.currency} onChange={(e) => setData('currency', e.target.value)} placeholder="Rp" />
                                 </div>
                                 <div className="space-y-2">
-                                    <Label htmlFor="timezone">Timezone</Label>
+                                    <Label htmlFor="timezone">{t('setup.step2.timezone')}</Label>
                                     <Input id="timezone" value={data.timezone} onChange={(e) => setData('timezone', e.target.value)} placeholder="Asia/Jakarta" />
                                 </div>
                             </div>
                         </CardContent>
                         <CardFooter className="justify-between pt-6 border-t border-slate-800/50 mt-4">
                             <Button variant="outline" onClick={() => setCurrentStep(1)}>
-                                Back
+                                {t('setup.step2.back')}
                             </Button>
                             <Button onClick={() => setCurrentStep(3)} disabled={!data.store_name}>
-                                Next Step
+                                {t('setup.step2.next_step')}
                             </Button>
                         </CardFooter>
                     </>
@@ -263,40 +278,40 @@ export default function SetupWizard() {
                         <CardHeader>
                             <CardTitle className="flex items-center space-x-2">
                                 <UserCheck className="w-5 h-5 text-primary" />
-                                <span>Step 3: Create Owner Account</span>
+                                <span>{t('setup.step3.title')}</span>
                             </CardTitle>
-                            <CardDescription className="text-slate-400">Setup superadmin account for login access.</CardDescription>
+                            <CardDescription className="text-slate-400">{t('setup.step3.description')}</CardDescription>
                         </CardHeader>
                         <CardContent className="space-y-4">
                             <div className="space-y-2">
-                                <Label htmlFor="name">Full Name *</Label>
+                                <Label htmlFor="name">{t('setup.step3.full_name')}</Label>
                                 <Input id="name" value={data.name} onChange={(e) => setData('name', e.target.value)} placeholder="John Doe" />
                                 {errors.name && <p className="text-sm text-destructive">{errors.name}</p>}
                             </div>
                             <div className="space-y-2">
-                                <Label htmlFor="email">Email Address *</Label>
+                                <Label htmlFor="email">{t('setup.step3.email')}</Label>
                                 <Input id="email" type="email" value={data.email} onChange={(e) => setData('email', e.target.value)} placeholder="owner@example.com" />
                                 {errors.email && <p className="text-sm text-destructive">{errors.email}</p>}
                             </div>
                             <div className="grid grid-cols-2 gap-4">
                                 <div className="space-y-2">
-                                    <Label htmlFor="password">Password *</Label>
+                                    <Label htmlFor="password">{t('setup.step3.password')}</Label>
                                     <Input id="password" type="password" value={data.password} onChange={(e) => setData('password', e.target.value)} placeholder="••••••••" />
                                     {errors.password && <p className="text-sm text-destructive">{errors.password}</p>}
                                 </div>
                                 <div className="space-y-2">
-                                    <Label htmlFor="password_confirmation">Confirm Password *</Label>
+                                    <Label htmlFor="password_confirmation">{t('setup.step3.confirm_password')}</Label>
                                     <Input id="password_confirmation" type="password" value={data.password_confirmation} onChange={(e) => setData('password_confirmation', e.target.value)} placeholder="••••••••" />
                                 </div>
                             </div>
                         </CardContent>
                         <CardFooter className="justify-between pt-6 border-t border-slate-800/50 mt-4">
                             <Button type="button" variant="outline" onClick={() => setCurrentStep(2)}>
-                                Back
+                                {t('setup.step3.back')}
                             </Button>
                             <Button type="submit" disabled={processing} className="bg-emerald-600 hover:bg-emerald-500 text-white">
                                 {processing ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <Rocket className="w-4 h-4 mr-2" />}
-                                Complete Setup & Launch POS
+                                {t('setup.step3.complete_launch')}
                             </Button>
                         </CardFooter>
                     </form>
