@@ -251,10 +251,6 @@ export default function SetupWizard() {
                                 <Label htmlFor="store_address">{t('setup.step2.store_address')}</Label>
                                 <Input id="store_address" value={data.store_address} onChange={(e) => setData('store_address', e.target.value)} placeholder="Jl. Raya Utama No. 123" />
                             </div>
-                            <div className="space-y-2">
-                                <Label htmlFor="timezone">{t('setup.step2.timezone')}</Label>
-                                <Input id="timezone" value={data.timezone} onChange={(e) => setData('timezone', e.target.value)} placeholder="Asia/Jakarta" />
-                            </div>
                         </CardContent>
                         <CardFooter className="justify-between pt-4 border-t border-slate-800/50 mt-2">
                             <Button variant="outline" onClick={() => setCurrentStep(1)}>
