@@ -14,6 +14,7 @@ use App\Support\Interfaces\Services\ProductServiceInterface;
 use App\Support\Models\Category\GetCategoryReqModel;
 use App\Support\Models\Product\GetProductReqModel;
 use App\Support\Models\Unit\GetUnitReqModel;
+use App\Support\Utils\BarcodeGenerator;
 use App\Support\Utils\CheckException;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Exception;
@@ -583,11 +584,14 @@ class ProductService implements ProductServiceInterface
                 throw new Exception(trans('message.error.barcode_not_found'), Response::HTTP_UNPROCESSABLE_ENTITY);
             }
 
+            $barcodeHtml = BarcodeGenerator::generateHtml($product->barcode);
+
             $temporaryFilePath = tempnam(sys_get_temp_dir(), 'product-barcode-').'.pdf';
 
             Pdf::loadView('pdf.barcode', [
                 'product' => $product,
                 'quantity' => $quantity,
+                'barcodeHtml' => $barcodeHtml,
             ])
                 ->setPaper('a4', 'portrait')
                 ->save($temporaryFilePath);

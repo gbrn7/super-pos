@@ -29,7 +29,7 @@
             display: inline-block;
             width: 30%;
             margin: 1%;
-            padding: 8px;
+            padding: 10px 8px;
             border: 1px dashed #9ca3af;
             border-radius: 4px;
             box-sizing: border-box;
@@ -41,21 +41,21 @@
             font-weight: bold;
             font-size: 10px;
             height: 24px;
+            line-height: 1.2;
             overflow: hidden;
             text-overflow: ellipsis;
-            white-space: nowrap;
         }
 
-        .barcode-text {
-            font-size: 18px;
-            font-family: 'Libre Barcode 128', 'Code 128', 'DejaVu Sans', monospace;
-            letter-spacing: 2px;
-            margin: 6px 0 2px 0;
+        .barcode-wrapper {
+            margin: 8px auto 4px auto;
+            text-align: center;
         }
 
         .barcode-code {
             font-size: 9px;
-            color: #4b5563;
+            color: #374151;
+            font-family: monospace;
+            margin-top: 2px;
         }
 
         .product-price {
@@ -72,8 +72,9 @@
         @for ($i = 0; $i < $quantity; $i++)
             <div class="barcode-card">
                 <div class="product-name">{{ $product->name }}</div>
-                <div class="barcode-code">SKU: {{ $product->sku }}</div>
-                <div class="barcode-text">*{{ $product->barcode }}*</div>
+                <div class="barcode-wrapper">
+                    {!! $barcodeHtml !!}
+                </div>
                 <div class="barcode-code">{{ $product->barcode }}</div>
                 <div class="product-price">Rp {{ number_format((float) $product->price, 0, ',', '.') }}</div>
             </div>
