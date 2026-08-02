@@ -14,6 +14,8 @@ import {
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import axiosInstance from '@/lib/axios';
+import { handleApiError } from '@/lib/utils';
 import type { Product } from '@/support/models/product';
 
 interface PrintBarcodeDialogProps {
@@ -41,41 +43,43 @@ export function PrintBarcodeDialog({
             setLoading(true);
             setErrorMessage(null);
 
-            const response = await fetch(
-                `/products/${product.id}/print-barcode`,
+            const response = await axiosInstance.post(
+                `/api/product/${product.id}/print-barcode`,
+                { quantity },
                 {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        Accept: 'application/pdf, application/json',
-                        'X-CSRF-TOKEN':
-                            (
-                                document.querySelector(
-                                    'meta[name="csrf-token"]',
-                                ) as HTMLMetaElement
-                            )?.content || '',
-                    },
-                    body: JSON.stringify({ quantity }),
+                    responseType: 'blob',
                 },
             );
 
-            if (!response.ok) {
-                const data = await response.json();
-                throw new Error(
-                    data.message ||
-                        t(
-                            'page.product.dialog_modal.print_barcode_dialog.no_barcode_error',
-                            'Barcode tidak ditemukan pada produk ini.',
-                        ),
-                );
-            }
-
-            const blob = await response.blob();
+            const blob = new Blob([response.data], {
+                type: 'application/pdf',
+            });
             const url = window.URL.createObjectURL(blob);
             window.open(url, '_blank');
             onOpenChange(false);
         } catch (error: any) {
-            setErrorMessage(error.message);
+            if (error?.response?.data instanceof Blob) {
+                try {
+                    const text = await error.response.data.text();
+                    const json = JSON.parse(text);
+                    setErrorMessage(
+                        json.message ||
+                            t(
+                                'page.product.dialog_modal.print_barcode_dialog.no_barcode_error',
+                                'Barcode tidak ditemukan pada produk ini.',
+                            ),
+                    );
+                } catch {
+                    setErrorMessage(
+                        t(
+                            'page.product.dialog_modal.print_barcode_dialog.no_barcode_error',
+                            'Barcode tidak ditemukan pada produk ini.',
+                        ),
+                    );
+                }
+            } else {
+                handleApiError(error);
+            }
         } finally {
             setLoading(false);
         }
