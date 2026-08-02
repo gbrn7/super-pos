@@ -26,9 +26,8 @@ return new class extends Migration
             $table->string('image')->nullable();
             $table->decimal('price', 10, 2);
             $table->decimal('cost_price', 10, 2);
-            $table->unsignedBigInteger('created_at');
-            $table->unsignedBigInteger('updated_at');
-            $table->unsignedBigInteger('deleted_at')->nullable();
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -18,9 +18,8 @@ return new class extends Migration
             $table->decimal('balance_before', 15, 2);
             $table->decimal('balance_after', 15, 2);
             $table->text('notes')->nullable();
-            $table->unsignedBigInteger('created_at');
-            $table->unsignedBigInteger('updated_at');
-            $table->unsignedBigInteger('deleted_at')->nullable();
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 

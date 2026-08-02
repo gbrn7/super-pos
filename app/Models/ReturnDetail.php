@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -10,13 +9,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class ReturnDetail extends Model
 {
     use HasFactory;
-
-    protected $dateFormat = 'U';
-
-    protected function serializeDate(DateTimeInterface $date): int
-    {
-        return $date->getTimestamp();
-    }
 
     protected $fillable = [
         'return_id',

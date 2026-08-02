@@ -6,6 +6,7 @@ use App\Models\ProductReturn;
 use App\Models\ReturnDetail;
 use App\Support\Interfaces\Repositories\ReturnRepositoryInterface;
 use App\Support\Models\ProductReturn\GetProductReturnReqModel;
+use Carbon\Carbon;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Support\Collection;
 
@@ -34,10 +35,10 @@ class ReturnRepository implements ReturnRepositoryInterface
                 }
             })
             ->when($request->start_date, function ($query) use ($request) {
-                $query->where('created_at', '>=', $request->start_date);
+                $query->where('created_at', '>=', Carbon::parse($request->start_date)->startOfDay());
             })
             ->when($request->end_date, function ($query) use ($request) {
-                $query->where('created_at', '<=', $request->end_date);
+                $query->where('created_at', '<=', Carbon::parse($request->end_date)->endOfDay());
             });
 
         if ($request->order_by && $request->order) {

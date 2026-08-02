@@ -37,15 +37,11 @@ class TransactionRepository implements TransactionRepositoryInterface
             ->when($request->user_id, fn ($query) => $query->where('transactions.user_id', $request->user_id))
             ->when($request->payment_method_id, fn ($query) => $query->where('transactions.payment_method_id', $request->payment_method_id))
             ->when($request->start_date, function ($query) use ($request) {
-                $startDate = is_numeric($request->start_date)
-                    ? (int) $request->start_date
-                    : Carbon::parse($request->start_date)->startOfDay()->getTimestamp();
+                $startDate = Carbon::parse($request->start_date)->startOfDay();
                 $query->where('transactions.created_at', '>=', $startDate);
             })
             ->when($request->end_date, function ($query) use ($request) {
-                $endDate = is_numeric($request->end_date)
-                    ? (int) $request->end_date
-                    : Carbon::parse($request->end_date)->endOfDay()->getTimestamp();
+                $endDate = Carbon::parse($request->end_date)->endOfDay();
                 $query->where('transactions.created_at', '<=', $endDate);
             });
 

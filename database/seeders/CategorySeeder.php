@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\Category;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Carbon;
 
 class CategorySeeder extends Seeder
 {
@@ -18,32 +17,32 @@ class CategorySeeder extends Seeder
                 [
                     'name' => 'Sembako',
                     'desc' => fake()->sentence(),
-                    'created_at' => Carbon::now()->unix(),
-                    'updated_at' => Carbon::now()->unix(),
+                    'created_at' => now(),
+                    'updated_at' => now(),
                 ],
                 [
                     'name' => 'Minuman',
                     'desc' => fake()->sentence(),
-                    'created_at' => Carbon::now()->unix(),
-                    'updated_at' => Carbon::now()->unix(),
+                    'created_at' => now(),
+                    'updated_at' => now(),
                 ],
                 [
                     'name' => 'Snack',
                     'desc' => fake()->sentence(),
-                    'created_at' => Carbon::now()->unix(),
-                    'updated_at' => Carbon::now()->unix(),
+                    'created_at' => now(),
+                    'updated_at' => now(),
                 ],
                 [
                     'name' => 'Obat Obatan',
                     'desc' => fake()->sentence(),
-                    'created_at' => Carbon::now()->unix(),
-                    'updated_at' => Carbon::now()->unix(),
+                    'created_at' => now(),
+                    'updated_at' => now(),
                 ],
                 [
                     'name' => 'Gas',
                     'desc' => fake()->sentence(),
-                    'created_at' => Carbon::now()->unix(),
-                    'updated_at' => Carbon::now()->unix(),
+                    'created_at' => now(),
+                    'updated_at' => now(),
                 ],
             ]
         );

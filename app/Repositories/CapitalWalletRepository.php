@@ -54,15 +54,11 @@ class CapitalWalletRepository implements CapitalWalletRepositoryInterface
         $query = CapitalWalletTransaction::query()->with('reference');
 
         if ($request->start_date) {
-            $startDate = is_numeric($request->start_date)
-                ? (int) $request->start_date
-                : Carbon::parse($request->start_date)->startOfDay()->getTimestamp();
+            $startDate = Carbon::parse($request->start_date)->startOfDay();
             $query->where('created_at', '>=', $startDate);
         }
         if ($request->end_date) {
-            $endDate = is_numeric($request->end_date)
-                ? (int) $request->end_date
-                : Carbon::parse($request->end_date)->endOfDay()->getTimestamp();
+            $endDate = Carbon::parse($request->end_date)->endOfDay();
             $query->where('created_at', '<=', $endDate);
         }
         if ($request->type) {
@@ -107,10 +103,10 @@ class CapitalWalletRepository implements CapitalWalletRepositoryInterface
         $query = CapitalWalletTransaction::query();
 
         if ($request->start_date) {
-            $query->where('created_at', '>=', Carbon::parse($request->start_date)->startOfDay()->getTimestamp());
+            $query->where('created_at', '>=', Carbon::parse($request->start_date)->startOfDay());
         }
         if ($request->end_date) {
-            $query->where('created_at', '<=', Carbon::parse($request->end_date)->endOfDay()->getTimestamp());
+            $query->where('created_at', '<=', Carbon::parse($request->end_date)->endOfDay());
         }
         if ($request->type) {
             $query->where('type', $request->type);

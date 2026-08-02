@@ -35,8 +35,8 @@ class TransactionSeeder extends Seeder
             foreach (['Cash', 'Qris', 'Transfer'] as $pmName) {
                 PaymentMethod::create([
                     'name' => $pmName,
-                    'created_at' => time(),
-                    'updated_at' => time(),
+                    'created_at' => now(),
+                    'updated_at' => now(),
                 ]);
             }
             $paymentMethods = PaymentMethod::all();
@@ -71,8 +71,8 @@ class TransactionSeeder extends Seeder
                     'quantity' => $qty,
                     'cost_price' => $costPrice,
                     'price' => $price,
-                    'created_at' => $createdAt->unix(),
-                    'updated_at' => $createdAt->unix(),
+                    'created_at' => $createdAt,
+                    'updated_at' => $createdAt,
                 ];
             }
 
@@ -96,8 +96,8 @@ class TransactionSeeder extends Seeder
                 'total_amount' => $totalAmount,
                 'payment_amount' => $paymentAmount,
                 'change_amount' => $changeAmount,
-                'created_at' => $createdAt->unix(),
-                'updated_at' => $createdAt->unix(),
+                'created_at' => $createdAt,
+                'updated_at' => $createdAt,
             ]);
 
             $totalCost = 0;
@@ -113,11 +113,11 @@ class TransactionSeeder extends Seeder
 
             $profit = $totalAmount - $totalCost;
             $profitTx = $profitService->recordSalesProfit($profit, $transaction->id);
-            $profitTx->update(['created_at' => $createdAt->unix(), 'updated_at' => $createdAt->unix()]);
+            $profitTx->update(['created_at' => $createdAt, 'updated_at' => $createdAt]);
 
             if ($totalCost > 0) {
                 $capitalTx = $capitalService->recordSalesCapital($totalCost, $transaction->id);
-                $capitalTx->update(['created_at' => $createdAt->unix(), 'updated_at' => $createdAt->unix()]);
+                $capitalTx->update(['created_at' => $createdAt, 'updated_at' => $createdAt]);
             }
         }
     }

@@ -21,8 +21,8 @@ class CategoryFactory extends Factory
         return [
             'name' => fake()->unique()->words(2, true).' '.fake()->unique()->numerify('#####'),
             'desc' => fake()->randomAscii(),
-            'created_at' => Carbon::now()->unix(),
-            'updated_at' => Carbon::now()->unix(),
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
         ];
     }
 }

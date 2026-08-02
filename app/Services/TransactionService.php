@@ -17,6 +17,7 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use Exception;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Http\Response;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -237,8 +238,8 @@ class TransactionService implements TransactionServiceInterface
             }
 
             $printedAt = date('d/m/Y H:i:s');
-            $startDate = $request->start_date ? date('d/m/Y', $request->start_date) : null;
-            $endDate = $request->end_date ? date('d/m/Y', $request->end_date) : null;
+            $startDate = $request->start_date ? Carbon::parse($request->start_date)->format('d/m/Y') : null;
+            $endDate = $request->end_date ? Carbon::parse($request->end_date)->format('d/m/Y') : null;
             $storeSetting = StoreSetting::first();
 
             $pdf = Pdf::loadView('pdf.transactions', [

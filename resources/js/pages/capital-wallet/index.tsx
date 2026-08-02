@@ -40,8 +40,8 @@ export default function CapitalWalletIndex({ storeSetting }: { storeSetting?: St
         keyword: string;
         type: string;
         transaction_type: string;
-        start_date: number | null;
-        end_date: number | null;
+        start_date: string | null;
+        end_date: string | null;
     }>({
         page: 1,
         limit: 10,

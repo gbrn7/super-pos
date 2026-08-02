@@ -57,8 +57,8 @@ interface DataTableProps<TData, TValue> {
         keyword: string;
         type: string;
         transaction_type: string;
-        start_date: number | null;
-        end_date: number | null;
+        start_date: string | null;
+        end_date: string | null;
     };
     pagination: {
         current_page: number;
@@ -212,7 +212,7 @@ export function DataTable<TData, TValue>({
                         <PopoverTrigger asChild>
                             <Button variant="outline" disabled={processing} className="w-full justify-start text-left font-normal text-xs h-9">
                                 {queryParam.start_date ? (
-                                    new Date(queryParam.start_date * 1000).toLocaleDateString('id-ID')
+                                    new Date(queryParam.start_date).toLocaleDateString('id-ID')
                                 ) : (
                                     <span className="text-muted-foreground">{t('page.capital_wallet.data_table.filters.start_date_label', 'Mulai')}</span>
                                 )}
@@ -221,11 +221,13 @@ export function DataTable<TData, TValue>({
                         <PopoverContent className="w-auto p-0" align="start">
                             <CalendarPicker
                                 mode="single"
-                                selected={queryParam.start_date ? new Date(queryParam.start_date * 1000) : undefined}
+                                selected={queryParam.start_date ? new Date(queryParam.start_date) : undefined}
                                 onSelect={(date) => {
                                     if (date) {
-                                        const startDate = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0, 0, 0);
-                                        onQueryParamChange('start_date', Math.floor(startDate.getTime() / 1000));
+                                        const year = date.getFullYear();
+                                        const month = String(date.getMonth() + 1).padStart(2, '0');
+                                        const day = String(date.getDate()).padStart(2, '0');
+                                        onQueryParamChange('start_date', `${year}-${month}-${day}`);
                                     } else {
                                         onQueryParamChange('start_date', null);
                                     }
@@ -245,7 +247,7 @@ export function DataTable<TData, TValue>({
                         <PopoverTrigger asChild>
                             <Button variant="outline" disabled={processing} className="w-full justify-start text-left font-normal text-xs h-9">
                                 {queryParam.end_date ? (
-                                    new Date(queryParam.end_date * 1000).toLocaleDateString('id-ID')
+                                    new Date(queryParam.end_date).toLocaleDateString('id-ID')
                                 ) : (
                                     <span className="text-muted-foreground">{t('page.capital_wallet.data_table.filters.end_date_label', 'Hingga')}</span>
                                 )}
@@ -254,11 +256,13 @@ export function DataTable<TData, TValue>({
                         <PopoverContent className="w-auto p-0" align="start">
                             <CalendarPicker
                                 mode="single"
-                                selected={queryParam.end_date ? new Date(queryParam.end_date * 1000) : undefined}
+                                selected={queryParam.end_date ? new Date(queryParam.end_date) : undefined}
                                 onSelect={(date) => {
                                     if (date) {
-                                        const endDate = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 23, 59, 59, 999);
-                                        onQueryParamChange('end_date', Math.floor(endDate.getTime() / 1000));
+                                        const year = date.getFullYear();
+                                        const month = String(date.getMonth() + 1).padStart(2, '0');
+                                        const day = String(date.getDate()).padStart(2, '0');
+                                        onQueryParamChange('end_date', `${year}-${month}-${day}`);
                                     } else {
                                         onQueryParamChange('end_date', null);
                                     }
@@ -322,7 +326,7 @@ export function DataTable<TData, TValue>({
                     )}
                     {queryParam.start_date && (
                         <Badge variant="secondary" className="gap-1 font-normal py-0.5 px-2 bg-muted/50 hover:bg-muted">
-                            {t('page.capital_wallet.data_table.filters.start_date_label', 'Mulai')}: {new Date(queryParam.start_date * 1000).toISOString().slice(0, 10)}
+                            {t('page.capital_wallet.data_table.filters.start_date_label', 'Mulai')}: {queryParam.start_date}
                             <button
                                 type="button"
                                 onClick={() => onQueryParamChange('start_date', null)}
@@ -335,7 +339,7 @@ export function DataTable<TData, TValue>({
                     )}
                     {queryParam.end_date && (
                         <Badge variant="secondary" className="gap-1 font-normal py-0.5 px-2 bg-muted/50 hover:bg-muted">
-                            {t('page.capital_wallet.data_table.filters.end_date_badge_label', 'Akhir')}: {new Date(queryParam.end_date * 1000).toISOString().slice(0, 10)}
+                            {t('page.capital_wallet.data_table.filters.end_date_badge_label', 'Akhir')}: {queryParam.end_date}
                             <button
                                 type="button"
                                 onClick={() => onQueryParamChange('end_date', null)}

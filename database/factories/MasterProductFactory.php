@@ -27,8 +27,8 @@ class MasterProductFactory extends Factory
             'desc' => fake()->sentence(),
             'price' => $price,
             'cost_price' => (80 / 100) * $price,
-            'created_at' => now()->unix(),
-            'updated_at' => now()->unix(),
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
     }
 }

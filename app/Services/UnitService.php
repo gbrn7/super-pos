@@ -10,7 +10,6 @@ use App\Support\Interfaces\Repositories\UnitRepositoryInterface;
 use App\Support\Interfaces\Services\UnitServiceInterface;
 use App\Support\Models\Unit\GetUnitReqModel;
 use App\Support\Utils\CheckException;
-use Carbon\Carbon;
 use Exception;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Http\Response;
@@ -122,14 +121,14 @@ class UnitService implements UnitServiceInterface
 
             $newData = Collection::make();
 
-            $unixTime = Carbon::now()->unix();
+            $now = now();
 
             foreach ($raws as $raw) {
                 foreach ($raw as $row) {
                     $newData->push([
                         'name' => $row['nama'],
-                        'created_at' => $unixTime,
-                        'updated_at' => $unixTime,
+                        'created_at' => $now,
+                        'updated_at' => $now,
                     ]);
                 }
             }

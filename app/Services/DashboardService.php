@@ -24,8 +24,8 @@ class DashboardService implements DashboardServiceInterface
         try {
             // Default to this month (Bulan Ini) if not specified
             if (empty($startDate) || empty($endDate)) {
-                $startDate = (string) Carbon::now()->startOfMonth()->startOfDay()->unix();
-                $endDate = (string) Carbon::now()->endOfMonth()->endOfDay()->unix();
+                $startDate = Carbon::now()->startOfMonth()->format('Y-m-d');
+                $endDate = Carbon::now()->endOfMonth()->format('Y-m-d');
             }
 
             // Fetch recent transactions using TransactionRepository with server-side pagination

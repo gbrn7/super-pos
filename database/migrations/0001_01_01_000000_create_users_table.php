@@ -15,19 +15,17 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
-            $table->unsignedBigInteger('email_verified_at')->nullable();
+            $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
-            $table->unsignedBigInteger('created_at');
-            $table->unsignedBigInteger('updated_at');
-            $table->unsignedBigInteger('deleted_at')->nullable();
+            $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
             $table->string('email')->primary();
             $table->string('token');
-            $table->unsignedBigInteger('created_at');
-            $table->unsignedBigInteger('updated_at');
+            $table->timestamps();
         });
 
         Schema::create('sessions', function (Blueprint $table) {

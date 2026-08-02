@@ -15,8 +15,8 @@ class CapitalWalletFactory extends Factory
         return [
             'balance' => 0.00,
             'status' => 'active',
-            'created_at' => Carbon::now()->unix(),
-            'updated_at' => Carbon::now()->unix(),
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
         ];
     }
 }

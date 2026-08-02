@@ -15,9 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('name')->index()->unique();
             $table->text('desc')->nullable();
-            $table->unsignedBigInteger('created_at');
-            $table->unsignedBigInteger('updated_at');
-            $table->unsignedBigInteger('deleted_at')->nullable();
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 

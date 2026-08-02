@@ -147,7 +147,7 @@
                     <td class="font-bold">{{ $trx->invoice_number }}</td>
                     <td>
                         @if($trx->created_at)
-                            {{ is_numeric($trx->created_at) ? date('d/m/Y H:i', (int)$trx->created_at) : \Carbon\Carbon::parse($trx->created_at)->format('d/m/Y H:i') }}
+                            {{ \Carbon\Carbon::parse($trx->created_at)->format('d/m/Y H:i') }}
                         @else
                             -
                         @endif

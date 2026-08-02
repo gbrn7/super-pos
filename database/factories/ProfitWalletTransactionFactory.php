@@ -21,8 +21,8 @@ class ProfitWalletTransactionFactory extends Factory
             'balance_before' => 0.00,
             'balance_after' => 5000.00,
             'notes' => 'Test Transaction',
-            'created_at' => Carbon::now()->unix(),
-            'updated_at' => Carbon::now()->unix(),
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
         ];
     }
 }

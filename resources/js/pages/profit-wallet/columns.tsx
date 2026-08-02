@@ -3,7 +3,7 @@ import i18next from 'i18next';
 import { ServerSideDataTableHeader } from '@/components/server-side-data-table-header';
 import { Badge } from '@/components/ui/badge';
 import { formatRupiah } from '@/lib/format-money';
-import dayjs from 'dayjs';
+import { formatDate } from '@/lib/format-date';
 import type { ProfitWalletTransaction } from '@/support/models/profitWallet';
 
 interface ColumnProps {
@@ -19,7 +19,7 @@ export const columns = ({ onInvoiceClick, onSortChange, orderBy, order }: Column
         header: () => i18next.t('page.profit_wallet.data_table.columns.created_at', 'Waktu Mutasi'),
         cell: ({ row }) => (
             <span className="whitespace-nowrap">
-                {dayjs.unix(row.original.created_at).format('DD/MM/YYYY HH:mm')}
+                {formatDate(row.original.created_at)}
             </span>
         ),
     },

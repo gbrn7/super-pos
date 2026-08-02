@@ -11,7 +11,6 @@ use App\Support\Interfaces\Repositories\PaymentMethodRepositoryInterface;
 use App\Support\Interfaces\Services\PaymentMethodServiceInterface;
 use App\Support\Models\PaymentMethod\GetPaymentMethodReqModel;
 use App\Support\Utils\CheckException;
-use Carbon\Carbon;
 use Exception;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Http\Response;
@@ -157,15 +156,15 @@ class PaymentMethodService implements PaymentMethodServiceInterface
 
             $newData = Collection::make();
 
-            $unixTime = Carbon::now()->unix();
+            $now = now();
 
             foreach ($raws as $raw) {
                 foreach ($raw as $row) {
                     $newData->push([
                         'name' => $row['nama'],
                         'desc' => $row['deskripsi'],
-                        'created_at' => $unixTime,
-                        'updated_at' => $unixTime,
+                        'created_at' => $now,
+                        'updated_at' => $now,
                     ]);
                 }
             }

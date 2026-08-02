@@ -230,7 +230,7 @@ export default function Dashboard() {
     const [activeTab, setActiveTab] = React.useState<'transactions' | 'low_stock' | 'best_sellers'>('transactions');
     const [page, setPage] = React.useState(1);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
-    const [currentRange, setCurrentRange] = React.useState<{ start_date: number | null; end_date: number | null }>({
+    const [currentRange, setCurrentRange] = React.useState<{ start_date: string | null; end_date: string | null }>({
         start_date: null,
         end_date: null,
     });
@@ -313,9 +313,16 @@ export default function Dashboard() {
                 break;
         }
 
+        const formatDateStr = (d: Date) => {
+            const year = d.getFullYear();
+            const month = String(d.getMonth() + 1).padStart(2, '0');
+            const day = String(d.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        };
+
         return {
-            start_date: Math.floor(start.getTime() / 1000),
-            end_date: Math.floor(end.getTime() / 1000),
+            start_date: formatDateStr(start),
+            end_date: formatDateStr(end),
         };
     };
 
@@ -323,7 +330,7 @@ export default function Dashboard() {
     const lastLoadedLimit = React.useRef(10);
     const lastLoadedRange = React.useRef('');
 
-    const fetchDashboardData = async (start: number, end: number, txPageNum = 1, txLimitNum = 10, onlyTransactions = false) => {
+    const fetchDashboardData = async (start: string, end: string, txPageNum = 1, txLimitNum = 10, onlyTransactions = false) => {
         if (onlyTransactions) {
             setIsTableLoading(true);
         } else {
@@ -386,9 +393,13 @@ export default function Dashboard() {
     const handleDateRangeSelect = (range: DateRange | undefined) => {
         setDateRange(range);
         if (range?.from && range?.to) {
-            const startTs = Math.floor(new Date(range.from.getFullYear(), range.from.getMonth(), range.from.getDate(), 0, 0, 0, 0).getTime() / 1000);
-            const endTs = Math.floor(new Date(range.to.getFullYear(), range.to.getMonth(), range.to.getDate(), 23, 59, 59, 999).getTime() / 1000);
-            setCurrentRange({ start_date: startTs, end_date: endTs });
+            const formatDateStr = (d: Date) => {
+                const year = d.getFullYear();
+                const month = String(d.getMonth() + 1).padStart(2, '0');
+                const day = String(d.getDate()).padStart(2, '0');
+                return `${year}-${month}-${day}`;
+            };
+            setCurrentRange({ start_date: formatDateStr(range.from), end_date: formatDateStr(range.to) });
             setPage(1);
         }
     };

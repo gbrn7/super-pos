@@ -37,8 +37,8 @@ class ProductFactory extends Factory
             'is_active' => fake()->boolean(),
             'is_unlimited' => fake()->boolean(),
             'desc' => fake()->sentence(),
-            'created_at' => now()->unix(),
-            'updated_at' => now()->unix(),
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
     }
 }

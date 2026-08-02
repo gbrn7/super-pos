@@ -16,7 +16,6 @@ use App\Support\Models\Product\GetProductReqModel;
 use App\Support\Models\Unit\GetUnitReqModel;
 use App\Support\Utils\CheckException;
 use Barryvdh\DomPDF\Facade\Pdf;
-use Carbon\Carbon;
 use Exception;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Http\Request;
@@ -157,7 +156,7 @@ class ProductService implements ProductServiceInterface
             DB::beginTransaction();
 
             $insertData = Collection::make();
-            $now = Carbon::now()->unix();
+            $now = now();
 
             foreach ($productsData as $data) {
                 if (isset($data['cost_price'], $data['price']) && $data['cost_price'] > $data['price']) {
@@ -374,7 +373,7 @@ class ProductService implements ProductServiceInterface
 
             $newData = Collection::make();
 
-            $unixTime = Carbon::now()->unix();
+            $now = now();
 
             $getCategoryReqModel = new GetCategoryReqModel(new Request(['limit' => null]));
             $getUnitReqModel = new GetUnitReqModel(new Request(['limit' => null]));
@@ -467,8 +466,8 @@ class ProductService implements ProductServiceInterface
                         'is_active' => $isActive,
                         'is_unlimited' => $is_unlimited,
                         'desc' => $row['deskripsi_opsional'] ?? Constants::EMPTY_STRING_VALUE,
-                        'created_at' => $unixTime,
-                        'updated_at' => $unixTime,
+                        'created_at' => $now,
+                        'updated_at' => $now,
                     ];
 
                     if ($newProduct['name'] == Constants::EMPTY_STRING_VALUE) {

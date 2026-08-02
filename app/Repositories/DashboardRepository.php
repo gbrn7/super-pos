@@ -11,18 +11,18 @@ use Illuminate\Support\Facades\DB;
 
 class DashboardRepository implements DashboardRepositoryInterface
 {
-    private function parseStartTimestamp(string $startDate): int
+    private function parseStartTimestamp(string $startDate): Carbon
     {
         return is_numeric($startDate)
-            ? (int) $startDate
-            : Carbon::parse($startDate)->startOfDay()->unix();
+            ? Carbon::createFromTimestamp((int) $startDate)->startOfDay()
+            : Carbon::parse($startDate)->startOfDay();
     }
 
-    private function parseEndTimestamp(string $endDate): int
+    private function parseEndTimestamp(string $endDate): Carbon
     {
         return is_numeric($endDate)
-            ? (int) $endDate
-            : Carbon::parse($endDate)->endOfDay()->unix();
+            ? Carbon::createFromTimestamp((int) $endDate)->endOfDay()
+            : Carbon::parse($endDate)->endOfDay();
     }
 
     public function getMetrics(string $startDate, string $endDate): array
@@ -111,12 +111,12 @@ class DashboardRepository implements DashboardRepositoryInterface
             ->whereBetween('transactions.created_at', [$start, $end])
             ->whereNull('transactions.deleted_at')
             ->select(
-                DB::raw("to_char(to_timestamp(transactions.created_at), 'YYYY-MM-DD') as date"),
+                DB::raw("to_char(transactions.created_at, 'YYYY-MM-DD') as date"),
                 DB::raw('COALESCE(SUM(transactions.total_amount), 0) as revenue'),
                 DB::raw('COALESCE(SUM(details.cost), 0) as cost'),
                 DB::raw('COALESCE(SUM(details.quantity), 0) as quantity')
             )
-            ->groupBy(DB::raw("to_char(to_timestamp(transactions.created_at), 'YYYY-MM-DD')"))
+            ->groupBy(DB::raw("to_char(transactions.created_at, 'YYYY-MM-DD')"))
             ->get();
 
         $returnData = DB::table('returns')
@@ -127,12 +127,12 @@ class DashboardRepository implements DashboardRepositoryInterface
             })
             ->whereBetween('returns.created_at', [$start, $end])
             ->select(
-                DB::raw("to_char(to_timestamp(returns.created_at), 'YYYY-MM-DD') as date"),
+                DB::raw("to_char(returns.created_at, 'YYYY-MM-DD') as date"),
                 DB::raw('COALESCE(SUM(returns.total_refund_amount), 0) as refund'),
                 DB::raw('COALESCE(SUM(return_details.quantity * transaction_detail.cost_price), 0) as returned_cost'),
                 DB::raw('COALESCE(SUM(return_details.quantity), 0) as returned_qty')
             )
-            ->groupBy(DB::raw("to_char(to_timestamp(returns.created_at), 'YYYY-MM-DD')"))
+            ->groupBy(DB::raw("to_char(returns.created_at, 'YYYY-MM-DD')"))
             ->get()
             ->keyBy('date');
 

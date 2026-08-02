@@ -20,10 +20,10 @@ return new class extends Migration
             $table->decimal('payment_amount', 10, 2);
             $table->decimal('change_amount', 10, 2);
             $table->decimal('discount_amount', 10, 2)->default(0);
-            $table->unsignedBigInteger('created_at')->index();
-            $table->unsignedBigInteger('updated_at');
-            $table->unsignedBigInteger('deleted_at')->nullable();
+            $table->timestamps();
+            $table->softDeletes();
 
+            $table->index('created_at');
             $table->index(['created_at', 'payment_method_id']);
             $table->index(['created_at', 'user_id']);
         });

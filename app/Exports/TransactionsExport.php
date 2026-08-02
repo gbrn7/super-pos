@@ -39,12 +39,9 @@ class TransactionsExport implements FromCollection, ShouldAutoSize, WithHeadings
 
     public function map($transaction): array
     {
-        $formattedDate = '-';
-        if ($transaction->created_at) {
-            $formattedDate = is_numeric($transaction->created_at)
-                ? date('Y-m-d H:i:s', (int) $transaction->created_at)
-                : Carbon::parse($transaction->created_at)->format('Y-m-d H:i:s');
-        }
+        $formattedDate = $transaction->created_at
+            ? Carbon::parse($transaction->created_at)->format('Y-m-d H:i:s')
+            : '-';
 
         $totalAmount = (float) ($transaction->total_amount ?? 0);
         $discountAmount = (float) ($transaction->discount_amount ?? 0);

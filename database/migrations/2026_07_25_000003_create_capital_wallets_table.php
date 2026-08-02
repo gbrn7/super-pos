@@ -15,12 +15,11 @@ return new class extends Migration
             $table->decimal('total_inflow', 15, 2)->default(0.00);
             $table->decimal('total_outflow', 15, 2)->default(0.00);
             $table->string('status')->default('active');
-            $table->unsignedBigInteger('created_at');
-            $table->unsignedBigInteger('updated_at');
-            $table->unsignedBigInteger('deleted_at')->nullable();
+            $table->timestamps();
+            $table->softDeletes();
         });
 
-        $now = time();
+        $now = now();
         DB::table('capital_wallets')->insert([
             'balance' => 0.00,
             'total_inflow' => 0.00,

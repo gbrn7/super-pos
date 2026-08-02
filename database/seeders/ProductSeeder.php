@@ -31,8 +31,8 @@ class ProductSeeder extends Seeder
                 'image' => 'product/test.jpg',
                 'is_unlimited' => true,
                 'desc' => 'Test Desc',
-                'created_at' => now()->unix(),
-                'updated_at' => now()->unix(),
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'category_id' => 1,
@@ -49,8 +49,8 @@ class ProductSeeder extends Seeder
                 'is_active' => false,
                 'is_unlimited' => false,
                 'desc' => 'Test Desc',
-                'created_at' => now()->unix(),
-                'updated_at' => now()->unix(),
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'category_id' => 1,
@@ -67,8 +67,8 @@ class ProductSeeder extends Seeder
                 'is_active' => true,
                 'is_unlimited' => false,
                 'desc' => 'Test Desc',
-                'created_at' => now()->unix(),
-                'updated_at' => now()->unix(),
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'category_id' => 2,
@@ -85,8 +85,8 @@ class ProductSeeder extends Seeder
                 'is_active' => true,
                 'is_unlimited' => false,
                 'desc' => 'Test Desc',
-                'created_at' => now()->unix(),
-                'updated_at' => now()->unix(),
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
         ]);
     }

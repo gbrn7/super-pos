@@ -6,7 +6,6 @@ use App\Imports\MasterProductImport;
 use App\Models\MasterProduct;
 use App\Support\Constants\Constants;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -30,7 +29,7 @@ class MasterProductSeeder extends Seeder
         $data = Excel::toArray(new MasterProductImport, $publicFilePath);
         $chunks = array_chunk($data[0], 1000);
 
-        $unixTime = Carbon::now()->unix();
+        $now = now();
 
         DB::beginTransaction();
         foreach ($chunks as $chunk) {
@@ -45,8 +44,8 @@ class MasterProductSeeder extends Seeder
                     'cost_price' => $row['harga_modal'] ?? Constants::EMPTY_NUMBER_VALUE,
                     'price' => $row['harga_jual'] ?? Constants::EMPTY_NUMBER_VALUE,
                     'desc' => $row['deskripsi_opsional'] ?? Constants::EMPTY_STRING_VALUE,
-                    'created_at' => $unixTime,
-                    'updated_at' => $unixTime,
+                    'created_at' => $now,
+                    'updated_at' => $now,
                 ];
 
                 $newData->push($newMasterProduct);

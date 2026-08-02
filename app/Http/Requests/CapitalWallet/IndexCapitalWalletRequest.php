@@ -14,8 +14,8 @@ class IndexCapitalWalletRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'start_date' => ['nullable', 'numeric'],
-            'end_date' => ['nullable', 'numeric'],
+            'start_date' => ['nullable', 'string'],
+            'end_date' => ['nullable', 'string'],
             'type' => ['nullable', 'in:in,out'],
             'transaction_type' => ['nullable', 'in:sales_capital_recovery,reinvestment,capital_injection,capital_drawdown,product_purchase'],
             'keyword' => ['nullable', 'string', 'max:255'],

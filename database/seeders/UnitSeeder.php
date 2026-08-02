@@ -12,31 +12,32 @@ class UnitSeeder extends Seeder
      */
     public function run(): void
     {
+        $now = now();
         Unit::insert([
             [
                 'name' => 'Kilogram',
-                'created_at' => now()->unix(),
-                'updated_at' => now()->unix(),
+                'created_at' => $now,
+                'updated_at' => $now,
             ],
             [
                 'name' => 'Liter',
-                'created_at' => now()->unix(),
-                'updated_at' => now()->unix(),
+                'created_at' => $now,
+                'updated_at' => $now,
             ],
             [
                 'name' => 'Pcs',
-                'created_at' => now()->unix(),
-                'updated_at' => now()->unix(),
+                'created_at' => $now,
+                'updated_at' => $now,
             ],
             [
                 'name' => 'Box',
-                'created_at' => now()->unix(),
-                'updated_at' => now()->unix(),
+                'created_at' => $now,
+                'updated_at' => $now,
             ],
             [
                 'name' => 'Lusin',
-                'created_at' => now()->unix(),
-                'updated_at' => now()->unix(),
+                'created_at' => $now,
+                'updated_at' => $now,
             ],
         ]);
     }

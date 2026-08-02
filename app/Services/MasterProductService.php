@@ -12,7 +12,6 @@ use App\Support\Interfaces\Services\MasterProductServiceInterface;
 use App\Support\Models\MasterProduct\GetMasterProductReqModel;
 use App\Support\Utils\CheckException;
 use Barryvdh\DomPDF\Facade\Pdf;
-use Carbon\Carbon;
 use Exception;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Http\Request;
@@ -151,7 +150,7 @@ class MasterProductService implements MasterProductServiceInterface
             $data = Excel::toArray(new MasterProductImport, $file);
             $chunks = array_chunk($data[0], 1000);
 
-            $unixTime = Carbon::now()->unix();
+            $now = now();
 
             $insertedCount = 0;
 
@@ -167,8 +166,8 @@ class MasterProductService implements MasterProductServiceInterface
                         'cost_price' => $row['harga_modal'] ?? Constants::EMPTY_NUMBER_VALUE,
                         'price' => $row['harga_jual'] ?? Constants::EMPTY_NUMBER_VALUE,
                         'desc' => $row['deskripsi_opsional'] ?? Constants::EMPTY_STRING_VALUE,
-                        'created_at' => $unixTime,
-                        'updated_at' => $unixTime,
+                        'created_at' => $now,
+                        'updated_at' => $now,
                     ];
 
                     if ($newMasterProduct['name'] == Constants::EMPTY_STRING_VALUE) {
@@ -227,7 +226,7 @@ class MasterProductService implements MasterProductServiceInterface
             $request = new GetMasterProductReqModel(new Request(['limit' => null]));
             $Masterproducts = $this->MasterproductRepository->getAllByIndex($request);
 
-            $temporaryFilePath = tempnam(sys_get_temp_dir(), 'MasterProducts-export-') . '.pdf';
+            $temporaryFilePath = tempnam(sys_get_temp_dir(), 'MasterProducts-export-').'.pdf';
 
             Pdf::loadView('exports.master-products-pdf', ['masterproducts' => $Masterproducts])
                 ->setPaper('a4', 'landscape')

@@ -20,9 +20,8 @@ return new class extends Migration
             $table->decimal('cost_price', 10, 2);
             $table->decimal('price', 10, 2);
             $table->decimal('discount', 10, 2)->default(0);
-            $table->unsignedBigInteger('created_at');
-            $table->unsignedBigInteger('updated_at');
-            $table->unsignedBigInteger('deleted_at')->nullable();
+            $table->timestamps();
+            $table->softDeletes();
 
             $table->index(['transaction_id', 'product_id']);
         });
