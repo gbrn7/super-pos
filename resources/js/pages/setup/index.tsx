@@ -209,7 +209,7 @@ export default function SetupWizard() {
                                 </Button>
                             </div>
                         </CardContent>
-                        <CardFooter className="justify-end">
+                        <CardFooter className="justify-end pt-6 border-t border-slate-800/50 mt-4">
                             <Button onClick={() => setCurrentStep(2)} disabled={!isMigrated}>
                                 Next Step
                             </Button>
@@ -247,7 +247,7 @@ export default function SetupWizard() {
                                 </div>
                             </div>
                         </CardContent>
-                        <CardFooter className="justify-between">
+                        <CardFooter className="justify-between pt-6 border-t border-slate-800/50 mt-4">
                             <Button variant="outline" onClick={() => setCurrentStep(1)}>
                                 Back
                             </Button>
@@ -290,7 +290,7 @@ export default function SetupWizard() {
                                 </div>
                             </div>
                         </CardContent>
-                        <CardFooter className="justify-between">
+                        <CardFooter className="justify-between pt-6 border-t border-slate-800/50 mt-4">
                             <Button type="button" variant="outline" onClick={() => setCurrentStep(2)}>
                                 Back
                             </Button>
