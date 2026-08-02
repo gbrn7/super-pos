@@ -152,14 +152,14 @@ export default function SetupWizard() {
             <Card className="w-full max-w-2xl bg-slate-900 border-slate-800 text-slate-100">
                 {currentStep === 1 && (
                     <>
-                        <CardHeader className="pb-6 border-b border-slate-800/50">
+                        <CardHeader className="pb-3">
                             <CardTitle className="flex items-center space-x-2">
                                 <Database className="w-5 h-5 text-primary" />
                                 <span>{t('setup.step1.title')}</span>
                             </CardTitle>
                             <CardDescription className="text-slate-400">{t('setup.step1.description')}</CardDescription>
                         </CardHeader>
-                        <CardContent className="space-y-4 pt-6">
+                        <CardContent className="space-y-4 pt-4">
                             {dbMessage && (
                                 <Alert className={dbTested || isMigrated ? 'bg-emerald-950/50 border-emerald-800 text-emerald-300' : 'bg-destructive/10 border-destructive/20 text-destructive'}>
                                     {dbTested || isMigrated ? <CheckCircle2 className="h-4 w-4" /> : <AlertCircle className="h-4 w-4" />}
@@ -234,14 +234,14 @@ export default function SetupWizard() {
 
                 {currentStep === 2 && (
                     <>
-                        <CardHeader className="pb-6 border-b border-slate-800/50">
+                        <CardHeader className="pb-3">
                             <CardTitle className="flex items-center space-x-2">
                                 <Store className="w-5 h-5 text-primary" />
                                 <span>{t('setup.step2.title')}</span>
                             </CardTitle>
                             <CardDescription className="text-slate-400">{t('setup.step2.description')}</CardDescription>
                         </CardHeader>
-                        <CardContent className="space-y-4 pt-6">
+                        <CardContent className="space-y-4 pt-4">
                             <div className="space-y-2">
                                 <Label htmlFor="store_name">{t('setup.step2.store_name')}</Label>
                                 <Input id="store_name" value={data.store_name} onChange={(e) => setData('store_name', e.target.value)} placeholder="e.g. Toko Berkah POS" />
@@ -275,14 +275,14 @@ export default function SetupWizard() {
 
                 {currentStep === 3 && (
                     <form onSubmit={handleSubmitComplete}>
-                        <CardHeader className="pb-6 border-b border-slate-800/50">
+                        <CardHeader className="pb-3">
                             <CardTitle className="flex items-center space-x-2">
                                 <UserCheck className="w-5 h-5 text-primary" />
                                 <span>{t('setup.step3.title')}</span>
                             </CardTitle>
                             <CardDescription className="text-slate-400">{t('setup.step3.description')}</CardDescription>
                         </CardHeader>
-                        <CardContent className="space-y-4 pt-6">
+                        <CardContent className="space-y-4 pt-4">
                             <div className="space-y-2">
                                 <Label htmlFor="name">{t('setup.step3.full_name')}</Label>
                                 <Input id="name" value={data.name} onChange={(e) => setData('name', e.target.value)} placeholder="John Doe" />
