@@ -54,7 +54,7 @@ class HandleInertiaRequests extends Middleware
                         ->toArray(),
                     // check is superadmin
                     'isSuperAdmin' => $request->user()?->hasRole(RoleEnums::SUPER_ADMIN->value),
-                ] : [],
+                ] : null,
             ],
             'sidebarOpen' => ! $request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
         ];

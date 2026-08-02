@@ -5,23 +5,23 @@ interface User {
     id: number;
     name: string;
     email: string;
-    roles: string[];
-    permissions: string[];
+    roles?: string[];
+    permissions?: string[];
 }
 
 export const useAuth = () => {
-    const { auth } = usePage().props;
-    const user = auth?.user as User | undefined;
+    const { auth } = usePage().props as { auth?: { user?: User | null } };
+    const user = auth?.user;
 
     const hasRole = (role: string | string[]): boolean => {
-        if (!user) return false;
+        if (!user || !Array.isArray(user.roles)) return false;
 
         if (typeof role === 'string') {
             return user.roles.includes(role);
         }
 
         // Jika array, cek apakah user memiliki salah satu role
-        return role.some((r) => user.roles.includes(r));
+        return role.some((r) => user.roles?.includes(r));
     };
 
     const isSuperAdmin = (): boolean => {
@@ -29,7 +29,7 @@ export const useAuth = () => {
     };
 
     const hasPermission = (permission: string | string[]): boolean => {
-        if (!user) return false;
+        if (!user || !Array.isArray(user.permissions)) return false;
 
         // Super admin bypass semua permission checks
         if (isSuperAdmin()) return true;
@@ -39,16 +39,16 @@ export const useAuth = () => {
         }
 
         // Jika array, cek apakah user memiliki semua permissions
-        return permission.every((p) => user.permissions.includes(p));
+        return permission.every((p) => user.permissions?.includes(p));
     };
 
     const hasAnyPermission = (permissions: string[]): boolean => {
-        if (!user) return false;
+        if (!user || !Array.isArray(user.permissions)) return false;
 
         // Super admin bypass semua permission checks
         if (isSuperAdmin()) return true;
 
-        return permissions.some((p) => user.permissions.includes(p));
+        return permissions.some((p) => user.permissions?.includes(p));
     };
 
     return {
