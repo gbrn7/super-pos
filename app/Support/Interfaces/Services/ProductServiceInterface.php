@@ -67,4 +67,9 @@ interface ProductServiceInterface
      * Export products to pdf file.
      */
     public function exportPdf(): BinaryFileResponse;
+
+    /**
+     * Print barcode for product.
+     */
+    public function printBarcode(int|string $id, int $quantity);
 }

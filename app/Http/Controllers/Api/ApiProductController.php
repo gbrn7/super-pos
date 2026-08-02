@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Product\BulkDeleteProductRequest;
 use App\Http\Requests\Product\BulkStoreProductRequest;
 use App\Http\Requests\Product\ImportProductRequest;
+use App\Http\Requests\Product\PrintBarcodeProductRequest;
 use App\Http\Requests\Product\StoreProductRequest;
 use App\Http\Requests\Product\UpdateProductRequest;
 use App\Http\Resources\ProductResource;
@@ -29,7 +30,7 @@ class ApiProductController extends Controller implements HasMiddleware
         return [
             new Middleware(
                 'permission:'.ProductPermissionEnums::READ_PRODUCT->value,
-                only: ['index', 'show', 'getByBarcode', 'exportProductExcelData', 'exportProductPdfData']
+                only: ['index', 'show', 'getByBarcode', 'exportProductExcelData', 'exportProductPdfData', 'printBarcode']
             ),
 
             new Middleware(
@@ -211,6 +212,15 @@ class ApiProductController extends Controller implements HasMiddleware
             return $this->productService->exportPdf();
         } catch (\Throwable $th) {
             return ResponseApi::make(false, $th->getMessage(), null, $th->getcode());
+        }
+    }
+
+    public function printBarcode(PrintBarcodeProductRequest $request, string $id)
+    {
+        try {
+            return $this->productService->printBarcode($id, $request->validated('quantity'));
+        } catch (\Throwable $th) {
+            return ResponseApi::make(false, $th->getMessage(), null, $th->getCode() ?: 400);
         }
     }
 }

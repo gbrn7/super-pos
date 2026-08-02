@@ -569,4 +569,32 @@ class ProductService implements ProductServiceInterface
             throw CheckException::Check($th);
         }
     }
+
+    public function printBarcode(int|string $id, int $quantity): BinaryFileResponse
+    {
+        try {
+            $product = $this->productRepository->getById((int) $id);
+
+            if (! $product) {
+                throw new Exception(trans('message.error.data_not_found'), Response::HTTP_NOT_FOUND);
+            }
+
+            if (empty($product->barcode)) {
+                throw new Exception(trans('message.error.barcode_not_found'), Response::HTTP_UNPROCESSABLE_ENTITY);
+            }
+
+            $temporaryFilePath = tempnam(sys_get_temp_dir(), 'product-barcode-').'.pdf';
+
+            Pdf::loadView('pdf.barcode', [
+                'product' => $product,
+                'quantity' => $quantity,
+            ])
+                ->setPaper('a4', 'portrait')
+                ->save($temporaryFilePath);
+
+            return response()->download($temporaryFilePath, "barcode-{$product->barcode}.pdf")->deleteFileAfterSend(true);
+        } catch (\Throwable $th) {
+            throw CheckException::Check($th);
+        }
+    }
 }
