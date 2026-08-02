@@ -120,7 +120,7 @@ class SetupController extends Controller
             'store_name' => 'required|string|max:255',
             'store_address' => 'nullable|string|max:500',
             'store_phone' => 'nullable|string|max:50',
-            'currency' => 'required|string|max:10',
+            'currency' => 'nullable|string|max:10',
             'timezone' => 'required|string|max:100',
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users,email',
