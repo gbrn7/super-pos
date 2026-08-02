@@ -15,7 +15,7 @@ return [
 
     'name' => env('APP_NAME', 'Laravel'),
 
-    'installed' => (bool) env('APP_INSTALLED', false),
+    'installed' => (bool) env('APP_INSTALLED', true),
 
     /*
     |--------------------------------------------------------------------------
