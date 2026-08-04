@@ -38,8 +38,8 @@ class SetupController extends Controller
 
         if ($connection !== 'sqlite') {
             $host = $validated['db_host'] ?? config("database.connections.{$connection}.host", '127.0.0.1');
-            $port = $validated['db_port'] ?? config("database.connections.{$connection}.port", '5433');
-            $database = $validated['db_database'] ?? config("database.connections.{$connection}.database", 'super_pos');
+            $port = $validated['db_port'] ?? config("database.connections.{$connection}.port", '5432');
+            $database = $validated['db_database'] ?? config("database.connections.{$connection}.database", 'praktis_pos');
             $username = $validated['db_username'] ?? config("database.connections.{$connection}.username", 'postgres');
             $password = $validated['db_password'] ?? config("database.connections.{$connection}.password", 'admin');
 
@@ -128,37 +128,41 @@ class SetupController extends Controller
             'password' => 'required|string|min:8|confirmed',
         ]);
 
-        DB::transaction(function () use ($validated) {
-            $user = User::create([
-                'name' => $validated['name'],
-                'email' => $validated['email'],
-                'password' => Hash::make($validated['password']),
-            ]);
+        try {
+            DB::transaction(function () use ($validated) {
+                $user = User::create([
+                    'name' => $validated['name'],
+                    'email' => $validated['email'],
+                    'password' => Hash::make($validated['password']),
+                ]);
 
-            // Ensure superadmin role exists and assign to user
-            if (class_exists(Role::class)) {
-                $role = Role::firstOrCreate(['name' => RoleEnums::SUPER_ADMIN->value]);
-                if (method_exists($user, 'assignRole')) {
-                    $user->assignRole($role);
+                // Ensure superadmin role exists and assign to user
+                if (class_exists(Role::class)) {
+                    $role = Role::firstOrCreate(['name' => RoleEnums::SUPER_ADMIN->value]);
+                    if (method_exists($user, 'assignRole')) {
+                        $user->assignRole($role);
+                    }
                 }
-            }
 
-            // Write APP_INSTALLED=true to .env
-            $envPath = base_path('.env');
-            if (file_exists($envPath)) {
-                $envContent = file_get_contents($envPath);
-                if (str_contains($envContent, 'APP_INSTALLED=')) {
-                    $envContent = preg_replace('/APP_INSTALLED=.*/', 'APP_INSTALLED=true', $envContent);
-                } else {
-                    $envContent .= "\nAPP_INSTALLED=true\n";
+                // Write APP_INSTALLED=true to .env
+                $envPath = base_path('.env');
+                if (file_exists($envPath)) {
+                    $envContent = file_get_contents($envPath);
+                    if (str_contains($envContent, 'APP_INSTALLED=')) {
+                        $envContent = preg_replace('/APP_INSTALLED=.*/', 'APP_INSTALLED=true', $envContent);
+                    } else {
+                        $envContent .= "\nAPP_INSTALLED=true\n";
+                    }
+                    file_put_contents($envPath, $envContent);
                 }
-                file_put_contents($envPath, $envContent);
-            }
 
-            config(['app.installed' => true]);
-            Auth::login($user);
-        });
+                config(['app.installed' => true]);
+                Auth::login($user);
+            });
 
-        return redirect()->to('/dashboard');
+            return redirect()->intended('/dashboard');
+        } catch (Exception $e) {
+            return redirect()->back()->withErrors(['general' => $e->getMessage()]);
+        }
     }
 }

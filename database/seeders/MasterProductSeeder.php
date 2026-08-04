@@ -18,6 +18,8 @@ class MasterProductSeeder extends Seeder
      */
     public function run(): void
     {
+        set_time_limit(300);
+
         $publicFilePath = public_path('imports/master-products-database.xlsx');
 
         if (! file_exists($publicFilePath)) {

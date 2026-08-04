@@ -7,10 +7,12 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import { CheckCircle2, AlertCircle, Loader2, Database, Store, UserCheck, Rocket, ChevronDown, Settings2, Globe, Eye, EyeOff } from 'lucide-react';
+import { CheckCircle2, AlertCircle, Loader2, Database, Store, UserCheck, Rocket, ChevronDown, Settings2, Globe, Eye, EyeOff, Sun, Moon, Monitor } from 'lucide-react';
+import { useAppearance, Appearance } from '@/hooks/use-appearance';
 
 export default function SetupWizard() {
     const { t, i18n } = useTranslation();
+    const { appearance, updateAppearance } = useAppearance();
     const [currentStep, setCurrentStep] = useState<number>(1);
     const [dbTested, setDbTested] = useState<boolean>(false);
     const [dbLoading, setDbLoading] = useState<boolean>(false);
@@ -18,6 +20,7 @@ export default function SetupWizard() {
     const [isMigrated, setIsMigrated] = useState<boolean>(false);
     const [migrating, setMigrating] = useState<boolean>(false);
     const [isDbFormOpen, setIsDbFormOpen] = useState<boolean>(false);
+    const [showDbPassword, setShowDbPassword] = useState<boolean>(false);
     const [showPassword, setShowPassword] = useState<boolean>(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);
 
@@ -25,8 +28,8 @@ export default function SetupWizard() {
     const [dbCredentials, setDbCredentials] = useState({
         db_connection: 'pgsql',
         db_host: '127.0.0.1',
-        db_port: '5433',
-        db_database: 'super_pos',
+        db_port: '5432',
+        db_database: 'praktis_pos',
         db_username: 'postgres',
         db_password: 'admin',
     });
@@ -54,6 +57,15 @@ export default function SetupWizard() {
     const toggleLanguage = () => {
         const nextLang = i18n.language === 'id' ? 'en' : 'id';
         i18n.changeLanguage(nextLang);
+    };
+
+    const cycleTheme = () => {
+        const nextTheme: Record<Appearance, Appearance> = {
+            light: 'dark',
+            dark: 'system',
+            system: 'light',
+        };
+        updateAppearance(nextTheme[appearance] || 'light');
     };
 
     const handleTestDb = async () => {
@@ -103,55 +115,105 @@ export default function SetupWizard() {
 
     const handleSubmitComplete = (e: React.FormEvent) => {
         e.preventDefault();
-        post('/setup/complete');
+        post('/setup/complete', {
+            onSuccess: () => {
+                window.location.href = '/dashboard';
+            },
+            onError: (errors) => {
+                console.error('Setup completion errors:', errors);
+            },
+        });
     };
 
     return (
-        <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col justify-center items-center p-4 relative">
+        <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 flex flex-col justify-center items-center p-4 relative transition-colors duration-200">
             <Head title={t('setup.title')} />
 
-            {/* Language Switcher */}
-            <div className="absolute top-4 right-4">
-                <Button variant="outline" size="sm" onClick={toggleLanguage} className="bg-slate-900 border-slate-800 text-slate-300 hover:text-white flex items-center space-x-2">
+            {/* Top Bar Actions: Language & Theme Switcher */}
+            <div className="absolute top-4 right-4 flex items-center space-x-3">
+                {/* Appearance Segmented Toggle Tab */}
+                <div className="inline-flex gap-1 rounded-lg bg-slate-200 dark:bg-slate-800 p-1 border border-slate-300 dark:border-slate-700">
+                    <button
+                        type="button"
+                        onClick={() => updateAppearance('light')}
+                        className={`flex items-center rounded-md px-2.5 py-1 text-xs font-semibold transition-colors ${
+                            appearance === 'light'
+                                ? 'bg-white text-slate-900 shadow-xs dark:bg-slate-700 dark:text-white'
+                                : 'text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'
+                        }`}
+                        title="Light Mode"
+                    >
+                        <Sun className="h-3.5 w-3.5 mr-1 text-amber-500" />
+                        <span>Light</span>
+                    </button>
+                    <button
+                        type="button"
+                        onClick={() => updateAppearance('dark')}
+                        className={`flex items-center rounded-md px-2.5 py-1 text-xs font-semibold transition-colors ${
+                            appearance === 'dark'
+                                ? 'bg-white text-slate-900 shadow-xs dark:bg-slate-700 dark:text-white'
+                                : 'text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'
+                        }`}
+                        title="Dark Mode"
+                    >
+                        <Moon className="h-3.5 w-3.5 mr-1 text-indigo-400" />
+                        <span>Dark</span>
+                    </button>
+                    <button
+                        type="button"
+                        onClick={() => updateAppearance('system')}
+                        className={`flex items-center rounded-md px-2.5 py-1 text-xs font-semibold transition-colors ${
+                            appearance === 'system'
+                                ? 'bg-white text-slate-900 shadow-xs dark:bg-slate-700 dark:text-white'
+                                : 'text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'
+                        }`}
+                        title="System Mode"
+                    >
+                        <Monitor className="h-3.5 w-3.5 mr-1 text-primary" />
+                        <span>System</span>
+                    </button>
+                </div>
+
+                <Button variant="outline" size="sm" onClick={toggleLanguage} className="bg-white dark:bg-slate-900 border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white flex items-center space-x-2">
                     <Globe className="w-4 h-4 text-primary" />
                     <span className="font-semibold uppercase">{i18n.language === 'id' ? 'ID' : 'EN'}</span>
                 </Button>
             </div>
 
             <div className="w-full max-w-2xl mb-3 text-center">
-                <h1 className="text-3xl font-bold tracking-tight text-white mb-1">{t('setup.title')}</h1>
-                <p className="text-slate-400">{t('setup.subtitle')}</p>
+                <h1 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-white mb-1">{t('setup.title')}</h1>
+                <p className="text-slate-600 dark:text-slate-400">{t('setup.subtitle')}</p>
             </div>
 
             {/* Stepper Navigation */}
             <div className="w-full max-w-2xl flex items-center justify-between mb-4 px-4">
-                <div className={`flex items-center space-x-2 ${currentStep >= 1 ? 'text-primary' : 'text-slate-600'}`}>
-                    <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold ${currentStep === 1 ? 'bg-primary text-primary-foreground' : currentStep > 1 ? 'bg-emerald-600 text-white' : 'bg-slate-800'}`}>
+                <div className={`flex items-center space-x-2 ${currentStep >= 1 ? 'text-primary' : 'text-slate-400 dark:text-slate-600'}`}>
+                    <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold ${currentStep === 1 ? 'bg-primary text-primary-foreground' : currentStep > 1 ? 'bg-emerald-600 text-white' : 'bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400'}`}>
                         1
                     </div>
                     <span className="font-medium hidden sm:inline">{t('setup.stepper.database')}</span>
                 </div>
-                <div className="flex-1 h-0.5 mx-4 bg-slate-800">
+                <div className="flex-1 h-0.5 mx-4 bg-slate-200 dark:bg-slate-800">
                     <div className={`h-full bg-primary transition-all ${currentStep > 1 ? 'w-full' : 'w-0'}`} />
                 </div>
-                <div className={`flex items-center space-x-2 ${currentStep >= 2 ? 'text-primary' : 'text-slate-600'}`}>
-                    <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold ${currentStep === 2 ? 'bg-primary text-primary-foreground' : currentStep > 2 ? 'bg-emerald-600 text-white' : 'bg-slate-800'}`}>
+                <div className={`flex items-center space-x-2 ${currentStep >= 2 ? 'text-primary' : 'text-slate-400 dark:text-slate-600'}`}>
+                    <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold ${currentStep === 2 ? 'bg-primary text-primary-foreground' : currentStep > 2 ? 'bg-emerald-600 text-white' : 'bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400'}`}>
                         2
                     </div>
                     <span className="font-medium hidden sm:inline">{t('setup.stepper.store')}</span>
                 </div>
-                <div className="flex-1 h-0.5 mx-4 bg-slate-800">
+                <div className="flex-1 h-0.5 mx-4 bg-slate-200 dark:bg-slate-800">
                     <div className={`h-full bg-primary transition-all ${currentStep > 2 ? 'w-full' : 'w-0'}`} />
                 </div>
-                <div className={`flex items-center space-x-2 ${currentStep >= 3 ? 'text-primary' : 'text-slate-600'}`}>
-                    <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold ${currentStep === 3 ? 'bg-primary text-primary-foreground' : 'bg-slate-800'}`}>
+                <div className={`flex items-center space-x-2 ${currentStep >= 3 ? 'text-primary' : 'text-slate-400 dark:text-slate-600'}`}>
+                    <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold ${currentStep === 3 ? 'bg-primary text-primary-foreground' : 'bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400'}`}>
                         3
                     </div>
                     <span className="font-medium hidden sm:inline">{t('setup.stepper.owner')}</span>
                 </div>
             </div>
 
-            <Card className="w-full max-w-2xl bg-slate-900 border-slate-800 text-slate-100">
+            <Card className="w-full max-w-2xl bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-900 dark:text-slate-100 shadow-sm dark:shadow-none">
                 {currentStep === 1 && (
                     <>
                         <CardHeader className="pb-3">
@@ -159,11 +221,11 @@ export default function SetupWizard() {
                                 <Database className="w-5 h-5 text-primary" />
                                 <span>{t('setup.step1.title')}</span>
                             </CardTitle>
-                            <CardDescription className="text-slate-400">{t('setup.step1.description')}</CardDescription>
+                            <CardDescription className="text-slate-600 dark:text-slate-400">{t('setup.step1.description')}</CardDescription>
                         </CardHeader>
                         <CardContent className="space-y-4 pt-4">
                             {dbMessage && (
-                                <Alert className={dbTested || isMigrated ? 'bg-emerald-950/50 border-emerald-800 text-emerald-300' : 'bg-destructive/10 border-destructive/20 text-destructive'}>
+                                <Alert className={dbTested || isMigrated ? 'bg-emerald-50 dark:bg-emerald-950/50 border-emerald-300 dark:border-emerald-800 text-emerald-800 dark:text-emerald-300' : 'bg-destructive/10 border-destructive/20 text-destructive'}>
                                     {dbTested || isMigrated ? <CheckCircle2 className="h-4 w-4" /> : <AlertCircle className="h-4 w-4" />}
                                     <AlertTitle>{dbTested || isMigrated ? 'Success' : 'Error'}</AlertTitle>
                                     <AlertDescription>{dbMessage}</AlertDescription>
@@ -171,9 +233,9 @@ export default function SetupWizard() {
                             )}
 
                             {/* Collapsible Database Credentials Form */}
-                            <Collapsible open={isDbFormOpen} onOpenChange={setIsDbFormOpen} className="border border-slate-800 rounded-lg p-3 bg-slate-950/50">
+                            <Collapsible open={isDbFormOpen} onOpenChange={setIsDbFormOpen} className="border border-slate-200 dark:border-slate-800 rounded-lg p-3 bg-slate-50 dark:bg-slate-950/50">
                                 <CollapsibleTrigger asChild>
-                                    <Button variant="ghost" className="w-full flex justify-between items-center text-sm font-medium text-slate-300 hover:text-white">
+                                    <Button variant="ghost" className="w-full flex justify-between items-center text-sm font-medium text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white">
                                         <div className="flex items-center space-x-2">
                                             <Settings2 className="w-4 h-4 text-primary" />
                                             <span>{t('setup.step1.db_config')}</span>
@@ -181,7 +243,7 @@ export default function SetupWizard() {
                                         <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${isDbFormOpen ? 'rotate-180' : ''}`} />
                                     </Button>
                                 </CollapsibleTrigger>
-                                <CollapsibleContent className="space-y-3 pt-3 mt-2 border-t border-slate-800">
+                                <CollapsibleContent className="space-y-3 pt-3 mt-2 border-t border-slate-200 dark:border-slate-800">
                                     <div className="grid grid-cols-2 gap-3">
                                         <div className="space-y-1">
                                             <Label htmlFor="db_connection" className="text-xs">{t('setup.step1.driver')}</Label>
@@ -195,11 +257,11 @@ export default function SetupWizard() {
                                     <div className="grid grid-cols-2 gap-3">
                                         <div className="space-y-1">
                                             <Label htmlFor="db_port" className="text-xs">{t('setup.step1.port')}</Label>
-                                            <Input id="db_port" value={dbCredentials.db_port} onChange={(e) => handleDbCredentialChange('db_port', e.target.value)} placeholder="5433" />
+                                            <Input id="db_port" value={dbCredentials.db_port} onChange={(e) => handleDbCredentialChange('db_port', e.target.value)} placeholder="5432" />
                                         </div>
                                         <div className="space-y-1">
                                             <Label htmlFor="db_database" className="text-xs">{t('setup.step1.database_name')}</Label>
-                                            <Input id="db_database" value={dbCredentials.db_database} onChange={(e) => handleDbCredentialChange('db_database', e.target.value)} placeholder="super_pos" />
+                                            <Input id="db_database" value={dbCredentials.db_database} onChange={(e) => handleDbCredentialChange('db_database', e.target.value)} placeholder="praktis_pos" />
                                         </div>
                                     </div>
                                     <div className="grid grid-cols-2 gap-3">
@@ -209,7 +271,12 @@ export default function SetupWizard() {
                                         </div>
                                         <div className="space-y-1">
                                             <Label htmlFor="db_password" className="text-xs">{t('setup.step1.password')}</Label>
-                                            <Input id="db_password" type="password" value={dbCredentials.db_password} onChange={(e) => handleDbCredentialChange('db_password', e.target.value)} placeholder="admin" />
+                                            <div className="relative">
+                                                <Input id="db_password" type={showDbPassword ? 'text' : 'password'} value={dbCredentials.db_password} onChange={(e) => handleDbCredentialChange('db_password', e.target.value)} placeholder="admin" className="pr-10" />
+                                                <button type="button" onClick={() => setShowDbPassword(!showDbPassword)} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 focus:outline-none">
+                                                    {showDbPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
                                 </CollapsibleContent>
@@ -226,7 +293,7 @@ export default function SetupWizard() {
                                 </Button>
                             </div>
                         </CardContent>
-                        <CardFooter className="justify-end pt-4 border-t border-slate-800/50 mt-2">
+                        <CardFooter className="justify-end pt-4 border-t border-slate-200 dark:border-slate-800/50 mt-2">
                             <Button onClick={() => setCurrentStep(2)} disabled={!isMigrated}>
                                 {t('setup.step1.next_step')}
                             </Button>
@@ -241,7 +308,7 @@ export default function SetupWizard() {
                                 <Store className="w-5 h-5 text-primary" />
                                 <span>{t('setup.step2.title')}</span>
                             </CardTitle>
-                            <CardDescription className="text-slate-400">{t('setup.step2.description')}</CardDescription>
+                            <CardDescription className="text-slate-600 dark:text-slate-400">{t('setup.step2.description')}</CardDescription>
                         </CardHeader>
                         <CardContent className="space-y-4 pt-4">
                             <div className="space-y-2">
@@ -254,7 +321,7 @@ export default function SetupWizard() {
                                 <Input id="store_address" value={data.store_address} onChange={(e) => setData('store_address', e.target.value)} placeholder="Jl. Raya Utama No. 123" />
                             </div>
                         </CardContent>
-                        <CardFooter className="justify-between pt-4 border-t border-slate-800/50 mt-2">
+                        <CardFooter className="justify-between pt-4 border-t border-slate-200 dark:border-slate-800/50 mt-2">
                             <Button variant="outline" onClick={() => setCurrentStep(1)}>
                                 {t('setup.step2.back')}
                             </Button>
@@ -272,9 +339,18 @@ export default function SetupWizard() {
                                 <UserCheck className="w-5 h-5 text-primary" />
                                 <span>{t('setup.step3.title')}</span>
                             </CardTitle>
-                            <CardDescription className="text-slate-400">{t('setup.step3.description')}</CardDescription>
+                            <CardDescription className="text-slate-600 dark:text-slate-400">{t('setup.step3.description')}</CardDescription>
                         </CardHeader>
                         <CardContent className="space-y-4 pt-4">
+                            {Object.keys(errors).length > 0 && (
+                                <Alert className="bg-destructive/10 border-destructive/20 text-destructive mb-4">
+                                    <AlertCircle className="h-4 w-4" />
+                                    <AlertTitle>Terjadi Kesalahan</AlertTitle>
+                                    <AlertDescription>
+                                        {Object.values(errors).join(', ')}
+                                    </AlertDescription>
+                                </Alert>
+                            )}
                             <div className="space-y-2">
                                 <Label htmlFor="name">{t('setup.step3.full_name')}</Label>
                                 <Input id="name" value={data.name} onChange={(e) => setData('name', e.target.value)} placeholder="John Doe" />
@@ -290,7 +366,7 @@ export default function SetupWizard() {
                                     <Label htmlFor="password">{t('setup.step3.password')}</Label>
                                     <div className="relative">
                                         <Input id="password" type={showPassword ? 'text' : 'password'} value={data.password} onChange={(e) => setData('password', e.target.value)} placeholder="••••••••" className="pr-10" />
-                                        <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-200 focus:outline-none">
+                                        <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 focus:outline-none">
                                             {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                                         </button>
                                     </div>
@@ -300,14 +376,14 @@ export default function SetupWizard() {
                                     <Label htmlFor="password_confirmation">{t('setup.step3.confirm_password')}</Label>
                                     <div className="relative">
                                         <Input id="password_confirmation" type={showConfirmPassword ? 'text' : 'password'} value={data.password_confirmation} onChange={(e) => setData('password_confirmation', e.target.value)} placeholder="••••••••" className="pr-10" />
-                                        <button type="button" onClick={() => setShowConfirmPassword(!showConfirmPassword)} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-200 focus:outline-none">
+                                        <button type="button" onClick={() => setShowConfirmPassword(!showConfirmPassword)} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 focus:outline-none">
                                             {showConfirmPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                                         </button>
                                     </div>
                                 </div>
                             </div>
                         </CardContent>
-                        <CardFooter className="justify-between pt-4 border-t border-slate-800/50 mt-2">
+                        <CardFooter className="justify-between pt-4 border-t border-slate-200 dark:border-slate-800/50 mt-2">
                             <Button type="button" variant="outline" onClick={() => setCurrentStep(2)}>
                                 {t('setup.step3.back')}
                             </Button>
