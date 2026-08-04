@@ -14,6 +14,7 @@ import {
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { CheckCircle2, AlertCircle, Loader2, Database, Store, UserCheck, Rocket, ChevronDown, Settings2, Globe, Eye, EyeOff, Sun, Moon, Monitor, Upload, FileSpreadsheet, X, FileCheck, Check } from 'lucide-react';
+import SetupController from '@/actions/App/Http/Controllers/SetupController';
 import { useAppearance, Appearance } from '@/hooks/use-appearance';
 
 export default function SetupWizard() {
@@ -82,8 +83,8 @@ export default function SetupWizard() {
         setDbLoading(true);
         setDbMessage(null);
         try {
-            const res = await fetch('/setup/test-db', {
-                method: 'POST',
+            const res = await fetch(SetupController.testDatabase.url(), {
+                method: SetupController.testDatabase.definition.methods[0].toUpperCase(),
                 headers: {
                     'Content-Type': 'application/json',
                     'X-CSRF-TOKEN': getCsrfToken(),
@@ -105,8 +106,8 @@ export default function SetupWizard() {
         setMigrating(true);
         setDbMessage(null);
         try {
-            const res = await fetch('/setup/migrate', {
-                method: 'POST',
+            const res = await fetch(SetupController.runMigration.url(), {
+                method: SetupController.runMigration.definition.methods[0].toUpperCase(),
                 headers: {
                     'Content-Type': 'application/json',
                     'X-CSRF-TOKEN': getCsrfToken(),
@@ -134,8 +135,8 @@ export default function SetupWizard() {
         formData.append('file', file);
 
         try {
-            const res = await fetch('/setup/upload-master-product', {
-                method: 'POST',
+            const res = await fetch(SetupController.uploadMasterProduct.url(), {
+                method: SetupController.uploadMasterProduct.definition.methods[0].toUpperCase(),
                 headers: {
                     'X-CSRF-TOKEN': getCsrfToken(),
                 },
@@ -157,8 +158,8 @@ export default function SetupWizard() {
 
     const handleCustomFileReset = async () => {
         try {
-            await fetch('/setup/reset-master-product', {
-                method: 'DELETE',
+            await fetch(SetupController.resetMasterProduct.url(), {
+                method: SetupController.resetMasterProduct.definition.methods[0].toUpperCase(),
                 headers: {
                     'X-CSRF-TOKEN': getCsrfToken(),
                 },
@@ -172,10 +173,7 @@ export default function SetupWizard() {
 
     const handleSubmitComplete = (e: React.FormEvent) => {
         e.preventDefault();
-        post('/setup/complete', {
-            onSuccess: () => {
-                window.location.href = '/dashboard';
-            },
+        post(SetupController.complete.url(), {
             onError: (errors) => {
                 console.error('Setup completion errors:', errors);
             },
@@ -193,11 +191,10 @@ export default function SetupWizard() {
                     <button
                         type="button"
                         onClick={() => updateAppearance('light')}
-                        className={`flex items-center rounded-md px-2.5 py-1 text-xs font-semibold transition-colors ${
-                            appearance === 'light'
+                        className={`flex items-center rounded-md px-2.5 py-1 text-xs font-semibold transition-colors ${appearance === 'light'
                                 ? 'bg-white text-slate-900 shadow-xs dark:bg-slate-700 dark:text-white'
                                 : 'text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'
-                        }`}
+                            }`}
                         title="Light Mode"
                     >
                         <Sun className="h-3.5 w-3.5 mr-1 text-amber-500" />
@@ -206,11 +203,10 @@ export default function SetupWizard() {
                     <button
                         type="button"
                         onClick={() => updateAppearance('dark')}
-                        className={`flex items-center rounded-md px-2.5 py-1 text-xs font-semibold transition-colors ${
-                            appearance === 'dark'
+                        className={`flex items-center rounded-md px-2.5 py-1 text-xs font-semibold transition-colors ${appearance === 'dark'
                                 ? 'bg-white text-slate-900 shadow-xs dark:bg-slate-700 dark:text-white'
                                 : 'text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'
-                        }`}
+                            }`}
                         title="Dark Mode"
                     >
                         <Moon className="h-3.5 w-3.5 mr-1 text-indigo-400" />
@@ -219,11 +215,10 @@ export default function SetupWizard() {
                     <button
                         type="button"
                         onClick={() => updateAppearance('system')}
-                        className={`flex items-center rounded-md px-2.5 py-1 text-xs font-semibold transition-colors ${
-                            appearance === 'system'
+                        className={`flex items-center rounded-md px-2.5 py-1 text-xs font-semibold transition-colors ${appearance === 'system'
                                 ? 'bg-white text-slate-900 shadow-xs dark:bg-slate-700 dark:text-white'
                                 : 'text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'
-                        }`}
+                            }`}
                         title="System Mode"
                     >
                         <Monitor className="h-3.5 w-3.5 mr-1 text-primary" />
@@ -236,7 +231,7 @@ export default function SetupWizard() {
                     <DropdownMenuTrigger asChild>
                         <Button variant="outline" size="sm" className="bg-white dark:bg-slate-900 border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white flex items-center space-x-1.5">
                             <Globe className="w-4 h-4 text-primary" />
-                            <span className="font-semibold uppercase">{i18n.language === 'id' ? 'Bahasa Indonesia' : 'English'}</span>
+                            <span className="font-semibold">{i18n.language === 'id' ? 'Indonesia' : 'English'}</span>
                             <ChevronDown className="w-3.5 h-3.5 opacity-70" />
                         </Button>
                     </DropdownMenuTrigger>
