@@ -7,7 +7,13 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import { CheckCircle2, AlertCircle, Loader2, Database, Store, UserCheck, Rocket, ChevronDown, Settings2, Globe, Eye, EyeOff, Sun, Moon, Monitor, Upload, FileSpreadsheet, X, FileCheck } from 'lucide-react';
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import { CheckCircle2, AlertCircle, Loader2, Database, Store, UserCheck, Rocket, ChevronDown, Settings2, Globe, Eye, EyeOff, Sun, Moon, Monitor, Upload, FileSpreadsheet, X, FileCheck, Check } from 'lucide-react';
 import { useAppearance, Appearance } from '@/hooks/use-appearance';
 
 export default function SetupWizard() {
@@ -225,10 +231,26 @@ export default function SetupWizard() {
                     </button>
                 </div>
 
-                <Button variant="outline" size="sm" onClick={toggleLanguage} className="bg-white dark:bg-slate-900 border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white flex items-center space-x-2">
-                    <Globe className="w-4 h-4 text-primary" />
-                    <span className="font-semibold uppercase">{i18n.language === 'id' ? 'ID' : 'EN'}</span>
-                </Button>
+                {/* Language Selection Dropdown */}
+                <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                        <Button variant="outline" size="sm" className="bg-white dark:bg-slate-900 border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white flex items-center space-x-1.5">
+                            <Globe className="w-4 h-4 text-primary" />
+                            <span className="font-semibold uppercase">{i18n.language === 'id' ? 'Bahasa Indonesia' : 'English'}</span>
+                            <ChevronDown className="w-3.5 h-3.5 opacity-70" />
+                        </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end" className="w-44 bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800">
+                        <DropdownMenuItem onClick={() => i18n.changeLanguage('id')} className="flex items-center justify-between cursor-pointer">
+                            <span>Bahasa Indonesia</span>
+                            {i18n.language === 'id' && <Check className="w-4 h-4 text-primary" />}
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => i18n.changeLanguage('en')} className="flex items-center justify-between cursor-pointer">
+                            <span>English</span>
+                            {i18n.language === 'en' && <Check className="w-4 h-4 text-primary" />}
+                        </DropdownMenuItem>
+                    </DropdownMenuContent>
+                </DropdownMenu>
             </div>
 
             <div className="w-full max-w-2xl mb-3 text-center">
