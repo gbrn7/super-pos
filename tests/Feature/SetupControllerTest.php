@@ -44,7 +44,7 @@ test('complete endpoint creates owner account and marks app installed', function
 
     $response = $this->post(route('setup.complete'), $payload);
 
-    $response->assertRedirect('/dashboard');
+    $response->assertRedirect('/login');
     $this->assertDatabaseHas('users', ['email' => 'owner@example.com']);
-    $this->assertAuthenticated();
+    $this->assertGuest();
 });

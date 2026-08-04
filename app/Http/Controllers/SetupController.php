@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\StoreSetting;
 use App\Models\User;
 use App\Support\Enums\RoleEnums;
 use Exception;
@@ -9,7 +10,6 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Inertia\Inertia;
@@ -136,6 +136,16 @@ class SetupController extends Controller
                     'password' => Hash::make($validated['password']),
                 ]);
 
+                // Store settings
+                StoreSetting::updateOrCreate(
+                    ['id' => 1],
+                    [
+                        'name' => $validated['store_name'],
+                        'address' => $validated['store_address'] ?? null,
+                        'phone' => $validated['store_phone'] ?? null,
+                    ]
+                );
+
                 // Ensure superadmin role exists and assign to user
                 if (class_exists(Role::class)) {
                     $role = Role::firstOrCreate(['name' => RoleEnums::SUPER_ADMIN->value]);
@@ -157,10 +167,9 @@ class SetupController extends Controller
                 }
 
                 config(['app.installed' => true]);
-                Auth::login($user);
             });
 
-            return redirect()->intended('/dashboard');
+            return redirect()->to(route('login'))->with('success', __('setup.complete_success'));
         } catch (Exception $e) {
             return redirect()->back()->withErrors(['general' => $e->getMessage()]);
         }
