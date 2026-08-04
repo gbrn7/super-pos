@@ -165,4 +165,42 @@ class SetupController extends Controller
             return redirect()->back()->withErrors(['general' => $e->getMessage()]);
         }
     }
+
+    public function uploadMasterProduct(Request $request): JsonResponse
+    {
+        $request->validate([
+            'file' => 'required|file|mimes:xlsx,xls|max:20480',
+        ]);
+
+        $file = $request->file('file');
+        $originalName = $file->getClientOriginalName();
+        $fileSize = number_format($file->getSize() / 1024 / 1024, 2).' MB';
+
+        $tempDir = storage_path('app/temp');
+        if (! is_dir($tempDir)) {
+            mkdir($tempDir, 0755, true);
+        }
+
+        $file->move($tempDir, 'custom_master_products.xlsx');
+
+        return response()->json([
+            'success' => true,
+            'message' => __('File katalog kustom berhasil diunggah.'),
+            'filename' => $originalName,
+            'size' => $fileSize,
+        ]);
+    }
+
+    public function resetMasterProduct(): JsonResponse
+    {
+        $tempPath = storage_path('app/temp/custom_master_products.xlsx');
+        if (file_exists($tempPath)) {
+            unlink($tempPath);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => __('Kembali menggunakan file katalog default.'),
+        ]);
+    }
 }
