@@ -34,6 +34,7 @@ export default function SetupWizard() {
     const [customFile, setCustomFile] = useState<{ name: string; size: string } | null>(null);
     const [uploadingFile, setUploadingFile] = useState<boolean>(false);
     const [uploadError, setUploadError] = useState<string | null>(null);
+    const [isCompleted, setIsCompleted] = useState<boolean>(false);
 
     // Database Credentials State with requested defaults
     const [dbCredentials, setDbCredentials] = useState({
@@ -65,10 +66,6 @@ export default function SetupWizard() {
         setDbCredentials((prev) => ({ ...prev, [field]: value }));
     };
 
-    const toggleLanguage = () => {
-        const nextLang = i18n.language === 'id' ? 'en' : 'id';
-        i18n.changeLanguage(nextLang);
-    };
 
     const cycleTheme = () => {
         const nextTheme: Record<Appearance, Appearance> = {
@@ -174,6 +171,10 @@ export default function SetupWizard() {
     const handleSubmitComplete = (e: React.FormEvent) => {
         e.preventDefault();
         post(SetupController.complete.url(), {
+            onSuccess: () => {
+                setIsCompleted(true);
+                window.location.href = '/login';
+            },
             onError: (errors) => {
                 console.error('Setup completion errors:', errors);
             },
@@ -192,8 +193,8 @@ export default function SetupWizard() {
                         type="button"
                         onClick={() => updateAppearance('light')}
                         className={`flex items-center rounded-md px-2.5 py-1 text-xs font-semibold transition-colors ${appearance === 'light'
-                                ? 'bg-white text-slate-900 shadow-xs dark:bg-slate-700 dark:text-white'
-                                : 'text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'
+                            ? 'bg-white text-slate-900 shadow-xs dark:bg-slate-700 dark:text-white'
+                            : 'text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'
                             }`}
                         title="Light Mode"
                     >
@@ -204,8 +205,8 @@ export default function SetupWizard() {
                         type="button"
                         onClick={() => updateAppearance('dark')}
                         className={`flex items-center rounded-md px-2.5 py-1 text-xs font-semibold transition-colors ${appearance === 'dark'
-                                ? 'bg-white text-slate-900 shadow-xs dark:bg-slate-700 dark:text-white'
-                                : 'text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'
+                            ? 'bg-white text-slate-900 shadow-xs dark:bg-slate-700 dark:text-white'
+                            : 'text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'
                             }`}
                         title="Dark Mode"
                     >
@@ -216,8 +217,8 @@ export default function SetupWizard() {
                         type="button"
                         onClick={() => updateAppearance('system')}
                         className={`flex items-center rounded-md px-2.5 py-1 text-xs font-semibold transition-colors ${appearance === 'system'
-                                ? 'bg-white text-slate-900 shadow-xs dark:bg-slate-700 dark:text-white'
-                                : 'text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'
+                            ? 'bg-white text-slate-900 shadow-xs dark:bg-slate-700 dark:text-white'
+                            : 'text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'
                             }`}
                         title="System Mode"
                     >
@@ -503,9 +504,14 @@ export default function SetupWizard() {
                             <Button type="button" variant="outline" onClick={() => setCurrentStep(2)}>
                                 {t('setup.step3.back')}
                             </Button>
-                            <Button type="submit" disabled={processing} className="bg-emerald-600 hover:bg-emerald-500 text-white">
-                                {processing ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <Rocket className="w-4 h-4 mr-2" />}
-                                {t('setup.step3.complete_launch')}
+                            <Button
+                                type={isCompleted ? 'button' : 'submit'}
+                                disabled={processing}
+                                onClick={isCompleted ? () => { window.location.href = '/login'; } : undefined}
+                                className="bg-emerald-600 hover:bg-emerald-500 text-white"
+                            >
+                                {processing ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : (isCompleted ? <Check className="w-4 h-4 mr-2" /> : <Rocket className="w-4 h-4 mr-2" />)}
+                                {isCompleted ? t('setup.step3.login_btn') : t('setup.step3.complete_launch')}
                             </Button>
                         </CardFooter>
                     </form>

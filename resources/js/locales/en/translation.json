@@ -1533,7 +1533,7 @@
             "password": "Password",
             "custom_catalog": "Master Product Catalog (Optional)",
             "custom_catalog_active": "Active",
-            "custom_catalog_desc": "Upload an Excel file (.xlsx / .xls) for your custom product catalog, or leave blank to use the default catalog (14,000+ products).",
+            "custom_catalog_desc": "Upload an Excel file (.xlsx / .xls) for your custom product catalog, or leave blank to use the default catalog.",
             "select_excel_file": "Select Excel File (.xlsx / .xls)",
             "uploading": "Uploading...",
             "error_alert_title": "An Error Occurred",
@@ -1560,7 +1560,8 @@
             "password": "Password *",
             "confirm_password": "Confirm Password *",
             "back": "Back",
-            "complete_launch": "Complete Setup & Launch POS"
+            "complete_launch": "Complete Setup & Launch POS",
+            "login_btn": "Log In"
         }
     }
 }

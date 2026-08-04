@@ -1528,7 +1528,7 @@
             "password": "Password",
             "custom_catalog": "Katalog Produk Master (Opsional)",
             "custom_catalog_active": "Aktif",
-            "custom_catalog_desc": "Unggah file Excel (.xlsx / .xls) untuk katalog produk kustom Anda, atau biarkan kosong untuk menggunakan katalog default (14.000+ produk).",
+            "custom_catalog_desc": "Unggah file Excel (.xlsx / .xls) untuk katalog produk kustom Anda, atau biarkan kosong untuk menggunakan katalog default.",
             "select_excel_file": "Pilih File Excel (.xlsx / .xls)",
             "uploading": "Mengunggah...",
             "error_alert_title": "Terjadi Kesalahan",
@@ -1555,7 +1555,8 @@
             "password": "Password *",
             "confirm_password": "Konfirmasi Password *",
             "back": "Kembali",
-            "complete_launch": "Selesaikan Setup & Buka POS"
+            "complete_launch": "Selesaikan Setup & Buka POS",
+            "login_btn": "Masuk"
         }
     }
 }
