@@ -138,22 +138,67 @@ export function NavMain({
     items?: NavItem[];
     groups?: NavGroup[];
 }) {
+    const { hasPermission, hasAnyPermission, hasRole, isSuperAdmin } =
+        useAuth();
+
+    const isItemAllowed = (navItem: NavItem): boolean => {
+        if (isSuperAdmin()) return true;
+
+        let hasRoleAccess = true;
+        if (navItem.role) {
+            if (Array.isArray(navItem.role)) {
+                hasRoleAccess =
+                    navItem.role.length === 0 ||
+                    navItem.role.some((r) => hasRole(r));
+            } else {
+                hasRoleAccess = hasRole(navItem.role);
+            }
+        }
+
+        let hasPermAccess = true;
+        if (navItem.permission) {
+            if (Array.isArray(navItem.permission)) {
+                hasPermAccess =
+                    navItem.permission.length === 0 ||
+                    hasAnyPermission(navItem.permission);
+            } else {
+                hasPermAccess = hasPermission(navItem.permission);
+            }
+        }
+
+        return hasRoleAccess && hasPermAccess;
+    };
+
     const navGroups: NavGroup[] = groups.length > 0 ? groups : [{ items }];
 
     return (
         <>
-            {navGroups.map((group, index) => (
-                <SidebarGroup key={group.title || index} className="px-2 py-1">
-                    {group.title && (
-                        <SidebarGroupLabel>{group.title}</SidebarGroupLabel>
-                    )}
-                    <SidebarMenu>
-                        {group.items.map((item) => (
-                            <SidebarNavItem key={item.title} item={item} />
-                        ))}
-                    </SidebarMenu>
-                </SidebarGroup>
-            ))}
+            {navGroups.map((group, index) => {
+                const visibleItems = group.items.filter((item) => {
+                    if (!isItemAllowed(item)) return false;
+                    if (item.items && item.items.length > 0) {
+                        return item.items.some((sub) => isItemAllowed(sub));
+                    }
+                    return true;
+                });
+
+                if (visibleItems.length === 0) {
+                    return null;
+                }
+
+                return (
+                    <SidebarGroup key={group.title || index} className="px-2 py-1">
+                        {group.title && (
+                            <SidebarGroupLabel>{group.title}</SidebarGroupLabel>
+                        )}
+                        <SidebarMenu>
+                            {visibleItems.map((item) => (
+                                <SidebarNavItem key={item.title} item={item} />
+                            ))}
+                        </SidebarMenu>
+                    </SidebarGroup>
+                );
+            })}
         </>
     );
 }

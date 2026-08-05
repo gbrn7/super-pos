@@ -34,5 +34,12 @@ class UserSeeder extends Seeder
         ]);
 
         $admin->assignRole(RoleEnums::ADMIN->value);
+
+        $kasir = User::factory()->create([
+            'name' => 'kasir',
+            'email' => 'kasir@example.com',
+        ]);
+
+        $kasir->assignRole(RoleEnums::KASIR->value);
     }
 }

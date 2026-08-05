@@ -6,7 +6,6 @@ use App\Models\Permission;
 use App\Models\Role;
 use App\Support\Enums\CapitalWalletPermissionEnums;
 use App\Support\Enums\CategoryPermissionEnums;
-use App\Support\Enums\DashboardPermissionEnums;
 use App\Support\Enums\MasterProductPermissionEnums;
 use App\Support\Enums\PaymentMethodPermissionEnums;
 use App\Support\Enums\ProductPermissionEnums;
@@ -52,12 +51,6 @@ class PermissionSeeder extends Seeder
         }
 
         foreach (CategoryPermissionEnums::cases() as $permission) {
-            Permission::firstOrCreate([
-                'name' => $permission->value,
-            ]);
-        }
-
-        foreach (DashboardPermissionEnums::cases() as $permission) {
             Permission::firstOrCreate([
                 'name' => $permission->value,
             ]);
@@ -117,5 +110,17 @@ class PermissionSeeder extends Seeder
         $allPermissions = Permission::whereNotIn('name', $profitWalletPermissions)->get();
 
         $admin->syncPermissions($allPermissions);
+
+        $kasir = Role::findByName(RoleEnums::KASIR->value);
+
+        $excludedKasirPermissions = array_merge(
+            $profitWalletPermissions,
+            array_map(fn (UserPermissionEnums $permission) => $permission->value, UserPermissionEnums::cases()),
+            array_map(fn (RolePermissionEnums $permission) => $permission->value, RolePermissionEnums::cases())
+        );
+
+        $kasirPermissions = Permission::whereNotIn('name', $excludedKasirPermissions)->get();
+
+        $kasir->syncPermissions($kasirPermissions);
     }
 }
