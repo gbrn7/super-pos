@@ -16,5 +16,9 @@ return [
     'failed' => 'These credentials do not match our records.',
     'password' => 'The provided password is incorrect.',
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
+    'recovery_code_invalid' => 'The recovery code provided is invalid.',
+    'recovery_code_verified' => 'Recovery code verified successfully.',
+    'recovery_unauthorized' => 'Unauthorized recovery attempt. Please verify recovery code first.',
+    'superadmin_created' => 'Owner account created successfully.',
 
 ];

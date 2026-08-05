@@ -1563,5 +1563,20 @@
             "complete_launch": "Complete Setup & Launch POS",
             "login_btn": "Log In"
         }
+    },
+    "recovery": {
+        "forgot_link": "Forgot Email / Password?",
+        "step1_title": "Owner Account Recovery",
+        "step1_desc": "Enter the Recovery Code from the server/.env file to proceed.",
+        "code_label": "Recovery Code",
+        "verify_btn": "Verify Code",
+        "step2_title": "Create New Owner Account",
+        "step2_desc": "Fill in the details below to create a new Owner account.",
+        "name_label": "Full Name",
+        "email_label": "Email Address",
+        "password_label": "New Password",
+        "confirm_password_label": "Confirm Password",
+        "submit_btn": "Create & Log In",
+        "back_to_login": "Back to Login"
     }
 }

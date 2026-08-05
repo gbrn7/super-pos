@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\Api\ApiCapitalWalletController;
 use App\Http\Controllers\Api\ApiCategoryController;
 use App\Http\Controllers\Api\ApiDashboardController;
 use App\Http\Controllers\Api\ApiMasterProductController;
@@ -13,6 +12,7 @@ use App\Http\Controllers\Api\ApiTransactionController;
 use App\Http\Controllers\Api\ApiTransactionDetailController;
 use App\Http\Controllers\Api\ApiUnitController;
 use App\Http\Controllers\Api\ApiUserController;
+use App\Http\Controllers\Auth\RecoveryController;
 use App\Http\Controllers\CapitalWalletController;
 use App\Http\Controllers\CashierController;
 use App\Http\Controllers\CategoryController;
@@ -40,6 +40,9 @@ Route::delete('/setup/reset-master-product', [SetupController::class, 'resetMast
 Route::get('/', function () {
     return redirect()->route('dashboard');
 })->name('home');
+
+Route::middleware('throttle:5,1')->post('/api/recovery/verify-code', [RecoveryController::class, 'verifyCode']);
+Route::post('/api/recovery/create-superadmin', [RecoveryController::class, 'createSuperadmin']);
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::inertia('dashboard', 'dashboard')->name('dashboard');

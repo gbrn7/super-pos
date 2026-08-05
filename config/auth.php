@@ -15,6 +15,8 @@ return [
     |
     */
 
+    'recovery_code' => env('RECOVERY_CODE', 'praktis-pos-secret-recovery'),
+
     'defaults' => [
         'guard' => env('AUTH_GUARD', 'web'),
         'passwords' => env('AUTH_PASSWORD_BROKER', 'users'),

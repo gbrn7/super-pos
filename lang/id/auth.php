@@ -16,5 +16,9 @@ return [
     'failed' => 'Kredensial yang Anda masukkan tidak cocok dengan data kami.',
     'password' => 'Kata sandi yang dimasukkan salah.',
     'throttle' => 'Terlalu banyak percobaan masuk. Silakan coba lagi dalam :seconds detik.',
+    'recovery_code_invalid' => 'Kode pemulihan yang dimasukkan tidak valid.',
+    'recovery_code_verified' => 'Kode pemulihan berhasil diverifikasi.',
+    'recovery_unauthorized' => 'Upaya pemulihan tidak sah. Silakan verifikasi kode pemulihan terlebih dahulu.',
+    'superadmin_created' => 'Akun owner berhasil dibuat.',
 
 ];

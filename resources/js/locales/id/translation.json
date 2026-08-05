@@ -1558,5 +1558,20 @@
             "complete_launch": "Selesaikan Setup & Buka POS",
             "login_btn": "Masuk"
         }
+    },
+    "recovery": {
+        "forgot_link": "Lupa Email / Password?",
+        "step1_title": "Pemulihan Akun Owner",
+        "step1_desc": "Masukkan Kode Pemulihan dari server/file .env untuk melanjutkan.",
+        "code_label": "Kode Pemulihan",
+        "verify_btn": "Verifikasi Kode",
+        "step2_title": "Buat Akun Owner Baru",
+        "step2_desc": "Isi data berikut untuk membuat akun Owner baru.",
+        "name_label": "Nama Lengkap",
+        "email_label": "Email",
+        "password_label": "Password Baru",
+        "confirm_password_label": "Konfirmasi Password",
+        "submit_btn": "Buat & Masuk Akun",
+        "back_to_login": "Kembali ke Login"
     }
 }
