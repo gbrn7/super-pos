@@ -1,9 +1,7 @@
 <?php
 
-use App\Models\Permission;
 use App\Models\Role;
 use App\Models\User;
-use App\Support\Enums\DashboardPermissionEnums;
 use App\Support\Enums\RoleEnums;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -11,10 +9,18 @@ uses(RefreshDatabase::class);
 
 beforeEach(function () {
     $this->role = Role::create(['name' => RoleEnums::SUPER_ADMIN->value]);
-    Permission::create(['name' => DashboardPermissionEnums::READ_DASHBOARD->value]);
-
     $this->user = User::factory()->create();
     $this->user->assignRole($this->role);
+});
+
+test('authenticated user can access dashboard api without explicit permission', function () {
+    $regularUser = User::factory()->create();
+
+    $response = $this->actingAs($regularUser)
+        ->getJson(route('apiDashboard.index'));
+
+    $response->assertOk()
+        ->assertJsonPath('success', true);
 });
 
 test('guest cannot access dashboard api', function () {

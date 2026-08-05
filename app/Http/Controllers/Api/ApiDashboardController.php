@@ -3,13 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Support\Enums\DashboardPermissionEnums;
 use App\Support\Interfaces\Services\DashboardServiceInterface;
 use App\Support\Utils\ResponseApi;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
-use Illuminate\Routing\Controllers\Middleware;
 
 class ApiDashboardController extends Controller implements HasMiddleware
 {
@@ -19,9 +17,7 @@ class ApiDashboardController extends Controller implements HasMiddleware
 
     public static function middleware(): array
     {
-        return [
-            new Middleware('permission:'.DashboardPermissionEnums::READ_DASHBOARD->value, only: ['index']),
-        ];
+        return [];
     }
 
     public function index(Request $request): JsonResponse
