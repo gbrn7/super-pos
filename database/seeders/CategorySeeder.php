@@ -50,8 +50,8 @@ class CategorySeeder extends Seeder
                 'desc' => 'Gas LPG 3kg/12kg dan air galon.',
             ],
             [
-                'name' => 'Rokok & Tembakau',
-                'desc' => 'Berbagai merk rokok dan perlengkapannya.',
+                'name' => 'Rokok',
+                'desc' => 'Berbagai merk rokok.',
             ],
             [
                 'name' => 'Alat Tulis & Kantor (ATK)',
