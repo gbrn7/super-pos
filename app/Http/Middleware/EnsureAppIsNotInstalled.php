@@ -17,8 +17,8 @@ class EnsureAppIsNotInstalled
             return redirect()->route('setup.index');
         }
 
-        if ($isInstalled && $isSetupRoute) {
-            return redirect()->to('/dashboard');
+        if ($isInstalled && $isSetupRoute && ! $request->routeIs('setup.complete')) {
+            return redirect()->route('dashboard');
         }
 
         return $next($request);

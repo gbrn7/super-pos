@@ -27,6 +27,8 @@ use App\Http\Controllers\SetupController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\TransactionDetailController;
 use App\Http\Controllers\UnitController;
+use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Route;
 
 Route::get('/setup', [SetupController::class, 'index'])->name('setup.index');
 Route::post('/setup/test-db', [SetupController::class, 'testDatabase'])->name('setup.test-db');

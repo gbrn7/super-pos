@@ -7,9 +7,6 @@ enum CategoryPermissionEnums {
     DELETE = 'delete-category',
 }
 
-enum DashboardPermissionEnums {
-    READ = 'read-dashboard',
-}
 
 enum RolePermissionEnums {
     CREATE = 'create-role',
@@ -85,7 +82,6 @@ enum ReturnPermissionEnums {
 
 export const PERMISSIONENUMS = {
     CATEGORY: CategoryPermissionEnums,
-    DASHBOARD: DashboardPermissionEnums,
     ROLE: RolePermissionEnums,
     USER: UserPermissionEnums,
     UNIT: UnitPermissionEnums,
