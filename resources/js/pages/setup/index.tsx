@@ -15,6 +15,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { CheckCircle2, AlertCircle, Loader2, Database, Store, UserCheck, Rocket, ChevronDown, Settings2, Globe, Eye, EyeOff, Sun, Moon, Monitor, Upload, FileSpreadsheet, X, FileCheck, Check } from 'lucide-react';
 import SetupController from '@/actions/App/Http/Controllers/SetupController';
+import { login } from '@/routes';
 import { useAppearance, Appearance } from '@/hooks/use-appearance';
 
 export default function SetupWizard() {
@@ -171,9 +172,8 @@ export default function SetupWizard() {
     const handleSubmitComplete = (e: React.FormEvent) => {
         e.preventDefault();
         post(SetupController.complete.url(), {
-            onSuccess: () => {
-                setIsCompleted(true);
-                window.location.href = '/login';
+            onFinish: () => {
+                window.location.href = login.url();
             },
             onError: (errors) => {
                 console.error('Setup completion errors:', errors);
@@ -507,7 +507,7 @@ export default function SetupWizard() {
                             <Button
                                 type={isCompleted ? 'button' : 'submit'}
                                 disabled={processing}
-                                onClick={isCompleted ? () => { window.location.href = '/login'; } : undefined}
+                                onClick={isCompleted ? () => { window.location.href = login.url(); } : undefined}
                                 className="bg-emerald-600 hover:bg-emerald-500 text-white"
                             >
                                 {processing ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : (isCompleted ? <Check className="w-4 h-4 mr-2" /> : <Rocket className="w-4 h-4 mr-2" />)}

@@ -7,7 +7,6 @@ use App\Models\User;
 use App\Support\Enums\RoleEnums;
 use Exception;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
@@ -115,7 +114,7 @@ class SetupController extends Controller
         }
     }
 
-    public function complete(Request $request): RedirectResponse
+    public function complete(Request $request)
     {
         $validated = $request->validate([
             'store_name' => 'required|string|max:255',
@@ -169,7 +168,7 @@ class SetupController extends Controller
                 config(['app.installed' => true]);
             });
 
-            return redirect()->to(route('login'))->with('success', __('setup.complete_success'));
+            return redirect()->route('login')->with('success', __('setup.complete_success'));
         } catch (Exception $e) {
             return redirect()->back()->withErrors(['general' => $e->getMessage()]);
         }
