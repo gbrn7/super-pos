@@ -1573,5 +1573,10 @@
         "confirm_password_label": "Konfirmasi Password",
         "submit_btn": "Buat & Masuk Akun",
         "back_to_login": "Kembali ke Login"
+    },
+    "theme": {
+        "light": "Terang",
+        "dark": "Gelap",
+        "system": "Sistem"
     }
 }

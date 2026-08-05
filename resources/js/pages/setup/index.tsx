@@ -199,7 +199,7 @@ export default function SetupWizard() {
                         title="Light Mode"
                     >
                         <Sun className="h-3.5 w-3.5 mr-1 text-amber-500" />
-                        <span>Light</span>
+                        <span>{t('theme.light', 'Terang')}</span>
                     </button>
                     <button
                         type="button"
@@ -211,7 +211,7 @@ export default function SetupWizard() {
                         title="Dark Mode"
                     >
                         <Moon className="h-3.5 w-3.5 mr-1 text-indigo-400" />
-                        <span>Dark</span>
+                        <span>{t('theme.dark', 'Gelap')}</span>
                     </button>
                     <button
                         type="button"
@@ -223,7 +223,7 @@ export default function SetupWizard() {
                         title="System Mode"
                     >
                         <Monitor className="h-3.5 w-3.5 mr-1 text-primary" />
-                        <span>System</span>
+                        <span>{t('theme.system', 'Sistem')}</span>
                     </button>
                 </div>
 

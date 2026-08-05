@@ -1,14 +1,23 @@
 import { Form, Head, router } from '@inertiajs/react';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import InputError from '@/components/input-error';
 import PasswordInput from '@/components/password-input';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Spinner } from '@/components/ui/spinner';
+import { useAppearance } from '@/hooks/use-appearance';
 import { store } from '@/routes/login';
 import i18next, { t } from 'i18next';
+import { Check, ChevronDown, Globe, Monitor, Moon, Sun } from 'lucide-react';
 
 type Props = {
     status?: string;
@@ -19,6 +28,8 @@ type Props = {
 export default function Login({
     status,
 }: Props) {
+    const { i18n } = useTranslation();
+    const { appearance, updateAppearance } = useAppearance();
     const [mode, setMode] = useState<'login' | 'recovery_code' | 'create_superadmin'>('login');
     const [recoveryCode, setRecoveryCode] = useState('');
     const [recoveryError, setRecoveryError] = useState('');
@@ -108,6 +119,70 @@ export default function Login({
                         ? t('recovery.step1_title', 'Pemulihan Akun Owner')
                         : t('recovery.step2_title', 'Buat Akun Owner Baru')
             } />
+
+            {/* Top Bar Actions: Language & Theme Switcher */}
+            <div className="absolute top-4 right-4 flex items-center space-x-3">
+                {/* Appearance Segmented Toggle Tab */}
+                <div className="inline-flex gap-1 rounded-lg bg-slate-200 dark:bg-slate-800 p-1 border border-slate-300 dark:border-slate-700">
+                    <button
+                        type="button"
+                        onClick={() => updateAppearance('light')}
+                        className={`flex items-center rounded-md px-2.5 py-1 text-xs font-semibold transition-colors ${appearance === 'light'
+                            ? 'bg-white text-slate-900 shadow-xs dark:bg-slate-700 dark:text-white'
+                            : 'text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'
+                            }`}
+                        title="Light Mode"
+                    >
+                        <Sun className="h-3.5 w-3.5 mr-1 text-amber-500" />
+                        <span>{t('theme.light', 'Terang')}</span>
+                    </button>
+                    <button
+                        type="button"
+                        onClick={() => updateAppearance('dark')}
+                        className={`flex items-center rounded-md px-2.5 py-1 text-xs font-semibold transition-colors ${appearance === 'dark'
+                            ? 'bg-white text-slate-900 shadow-xs dark:bg-slate-700 dark:text-white'
+                            : 'text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'
+                            }`}
+                        title="Dark Mode"
+                    >
+                        <Moon className="h-3.5 w-3.5 mr-1 text-indigo-400" />
+                        <span>{t('theme.dark', 'Gelap')}</span>
+                    </button>
+                    <button
+                        type="button"
+                        onClick={() => updateAppearance('system')}
+                        className={`flex items-center rounded-md px-2.5 py-1 text-xs font-semibold transition-colors ${appearance === 'system'
+                            ? 'bg-white text-slate-900 shadow-xs dark:bg-slate-700 dark:text-white'
+                            : 'text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'
+                            }`}
+                        title="System Mode"
+                    >
+                        <Monitor className="h-3.5 w-3.5 mr-1 text-primary" />
+                        <span>{t('theme.system', 'Sistem')}</span>
+                    </button>
+                </div>
+
+                {/* Language Selection Dropdown */}
+                <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                        <Button variant="outline" size="sm" className="bg-white dark:bg-slate-900 border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white flex items-center space-x-1.5">
+                            <Globe className="w-4 h-4 text-primary" />
+                            <span className="font-semibold">{i18n.language === 'id' ? 'Indonesia' : 'English'}</span>
+                            <ChevronDown className="w-3.5 h-3.5 opacity-70" />
+                        </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end" className="w-44 bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800">
+                        <DropdownMenuItem onClick={() => i18n.changeLanguage('id')} className="flex items-center justify-between cursor-pointer">
+                            <span>Bahasa Indonesia</span>
+                            {i18n.language === 'id' && <Check className="w-4 h-4 text-primary" />}
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => i18n.changeLanguage('en')} className="flex items-center justify-between cursor-pointer">
+                            <span>English</span>
+                            {i18n.language === 'en' && <Check className="w-4 h-4 text-primary" />}
+                        </DropdownMenuItem>
+                    </DropdownMenuContent>
+                </DropdownMenu>
+            </div>
 
             {status && mode === 'login' && (
                 <div className="mb-4 rounded-lg bg-green-50 border border-green-200 px-4 py-3 text-center text-sm font-medium text-green-700 dark:bg-green-950/30 dark:border-green-800 dark:text-green-400">

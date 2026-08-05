@@ -1578,5 +1578,10 @@
         "confirm_password_label": "Confirm Password",
         "submit_btn": "Create & Log In",
         "back_to_login": "Back to Login"
+    },
+    "theme": {
+        "light": "Light",
+        "dark": "Dark",
+        "system": "System"
     }
 }
