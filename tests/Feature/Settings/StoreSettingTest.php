@@ -38,7 +38,6 @@ test('store setting can be updated', function () {
             'address' => 'Updated Address Road 456',
             'phone' => '081234567890',
             'email' => 'updated@store.com',
-            'tax_number' => '99.999.999.9-999.000',
             'receipt_footer' => 'New Footer Text',
         ]);
 
@@ -51,7 +50,6 @@ test('store setting can be updated', function () {
     expect($setting->address)->toBe('Updated Address Road 456');
     expect($setting->phone)->toBe('081234567890');
     expect($setting->email)->toBe('updated@store.com');
-    expect($setting->tax_number)->toBe('99.999.999.9-999.000');
     expect($setting->receipt_footer)->toBe('New Footer Text');
 });
 

@@ -207,30 +207,6 @@ export default function Store({ storeSetting }: { storeSetting: StoreSetting }) 
                                     />
                                 </div>
 
-                                <div className="grid gap-2">
-                                    <Label htmlFor="tax_number">
-                                        {t(
-                                            'page.settings.store.form.tax_number_input_label',
-                                            'NPWP / No. Pajak',
-                                        )}
-                                    </Label>
-
-                                    <Input
-                                        id="tax_number"
-                                        className="mt-1 block w-full"
-                                        defaultValue={storeSetting.tax_number ?? ''}
-                                        name="tax_number"
-                                        placeholder={t(
-                                            'page.settings.store.form.tax_number_input_placeholder',
-                                            'Masukkan NPWP toko',
-                                        )}
-                                    />
-
-                                    <InputError
-                                        className="mt-2"
-                                        message={errors.tax_number}
-                                    />
-                                </div>
 
                                 <div className="grid gap-2">
                                     <Label htmlFor="receipt_footer">

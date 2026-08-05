@@ -18,7 +18,6 @@ class StoreSettingUpdateRequest extends FormRequest
             'address' => ['required', 'string'],
             'phone' => ['required', 'string', 'max:20'],
             'email' => ['nullable', 'email', 'max:255'],
-            'tax_number' => ['nullable', 'string', 'max:50'],
             'receipt_footer' => ['nullable', 'string'],
         ];
     }
