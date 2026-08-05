@@ -154,15 +154,6 @@ export const PERMISSIONLIST = (): Permission[] => {
             ],
         },
         {
-            LABEL: t('permission_label.dashboard.permission', 'Dasbor'),
-            ACCESSLIST: [
-                {
-                    LABEL: t('permission_label.dashboard.read', 'Baca Dasbor'),
-                    VALUE: DashboardPermissionEnums.READ,
-                },
-            ],
-        },
-        {
             LABEL: t('permission_label.user.permission', 'Pengguna'),
             ACCESSLIST: [
                 {

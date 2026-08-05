@@ -72,7 +72,6 @@ export function AppSidebar() {
                     ),
                     href: dashboard(),
                     icon: LayoutGrid,
-                    permission: PERMISSIONENUMS.DASHBOARD.READ,
                     role: [],
                 },
             ],
