@@ -80,9 +80,15 @@ export default function SetupWizard() {
             if (field === 'db_connection') {
                 if (value === 'sqlite') {
                     next.db_database = 'database/database.sqlite';
-                } else if (prev.db_connection === 'sqlite' || prev.db_database === 'database/database.sqlite') {
+                } else {
                     next.db_database = 'praktis_pos';
-                    next.db_port = value === 'pgsql' ? '5432' : '3306';
+                    if (value === 'mysql') {
+                        next.db_port = '3306';
+                        next.db_username = 'admin';
+                    } else if (value === 'pgsql') {
+                        next.db_port = '5432';
+                        next.db_username = 'postgres';
+                    }
                 }
             }
             return next;
