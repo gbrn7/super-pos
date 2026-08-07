@@ -74,7 +74,9 @@ class SetupController extends Controller
         }
 
         try {
+            config(['database.default' => $connection]);
             DB::purge($connection);
+            DB::reconnect($connection);
             DB::connection($connection)->getPdo();
 
             // Update .env file
