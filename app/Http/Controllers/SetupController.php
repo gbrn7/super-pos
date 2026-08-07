@@ -51,7 +51,26 @@ class SetupController extends Controller
             ]);
         } else {
             $database = $validated['db_database'] ?? config('database.connections.sqlite.database');
-            config(['database.connections.sqlite.database' => $database]);
+
+            // Resolve relative path to absolute path if needed
+            if ($database !== ':memory:' && ! str_starts_with($database, '/')) {
+                $databasePath = base_path($database);
+            } else {
+                $databasePath = $database;
+            }
+
+            // Automatically create the SQLite database file and directory if it does not exist
+            if ($databasePath !== ':memory:') {
+                $dir = dirname($databasePath);
+                if (! is_dir($dir)) {
+                    mkdir($dir, 0755, true);
+                }
+                if (! file_exists($databasePath)) {
+                    touch($databasePath);
+                }
+            }
+
+            config(['database.connections.sqlite.database' => $databasePath]);
         }
 
         try {
@@ -72,6 +91,8 @@ class SetupController extends Controller
                     $replacements['DB_DATABASE'] = $database;
                     $replacements['DB_USERNAME'] = $username;
                     $replacements['DB_PASSWORD'] = $password;
+                } else {
+                    $replacements['DB_DATABASE'] = $database;
                 }
 
                 foreach ($replacements as $key => $val) {
