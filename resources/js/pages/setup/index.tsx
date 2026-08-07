@@ -13,6 +13,13 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from '@/components/ui/select';
 import { CheckCircle2, AlertCircle, Loader2, Database, Store, UserCheck, Rocket, ChevronDown, Settings2, Globe, Eye, EyeOff, Sun, Moon, Monitor, Upload, FileSpreadsheet, X, FileCheck, Check } from 'lucide-react';
 import SetupController from '@/actions/App/Http/Controllers/SetupController';
 import { login } from '@/routes';
@@ -39,10 +46,10 @@ export default function SetupWizard() {
 
     // Database Credentials State with requested defaults
     const [dbCredentials, setDbCredentials] = useState({
-        db_connection: 'pgsql',
+        db_connection: 'sqlite',
         db_host: '127.0.0.1',
         db_port: '5432',
-        db_database: 'praktis_pos',
+        db_database: 'database/database.sqlite',
         db_username: 'postgres',
         db_password: 'admin',
     });
@@ -324,33 +331,45 @@ export default function SetupWizard() {
                                     <div className="grid grid-cols-2 gap-3">
                                         <div className="space-y-1">
                                             <Label htmlFor="db_connection" className="text-xs">{t('setup.step1.driver')}</Label>
-                                            <Input id="db_connection" value={dbCredentials.db_connection} onChange={(e) => handleDbCredentialChange('db_connection', e.target.value)} placeholder="pgsql" />
+                                            <Select
+                                                value={dbCredentials.db_connection}
+                                                onValueChange={(val) => handleDbCredentialChange('db_connection', val)}
+                                            >
+                                                <SelectTrigger id="db_connection" className="w-full h-9 text-sm">
+                                                    <SelectValue placeholder="Pilih Driver" />
+                                                </SelectTrigger>
+                                                <SelectContent>
+                                                    <SelectItem value="sqlite">SQLite (Rekomendasi Desktop)</SelectItem>
+                                                    <SelectItem value="pgsql">PostgreSQL</SelectItem>
+                                                    <SelectItem value="mysql">MySQL</SelectItem>
+                                                </SelectContent>
+                                            </Select>
                                         </div>
                                         <div className="space-y-1">
                                             <Label htmlFor="db_host" className="text-xs">{t('setup.step1.host')}</Label>
-                                            <Input id="db_host" value={dbCredentials.db_host} onChange={(e) => handleDbCredentialChange('db_host', e.target.value)} placeholder="127.0.0.1" />
+                                            <Input id="db_host" value={dbCredentials.db_host} onChange={(e) => handleDbCredentialChange('db_host', e.target.value)} placeholder="127.0.0.1" disabled={dbCredentials.db_connection === 'sqlite'} />
                                         </div>
                                     </div>
                                     <div className="grid grid-cols-2 gap-3">
                                         <div className="space-y-1">
                                             <Label htmlFor="db_port" className="text-xs">{t('setup.step1.port')}</Label>
-                                            <Input id="db_port" value={dbCredentials.db_port} onChange={(e) => handleDbCredentialChange('db_port', e.target.value)} placeholder="5432" />
+                                            <Input id="db_port" value={dbCredentials.db_port} onChange={(e) => handleDbCredentialChange('db_port', e.target.value)} placeholder="5432" disabled={dbCredentials.db_connection === 'sqlite'} />
                                         </div>
                                         <div className="space-y-1">
                                             <Label htmlFor="db_database" className="text-xs">{t('setup.step1.database_name')}</Label>
-                                            <Input id="db_database" value={dbCredentials.db_database} onChange={(e) => handleDbCredentialChange('db_database', e.target.value)} placeholder="praktis_pos" />
+                                            <Input id="db_database" value={dbCredentials.db_database} onChange={(e) => handleDbCredentialChange('db_database', e.target.value)} placeholder="database/database.sqlite" />
                                         </div>
                                     </div>
                                     <div className="grid grid-cols-2 gap-3">
                                         <div className="space-y-1">
                                             <Label htmlFor="db_username" className="text-xs">{t('setup.step1.username')}</Label>
-                                            <Input id="db_username" value={dbCredentials.db_username} onChange={(e) => handleDbCredentialChange('db_username', e.target.value)} placeholder="postgres" />
+                                            <Input id="db_username" value={dbCredentials.db_username} onChange={(e) => handleDbCredentialChange('db_username', e.target.value)} placeholder="postgres" disabled={dbCredentials.db_connection === 'sqlite'} />
                                         </div>
                                         <div className="space-y-1">
                                             <Label htmlFor="db_password" className="text-xs">{t('setup.step1.password')}</Label>
                                             <div className="relative">
-                                                <Input id="db_password" type={showDbPassword ? 'text' : 'password'} value={dbCredentials.db_password} onChange={(e) => handleDbCredentialChange('db_password', e.target.value)} placeholder="admin" className="pr-10" />
-                                                <button type="button" onClick={() => setShowDbPassword(!showDbPassword)} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 focus:outline-none">
+                                                <Input id="db_password" type={showDbPassword ? 'text' : 'password'} value={dbCredentials.db_password} onChange={(e) => handleDbCredentialChange('db_password', e.target.value)} placeholder="admin" className="pr-10" disabled={dbCredentials.db_connection === 'sqlite'} />
+                                                <button type="button" onClick={() => setShowDbPassword(!showDbPassword)} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 focus:outline-none" disabled={dbCredentials.db_connection === 'sqlite'}>
                                                     {showDbPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                                                 </button>
                                             </div>
