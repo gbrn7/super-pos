@@ -75,7 +75,18 @@ export default function SetupWizard() {
     };
 
     const handleDbCredentialChange = (field: string, value: string) => {
-        setDbCredentials((prev) => ({ ...prev, [field]: value }));
+        setDbCredentials((prev) => {
+            const next = { ...prev, [field]: value };
+            if (field === 'db_connection') {
+                if (value === 'sqlite') {
+                    next.db_database = 'database/database.sqlite';
+                } else if (prev.db_connection === 'sqlite' || prev.db_database === 'database/database.sqlite') {
+                    next.db_database = 'praktis_pos';
+                    next.db_port = value === 'pgsql' ? '5432' : '3306';
+                }
+            }
+            return next;
+        });
     };
 
 
