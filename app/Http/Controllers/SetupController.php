@@ -52,9 +52,15 @@ class SetupController extends Controller
         } else {
             $database = $validated['db_database'] ?? config('database.connections.sqlite.database');
 
-            // Resolve relative path to absolute path if needed
+            // Resolve SQLite database path to a user-writable location (e.g. storage_path) if base_path is read-only
             if ($database !== ':memory:' && ! str_starts_with($database, '/')) {
-                $databasePath = base_path($database);
+                $baseCandidate = base_path($database);
+                $targetDir = dirname($baseCandidate);
+                if (! is_dir($targetDir) && ! @mkdir($targetDir, 0755, true)) {
+                    $databasePath = storage_path('app/'.basename($database));
+                } else {
+                    $databasePath = $baseCandidate;
+                }
             } else {
                 $databasePath = $database;
             }
@@ -63,10 +69,10 @@ class SetupController extends Controller
             if ($databasePath !== ':memory:') {
                 $dir = dirname($databasePath);
                 if (! is_dir($dir)) {
-                    mkdir($dir, 0755, true);
+                    @mkdir($dir, 0755, true);
                 }
                 if (! file_exists($databasePath)) {
-                    touch($databasePath);
+                    @touch($databasePath);
                 }
             }
 
@@ -104,7 +110,10 @@ class SetupController extends Controller
                         $envContent .= "\n{$key}={$val}\n";
                     }
                 }
-                file_put_contents($envPath, $envContent);
+                // Only attempt to write .env if it is writable (e.g. not in read-only /opt directory)
+                if (is_writable($envPath)) {
+                    @file_put_contents($envPath, $envContent);
+                }
             }
 
             return response()->json([
@@ -128,7 +137,13 @@ class SetupController extends Controller
                 $database = config('database.connections.sqlite.database');
 
                 if ($database !== ':memory:' && ! str_starts_with($database, '/')) {
-                    $databasePath = base_path($database);
+                    $baseCandidate = base_path($database);
+                    $targetDir = dirname($baseCandidate);
+                    if (! is_dir($targetDir) && ! @mkdir($targetDir, 0755, true)) {
+                        $databasePath = storage_path('app/'.basename($database));
+                    } else {
+                        $databasePath = $baseCandidate;
+                    }
                 } else {
                     $databasePath = $database;
                 }
@@ -136,10 +151,10 @@ class SetupController extends Controller
                 if ($databasePath !== ':memory:') {
                     $dir = dirname($databasePath);
                     if (! is_dir($dir)) {
-                        mkdir($dir, 0755, true);
+                        @mkdir($dir, 0755, true);
                     }
                     if (! file_exists($databasePath)) {
-                        touch($databasePath);
+                        @touch($databasePath);
                     }
                 }
 

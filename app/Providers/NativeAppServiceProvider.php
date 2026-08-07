@@ -14,7 +14,7 @@ class NativeAppServiceProvider implements ProvidesPhpIni
     public function boot(): void
     {
         Window::open()
-            ->title('Super POS - Point of Sale')
+            ->title('Praktis POS - Point of Sale')
             ->width(1280)
             ->height(800)
             ->minWidth(1024)
@@ -26,7 +26,6 @@ class NativeAppServiceProvider implements ProvidesPhpIni
      */
     public function phpIni(): array
     {
-        return [
-        ];
+        return [];
     }
 }
