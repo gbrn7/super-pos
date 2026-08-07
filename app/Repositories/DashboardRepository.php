@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Models\Product;
 use App\Models\Transaction;
 use App\Support\Interfaces\Repositories\DashboardRepositoryInterface;
+use App\Support\Utils\QueryHelper;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
@@ -104,6 +105,9 @@ class DashboardRepository implements DashboardRepositoryInterface
             )
             ->groupBy('transaction_id');
 
+        $txDateFormat = QueryHelper::dateFormatExpression('transactions.created_at');
+        $returnDateFormat = QueryHelper::dateFormatExpression('returns.created_at');
+
         $txData = DB::table('transactions')
             ->leftJoinSub($detailSubquery, 'details', function ($join) {
                 $join->on('transactions.id', '=', 'details.transaction_id');
@@ -111,12 +115,12 @@ class DashboardRepository implements DashboardRepositoryInterface
             ->whereBetween('transactions.created_at', [$start, $end])
             ->whereNull('transactions.deleted_at')
             ->select(
-                DB::raw("to_char(transactions.created_at, 'YYYY-MM-DD') as date"),
+                DB::raw("{$txDateFormat} as date"),
                 DB::raw('COALESCE(SUM(transactions.total_amount), 0) as revenue'),
                 DB::raw('COALESCE(SUM(details.cost), 0) as cost'),
                 DB::raw('COALESCE(SUM(details.quantity), 0) as quantity')
             )
-            ->groupBy(DB::raw("to_char(transactions.created_at, 'YYYY-MM-DD')"))
+            ->groupBy(DB::raw($txDateFormat))
             ->get();
 
         $returnData = DB::table('returns')
@@ -127,12 +131,12 @@ class DashboardRepository implements DashboardRepositoryInterface
             })
             ->whereBetween('returns.created_at', [$start, $end])
             ->select(
-                DB::raw("to_char(returns.created_at, 'YYYY-MM-DD') as date"),
+                DB::raw("{$returnDateFormat} as date"),
                 DB::raw('COALESCE(SUM(returns.total_refund_amount), 0) as refund'),
                 DB::raw('COALESCE(SUM(return_details.quantity * transaction_detail.cost_price), 0) as returned_cost'),
                 DB::raw('COALESCE(SUM(return_details.quantity), 0) as returned_qty')
             )
-            ->groupBy(DB::raw("to_char(returns.created_at, 'YYYY-MM-DD')"))
+            ->groupBy(DB::raw($returnDateFormat))
             ->get()
             ->keyBy('date');
 

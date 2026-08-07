@@ -113,13 +113,9 @@ export function DetailDialog({
         }
     }, [isOpen, transaction?.id]);
 
-    if (!transaction) {
-        return null;
-    }
-
     const currentTransaction = detailData || transaction;
-    const discountAmount = Number(currentTransaction.discount_amount || 0);
-    const details = currentTransaction.details ?? [];
+    const discountAmount = Number(currentTransaction?.discount_amount || 0);
+    const details = currentTransaction?.details ?? [];
     const netSubtotal = details.length > 0
         ? details.reduce(
             (sum, item) =>
@@ -129,7 +125,7 @@ export function DetailDialog({
                     item.quantity),
             0,
         )
-        : Number(currentTransaction.total_amount) + discountAmount;
+        : Number(currentTransaction?.total_amount || 0) + discountAmount;
 
     const totalItems = details.length;
     const totalQuantity = details.reduce((sum, item) => sum + item.quantity, 0);
@@ -145,14 +141,14 @@ export function DetailDialog({
     const totalAllDiscount = totalItemDiscount + discountAmount;
     const totalProfit = netSubtotal - totalCost - discountAmount;
     const totalRefund = useMemo(() => {
-        if (!currentTransaction.returns) return 0;
+        if (!currentTransaction?.returns) return 0;
         return currentTransaction.returns.reduce(
             (sum: number, ret: any) => sum + Number(ret.total_refund_amount || 0),
             0,
         );
-    }, [currentTransaction.returns]);
+    }, [currentTransaction?.returns]);
     const totalRefundQuantity = useMemo(() => {
-        if (!currentTransaction.returns) return 0;
+        if (!currentTransaction?.returns) return 0;
         return currentTransaction.returns.reduce(
             (sum: number, ret: any) => {
                 const detailsSum = (ret.details || []).reduce(
@@ -163,12 +159,12 @@ export function DetailDialog({
             },
             0,
         );
-    }, [currentTransaction.returns]);
+    }, [currentTransaction?.returns]);
     const profitMarginPercentage = useMemo(() => {
-        const totalAmount = Number(currentTransaction.total_amount || 0);
+        const totalAmount = Number(currentTransaction?.total_amount || 0);
         if (totalAmount <= 0) return 0;
         return (totalProfit / totalAmount) * 100;
-    }, [totalProfit, currentTransaction.total_amount]);
+    }, [totalProfit, currentTransaction?.total_amount]);
 
     const breakdownColors = useMemo(() => getBreakdownColors(), []);
 
@@ -197,6 +193,10 @@ export function DetailDialog({
         }
         return data;
     }, [details, totalCost, totalProfit, totalAllDiscount, discountAmount, breakdownColors, t]);
+
+    if (!transaction || !currentTransaction) {
+        return null;
+    }
 
     const chartConfig: ChartConfig = {
         profit: {

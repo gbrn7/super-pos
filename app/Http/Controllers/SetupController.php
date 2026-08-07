@@ -122,6 +122,31 @@ class SetupController extends Controller
     public function runMigration(): JsonResponse
     {
         try {
+            $connection = config('database.default', 'sqlite');
+
+            if ($connection === 'sqlite') {
+                $database = config('database.connections.sqlite.database');
+
+                if ($database !== ':memory:' && ! str_starts_with($database, '/')) {
+                    $databasePath = base_path($database);
+                } else {
+                    $databasePath = $database;
+                }
+
+                if ($databasePath !== ':memory:') {
+                    $dir = dirname($databasePath);
+                    if (! is_dir($dir)) {
+                        mkdir($dir, 0755, true);
+                    }
+                    if (! file_exists($databasePath)) {
+                        touch($databasePath);
+                    }
+                }
+
+                config(['database.connections.sqlite.database' => $databasePath]);
+                DB::purge('sqlite');
+            }
+
             Artisan::call('migrate:fresh', ['--force' => true]);
             Artisan::call('db:seed', ['--force' => true]);
 
@@ -151,6 +176,18 @@ class SetupController extends Controller
         ]);
 
         try {
+            $connection = config('database.default', 'sqlite');
+
+            if ($connection === 'sqlite') {
+                $database = config('database.connections.sqlite.database');
+
+                if ($database !== ':memory:' && ! str_starts_with($database, '/')) {
+                    $databasePath = base_path($database);
+                    config(['database.connections.sqlite.database' => $databasePath]);
+                    DB::purge('sqlite');
+                }
+            }
+
             DB::transaction(function () use ($validated) {
                 $user = User::create([
                     'name' => $validated['name'],

@@ -40,21 +40,27 @@ class HandleInertiaRequests extends Middleware
             ...parent::share($request),
             'name' => config('app.name'),
             'auth' => [
-                // 'user' => $request->user(),
-                'user' => $request->user() ? [
-                    'id' => $request->user()->id,
-                    'name' => $request->user()->name,
-                    'email' => $request->user()->email,
-                    // Get all roles
-                    'roles' => $request->user()->getRoleNames()->toArray(),
-                    // Get all permissions (flattened)
-                    'permissions' => $request->user()
-                        ->getAllPermissions()
-                        ->pluck('name')
-                        ->toArray(),
-                    // check is superadmin
-                    'isSuperAdmin' => $request->user()?->hasRole(RoleEnums::SUPER_ADMIN->value),
-                ] : null,
+                'user' => function () use ($request) {
+                    try {
+                        if (! $request->user()) {
+                            return null;
+                        }
+
+                        return [
+                            'id' => $request->user()->id,
+                            'name' => $request->user()->name,
+                            'email' => $request->user()->email,
+                            'roles' => $request->user()->getRoleNames()->toArray(),
+                            'permissions' => $request->user()
+                                ->getAllPermissions()
+                                ->pluck('name')
+                                ->toArray(),
+                            'isSuperAdmin' => $request->user()->hasRole(RoleEnums::SUPER_ADMIN->value),
+                        ];
+                    } catch (\Throwable $e) {
+                        return null;
+                    }
+                },
             ],
             'sidebarOpen' => ! $request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
         ];
