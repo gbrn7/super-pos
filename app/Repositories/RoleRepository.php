@@ -6,6 +6,7 @@ use App\Models\Role;
 use App\Support\Enums\RoleEnums;
 use App\Support\Interfaces\Repositories\RoleRepositoryInterface;
 use App\Support\Models\Role\GetRoleReqModel;
+use App\Support\Utils\QueryHelper;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Support\Collection;
 
@@ -13,9 +14,11 @@ class RoleRepository implements RoleRepositoryInterface
 {
     public function getAllByIndex(GetRoleReqModel $request): Paginator|Collection
     {
+        $like = QueryHelper::likeOperator();
+
         $query = Role::query()
             ->orderBy('id', 'desc')
-            ->when($request->name, fn ($query) => $query->where('name', 'ilike', "%{$request->name}%"))
+            ->when($request->name, fn ($query) => $query->where('name', $like, "%{$request->name}%"))
             ->where('name', '!=', RoleEnums::SUPER_ADMIN->value);
 
         if ($request->limit === null) {

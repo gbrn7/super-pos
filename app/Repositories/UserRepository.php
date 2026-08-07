@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Support\Enums\RoleEnums;
 use App\Support\Interfaces\Repositories\UserRepositoryInterface;
 use App\Support\Models\User\GetUserReqModel;
+use App\Support\Utils\QueryHelper;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Support\Collection;
 
@@ -13,10 +14,12 @@ class UserRepository implements UserRepositoryInterface
 {
     public function getAllByIndex(GetUserReqModel $request, bool $isIncludeSuperAdmin = false): Paginator|Collection
     {
+        $like = QueryHelper::likeOperator();
+
         $query = User::query()
             ->with('roles')
             ->orderBy('id', 'desc')
-            ->when($request->name, fn ($query) => $query->where('name', 'ilike', "%{$request->name}%"))
+            ->when($request->name, fn ($query) => $query->where('name', $like, "%{$request->name}%"))
             ->when(! $isIncludeSuperAdmin, function ($query) {
                 $query->whereDoesntHave('roles', function ($q) {
                     $q->where('name', RoleEnums::SUPER_ADMIN->value);

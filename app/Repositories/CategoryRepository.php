@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Models\Category;
 use App\Support\Interfaces\Repositories\CategoryRepositoryInterface;
 use App\Support\Models\Category\GetCategoryReqModel;
+use App\Support\Utils\QueryHelper;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Support\Collection;
 
@@ -12,9 +13,11 @@ class CategoryRepository implements CategoryRepositoryInterface
 {
     public function getAllByIndex(GetCategoryReqModel $request): Paginator|Collection
     {
+        $like = QueryHelper::likeOperator();
+
         $query = Category::query()
             ->orderBy(isset($request->order_by) ? $request->order_by : 'id', isset($request->order) ? $request->order : 'desc')
-            ->when($request->name, fn ($query) => $query->where('name', 'ilike', "%{$request->name}%"));
+            ->when($request->name, fn ($query) => $query->where('name', $like, "%{$request->name}%"));
 
         if ($request->limit === null) {
             return $query->get();

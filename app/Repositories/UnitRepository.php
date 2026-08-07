@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Models\Unit;
 use App\Support\Interfaces\Repositories\UnitRepositoryInterface;
 use App\Support\Models\Unit\GetUnitReqModel;
+use App\Support\Utils\QueryHelper;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Support\Collection;
 
@@ -12,9 +13,11 @@ class UnitRepository implements UnitRepositoryInterface
 {
     public function getAllByIndex(GetUnitReqModel $request): Paginator|Collection
     {
+        $like = QueryHelper::likeOperator();
+
         $query = Unit::query()
             ->orderBy(isset($request->order_by) ? $request->order_by : 'id', isset($request->order) ? $request->order : 'desc')
-            ->when($request->name, fn ($query) => $query->where('name', 'ilike', "%{$request->name}%"));
+            ->when($request->name, fn ($query) => $query->where('name', $like, "%{$request->name}%"));
 
         if ($request->limit === null) {
             return $query->get();

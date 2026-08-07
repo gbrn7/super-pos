@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Models\Transaction;
 use App\Support\Interfaces\Repositories\TransactionRepositoryInterface;
 use App\Support\Models\Transaction\GetTransactionReqModel;
+use App\Support\Utils\QueryHelper;
 use Carbon\Carbon;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Support\Collection;
@@ -13,27 +14,29 @@ class TransactionRepository implements TransactionRepositoryInterface
 {
     public function getAllByIndex(GetTransactionReqModel $request): Paginator|Collection
     {
+        $like = QueryHelper::likeOperator();
+
         // dd($request);
         $query = Transaction::query()
             ->with(['user', 'paymentMethod', 'transactionDetails'])
-            ->when($request->keyword, function ($query) use ($request) {
+            ->when($request->keyword, function ($query) use ($request, $like) {
                 if ($request->field && $request->field !== 'default') {
                     if ($request->field === 'payment_method_name') {
-                        $query->whereHas('paymentMethod', fn ($pm) => $pm->where('name', 'ilike', "%{$request->keyword}%"));
+                        $query->whereHas('paymentMethod', fn ($pm) => $pm->where('name', $like, "%{$request->keyword}%"));
                     } elseif ($request->field === 'user_name') {
-                        $query->whereHas('user', fn ($u) => $u->where('name', 'ilike', "%{$request->keyword}%"));
+                        $query->whereHas('user', fn ($u) => $u->where('name', $like, "%{$request->keyword}%"));
                     } else {
-                        $query->where('transactions.'.$request->field, 'ilike', "%{$request->keyword}%");
+                        $query->where('transactions.'.$request->field, $like, "%{$request->keyword}%");
                     }
                 } else {
-                    $query->where(function ($q) use ($request) {
-                        $q->where('transactions.invoice_number', 'ilike', "%{$request->keyword}%")
-                            ->orWhereHas('paymentMethod', fn ($pm) => $pm->where('name', 'ilike', "%{$request->keyword}%"))
-                            ->orWhereHas('user', fn ($u) => $u->where('name', 'ilike', "%{$request->keyword}%"));
+                    $query->where(function ($q) use ($request, $like) {
+                        $q->where('transactions.invoice_number', $like, "%{$request->keyword}%")
+                            ->orWhereHas('paymentMethod', fn ($pm) => $pm->where('name', $like, "%{$request->keyword}%"))
+                            ->orWhereHas('user', fn ($u) => $u->where('name', $like, "%{$request->keyword}%"));
                     });
                 }
             })
-            ->when($request->invoice_number, fn ($query) => $query->where('transactions.invoice_number', 'ilike', "%{$request->invoice_number}%"))
+            ->when($request->invoice_number, fn ($query) => $query->where('transactions.invoice_number', $like, "%{$request->invoice_number}%"))
             ->when($request->user_id, fn ($query) => $query->where('transactions.user_id', $request->user_id))
             ->when($request->payment_method_id, fn ($query) => $query->where('transactions.payment_method_id', $request->payment_method_id))
             ->when($request->start_date, function ($query) use ($request) {

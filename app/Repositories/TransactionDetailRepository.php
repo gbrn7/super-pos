@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Models\TransactionDetail;
 use App\Support\Interfaces\Repositories\TransactionDetailRepositoryInterface;
 use App\Support\Models\TransactionDetail\GetTransactionDetailReqModel;
+use App\Support\Utils\QueryHelper;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Support\Collection;
 
@@ -12,20 +13,22 @@ class TransactionDetailRepository implements TransactionDetailRepositoryInterfac
 {
     public function getAllByIndex(GetTransactionDetailReqModel $request): Paginator|Collection
     {
+        $like = QueryHelper::likeOperator();
+
         $query = TransactionDetail::query()
             ->with(['transaction', 'product'])
-            ->when($request->keyword, function ($query) use ($request) {
+            ->when($request->keyword, function ($query) use ($request, $like) {
                 if ($request->field && $request->field !== 'default') {
-                    $query->where('transaction_detail.'.$request->field, 'ilike', "%{$request->keyword}%");
+                    $query->where('transaction_detail.'.$request->field, $like, "%{$request->keyword}%");
                 } else {
-                    $query->where(function ($q) use ($request) {
-                        $q->where('transaction_detail.unit_name', 'ilike', "%{$request->keyword}%");
+                    $query->where(function ($q) use ($request, $like) {
+                        $q->where('transaction_detail.unit_name', $like, "%{$request->keyword}%");
                     });
                 }
             })
             ->when($request->transaction_id, fn ($query) => $query->where('transaction_detail.transaction_id', $request->transaction_id))
             ->when($request->product_id, fn ($query) => $query->where('transaction_detail.product_id', $request->product_id))
-            ->when($request->unit_name, fn ($query) => $query->where('transaction_detail.unit_name', 'ilike', "%{$request->unit_name}%"));
+            ->when($request->unit_name, fn ($query) => $query->where('transaction_detail.unit_name', $like, "%{$request->unit_name}%"));
 
         if (isset($request->order_by) && isset($request->order)) {
             $query->orderBy('transaction_detail.'.$request->order_by, $request->order);

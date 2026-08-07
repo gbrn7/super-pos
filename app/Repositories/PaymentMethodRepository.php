@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Models\PaymentMethod;
 use App\Support\Interfaces\Repositories\PaymentMethodRepositoryInterface;
 use App\Support\Models\PaymentMethod\GetPaymentMethodReqModel;
+use App\Support\Utils\QueryHelper;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Support\Collection;
 
@@ -12,9 +13,11 @@ class PaymentMethodRepository implements PaymentMethodRepositoryInterface
 {
     public function getAllByIndex(GetPaymentMethodReqModel $request): Paginator|Collection
     {
+        $like = QueryHelper::likeOperator();
+
         $query = PaymentMethod::query()
             ->orderBy('id', 'desc')
-            ->when($request->name, fn ($query) => $query->where('name', 'ilike', "%{$request->name}%"));
+            ->when($request->name, fn ($query) => $query->where('name', $like, "%{$request->name}%"));
 
         if ($request->limit === null) {
             return $query->get();

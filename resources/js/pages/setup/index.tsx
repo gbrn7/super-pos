@@ -60,7 +60,11 @@ export default function SetupWizard() {
     });
 
     const getCsrfToken = () => {
-        return (document.querySelector('meta[name="csrf-token"]') as HTMLMetaElement)?.content || '';
+        const metaToken = (document.querySelector('meta[name="csrf-token"]') as HTMLMetaElement)?.content;
+        if (metaToken) return metaToken;
+
+        const match = document.cookie.match(/XSRF-TOKEN=([^;]+)/);
+        return match ? decodeURIComponent(match[1]) : '';
     };
 
     const handleDbCredentialChange = (field: string, value: string) => {
@@ -85,6 +89,7 @@ export default function SetupWizard() {
                 method: SetupController.testDatabase.definition.methods[0].toUpperCase(),
                 headers: {
                     'Content-Type': 'application/json',
+                    'Accept': 'application/json',
                     'X-CSRF-TOKEN': getCsrfToken(),
                 },
                 body: JSON.stringify(dbCredentials),
@@ -108,6 +113,7 @@ export default function SetupWizard() {
                 method: SetupController.runMigration.definition.methods[0].toUpperCase(),
                 headers: {
                     'Content-Type': 'application/json',
+                    'Accept': 'application/json',
                     'X-CSRF-TOKEN': getCsrfToken(),
                 },
             });
@@ -136,6 +142,7 @@ export default function SetupWizard() {
             const res = await fetch(SetupController.uploadMasterProduct.url(), {
                 method: SetupController.uploadMasterProduct.definition.methods[0].toUpperCase(),
                 headers: {
+                    'Accept': 'application/json',
                     'X-CSRF-TOKEN': getCsrfToken(),
                 },
                 body: formData,
@@ -159,6 +166,7 @@ export default function SetupWizard() {
             await fetch(SetupController.resetMasterProduct.url(), {
                 method: SetupController.resetMasterProduct.definition.methods[0].toUpperCase(),
                 headers: {
+                    'Accept': 'application/json',
                     'X-CSRF-TOKEN': getCsrfToken(),
                 },
             });

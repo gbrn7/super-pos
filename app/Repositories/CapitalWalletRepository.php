@@ -9,6 +9,7 @@ use App\Support\Enums\CapitalWalletStatusEnums;
 use App\Support\Enums\CapitalWalletTransactionDirectionEnums;
 use App\Support\Interfaces\Repositories\CapitalWalletRepositoryInterface;
 use App\Support\Models\CapitalWallet\GetCapitalWalletTransactionReqModel;
+use App\Support\Utils\QueryHelper;
 use Carbon\Carbon;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Support\Collection;
@@ -51,6 +52,7 @@ class CapitalWalletRepository implements CapitalWalletRepositoryInterface
 
     public function getTransactions(GetCapitalWalletTransactionReqModel $request): Paginator|Collection
     {
+        $like = QueryHelper::likeOperator();
         $query = CapitalWalletTransaction::query()->with('reference');
 
         if ($request->start_date) {
@@ -68,12 +70,12 @@ class CapitalWalletRepository implements CapitalWalletRepositoryInterface
             $query->where('transaction_type', $request->transaction_type);
         }
         if ($request->keyword) {
-            $query->where(function ($q) use ($request) {
-                $q->where('notes', 'ilike', "%{$request->keyword}%")
-                    ->orWhere(function ($sub) use ($request) {
+            $query->where(function ($q) use ($request, $like) {
+                $q->where('notes', $like, "%{$request->keyword}%")
+                    ->orWhere(function ($sub) use ($request, $like) {
                         $sub->where('reference_type', Transaction::class)
-                            ->whereHasMorph('reference', [Transaction::class], function ($morphQuery) use ($request) {
-                                $morphQuery->where('invoice_number', 'ilike', "%{$request->keyword}%");
+                            ->whereHasMorph('reference', [Transaction::class], function ($morphQuery) use ($request, $like) {
+                                $morphQuery->where('invoice_number', $like, "%{$request->keyword}%");
                             });
                     });
             });
@@ -100,6 +102,7 @@ class CapitalWalletRepository implements CapitalWalletRepositoryInterface
             ];
         }
 
+        $like = QueryHelper::likeOperator();
         $query = CapitalWalletTransaction::query();
 
         if ($request->start_date) {
@@ -115,12 +118,12 @@ class CapitalWalletRepository implements CapitalWalletRepositoryInterface
             $query->where('transaction_type', $request->transaction_type);
         }
         if ($request->keyword) {
-            $query->where(function ($q) use ($request) {
-                $q->where('notes', 'ilike', "%{$request->keyword}%")
-                    ->orWhere(function ($sub) use ($request) {
+            $query->where(function ($q) use ($request, $like) {
+                $q->where('notes', $like, "%{$request->keyword}%")
+                    ->orWhere(function ($sub) use ($request, $like) {
                         $sub->where('reference_type', Transaction::class)
-                            ->whereHasMorph('reference', [Transaction::class], function ($morphQuery) use ($request) {
-                                $morphQuery->where('invoice_number', 'ilike', "%{$request->keyword}%");
+                            ->whereHasMorph('reference', [Transaction::class], function ($morphQuery) use ($request, $like) {
+                                $morphQuery->where('invoice_number', $like, "%{$request->keyword}%");
                             });
                     });
             });

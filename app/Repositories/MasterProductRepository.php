@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Models\MasterProduct;
 use App\Support\Interfaces\Repositories\MasterProductRepositoryInterface;
 use App\Support\Models\MasterProduct\GetMasterProductReqModel;
+use App\Support\Utils\QueryHelper;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Support\Collection;
 
@@ -12,24 +13,26 @@ class MasterProductRepository implements MasterProductRepositoryInterface
 {
     public function getAllByIndex(GetMasterProductReqModel $request): Paginator|Collection
     {
+        $like = QueryHelper::likeOperator();
+
         $query = MasterProduct::query()
             ->with('product')
-            ->when($request->keyword, function ($query) use ($request) {
+            ->when($request->keyword, function ($query) use ($request, $like) {
                 if ($request->field && $request->field != 'default') {
-                    $query->where($request->field, 'ilike', "%{$request->keyword}%");
+                    $query->where($request->field, $like, "%{$request->keyword}%");
                 } else {
                     $query
-                        ->orwhere('name', 'ilike', "%{$request->keyword}%")
-                        ->orwhere('category_name', 'ilike', "%{$request->keyword}%")
-                        ->orwhere('unit_name', 'ilike', "%{$request->keyword}%")
-                        ->orwhere('barcode', 'ilike', "%{$request->keyword}%")
-                        ->orwhere('desc', 'ilike', "%{$request->keyword}%");
+                        ->orwhere('name', $like, "%{$request->keyword}%")
+                        ->orwhere('category_name', $like, "%{$request->keyword}%")
+                        ->orwhere('unit_name', $like, "%{$request->keyword}%")
+                        ->orwhere('barcode', $like, "%{$request->keyword}%")
+                        ->orwhere('desc', $like, "%{$request->keyword}%");
                 }
             })
-            ->when($request->name, fn ($query) => $query->where('name', 'ilike', "%{$request->name}%"))
-            ->when($request->barcode, fn ($query) => $query->where('barcode', 'ilike', "%{$request->barcode}%"))
-            ->when($request->category_name, fn ($query) => $query->where('category_name', 'ilike', "%{$request->category_name}%"))
-            ->when($request->unit_name, fn ($query) => $query->where('unit_name', 'ilike', "%{$request->unit_name}%"))
+            ->when($request->name, fn ($query) => $query->where('name', $like, "%{$request->name}%"))
+            ->when($request->barcode, fn ($query) => $query->where('barcode', $like, "%{$request->barcode}%"))
+            ->when($request->category_name, fn ($query) => $query->where('category_name', $like, "%{$request->category_name}%"))
+            ->when($request->unit_name, fn ($query) => $query->where('unit_name', $like, "%{$request->unit_name}%"))
             ->when($request->price, fn ($query) => $query->where('price', $request->price))
             ->when($request->cost_price, fn ($query) => $query->where('cost_price', $request->cost_price))
             ->when($request->is_added !== null && $request->is_added !== '', function ($query) use ($request) {

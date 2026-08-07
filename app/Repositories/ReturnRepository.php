@@ -6,6 +6,7 @@ use App\Models\ProductReturn;
 use App\Models\ReturnDetail;
 use App\Support\Interfaces\Repositories\ReturnRepositoryInterface;
 use App\Support\Models\ProductReturn\GetProductReturnReqModel;
+use App\Support\Utils\QueryHelper;
 use Carbon\Carbon;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Support\Collection;
@@ -14,23 +15,25 @@ class ReturnRepository implements ReturnRepositoryInterface
 {
     public function getAll(GetProductReturnReqModel $request): Paginator|Collection
     {
+        $like = QueryHelper::likeOperator();
+
         $query = ProductReturn::with(['transaction', 'user', 'details.product'])
-            ->when($request->keyword, function ($query) use ($request) {
+            ->when($request->keyword, function ($query) use ($request, $like) {
                 if ($request->field && $request->field !== 'default') {
                     if ($request->field === 'return_number') {
-                        $query->where('return_number', 'ilike', "%{$request->keyword}%");
+                        $query->where('return_number', $like, "%{$request->keyword}%");
                     } elseif ($request->field === 'invoice_number') {
-                        $query->whereHas('transaction', fn ($q) => $q->where('invoice_number', 'ilike', "%{$request->keyword}%"));
+                        $query->whereHas('transaction', fn ($q) => $q->where('invoice_number', $like, "%{$request->keyword}%"));
                     } elseif ($request->field === 'user_name') {
-                        $query->whereHas('user', fn ($q) => $q->where('name', 'ilike', "%{$request->keyword}%"));
+                        $query->whereHas('user', fn ($q) => $q->where('name', $like, "%{$request->keyword}%"));
                     } else {
-                        $query->where($request->field, 'ilike', "%{$request->keyword}%");
+                        $query->where($request->field, $like, "%{$request->keyword}%");
                     }
                 } else {
-                    $query->where(function ($q) use ($request) {
-                        $q->where('return_number', 'ilike', "%{$request->keyword}%")
-                            ->orWhereHas('transaction', fn ($t) => $t->where('invoice_number', 'ilike', "%{$request->keyword}%"))
-                            ->orWhereHas('user', fn ($u) => $u->where('name', 'ilike', "%{$request->keyword}%"));
+                    $query->where(function ($q) use ($request, $like) {
+                        $q->where('return_number', $like, "%{$request->keyword}%")
+                            ->orWhereHas('transaction', fn ($t) => $t->where('invoice_number', $like, "%{$request->keyword}%"))
+                            ->orWhereHas('user', fn ($u) => $u->where('name', $like, "%{$request->keyword}%"));
                     });
                 }
             })
