@@ -333,122 +333,65 @@ export default function SetupWizard() {
                                 </Alert>
                             )}
 
-                            {/* Collapsible Database Credentials Form */}
-                            <Collapsible open={isDbFormOpen} onOpenChange={setIsDbFormOpen} className="border border-slate-200 dark:border-slate-800 rounded-lg p-3 bg-slate-50 dark:bg-slate-950/50">
-                                <CollapsibleTrigger asChild>
-                                    <Button variant="ghost" className="w-full flex justify-between items-center text-sm font-medium text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white">
-                                        <div className="flex items-center space-x-2">
-                                            <Settings2 className="w-4 h-4 text-primary" />
-                                            <span>{t('setup.step1.db_config')}</span>
-                                        </div>
-                                        <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${isDbFormOpen ? 'rotate-180' : ''}`} />
-                                    </Button>
-                                </CollapsibleTrigger>
-                                <CollapsibleContent className="space-y-3 pt-3 mt-2 border-t border-slate-200 dark:border-slate-800">
-                                    <div className="grid grid-cols-2 gap-3">
-                                        <div className="space-y-1">
-                                            <Label htmlFor="db_connection" className="text-xs">{t('setup.step1.driver')}</Label>
-                                            <Select
-                                                value={dbCredentials.db_connection}
-                                                onValueChange={(val) => handleDbCredentialChange('db_connection', val)}
-                                            >
-                                                <SelectTrigger id="db_connection" className="w-full h-9 text-sm">
-                                                    <SelectValue placeholder="Pilih Driver" />
-                                                </SelectTrigger>
-                                                <SelectContent>
-                                                    <SelectItem value="sqlite">SQLite (Rekomendasi Desktop)</SelectItem>
-                                                    <SelectItem value="pgsql">PostgreSQL</SelectItem>
-                                                    <SelectItem value="mysql">MySQL</SelectItem>
-                                                </SelectContent>
-                                            </Select>
-                                        </div>
-                                        <div className="space-y-1">
-                                            <Label htmlFor="db_host" className="text-xs">{t('setup.step1.host')}</Label>
-                                            <Input id="db_host" value={dbCredentials.db_host} onChange={(e) => handleDbCredentialChange('db_host', e.target.value)} placeholder="127.0.0.1" disabled={dbCredentials.db_connection === 'sqlite'} />
-                                        </div>
+                            {/* SQLite Status Card */}
+                            <div className="flex items-center justify-between p-3.5 bg-slate-100 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/80 rounded-lg text-sm">
+                                <div className="flex items-center space-x-3">
+                                    <div className="p-2 bg-emerald-100 dark:bg-emerald-950/80 text-emerald-600 dark:text-emerald-400 rounded-md">
+                                        <Database className="w-5 h-5" />
                                     </div>
-                                    <div className="grid grid-cols-2 gap-3">
-                                        <div className="space-y-1">
-                                            <Label htmlFor="db_port" className="text-xs">{t('setup.step1.port')}</Label>
-                                            <Input id="db_port" value={dbCredentials.db_port} onChange={(e) => handleDbCredentialChange('db_port', e.target.value)} placeholder="5432" disabled={dbCredentials.db_connection === 'sqlite'} />
-                                        </div>
-                                        <div className="space-y-1">
-                                            <Label htmlFor="db_database" className="text-xs">{t('setup.step1.database_name')}</Label>
-                                            <Input id="db_database" value={dbCredentials.db_database} onChange={(e) => handleDbCredentialChange('db_database', e.target.value)} placeholder="database/database.sqlite" />
-                                        </div>
+                                    <div>
+                                        <h4 className="font-semibold text-slate-800 dark:text-slate-200">{t('setup.step1.sqlite_info')}</h4>
+                                        <p className="text-xs text-slate-500 dark:text-slate-400">database/database.sqlite</p>
                                     </div>
-                                    <div className="grid grid-cols-2 gap-3">
-                                        <div className="space-y-1">
-                                            <Label htmlFor="db_username" className="text-xs">{t('setup.step1.username')}</Label>
-                                            <Input id="db_username" value={dbCredentials.db_username} onChange={(e) => handleDbCredentialChange('db_username', e.target.value)} placeholder="postgres" disabled={dbCredentials.db_connection === 'sqlite'} />
-                                        </div>
-                                        <div className="space-y-1">
-                                            <Label htmlFor="db_password" className="text-xs">{t('setup.step1.password')}</Label>
-                                            <div className="relative">
-                                                <Input id="db_password" type={showDbPassword ? 'text' : 'password'} value={dbCredentials.db_password} onChange={(e) => handleDbCredentialChange('db_password', e.target.value)} placeholder="admin" className="pr-10" disabled={dbCredentials.db_connection === 'sqlite'} />
-                                                <button type="button" onClick={() => setShowDbPassword(!showDbPassword)} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 focus:outline-none" disabled={dbCredentials.db_connection === 'sqlite'}>
-                                                    {showDbPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </CollapsibleContent>
-                            </Collapsible>
+                                </div>
+                                <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-100 dark:bg-emerald-900/50 text-emerald-800 dark:text-emerald-300">
+                                    Ready
+                                </span>
+                            </div>
 
-                            {/* Custom Master Product File Upload (Optional) - Collapsible */}
-                            <Collapsible open={isUploadFormOpen} onOpenChange={setIsUploadFormOpen} className="border border-slate-200 dark:border-slate-800 rounded-lg p-3 bg-slate-50 dark:bg-slate-950/50">
-                                <CollapsibleTrigger asChild>
-                                    <Button variant="ghost" className="w-full flex justify-between items-center text-sm font-medium text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white">
-                                        <div className="flex items-center space-x-2">
-                                            <FileSpreadsheet className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
-                                            <span>{t('setup.step1.custom_catalog')}</span>
-                                            {customFile && (
-                                                <span className="text-xs text-emerald-600 dark:text-emerald-400 font-medium ml-2 flex items-center gap-1">
-                                                    <FileCheck className="w-3 h-3" /> {t('setup.step1.custom_catalog_active')}
-                                                </span>
-                                            )}
-                                        </div>
-                                        <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${isUploadFormOpen ? 'rotate-180' : ''}`} />
-                                    </Button>
-                                </CollapsibleTrigger>
-                                <CollapsibleContent className="space-y-3 pt-3 mt-2 border-t border-slate-200 dark:border-slate-800">
-                                    <p className="text-xs text-slate-500 dark:text-slate-400">
-                                        {t('setup.step1.custom_catalog_desc')}
-                                    </p>
-
-                                    {uploadError && (
-                                        <p className="text-xs text-destructive font-medium">{uploadError}</p>
+                            {/* Custom Master Product File Upload (Optional) */}
+                            <div className="border border-slate-200 dark:border-slate-800 rounded-lg p-4 bg-slate-50 dark:bg-slate-950/50 space-y-3">
+                                <div className="flex items-center space-x-2">
+                                    <FileSpreadsheet className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+                                    <h4 className="text-sm font-semibold text-slate-800 dark:text-slate-200">{t('setup.step1.custom_catalog')}</h4>
+                                    {customFile && (
+                                        <span className="text-xs bg-emerald-100 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300 font-medium px-2 py-0.5 rounded-full flex items-center gap-1">
+                                            <FileCheck className="w-3 h-3" /> {t('setup.step1.custom_catalog_active')}
+                                        </span>
                                     )}
+                                </div>
+                                <p className="text-xs text-slate-500 dark:text-slate-400">
+                                    {t('setup.step1.custom_catalog_desc')}
+                                </p>
 
-                                    {customFile ? (
-                                        <div className="flex items-center justify-between p-2.5 bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 rounded-md text-xs">
-                                            <div className="flex items-center space-x-2 truncate">
-                                                <FileSpreadsheet className="w-4 h-4 text-emerald-600 shrink-0" />
-                                                <span className="font-medium text-emerald-900 dark:text-emerald-200 truncate">{customFile.name}</span>
-                                                <span className="text-slate-400">({customFile.size})</span>
-                                            </div>
-                                            <Button type="button" variant="ghost" size="icon" className="h-6 w-6 text-slate-500 hover:text-destructive shrink-0" onClick={handleCustomFileReset}>
-                                                <X className="w-3.5 h-3.5" />
-                                            </Button>
-                                        </div>
-                                    ) : (
-                                        <div className="flex items-center space-x-2 pt-1">
-                                            <Label htmlFor="custom_master_file" className="cursor-pointer inline-flex items-center space-x-2 text-xs bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 px-3 py-1.5 rounded-md font-medium text-slate-700 dark:text-slate-300 transition-colors">
-                                                {uploadingFile ? <Loader2 className="w-3.5 h-3.5 animate-spin text-primary" /> : <Upload className="w-3.5 h-3.5 text-primary" />}
-                                                <span>{uploadingFile ? t('setup.step1.uploading') : t('setup.step1.select_excel_file')}</span>
-                                            </Label>
-                                            <input id="custom_master_file" type="file" accept=".xlsx,.xls" className="hidden" onChange={handleCustomFileUpload} disabled={uploadingFile || migrating} />
-                                        </div>
-                                    )}
-                                </CollapsibleContent>
-                            </Collapsible>
+                                {uploadError && (
+                                    <p className="text-xs text-destructive font-medium">{uploadError}</p>
+                                )}
 
-                            <div className="flex flex-col gap-3 pt-2">
-                                <Button onClick={handleTestDb} disabled={dbLoading || migrating} variant="outline">
-                                    {dbLoading ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : null}
-                                    {t('setup.step1.test_connection')}
-                                </Button>
-                                <Button onClick={handleMigrate} disabled={!dbTested || migrating || isMigrated} className="w-full">
+                                {customFile ? (
+                                    <div className="flex items-center justify-between p-2.5 bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 rounded-md text-xs">
+                                        <div className="flex items-center space-x-2 truncate">
+                                            <FileSpreadsheet className="w-4 h-4 text-emerald-600 shrink-0" />
+                                            <span className="font-medium text-emerald-900 dark:text-emerald-200 truncate">{customFile.name}</span>
+                                            <span className="text-slate-400">({customFile.size})</span>
+                                        </div>
+                                        <Button type="button" variant="ghost" size="icon" className="h-6 w-6 text-slate-500 hover:text-destructive shrink-0" onClick={handleCustomFileReset}>
+                                            <X className="w-3.5 h-3.5" />
+                                        </Button>
+                                    </div>
+                                ) : (
+                                    <div className="flex items-center space-x-2 pt-1">
+                                        <Label htmlFor="custom_master_file" className="cursor-pointer inline-flex items-center space-x-2 text-xs bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 px-3 py-2 rounded-md font-medium text-slate-700 dark:text-slate-300 transition-colors shadow-xs">
+                                            {uploadingFile ? <Loader2 className="w-4 h-4 animate-spin text-primary" /> : <Upload className="w-4 h-4 text-primary" />}
+                                            <span>{uploadingFile ? t('setup.step1.uploading') : t('setup.step1.select_excel_file')}</span>
+                                        </Label>
+                                        <input id="custom_master_file" type="file" accept=".xlsx,.xls" className="hidden" onChange={handleCustomFileUpload} disabled={uploadingFile || migrating} />
+                                    </div>
+                                )}
+                            </div>
+
+                            <div className="pt-2">
+                                <Button onClick={handleMigrate} disabled={migrating || isMigrated} className="w-full h-11 text-base font-semibold shadow-xs">
                                     {migrating ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : null}
                                     {isMigrated ? t('setup.step1.migrated_seeded') : t('setup.step1.run_migration')}
                                 </Button>
