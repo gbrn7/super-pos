@@ -24,8 +24,8 @@ class SetupController extends Controller
 
     public function testDatabase(Request $request): JsonResponse
     {
-        $connection = 'sqlite';
-        $databasePath = config('database.connections.sqlite.database');
+        $connection = config('database.default', 'sqlite');
+        $databasePath = config("database.connections.{$connection}.database");
 
         // Automatically create the SQLite database file and directory if it does not exist
         if (! app()->environment('testing') && $databasePath !== ':memory:') {
@@ -41,12 +41,11 @@ class SetupController extends Controller
         try {
             if (! app()->environment('testing')) {
                 config([
-                    'database.default' => 'sqlite',
-                    'database.connections.sqlite.database' => $databasePath,
+                    "database.connections.{$connection}.database" => $databasePath,
                 ]);
-                DB::purge('sqlite');
-                DB::reconnect('sqlite');
-                DB::connection('sqlite')->getPdo();
+                DB::purge($connection);
+                DB::reconnect($connection);
+                DB::connection($connection)->getPdo();
             }
 
             // Update .env file (skip in testing)
@@ -87,8 +86,8 @@ class SetupController extends Controller
     public function runMigration(): JsonResponse
     {
         try {
-            $connection = 'sqlite';
-            $databasePath = config('database.connections.sqlite.database');
+            $connection = config('database.default', 'sqlite');
+            $databasePath = config("database.connections.{$connection}.database");
 
             if (! app()->environment('testing') && $databasePath !== ':memory:') {
                 $dir = dirname($databasePath);
@@ -100,11 +99,10 @@ class SetupController extends Controller
                 }
 
                 config([
-                    'database.default' => 'sqlite',
-                    'database.connections.sqlite.database' => $databasePath,
+                    "database.connections.{$connection}.database" => $databasePath,
                 ]);
-                DB::purge('sqlite');
-                DB::reconnect('sqlite');
+                DB::purge($connection);
+                DB::reconnect($connection);
             }
 
             $lockPath = storage_path('app/installed.lock');
@@ -154,12 +152,12 @@ class SetupController extends Controller
         ]);
 
         try {
-            $connection = 'sqlite';
-            $databasePath = config('database.connections.sqlite.database');
+            $connection = config('database.default', 'sqlite');
+            $databasePath = config("database.connections.{$connection}.database");
 
             if (! app()->environment('testing')) {
-                config(['database.connections.sqlite.database' => $databasePath]);
-                DB::purge('sqlite');
+                config(["database.connections.{$connection}.database" => $databasePath]);
+                DB::purge($connection);
             }
 
             DB::transaction(function () use ($validated) {
