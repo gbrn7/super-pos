@@ -31,30 +31,16 @@ export default function SetupWizard() {
     const { t, i18n } = useTranslation();
     const { appearance, updateAppearance } = useAppearance();
     const [currentStep, setCurrentStep] = useState<number>(1);
-    const [dbTested, setDbTested] = useState<boolean>(false);
-    const [dbLoading, setDbLoading] = useState<boolean>(false);
     const [dbMessage, setDbMessage] = useState<string | null>(null);
     const [isMigrated, setIsMigrated] = useState<boolean>(false);
     const [migrating, setMigrating] = useState<boolean>(false);
-    const [isDbFormOpen, setIsDbFormOpen] = useState<boolean>(false);
     const [isUploadFormOpen, setIsUploadFormOpen] = useState<boolean>(false);
-    const [showDbPassword, setShowDbPassword] = useState<boolean>(false);
     const [showPassword, setShowPassword] = useState<boolean>(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);
     const [customFile, setCustomFile] = useState<{ name: string; size: string } | null>(null);
     const [uploadingFile, setUploadingFile] = useState<boolean>(false);
     const [uploadError, setUploadError] = useState<string | null>(null);
     const [isCompleted, setIsCompleted] = useState<boolean>(false);
-
-    // Database Credentials State with requested defaults
-    const [dbCredentials, setDbCredentials] = useState({
-        db_connection: 'sqlite',
-        db_host: '127.0.0.1',
-        db_port: '5432',
-        db_database: 'database/database.sqlite',
-        db_username: 'postgres',
-        db_password: 'admin',
-    });
 
     const { data, setData, post, processing, errors } = useForm({
         store_name: '',
@@ -76,28 +62,6 @@ export default function SetupWizard() {
         return match ? decodeURIComponent(match[1]) : '';
     };
 
-    const handleDbCredentialChange = (field: string, value: string) => {
-        setDbCredentials((prev) => {
-            const next = { ...prev, [field]: value };
-            if (field === 'db_connection') {
-                if (value === 'sqlite') {
-                    next.db_database = 'database/database.sqlite';
-                } else {
-                    next.db_database = 'praktis_pos';
-                    if (value === 'mysql') {
-                        next.db_port = '3306';
-                        next.db_username = 'admin';
-                    } else if (value === 'pgsql') {
-                        next.db_port = '5432';
-                        next.db_username = 'postgres';
-                    }
-                }
-            }
-            return next;
-        });
-    };
-
-
     const cycleTheme = () => {
         const nextTheme: Record<Appearance, Appearance> = {
             light: 'dark',
@@ -105,21 +69,6 @@ export default function SetupWizard() {
             system: 'light',
         };
         updateAppearance(nextTheme[appearance] || 'light');
-    };
-
-    const handleTestDb = async () => {
-        setDbLoading(true);
-        setDbMessage(null);
-        try {
-            const response = await axiosInstance.post(SetupController.testDatabase.url(), dbCredentials);
-            setDbTested(response.data.success);
-            setDbMessage(response.data.message);
-        } catch (e: any) {
-            setDbTested(false);
-            setDbMessage(e.response?.data?.message || e.message || 'Failed to connect to database');
-        } finally {
-            setDbLoading(false);
-        }
     };
 
     const handleMigrate = async () => {
@@ -311,13 +260,13 @@ export default function SetupWizard() {
                             <CardDescription className="text-slate-600 dark:text-slate-400">{t('setup.step1.description')}</CardDescription>
                         </CardHeader>
                         <CardContent className="space-y-4 pt-4">
-                            {dbMessage && (
-                                <Alert className={dbTested || isMigrated ? 'bg-emerald-50 dark:bg-emerald-950/50 border-emerald-300 dark:border-emerald-800 text-emerald-800 dark:text-emerald-300' : 'bg-destructive/10 border-destructive/20 text-destructive'}>
-                                    {dbTested || isMigrated ? <CheckCircle2 className="h-4 w-4" /> : <AlertCircle className="h-4 w-4" />}
-                                    <AlertTitle>{dbTested || isMigrated ? 'Success' : 'Error'}</AlertTitle>
-                                    <AlertDescription>{dbMessage}</AlertDescription>
-                                </Alert>
-                            )}
+                             {dbMessage && (
+                                 <Alert className={isMigrated ? 'bg-emerald-50 dark:bg-emerald-950/50 border-emerald-300 dark:border-emerald-800 text-emerald-800 dark:text-emerald-300' : 'bg-destructive/10 border-destructive/20 text-destructive'}>
+                                     {isMigrated ? <CheckCircle2 className="h-4 w-4" /> : <AlertCircle className="h-4 w-4" />}
+                                     <AlertTitle>{isMigrated ? 'Success' : 'Error'}</AlertTitle>
+                                     <AlertDescription>{dbMessage}</AlertDescription>
+                                 </Alert>
+                             )}
 
                             {/* SQLite Status Card */}
                             <div className="flex items-center justify-between p-3.5 bg-slate-100 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/80 rounded-lg text-sm">

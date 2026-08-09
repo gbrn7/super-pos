@@ -139,7 +139,7 @@ class TransactionService implements TransactionServiceInterface
     {
         try {
             return DB::transaction(function () use ($data) {
-                $invoiceNumber = 'INV-' . now()->format('Ymd') . '-' . strtoupper(Str::random(6));
+                $invoiceNumber = 'INV-'.now()->format('Ymd').'-'.strtoupper(Str::random(6));
 
                 $itemsSubtotal = 0;
                 $validatedItems = [];
@@ -234,7 +234,7 @@ class TransactionService implements TransactionServiceInterface
             if ($format === 'excel') {
                 return Excel::download(
                     new TransactionsExport($transactions),
-                    'laporan-transaksi-' . date('Y-m-d-His') . '.xlsx'
+                    'laporan-transaksi-'.date('Y-m-d-His').'.xlsx'
                 );
             }
 
@@ -251,7 +251,7 @@ class TransactionService implements TransactionServiceInterface
                 'storeSetting' => $storeSetting,
             ])->setPaper('a4', 'portrait');
 
-            return $pdf->download('laporan-transaksi-' . date('Y-m-d-His') . '.pdf');
+            return $pdf->download('laporan-transaksi-'.date('Y-m-d-His').'.pdf');
         } catch (\Throwable $th) {
             throw CheckException::Check($th);
         }
