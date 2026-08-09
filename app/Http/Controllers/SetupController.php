@@ -42,6 +42,9 @@ class SetupController extends Controller
             if (! app()->environment('testing')) {
                 config([
                     "database.connections.{$connection}.database" => $databasePath,
+                    "database.connections.{$connection}.busy_timeout" => 60000,
+                    "database.connections.{$connection}.journal_mode" => 'WAL',
+                    "database.connections.{$connection}.synchronous" => 'NORMAL',
                 ]);
                 DB::purge($connection);
                 DB::reconnect($connection);
@@ -100,6 +103,9 @@ class SetupController extends Controller
 
                 config([
                     "database.connections.{$connection}.database" => $databasePath,
+                    "database.connections.{$connection}.busy_timeout" => 60000,
+                    "database.connections.{$connection}.journal_mode" => 'WAL',
+                    "database.connections.{$connection}.synchronous" => 'NORMAL',
                 ]);
                 DB::purge($connection);
                 DB::reconnect($connection);
@@ -156,7 +162,12 @@ class SetupController extends Controller
             $databasePath = config("database.connections.{$connection}.database");
 
             if (! app()->environment('testing')) {
-                config(["database.connections.{$connection}.database" => $databasePath]);
+                config([
+                    "database.connections.{$connection}.database" => $databasePath,
+                    "database.connections.{$connection}.busy_timeout" => 60000,
+                    "database.connections.{$connection}.journal_mode" => 'WAL',
+                    "database.connections.{$connection}.synchronous" => 'NORMAL',
+                ]);
                 DB::purge($connection);
             }
 
