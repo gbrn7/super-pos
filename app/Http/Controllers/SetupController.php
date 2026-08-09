@@ -129,34 +129,35 @@ class SetupController extends Controller
     public function runMigration(): JsonResponse
     {
         try {
-            $connection = config('database.default', 'sqlite');
+            $connection = 'sqlite';
+            $database = config('database.connections.sqlite.database', 'database/database.sqlite');
 
-            if ($connection === 'sqlite') {
-                $database = config('database.connections.sqlite.database');
-
-                if ($database !== ':memory:' && ! str_starts_with($database, '/')) {
-                    if (! is_writable(base_path())) {
-                        $databasePath = storage_path('app/'.basename($database));
-                    } else {
-                        $databasePath = base_path($database);
-                    }
+            if ($database !== ':memory:' && ! str_starts_with($database, '/')) {
+                if (! is_writable(base_path())) {
+                    $databasePath = storage_path('app/'.basename($database));
                 } else {
-                    $databasePath = $database;
+                    $databasePath = base_path($database);
                 }
-
-                if ($databasePath !== ':memory:') {
-                    $dir = dirname($databasePath);
-                    if (! is_dir($dir)) {
-                        @mkdir($dir, 0755, true);
-                    }
-                    if (! file_exists($databasePath)) {
-                        @touch($databasePath);
-                    }
-                }
-
-                config(['database.connections.sqlite.database' => $databasePath]);
-                DB::purge('sqlite');
+            } else {
+                $databasePath = $database;
             }
+
+            if ($databasePath !== ':memory:') {
+                $dir = dirname($databasePath);
+                if (! is_dir($dir)) {
+                    @mkdir($dir, 0755, true);
+                }
+                if (! file_exists($databasePath)) {
+                    @touch($databasePath);
+                }
+            }
+
+            config([
+                'database.default' => 'sqlite',
+                'database.connections.sqlite.database' => $databasePath,
+            ]);
+            DB::purge('sqlite');
+            DB::reconnect('sqlite');
 
             Artisan::call('migrate:fresh', ['--force' => true]);
             Artisan::call('db:seed', ['--force' => true]);
