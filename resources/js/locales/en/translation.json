@@ -179,23 +179,28 @@
             "filter": {
                 "category_placeholder": "Select Category",
                 "category_label": "Category",
+                "all_categories": "All Categories",
                 "product_placeholder": "Select Product",
                 "product_label": "Product",
                 "unit_placeholder": "Select Unit",
                 "unit_label": "Unit",
+                "all_units": "All Units",
                 "status_placeholder": "Select Status",
                 "status_label": "Status",
                 "all_status_label": "All Status",
                 "status_active_label": "Active",
                 "status_inactive_label": "Inactive",
+                "all_statuses": "All Statuses",
                 "stock_type_placeholder": "Select Stock Type",
                 "stock_label": "Stock Type",
                 "limitted_stock_label": "Limited",
                 "unlimited_stock_label": "Unlimited",
+                "all_stock_types": "All Stock Types",
                 "is_available_stock_placholder": "Select Stock Status",
                 "is_available_stock_label": "Stock Status",
                 "available_stock_label": "Available",
                 "unavailable_stock_label": "Unavailable",
+                "all_stock_availability": "All Stock Statuses",
                 "start_date_label": "Start Date",
                 "end_date_label": "End Date"
             },
@@ -220,6 +225,8 @@
             "row_per_page": "Rows per page",
             "selected_row": "%d of %d row(s) selected",
             "pagination_info": "Page %d of %d",
+            "all_cashiers": "All Cashiers",
+            "all_payment_methods": "All Payment Methods",
             "pagination": {
                 "first_page": "First Page",
                 "prev_page": "Previous Page",
@@ -267,6 +274,8 @@
                 "table_title": "Wallet Ledger",
                 "filters": {
                     "keyword": "Keyword",
+                    "keyword_placeholder": "Search Notes / References...",
+                    "active_filters": "Active Filters:",
                     "type_label": "Direction",
                     "type_placeholder": "All Directions",
                     "direction_in": "Inflow",
@@ -338,6 +347,8 @@
                 "table_title": "Wallet Ledger",
                 "filters": {
                     "keyword": "Keyword",
+                    "keyword_placeholder": "Search Notes / References...",
+                    "active_filters": "Active Filters:",
                     "type_label": "Direction",
                     "type_placeholder": "All Directions",
                     "direction_in": "Inflow",
@@ -1579,5 +1590,9 @@
         "light": "Light",
         "dark": "Dark",
         "system": "System"
+    },
+    "common": {
+        "search": "Search",
+        "clear": "Reset"
     }
 }

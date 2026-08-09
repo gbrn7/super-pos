@@ -146,7 +146,7 @@ export function DataTable<TData, TValue>({
                     <div className="relative w-full">
                         <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
                         <Input
-                            placeholder={t('page.profit.filters.keyword_placeholder', 'Cari Catatan / Rujukan...')}
+                            placeholder={t('page.profit_wallet.data_table.filters.keyword_placeholder', 'Cari Catatan / Rujukan...')}
                             value={queryParam.keyword || ''}
                             onChange={(e) => onQueryParamChange('keyword', e.target.value)}
                             disabled={processing}
@@ -274,7 +274,7 @@ export function DataTable<TData, TValue>({
             {/* Active Filter Badges */}
             {isFilterActive && (
                 <div className="col-span-full flex flex-wrap items-center gap-1.5 pt-2 text-xs">
-                    <span className="text-muted-foreground">{t('page.profit.filters.active_filters', 'Filter Aktif:')}</span>
+                    <span className="text-muted-foreground">{t('page.profit_wallet.data_table.filters.active_filters', 'Filter Aktif:')}</span>
                     {queryParam.keyword && (
                         <Badge variant="secondary" className="gap-1 font-normal py-0.5 px-2 bg-muted/50 hover:bg-muted">
                             "{queryParam.keyword}"
