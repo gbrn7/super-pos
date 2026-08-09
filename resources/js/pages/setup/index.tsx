@@ -204,10 +204,11 @@ export default function SetupWizard() {
     const handleSubmitComplete = (e: React.FormEvent) => {
         e.preventDefault();
         post(SetupController.complete.url(), {
-            onFinish: () => {
+            onSuccess: () => {
                 window.location.href = login.url();
             },
             onError: (errors) => {
+                setCurrentStep(3);
                 console.error('Setup completion errors:', errors);
             },
         });
