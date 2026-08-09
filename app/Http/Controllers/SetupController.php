@@ -159,6 +159,11 @@ class SetupController extends Controller
             DB::purge('sqlite');
             DB::reconnect('sqlite');
 
+            $lockPath = storage_path('app/installed.lock');
+            if (file_exists($lockPath)) {
+                @unlink($lockPath);
+            }
+
             Artisan::call('migrate:fresh', ['--force' => true]);
             Artisan::call('db:seed', ['--force' => true]);
 
@@ -225,17 +230,13 @@ class SetupController extends Controller
                     }
                 }
 
-                // Write APP_INSTALLED=true to .env
-                $envPath = base_path('.env');
-                if (file_exists($envPath)) {
-                    $envContent = file_get_contents($envPath);
-                    if (str_contains($envContent, 'APP_INSTALLED=')) {
-                        $envContent = preg_replace('/APP_INSTALLED=.*/', 'APP_INSTALLED=true', $envContent);
-                    } else {
-                        $envContent .= "\nAPP_INSTALLED=true\n";
-                    }
-                    file_put_contents($envPath, $envContent);
+                // Create installed.lock file in storage directory (safe & user-writable, avoids server restart)
+                $lockPath = storage_path('app/installed.lock');
+                $lockDir = dirname($lockPath);
+                if (! is_dir($lockDir)) {
+                    @mkdir($lockDir, 0755, true);
                 }
+                @file_put_contents($lockPath, now()->toDateTimeString());
 
                 config(['app.installed' => true]);
             });
