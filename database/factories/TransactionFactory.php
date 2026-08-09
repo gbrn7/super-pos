@@ -22,7 +22,7 @@ class TransactionFactory extends Factory
         return [
             'user_id' => User::factory(),
             'payment_method_id' => PaymentMethod::factory(),
-            'invoice_number' => 'INV-'.fake()->unique()->numerify('##############'),
+            'invoice_number' => 'INV-'.$this->faker->unique()->numerify('##############'),
             'total_amount' => 100000,
             'payment_amount' => 100000,
             'change_amount' => 0,

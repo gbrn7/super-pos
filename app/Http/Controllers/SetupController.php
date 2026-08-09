@@ -54,12 +54,10 @@ class SetupController extends Controller
 
             // Resolve SQLite database path to a user-writable location (e.g. storage_path) if base_path is read-only
             if ($database !== ':memory:' && ! str_starts_with($database, '/')) {
-                $baseCandidate = base_path($database);
-                $targetDir = dirname($baseCandidate);
-                if (! is_dir($targetDir) && ! @mkdir($targetDir, 0755, true)) {
+                if (! is_writable(base_path())) {
                     $databasePath = storage_path('app/'.basename($database));
                 } else {
-                    $databasePath = $baseCandidate;
+                    $databasePath = base_path($database);
                 }
             } else {
                 $databasePath = $database;
@@ -137,12 +135,10 @@ class SetupController extends Controller
                 $database = config('database.connections.sqlite.database');
 
                 if ($database !== ':memory:' && ! str_starts_with($database, '/')) {
-                    $baseCandidate = base_path($database);
-                    $targetDir = dirname($baseCandidate);
-                    if (! is_dir($targetDir) && ! @mkdir($targetDir, 0755, true)) {
+                    if (! is_writable(base_path())) {
                         $databasePath = storage_path('app/'.basename($database));
                     } else {
-                        $databasePath = $baseCandidate;
+                        $databasePath = base_path($database);
                     }
                 } else {
                     $databasePath = $database;

@@ -18,8 +18,8 @@ class PaymentMethodFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->unique()->words(2, true).' '.fake()->unique()->numerify('#####'),
-            'desc' => fake()->sentence(),
+            'name' => $this->faker->unique()->words(2, true).' '.$this->faker->unique()->numerify('#####'),
+            'desc' => $this->faker->sentence(),
             'image' => null,
             'created_at' => time(),
             'updated_at' => time(),

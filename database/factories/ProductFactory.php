@@ -20,23 +20,23 @@ class ProductFactory extends Factory
      */
     public function definition(): array
     {
-        $productName = Str::ucfirst(fake()->word());
-        $price = fake()->numberBetween(1000, 100000);
+        $productName = Str::ucfirst($this->faker->word());
+        $price = $this->faker->numberBetween(1000, 100000);
 
         return [
+            'code' => 'PRD-'.Str::upper(Str::random(6)),
+            'master_code' => null,
             'category_id' => Category::factory(),
             'unit_id' => Unit::factory(),
+            'barcode' => $this->faker->ean13(),
+            'stock' => $this->faker->numberBetween(0, 100),
+            'stock_alert' => 10,
+            'cost_price' => $price,
+            'selling_price' => $price + 5000,
             'name' => $productName,
-            'barcode' => fake()->ean13(),
-            'stock' => fake()->numberBetween(0, 100),
-            'sku' => Str::of($productName)
-                ->headline()
-                ->replaceMatches('/[^A-Z]/', '').'-'.strtoupper(Str::random(8)),
-            'price' => $price,
-            'cost_price' => (80 / 100) * $price,
-            'is_active' => fake()->boolean(),
-            'is_unlimited' => fake()->boolean(),
-            'desc' => fake()->sentence(),
+            'is_active' => $this->faker->boolean(),
+            'is_unlimited' => $this->faker->boolean(),
+            'desc' => $this->faker->sentence(),
             'created_at' => now(),
             'updated_at' => now(),
         ];

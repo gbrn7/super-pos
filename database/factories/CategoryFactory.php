@@ -19,8 +19,8 @@ class CategoryFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->unique()->words(2, true).' '.fake()->unique()->numerify('#####'),
-            'desc' => fake()->randomAscii(),
+            'name' => $this->faker->unique()->words(2, true).' '.$this->faker->unique()->numerify('#####'),
+            'desc' => $this->faker->randomAscii(),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ];

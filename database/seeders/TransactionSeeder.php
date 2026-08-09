@@ -87,7 +87,7 @@ class TransactionSeeder extends Seeder
             }
 
             $changeAmount = $paymentAmount - $totalAmount;
-            $invoiceNumber = 'INV-'.$createdAt->format('Ymd').'-'.str_pad((string) $i, 4, '0', STR_PAD_LEFT).'-'.fake()->numerify('######');
+            $invoiceNumber = 'INV-'.$createdAt->format('Ymd').'-'.str_pad((string) $i, 4, '0', STR_PAD_LEFT).'-'.str_pad((string) rand(0, 999999), 6, '0', STR_PAD_LEFT);
 
             $transaction = Transaction::create([
                 'user_id' => $user->id,

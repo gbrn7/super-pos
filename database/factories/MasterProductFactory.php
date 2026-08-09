@@ -17,14 +17,14 @@ class MasterProductFactory extends Factory
      */
     public function definition(): array
     {
-        $price = fake()->numberBetween(1000, 100000);
+        $price = $this->faker->numberBetween(1000, 100000);
 
         return [
-            'category_name' => fake()->sentence(2),
+            'category_name' => $this->faker->sentence(2),
             'unit_name' => 'Pcs',
-            'name' => fake()->word(),
-            'barcode' => fake()->ean13(),
-            'desc' => fake()->sentence(),
+            'name' => $this->faker->word(),
+            'barcode' => $this->faker->ean13(),
+            'desc' => $this->faker->sentence(),
             'price' => $price,
             'cost_price' => (80 / 100) * $price,
             'created_at' => now(),
