@@ -176,10 +176,10 @@ export default function SetupWizard() {
             if (res.ok && result.success) {
                 setCustomFile({ name: result.filename, size: result.size });
             } else {
-                setUploadError(result.message || 'Gagal mengunggah file.');
+                setUploadError(result.message || t('setup.step1.custom_upload_error'));
             }
         } catch (err: any) {
-            setUploadError(err.message || 'Terjadi kesalahan saat unggah file.');
+            setUploadError(err.message || t('setup.step1.custom_upload_error'));
         } finally {
             setUploadingFile(false);
         }

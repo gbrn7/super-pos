@@ -266,7 +266,7 @@ class SetupController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => __('File katalog kustom berhasil diunggah.'),
+            'message' => __('setup.step1.custom_upload_success'),
             'filename' => $originalName,
             'size' => $fileSize,
         ]);
@@ -281,7 +281,7 @@ class SetupController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => __('Kembali menggunakan file katalog default.'),
+            'message' => __('setup.step1.custom_reset_success'),
         ]);
     }
 }
