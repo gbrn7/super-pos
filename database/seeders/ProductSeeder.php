@@ -22,7 +22,7 @@ class ProductSeeder extends Seeder
                 'stock' => 0,
                 'sku' => Str::of('Gulaku 1KG')
                     ->headline()
-                    ->replaceMatches('/[^A-Z]/', '') . '-' . strtoupper(Str::random(8)),
+                    ->replaceMatches('/[^A-Z]/', '').'-'.strtoupper(Str::random(8)),
                 'price' => 17000,
                 'cost_price' => 12000,
                 'is_active' => false,
@@ -40,7 +40,7 @@ class ProductSeeder extends Seeder
                 'stock' => 12,
                 'sku' => Str::of('Minyak Kita')
                     ->headline()
-                    ->replaceMatches('/[^A-Z]/', '') . '-' . strtoupper(Str::random(8)),
+                    ->replaceMatches('/[^A-Z]/', '').'-'.strtoupper(Str::random(8)),
                 'price' => 14000,
                 'image' => 'product/test2.jpg',
                 'cost_price' => 11000,
@@ -59,7 +59,7 @@ class ProductSeeder extends Seeder
                 'image' => 'product/test4.jpg',
                 'sku' => Str::of('Beras Rojo Lele')
                     ->headline()
-                    ->replaceMatches('/[^A-Z]/', '') . '-' . strtoupper(Str::random(8)),
+                    ->replaceMatches('/[^A-Z]/', '').'-'.strtoupper(Str::random(8)),
                 'price' => 10000,
                 'cost_price' => 7000,
                 'is_active' => true,
@@ -76,7 +76,7 @@ class ProductSeeder extends Seeder
                 'stock' => 6,
                 'sku' => Str::of('Teh Pucuk Harum 1 Liter')
                     ->headline()
-                    ->replaceMatches('/[^A-Z]/', '') . '-' . strtoupper(Str::random(8)),
+                    ->replaceMatches('/[^A-Z]/', '').'-'.strtoupper(Str::random(8)),
                 'price' => 9000,
                 'image' => 'product/test4.jpg',
                 'cost_price' => 7000,

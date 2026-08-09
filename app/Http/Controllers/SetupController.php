@@ -25,20 +25,10 @@ class SetupController extends Controller
     public function testDatabase(Request $request): JsonResponse
     {
         $connection = 'sqlite';
-        $database = 'database/database.sqlite';
-
-        if (app()->environment('testing')) {
-            $databasePath = config('database.connections.sqlite.database');
-        } else {
-            if (! is_writable(base_path())) {
-                $databasePath = storage_path('app/database.sqlite');
-            } else {
-                $databasePath = base_path($database);
-            }
-        }
+        $databasePath = config('database.connections.sqlite.database');
 
         // Automatically create the SQLite database file and directory if it does not exist
-        if (! app()->environment('testing')) {
+        if (! app()->environment('testing') && $databasePath !== ':memory:') {
             $dir = dirname($databasePath);
             if (! is_dir($dir)) {
                 @mkdir($dir, 0755, true);
@@ -66,7 +56,7 @@ class SetupController extends Controller
                     $envContent = file_get_contents($envPath);
                     $replacements = [
                         'DB_CONNECTION' => 'sqlite',
-                        'DB_DATABASE' => $database,
+                        'DB_DATABASE' => 'database/database.sqlite',
                     ];
 
                     foreach ($replacements as $key => $val) {
@@ -98,19 +88,9 @@ class SetupController extends Controller
     {
         try {
             $connection = 'sqlite';
-            $database = 'database/database.sqlite';
+            $databasePath = config('database.connections.sqlite.database');
 
-            if (app()->environment('testing')) {
-                $databasePath = config('database.connections.sqlite.database');
-            } else {
-                if (! is_writable(base_path())) {
-                    $databasePath = storage_path('app/database.sqlite');
-                } else {
-                    $databasePath = base_path($database);
-                }
-            }
-
-            if (! app()->environment('testing')) {
+            if (! app()->environment('testing') && $databasePath !== ':memory:') {
                 $dir = dirname($databasePath);
                 if (! is_dir($dir)) {
                     @mkdir($dir, 0755, true);
@@ -175,17 +155,8 @@ class SetupController extends Controller
 
         try {
             $connection = 'sqlite';
-            $database = 'database/database.sqlite';
+            $databasePath = config('database.connections.sqlite.database');
 
-            if (app()->environment('testing')) {
-                $databasePath = config('database.connections.sqlite.database');
-            } else {
-                if (! is_writable(base_path())) {
-                    $databasePath = storage_path('app/database.sqlite');
-                } else {
-                    $databasePath = base_path($database);
-                }
-            }
             if (! app()->environment('testing')) {
                 config(['database.connections.sqlite.database' => $databasePath]);
                 DB::purge('sqlite');
