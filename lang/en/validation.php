@@ -34,6 +34,7 @@ return [
 
     'attributes' => [
         'name' => 'Name',
+        'email' => 'Email Address',
         'desc' => 'Description',
         'age' => 'Age',
         'permissions' => 'Permissions',

@@ -34,6 +34,7 @@ return [
 
     'attributes' => [
         'name' => 'Nama',
+        'email' => 'Alamat Email',
         'desc' => 'Deskripsi',
         'age' => 'Umur',
         'permissions' => 'Hak akses',
