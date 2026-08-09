@@ -42,7 +42,7 @@ Route::get('/', function () {
     return redirect()->route('dashboard');
 })->name('home');
 
-Route::middleware('throttle:5,1')->post('/api/recovery/verify-code', [RecoveryController::class, 'verifyCode']);
+Route::post('/api/recovery/verify-code', [RecoveryController::class, 'verifyCode']);
 Route::post('/api/recovery/create-superadmin', [RecoveryController::class, 'createSuperadmin']);
 
 Route::middleware(['auth', 'verified'])->group(function () {
