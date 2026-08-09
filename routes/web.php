@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\ApiCapitalWalletController;
 use App\Http\Controllers\Api\ApiCategoryController;
 use App\Http\Controllers\Api\ApiDashboardController;
 use App\Http\Controllers\Api\ApiMasterProductController;

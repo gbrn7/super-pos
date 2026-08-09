@@ -10,7 +10,7 @@ class EnsureAppIsNotInstalled
 {
     public function handle(Request $request, Closure $next): Response
     {
-        $isInstalled = (bool) config('app.installed', false);
+        $isInstalled = (bool) config('app.installed', false) || file_exists(storage_path('app/installed.lock'));
         $isSetupRoute = $request->routeIs('setup.*');
 
         if (! $isInstalled && ! $isSetupRoute) {

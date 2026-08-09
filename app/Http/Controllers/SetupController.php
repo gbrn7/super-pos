@@ -224,6 +224,14 @@ class SetupController extends Controller
                     }
                 }
 
+                // Create installed.lock file in storage directory (safe & user-writable, avoids server restart)
+                $lockPath = storage_path('app/installed.lock');
+                $lockDir = dirname($lockPath);
+                if (! is_dir($lockDir)) {
+                    @mkdir($lockDir, 0755, true);
+                }
+                @file_put_contents($lockPath, now()->toDateTimeString());
+
                 // Write APP_INSTALLED=true to .env
                 $envPath = base_path('.env');
                 if (file_exists($envPath)) {

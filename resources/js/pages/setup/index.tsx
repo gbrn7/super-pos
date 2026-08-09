@@ -157,10 +157,10 @@ export default function SetupWizard() {
             if (response.data.success) {
                 setCustomFile({ name: response.data.filename, size: response.data.size });
             } else {
-                setUploadError(response.data.message || t('setup.step1.custom_upload_error'));
+                setUploadError(response.data.message || t('setup.step1.custom_upload_error', 'Gagal mengunggah berkas kustom master produk'));
             }
         } catch (err: any) {
-            setUploadError(err.response?.data?.message || err.message || t('setup.step1.custom_upload_error'));
+            setUploadError(err.response?.data?.message || err.message || t('setup.step1.custom_upload_error', 'Gagal mengunggah berkas kustom master produk'));
         } finally {
             setUploadingFile(false);
         }
@@ -168,7 +168,7 @@ export default function SetupWizard() {
 
     const handleCustomFileReset = async () => {
         try {
-            await axiosInstance.post(SetupController.resetMasterProduct.url());
+            await axiosInstance.delete(SetupController.resetMasterProduct.url());
             setCustomFile(null);
             setUploadError(null);
         } catch (err) {
@@ -342,7 +342,7 @@ export default function SetupWizard() {
                                                     <SelectValue placeholder="Pilih Driver" />
                                                 </SelectTrigger>
                                                 <SelectContent>
-                                                    <SelectItem value="sqlite">SQLite (Rekomendasi Desktop)</SelectItem>
+                                                    <SelectItem value="sqlite">SQLite</SelectItem>
                                                     <SelectItem value="pgsql">PostgreSQL</SelectItem>
                                                     <SelectItem value="mysql">MySQL</SelectItem>
                                                 </SelectContent>
