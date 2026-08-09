@@ -179,23 +179,28 @@
             "filter": {
                 "category_placeholder": "Pilih Kategori",
                 "category_label": "Kategori",
+                "all_categories": "Semua Kategori",
                 "product_placeholder": "Pilih Produk",
                 "product_label": "Produk",
                 "unit_placeholder": "Pilih Satuan",
                 "unit_label": "Satuan",
+                "all_units": "Semua Satuan",
                 "status_placeholder": "Pilih Status",
                 "status_label": "Status",
                 "all_status_label": "Semua Status",
                 "status_active_label": "Aktif",
                 "status_inactive_label": "Tidak Aktif",
+                "all_statuses": "Semua Status",
                 "stock_type_placeholder": "Pilih Tipe Stok",
                 "stock_label": "Tipe Stok",
                 "limitted_stock_label": "Terbatas",
                 "unlimited_stock_label": "Tidak Terbatas",
+                "all_stock_types": "Semua Tipe Stok",
                 "is_available_stock_placholder": "Pilih Status Stok",
                 "is_available_stock_label": "Status Stok",
                 "available_stock_label": "Tersedia",
                 "unavailable_stock_label": "Tidak Tersedia",
+                "all_stock_availability": "Semua Status Stok",
                 "start_date_label": "Tanggal Mulai",
                 "end_date_label": "Tanggal Akhir"
             },
@@ -220,6 +225,8 @@
             "row_per_page": "Baris per halaman",
             "selected_row": "%d dari %d baris terpilih",
             "pagination_info": "Halaman %d dari %d",
+            "all_cashiers": "Semua Kasir",
+            "all_payment_methods": "Semua Metode Pembayaran",
             "pagination": {
                 "first_page": "Halaman Pertama",
                 "prev_page": "Halaman Sebelumnya",
@@ -267,6 +274,8 @@
                 "table_title": "Mutasi Dompet",
                 "filters": {
                     "keyword": "Kata Kunci",
+                    "keyword_placeholder": "Cari Catatan / Rujukan...",
+                    "active_filters": "Filter Aktif:",
                     "type_label": "Arah Aliran",
                     "type_placeholder": "Semua Arah",
                     "direction_in": "Uang Masuk",
@@ -338,6 +347,8 @@
                 "table_title": "Mutasi Dompet",
                 "filters": {
                     "keyword": "Kata Kunci",
+                    "keyword_placeholder": "Cari Catatan / Rujukan...",
+                    "active_filters": "Filter Aktif:",
                     "type_label": "Arah Aliran",
                     "type_placeholder": "Semua Arah",
                     "direction_in": "Uang Masuk",
@@ -1578,5 +1589,9 @@
         "light": "Terang",
         "dark": "Gelap",
         "system": "Sistem"
+    },
+    "common": {
+        "search": "Cari",
+        "clear": "Reset"
     }
 }
