@@ -132,8 +132,21 @@ class SetupController extends Controller
                 @unlink($lockPath);
             }
 
-            Artisan::call('migrate:fresh', ['--force' => true]);
-            Artisan::call('db:seed', ['--force' => true]);
+            $migrateExit = Artisan::call('migrate:fresh', ['--force' => true]);
+            if ($migrateExit !== 0) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Migration failed: '.Artisan::output(),
+                ], 500);
+            }
+
+            $seedExit = Artisan::call('db:seed', ['--force' => true]);
+            if ($seedExit !== 0) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Seeding failed: '.Artisan::output(),
+                ], 500);
+            }
 
             return response()->json([
                 'success' => true,
