@@ -31,21 +31,54 @@ class MasterProductSeeder extends Seeder
             return;
         }
 
+        $driver = DB::getDriverName();
+        if ($driver === 'mysql' || $driver === 'mariadb') {
+            DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        } elseif ($driver === 'sqlite') {
+            DB::statement('PRAGMA foreign_keys = OFF;');
+        }
+
+        MasterProduct::truncate();
+
+        if ($driver === 'mysql' || $driver === 'mariadb') {
+            DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+        } elseif ($driver === 'sqlite') {
+            DB::statement('PRAGMA foreign_keys = ON;');
+        }
+
         $data = Excel::toArray(new MasterProductImport, $publicFilePath);
         $chunks = array_chunk($data[0], 1000);
 
         $now = now();
+        $seenBarcodes = [];
 
         DB::beginTransaction();
         foreach ($chunks as $chunk) {
             $newData = Collection::make();
 
             foreach ($chunk as $row) {
+                $rawBarcode = $row['barcode_opsional'] ?? null;
+                $barcode = null;
+
+                if (! empty($rawBarcode) || $rawBarcode === 0 || $rawBarcode === '0') {
+                    $trimmed = trim((string) $rawBarcode);
+                    if ($trimmed !== '') {
+                        $barcode = $trimmed;
+                    }
+                }
+
+                if ($barcode !== null) {
+                    if (isset($seenBarcodes[$barcode])) {
+                        continue;
+                    }
+                    $seenBarcodes[$barcode] = true;
+                }
+
                 $newMasterProduct = [
-                    'name' => Str::upper($row['nama']),
+                    'name' => Str::upper($row['nama'] ?? ''),
                     'category_name' => $row['kategori'] ?? Constants::EMPTY_STRING_VALUE,
                     'unit_name' => $row['satuan'] ?? Constants::EMPTY_STRING_VALUE,
-                    'barcode' => ! empty($row['barcode_opsional']) ? (string) $row['barcode_opsional'] : null,
+                    'barcode' => $barcode,
                     'cost_price' => $row['harga_modal'] ?? Constants::EMPTY_NUMBER_VALUE,
                     'price' => $row['harga_jual'] ?? Constants::EMPTY_NUMBER_VALUE,
                     'desc' => $row['deskripsi_opsional'] ?? Constants::EMPTY_STRING_VALUE,
@@ -55,7 +88,10 @@ class MasterProductSeeder extends Seeder
 
                 $newData->push($newMasterProduct);
             }
-            MasterProduct::insert($newData->toArray());
+
+            if ($newData->isNotEmpty()) {
+                MasterProduct::insertOrIgnore($newData->toArray());
+            }
         }
         DB::commit();
 

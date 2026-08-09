@@ -24,6 +24,8 @@ import { CheckCircle2, AlertCircle, Loader2, Database, Store, UserCheck, Rocket,
 import SetupController from '@/actions/App/Http/Controllers/SetupController';
 import { login } from '@/routes';
 import { useAppearance, Appearance } from '@/hooks/use-appearance';
+import axiosInstance from '@/lib/axios';
+import { localStorageKey } from '@/constants/Index';
 
 export default function SetupWizard() {
     const { t, i18n } = useTranslation();
@@ -109,21 +111,12 @@ export default function SetupWizard() {
         setDbLoading(true);
         setDbMessage(null);
         try {
-            const res = await fetch(SetupController.testDatabase.url(), {
-                method: SetupController.testDatabase.definition.methods[0].toUpperCase(),
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json',
-                    'X-CSRF-TOKEN': getCsrfToken(),
-                },
-                body: JSON.stringify(dbCredentials),
-            });
-            const result = await res.json();
-            setDbTested(result.success);
-            setDbMessage(result.message);
+            const response = await axiosInstance.post(SetupController.testDatabase.url(), dbCredentials);
+            setDbTested(response.data.success);
+            setDbMessage(response.data.message);
         } catch (e: any) {
             setDbTested(false);
-            setDbMessage(e.message || 'Failed to connect to database');
+            setDbMessage(e.response?.data?.message || e.message || 'Failed to connect to database');
         } finally {
             setDbLoading(false);
         }
@@ -133,20 +126,12 @@ export default function SetupWizard() {
         setMigrating(true);
         setDbMessage(null);
         try {
-            const res = await fetch(SetupController.runMigration.url(), {
-                method: SetupController.runMigration.definition.methods[0].toUpperCase(),
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json',
-                    'X-CSRF-TOKEN': getCsrfToken(),
-                },
-            });
-            const result = await res.json();
-            setIsMigrated(result.success);
-            setDbMessage(result.message);
+            const response = await axiosInstance.post(SetupController.runMigration.url());
+            setIsMigrated(response.data.success);
+            setDbMessage(response.data.message);
         } catch (e: any) {
             setIsMigrated(false);
-            setDbMessage(e.message || 'Migration failed');
+            setDbMessage(e.response?.data?.message || e.message || 'Migration failed');
         } finally {
             setMigrating(false);
         }
@@ -163,23 +148,19 @@ export default function SetupWizard() {
         formData.append('file', file);
 
         try {
-            const res = await fetch(SetupController.uploadMasterProduct.url(), {
-                method: SetupController.uploadMasterProduct.definition.methods[0].toUpperCase(),
+            const response = await axiosInstance.post(SetupController.uploadMasterProduct.url(), formData, {
                 headers: {
-                    'Accept': 'application/json',
-                    'X-CSRF-TOKEN': getCsrfToken(),
+                    'Content-Type': 'multipart/form-data',
                 },
-                body: formData,
             });
 
-            const result = await res.json();
-            if (res.ok && result.success) {
-                setCustomFile({ name: result.filename, size: result.size });
+            if (response.data.success) {
+                setCustomFile({ name: response.data.filename, size: response.data.size });
             } else {
-                setUploadError(result.message || 'Gagal mengunggah file.');
+                setUploadError(response.data.message || t('setup.step1.custom_upload_error'));
             }
         } catch (err: any) {
-            setUploadError(err.message || 'Terjadi kesalahan saat unggah file.');
+            setUploadError(err.response?.data?.message || err.message || t('setup.step1.custom_upload_error'));
         } finally {
             setUploadingFile(false);
         }
@@ -187,13 +168,7 @@ export default function SetupWizard() {
 
     const handleCustomFileReset = async () => {
         try {
-            await fetch(SetupController.resetMasterProduct.url(), {
-                method: SetupController.resetMasterProduct.definition.methods[0].toUpperCase(),
-                headers: {
-                    'Accept': 'application/json',
-                    'X-CSRF-TOKEN': getCsrfToken(),
-                },
-            });
+            await axiosInstance.post(SetupController.resetMasterProduct.url());
             setCustomFile(null);
             setUploadError(null);
         } catch (err) {
@@ -204,13 +179,24 @@ export default function SetupWizard() {
     const handleSubmitComplete = (e: React.FormEvent) => {
         e.preventDefault();
         post(SetupController.complete.url(), {
-            onFinish: () => {
+            headers: {
+                'X-Language': localStorage.getItem('lang') || i18n.language || 'id',
+            },
+            onSuccess: () => {
                 window.location.href = login.url();
             },
-            onError: (errors) => {
-                console.error('Setup completion errors:', errors);
+            onError: (errs) => {
+                setCurrentStep(3);
+                console.error('Setup completion errors:', errs);
             },
         });
+    };
+
+    const handleLanguageChange = (lang: string) => {
+        i18n.changeLanguage(lang);
+        if (typeof localStorage !== 'undefined') {
+            localStorage.setItem(localStorageKey.LanguageKey, lang);
+        }
     };
 
     return (
@@ -269,11 +255,11 @@ export default function SetupWizard() {
                         </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end" className="w-44 bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800">
-                        <DropdownMenuItem onClick={() => i18n.changeLanguage('id')} className="flex items-center justify-between cursor-pointer">
+                        <DropdownMenuItem onClick={() => handleLanguageChange('id')} className="flex items-center justify-between cursor-pointer">
                             <span>Bahasa Indonesia</span>
                             {i18n.language === 'id' && <Check className="w-4 h-4 text-primary" />}
                         </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => i18n.changeLanguage('en')} className="flex items-center justify-between cursor-pointer">
+                        <DropdownMenuItem onClick={() => handleLanguageChange('en')} className="flex items-center justify-between cursor-pointer">
                             <span>English</span>
                             {i18n.language === 'en' && <Check className="w-4 h-4 text-primary" />}
                         </DropdownMenuItem>

@@ -18,6 +18,7 @@ import { useAppearance } from '@/hooks/use-appearance';
 import { store } from '@/routes/login';
 import i18next, { t } from 'i18next';
 import { Check, ChevronDown, Globe, Monitor, Moon, Sun } from 'lucide-react';
+import { localStorageKey } from '@/constants/Index';
 
 type Props = {
     status?: string;
@@ -110,6 +111,13 @@ export default function Login({
         }
     };
 
+    const handleLanguageChange = (lang: string) => {
+        i18n.changeLanguage(lang);
+        if (typeof localStorage !== 'undefined') {
+            localStorage.setItem(localStorageKey.LanguageKey, lang);
+        }
+    };
+
     return (
         <>
             <Head title={
@@ -172,11 +180,11 @@ export default function Login({
                         </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end" className="w-44 bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800">
-                        <DropdownMenuItem onClick={() => i18n.changeLanguage('id')} className="flex items-center justify-between cursor-pointer">
+                        <DropdownMenuItem onClick={() => handleLanguageChange('id')} className="flex items-center justify-between cursor-pointer">
                             <span>Bahasa Indonesia</span>
                             {i18n.language === 'id' && <Check className="w-4 h-4 text-primary" />}
                         </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => i18n.changeLanguage('en')} className="flex items-center justify-between cursor-pointer">
+                        <DropdownMenuItem onClick={() => handleLanguageChange('en')} className="flex items-center justify-between cursor-pointer">
                             <span>English</span>
                             {i18n.language === 'en' && <Check className="w-4 h-4 text-primary" />}
                         </DropdownMenuItem>
