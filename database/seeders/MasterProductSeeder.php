@@ -34,16 +34,19 @@ class MasterProductSeeder extends Seeder
         $driver = DB::getDriverName();
         if ($driver === 'mysql' || $driver === 'mariadb') {
             DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-        } elseif ($driver === 'sqlite') {
-            DB::statement('PRAGMA foreign_keys = OFF;');
-        }
-
-        MasterProduct::truncate();
-
-        if ($driver === 'mysql' || $driver === 'mariadb') {
+            MasterProduct::truncate();
             DB::statement('SET FOREIGN_KEY_CHECKS=1;');
         } elseif ($driver === 'sqlite') {
+            DB::statement('PRAGMA foreign_keys = OFF;');
+            MasterProduct::query()->delete();
+            try {
+                DB::statement("DELETE FROM sqlite_sequence WHERE name = 'master_products'");
+            } catch (\Exception $e) {
+                // Ignore if sqlite_sequence table does not exist yet
+            }
             DB::statement('PRAGMA foreign_keys = ON;');
+        } else {
+            MasterProduct::truncate();
         }
 
         $data = Excel::toArray(new MasterProductImport, $publicFilePath);
