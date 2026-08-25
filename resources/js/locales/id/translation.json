@@ -239,6 +239,26 @@
         }
     },
     "page": {
+        "data_management": {
+            "title": "Manajemen Data",
+            "subtitle": "Bersihkan data lama untuk mengoptimalkan kinerja aplikasi.",
+            "retention_period_label": "Pertahankan Data Sejak",
+            "modules_label": "Pilih Kategori Data yang Akan Dihapus",
+            "module_transactions": "Transaksi Penjualan",
+            "module_returns": "Retur Barang",
+            "module_profit_wallet": "Riwayat Dompet Profit",
+            "module_capital_wallet": "Riwayat Dompet Modal",
+            "purge_button": "Bersihkan Data Usang",
+            "confirm_title": "Konfirmasi Penghapusan Permanen",
+            "confirm_desc": "Tindakan ini tidak dapat dibatalkan. Seluruh data terpilih yang lebih lama dari jangka waktu yang ditentukan akan dihapus secara permanen. Masukkan kata sandi Anda untuk melanjutkan.",
+            "confirm_submit": "Ya, Hapus Permanen",
+            "period_options": {
+                "1_month": "1 Bulan Terakhir",
+                "3_months": "3 Bulan Terakhir",
+                "6_months": "6 Bulan Terakhir",
+                "12_months": "1 Tahun Terakhir"
+            }
+        },
         "profit_wallet": {
             "page_name": "Dompet Profit",
             "cards": {

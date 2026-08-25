@@ -239,6 +239,26 @@
         }
     },
     "page": {
+        "data_management": {
+            "title": "Data Management",
+            "subtitle": "Purge legacy data to optimize application performance.",
+            "retention_period_label": "Keep Data Since",
+            "modules_label": "Select Data Categories to Delete",
+            "module_transactions": "Sales Transactions",
+            "module_returns": "Product Returns",
+            "module_profit_wallet": "Profit Wallet History",
+            "module_capital_wallet": "Capital Wallet History",
+            "purge_button": "Purge Legacy Data",
+            "confirm_title": "Confirm Permanent Deletion",
+            "confirm_desc": "This action cannot be undone. All selected data older than the specified period will be permanently deleted. Enter your password to continue.",
+            "confirm_submit": "Yes, Delete Permanently",
+            "period_options": {
+                "1_month": "Past 1 Month",
+                "3_months": "Past 3 Months",
+                "6_months": "Past 6 Months",
+                "12_months": "Past 12 Months"
+            }
+        },
         "profit_wallet": {
             "page_name": "Profit Wallet",
             "cards": {

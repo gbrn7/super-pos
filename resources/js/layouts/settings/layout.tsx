@@ -10,6 +10,7 @@ import { edit as editAppearance } from '@/routes/appearance';
 import { edit } from '@/routes/profile';
 import { edit as editSecurity } from '@/routes/security';
 import { edit as editStore } from '@/routes/store';
+import { edit as editDataManagement } from '@/routes/data-management';
 import type { NavItem } from '@/types';
 import { useTranslation } from 'react-i18next';
 
@@ -41,6 +42,11 @@ export default function SettingsLayout({ children }: PropsWithChildren) {
         {
             title: t('page.settings.store.label', 'Informasi Toko'),
             href: editStore(),
+            icon: null,
+        },
+        {
+            title: t('page.data_management.title', 'Manajemen Data'),
+            href: editDataManagement(),
             icon: null,
         },
     ];
