@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Settings;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Settings\PurgeDataRequest;
+use App\Support\Enums\RoleEnums;
 use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
@@ -14,6 +15,10 @@ class DataManagementController extends Controller
 {
     public function edit(): Response
     {
+        if (! auth()->user()->hasRole(RoleEnums::SUPER_ADMIN->value)) {
+            abort(403);
+        }
+
         return Inertia::render('settings/data-management');
     }
 
@@ -37,7 +42,7 @@ class DataManagementController extends Controller
                     ->where('created_at', '<', $cutoffDate)
                     ->pluck('id');
 
-                DB::table('transaction_details')
+                DB::table('transaction_detail')
                     ->whereIn('transaction_id', $transactionIds)
                     ->delete();
 
@@ -47,15 +52,15 @@ class DataManagementController extends Controller
             }
 
             if (in_array('returns', $modules)) {
-                $returnIds = DB::table('product_returns')
+                $returnIds = DB::table('returns')
                     ->where('created_at', '<', $cutoffDate)
                     ->pluck('id');
 
                 DB::table('return_details')
-                    ->whereIn('product_return_id', $returnIds)
+                    ->whereIn('return_id', $returnIds)
                     ->delete();
 
-                DB::table('product_returns')
+                DB::table('returns')
                     ->whereIn('id', $returnIds)
                     ->delete();
             }
@@ -74,7 +79,9 @@ class DataManagementController extends Controller
         });
 
         // Run SQLite VACUUM to free space
-        DB::statement('VACUUM');
+        if (DB::connection()->getDriverName() === 'sqlite') {
+            DB::statement('VACUUM');
+        }
 
         Inertia::flash('toast', [
             'type' => 'success',
