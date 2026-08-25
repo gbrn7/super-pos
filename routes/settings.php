@@ -25,4 +25,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('settings/store', [StoreSettingController::class, 'edit'])->name('store.edit');
     Route::patch('settings/store', [StoreSettingController::class, 'update'])->name('store.update');
+
+    Route::get('settings/data-management', [\App\Http\Controllers\Settings\DataManagementController::class, 'edit'])->name('data-management.edit');
+    Route::post('settings/data-management/purge', [\App\Http\Controllers\Settings\DataManagementController::class, 'purge'])->name('data-management.purge');
 });

@@ -26,6 +26,7 @@ return [
             'success_get' => 'Returns data retrieved successfully.',
             'success_process' => 'Product return processed successfully.',
         ],
+        'data_purged' => 'Legacy data successfully purged and storage optimized.',
     ],
 
     'error' => [

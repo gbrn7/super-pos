@@ -26,6 +26,7 @@ return [
             'success_get' => 'Berhasil mengambil data retur.',
             'success_process' => 'Retur barang berhasil diproses.',
         ],
+        'data_purged' => 'Data lama berhasil dibersihkan dan penyimpanan dioptimalkan.',
     ],
     'error' => [
         'data_not_found' => 'Data tidak ditemukan',
