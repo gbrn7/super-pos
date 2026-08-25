@@ -139,6 +139,20 @@ class AppServiceProvider extends ServiceProvider
      */
     protected function configureDefaults(): void
     {
+        // Ensure standard storage directories exist for views, cache, and sessions
+        $directories = [
+            storage_path('framework/views'),
+            storage_path('framework/cache/data'),
+            storage_path('framework/sessions'),
+            storage_path('app/public'),
+        ];
+
+        foreach ($directories as $directory) {
+            if (! is_dir($directory)) {
+                @mkdir($directory, 0755, true);
+            }
+        }
+
         Date::use(CarbonImmutable::class);
 
         DB::prohibitDestructiveCommands(
