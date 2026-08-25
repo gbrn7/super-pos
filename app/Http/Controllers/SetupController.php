@@ -209,6 +209,13 @@ class SetupController extends Controller
                 config(['app.installed' => true]);
             });
 
+            // Pre-compile views to avoid concurrent compilation locks on Windows
+            try {
+                Artisan::call('view:cache');
+            } catch (Exception $e) {
+                // Keep going if view caching fails
+            }
+
             return redirect()->route('login')->with('success', __('setup.complete_success'));
         } catch (Exception $e) {
             return redirect()->back()->withErrors(['general' => $e->getMessage()]);
