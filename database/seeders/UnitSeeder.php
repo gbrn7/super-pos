@@ -25,17 +25,17 @@ class UnitSeeder extends Seeder
                 'updated_at' => $now,
             ],
             [
-                'name' => 'Pcs',
-                'created_at' => $now,
-                'updated_at' => $now,
-            ],
-            [
                 'name' => 'Box',
                 'created_at' => $now,
                 'updated_at' => $now,
             ],
             [
                 'name' => 'Lusin',
+                'created_at' => $now,
+                'updated_at' => $now,
+            ],
+            [
+                'name' => 'Pcs',
                 'created_at' => $now,
                 'updated_at' => $now,
             ],
