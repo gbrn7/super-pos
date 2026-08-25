@@ -51,29 +51,6 @@ class SetupController extends Controller
                 DB::connection($connection)->getPdo();
             }
 
-            // Update .env file (skip in testing)
-            if (! app()->environment('testing')) {
-                $envPath = base_path('.env');
-                if (file_exists($envPath)) {
-                    $envContent = file_get_contents($envPath);
-                    $replacements = [
-                        'DB_CONNECTION' => 'sqlite',
-                        'DB_DATABASE' => 'database/database.sqlite',
-                    ];
-
-                    foreach ($replacements as $key => $val) {
-                        if (str_contains($envContent, "{$key}=")) {
-                            $envContent = preg_replace("/{$key}=.*/", "{$key}={$val}", $envContent);
-                        } else {
-                            $envContent .= "\n{$key}={$val}\n";
-                        }
-                    }
-                    if (is_writable($envPath)) {
-                        @file_put_contents($envPath, $envContent);
-                    }
-                }
-            }
-
             return response()->json([
                 'success' => true,
                 'message' => __('setup.db_success'),

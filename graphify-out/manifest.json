@@ -3490,8 +3490,8 @@
     "semantic_hash": ""
   },
   "app/Http/Controllers/SetupController.php": {
-    "mtime": 1787643342.0631897,
-    "ast_hash": "153bece939f55adb3777ac51c4a4975b",
+    "mtime": 1787652498.7939496,
+    "ast_hash": "5d52bd7599b6fa0f7a1c37ea178d8450",
     "semantic_hash": ""
   },
   "app/Http/Middleware/EnsureAppIsNotInstalled.php": {
@@ -3910,7 +3910,7 @@
     "semantic_hash": ""
   },
   "app/Http/Controllers/Settings/DataManagementController.php": {
-    "mtime": 1787649610.4980428,
+    "mtime": 1787650287.6785712,
     "ast_hash": "86276e023f14750e81c0ea2e169a0b80",
     "semantic_hash": ""
   },
