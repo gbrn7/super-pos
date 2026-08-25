@@ -75,17 +75,11 @@ export function ExportModal({
             const params: Record<string, any> = { format };
 
             if (startDate) {
-                const [y, m, d] = startDate.split('-').map(Number);
-                params.start_date = Math.floor(
-                    new Date(y, m - 1, d, 0, 0, 0).getTime() / 1000,
-                );
+                params.start_date = startDate;
             }
 
             if (endDate) {
-                const [y, m, d] = endDate.split('-').map(Number);
-                params.end_date = Math.floor(
-                    new Date(y, m - 1, d, 23, 59, 59).getTime() / 1000,
-                );
+                params.end_date = endDate;
             }
 
             const exportUrl = apiExportTransactions({ query: params }).url;
