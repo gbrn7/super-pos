@@ -156,6 +156,7 @@ return [
      * Define your own scripts to run before and after the build process.
      */
     'prebuild' => [
+        'php artisan wayfinder:generate --with-form',
         'npm run build',
     ],
 
