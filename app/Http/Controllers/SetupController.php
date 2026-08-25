@@ -146,22 +146,19 @@ class SetupController extends Controller
 
     public function complete(Request $request)
     {
-        $validated = $request->validate([
-            'store_name' => 'required|string|max:255',
-            'store_address' => 'nullable|string|max:500',
-            'store_phone' => 'nullable|string|max:50',
-            'currency' => 'nullable|string|max:10',
-            'timezone' => 'nullable|string|max:100',
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users,email',
-            'password' => 'required|string|min:8|confirmed',
-        ]);
-
         try {
             $connection = config('database.default', 'sqlite');
             $databasePath = config("database.connections.{$connection}.database");
 
-            if (! app()->environment('testing')) {
+            if (! app()->environment('testing') && $databasePath !== ':memory:') {
+                $dir = dirname($databasePath);
+                if (! is_dir($dir)) {
+                    @mkdir($dir, 0755, true);
+                }
+                if (! file_exists($databasePath)) {
+                    @touch($databasePath);
+                }
+
                 config([
                     "database.connections.{$connection}.database" => $databasePath,
                     "database.connections.{$connection}.busy_timeout" => 60000,
@@ -169,7 +166,35 @@ class SetupController extends Controller
                     "database.connections.{$connection}.synchronous" => 'NORMAL',
                 ]);
                 DB::purge($connection);
+                DB::reconnect($connection);
             }
+
+            // Run migration and seeding first
+            $lockPath = storage_path('app/installed.lock');
+            if (file_exists($lockPath)) {
+                @unlink($lockPath);
+            }
+
+            $migrateExit = Artisan::call('migrate:fresh', ['--force' => true]);
+            if ($migrateExit !== 0) {
+                throw new Exception('Migration failed: '.Artisan::output());
+            }
+
+            $seedExit = Artisan::call('db:seed', ['--force' => true]);
+            if ($seedExit !== 0) {
+                throw new Exception('Seeding failed: '.Artisan::output());
+            }
+
+            $validated = $request->validate([
+                'store_name' => 'required|string|max:255',
+                'store_address' => 'nullable|string|max:500',
+                'store_phone' => 'nullable|string|max:50',
+                'currency' => 'nullable|string|max:10',
+                'timezone' => 'nullable|string|max:100',
+                'name' => 'required|string|max:255',
+                'email' => 'required|string|email|max:255|unique:users,email',
+                'password' => 'required|string|min:8|confirmed',
+            ]);
 
             DB::transaction(function () use ($validated) {
                 $user = User::create([

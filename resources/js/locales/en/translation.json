@@ -1538,14 +1538,14 @@
             "sqlite_info": "Using Local SQLite Database",
             "custom_catalog": "Master Product Catalog (Optional)",
             "custom_catalog_active": "Custom File Active",
-            "custom_catalog_desc": "Upload an Excel file (.xlsx / .xls) for your custom product catalog, or leave empty to use the default catalog of 50,000+ products.",
+            "custom_catalog_desc": "Upload an Excel file (.xlsx / .xls) for your custom product catalog.",
             "select_excel_file": "Select Excel File (.xlsx / .xls)",
             "uploading": "Uploading...",
             "custom_upload_success": "Custom catalog file uploaded successfully.",
             "custom_upload_error": "Failed to upload catalog file.",
             "custom_reset_success": "Restored to default catalog file.",
             "error_alert_title": "An Error Occurred",
-            "run_migration": "Initialize Database & Import Data",
+            "run_migration": "Initialize Database",
             "migrated_seeded": "Database & Catalog Successfully Initialized",
             "next_step": "Next Step"
         },
@@ -1567,7 +1567,7 @@
             "password": "Password *",
             "confirm_password": "Confirm Password *",
             "back": "Back",
-            "complete_launch": "Complete Setup & Launch POS",
+            "complete_launch": "Complete Setup",
             "login_btn": "Log In"
         }
     },

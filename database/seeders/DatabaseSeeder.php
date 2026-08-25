@@ -13,7 +13,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
-            MasterProductSeeder::class,
+            // MasterProductSeeder::class,
             RoleSeeder::class,
             PermissionSeeder::class,
             UserSeeder::class,

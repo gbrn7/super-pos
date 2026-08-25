@@ -1533,14 +1533,14 @@
             "sqlite_info": "Menggunakan Database SQLite Lokal",
             "custom_catalog": "Katalog Produk Master (Opsional)",
             "custom_catalog_active": "File Kustom Aktif",
-            "custom_catalog_desc": "Unggah file Excel (.xlsx / .xls) untuk katalog produk kustom Anda, atau biarkan kosong untuk menggunakan katalog default 50.000+ produk.",
+            "custom_catalog_desc": "Unggah file Excel (.xlsx / .xls) untuk katalog produk kustom Anda.",
             "select_excel_file": "Pilih File Excel (.xlsx / .xls)",
             "uploading": "Mengunggah...",
             "custom_upload_success": "File katalog kustom berhasil diunggah.",
             "custom_upload_error": "Gagal mengunggah file katalog.",
             "custom_reset_success": "Kembali menggunakan file katalog default.",
             "error_alert_title": "Terjadi Kesalahan",
-            "run_migration": "Inisialisasi Database & Impor Data",
+            "run_migration": "Inisialisasi Database",
             "migrated_seeded": "Database & Katalog Berhasil Di-inisialisasi",
             "next_step": "Langkah Berikutnya"
         },
@@ -1562,7 +1562,7 @@
             "password": "Password *",
             "confirm_password": "Konfirmasi Password *",
             "back": "Kembali",
-            "complete_launch": "Selesaikan Setup & Buka POS",
+            "complete_launch": "Selesaikan Setup",
             "login_btn": "Masuk"
         }
     },
