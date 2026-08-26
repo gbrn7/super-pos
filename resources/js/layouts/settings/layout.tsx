@@ -13,10 +13,13 @@ import { edit as editStore } from '@/routes/store';
 import { edit as editDataManagement } from '@/routes/data-management';
 import type { NavItem } from '@/types';
 import { useTranslation } from 'react-i18next';
+import { useAuth } from '@/hooks/use-auth';
+import { RoleEnums } from '@/support/enums/RoleEnums';
 
 export default function SettingsLayout({ children }: PropsWithChildren) {
     const { t } = useTranslation();
     const { isCurrentOrParentUrl } = useCurrentUrl();
+    const { hasRole, isSuperAdmin } = useAuth();
 
     const sidebarNavItems: NavItem[] = [
         {
@@ -43,13 +46,28 @@ export default function SettingsLayout({ children }: PropsWithChildren) {
             title: t('page.settings.store.label', 'Informasi Toko'),
             href: editStore(),
             icon: null,
+            role: [RoleEnums.SUPER_ADMIN, RoleEnums.ADMIN],
         },
         {
             title: t('page.data_management.title', 'Manajemen Data'),
             href: editDataManagement(),
             icon: null,
+            role: RoleEnums.SUPER_ADMIN,
         },
     ];
+
+    const filteredSidebarNavItems = sidebarNavItems.filter((item) => {
+        if (isSuperAdmin()) {
+            return true;
+        }
+
+        if (item.role) {
+            const roles = Array.isArray(item.role) ? item.role : [item.role];
+            return roles.some((r) => hasRole(r));
+        }
+
+        return true;
+    });
 
     return (
         <div className="px-4 py-6">
@@ -67,7 +85,7 @@ export default function SettingsLayout({ children }: PropsWithChildren) {
                         className="flex flex-col space-y-1 space-x-0"
                         aria-label="Settings"
                     >
-                        {sidebarNavItems.map((item, index) => (
+                        {filteredSidebarNavItems.map((item, index) => (
                             <Button
                                 key={`${toUrl(item.href!)}-${index}`}
                                 size="sm"

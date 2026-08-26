@@ -289,10 +289,10 @@ export default function Login({
                 <form onSubmit={handleVerifyCode} className="flex flex-col gap-5">
                     <div className="grid gap-4 text-center mb-1">
                         <h2 className="text-xl font-bold text-foreground">
-                            {t('recovery.step1_title', 'Pemulihan Akun Superadmin')}
+                            {t('recovery.step1_title', 'Verifikasi Kode Pemulihan')}
                         </h2>
                         <p className="text-sm text-muted-foreground">
-                            {t('recovery.step1_desc', 'Masukkan Kode Pemulihan dari server/file .env untuk melanjutkan.')}
+                            {t('recovery.step1_desc', 'Masukkan kode pemulihan')}
                         </p>
                     </div>
 

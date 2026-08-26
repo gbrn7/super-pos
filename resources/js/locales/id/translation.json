@@ -1588,8 +1588,8 @@
     },
     "recovery": {
         "forgot_link": "Lupa Email / Password?",
-        "step1_title": "Pemulihan Akun Owner",
-        "step1_desc": "Masukkan Kode Pemulihan dari server/file .env untuk melanjutkan.",
+        "step1_title": "Verifikasi Kode Pemulihan",
+        "step1_desc": "Masukkan kode pemulihan",
         "code_label": "Kode Pemulihan",
         "verify_btn": "Verifikasi Kode",
         "step2_title": "Buat Akun Owner Baru",

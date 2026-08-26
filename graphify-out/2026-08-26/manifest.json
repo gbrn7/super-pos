@@ -1555,8 +1555,8 @@
     "semantic_hash": ""
   },
   "resources/js/locales/id/translation.json": {
-    "mtime": 1787660914.3515985,
-    "ast_hash": "2679cac3b30ffe901bc68d422a24aafa",
+    "mtime": 1787758298.8387306,
+    "ast_hash": "373dacc7d68813189bea378793a1138d",
     "semantic_hash": ""
   },
   "resources/js/pages/auth/confirm-password.tsx": {
@@ -1570,8 +1570,8 @@
     "semantic_hash": ""
   },
   "resources/js/pages/auth/login.tsx": {
-    "mtime": 1786279770.2548904,
-    "ast_hash": "86a8314812fedce9ef0f2966b158ba7f",
+    "mtime": 1787758302.1580713,
+    "ast_hash": "928aa8371fd3a585c44f983874e7de84",
     "semantic_hash": ""
   },
   "resources/js/pages/auth/register.tsx": {
@@ -2250,8 +2250,8 @@
     "semantic_hash": "316b31ec503e66838e9ce06bf55e4caa"
   },
   "routes/settings.php": {
-    "mtime": 1787660914.3637507,
-    "ast_hash": "a0282c7ad85b407af2cb317304103312",
+    "mtime": 1787756590.075167,
+    "ast_hash": "9f4f727377244ca470b7f84ba5fac84a",
     "semantic_hash": ""
   },
   "routes/web.php": {
@@ -3910,8 +3910,8 @@
     "semantic_hash": ""
   },
   "app/Http/Controllers/Settings/DataManagementController.php": {
-    "mtime": 1787660913.8998284,
-    "ast_hash": "86276e023f14750e81c0ea2e169a0b80",
+    "mtime": 1787757498.6414514,
+    "ast_hash": "5f65cd460c3cedca683ede82e1d6b624",
     "semantic_hash": ""
   },
   "app/Http/Requests/Settings/PurgeDataRequest.php": {
@@ -3920,8 +3920,8 @@
     "semantic_hash": ""
   },
   "resources/js/pages/settings/data-management.tsx": {
-    "mtime": 1787660914.3536742,
-    "ast_hash": "9b59aa11ad508730577e1c2273e12d9a",
+    "mtime": 1787757502.7847846,
+    "ast_hash": "df5c96badb3f0114f9a075a904891721",
     "semantic_hash": ""
   },
   "tests/Feature/Settings/DataPurgeTest.php": {
@@ -3942,6 +3942,21 @@
   "public/icon.png": {
     "mtime": 1787660914.3445818,
     "ast_hash": "c1653106c7c4fbe41669d2feb3ae4d18",
+    "semantic_hash": ""
+  },
+  "tests/Feature/Settings/DatabaseExportTest.php": {
+    "mtime": 1787756590.236855,
+    "ast_hash": "e17fd85bfa1d729d12eeebd78b46cdbd",
+    "semantic_hash": ""
+  },
+  "docs/superpowers/plans/2026-08-26-export-sql.md": {
+    "mtime": 1787756473.5852642,
+    "ast_hash": "093d51ad225fda46eb0637295ff08bc7",
+    "semantic_hash": ""
+  },
+  "docs/superpowers/specs/2026-08-26-export-sql-design-doc.md": {
+    "mtime": 1787756438.7324028,
+    "ast_hash": "a72d939b5ea1b374a88ddec938fa6116",
     "semantic_hash": ""
   }
 }

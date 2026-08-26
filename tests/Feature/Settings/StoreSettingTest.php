@@ -2,17 +2,24 @@
 
 use App\Models\StoreSetting;
 use App\Models\User;
+use App\Support\Enums\RoleEnums;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Inertia\Testing\AssertableInertia as Assert;
+use Spatie\Permission\Models\Role;
 
 uses(RefreshDatabase::class);
 
-test('store setting page is displayed for authenticated user', function () {
-    $user = User::factory()->create();
+beforeEach(function () {
+    $this->role = Role::firstOrCreate(['name' => RoleEnums::ADMIN->value]);
+    $this->user = User::factory()->create();
+    $this->user->assignRole($this->role);
+});
+
+test('store setting page is displayed for authorized user', function () {
     $storeSetting = StoreSetting::factory()->create();
 
     $response = $this
-        ->actingAs($user)
+        ->actingAs($this->user)
         ->get(route('store.edit'));
 
     $response->assertOk();
@@ -27,12 +34,22 @@ test('store setting page is displayed for authenticated user', function () {
     );
 });
 
+test('store setting page is forbidden for unauthorized user', function () {
+    $unauthorizedUser = User::factory()->create();
+    $storeSetting = StoreSetting::factory()->create();
+
+    $response = $this
+        ->actingAs($unauthorizedUser)
+        ->get(route('store.edit'));
+
+    $response->assertForbidden();
+});
+
 test('store setting can be updated', function () {
-    $user = User::factory()->create();
     StoreSetting::factory()->create();
 
     $response = $this
-        ->actingAs($user)
+        ->actingAs($this->user)
         ->patch(route('store.update'), [
             'name' => 'Updated Store Name',
             'address' => 'Updated Address Road 456',
@@ -54,11 +71,10 @@ test('store setting can be updated', function () {
 });
 
 test('store setting update requires validation', function () {
-    $user = User::factory()->create();
     StoreSetting::factory()->create();
 
     $response = $this
-        ->actingAs($user)
+        ->actingAs($this->user)
         ->from(route('store.edit'))
         ->patch(route('store.update'), [
             'name' => '',
