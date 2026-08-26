@@ -10,6 +10,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 use Inertia\Response;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class DataManagementController extends Controller
 {
@@ -89,5 +90,62 @@ class DataManagementController extends Controller
         ]);
 
         return to_route('data-management.edit');
+    }
+
+    public function exportSql(): StreamedResponse
+    {
+        if (! auth()->user()->hasRole(RoleEnums::SUPER_ADMIN->value)) {
+            abort(403);
+        }
+
+        $filename = 'praktis_pos_backup_'.now()->format('Y-m-d').'.sql';
+
+        return response()->stream(function () {
+            $out = fopen('php://output', 'w');
+
+            fwrite($out, "-- Praktis-Pos Database Backup\n");
+            fwrite($out, '-- Date: '.now()->toDateTimeString()."\n");
+            fwrite($out, '-- Connection: '.DB::connection()->getDriverName()."\n\n");
+            fwrite($out, "PRAGMA foreign_keys = OFF;\n\n");
+
+            // Get all tables in the SQLite database
+            $tables = DB::select("SELECT name, sql FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'");
+
+            foreach ($tables as $table) {
+                $tableName = $table->name;
+                $createSql = $table->sql;
+
+                fwrite($out, 'DROP TABLE IF EXISTS `'.$tableName."`;\n");
+                fwrite($out, $createSql.";\n\n");
+
+                // Retrieve and stream table rows
+                DB::table($tableName)->orderByRaw('1')->chunk(200, function ($rows) use ($out, $tableName) {
+                    foreach ($rows as $row) {
+                        $rowArray = (array) $row;
+                        $columns = array_keys($rowArray);
+                        $escapedColumns = array_map(fn ($col) => '`'.$col.'`', $columns);
+
+                        $escapedValues = array_map(function ($val) {
+                            if ($val === null) {
+                                return 'NULL';
+                            }
+
+                            return "'".str_replace("'", "''", $val)."'";
+                        }, array_values($rowArray));
+
+                        $insertSql = 'INSERT INTO `'.$tableName.'` ('.implode(', ', $escapedColumns).') VALUES ('.implode(', ', $escapedValues).");\n";
+                        fwrite($out, $insertSql);
+                    }
+                });
+
+                fwrite($out, "\n");
+            }
+
+            fwrite($out, "PRAGMA foreign_keys = ON;\n");
+            fclose($out);
+        }, 200, [
+            'Content-Type' => 'text/plain; charset=UTF-8',
+            'Content-Disposition' => 'attachment; filename="'.$filename.'"',
+        ]);
     }
 }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Settings\DataManagementController;
 use App\Http\Controllers\Settings\ProfileController;
 use App\Http\Controllers\Settings\SecurityController;
 use App\Http\Controllers\Settings\StoreSettingController;
@@ -26,6 +27,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('settings/store', [StoreSettingController::class, 'edit'])->name('store.edit');
     Route::patch('settings/store', [StoreSettingController::class, 'update'])->name('store.update');
 
-    Route::get('settings/data-management', [\App\Http\Controllers\Settings\DataManagementController::class, 'edit'])->name('data-management.edit');
-    Route::post('settings/data-management/purge', [\App\Http\Controllers\Settings\DataManagementController::class, 'purge'])->name('data-management.purge');
+    Route::get('settings/data-management', [DataManagementController::class, 'edit'])->name('data-management.edit');
+    Route::post('settings/data-management/purge', [DataManagementController::class, 'purge'])->name('data-management.purge');
+    Route::get('settings/data-management/export-sql', [DataManagementController::class, 'exportSql'])->name('data-management.export-sql');
 });
