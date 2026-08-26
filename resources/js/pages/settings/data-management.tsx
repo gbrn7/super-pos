@@ -40,8 +40,13 @@ export default function DataManagement() {
 
     const downloadSql = async () => {
         setExporting(true);
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 seconds timeout
+
         try {
-            const response = await fetch(DataManagementController.exportSql.url());
+            const response = await fetch(DataManagementController.exportSql.url(), {
+                signal: controller.signal,
+            });
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
@@ -55,9 +60,14 @@ export default function DataManagement() {
             a.click();
             a.remove();
             window.URL.revokeObjectURL(url);
-        } catch (error) {
-            console.error('Failed to download database:', error);
+        } catch (error: any) {
+            if (error.name === 'AbortError') {
+                console.error('Download database request timed out');
+            } else {
+                console.error('Failed to download database:', error);
+            }
         } finally {
+            clearTimeout(timeoutId);
             setExporting(false);
         }
     };
