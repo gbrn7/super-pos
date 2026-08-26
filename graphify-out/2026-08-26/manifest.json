@@ -425,8 +425,8 @@
     "semantic_hash": ""
   },
   "app/Models/Product.php": {
-    "mtime": 1785642866.7233164,
-    "ast_hash": "e6493d0db9330ade7668ac9dee0a9c44",
+    "mtime": 1787705022.139609,
+    "ast_hash": "3662cdf316afa7bfa5db694013944684",
     "semantic_hash": ""
   },
   "app/Models/Role.php": {
@@ -835,9 +835,9 @@
     "semantic_hash": ""
   },
   "config/filesystems.php": {
-    "mtime": 1776735671.265385,
-    "ast_hash": "bde1aa1027f0448f17348dbd93f3d7ea",
-    "semantic_hash": "bde1aa1027f0448f17348dbd93f3d7ea"
+    "mtime": 1787706473.18114,
+    "ast_hash": "fb4321a59135393eb8caa35841516e97",
+    "semantic_hash": ""
   },
   "config/fortify.php": {
     "mtime": 1785954551.7210796,
@@ -1840,8 +1840,8 @@
     "semantic_hash": ""
   },
   "resources/js/pages/product/dialog-modal/edit-dialog.tsx": {
-    "mtime": 1784729606.5223498,
-    "ast_hash": "339a3b1d858c47489cea58cb980a5ea8",
+    "mtime": 1787705026.3444095,
+    "ast_hash": "821de98c16633533e2986339676dbcdb",
     "semantic_hash": ""
   },
   "resources/js/pages/product/dialog-modal/import-excel-dialog.tsx": {
@@ -2255,8 +2255,8 @@
     "semantic_hash": ""
   },
   "routes/web.php": {
-    "mtime": 1787701433.4844077,
-    "ast_hash": "1e7e78d99627a7483a23ac15d74b9801",
+    "mtime": 1787706483.9185774,
+    "ast_hash": "979840216fff26de3a60b25ab8306214",
     "semantic_hash": ""
   },
   "src/@types/i18next.d.ts": {
@@ -3490,8 +3490,8 @@
     "semantic_hash": ""
   },
   "app/Http/Controllers/SetupController.php": {
-    "mtime": 1787665622.8610606,
-    "ast_hash": "b05995e48768b1e595490e6a62634ed8",
+    "mtime": 1787705030.1360645,
+    "ast_hash": "f5195b1e760cd7d1a50d3b73f370aee1",
     "semantic_hash": ""
   },
   "app/Http/Middleware/EnsureAppIsNotInstalled.php": {
