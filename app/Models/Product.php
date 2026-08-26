@@ -36,4 +36,17 @@ class Product extends Model
     {
         return $this->belongsTo(Unit::class, 'unit_id', 'id');
     }
+
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'is_active' => 'boolean',
+            'is_unlimited' => 'boolean',
+        ];
+    }
 }

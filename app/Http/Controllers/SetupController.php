@@ -152,7 +152,7 @@ class SetupController extends Controller
                 @unlink($lockPath);
             }
 
-            $migrateExit = Artisan::call('migrate', ['--force' => true]);
+            $migrateExit = Artisan::call('migrate:fresh', ['--force' => true]);
             if ($migrateExit !== 0) {
                 throw new Exception('Migration failed: '.Artisan::output());
             }

@@ -30,7 +30,6 @@ use App\Http\Controllers\TransactionDetailController;
 use App\Http\Controllers\UnitController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Storage;
 
 Route::get('/setup', [SetupController::class, 'index'])->name('setup.index');
 Route::post('/setup/test-db', [SetupController::class, 'testDatabase'])->name('setup.test-db');
@@ -45,14 +44,6 @@ Route::get('/', function () {
 
 Route::post('/api/recovery/verify-code', [RecoveryController::class, 'verifyCode']);
 Route::post('/api/recovery/create-superadmin', [RecoveryController::class, 'createSuperadmin']);
-
-Route::get('storage/{path}', function (string $path) {
-    if (! Storage::disk('public')->exists($path)) {
-        abort(404);
-    }
-
-    return Storage::disk('public')->response($path);
-})->where('path', '.*');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::inertia('dashboard', 'dashboard')->name('dashboard');

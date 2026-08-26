@@ -1,7 +1,7 @@
-# Graph Report - super-pos  (2026-08-25)
+# Graph Report - super-pos  (2026-08-26)
 
 ## Corpus Check
-- 769 files · ~432,795 words
+- 769 files · ~432,875 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
@@ -10,7 +10,7 @@
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `229ae3ab`
+- Built from commit: `6531f2d8`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -129,8 +129,8 @@
 - receipt-modal.tsx
 - auth.ts
 - @base-ui/react
+- typescript
 - clsx
-- cmdk
 - concurrently
 - RoleController
 - @dnd-kit/utilities
@@ -447,8 +447,8 @@ Cohesion: 0.11
 Nodes (32): AppLogo(), footerNavItems, NavFooter(), NavMain(), SidebarNavItem(), NavUser(), Sidebar(), SidebarContent() (+24 more)
 
 ### Community 20 - "API Controllers & Endpoints (20)"
-Cohesion: 0.07
-Nodes (40): HeaderContent(), Props, languageCode, localStorageKey, Message, PAGINATIONLIMITOPTIONDEFAULT, ROUTES, DataTable() (+32 more)
+Cohesion: 0.08
+Nodes (32): HeaderContent(), Props, languageCode, localStorageKey, Message, PAGINATIONLIMITOPTIONDEFAULT, ROUTES, columns() (+24 more)
 
 ### Community 21 - "Product Catalog & Inventory (21)"
 Cohesion: 0.07
@@ -495,8 +495,8 @@ Cohesion: 0.29
 Nodes (6): 1. Translations (`lang/id/message.php` and `lang/en/message.php`), 2. Service Class (`app/Services/TransactionService.php`), 3. Feature Test (`tests/Feature/Cashier/CashierCheckoutTest.php`), Design: Insufficient Stock Product Name Error, Proposed Changes, Requirements
 
 ### Community 32 - "Category"
-Cohesion: 0.07
-Nodes (38): DataTableProps, BulkDeleteDialogProps, DeleteDialogProps, DetailSheetProps, EditDialogProps, columns(), DataTable(), DataTableProps (+30 more)
+Cohesion: 0.09
+Nodes (32): DataTableProps, BulkDeleteDialogProps, DeleteDialogProps, DetailSheetProps, EditDialogProps, columns(), DataTable(), DataTableProps (+24 more)
 
 ### Community 33 - "node Domain (33)"
 Cohesion: 0.08
@@ -527,8 +527,8 @@ Cohesion: 0.20
 Nodes (9): 1. Pendahuluan, 2.1 Eager Loading Relasi Retur, 2.2 Eksposur Kuantitas Ter-retur di API Resource, 2. Perubahan Backend, 3.1 Selalu Mengambil Data Terbaru dari Server, 3.2 Logika Perhitungan Kuantitas Maksimal, 3.3 Penyesuaian Antarmuka (UI) Modal Retur, 3. Perubahan Frontend (+1 more)
 
 ### Community 40 - "Fortify Auth Strategy (40)"
-Cohesion: 0.25
-Nodes (7): PaymentMethodDetailDialogProps, DataTableProps, BulkDeleteDialogProps, DeleteDialogProps, DetailSheetProps, EditDialogProps, PaymentMethod
+Cohesion: 0.07
+Nodes (29): ReceiptCard(), ReceiptCardProps, ReceiptModalProps, Props, PaymentMethodDetailDialogProps, DataTableProps, BulkDeleteDialogProps, DeleteDialogProps (+21 more)
 
 ### Community 41 - "Category Data & Repositories (41)"
 Cohesion: 0.07
@@ -576,7 +576,7 @@ Nodes (18): scripts, lint, lint:check, post-autoload-dump, post-create-project-c
 
 ### Community 53 - "eslint Domain (53)"
 Cohesion: 0.12
-Nodes (17): eslint, eslint-config-prettier, @eslint/js, eslint-plugin-react, @laravel/vite-plugin-wayfinder, devDependencies, eslint, eslint-config-prettier (+9 more)
+Nodes (17): babel-plugin-react-compiler, eslint, eslint-config-prettier, @eslint/js, @laravel/vite-plugin-wayfinder, devDependencies, babel-plugin-react-compiler, eslint (+9 more)
 
 ### Community 54 - "drawer.tsx Domain (54)"
 Cohesion: 0.33
@@ -724,7 +724,7 @@ Nodes (6): Desktop Setup Wizard Simplification & SQLite Optimization Implementat
 
 ### Community 115 - "@dnd-kit/modifiers Domain (115)"
 Cohesion: 0.12
-Nodes (17): axios, chart.js, cmdk, dependencies, axios, chart.js, cmdk, @radix-ui/react-checkbox (+9 more)
+Nodes (17): axios, chart.js, cmdk, @dnd-kit/modifiers, dependencies, axios, chart.js, cmdk (+9 more)
 
 ### Community 116 - "RoleRepositoryInterface.php"
 Cohesion: 0.05
@@ -855,8 +855,8 @@ Cohesion: 0.13
 Nodes (12): AlertError(), Props, TwoFactorSetupStep(), InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot, CopiedValue (+4 more)
 
 ### Community 322 - "columns.tsx"
-Cohesion: 0.06
-Nodes (49): ReceiptCard(), ReceiptCardProps, ReceiptModalProps, Props, Separator(), formatDate(), formatRupiah(), ColumnProps (+41 more)
+Cohesion: 0.07
+Nodes (41): Separator(), formatDate(), formatRupiah(), ColumnProps, columns(), DataTable(), DrawdownDialog(), PurchaseProductDialog() (+33 more)
 
 ### Community 323 - "columns.tsx"
 Cohesion: 0.40
@@ -994,7 +994,7 @@ Nodes (3): Setup Wizard Multi-Language (i18n) Implementation Plan, Task 1: Add S
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `dependencies` connect `@dnd-kit/modifiers Domain (115)` to `cmdk`, `concurrently`, `@dnd-kit/utilities`, `eslint-plugin-react`, `@headlessui/react`, `@inertiajs/react`, `input-otp`, `i18next-resources-to-backend`, `nuqs`, `radix-ui`, `sweetalert2-react-content`, `@radix-ui/react-collapsible`, `@radix-ui/react-dialog`, `@radix-ui/react-dropdown-menu`, `zod`, `clsx`, `@radix-ui/react-separator`, `tailwind-merge`, `@radix-ui/react-toggle`, `tw-animate-css`, `@radix-ui/react-toggle-group`, `@radix-ui/react-tooltip`, `toggle-group.tsx`, `lucide-react`, `react-i18next`, `react-number-format`, `@radix-ui/react-avatar`, `sonner`, `tailwindcss`, `@types/react`, `@radix-ui/react-label`, `@types/react-dom`, `vite`, `@radix-ui/react-separator`, `dayjs`, `@headlessui/react`, `@inertiajs/react`, `lucide-react`, `@radix-ui/react-avatar`, `index.tsx`, `@radix-ui/react-label`, `@radix-ui/react-separator`, `@tailwindcss/vite`, `@tanstack/react-table`, `concurrently`, `package.json`, `react-barcode`, `@base-ui/react`, `date-fns`, `@dnd-kit/sortable`, `globals`, `i18next`, `@radix-ui/react-select`, `react-chartjs-2`, `react-day-picker`, `tabbied`, `@vitejs/plugin-react`, `data-table.tsx`?**
+- **Why does `dependencies` connect `@dnd-kit/modifiers Domain (115)` to `typescript`, `concurrently`, `@dnd-kit/utilities`, `eslint-plugin-react`, `@headlessui/react`, `@inertiajs/react`, `input-otp`, `i18next-resources-to-backend`, `nuqs`, `radix-ui`, `sweetalert2-react-content`, `@radix-ui/react-collapsible`, `@radix-ui/react-dialog`, `@radix-ui/react-dropdown-menu`, `zod`, `clsx`, `@radix-ui/react-separator`, `tailwind-merge`, `@radix-ui/react-toggle`, `tw-animate-css`, `@radix-ui/react-toggle-group`, `@radix-ui/react-tooltip`, `toggle-group.tsx`, `lucide-react`, `react-i18next`, `react-number-format`, `@radix-ui/react-avatar`, `sonner`, `tailwindcss`, `@types/react`, `@radix-ui/react-label`, `@types/react-dom`, `vite`, `@radix-ui/react-separator`, `dayjs`, `@headlessui/react`, `@inertiajs/react`, `lucide-react`, `@radix-ui/react-avatar`, `index.tsx`, `@radix-ui/react-label`, `@radix-ui/react-separator`, `@tailwindcss/vite`, `@tanstack/react-table`, `concurrently`, `package.json`, `react-barcode`, `@base-ui/react`, `date-fns`, `@dnd-kit/sortable`, `globals`, `i18next`, `@radix-ui/react-select`, `react-chartjs-2`, `react-day-picker`, `tabbied`, `@vitejs/plugin-react`, `data-table.tsx`?**
   _High betweenness centrality (0.269) - this node is a cross-community bridge._
 - **Why does `xlsx` connect `@dnd-kit/modifiers Domain (115)` to `lucide-react`?**
   _High betweenness centrality (0.249) - this node is a cross-community bridge._

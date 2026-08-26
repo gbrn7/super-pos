@@ -3585,7 +3585,7 @@
       "label": ".uploadMasterProduct()",
       "file_type": "code",
       "source_file": "app/Http/Controllers/SetupController.php",
-      "source_location": "L218",
+      "source_location": "L225",
       "_origin": "ast",
       "id": "app_http_controllers_setupcontroller_setupcontroller_uploadmasterproduct",
       "community": 18,
@@ -3596,7 +3596,7 @@
       "label": ".resetMasterProduct()",
       "file_type": "code",
       "source_file": "app/Http/Controllers/SetupController.php",
-      "source_location": "L243",
+      "source_location": "L250",
       "_origin": "ast",
       "id": "app_http_controllers_setupcontroller_setupcontroller_resetmasterproduct",
       "community": 18,
@@ -17822,8 +17822,8 @@
       "source_location": "L21",
       "_origin": "ast",
       "id": "package_devdependencies_babel_plugin_react_compiler",
-      "community": 109,
-      "community_name": "babel-plugin-react-compiler",
+      "community": 53,
+      "community_name": "eslint Domain (53)",
       "norm_label": "babel-plugin-react-compiler"
     },
     {
@@ -17833,8 +17833,8 @@
       "source_location": "L21",
       "_origin": "ast",
       "id": "babel_plugin_react_compiler",
-      "community": 109,
-      "community_name": "babel-plugin-react-compiler",
+      "community": 53,
+      "community_name": "eslint Domain (53)",
       "norm_label": "babel-plugin-react-compiler"
     },
     {
@@ -17932,8 +17932,8 @@
       "source_location": "L26",
       "_origin": "ast",
       "id": "package_devdependencies_eslint_plugin_react",
-      "community": 53,
-      "community_name": "eslint Domain (53)",
+      "community": 109,
+      "community_name": "babel-plugin-react-compiler",
       "norm_label": "eslint-plugin-react"
     },
     {
@@ -17943,8 +17943,8 @@
       "source_location": "L26",
       "_origin": "ast",
       "id": "eslint_plugin_react",
-      "community": 53,
-      "community_name": "eslint Domain (53)",
+      "community": 109,
+      "community_name": "babel-plugin-react-compiler",
       "norm_label": "eslint-plugin-react"
     },
     {
@@ -18097,8 +18097,8 @@
       "source_location": "L35",
       "_origin": "ast",
       "id": "package_dependencies_dnd_kit_modifiers",
-      "community": 132,
-      "community_name": "cmdk",
+      "community": 115,
+      "community_name": "@dnd-kit/modifiers Domain (115)",
       "norm_label": "@dnd-kit/modifiers"
     },
     {
@@ -18108,8 +18108,8 @@
       "source_location": "L35",
       "_origin": "ast",
       "id": "dnd_kit_modifiers",
-      "community": 132,
-      "community_name": "cmdk",
+      "community": 115,
+      "community_name": "@dnd-kit/modifiers Domain (115)",
       "norm_label": "@dnd-kit/modifiers"
     },
     {
@@ -19373,8 +19373,8 @@
       "source_location": "L93",
       "_origin": "ast",
       "id": "package_dependencies_typescript",
-      "community": 115,
-      "community_name": "@dnd-kit/modifiers Domain (115)",
+      "community": 130,
+      "community_name": "typescript",
       "norm_label": "typescript"
     },
     {
@@ -19384,8 +19384,8 @@
       "source_location": "L93",
       "_origin": "ast",
       "id": "typescript",
-      "community": 115,
-      "community_name": "@dnd-kit/modifiers Domain (115)",
+      "community": 130,
+      "community_name": "typescript",
       "norm_label": "typescript"
     },
     {
@@ -19648,8 +19648,8 @@
       "source_location": "L30",
       "_origin": "ast",
       "id": "resources_js_components_returnmodal_props",
-      "community": 322,
-      "community_name": "columns.tsx",
+      "community": 40,
+      "community_name": "Fortify Auth Strategy (40)",
       "norm_label": "props"
     },
     {
@@ -20352,8 +20352,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "resources_js_components_receipt_card",
-      "community": 322,
-      "community_name": "columns.tsx",
+      "community": 40,
+      "community_name": "Fortify Auth Strategy (40)",
       "norm_label": "receipt-card.tsx"
     },
     {
@@ -20363,8 +20363,8 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "resources_js_components_receipt_card_receiptcardprops",
-      "community": 322,
-      "community_name": "columns.tsx",
+      "community": 40,
+      "community_name": "Fortify Auth Strategy (40)",
       "norm_label": "receiptcardprops"
     },
     {
@@ -20374,8 +20374,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "resources_js_components_receipt_card_receiptcard",
-      "community": 322,
-      "community_name": "columns.tsx",
+      "community": 40,
+      "community_name": "Fortify Auth Strategy (40)",
       "norm_label": "receiptcard()"
     },
     {
@@ -20385,8 +20385,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "resources_js_components_receipt_modal",
-      "community": 322,
-      "community_name": "columns.tsx",
+      "community": 40,
+      "community_name": "Fortify Auth Strategy (40)",
       "norm_label": "receipt-modal.tsx"
     },
     {
@@ -20407,8 +20407,8 @@
       "source_location": "L24",
       "_origin": "ast",
       "id": "resources_js_components_receipt_modal_receiptmodalprops",
-      "community": 322,
-      "community_name": "columns.tsx",
+      "community": 40,
+      "community_name": "Fortify Auth Strategy (40)",
       "norm_label": "receiptmodalprops"
     },
     {
@@ -20418,8 +20418,8 @@
       "source_location": "L32",
       "_origin": "ast",
       "id": "resources_js_components_receipt_modal_receiptmodal",
-      "community": 322,
-      "community_name": "columns.tsx",
+      "community": 40,
+      "community_name": "Fortify Auth Strategy (40)",
       "norm_label": "receiptmodal()"
     },
     {
@@ -25324,8 +25324,8 @@
       "source_location": "L25",
       "_origin": "ast",
       "id": "resources_js_pages_category_columns_columns",
-      "community": 322,
-      "community_name": "columns.tsx",
+      "community": 20,
+      "community_name": "API Controllers & Endpoints (20)",
       "norm_label": "columns()"
     },
     {
@@ -27799,8 +27799,8 @@
       "source_location": "L20",
       "_origin": "ast",
       "id": "resources_js_pages_transaction_columns_columnsprops",
-      "community": 322,
-      "community_name": "columns.tsx",
+      "community": 40,
+      "community_name": "Fortify Auth Strategy (40)",
       "norm_label": "columnsprops"
     },
     {
@@ -27810,8 +27810,8 @@
       "source_location": "L28",
       "_origin": "ast",
       "id": "resources_js_pages_transaction_columns_columns",
-      "community": 32,
-      "community_name": "Category",
+      "community": 40,
+      "community_name": "Fortify Auth Strategy (40)",
       "norm_label": "columns()"
     },
     {
@@ -27832,8 +27832,8 @@
       "source_location": "L76",
       "_origin": "ast",
       "id": "resources_js_pages_transaction_data_table_datatableprops",
-      "community": 32,
-      "community_name": "Category",
+      "community": 40,
+      "community_name": "Fortify Auth Strategy (40)",
       "norm_label": "datatableprops"
     },
     {
@@ -27843,8 +27843,8 @@
       "source_location": "L112",
       "_origin": "ast",
       "id": "resources_js_pages_transaction_data_table_datatable",
-      "community": 32,
-      "community_name": "Category",
+      "community": 40,
+      "community_name": "Fortify Auth Strategy (40)",
       "norm_label": "datatable()"
     },
     {
@@ -27865,8 +27865,8 @@
       "source_location": "L25",
       "_origin": "ast",
       "id": "resources_js_pages_transaction_dialog_modal_bulk_delete_dialog_bulkdeletedialogprops",
-      "community": 322,
-      "community_name": "columns.tsx",
+      "community": 40,
+      "community_name": "Fortify Auth Strategy (40)",
       "norm_label": "bulkdeletedialogprops"
     },
     {
@@ -27898,8 +27898,8 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "resources_js_pages_transaction_dialog_modal_delete_dialog_deletedialogprops",
-      "community": 322,
-      "community_name": "columns.tsx",
+      "community": 40,
+      "community_name": "Fortify Auth Strategy (40)",
       "norm_label": "deletedialogprops"
     },
     {
@@ -27997,8 +27997,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "resources_js_pages_transaction_index",
-      "community": 32,
-      "community_name": "Category",
+      "community": 40,
+      "community_name": "Fortify Auth Strategy (40)",
       "norm_label": "index.tsx"
     },
     {
@@ -28008,8 +28008,8 @@
       "source_location": "L29",
       "_origin": "ast",
       "id": "resources_js_pages_transaction_index_url",
-      "community": 32,
-      "community_name": "Category",
+      "community": 40,
+      "community_name": "Fortify Auth Strategy (40)",
       "norm_label": "{ url }"
     },
     {
@@ -28019,8 +28019,8 @@
       "source_location": "L31",
       "_origin": "ast",
       "id": "resources_js_pages_transaction_index_paginateddata",
-      "community": 32,
-      "community_name": "Category",
+      "community": 40,
+      "community_name": "Fortify Auth Strategy (40)",
       "norm_label": "paginateddata"
     },
     {
@@ -28063,8 +28063,8 @@
       "source_location": "L25",
       "_origin": "ast",
       "id": "resources_js_pages_unit_columns_columns",
-      "community": 20,
-      "community_name": "API Controllers & Endpoints (20)",
+      "community": 322,
+      "community_name": "columns.tsx",
       "norm_label": "columns()"
     },
     {
@@ -28382,8 +28382,8 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "resources_js_pages_user_columns_columnsprops",
-      "community": 20,
-      "community_name": "API Controllers & Endpoints (20)",
+      "community": 40,
+      "community_name": "Fortify Auth Strategy (40)",
       "norm_label": "columnsprops"
     },
     {
@@ -28415,8 +28415,8 @@
       "source_location": "L65",
       "_origin": "ast",
       "id": "resources_js_pages_user_data_table_datatableprops",
-      "community": 20,
-      "community_name": "API Controllers & Endpoints (20)",
+      "community": 40,
+      "community_name": "Fortify Auth Strategy (40)",
       "norm_label": "datatableprops"
     },
     {
@@ -28448,8 +28448,8 @@
       "source_location": "L29",
       "_origin": "ast",
       "id": "resources_js_pages_user_dialog_modal_bulk_delete_dialog_bulkdeletedialogprops",
-      "community": 20,
-      "community_name": "API Controllers & Endpoints (20)",
+      "community": 40,
+      "community_name": "Fortify Auth Strategy (40)",
       "norm_label": "bulkdeletedialogprops"
     },
     {
@@ -28514,8 +28514,8 @@
       "source_location": "L26",
       "_origin": "ast",
       "id": "resources_js_pages_user_dialog_modal_delete_dialog_deletedialogprops",
-      "community": 20,
-      "community_name": "API Controllers & Endpoints (20)",
+      "community": 40,
+      "community_name": "Fortify Auth Strategy (40)",
       "norm_label": "deletedialogprops"
     },
     {
@@ -28536,8 +28536,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "resources_js_pages_user_dialog_modal_detail_dialog",
-      "community": 20,
-      "community_name": "API Controllers & Endpoints (20)",
+      "community": 40,
+      "community_name": "Fortify Auth Strategy (40)",
       "norm_label": "detail-dialog.tsx"
     },
     {
@@ -28547,8 +28547,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "resources_js_pages_user_dialog_modal_detail_dialog_detailsheetprops",
-      "community": 20,
-      "community_name": "API Controllers & Endpoints (20)",
+      "community": 40,
+      "community_name": "Fortify Auth Strategy (40)",
       "norm_label": "detailsheetprops"
     },
     {
@@ -28558,8 +28558,8 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "resources_js_pages_user_dialog_modal_detail_dialog_detaildialog",
-      "community": 20,
-      "community_name": "API Controllers & Endpoints (20)",
+      "community": 40,
+      "community_name": "Fortify Auth Strategy (40)",
       "norm_label": "detaildialog()"
     },
     {
@@ -28580,8 +28580,8 @@
       "source_location": "L39",
       "_origin": "ast",
       "id": "resources_js_pages_user_dialog_modal_edit_dialog_editdialogprops",
-      "community": 20,
-      "community_name": "API Controllers & Endpoints (20)",
+      "community": 40,
+      "community_name": "Fortify Auth Strategy (40)",
       "norm_label": "editdialogprops"
     },
     {
@@ -29053,8 +29053,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "resources_js_support_interfaces_request_transaction",
-      "community": 32,
-      "community_name": "Category",
+      "community": 40,
+      "community_name": "Fortify Auth Strategy (40)",
       "norm_label": "transaction.ts"
     },
     {
@@ -29064,8 +29064,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "resources_js_support_interfaces_request_transaction_transactionqueryparam",
-      "community": 32,
-      "community_name": "Category",
+      "community": 40,
+      "community_name": "Fortify Auth Strategy (40)",
       "norm_label": "transactionqueryparam"
     },
     {
@@ -29482,8 +29482,8 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "resources_js_support_models_transaction_transaction",
-      "community": 322,
-      "community_name": "columns.tsx",
+      "community": 40,
+      "community_name": "Fortify Auth Strategy (40)",
       "norm_label": "transaction"
     },
     {
@@ -29515,8 +29515,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "resources_js_support_models_user",
-      "community": 20,
-      "community_name": "API Controllers & Endpoints (20)",
+      "community": 40,
+      "community_name": "Fortify Auth Strategy (40)",
       "norm_label": "user.tsx"
     },
     {
@@ -29526,8 +29526,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "resources_js_support_models_user_user",
-      "community": 20,
-      "community_name": "API Controllers & Endpoints (20)",
+      "community": 40,
+      "community_name": "Fortify Auth Strategy (40)",
       "norm_label": "user"
     },
     {
@@ -51400,7 +51400,7 @@
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "app/Http/Controllers/SetupController.php",
-      "source_location": "L243",
+      "source_location": "L250",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_http_controllers_setupcontroller_setupcontroller",
@@ -51433,7 +51433,7 @@
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "app/Http/Controllers/SetupController.php",
-      "source_location": "L218",
+      "source_location": "L225",
       "weight": 1.0,
       "_origin": "ast",
       "source": "app_http_controllers_setupcontroller_setupcontroller",
@@ -51540,7 +51540,7 @@
       "relation": "references",
       "confidence": "EXTRACTED",
       "source_file": "app/Http/Controllers/SetupController.php",
-      "source_location": "L218",
+      "source_location": "L225",
       "weight": 1.0,
       "context": "return_type",
       "_origin": "ast",
@@ -51552,7 +51552,7 @@
       "relation": "references",
       "confidence": "EXTRACTED",
       "source_file": "app/Http/Controllers/SetupController.php",
-      "source_location": "L218",
+      "source_location": "L225",
       "weight": 1.0,
       "context": "parameter_type",
       "_origin": "ast",
@@ -51564,7 +51564,7 @@
       "relation": "references",
       "confidence": "EXTRACTED",
       "source_file": "app/Http/Controllers/SetupController.php",
-      "source_location": "L243",
+      "source_location": "L250",
       "weight": 1.0,
       "context": "return_type",
       "_origin": "ast",
@@ -151887,5 +151887,5 @@
       "source_file": ".github/skills/laravel-best-practices/rules/security.md"
     }
   ],
-  "built_at_commit": "229ae3abca00cd685865d24c2975e35f4c53a492"
+  "built_at_commit": "6531f2d84659b817206990b09e2f6fbd8c13bcc3"
 }
