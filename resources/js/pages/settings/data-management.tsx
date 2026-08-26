@@ -41,7 +41,7 @@ export default function DataManagement() {
     const downloadSql = async () => {
         setExporting(true);
         const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 seconds timeout
+        const timeoutId = setTimeout(() => controller.abort(), 300000); // 5 minutes timeout
 
         try {
             const response = await fetch(DataManagementController.exportSql.url(), {

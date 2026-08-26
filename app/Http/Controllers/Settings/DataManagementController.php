@@ -98,6 +98,9 @@ class DataManagementController extends Controller
             abort(403);
         }
 
+        // Increase execution time limit to 5 minutes for large databases
+        set_time_limit(300);
+
         $filename = 'praktis_pos_backup_'.now()->format('Y-m-d').'.sql';
 
         return response()->stream(function () {
