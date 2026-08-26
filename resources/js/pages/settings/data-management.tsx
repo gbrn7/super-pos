@@ -152,6 +152,35 @@ export default function DataManagement() {
                         </Button>
                     </div>
                 </div>
+
+                {/* Separator */}
+                <hr className="border-t border-muted/30 my-8" />
+
+                {/* Database Export Card Section */}
+                <div className="space-y-4 max-w-xl">
+                    <div className="space-y-1">
+                        <h2 className="text-lg font-medium">
+                            {t('page.data_management.export_title', 'Ekspor Basis Data')}
+                        </h2>
+                        <p className="text-sm text-muted-foreground text-pretty">
+                            {t(
+                                'page.data_management.export_desc',
+                                'Cadangkan seluruh data dan skema aplikasi Anda ke dalam format SQL mentah. Berkas ini dapat digunakan untuk pemulihan basis data di kemudian hari.',
+                            )}
+                        </p>
+                    </div>
+
+                    <div className="pt-2">
+                        <Button
+                            variant="outline"
+                            onClick={() => {
+                                window.location.href = DataManagementController.exportSql.url();
+                            }}
+                        >
+                            {t('page.data_management.export_button', 'Unduh Basis Data (.sql)')}
+                        </Button>
+                    </div>
+                </div>
             </div>
 
             {/* Confirmation Dialog */}
