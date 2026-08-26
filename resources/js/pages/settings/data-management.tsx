@@ -36,6 +36,32 @@ export default function DataManagement() {
         password: '',
     });
 
+    const [exporting, setExporting] = useState(false);
+
+    const downloadSql = async () => {
+        setExporting(true);
+        try {
+            const response = await fetch(DataManagementController.exportSql.url());
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const blob = await response.blob();
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            const dateStr = new Date().toISOString().split('T')[0];
+            a.download = `praktis_pos_backup_${dateStr}.sql`;
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+            window.URL.revokeObjectURL(url);
+        } catch (error) {
+            console.error('Failed to download database:', error);
+        } finally {
+            setExporting(false);
+        }
+    };
+
     const handleCheckboxChange = (moduleName: string, checked: boolean) => {
         if (checked) {
             setData('modules', [...data.modules, moduleName]);
@@ -173,11 +199,12 @@ export default function DataManagement() {
                     <div className="pt-2">
                         <Button
                             variant="outline"
-                            onClick={() => {
-                                window.location.href = DataManagementController.exportSql.url();
-                            }}
+                            onClick={downloadSql}
+                            disabled={exporting}
                         >
-                            {t('page.data_management.export_button', 'Unduh Basis Data (.sql)')}
+                            {exporting
+                                ? t('page.data_management.exporting_button', 'Mengunduh...')
+                                : t('page.data_management.export_button', 'Unduh Basis Data (.sql)')}
                         </Button>
                     </div>
                 </div>
