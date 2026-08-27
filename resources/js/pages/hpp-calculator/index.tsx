@@ -1,4 +1,3 @@
-import AppLayout from '@/layouts/app-layout';
 import { Head } from '@inertiajs/react';
 import { useState, useMemo } from 'react';
 import { Plus, Trash2, RotateCcw } from 'lucide-react';
@@ -79,7 +78,7 @@ export default function HppCalculator() {
     };
 
     return (
-        <AppLayout>
+        <>
             <Head title="Kalkulator HPP" />
             
             <div className="flex flex-col gap-6 p-6">
@@ -230,6 +229,6 @@ export default function HppCalculator() {
                     </div>
                 </div>
             </div>
-        </AppLayout>
+        </>
     );
 }
