@@ -16,22 +16,29 @@ export default function HppCalculator() {
         { id: '1', name: 'Bahan Baku', amount: 0 },
     ]);
     const [margin, setMargin] = useState(20);
+    const [quantity, setQuantity] = useState(1);
 
     // Total HPP Sum
     const totalHpp = useMemo(() => {
         return costs.reduce((sum, item) => sum + (item.amount || 0), 0);
     }, [costs]);
 
-    // Calculate suggested selling price
+    // HPP per Unit
+    const hppPerUnit = useMemo(() => {
+        const safeQty = Math.max(quantity, 1);
+        return totalHpp / safeQty;
+    }, [totalHpp, quantity]);
+
+    // Calculate suggested selling price per unit
     const suggestedPrice = useMemo(() => {
         const safeMargin = Math.min(Math.max(margin, 0), 99);
-        return totalHpp / (1 - safeMargin / 100);
-    }, [totalHpp, margin]);
+        return hppPerUnit / (1 - safeMargin / 100);
+    }, [hppPerUnit, margin]);
 
-    // Estimated Profit
+    // Estimated Profit per unit
     const profit = useMemo(() => {
-        return Math.max(0, suggestedPrice - totalHpp);
-    }, [suggestedPrice, totalHpp]);
+        return Math.max(0, suggestedPrice - hppPerUnit);
+    }, [suggestedPrice, hppPerUnit]);
 
     // Add a new cost row
     const addCostItem = () => {
@@ -67,6 +74,7 @@ export default function HppCalculator() {
         setProductName('');
         setCosts([{ id: '1', name: 'Bahan Baku', amount: 0 }]);
         setMargin(20);
+        setQuantity(1);
     };
 
     // Format to Rupiah currency
@@ -96,7 +104,7 @@ export default function HppCalculator() {
                     <div className="md:col-span-2 space-y-6">
                         <div className="rounded-xl border bg-card p-6 shadow-xs">
                             <h2 className="text-lg font-semibold mb-4">Detail Simulasi</h2>
-                            <div className="space-y-4">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div>
                                     <label className="text-sm font-medium">Nama Produk (Opsional)</label>
                                     <input
@@ -105,6 +113,20 @@ export default function HppCalculator() {
                                         placeholder="Contoh: Nasi Goreng Spesial"
                                         value={productName}
                                         onChange={(e) => setProductName(e.target.value)}
+                                    />
+                                </div>
+                                <div>
+                                    <label className="text-sm font-medium">Banyak Barang / Qty Produksi</label>
+                                    <input
+                                        type="number"
+                                        min="1"
+                                        className="mt-1 flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-xs transition-colors placeholder:text-muted-foreground focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring"
+                                        placeholder="1"
+                                        value={quantity}
+                                        onChange={(e) => {
+                                            const val = parseInt(e.target.value);
+                                            setQuantity(isNaN(val) ? 1 : Math.max(1, val));
+                                        }}
                                     />
                                 </div>
                             </div>
@@ -206,14 +228,26 @@ export default function HppCalculator() {
                                         <span className="text-sm text-muted-foreground">Total HPP</span>
                                         <span className="text-sm font-semibold">{formatRupiah(totalHpp)}</span>
                                     </div>
+                                    {quantity > 1 && (
+                                        <>
+                                            <div className="flex justify-between">
+                                                <span className="text-sm text-muted-foreground">Banyak Barang</span>
+                                                <span className="text-sm font-semibold">{quantity} unit</span>
+                                            </div>
+                                            <div className="flex justify-between">
+                                                <span className="text-sm text-muted-foreground">HPP per Unit</span>
+                                                <span className="text-sm font-semibold">{formatRupiah(hppPerUnit)}</span>
+                                            </div>
+                                        </>
+                                    )}
                                     <div className="flex justify-between">
                                         <span className="text-sm text-muted-foreground">Margin Keuntungan ({margin}%)</span>
                                         <span className="text-sm font-semibold text-emerald-600">
-                                            +{formatRupiah(profit)}
+                                            +{formatRupiah(profit)} {quantity > 1 ? '/ unit' : ''}
                                         </span>
                                     </div>
                                     <div className="flex justify-between pt-3 border-t">
-                                        <span className="text-base font-bold">Rekomendasi Harga</span>
+                                        <span className="text-base font-bold">Rekomendasi Jual {quantity > 1 ? '/ Unit' : ''}</span>
                                         <span className="text-base font-bold text-primary">
                                             {formatRupiah(suggestedPrice)}
                                         </span>
