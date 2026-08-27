@@ -3,6 +3,7 @@ import { useState, useMemo } from 'react';
 import { Plus, Trash2, RotateCcw } from 'lucide-react';
 import { NumericFormat } from 'react-number-format';
 import { Input } from '@/components/ui/input';
+import { useTranslation } from 'react-i18next';
 
 interface CostItem {
     id: string;
@@ -11,6 +12,7 @@ interface CostItem {
 }
 
 export default function HppCalculator() {
+    const { t } = useTranslation();
     const [productName, setProductName] = useState('');
     const [costs, setCosts] = useState<CostItem[]>([
         { id: '1', name: 'Bahan Baku', amount: 0 },
@@ -89,13 +91,13 @@ export default function HppCalculator() {
 
     return (
         <>
-            <Head title="Kalkulator HPP" />
+            <Head title={t('page.hpp_calculator.title', 'Kalkulator HPP')} />
             
             <div className="flex flex-col gap-6 p-6">
                 <div>
-                    <h1 className="text-2xl font-bold tracking-tight">Kalkulator HPP</h1>
+                    <h1 className="text-2xl font-bold tracking-tight">{t('page.hpp_calculator.title', 'Kalkulator HPP')}</h1>
                     <p className="text-muted-foreground text-sm">
-                        Simulasikan Harga Pokok Penjualan (HPP) dan tentukan harga jual produk Anda.
+                        {t('page.hpp_calculator.subtitle', 'Simulasikan Harga Pokok Penjualan (HPP) dan tentukan harga jual produk Anda.')}
                     </p>
                 </div>
 
@@ -103,20 +105,20 @@ export default function HppCalculator() {
                     {/* Left: Costs Inputs */}
                     <div className="md:col-span-2 space-y-6">
                         <div className="rounded-xl border bg-card p-6 shadow-xs">
-                            <h2 className="text-lg font-semibold mb-4">Detail Simulasi</h2>
+                            <h2 className="text-lg font-semibold mb-4">{t('page.hpp_calculator.detail_section', 'Detail Simulasi')}</h2>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div>
-                                    <label className="text-sm font-medium">Nama Produk (Opsional)</label>
+                                    <label className="text-sm font-medium">{t('page.hpp_calculator.product_name', 'Nama Produk (Opsional)')}</label>
                                     <input
                                         type="text"
                                         className="mt-1 flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-xs transition-colors placeholder:text-muted-foreground focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring"
-                                        placeholder="Contoh: Nasi Goreng Spesial"
+                                        placeholder={t('page.hpp_calculator.product_placeholder', 'Contoh: Nasi Goreng Spesial')}
                                         value={productName}
                                         onChange={(e) => setProductName(e.target.value)}
                                     />
                                 </div>
                                 <div>
-                                    <label className="text-sm font-medium">Banyak Barang / Qty Produksi</label>
+                                    <label className="text-sm font-medium">{t('page.hpp_calculator.quantity_label', 'Banyak Barang / Qty Produksi')}</label>
                                     <input
                                         type="number"
                                         min="1"
@@ -134,12 +136,12 @@ export default function HppCalculator() {
 
                         <div className="rounded-xl border bg-card p-6 shadow-xs">
                             <div className="flex justify-between items-center mb-4">
-                                <h2 className="text-lg font-semibold">Komponen Biaya</h2>
+                                <h2 className="text-lg font-semibold">{t('page.hpp_calculator.costs_section', 'Komponen Biaya')}</h2>
                                 <button
                                     onClick={addCostItem}
                                     className="inline-flex items-center gap-1.5 justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring bg-primary text-primary-foreground shadow-sm hover:bg-primary/90 h-9 px-4 py-2"
                                 >
-                                    <Plus className="h-4 w-4" /> Tambah Baris
+                                    <Plus className="h-4 w-4" /> {t('page.hpp_calculator.add_row', 'Tambah Baris')}
                                 </button>
                             </div>
 
@@ -149,7 +151,7 @@ export default function HppCalculator() {
                                         <div className="flex-1">
                                             <input
                                                 type="text"
-                                                placeholder={`Komponen Biaya ${index + 1}`}
+                                                placeholder={t('page.hpp_calculator.cost_placeholder', 'Komponen Biaya') + ` ${index + 1}`}
                                                 className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-xs transition-colors placeholder:text-muted-foreground focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring"
                                                 value={item.name}
                                                 onChange={(e) =>
@@ -192,12 +194,12 @@ export default function HppCalculator() {
                     {/* Right: Calculations Summary */}
                     <div className="space-y-6">
                         <div className="rounded-xl border bg-card p-6 shadow-xs sticky top-6">
-                            <h2 className="text-lg font-semibold mb-4">Hasil Simulasi</h2>
+                            <h2 className="text-lg font-semibold mb-4">{t('page.hpp_calculator.result_section', 'Hasil Simulasi')}</h2>
                             
                             <div className="space-y-6">
                                 <div>
                                     <div className="flex justify-between items-center mb-1">
-                                        <label className="text-sm font-medium">Target Margin (%)</label>
+                                        <label className="text-sm font-medium">{t('page.hpp_calculator.target_margin', 'Target Margin (%)')}</label>
                                         <span className="text-sm font-bold text-primary">{margin}%</span>
                                     </div>
                                     <input
@@ -225,25 +227,25 @@ export default function HppCalculator() {
 
                                 <div className="space-y-3">
                                     <div className="flex justify-between">
-                                        <span className="text-sm text-muted-foreground">Total HPP (Total Biaya)</span>
+                                        <span className="text-sm text-muted-foreground">{t('page.hpp_calculator.total_hpp', 'Total HPP (Total Biaya)')}</span>
                                         <span className="text-sm font-semibold">{formatRupiah(totalHpp)}</span>
                                     </div>
                                     <div className="flex justify-between">
-                                        <span className="text-sm text-muted-foreground">Banyak Barang</span>
+                                        <span className="text-sm text-muted-foreground">{t('page.hpp_calculator.banyak_barang', 'Banyak Barang')}</span>
                                         <span className="text-sm font-semibold">{quantity} unit</span>
                                     </div>
                                     <div className="flex justify-between">
-                                        <span className="text-sm text-muted-foreground">HPP per Unit</span>
+                                        <span className="text-sm text-muted-foreground">{t('page.hpp_calculator.hpp_per_unit', 'HPP per Unit')}</span>
                                         <span className="text-sm font-semibold">{formatRupiah(hppPerUnit)}</span>
                                     </div>
                                     <div className="flex justify-between">
-                                        <span className="text-sm text-muted-foreground">Margin Keuntungan ({margin}%)</span>
+                                        <span className="text-sm text-muted-foreground">{t('page.hpp_calculator.margin_profit', 'Margin Keuntungan')} ({margin}%)</span>
                                         <span className="text-sm font-semibold text-emerald-600">
                                             +{formatRupiah(profit)} / unit
                                         </span>
                                     </div>
                                     <div className="flex justify-between pt-3 border-t">
-                                        <span className="text-base font-bold">Rekomendasi Jual / Unit</span>
+                                        <span className="text-base font-bold">{t('page.hpp_calculator.suggested_price', 'Rekomendasi Jual / Unit')}</span>
                                         <span className="text-base font-bold text-primary">
                                             {formatRupiah(suggestedPrice)}
                                         </span>
@@ -255,7 +257,7 @@ export default function HppCalculator() {
                                         onClick={handleReset}
                                         className="flex-1 inline-flex items-center gap-1.5 justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring border border-input bg-background shadow-xs hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2"
                                     >
-                                        <RotateCcw className="h-4 w-4" /> Reset
+                                        <RotateCcw className="h-4 w-4" /> {t('page.hpp_calculator.reset', 'Reset')}
                                     </button>
                                 </div>
                             </div>

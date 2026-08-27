@@ -157,7 +157,8 @@
             "group_finance": "Finance",
             "profit_wallet_menu_label": "Profit Wallet",
             "capital_wallet_menu_label": "Capital Wallet",
-            "return_menu_label": "Product Returns"
+            "return_menu_label": "Product Returns",
+            "hpp_calculator_menu_label": "HPP Calculator"
         },
         "data_table": {
             "search_component": {
@@ -239,6 +240,25 @@
         }
     },
     "page": {
+        "hpp_calculator": {
+            "title": "HPP Calculator",
+            "subtitle": "Simulate the Cost of Goods Sold (COGS) and determine your product's selling price.",
+            "detail_section": "Simulation Details",
+            "product_name": "Product Name (Optional)",
+            "product_placeholder": "Example: Special Fried Rice",
+            "quantity_label": "Quantity / Production Qty",
+            "costs_section": "Cost Components",
+            "add_row": "Add Row",
+            "cost_placeholder": "Cost Component",
+            "result_section": "Simulation Result",
+            "target_margin": "Target Margin (%)",
+            "total_hpp": "Total HPP (Total Cost)",
+            "banyak_barang": "Quantity",
+            "hpp_per_unit": "HPP per Unit",
+            "margin_profit": "Profit Margin",
+            "suggested_price": "Suggested Price / Unit",
+            "reset": "Reset"
+        },
         "data_management": {
             "title": "Data Management",
             "subtitle": "Purge legacy data to optimize application performance.",

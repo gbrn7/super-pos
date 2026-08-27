@@ -157,7 +157,8 @@
             "group_finance": "Keuangan",
             "profit_wallet_menu_label": "Dompet Profit",
             "capital_wallet_menu_label": "Dompet Modal",
-            "return_menu_label": "Retur Barang"
+            "return_menu_label": "Retur Barang",
+            "hpp_calculator_menu_label": "Kalkulator HPP"
         },
         "data_table": {
             "search_component": {
