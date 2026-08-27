@@ -1,6 +1,8 @@
 import { Head } from '@inertiajs/react';
 import { useState, useMemo } from 'react';
 import { Plus, Trash2, RotateCcw } from 'lucide-react';
+import { NumericFormat } from 'react-number-format';
+import { Input } from '@/components/ui/input';
 
 interface CostItem {
     id: string;
@@ -134,18 +136,20 @@ export default function HppCalculator() {
                                             />
                                         </div>
                                         <div className="w-1/3">
-                                            <input
-                                                type="number"
-                                                min="0"
+                                            <NumericFormat
+                                                thousandSeparator="."
+                                                decimalSeparator=","
+                                                prefix="Rp "
+                                                allowNegative={false}
+                                                customInput={Input}
                                                 placeholder="Rp 0"
-                                                className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-xs transition-colors placeholder:text-muted-foreground focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring"
-                                                value={item.amount || ''}
-                                                onChange={(e) => {
-                                                    const val = parseFloat(e.target.value);
+                                                value={item.amount === 0 ? '' : item.amount}
+                                                onValueChange={(values) => {
+                                                    const { floatValue } = values;
                                                     updateCostItem(
                                                         item.id,
                                                         'amount',
-                                                        isNaN(val) ? 0 : Math.max(0, val)
+                                                        floatValue === undefined ? 0 : floatValue
                                                     );
                                                 }}
                                             />
