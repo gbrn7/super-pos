@@ -17,7 +17,6 @@ export default function HppCalculator() {
     const [costs, setCosts] = useState<CostItem[]>([
         { id: '1', name: 'page.hpp_calculator.default_costs.raw_material', amount: 0 },
         { id: '2', name: 'page.hpp_calculator.default_costs.packaging', amount: 0 },
-        { id: '3', name: 'page.hpp_calculator.default_costs.operational', amount: 0 },
     ]);
     const [margin, setMargin] = useState(20);
     const [quantity, setQuantity] = useState(1);
@@ -79,7 +78,6 @@ export default function HppCalculator() {
         setCosts([
             { id: '1', name: 'page.hpp_calculator.default_costs.raw_material', amount: 0 },
             { id: '2', name: 'page.hpp_calculator.default_costs.packaging', amount: 0 },
-            { id: '3', name: 'page.hpp_calculator.default_costs.operational', amount: 0 },
         ]);
         setMargin(20);
         setQuantity(1);
