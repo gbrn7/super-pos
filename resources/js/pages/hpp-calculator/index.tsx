@@ -225,29 +225,25 @@ export default function HppCalculator() {
 
                                 <div className="space-y-3">
                                     <div className="flex justify-between">
-                                        <span className="text-sm text-muted-foreground">Total HPP</span>
+                                        <span className="text-sm text-muted-foreground">Total HPP (Total Biaya)</span>
                                         <span className="text-sm font-semibold">{formatRupiah(totalHpp)}</span>
                                     </div>
-                                    {quantity > 1 && (
-                                        <>
-                                            <div className="flex justify-between">
-                                                <span className="text-sm text-muted-foreground">Banyak Barang</span>
-                                                <span className="text-sm font-semibold">{quantity} unit</span>
-                                            </div>
-                                            <div className="flex justify-between">
-                                                <span className="text-sm text-muted-foreground">HPP per Unit</span>
-                                                <span className="text-sm font-semibold">{formatRupiah(hppPerUnit)}</span>
-                                            </div>
-                                        </>
-                                    )}
+                                    <div className="flex justify-between">
+                                        <span className="text-sm text-muted-foreground">Banyak Barang</span>
+                                        <span className="text-sm font-semibold">{quantity} unit</span>
+                                    </div>
+                                    <div className="flex justify-between">
+                                        <span className="text-sm text-muted-foreground">HPP per Unit</span>
+                                        <span className="text-sm font-semibold">{formatRupiah(hppPerUnit)}</span>
+                                    </div>
                                     <div className="flex justify-between">
                                         <span className="text-sm text-muted-foreground">Margin Keuntungan ({margin}%)</span>
                                         <span className="text-sm font-semibold text-emerald-600">
-                                            +{formatRupiah(profit)} {quantity > 1 ? '/ unit' : ''}
+                                            +{formatRupiah(profit)} / unit
                                         </span>
                                     </div>
                                     <div className="flex justify-between pt-3 border-t">
-                                        <span className="text-base font-bold">Rekomendasi Jual {quantity > 1 ? '/ Unit' : ''}</span>
+                                        <span className="text-base font-bold">Rekomendasi Jual / Unit</span>
                                         <span className="text-base font-bold text-primary">
                                             {formatRupiah(suggestedPrice)}
                                         </span>
