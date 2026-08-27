@@ -70,6 +70,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::resource('example', ExampleController::class);
 
+    Route::inertia('hpp-calculator', 'hpp-calculator/index')->name('hpp-calculator');
+
     Route::resource('profit-wallet', ProfitWalletController::class)->only('index');
     Route::resource('capital-wallet', CapitalWalletController::class)->only('index');
 
