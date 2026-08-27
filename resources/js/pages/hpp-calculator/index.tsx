@@ -15,7 +15,9 @@ export default function HppCalculator() {
     const { t } = useTranslation();
     const [productName, setProductName] = useState('');
     const [costs, setCosts] = useState<CostItem[]>([
-        { id: '1', name: 'Bahan Baku', amount: 0 },
+        { id: '1', name: 'page.hpp_calculator.default_costs.raw_material', amount: 0 },
+        { id: '2', name: 'page.hpp_calculator.default_costs.packaging', amount: 0 },
+        { id: '3', name: 'page.hpp_calculator.default_costs.operational', amount: 0 },
     ]);
     const [margin, setMargin] = useState(20);
     const [quantity, setQuantity] = useState(1);
@@ -74,7 +76,11 @@ export default function HppCalculator() {
     // Reset form
     const handleReset = () => {
         setProductName('');
-        setCosts([{ id: '1', name: 'Bahan Baku', amount: 0 }]);
+        setCosts([
+            { id: '1', name: 'page.hpp_calculator.default_costs.raw_material', amount: 0 },
+            { id: '2', name: 'page.hpp_calculator.default_costs.packaging', amount: 0 },
+            { id: '3', name: 'page.hpp_calculator.default_costs.operational', amount: 0 },
+        ]);
         setMargin(20);
         setQuantity(1);
     };
@@ -153,7 +159,7 @@ export default function HppCalculator() {
                                                 type="text"
                                                 placeholder={t('page.hpp_calculator.cost_placeholder', 'Komponen Biaya') + ` ${index + 1}`}
                                                 className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-xs transition-colors placeholder:text-muted-foreground focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring"
-                                                value={item.name}
+                                                value={item.name.startsWith('page.hpp_calculator.default_costs.') ? t(item.name) : item.name}
                                                 onChange={(e) =>
                                                     updateCostItem(item.id, 'name', e.target.value)
                                                 }

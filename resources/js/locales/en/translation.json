@@ -257,7 +257,12 @@
             "hpp_per_unit": "HPP per Unit",
             "margin_profit": "Profit Margin",
             "suggested_price": "Suggested Price / Unit",
-            "reset": "Reset"
+            "reset": "Reset",
+            "default_costs": {
+                "raw_material": "Raw Material",
+                "packaging": "Packaging",
+                "operational": "Operational"
+            }
         },
         "data_management": {
             "title": "Data Management",

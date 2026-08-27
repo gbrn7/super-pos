@@ -240,6 +240,13 @@
         }
     },
     "page": {
+        "hpp_calculator": {
+            "default_costs": {
+                "raw_material": "Bahan Baku",
+                "packaging": "Kemasan",
+                "operational": "Operasional"
+            }
+        },
         "data_management": {
             "title": "Manajemen Data",
             "subtitle": "Bersihkan data lama untuk mengoptimalkan kinerja aplikasi.",
