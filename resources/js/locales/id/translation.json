@@ -226,6 +226,7 @@
             "row_per_page": "Baris per halaman",
             "selected_row": "%d dari %d baris terpilih",
             "pagination_info": "Halaman %d dari %d",
+            "row_info": "Menampilkan %d sampai %d",
             "all_cashiers": "Semua Kasir",
             "all_payment_methods": "Semua Metode Pembayaran",
             "pagination": {

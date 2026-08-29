@@ -416,8 +416,8 @@ export function BulkAddProductsDialog({
 
                 const stockVal =
                     item.stock !== '' &&
-                    item.stock !== null &&
-                    !isNaN(Number(item.stock))
+                        item.stock !== null &&
+                        !isNaN(Number(item.stock))
                         ? Number(item.stock)
                         : 0;
                 formData.append(
@@ -514,8 +514,8 @@ export function BulkAddProductsDialog({
                     </span>
                 </Button>
             </DialogTrigger>
-            <DialogContent className="max-h-[92vh] w-[calc(100%-1rem)] overflow-y-auto rounded-xl p-4 sm:max-h-[90vh] sm:w-full sm:max-w-6xl sm:p-6">
-                <form onSubmit={handleSubmit} className="space-y-4">
+            <DialogContent className="flex flex-col max-h-[92vh] w-[calc(100%-1rem)] rounded-xl p-4 sm:max-h-[90vh] sm:w-full sm:max-w-6xl sm:p-6">
+                <form onSubmit={handleSubmit} className="flex flex-col flex-1 min-h-0 space-y-4">
                     <DialogHeader>
                         <DialogTitle className="flex items-center gap-2 text-lg leading-tight font-bold sm:text-xl">
                             <PlusCircle className="h-5 w-5 shrink-0 text-primary" />
@@ -672,7 +672,7 @@ export function BulkAddProductsDialog({
                     )}
 
                     {/* List of items to create */}
-                    <div className="max-h-[50vh] space-y-3 overflow-y-auto pr-1">
+                    <div className="flex-1 min-h-0 space-y-3 overflow-y-auto pr-1">
                         {paginatedItems.map((item, pageRelativeIndex) => {
                             const originalIndex =
                                 startIndex + pageRelativeIndex;
@@ -909,7 +909,7 @@ export function BulkAddProductsDialog({
                                                         originalIndex,
                                                         'cost_price',
                                                         values.floatValue ??
-                                                            null,
+                                                        null,
                                                     )
                                                 }
                                                 className={
@@ -954,7 +954,7 @@ export function BulkAddProductsDialog({
                                                         originalIndex,
                                                         'price',
                                                         values.floatValue ??
-                                                            null,
+                                                        null,
                                                     )
                                                 }
                                                 className={
@@ -1034,7 +1034,7 @@ export function BulkAddProductsDialog({
                             <div>
                                 {sprintf(
                                     t(
-                                        'component.data_table.pagination_info',
+                                        'component.data_table.row_info',
                                         'Menampilkan %d - %d dari %d produk',
                                     ),
                                     startIndex + 1,
