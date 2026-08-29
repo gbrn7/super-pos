@@ -8,7 +8,7 @@ import { formatRupiah } from '@/lib/format-money';
 import axiosInstance from '@/lib/axios';
 import { handleApiError } from '@/lib/utils';
 import { index as profitWalletRoute } from '@/routes/profit-wallet';
-import { index as apiGetProfitWallet } from '@/routes/apiProfitWallet';
+import { index as apiGetProfitWallet, exportData as apiExportProfitWallet } from '@/routes/apiProfitWallet';
 import { columns } from './columns';
 import { DataTable } from './data-table';
 import { Can } from '@/components/auth/can';
@@ -31,6 +31,7 @@ export default function ProfitWalletIndex({ storeSetting }: { storeSetting?: Sto
         total_outflow: 0,
     });
     const [processing, setProcessing] = useState(false);
+    const [exporting, setExporting] = useState(false);
     const [detailOpen, setDetailOpen] = useState(false);
     const [selectedTransaction, setSelectedTransaction] = useState<any>(null);
 
@@ -94,6 +95,44 @@ export default function ProfitWalletIndex({ storeSetting }: { storeSetting?: Sto
             }
         } catch (error) {
             handleApiError(error);
+        }
+    };
+
+    const handleExport = async () => {
+        try {
+            setExporting(true);
+            const params: Record<string, any> = {
+                ...queryParam,
+                format: 'excel',
+            };
+            delete params.limit;
+            delete params.page;
+
+            const exportUrl = apiExportProfitWallet({ query: params }).url;
+
+            const response = await axiosInstance.get(exportUrl, {
+                responseType: 'blob',
+            });
+
+            const blob = new Blob([response.data], {
+                type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+            });
+
+            const url = window.URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute(
+                'download',
+                `laporan-dompet-profit-${new Date().toISOString().slice(0, 10)}.xlsx`
+            );
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
+            window.URL.revokeObjectURL(url);
+        } catch (error) {
+            handleApiError(error);
+        } finally {
+            setExporting(false);
         }
     };
 
@@ -178,6 +217,8 @@ export default function ProfitWalletIndex({ storeSetting }: { storeSetting?: Sto
                     onChangePaginationPage={(val) => handleQueryParamChange('page', val)}
                     onChangePaginationLimit={(val) => handleQueryParamChange('limit', val)}
                     limitOptions={[10, 25, 50, 100]}
+                    onExport={handleExport}
+                    exporting={exporting}
                 />
 
                 {/* Struk / Detail Transaction Modal */}
