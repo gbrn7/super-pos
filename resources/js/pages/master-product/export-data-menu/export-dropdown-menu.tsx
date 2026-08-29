@@ -6,6 +6,7 @@ import { Spinner } from '@/components/ui/spinner';
 import axiosInstance from '@/lib/axios';
 import apiMasterProducts from '@/routes/apiMasterProducts';
 import { handleApiError } from '@/lib/utils';
+import * as XLSX from 'xlsx';
 
 interface ExportDropdownMenuProps<TData> {
     data?: TData[];
@@ -20,32 +21,29 @@ export function ExportDropdownMenu<TData>({
     const handleExport = async () => {
         try {
             setLoading(true);
-            const route = apiMasterProducts.exportMasterProductsExcelData();
+            const route = apiMasterProducts.index();
             const response = await axiosInstance.get(route.url, {
-                responseType: 'blob',
+                params: { limit: 999999 }
             });
 
-            const blob = new Blob([response.data], {
-                type: response.headers['content-type'] || 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-            });
-            const url = window.URL.createObjectURL(blob);
-            const link = document.createElement('a');
-            link.href = url;
+            const masterProducts = response.data.data.items || [];
 
-            const contentDisposition = response.headers['content-disposition'];
-            let fileName = `master-products_${new Date().toISOString().split('T')[0]}.xlsx`;
-            if (contentDisposition) {
-                const match = contentDisposition.match(/filename="?([^";]+)"?/);
-                if (match && match[1]) {
-                    fileName = match[1];
-                }
-            }
+            const rows = masterProducts.map((masterProduct: any) => ({
+                [t('page.master_product.form.name_label', 'Nama')]: masterProduct.name,
+                [t('page.master_product.form.category_label', 'Kategori')]: masterProduct.category_name || '',
+                [t('page.master_product.form.unit_label', 'Satuan')]: masterProduct.unit_name || '',
+                [t('page.master_product.form.barcode_label', 'Barcode (Opsional)')]: masterProduct.barcode || '',
+                [t('page.master_product.form.cost_price_label', 'Harga Modal')]: masterProduct.cost_price,
+                [t('page.master_product.form.price_label', 'Harga Jual')]: masterProduct.price,
+                [t('page.master_product.form.desc_label', 'Deskripsi (Opsional)')]: masterProduct.desc || '',
+            }));
 
-            link.setAttribute('download', fileName);
-            document.body.appendChild(link);
-            link.click();
-            link.remove();
-            window.URL.revokeObjectURL(url);
+            const worksheet = XLSX.utils.json_to_sheet(rows);
+            const workbook = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(workbook, worksheet, 'Master Products');
+
+            const fileName = `master-products_${new Date().toISOString().split('T')[0]}.xlsx`;
+            XLSX.writeFile(workbook, fileName);
         } catch (error) {
             handleApiError(error);
         } finally {

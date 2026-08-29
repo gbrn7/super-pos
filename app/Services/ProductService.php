@@ -28,6 +28,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Maatwebsite\Excel\Facades\Excel;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Csv;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
@@ -560,6 +561,14 @@ class ProductService implements ProductServiceInterface
             }
 
             $sheet->fromArray($rows, null, 'A2');
+
+            if (! class_exists('XMLWriter')) {
+                $temporaryFilePath = tempnam(sys_get_temp_dir(), 'products-export-').'.csv';
+                $writer = new Csv($spreadsheet);
+                $writer->save($temporaryFilePath);
+
+                return response()->download($temporaryFilePath, 'products-export.csv')->deleteFileAfterSend(true);
+            }
 
             $temporaryFilePath = tempnam(sys_get_temp_dir(), 'products-export-').'.xlsx';
             $writer = new Xlsx($spreadsheet);

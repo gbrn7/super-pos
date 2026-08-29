@@ -6,6 +6,7 @@ import { Spinner } from '@/components/ui/spinner';
 import axiosInstance from '@/lib/axios';
 import apiCategories from '@/routes/apiCategories';
 import { handleApiError } from '@/lib/utils';
+import * as XLSX from 'xlsx';
 
 interface ExportDropdownMenuProps<TData> {
     data?: TData[];
@@ -20,34 +21,24 @@ export function ExportDropdownMenu<TData>({
     const handleExport = async () => {
         try {
             setLoading(true);
-            const route = apiCategories.exportCategoriesExcelData();
+            const route = apiCategories.index();
             const response = await axiosInstance.get(route.url, {
-                responseType: 'blob',
+                params: { limit: 999999 }
             });
 
-            const blob = new Blob([response.data], {
-                type:
-                    response.headers['content-type'] ||
-                    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-            });
-            const url = window.URL.createObjectURL(blob);
-            const link = document.createElement('a');
-            link.href = url;
+            const categories = response.data.data.items || [];
 
-            const contentDisposition = response.headers['content-disposition'];
-            let fileName = `categories_${new Date().toISOString().split('T')[0]}.xlsx`;
-            if (contentDisposition) {
-                const match = contentDisposition.match(/filename="?([^";]+)"?/);
-                if (match && match[1]) {
-                    fileName = match[1];
-                }
-            }
+            const rows = categories.map((category: any) => ({
+                [t('page.category.form.name_label', 'Nama')]: category.name,
+                [t('page.category.form.desc_label', 'Deskripsi')]: category.desc || '',
+            }));
 
-            link.setAttribute('download', fileName);
-            document.body.appendChild(link);
-            link.click();
-            link.remove();
-            window.URL.revokeObjectURL(url);
+            const worksheet = XLSX.utils.json_to_sheet(rows);
+            const workbook = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(workbook, worksheet, 'Categories');
+
+            const fileName = `categories_${new Date().toISOString().split('T')[0]}.xlsx`;
+            XLSX.writeFile(workbook, fileName);
         } catch (error) {
             handleApiError(error);
         } finally {

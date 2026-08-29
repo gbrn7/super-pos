@@ -6,6 +6,7 @@ import { Spinner } from '@/components/ui/spinner';
 import axiosInstance from '@/lib/axios';
 import { handleApiError } from '@/lib/utils';
 import apiUnits from '@/routes/apiUnits';
+import * as XLSX from 'xlsx';
 
 interface ExportDropdownMenuProps<TData> {
     data?: TData[];
@@ -18,36 +19,23 @@ export function ExportDropdownMenu() {
     const handleExport = async () => {
         try {
             setLoading(true);
-            const route = apiUnits.exportUnitsExcelData();
+            const route = apiUnits.index();
             const response = await axiosInstance.get(route.url, {
-                responseType: 'blob',
+                params: { limit: 999999 }
             });
 
-            const blob = new Blob([response.data], {
-                type:
-                    response.headers['content-type'] ||
-                    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-            });
-            const url = window.URL.createObjectURL(blob);
-            const link = document.createElement('a');
-            link.href = url;
+            const units = response.data.data.items || [];
 
-            const contentDisposition = response.headers['content-disposition'];
-            let fileName = `units_${new Date().toISOString().split('T')[0]}.xlsx`;
+            const rows = units.map((unit: any) => ({
+                [t('page.unit.form.name_label', 'Nama')]: unit.name,
+            }));
 
-            if (contentDisposition) {
-                const match = contentDisposition.match(/filename="?([^";]+)"?/);
+            const worksheet = XLSX.utils.json_to_sheet(rows);
+            const workbook = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(workbook, worksheet, 'Units');
 
-                if (match && match[1]) {
-                    fileName = match[1];
-                }
-            }
-
-            link.setAttribute('download', fileName);
-            document.body.appendChild(link);
-            link.click();
-            link.remove();
-            window.URL.revokeObjectURL(url);
+            const fileName = `units_${new Date().toISOString().split('T')[0]}.xlsx`;
+            XLSX.writeFile(workbook, fileName);
         } catch (error) {
             handleApiError(error);
         } finally {

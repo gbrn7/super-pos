@@ -8,12 +8,11 @@ use Illuminate\Support\Facades\Log;
 
 class CheckException
 {
-    public static function Check(Exception $th): Exception
+    public static function Check(\Throwable $th): \Throwable
     {
         // Log the error
-        Log::error('Error', [
-            'message' => $th->getMessage(),
-            'code' => $th->getCode(),
+        Log::error($th->getMessage(), [
+            'exception' => $th,
         ]);
 
         $code = $th->getCode();
