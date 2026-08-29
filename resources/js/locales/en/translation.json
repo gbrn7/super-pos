@@ -225,6 +225,7 @@
             "row_per_page": "Rows per page",
             "selected_row": "%d of %d row(s) selected",
             "pagination_info": "Page %d of %d",
+            "row_info": "Show %d to %d",
             "all_cashiers": "All Cashiers",
             "all_payment_methods": "All Payment Methods",
             "pagination": {
