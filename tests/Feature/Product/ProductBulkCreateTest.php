@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Category;
+use App\Models\MasterProduct;
 use App\Models\Product;
 use App\Models\Role;
 use App\Models\Unit;
@@ -169,4 +170,57 @@ test('api bulk create products with images endpoint', function () {
     $product = Product::where('barcode', 'BARCODE-IMG-001')->first();
     expect($product->image)->not->toBeNull();
     Storage::disk('public')->assertExists($product->image);
+});
+
+test('it syncs master products when bulk creating products', function () {
+    $category = Category::factory()->create(['name' => 'Kategori Test']);
+    $unit = Unit::create(['name' => 'PCS']);
+
+    $masterProduct = MasterProduct::create([
+        'name' => 'Existing Master',
+        'barcode' => 'BARCODE-BULK-001',
+        'cost_price' => 1000,
+        'price' => 2000,
+        'category_name' => 'Old Cat',
+        'unit_name' => 'Old Unit',
+    ]);
+
+    $productsData = [
+        [
+            'category_id' => $category->id,
+            'unit_id' => $unit->id,
+            'name' => 'Existing Master Updated',
+            'cost_price' => 5000,
+            'price' => 10000,
+            'barcode' => 'BARCODE-BULK-001',
+        ],
+        [
+            'category_id' => $category->id,
+            'unit_id' => $unit->id,
+            'name' => 'New Bulk Product',
+            'cost_price' => 8000,
+            'price' => 15000,
+            'barcode' => 'BARCODE-BULK-002',
+        ],
+    ];
+
+    $service = app(ProductServiceInterface::class);
+
+    $count = $service->bulkCreate($productsData);
+
+    expect($count)->toBe(2);
+
+    $masterProduct->refresh();
+    expect((float) $masterProduct->cost_price)->toEqual(5000.0)
+        ->and((float) $masterProduct->price)->toEqual(10000.0)
+        ->and($masterProduct->category_name)->toBe('Kategori Test')
+        ->and($masterProduct->unit_name)->toBe('PCS');
+
+    $newMaster = MasterProduct::where('barcode', 'BARCODE-BULK-002')->first();
+    expect($newMaster)->not->toBeNull()
+        ->and($newMaster->name)->toBe('New Bulk Product')
+        ->and((float) $newMaster->cost_price)->toEqual(8000.0)
+        ->and((float) $newMaster->price)->toEqual(15000.0)
+        ->and($newMaster->category_name)->toBe('Kategori Test')
+        ->and($newMaster->unit_name)->toBe('PCS');
 });
