@@ -172,8 +172,8 @@ export default function ReturnModal({ isOpen, onClose, transaction, onSuccess }:
                                     disabled={isAllReturned}
                                     className="h-8 text-xs font-semibold"
                                 >
-                                    {isAllReturned 
-                                        ? t('page.return.modal.select_all_btn', 'Pilih Semua Produk') 
+                                    {isAllReturned
+                                        ? t('page.return.modal.select_all_btn', 'Pilih Semua Produk')
                                         : (isAllTransactionSelected ? t('page.return.modal.deselect_all_btn', 'Batal Pilih Semua') : t('page.return.modal.select_all_btn', 'Pilih Semua Produk'))}
                                 </Button>
                             )}
@@ -208,7 +208,7 @@ export default function ReturnModal({ isOpen, onClose, transaction, onSuccess }:
                                             const isDisabled = maxQty <= 0;
 
                                             return (
-                                                <TableRow 
+                                                <TableRow
                                                     key={detail.id}
                                                     className={isDisabled ? "opacity-50 bg-muted/20" : ""}
                                                 >
@@ -295,7 +295,7 @@ export default function ReturnModal({ isOpen, onClose, transaction, onSuccess }:
                     {/* Financial Summary Breakdown */}
                     <div className="rounded-lg border bg-muted/30 p-4 space-y-2">
                         <div className="flex items-center justify-between text-sm">
-                            <span className="font-medium text-muted-foreground">{t('page.return.modal.total_refund_label', 'Total Dana Refund:')}</span>
+                            <span className="font-medium text-muted-foreground">{t('page.return.total_refund_label', 'Total Dana Refund:')}</span>
                             <span className="text-lg font-bold text-rose-600 dark:text-rose-400">
                                 {formatRupiah(totalRefund)}
                             </span>
