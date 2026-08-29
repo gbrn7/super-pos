@@ -115,3 +115,23 @@ test('it updates master product when product is updated', function () {
         ->and($masterProduct->category_name)->toBe('Snack')
         ->and($masterProduct->unit_name)->toBe('PACK');
 });
+
+test('it generates a unique barcode when creating a product without barcode', function () {
+    $category = Category::factory()->create();
+    $unit = Unit::factory()->create();
+
+    $service = app(ProductService::class);
+
+    $product = $service->create([
+        'name' => 'Kopi Tanpa Barcode',
+        'cost_price' => 1000,
+        'price' => 1500,
+        'category_id' => $category->id,
+        'unit_id' => $unit->id,
+        'stock' => 10,
+    ]);
+
+    expect($product)->not->toBeNull();
+    expect($product->barcode)->not->toBeEmpty();
+    expect($product->barcode)->toBeString();
+});

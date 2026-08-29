@@ -92,7 +92,7 @@ class ProductService implements ProductServiceInterface
 
             if (empty($data['barcode'])) {
                 do {
-                    $generatedBarcode = strtoupper(Str::random(4)).mt_rand(1000000000000, 9999999999999);
+                    $generatedBarcode = BarcodeGenerator::generate();
                 } while ($this->productRepository->getByBarcode($generatedBarcode) !== null);
 
                 $data['barcode'] = $generatedBarcode;
@@ -180,12 +180,17 @@ class ProductService implements ProductServiceInterface
                         ->headline()
                         ->replaceMatches('/[^A-Z]/', '').'-'.strtoupper(Str::random(8));
 
-                if (! empty($data['barcode'])) {
-                    $product = $this->productRepository->getByBarcode($data['barcode']);
+                $barcode = $data['barcode'] ?? null;
+                if (empty($barcode)) {
+                    do {
+                        $barcode = BarcodeGenerator::generate();
+                    } while ($this->productRepository->getByBarcode($barcode) !== null || $insertData->contains('barcode', $barcode));
+                } else {
+                    $product = $this->productRepository->getByBarcode($barcode);
 
                     if (isset($product)) {
                         throw new Exception(
-                            sprintf(trans('message.error.product_with_barcode_exist'), $data['barcode']),
+                            sprintf(trans('message.error.product_with_barcode_exist'), $barcode),
                             Response::HTTP_UNPROCESSABLE_ENTITY
                         );
                     }
@@ -205,7 +210,7 @@ class ProductService implements ProductServiceInterface
                     'unit_id' => $data['unit_id'],
                     'name' => $data['name'],
                     'sku' => $sku,
-                    'barcode' => $data['barcode'] ?? null,
+                    'barcode' => $barcode,
                     'is_active' => $data['is_active'] ?? Constants::TRUE_VALUE,
                     'is_unlimited' => $data['is_unlimited'] ?? Constants::FALSE_VALUE,
                     'desc' => $data['desc'] ?? Constants::EMPTY_STRING_VALUE,
@@ -462,11 +467,18 @@ class ProductService implements ProductServiceInterface
                             $is_unlimited = Constants::FALSE_VALUE;
                     }
 
+                    $barcode = $row['barcode_opsional'];
+                    if (empty($barcode)) {
+                        do {
+                            $barcode = BarcodeGenerator::generate();
+                        } while ($this->productRepository->getByBarcode($barcode) !== null || $newData->contains('barcode', $barcode));
+                    }
+
                     $newProduct = [
                         'name' => Str::upper($row['nama']),
                         'category_id' => $categoryId,
                         'unit_id' => $unitId,
-                        'barcode' => $row['barcode_opsional'],
+                        'barcode' => $barcode,
                         'stock' => $row['stok'] ?? Constants::EMPTY_NUMBER_VALUE,
                         'cost_price' => $row['harga_modal'] ?? Constants::EMPTY_NUMBER_VALUE,
                         'price' => $row['harga_jual'] ?? Constants::EMPTY_NUMBER_VALUE,

@@ -2,8 +2,18 @@
 
 namespace App\Support\Utils;
 
+use Illuminate\Support\Str;
+
 class BarcodeGenerator
 {
+    /**
+     * Generate a random barcode string.
+     */
+    public static function generate(): string
+    {
+        return strtoupper(Str::random(4)).mt_rand(1000000000000, 9999999999999);
+    }
+
     /**
      * Generate HTML representation of Code128 barcode.
      */

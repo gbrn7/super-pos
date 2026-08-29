@@ -170,3 +170,38 @@ test('api bulk create products with images endpoint', function () {
     expect($product->image)->not->toBeNull();
     Storage::disk('public')->assertExists($product->image);
 });
+
+it('generates barcodes when bulk creating products without barcodes', function () {
+    $category = Category::factory()->create();
+    $unit = Unit::create(['name' => 'PCS']);
+
+    $productsData = [
+        [
+            'category_id' => $category->id,
+            'unit_id' => $unit->id,
+            'name' => 'Bulk No Barcode 1',
+            'cost_price' => 5000,
+            'price' => 10000,
+        ],
+        [
+            'category_id' => $category->id,
+            'unit_id' => $unit->id,
+            'name' => 'Bulk No Barcode 2',
+            'cost_price' => 8000,
+            'price' => 15000,
+        ],
+    ];
+
+    $service = app(ProductServiceInterface::class);
+
+    $count = $service->bulkCreate($productsData);
+
+    expect($count)->toBe(2);
+
+    $p1 = Product::where('name', 'Bulk No Barcode 1')->first();
+    $p2 = Product::where('name', 'Bulk No Barcode 2')->first();
+
+    expect($p1->barcode)->not->toBeNull();
+    expect($p2->barcode)->not->toBeNull();
+    expect($p1->barcode)->not->toEqual($p2->barcode);
+});
