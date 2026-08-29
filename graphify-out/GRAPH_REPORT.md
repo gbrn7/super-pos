@@ -1,16 +1,16 @@
 # Graph Report - super-pos  (2026-08-29)
 
 ## Corpus Check
-- 776 files · ~437,731 words
+- 776 files · ~437,837 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 3655 nodes · 9600 edges · 392 communities (235 shown, 157 thin omitted)
-- Extraction: 97% EXTRACTED · 3% INFERRED · 0% AMBIGUOUS · INFERRED: 332 edges (avg confidence: 0.78)
+- 3655 nodes · 9601 edges · 390 communities (232 shown, 158 thin omitted)
+- Extraction: 97% EXTRACTED · 3% INFERRED · 0% AMBIGUOUS · INFERRED: 333 edges (avg confidence: 0.78)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `7d57bedb`
+- Built from commit: `2c7eb0a3`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -96,6 +96,7 @@
 - 2026_05_13_155549_create_telescope_entries_table.php Domain (78)
 - Pest & Testing Suite (79)
 - collapsible.tsx Domain (80)
+- User & Auth Management (81)
 - API Controllers & Endpoints (82)
 - Inertia & Wayfinder Integration (83)
 - FormatIdrMoney.php Domain (84)
@@ -130,7 +131,6 @@
 - @base-ui/react
 - typescript
 - clsx
-- RoleServiceInterface.php
 - concurrently
 - RoleController
 - @dnd-kit/utilities
@@ -257,7 +257,6 @@
 - globals
 - typescript-eslint
 - @radix-ui/react-label
-- eslint-plugin-react
 - @radix-ui/react-separator
 - eslint-plugin-react-hooks
 - globals
@@ -352,14 +351,14 @@
 ## Surprising Connections (you probably didn't know these)
 - `cashierSetupUser()` --calls--> `Permission`  [INFERRED]
   tests/Feature/Cashier/CashierCheckoutTest.php → app/Models/Permission.php
-- `getUser()` --calls--> `Permission`  [INFERRED]
-  tests/Feature/Category/CategoryTest.php → app/Models/Permission.php
-- `getPaymentMethodUser()` --calls--> `Permission`  [INFERRED]
-  tests/Feature/PaymentMethod/PaymentMethodImportTest.php → app/Models/Permission.php
-- `getUnitUser()` --calls--> `Permission`  [INFERRED]
-  tests/Feature/Unit/UnitImportTest.php → app/Models/Permission.php
 - `cashierSetupUser()` --calls--> `Role`  [INFERRED]
   tests/Feature/Cashier/CashierCheckoutTest.php → app/Models/Role.php
+- `getUser()` --calls--> `Role`  [INFERRED]
+  tests/Feature/Category/CategoryTest.php → app/Models/Role.php
+- `getPaymentMethodUser()` --calls--> `Role`  [INFERRED]
+  tests/Feature/PaymentMethod/PaymentMethodImportTest.php → app/Models/Role.php
+- `getUnitUser()` --calls--> `Role`  [INFERRED]
+  tests/Feature/Unit/UnitImportTest.php → app/Models/Role.php
 
 ## Import Cycles
 - None detected.
@@ -372,19 +371,19 @@
 - **Laravel Frontend-Backend Integration Stack** — github_skills_wayfinder_development_skill_laravel_wayfinder, agents_inertia_v3_rules, github_skills_tailwindcss_development_skill_tailwind_v4 [INFERRED 0.85]
 - **Laravel Security and Input Validation Pattern** — github_skills_laravel_best_practices_rules_security_mass_assignment_protection, github_skills_laravel_best_practices_rules_validation_form_request_classes, github_skills_laravel_best_practices_rules_routing_thin_controllers [INFERRED 0.85]
 
-## Communities (392 total, 157 thin omitted)
+## Communities (390 total, 158 thin omitted)
 
 ### Community 0 - "API Controllers & Endpoints (0)"
-Cohesion: 0.05
-Nodes (17): ApiDashboardController, CapitalWalletController, CashierController, CategoryController, Controller, ExampleController, MasterProductController, PaymentMethodController (+9 more)
+Cohesion: 0.07
+Nodes (6): CategoryController, MasterProductController, PaymentMethodController, ProductController, Illuminate\Routing\Controllers\HasMiddleware, Illuminate\Routing\Controllers\Middleware
 
 ### Community 1 - "User & Auth Management (1)"
 Cohesion: 0.18
 Nodes (39): ErrorFormInfo(), Dialog(), DialogClose(), DialogContent(), DialogDescription(), DialogFooter(), DialogHeader(), DialogTitle() (+31 more)
 
 ### Community 2 - "Data Table UI Components (2)"
-Cohesion: 0.05
-Nodes (58): AlertError(), DataTableColumnHeader(), PasswordInput(), Alert(), AlertDescription(), AlertTitle(), alertVariants, AlertDialogOverlay() (+50 more)
+Cohesion: 0.04
+Nodes (76): DataTableColumnHeader(), PasswordInput(), AlertDialogOverlay(), buttonVariants, ComboboxChip(), ComboboxChips(), ComboboxChipsInput(), ComboboxClear() (+68 more)
 
 ### Community 3 - "react Domain (3)"
 Cohesion: 0.15
@@ -404,7 +403,7 @@ Nodes (61): ReturnModal(), handleApiError(), showErrorToast(), showSuccessToast(
 
 ### Community 7 - "Transaction Management (7)"
 Cohesion: 0.04
-Nodes (24): ApiReturnController, UserController, EnsureAppIsNotInstalled, HandleAppearance, HandleInertiaRequests, SetLanguage, CapitalWalletTransactionResource, CategoryResource (+16 more)
+Nodes (23): ApiReturnController, EnsureAppIsNotInstalled, HandleAppearance, HandleInertiaRequests, SetLanguage, CapitalWalletTransactionResource, CategoryResource, MasterProductResource (+15 more)
 
 ### Community 8 - "User & Auth Management (8)"
 Cohesion: 0.08
@@ -415,8 +414,8 @@ Cohesion: 0.08
 Nodes (15): TransactionDetail, TransactionDetailRepository, TransactionDetailService, create(), delete(), getAllByIndex(), getById(), getByTransactionId() (+7 more)
 
 ### Community 10 - "Data Table UI Components (10)"
-Cohesion: 0.09
-Nodes (24): ProductReturn, ReturnRepository, ReturnService, Constants, ErrorCode, create(), getAll(), getById() (+16 more)
+Cohesion: 0.07
+Nodes (29): Unit, UnitRepository, Constants, ErrorCode, getAllByIndex(), create(), delete(), getAllByIndex() (+21 more)
 
 ### Community 11 - "API Controllers & Endpoints (11)"
 Cohesion: 0.25
@@ -428,39 +427,39 @@ Nodes (18): Category, CategoryRepository, CategoryService, Collection, create(),
 
 ### Community 13 - "Transaction Management (13)"
 Cohesion: 0.06
-Nodes (19): TransactionController, Transaction, TransactionRepository, TransactionService, create(), delete(), getAllByIndex(), getById() (+11 more)
+Nodes (19): TransactionController, Transaction, TransactionRepository, DashboardService, TransactionService, create(), delete(), getAllByIndex() (+11 more)
 
 ### Community 14 - "Data Table UI Components (14)"
 Cohesion: 0.29
 Nodes (6): Deskripsi Masalah, Modifikasi Komponen, Rencana Implementasi, Spesifikasi Desain: Receipt Modal Overflow Fix, Tujuan Desain, Verifikasi & Pengujian
 
 ### Community 15 - "User & Auth Management (15)"
-Cohesion: 0.12
-Nodes (34): Calendar(), CalendarDayButton(), Popover(), PopoverContent(), PopoverTrigger(), Table, TableBody, TableCaption (+26 more)
+Cohesion: 0.18
+Nodes (36): DataTablePaginationProps, Badge(), badgeVariants, DropdownMenuCheckboxItem(), Popover(), PopoverContent(), PopoverTrigger(), Select() (+28 more)
 
 ### Community 16 - "PaymentMethod Domain (16)"
-Cohesion: 0.09
-Nodes (17): Unit, UnitRepository, Collection, UnitService, create(), delete(), getAllByIndex(), getById() (+9 more)
+Cohesion: 0.17
+Nodes (6): Illuminate\Database\Eloquent\Collection, Illuminate\Database\Eloquent\Relations\BelongsToMany, Spatie\Permission\Traits\HasAssignedModels, Spatie\Permission\Traits\HasPermissions, Spatie\Permission\Traits\HasRoles, Spatie\Permission\Traits\RefreshesPermissionCache
 
 ### Community 17 - "Unit Domain (17)"
-Cohesion: 0.16
-Nodes (5): CapitalWalletService, Collection, ProductService, BarcodeGenerator, CheckException
+Cohesion: 0.15
+Nodes (6): Collection, ProductService, Collection, UnitService, BarcodeGenerator, CheckException
 
 ### Community 18 - "alert-dialog.tsx Domain (18)"
-Cohesion: 0.06
-Nodes (8): ApiCapitalWalletController, RecoveryController, SetupController, DrawdownCapitalWalletRequest, IndexCapitalWalletRequest, InjectCapitalWalletRequest, PurchaseProductCapitalWalletRequest, Illuminate\Http\JsonResponse
+Cohesion: 0.09
+Nodes (5): ApiCapitalWalletController, DrawdownCapitalWalletRequest, IndexCapitalWalletRequest, InjectCapitalWalletRequest, PurchaseProductCapitalWalletRequest
 
 ### Community 19 - "app-sidebar.tsx Domain (19)"
-Cohesion: 0.10
-Nodes (35): AppLogo(), AppSidebar(), footerNavItems, NavFooter(), NavUser(), Sidebar(), SidebarContent(), SidebarContext (+27 more)
+Cohesion: 0.08
+Nodes (42): AppLogo(), footerNavItems, NavFooter(), NavMain(), SidebarNavItem(), NavUser(), Collapsible(), CollapsibleContent() (+34 more)
 
 ### Community 20 - "API Controllers & Endpoints (20)"
-Cohesion: 0.05
+Cohesion: 0.04
 Nodes (63): ReceiptCard(), ReceiptCardProps, ReceiptModalProps, StoreSetting, Props, Separator(), formatDate(), formatRupiah() (+55 more)
 
 ### Community 21 - "Product Catalog & Inventory (21)"
-Cohesion: 0.08
-Nodes (18): Product, ProductRepository, DashboardService, create(), decrementSoldQuantity(), decrementStock(), delete(), getAllByIndex() (+10 more)
+Cohesion: 0.09
+Nodes (17): Product, ProductRepository, create(), decrementSoldQuantity(), decrementStock(), delete(), getAllByIndex(), getBestSellers() (+9 more)
 
 ### Community 22 - "Product Catalog & Inventory (22)"
 Cohesion: 0.08
@@ -475,16 +474,16 @@ Cohesion: 0.12
 Nodes (9): exportExcel(), exportPdf(), create(), exportExcel(), exportPdf(), getByBarcode(), getById(), update() (+1 more)
 
 ### Community 25 - "Category Data & Repositories (25)"
-Cohesion: 0.08
-Nodes (26): CapitalWallet, CapitalWalletTransaction, CapitalWalletRepository, createTransaction(), createWallet(), getActiveWallet(), getTransactions(), getTransactionSummary() (+18 more)
+Cohesion: 0.09
+Nodes (25): CapitalWallet, CapitalWalletTransaction, CapitalWalletRepository, CapitalWalletService, createTransaction(), createWallet(), getActiveWallet(), getTransactions() (+17 more)
 
 ### Community 26 - "app-content.tsx Domain (26)"
-Cohesion: 0.11
-Nodes (21): AppContent(), Props, AppShell(), Props, AppSidebarHeader(), Breadcrumbs(), Breadcrumb(), BreadcrumbEllipsis() (+13 more)
+Cohesion: 0.10
+Nodes (23): AppContent(), Props, AppShell(), Props, AppSidebar(), AppSidebarHeader(), Breadcrumbs(), Breadcrumb() (+15 more)
 
 ### Community 27 - "app-header.tsx Domain (27)"
-Cohesion: 0.43
-Nodes (5): ToggleGroup(), ToggleGroupContext, ToggleGroupItem(), Toggle(), toggleVariants
+Cohesion: 0.25
+Nodes (4): AppLogoIcon(), AuthLoginLayout(), AuthSimpleLayout(), AuthLayoutProps
 
 ### Community 28 - "API Controllers & Endpoints (28)"
 Cohesion: 0.10
@@ -495,16 +494,16 @@ Cohesion: 0.09
 Nodes (5): ApiRoleController, BulkDeleteRoleRequest, StoreRoleRequest, UpdateRoleRequest, RoleResource
 
 ### Community 30 - "UI Notification & Error Handling (30)"
-Cohesion: 0.09
-Nodes (26): AppLogoIcon(), AppearanceToggleTab(), Toaster(), TooltipProvider(), Appearance, applyTheme(), getStoredAppearance(), handleSystemThemeChange() (+18 more)
+Cohesion: 0.14
+Nodes (21): AppearanceToggleTab(), Toaster(), TooltipProvider(), Appearance, applyTheme(), getStoredAppearance(), handleSystemThemeChange(), initializeTheme() (+13 more)
 
 ### Community 31 - "API Controllers & Endpoints (31)"
 Cohesion: 0.29
 Nodes (6): 1. Translations (`lang/id/message.php` and `lang/en/message.php`), 2. Service Class (`app/Services/TransactionService.php`), 3. Feature Test (`tests/Feature/Cashier/CashierCheckoutTest.php`), Design: Insufficient Stock Product Name Error, Proposed Changes, Requirements
 
 ### Community 32 - "Category"
-Cohesion: 0.09
-Nodes (28): Switch(), ColumnsProps, DataTableProps, BulkDeleteDialogProps, DeleteDialogProps, DetailSheetProps, DetailSheetProps, EditDialogProps (+20 more)
+Cohesion: 0.08
+Nodes (30): Switch(), ColumnsProps, DataTableProps, BulkDeleteDialogProps, DeleteDialogProps, DetailSheetProps, DetailSheetProps, EditDialogProps (+22 more)
 
 ### Community 33 - "node Domain (33)"
 Cohesion: 0.08
@@ -515,8 +514,8 @@ Cohesion: 0.12
 Nodes (15): 1. Requirements, 2. Technical Design, 3. Localization Keys, API Route, Backend Changes, Backend Messages (`lang/id/message.php` & `lang/en/message.php`), Controller: `DataManagementController`, DB Deletion Strategy (Cutoff Date) (+7 more)
 
 ### Community 35 - "Category Data & Repositories (35)"
-Cohesion: 0.09
-Nodes (11): CategorySeeder, DatabaseSeeder, MasterProductSeeder, PaymentMethodSeeder, PermissionSeeder, ProductSeeder, RoleSeeder, TransactionSeeder (+3 more)
+Cohesion: 0.10
+Nodes (10): CategorySeeder, DatabaseSeeder, MasterProductSeeder, PaymentMethodSeeder, PermissionSeeder, ProductSeeder, RoleSeeder, UnitSeeder (+2 more)
 
 ### Community 36 - "command.tsx Domain (36)"
 Cohesion: 0.32
@@ -528,7 +527,7 @@ Nodes (30): ApiCategoryController, ApiMasterProductController, ApiProductControl
 
 ### Community 38 - "Permission Domain (38)"
 Cohesion: 0.10
-Nodes (13): Role, RoleRepository, create(), delete(), getById(), getByName(), getByNameExceptID(), update() (+5 more)
+Nodes (14): Role, RoleRepository, RoleService, create(), delete(), getById(), getByName(), getByNameExceptID() (+6 more)
 
 ### Community 39 - "Role Domain (39)"
 Cohesion: 0.20
@@ -539,7 +538,7 @@ Cohesion: 0.15
 Nodes (12): 1. Arsitektur & Rute, 2. Antarmuka Pengguna (UI Layout), 3. Logika Perhitungan & State Management, 4. Penanganan Kasus Khusus (Edge Cases), 5. Rencana Pengujian (Testing Plan), Kolom Kanan: Ringkasan & Saran Harga Jual (Sticky Card), Kolom Kiri: Input Komponen Biaya (Dynamic Form), Menu Navigasi (`resources/js/components/app-sidebar.tsx`) (+4 more)
 
 ### Community 41 - "Category Data & Repositories (41)"
-Cohesion: 0.07
+Cohesion: 0.08
 Nodes (14): CapitalWalletFactory, CapitalWalletTransactionFactory, CategoryFactory, MasterProductFactory, PaymentMethodFactory, ProductFactory, ProfitWalletFactory, ProfitWalletTransactionFactory (+6 more)
 
 ### Community 42 - "API Controllers & Endpoints (42)"
@@ -588,7 +587,7 @@ Nodes (18): scripts, lint, lint:check, post-autoload-dump, post-create-project-c
 
 ### Community 53 - "eslint Domain (53)"
 Cohesion: 0.12
-Nodes (17): babel-plugin-react-compiler, eslint, eslint-config-prettier, @eslint/js, @laravel/vite-plugin-wayfinder, devDependencies, babel-plugin-react-compiler, eslint (+9 more)
+Nodes (17): eslint, eslint-config-prettier, @eslint/js, eslint-plugin-react, @laravel/vite-plugin-wayfinder, devDependencies, eslint, eslint-config-prettier (+9 more)
 
 ### Community 54 - "drawer.tsx Domain (54)"
 Cohesion: 0.33
@@ -599,8 +598,8 @@ Cohesion: 0.12
 Nodes (15): autoload-dev, psr-4, description, extra, laravel, keywords, dont-discover, license (+7 more)
 
 ### Community 56 - "RoleService.php Domain (56)"
-Cohesion: 0.16
-Nodes (14): buttonVariants, Pagination(), PaginationContent(), PaginationEllipsis(), PaginationItem(), PaginationLink(), PaginationLinkProps, PaginationNext() (+6 more)
+Cohesion: 0.09
+Nodes (21): react, react, Calendar(), CalendarDayButton(), useComboboxAnchor(), SidebarMenuSkeleton(), getNullableNumberFilterValue(), getNumberFilterValue() (+13 more)
 
 ### Community 57 - "lightningcss-linux-x64-gnu Domain (57)"
 Cohesion: 0.15
@@ -619,16 +618,16 @@ Cohesion: 0.15
 Nodes (13): require, barryvdh/laravel-dompdf, inertiajs/inertia-laravel, laravel/fortify, laravel/framework, laravel/tinker, laravel/wayfinder, maatwebsite/excel (+5 more)
 
 ### Community 61 - "app-logo.tsx Domain (61)"
-Cohesion: 0.09
-Nodes (8): ReturnDetail, createDetail(), Illuminate\Database\Eloquent\Factories\HasFactory, Illuminate\Database\Eloquent\Model, Illuminate\Database\Eloquent\Relations\BelongsTo, Illuminate\Database\Eloquent\Relations\HasMany, Illuminate\Database\Eloquent\Relations\MorphTo, Illuminate\Database\Eloquent\SoftDeletes
+Cohesion: 0.06
+Nodes (20): ProductReturn, ReturnDetail, ReturnRepository, ReturnService, create(), createDetail(), getAll(), getById() (+12 more)
 
 ### Community 62 - "require-dev Domain (62)"
 Cohesion: 0.25
 Nodes (8): require-dev, fakerphp/faker, laravel/boost, laravel/pail, laravel/pint, laravel/sail, mockery/mockery, nunomaduro/collision
 
 ### Community 63 - "User & Auth Management (63)"
-Cohesion: 0.09
-Nodes (9): DataManagementController, ProfileController, StoreSettingController, PurgeDataRequest, StoreSettingUpdateRequest, StoreSetting, StoreSettingSeeder, Illuminate\Http\RedirectResponse (+1 more)
+Cohesion: 0.03
+Nodes (23): ApiDashboardController, RecoveryController, CapitalWalletController, CashierController, Controller, ExampleController, ProfitWalletController, ReturnController (+15 more)
 
 ### Community 64 - "ci:check Domain (64)"
 Cohesion: 0.20
@@ -640,7 +639,7 @@ Nodes (14): Command(), CommandDialog(), CommandEmpty(), CommandGroup(), CommandI
 
 ### Community 66 - "Data Table UI Components (66)"
 Cohesion: 0.09
-Nodes (27): AppHeader(), mainNavItems, Props, rightNavItems, Avatar(), AvatarFallback(), AvatarImage(), NavigationMenu() (+19 more)
+Nodes (28): AppHeader(), mainNavItems, Props, rightNavItems, Avatar(), AvatarFallback(), AvatarImage(), Sheet() (+20 more)
 
 ### Community 67 - "User & Auth Management (67)"
 Cohesion: 0.22
@@ -659,8 +658,8 @@ Cohesion: 0.20
 Nodes (3): Illuminate\Foundation\Testing\TestCase, DesktopSetupTest, TestCase
 
 ### Community 71 - "UI Notification & Error Handling (71)"
-Cohesion: 0.12
-Nodes (9): Permission, UserFactory, Illuminate\Database\Eloquent\Collection, Illuminate\Database\Eloquent\Relations\BelongsToMany, Spatie\Permission\Contracts\Permission, Spatie\Permission\Contracts\Role, Spatie\Permission\Traits\HasRoles, Spatie\Permission\Traits\RefreshesPermissionCache (+1 more)
+Cohesion: 0.13
+Nodes (8): Permission, UserFactory, Spatie\Permission\Contracts\Permission, Spatie\Permission\Contracts\Role, static, getUser(), getPaymentMethodUser(), getUnitUser()
 
 ### Community 72 - "jspdf Domain (72)"
 Cohesion: 0.50
@@ -711,12 +710,12 @@ Cohesion: 0.33
 Nodes (5): 2026-07-24 Cash Profit Repository Service Implementation Plan, Global Constraints, Task 1: Create Request Model, Repository Interface, and Repository Implementation, Task 2: Create Service Interface and Service Implementation, Task 3: Register Bindings, Controller Refactoring, and Verification
 
 ### Community 102 - "package.json"
-Cohesion: 0.09
-Nodes (22): ProfitWallet, ProfitWalletTransaction, ProfitWalletRepository, ProfitWalletService, createTransaction(), createWallet(), getActiveWallet(), getTransactions() (+14 more)
+Cohesion: 0.07
+Nodes (24): ProfitWallet, ProfitWalletTransaction, ProfitWalletRepository, ProfitWalletService, createTransaction(), createWallet(), getActiveWallet(), getTransactions() (+16 more)
 
 ### Community 109 - "babel-plugin-react-compiler"
-Cohesion: 0.13
-Nodes (18): NavMain(), SidebarNavItem(), Collapsible(), CollapsibleContent(), CollapsibleTrigger(), SidebarGroupLabel(), SidebarMenuSub(), SidebarMenuSubButton() (+10 more)
+Cohesion: 0.48
+Nodes (5): AlertError(), Alert(), AlertDescription(), AlertTitle(), alertVariants
 
 ### Community 110 - "lucide-react"
 Cohesion: 0.09
@@ -734,10 +733,6 @@ Nodes (7): Capital Wallet (Dompet Modal) Implementation Plan, Global Constraints
 Cohesion: 0.29
 Nodes (6): Desktop Setup Wizard Simplification & SQLite Optimization Implementation Plan, Global Constraints, Task 1: Update i18n Translation Files for Step 1 Setup, Task 2: Simplify Backend `SetupController` for SQLite Automatic Setup, Task 3: Redesign Frontend Setup Wizard Step 1 UI (`index.tsx`), Task 4: End-to-End Verification & Pint Formatting
 
-### Community 114 - "@base-ui/react"
-Cohesion: 0.28
-Nodes (16): DataTablePaginationProps, Badge(), badgeVariants, DropdownMenuCheckboxItem(), Select(), SelectContent(), SelectGroup(), SelectItem() (+8 more)
-
 ### Community 115 - "@dnd-kit/modifiers Domain (115)"
 Cohesion: 0.12
 Nodes (17): axios, chart.js, class-variance-authority, cmdk, dependencies, axios, chart.js, class-variance-authority (+9 more)
@@ -747,8 +742,8 @@ Cohesion: 0.25
 Nodes (8): post-root-package-install, setup, composer install, npm install, npm run build, @php artisan key:generate, @php artisan migrate --force, @php -r \"file_exists('.env') || copy('.env.example', '.env');\
 
 ### Community 117 - "typescript-eslint"
-Cohesion: 0.09
-Nodes (27): react, react, ChartConfig, ChartContainer(), ChartContext, ChartContextProps, THEMES, useChart() (+19 more)
+Cohesion: 0.15
+Nodes (16): ChartConfig, ChartContainer(), ChartContext, ChartContextProps, THEMES, useChart(), Tabs(), TabsContent() (+8 more)
 
 ### Community 118 - "@radix-ui/react-label"
 Cohesion: 0.22
@@ -790,10 +785,6 @@ Nodes (10): 1. Backend Implementation, 2. Frontend UI Implementation, 3. Localiz
 Cohesion: 0.08
 Nodes (13): CreateNewUser, ResetUserPassword, emailRules(), nameRules(), profileRules(), PasswordUpdateRequest, ProfileDeleteRequest, ProfileUpdateRequest (+5 more)
 
-### Community 132 - "RoleServiceInterface.php"
-Cohesion: 0.17
-Nodes (6): RoleService, create(), getAllByIndex(), getById(), update(), Illuminate\Http\Resources\Json\AnonymousResourceCollection
-
 ### Community 135 - "RoleController"
 Cohesion: 0.33
 Nodes (5): Global Constraints, Product Return Validation Implementation Plan, Task 1: Backend Eager Loading in TransactionRepository, Task 2: Expose `returned_quantity` in TransactionDetailResource, Task 3: Frontend Update - ReturnModal UI & Validation
@@ -803,8 +794,8 @@ Cohesion: 0.33
 Nodes (5): 1. Pendahuluan, 2.1 Konfigurasi Kolom Tabel, 2.2 Halaman Utama Riwayat Retur, 2. Solusi Rancangan, Spesifikasi Desain: Hubungan Interaktif (Clickable) pada Riwayat Retur Barang
 
 ### Community 140 - "@inertiajs/react"
-Cohesion: 0.31
-Nodes (9): Props, Card(), CardAction(), CardContent(), CardDescription(), CardFooter(), CardHeader(), CardTitle() (+1 more)
+Cohesion: 0.17
+Nodes (16): Props, Card(), CardAction(), CardContent(), CardDescription(), CardFooter(), CardHeader(), CardTitle() (+8 more)
 
 ### Community 141 - "PermissionEnums.ts"
 Cohesion: 0.38
@@ -895,8 +886,8 @@ Cohesion: 0.33
 Nodes (5): 1. Pendahuluan, 2.1 Perubahan Terjemahan Lokal, 2.2 Penyesuaian Kolom Transaksi, 2. Solusi Rancangan, Spesifikasi Desain: Lokalisasi Menu dan Tombol Retur Barang
 
 ### Community 322 - "columns.tsx"
-Cohesion: 0.08
-Nodes (36): HeaderContent(), Props, languageCode, localStorageKey, Message, PAGINATIONLIMITOPTIONDEFAULT, ROUTES, { url } (+28 more)
+Cohesion: 0.09
+Nodes (34): HeaderContent(), Props, languageCode, localStorageKey, Message, PAGINATIONLIMITOPTIONDEFAULT, ROUTES, { url } (+26 more)
 
 ### Community 323 - "columns.tsx"
 Cohesion: 0.40
@@ -1023,8 +1014,8 @@ Cohesion: 0.50
 Nodes (3): Setup Wizard Multi-Language (i18n) Implementation Plan, Task 1: Add Setup Translation Keys to Locale JSON Files, Task 2: Refactor Setup Component to use `useTranslation` & Add Language Switcher
 
 ### Community 371 - "Pagination"
-Cohesion: 0.47
-Nodes (4): DataTableProps, PaginatedData, PaginationLink, Pagination
+Cohesion: 0.28
+Nodes (6): DataTableProps, DataTableProps, PaginatedData, TransactionQueryParam, PaginationLink, Pagination
 
 ### Community 372 - "post-update-cmd"
 Cohesion: 0.67
@@ -1033,21 +1024,21 @@ Nodes (3): post-update-cmd, @php artisan boost:update --ansi, @php artisan vendo
 ## Knowledge Gaps
 - **733 isolated node(s):** `Constants`, `ErrorCode`, `Header`, `$schema`, `style` (+728 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **157 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **158 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `dependencies` connect `@dnd-kit/modifiers Domain (115)` to `zod`, `concurrently`, `@dnd-kit/utilities`, `eslint-plugin-react`, `@headlessui/react`, `input-otp`, `i18next-resources-to-backend`, `nuqs`, `static`, `sweetalert2-react-content`, `@radix-ui/react-collapsible`, `@tabler/icons-react`, `@radix-ui/react-dialog`, `@radix-ui/react-dropdown-menu`, `clsx`, `@radix-ui/react-separator`, `tailwind-merge`, `@radix-ui/react-toggle`, `tw-animate-css`, `@radix-ui/react-toggle-group`, `@radix-ui/react-tooltip`, `@types/react-dom`, `react-i18next`, `lucide-react`, `react-number-format`, `@radix-ui/react-avatar`, `sonner`, `tailwindcss`, `@types/react`, `@radix-ui/react-label`, `vite`, `@radix-ui/react-separator`, `globals`, `@headlessui/react`, `i18next`, `@inertiajs/react`, `lucide-react`, `radix-ui`, `@radix-ui/react-avatar`, `@radix-ui/react-label`, `@radix-ui/react-separator`, `@tailwindcss/vite`, `@tanstack/react-table`, `@radix-ui/react-select`, `package.json Domain (58)`, `react-i18next`, `sprintf-js`, `sweetalert2-react-content`, `concurrently`, `typescript`, `vaul`, `date-fns`, `typescript-eslint`, `react-barcode`, `react-chartjs-2`, `react-day-picker`, `tabbied`, `@vitejs/plugin-react`?**
+- **Why does `dependencies` connect `@dnd-kit/modifiers Domain (115)` to `zod`, `concurrently`, `@dnd-kit/utilities`, `eslint-plugin-react`, `@headlessui/react`, `input-otp`, `i18next-resources-to-backend`, `nuqs`, `static`, `sweetalert2-react-content`, `@radix-ui/react-collapsible`, `@tabler/icons-react`, `@radix-ui/react-dialog`, `@radix-ui/react-dropdown-menu`, `clsx`, `@radix-ui/react-separator`, `tailwind-merge`, `@radix-ui/react-toggle`, `tw-animate-css`, `@radix-ui/react-toggle-group`, `@radix-ui/react-tooltip`, `@types/react-dom`, `react-i18next`, `lucide-react`, `react-number-format`, `@radix-ui/react-avatar`, `sonner`, `tailwindcss`, `@types/react`, `@radix-ui/react-label`, `vite`, `@radix-ui/react-separator`, `globals`, `@headlessui/react`, `i18next`, `@inertiajs/react`, `lucide-react`, `radix-ui`, `@radix-ui/react-avatar`, `@radix-ui/react-label`, `@radix-ui/react-separator`, `@tailwindcss/vite`, `@tanstack/react-table`, `@radix-ui/react-select`, `RoleService.php Domain (56)`, `package.json Domain (58)`, `react-i18next`, `sprintf-js`, `sweetalert2-react-content`, `concurrently`, `typescript`, `vaul`, `date-fns`, `react-barcode`, `react-chartjs-2`, `react-day-picker`, `tabbied`, `@vitejs/plugin-react`?**
   _High betweenness centrality (0.250) - this node is a cross-community bridge._
 - **Why does `xlsx` connect `@dnd-kit/modifiers Domain (115)` to `Data Table UI Components (10)`?**
   _High betweenness centrality (0.231) - this node is a cross-community bridge._
 - **What connects `Constants`, `ErrorCode`, `Header` to the rest of the system?**
   _733 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `API Controllers & Endpoints (0)` be split into smaller, more focused modules?**
-  _Cohesion score 0.04575611988103409 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.07242063492063493 - nodes in this community are weakly interconnected._
 - **Should `Data Table UI Components (2)` be split into smaller, more focused modules?**
-  _Cohesion score 0.048484848484848485 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.038303693570451436 - nodes in this community are weakly interconnected._
 - **Should `Graphify Python Core & Utilities (4)` be split into smaller, more focused modules?**
   _Cohesion score 0.05263157894736842 - nodes in this community are weakly interconnected._
 - **Should `UI Notification & Error Handling (5)` be split into smaller, more focused modules?**

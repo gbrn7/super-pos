@@ -525,8 +525,8 @@
     "semantic_hash": ""
   },
   "app/Services/ProductService.php": {
-    "mtime": 1785674212.0734758,
-    "ast_hash": "5de2e331991adc05c3185f8a261619d7",
+    "mtime": 1787973178.3980863,
+    "ast_hash": "47f500f8619faa16c5dd2d1382b22e6c",
     "semantic_hash": ""
   },
   "app/Services/RoleService.php": {
@@ -1120,8 +1120,8 @@
     "semantic_hash": "0d3a837ac67b8969159f68d3d4310faa"
   },
   "resources/js/components/app-sidebar.tsx": {
-    "mtime": 1785948380.0001075,
-    "ast_hash": "3b20c63a93e511464fd383fdc58a2c4b",
+    "mtime": 1787840745.5953803,
+    "ast_hash": "04be9ca07e30736b7cb15968f16b5f02",
     "semantic_hash": ""
   },
   "resources/js/components/appearance-tabs.tsx": {
@@ -1550,13 +1550,13 @@
     "semantic_hash": ""
   },
   "resources/js/locales/en/translation.json": {
-    "mtime": 1787660914.3481572,
-    "ast_hash": "16e3499a8517af7a78aaa738d3761ba8",
+    "mtime": 1787842354.2995963,
+    "ast_hash": "83b2c8f94e4d333c3ed87879983e3aab",
     "semantic_hash": ""
   },
   "resources/js/locales/id/translation.json": {
-    "mtime": 1787758298.8387306,
-    "ast_hash": "373dacc7d68813189bea378793a1138d",
+    "mtime": 1787842365.4865928,
+    "ast_hash": "65021849275f582f59bbba485ed912d2",
     "semantic_hash": ""
   },
   "resources/js/pages/auth/confirm-password.tsx": {
@@ -2255,8 +2255,8 @@
     "semantic_hash": ""
   },
   "routes/web.php": {
-    "mtime": 1787706483.9185774,
-    "ast_hash": "979840216fff26de3a60b25ab8306214",
+    "mtime": 1787840677.3474135,
+    "ast_hash": "e07af2eae127c002c605cbbf75208c28",
     "semantic_hash": ""
   },
   "src/@types/i18next.d.ts": {
@@ -3490,8 +3490,8 @@
     "semantic_hash": ""
   },
   "app/Http/Controllers/SetupController.php": {
-    "mtime": 1787705030.1360645,
-    "ast_hash": "f5195b1e760cd7d1a50d3b73f370aee1",
+    "mtime": 1787762290.2710989,
+    "ast_hash": "ee044459a63570003bc44d5d59741df4",
     "semantic_hash": ""
   },
   "app/Http/Middleware/EnsureAppIsNotInstalled.php": {
@@ -3530,8 +3530,8 @@
     "semantic_hash": ""
   },
   "app/Support/Utils/BarcodeGenerator.php": {
-    "mtime": 1785655889.9080422,
-    "ast_hash": "f91684d78db162e60455a2fd4168b34e",
+    "mtime": 1787973184.7153318,
+    "ast_hash": "6d012c5c3f20e9a4a1d18e623e2eda0e",
     "semantic_hash": ""
   },
   "config/nativephp.php": {
@@ -3645,8 +3645,8 @@
     "semantic_hash": ""
   },
   "tests/Feature/ProductCreateMasterProductTest.php": {
-    "mtime": 1785516006.6238494,
-    "ast_hash": "5a29b8c5c893de9aa2f99f937a3bf688",
+    "mtime": 1787973340.815455,
+    "ast_hash": "8279d6761f651556fa92645cc80dfa1a",
     "semantic_hash": ""
   },
   "tests/Feature/Setup/MasterProductSeederCustomFileTest.php": {
@@ -3920,8 +3920,8 @@
     "semantic_hash": ""
   },
   "resources/js/pages/settings/data-management.tsx": {
-    "mtime": 1787757502.7847846,
-    "ast_hash": "df5c96badb3f0114f9a075a904891721",
+    "mtime": 1787764179.0344765,
+    "ast_hash": "af4fc9e9b8febb9784106c68240d7cf9",
     "semantic_hash": ""
   },
   "tests/Feature/Settings/DataPurgeTest.php": {
@@ -3957,6 +3957,26 @@
   "docs/superpowers/specs/2026-08-26-export-sql-design-doc.md": {
     "mtime": 1787756438.7324028,
     "ast_hash": "a72d939b5ea1b374a88ddec938fa6116",
+    "semantic_hash": ""
+  },
+  "resources/js/pages/hpp-calculator/index.tsx": {
+    "mtime": 1787842452.5324838,
+    "ast_hash": "efeb1d28406fed61438fe4671ed96ab3",
+    "semantic_hash": ""
+  },
+  "tests/Feature/HppCalculatorTest.php": {
+    "mtime": 1787840658.5264196,
+    "ast_hash": "3b13ea4ec45665a951d8e4db51ab0348",
+    "semantic_hash": ""
+  },
+  "docs/superpowers/plans/2026-08-27-kalkulator-hpp.md": {
+    "mtime": 1787840638.225903,
+    "ast_hash": "17faf96741e4b11641b38fe8b8416a52",
+    "semantic_hash": ""
+  },
+  "docs/superpowers/specs/2026-08-27-kalkulator-hpp-design-spec.md": {
+    "mtime": 1787840607.8376853,
+    "ast_hash": "a13b23605e73581242f8ccf94caeb97d",
     "semantic_hash": ""
   }
 }
