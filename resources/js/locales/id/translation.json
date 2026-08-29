@@ -1495,7 +1495,7 @@
             "subtotal": "Subtotal",
             "no_items": "Tidak ada rincian produk.",
             "reason_label": "Catatan Alasan Retur:",
-            "total_refund_label": "Total Dana Refund",
+            "total_refund_label": "Total Dana Dikembalikan Ke Pelanggan",
             "data_table": {
                 "columns": {
                     "return_number": "No. Retur",
