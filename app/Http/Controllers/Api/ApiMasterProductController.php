@@ -14,6 +14,7 @@ use App\Support\Models\MasterProduct\GetMasterProductReqModel;
 use App\Support\Utils\PaginationResource;
 use App\Support\Utils\ResponseApi;
 use Exception;
+use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
@@ -27,22 +28,22 @@ class ApiMasterProductController extends Controller implements HasMiddleware
     {
         return [
             new Middleware(
-                'permission:'.MasterProductPermissionEnums::READ_MASTER_PRODUCT->value,
+                'permission:' . MasterProductPermissionEnums::READ_MASTER_PRODUCT->value,
                 only: ['index', 'show', 'getByBarcode', 'exportMasterProductExcelData', 'exportMasterProductPdfData']
             ),
 
             new Middleware(
-                'permission:'.MasterProductPermissionEnums::CREATE_MASTER_PRODUCT->value,
+                'permission:' . MasterProductPermissionEnums::CREATE_MASTER_PRODUCT->value,
                 only: ['store', 'getMasterProductImportTemplate', 'importMasterProductExcelData']
             ),
 
             new Middleware(
-                'permission:'.MasterProductPermissionEnums::UPDATE_MASTER_PRODUCT->value,
+                'permission:' . MasterProductPermissionEnums::UPDATE_MASTER_PRODUCT->value,
                 only: ['update']
             ),
 
             new Middleware(
-                'permission:'.MasterProductPermissionEnums::DELETE_MASTER_PRODUCT->value,
+                'permission:' . MasterProductPermissionEnums::DELETE_MASTER_PRODUCT->value,
                 only: ['destroy', 'bulkDelete']
             ),
         ];
@@ -56,9 +57,14 @@ class ApiMasterProductController extends Controller implements HasMiddleware
         try {
             $Masterproducts = $this->MasterProductService->getAllByIndex(new GetMasterProductReqModel($request));
 
-            $items = MasterProductResource::collection($Masterproducts->items());
 
-            $data = PaginationResource::make($items, $Masterproducts);
+            if ($Masterproducts instanceof Paginator) {
+                $items = MasterProductResource::collection($Masterproducts->items());
+
+                $data = PaginationResource::make($items, $Masterproducts);
+            } else {
+                $data = MasterProductResource::collection($Masterproducts);
+            }
 
             return ResponseApi::make(true, trans('message.success.success'), $data);
         } catch (\Throwable $th) {
@@ -159,7 +165,7 @@ class ApiMasterProductController extends Controller implements HasMiddleware
     public function getMasterProductImportTemplate()
     {
         $fileName = 'import-master-products-template.xlsx';
-        $publiFilePath = 'template/'.$fileName;
+        $publiFilePath = 'template/' . $fileName;
 
         if (! file_exists($publiFilePath)) {
             return ResponseApi::make(false, trans('message.error.not_found', ['resource' => 'file']), null, Response::HTTP_INTERNAL_SERVER_ERROR);

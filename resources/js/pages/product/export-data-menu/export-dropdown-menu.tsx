@@ -21,15 +21,15 @@ export function ExportDropdownMenu<TData>({
     const handleExport = async () => {
         try {
             setLoading(true);
-            
+
             // Fetch all products with a very high limit to get all records
             const route = apiProducts.index();
             const response = await axiosInstance.get(route.url, {
-                params: { limit: 999999 }
+                params: {}
             });
-            
+
             const products = response.data.data.items || [];
-            
+
             // Map data to Excel columns
             const rows = products.map((product: any) => ({
                 [t('page.product.form.name_label', 'Nama')]: product.name,
@@ -49,7 +49,7 @@ export function ExportDropdownMenu<TData>({
             const worksheet = XLSX.utils.json_to_sheet(rows);
             const workbook = XLSX.utils.book_new();
             XLSX.utils.book_append_sheet(workbook, worksheet, 'Products');
-            
+
             const fileName = `products_${new Date().toISOString().split('T')[0]}.xlsx`;
             XLSX.writeFile(workbook, fileName);
         } catch (error) {
