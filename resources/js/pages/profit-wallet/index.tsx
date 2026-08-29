@@ -15,6 +15,7 @@ import { Can } from '@/components/auth/can';
 import { PERMISSIONENUMS } from '@/support/enums/PermissionEnums';
 import { DisburseDialog } from './dialog-modal/disburse-dialog';
 import { WithdrawCapitalDialog } from './dialog-modal/withdraw-capital-dialog';
+import { ExportModal } from './dialog-modal/export-modal';
 import { DetailDialog } from '@/pages/transaction/dialog-modal/detail-dialog';
 import type { StoreSetting } from '@/components/receipt-modal';
 import type { ResponseApi } from '@/support/interfaces/response/Response';
@@ -31,7 +32,7 @@ export default function ProfitWalletIndex({ storeSetting }: { storeSetting?: Sto
         total_outflow: 0,
     });
     const [processing, setProcessing] = useState(false);
-    const [exporting, setExporting] = useState(false);
+    const [exportModalOpen, setExportModalOpen] = useState(false);
     const [detailOpen, setDetailOpen] = useState(false);
     const [selectedTransaction, setSelectedTransaction] = useState<any>(null);
 
@@ -98,42 +99,8 @@ export default function ProfitWalletIndex({ storeSetting }: { storeSetting?: Sto
         }
     };
 
-    const handleExport = async () => {
-        try {
-            setExporting(true);
-            const params: Record<string, any> = {
-                ...queryParam,
-                format: 'excel',
-            };
-            delete params.limit;
-            delete params.page;
-
-            const exportUrl = apiExportProfitWallet({ query: params }).url;
-
-            const response = await axiosInstance.get(exportUrl, {
-                responseType: 'blob',
-            });
-
-            const blob = new Blob([response.data], {
-                type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-            });
-
-            const url = window.URL.createObjectURL(blob);
-            const link = document.createElement('a');
-            link.href = url;
-            link.setAttribute(
-                'download',
-                `laporan-dompet-profit-${new Date().toISOString().slice(0, 10)}.xlsx`
-            );
-            document.body.appendChild(link);
-            link.click();
-            link.remove();
-            window.URL.revokeObjectURL(url);
-        } catch (error) {
-            handleApiError(error);
-        } finally {
-            setExporting(false);
-        }
+    const handleExport = () => {
+        setExportModalOpen(true);
     };
 
     const handleQueryParamChange = (key: string, value: any) => {
@@ -218,7 +185,7 @@ export default function ProfitWalletIndex({ storeSetting }: { storeSetting?: Sto
                     onChangePaginationLimit={(val) => handleQueryParamChange('limit', val)}
                     limitOptions={[10, 25, 50, 100]}
                     onExport={handleExport}
-                    exporting={exporting}
+                    exporting={false}
                 />
 
                 {/* Struk / Detail Transaction Modal */}
@@ -230,6 +197,13 @@ export default function ProfitWalletIndex({ storeSetting }: { storeSetting?: Sto
                         storeSetting={storeSetting}
                     />
                 )}
+
+                <ExportModal
+                    isOpen={exportModalOpen}
+                    onClose={() => setExportModalOpen(false)}
+                    defaultStartDate={queryParam.start_date}
+                    defaultEndDate={queryParam.end_date}
+                />
             </div>
         </>
     );
