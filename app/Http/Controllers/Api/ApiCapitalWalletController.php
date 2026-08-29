@@ -16,9 +16,12 @@ use App\Support\Models\CapitalWallet\InjectCapitalWalletReqModel;
 use App\Support\Models\CapitalWallet\PurchaseProductCapitalWalletReqModel;
 use App\Support\Utils\PaginationResource;
 use App\Support\Utils\ResponseApi;
+use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
+use Symfony\Component\HttpFoundation\Response;
 
 class ApiCapitalWalletController extends Controller implements HasMiddleware
 {
@@ -29,7 +32,7 @@ class ApiCapitalWalletController extends Controller implements HasMiddleware
     public static function middleware(): array
     {
         return [
-            new Middleware('permission:'.CapitalWalletPermissionEnums::READ_CAPITAL_WALLET->value, only: ['index']),
+            new Middleware('permission:'.CapitalWalletPermissionEnums::READ_CAPITAL_WALLET->value, only: ['index', 'export']),
             new Middleware('permission:'.CapitalWalletPermissionEnums::INJECT_CAPITAL_WALLET->value, only: ['inject']),
             new Middleware('permission:'.CapitalWalletPermissionEnums::DRAWDOWN_CAPITAL_WALLET->value, only: ['drawdown']),
             new Middleware('permission:'.CapitalWalletPermissionEnums::PURCHASE_PRODUCT_CAPITAL_WALLET->value, only: ['purchaseProduct']),
@@ -44,15 +47,23 @@ class ApiCapitalWalletController extends Controller implements HasMiddleware
             $summary = $this->capitalWalletService->getTransactionSummary($reqModel);
             $paginated = $this->capitalWalletService->getTransactions($reqModel);
 
-            $items = CapitalWalletTransactionResource::collection($paginated->items());
-            $paginationData = PaginationResource::make($items, $paginated);
+            if ($paginated instanceof Paginator) {
+                $items = CapitalWalletTransactionResource::collection($paginated->items());
+                $paginationData = PaginationResource::make($items, $paginated);
+                $transactionsData = [
+                    'items' => $items,
+                    'pagination' => $paginationData['pagination'],
+                ];
+            } else {
+                $transactionsData = [
+                    'items' => CapitalWalletTransactionResource::collection($paginated),
+                    'pagination' => null,
+                ];
+            }
 
             return ResponseApi::make(true, trans('message.success.success'), [
                 'summary' => $summary,
-                'transactions' => [
-                    'items' => $items,
-                    'pagination' => $paginationData['pagination'],
-                ],
+                'transactions' => $transactionsData,
             ]);
         } catch (\Throwable $th) {
             return ResponseApi::make(false, $th->getMessage(), null, 500);
@@ -104,6 +115,18 @@ class ApiCapitalWalletController extends Controller implements HasMiddleware
             ]);
         } catch (\Throwable $th) {
             return ResponseApi::make(false, $th->getMessage(), null, 422);
+        }
+    }
+
+    public function export(Request $request): Response
+    {
+        try {
+            $format = $request->query('format', 'pdf');
+            $reqModel = new GetCapitalWalletTransactionReqModel($request);
+
+            return $this->capitalWalletService->export($reqModel, $format);
+        } catch (\Throwable $th) {
+            return ResponseApi::make(false, $th->getMessage(), null, 500);
         }
     }
 }

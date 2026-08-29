@@ -57,4 +57,9 @@ interface CapitalWalletServiceInterface
      * Record capital deduction due to product return.
      */
     public function recordReturnCapitalDeduction(float $amount, int $returnId, ?string $invoiceNumber = null): CapitalWalletTransaction;
+
+    /**
+     * Export capital wallet transactions to Excel or PDF.
+     */
+    public function export(GetCapitalWalletTransactionReqModel $request, string $format);
 }

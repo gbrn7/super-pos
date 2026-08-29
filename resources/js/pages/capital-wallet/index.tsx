@@ -7,7 +7,7 @@ import { Card, CardHeader, CardTitle, CardDescription } from '@/components/ui/ca
 import { formatRupiah } from '@/lib/format-money';
 import axiosInstance from '@/lib/axios';
 import { handleApiError } from '@/lib/utils';
-import { index as apiGetCapitalWallet } from '@/routes/apiCapitalWallet';
+import { index as apiGetCapitalWallet, exportData as apiExportCapitalWallet } from '@/routes/apiCapitalWallet';
 import { columns } from './columns';
 import { DataTable } from './data-table';
 import { Can } from '@/components/auth/can';
@@ -15,6 +15,7 @@ import { PERMISSIONENUMS } from '@/support/enums/PermissionEnums';
 import { InjectDialog } from './dialog-modal/inject-dialog';
 import { DrawdownDialog } from './dialog-modal/drawdown-dialog';
 import { PurchaseProductDialog } from './dialog-modal/purchase-product-dialog';
+import { ExportModal } from './dialog-modal/export-modal';
 import { DetailDialog } from '@/pages/transaction/dialog-modal/detail-dialog';
 import type { StoreSetting } from '@/components/receipt-modal';
 import type { ResponseApi } from '@/support/interfaces/response/Response';
@@ -31,6 +32,7 @@ export default function CapitalWalletIndex({ storeSetting }: { storeSetting?: St
         total_outflow: 0,
     });
     const [processing, setProcessing] = useState(false);
+    const [exportModalOpen, setExportModalOpen] = useState(false);
     const [detailOpen, setDetailOpen] = useState(false);
     const [selectedTransaction, setSelectedTransaction] = useState<any>(null);
 
@@ -181,6 +183,7 @@ export default function CapitalWalletIndex({ storeSetting }: { storeSetting?: St
                     onChangePaginationPage={(val) => handleQueryParamChange('page', val)}
                     onChangePaginationLimit={(val) => handleQueryParamChange('limit', val)}
                     limitOptions={[10, 25, 50, 100]}
+                    onExport={() => setExportModalOpen(true)}
                 />
 
                 {/* Struk / Detail Transaction Modal */}
@@ -192,6 +195,13 @@ export default function CapitalWalletIndex({ storeSetting }: { storeSetting?: St
                         storeSetting={storeSetting}
                     />
                 )}
+
+                <ExportModal
+                    isOpen={exportModalOpen}
+                    onClose={() => setExportModalOpen(false)}
+                    defaultStartDate={queryParam.start_date}
+                    defaultEndDate={queryParam.end_date}
+                />
             </div>
         </>
     );

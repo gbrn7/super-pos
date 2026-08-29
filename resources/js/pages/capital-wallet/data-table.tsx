@@ -45,7 +45,7 @@ import {
     DropdownMenuCheckboxItem,
 } from '@/components/ui/dropdown-menu';
 import { Badge } from '@/components/ui/badge';
-import { RotateCcw, Search, Calendar, CreditCard, ArrowUpDown, X, Table as TableIcon } from 'lucide-react';
+import { RotateCcw, Search, Calendar, CreditCard, ArrowUpDown, X, Table as TableIcon, DownloadCloud } from 'lucide-react';
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[];
@@ -71,6 +71,8 @@ interface DataTableProps<TData, TValue> {
     onChangePaginationPage: (page: number) => void;
     onChangePaginationLimit: (limit: number) => void;
     limitOptions: number[];
+    onExport?: () => void;
+    exporting?: boolean;
 }
 
 export function DataTable<TData, TValue>({
@@ -84,6 +86,8 @@ export function DataTable<TData, TValue>({
     onChangePaginationPage,
     onChangePaginationLimit,
     limitOptions,
+    onExport,
+    exporting = false,
 }: DataTableProps<TData, TValue>) {
     const { t } = useTranslation();
 
@@ -108,6 +112,13 @@ export function DataTable<TData, TValue>({
                     <Button variant="outline" onClick={onResetFilter} size="sm" className="h-8" disabled={processing}>
                         <RotateCcw className="mr-1.5 h-3.5 w-3.5" />
                         {t('component.data_table.reset_filter', 'Reset Filter')}
+                    </Button>
+                )}
+
+                {onExport && (
+                    <Button variant="outline" onClick={onExport} size="sm" className="h-8" disabled={processing || exporting}>
+                        <DownloadCloud className="mr-1.5 h-4 w-4" />
+                        {t('component.data_table.export.export_excel_btn', 'Ekspor')}
                     </Button>
                 )}
 

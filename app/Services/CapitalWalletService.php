@@ -2,10 +2,12 @@
 
 namespace App\Services;
 
+use App\Exports\CapitalWalletExport;
 use App\Models\CapitalWallet;
 use App\Models\CapitalWalletTransaction;
 use App\Models\ProductReturn;
 use App\Models\ProfitWalletTransaction;
+use App\Models\StoreSetting;
 use App\Models\Transaction;
 use App\Support\Enums\CapitalWalletStatusEnums;
 use App\Support\Enums\CapitalWalletTransactionDirectionEnums;
@@ -17,11 +19,14 @@ use App\Support\Models\CapitalWallet\GetCapitalWalletTransactionReqModel;
 use App\Support\Models\CapitalWallet\InjectCapitalWalletReqModel;
 use App\Support\Models\CapitalWallet\PurchaseProductCapitalWalletReqModel;
 use App\Support\Utils\CheckException;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Exception;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Http\Response;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 
 class CapitalWalletService implements CapitalWalletServiceInterface
 {
@@ -276,6 +281,40 @@ class CapitalWalletService implements CapitalWalletServiceInterface
 
                 return $transaction;
             });
+        } catch (\Throwable $th) {
+            throw CheckException::Check($th);
+        }
+    }
+
+    public function export(GetCapitalWalletTransactionReqModel $request, string $format)
+    {
+        try {
+            $request->limit = null;
+            $transactions = $this->getTransactions($request);
+            $summary = $this->getTransactionSummary($request);
+
+            if ($format === 'excel') {
+                return Excel::download(
+                    new CapitalWalletExport($transactions),
+                    'laporan-dompet-modal-'.date('Y-m-d-His').'.xlsx'
+                );
+            }
+
+            $printedAt = date('d/m/Y H:i:s');
+            $startDate = $request->start_date ? Carbon::parse($request->start_date)->format('d/m/Y') : null;
+            $endDate = $request->end_date ? Carbon::parse($request->end_date)->format('d/m/Y') : null;
+            $storeSetting = StoreSetting::first();
+
+            $pdf = Pdf::loadView('pdf.capital_wallet', [
+                'transactions' => $transactions,
+                'summary' => $summary,
+                'startDate' => $startDate,
+                'endDate' => $endDate,
+                'printedAt' => $printedAt,
+                'storeSetting' => $storeSetting,
+            ])->setPaper('a4', 'portrait');
+
+            return $pdf->download('laporan-dompet-modal-'.date('Y-m-d-His').'.pdf');
         } catch (\Throwable $th) {
             throw CheckException::Check($th);
         }

@@ -189,6 +189,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/profit-wallet/withdraw-capital', [ApiProfitWalletController::class, 'withdrawCapital'])->name('apiProfitWallet.withdrawCapital');
 
         // capital wallet
+        Route::get('/capital-wallet/export', [ApiCapitalWalletController::class, 'export'])->name('apiCapitalWallet.exportData');
         Route::get('/capital-wallet', [ApiCapitalWalletController::class, 'index'])->name('apiCapitalWallet.index');
         Route::post('/capital-wallet/inject', [ApiCapitalWalletController::class, 'inject'])->name('apiCapitalWallet.inject');
         Route::post('/capital-wallet/drawdown', [ApiCapitalWalletController::class, 'drawdown'])->name('apiCapitalWallet.drawdown');
