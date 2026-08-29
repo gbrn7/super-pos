@@ -15,6 +15,7 @@ use App\Support\Models\ProfitWallet\WithdrawCapitalProfitWalletReqModel;
 use App\Support\Utils\PaginationResource;
 use App\Support\Utils\ResponseApi;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 use Symfony\Component\HttpFoundation\Response;
@@ -89,7 +90,7 @@ class ApiProfitWalletController extends Controller implements HasMiddleware
         }
     }
 
-    public function export(IndexProfitWalletRequest $request): Response
+    public function export(Request $request): Response
     {
         try {
             $format = $request->query('format', 'pdf');
