@@ -82,7 +82,6 @@ export function ExportModal({
             }
 
             if (format === 'excel') {
-                params.limit = 999999;
                 const exportUrl = apiGetProfitWallet({ query: params }).url;
                 const response = await axiosInstance.get(exportUrl);
                 
