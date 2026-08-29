@@ -46,4 +46,9 @@ interface ProfitWalletServiceInterface
      * Record profit deduction due to product return.
      */
     public function recordReturnProfitDeduction(float $amount, int $returnId, ?string $invoiceNumber = null): ProfitWalletTransaction;
+
+    /**
+     * Export profit wallet transactions to Excel or PDF.
+     */
+    public function export(GetProfitWalletTransactionReqModel $request, string $format);
 }

@@ -2,9 +2,11 @@
 
 namespace App\Services;
 
+use App\Exports\ProfitWalletExport;
 use App\Models\ProductReturn;
 use App\Models\ProfitWallet;
 use App\Models\ProfitWalletTransaction;
+use App\Models\StoreSetting;
 use App\Models\Transaction;
 use App\Support\Enums\ProfitWalletStatusEnums;
 use App\Support\Enums\ProfitWalletTransactionDirectionEnums;
@@ -16,11 +18,14 @@ use App\Support\Models\ProfitWallet\DisburseProfitWalletReqModel;
 use App\Support\Models\ProfitWallet\GetProfitWalletTransactionReqModel;
 use App\Support\Models\ProfitWallet\WithdrawCapitalProfitWalletReqModel;
 use App\Support\Utils\CheckException;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Exception;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Http\Response;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ProfitWalletService implements ProfitWalletServiceInterface
 {
@@ -210,6 +215,40 @@ class ProfitWalletService implements ProfitWalletServiceInterface
 
                 return $transaction;
             });
+        } catch (\Throwable $th) {
+            throw CheckException::Check($th);
+        }
+    }
+
+    public function export(GetProfitWalletTransactionReqModel $request, string $format)
+    {
+        try {
+            $request->limit = null;
+            $transactions = $this->getTransactions($request);
+            $summary = $this->getTransactionSummary($request);
+
+            if ($format === 'excel') {
+                return Excel::download(
+                    new ProfitWalletExport($transactions),
+                    'laporan-dompet-profit-'.date('Y-m-d-His').'.xlsx'
+                );
+            }
+
+            $printedAt = date('d/m/Y H:i:s');
+            $startDate = $request->start_date ? Carbon::parse($request->start_date)->format('d/m/Y') : null;
+            $endDate = $request->end_date ? Carbon::parse($request->end_date)->format('d/m/Y') : null;
+            $storeSetting = StoreSetting::first();
+
+            $pdf = Pdf::loadView('pdf.profit_wallet', [
+                'transactions' => $transactions,
+                'summary' => $summary,
+                'startDate' => $startDate,
+                'endDate' => $endDate,
+                'printedAt' => $printedAt,
+                'storeSetting' => $storeSetting,
+            ])->setPaper('a4', 'portrait');
+
+            return $pdf->download('laporan-dompet-profit-'.date('Y-m-d-His').'.pdf');
         } catch (\Throwable $th) {
             throw CheckException::Check($th);
         }

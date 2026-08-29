@@ -183,6 +183,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         });
 
         // profit wallet
+        Route::get('/profit-wallet/export', [ApiProfitWalletController::class, 'export'])->name('apiProfitWallet.exportData');
         Route::get('/profit-wallet', [ApiProfitWalletController::class, 'index'])->name('apiProfitWallet.index');
         Route::post('/profit-wallet/disburse', [ApiProfitWalletController::class, 'disburse'])->name('apiProfitWallet.disburse');
         Route::post('/profit-wallet/withdraw-capital', [ApiProfitWalletController::class, 'withdrawCapital'])->name('apiProfitWallet.withdrawCapital');

@@ -17,6 +17,7 @@ use App\Support\Utils\ResponseApi;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
+use Symfony\Component\HttpFoundation\Response;
 
 class ApiProfitWalletController extends Controller implements HasMiddleware
 {
@@ -27,7 +28,7 @@ class ApiProfitWalletController extends Controller implements HasMiddleware
     public static function middleware(): array
     {
         return [
-            new Middleware('permission:'.ProfitWalletPermissionEnums::READ_PROFIT_WALLET->value, only: ['index']),
+            new Middleware('permission:'.ProfitWalletPermissionEnums::READ_PROFIT_WALLET->value, only: ['index', 'export']),
             new Middleware('permission:'.ProfitWalletPermissionEnums::DISBURSE_PROFIT_WALLET->value, only: ['disburse']),
             new Middleware('permission:'.ProfitWalletPermissionEnums::WITHDRAW_CAPITAL_PROFIT_WALLET->value, only: ['withdrawCapital']),
         ];
@@ -85,6 +86,18 @@ class ApiProfitWalletController extends Controller implements HasMiddleware
             ]);
         } catch (\Throwable $th) {
             return ResponseApi::make(false, $th->getMessage(), null, 422);
+        }
+    }
+
+    public function export(IndexProfitWalletRequest $request): Response
+    {
+        try {
+            $format = $request->query('format', 'pdf');
+            $reqModel = new GetProfitWalletTransactionReqModel($request);
+
+            return $this->profitWalletService->export($reqModel, $format);
+        } catch (\Throwable $th) {
+            return ResponseApi::make(false, $th->getMessage(), null, 500);
         }
     }
 }
