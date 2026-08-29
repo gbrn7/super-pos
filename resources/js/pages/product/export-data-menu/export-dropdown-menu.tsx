@@ -22,20 +22,21 @@ export function ExportDropdownMenu<TData>({
         try {
             setLoading(true);
             
-            // Fetch all products without limit to get all records
+            // Fetch all products with a very high limit to get all records
             const route = apiProducts.index();
-            const response = await axiosInstance.get(route.url);
+            const response = await axiosInstance.get(route.url, {
+                params: { limit: 999999 }
+            });
             
-            const data = response.data.data;
-            const products = (data && data.items) || (data && data.data) || (Array.isArray(data) ? data : []);
+            const products = response.data.data.items || [];
             
             // Map data to Excel columns
             const rows = products.map((product: any) => ({
                 [t('page.product.form.name_label', 'Nama')]: product.name,
                 [t('page.product.form.sku_label', 'SKU')]: product.sku,
                 [t('page.product.form.barcode_label', 'Barcode')]: product.barcode,
-                [t('page.product.form.category_label', 'Kategori')]: product.category_name || '',
-                [t('page.product.form.unit_label', 'Satuan')]: product.unit_name || '',
+                [t('page.product.form.category_label', 'Kategori')]: product.category?.name || '',
+                [t('page.product.form.unit_label', 'Satuan')]: product.unit?.name || '',
                 [t('page.product.form.stock_label', 'Stok')]: product.stock,
                 [t('page.product.form.cost_price_label', 'Harga Modal')]: product.cost_price,
                 [t('page.product.form.price_label', 'Harga Jual')]: product.price,
