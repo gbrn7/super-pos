@@ -525,8 +525,8 @@
     "semantic_hash": ""
   },
   "app/Services/ProductService.php": {
-    "mtime": 1787973178.3980863,
-    "ast_hash": "47f500f8619faa16c5dd2d1382b22e6c",
+    "mtime": 1787973523.6515925,
+    "ast_hash": "7e0b8eaefd27acd957dd482062d22ae4",
     "semantic_hash": ""
   },
   "app/Services/RoleService.php": {
@@ -2340,9 +2340,9 @@
     "semantic_hash": "2bd7b23d74c41552c58a2af2b134702c"
   },
   "tests/Feature/Product/ProductBulkCreateTest.php": {
-    "mtime": 1784375632.854876,
-    "ast_hash": "95813ce00d3fe0d6df3b0335a9b924d2",
-    "semantic_hash": "95813ce00d3fe0d6df3b0335a9b924d2"
+    "mtime": 1787973553.6484668,
+    "ast_hash": "1c266b339acb548e520d903e3b764e1d",
+    "semantic_hash": ""
   },
   "tests/Feature/Product/ProductExportTest.php": {
     "mtime": 1783262663.121702,

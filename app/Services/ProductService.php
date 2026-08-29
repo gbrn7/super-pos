@@ -222,6 +222,38 @@ class ProductService implements ProductServiceInterface
                     'created_at' => $now,
                     'updated_at' => $now,
                 ]);
+
+                if (! empty($barcode)) {
+                    $masterProduct = $this->masterProductRepository->getByBarcode($barcode);
+                    $category = isset($data['category_id']) ? $this->categoryRepository->getById((int) $data['category_id']) : null;
+                    $unit = isset($data['unit_id']) ? $this->unitRepository->getById((int) $data['unit_id']) : null;
+
+                    if ($masterProduct) {
+                        $masterUpdateData = [
+                            'cost_price' => $data['cost_price'],
+                            'price' => $data['price'],
+                        ];
+
+                        if ($category) {
+                            $masterUpdateData['category_name'] = $category->name;
+                        }
+
+                        if ($unit) {
+                            $masterUpdateData['unit_name'] = $unit->name;
+                        }
+
+                        $this->masterProductRepository->update($masterProduct, $masterUpdateData);
+                    } else {
+                        $this->masterProductRepository->create([
+                            'name' => $data['name'],
+                            'barcode' => $barcode,
+                            'cost_price' => $data['cost_price'],
+                            'price' => $data['price'],
+                            'category_name' => $category?->name,
+                            'unit_name' => $unit?->name,
+                        ]);
+                    }
+                }
             }
 
             $isSuccess = $this->productRepository->insert($insertData->toArray());
