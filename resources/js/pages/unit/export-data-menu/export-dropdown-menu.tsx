@@ -20,11 +20,9 @@ export function ExportDropdownMenu() {
         try {
             setLoading(true);
             const route = apiUnits.index();
-            const response = await axiosInstance.get(route.url, {
-                params: { limit: 999999 }
-            });
+            const response = await axiosInstance.get(route.url);
 
-            const units = response.data.data.items || [];
+            const units = response.data.data || [];
 
             const rows = units.map((unit: any) => ({
                 [t('page.unit.form.name_label', 'Nama')]: unit.name,

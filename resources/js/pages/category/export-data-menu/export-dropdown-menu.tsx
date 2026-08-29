@@ -22,11 +22,9 @@ export function ExportDropdownMenu<TData>({
         try {
             setLoading(true);
             const route = apiCategories.index();
-            const response = await axiosInstance.get(route.url, {
-                params: { limit: 999999 }
-            });
+            const response = await axiosInstance.get(route.url);
 
-            const categories = response.data.data.items || [];
+            const categories = response.data.data || [];
 
             const rows = categories.map((category: any) => ({
                 [t('page.category.form.name_label', 'Nama')]: category.name,
