@@ -14,6 +14,7 @@ use App\Support\Models\ProfitWallet\GetProfitWalletTransactionReqModel;
 use App\Support\Models\ProfitWallet\WithdrawCapitalProfitWalletReqModel;
 use App\Support\Utils\PaginationResource;
 use App\Support\Utils\ResponseApi;
+use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
@@ -43,15 +44,23 @@ class ApiProfitWalletController extends Controller implements HasMiddleware
             $summary = $this->profitWalletService->getTransactionSummary($reqModel);
             $paginated = $this->profitWalletService->getTransactions($reqModel);
 
-            $items = ProfitWalletTransactionResource::collection($paginated->items());
-            $paginationData = PaginationResource::make($items, $paginated);
+            if ($paginated instanceof Paginator) {
+                $items = ProfitWalletTransactionResource::collection($paginated->items());
+                $paginationData = PaginationResource::make($items, $paginated);
+                $transactionsData = [
+                    'items' => $items,
+                    'pagination' => $paginationData['pagination'],
+                ];
+            } else {
+                $transactionsData = [
+                    'items' => ProfitWalletTransactionResource::collection($paginated),
+                    'pagination' => null,
+                ];
+            }
 
             return ResponseApi::make(true, trans('message.success.success'), [
                 'summary' => $summary,
-                'transactions' => [
-                    'items' => $items,
-                    'pagination' => $paginationData['pagination'],
-                ],
+                'transactions' => $transactionsData,
             ]);
         } catch (\Throwable $th) {
             return ResponseApi::make(false, $th->getMessage(), null, 500);
