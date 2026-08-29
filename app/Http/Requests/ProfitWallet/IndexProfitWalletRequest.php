@@ -19,7 +19,7 @@ class IndexProfitWalletRequest extends FormRequest
             'type' => ['nullable', 'in:in,out'],
             'transaction_type' => ['nullable', 'in:sales_profit,disbursement,capital_withdrawal'],
             'keyword' => ['nullable', 'string', 'max:255'],
-            'limit' => ['nullable', 'integer', 'min:1', 'max:100'],
+            'limit' => ['nullable', 'integer', 'min:1', 'max:999999'],
         ];
     }
 }
