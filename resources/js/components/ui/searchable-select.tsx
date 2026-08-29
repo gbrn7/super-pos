@@ -76,9 +76,9 @@ export function SearchableSelect({
           role="combobox"
           aria-expanded={open}
           disabled={disabled}
-          className={cn("w-full justify-between font-normal", className)}
+          className={cn("w-full justify-between font-normal min-w-0", className)}
         >
-          <span className={cn(!selectedLabel && "text-muted-foreground")}>
+          <span className={cn("truncate text-left min-w-0", !selectedLabel && "text-muted-foreground")}>
             {selectedLabel ?? placeholder}
           </span>
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />

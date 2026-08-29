@@ -96,7 +96,7 @@ export default function HppCalculator() {
     return (
         <>
             <Head title={t('page.hpp_calculator.title', 'Kalkulator HPP')} />
-            
+
             <div className="flex flex-col gap-6 p-6">
                 <div>
                     <h1 className="text-2xl font-bold tracking-tight">{t('page.hpp_calculator.title', 'Kalkulator HPP')}</h1>
@@ -157,7 +157,11 @@ export default function HppCalculator() {
                                                 type="text"
                                                 placeholder={t('page.hpp_calculator.cost_placeholder', 'Komponen Biaya') + ` ${index + 1}`}
                                                 className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-xs transition-colors placeholder:text-muted-foreground focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring"
-                                                value={item.name.startsWith('page.hpp_calculator.default_costs.') ? t(item.name) : item.name}
+                                                value={
+                                                    item.name && typeof item.name === 'string' && item.name.startsWith('page.hpp_calculator.default_costs.')
+                                                        ? t(item.name as any)
+                                                        : (item.name ?? '')
+                                                }
                                                 onChange={(e) =>
                                                     updateCostItem(item.id, 'name', e.target.value)
                                                 }
@@ -199,7 +203,7 @@ export default function HppCalculator() {
                     <div className="space-y-6">
                         <div className="rounded-xl border bg-card p-6 shadow-xs sticky top-6">
                             <h2 className="text-lg font-semibold mb-4">{t('page.hpp_calculator.result_section', 'Hasil Simulasi')}</h2>
-                            
+
                             <div className="space-y-6">
                                 <div>
                                     <div className="flex justify-between items-center mb-1">
