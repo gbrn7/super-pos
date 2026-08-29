@@ -1472,7 +1472,7 @@
             "subtotal": "Subtotal",
             "no_items": "No product details available.",
             "reason_label": "Return Reason Notes:",
-            "total_refund_label": "Total Refund Amount",
+            "total_refund_label": "Total Funds Returned to Customer",
             "data_table": {
                 "columns": {
                     "return_number": "Return No.",
