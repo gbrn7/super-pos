@@ -22,13 +22,12 @@ export function ExportDropdownMenu<TData>({
         try {
             setLoading(true);
             
-            // Fetch all products with a very high limit to get all records
+            // Fetch all products without limit to get all records
             const route = apiProducts.index();
-            const response = await axiosInstance.get(route.url, {
-                params: { limit: 999999 }
-            });
+            const response = await axiosInstance.get(route.url);
             
-            const products = response.data.data.items || [];
+            const data = response.data.data;
+            const products = (data && data.items) || (data && data.data) || (Array.isArray(data) ? data : []);
             
             // Map data to Excel columns
             const rows = products.map((product: any) => ({
