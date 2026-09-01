@@ -1,22 +1,50 @@
 <?php
 
-use App\Exports\MasterProductExport;
 use App\Models\MasterProduct;
-use App\Services\MasterProductService;
+use App\Models\Permission;
+use App\Models\Role;
+use App\Models\User;
+use App\Support\Enums\MasterProductPermissionEnums;
+use App\Support\Enums\RoleEnums;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Maatwebsite\Excel\Facades\Excel;
 
 uses(RefreshDatabase::class);
 
-it('can export master products to excel', function () {
-    Excel::fake();
+it('can get raw export data', function () {
+    $role = Role::create(['name' => RoleEnums::SUPER_ADMIN->value]);
+    $permission = Permission::create(['name' => MasterProductPermissionEnums::READ_MASTER_PRODUCT->value]);
+    $role->givePermissionTo($permission);
 
-    MasterProduct::factory()->count(5)->create();
+    $user = User::factory()->create();
+    $user->assignRole($role);
 
-    $service = app(MasterProductService::class);
-    $response = $service->exportExcel();
+    MasterProduct::factory()->count(3)->create();
 
-    Excel::assertDownloaded('Masterproducts-export.xlsx', function (MasterProductExport $export) {
-        return true;
-    });
+    $response = $this
+        ->actingAs($user)
+        ->getJson(route('apiMasterProducts.getRawExportData'));
+
+    $response->assertOk()
+        ->assertJsonStructure([
+            'success',
+            'message',
+            'data' => [
+                '*' => [
+                    'id',
+                    'name',
+                    'barcode',
+                    'category_name',
+                    'unit_name',
+                    'stock',
+                    'price',
+                    'cost_price',
+                    'desc',
+                    'isAdded',
+                    'created_at',
+                    'updated_at',
+                ],
+            ],
+        ]);
+
+    expect($response->json('data'))->toHaveCount(3);
 });

@@ -21,12 +21,10 @@ export function ExportDropdownMenu<TData>({
     const handleExport = async () => {
         try {
             setLoading(true);
-            const route = apiMasterProducts.index();
-            const response = await axiosInstance.get(route.url, {
-                params: { limit: 999999 }
-            });
+            const route = apiMasterProducts.getRawExportData();
+            const response = await axiosInstance.get(route.url);
 
-            const masterProducts = response.data.data.items || [];
+            const masterProducts = response.data.data || [];
 
             const rows = masterProducts.map((masterProduct: any) => ({
                 [t('page.master_product.form.name_label', 'Nama')]: masterProduct.name,

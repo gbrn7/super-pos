@@ -148,9 +148,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
         });
 
         // Masterproduct
-        Route::resource('master-product', ApiMasterProductController::class)->names('apiMasterProducts')->only(['index', 'store', 'show', 'update', 'destroy']);
-
         Route::group(['prefix' => 'master-product'], function () {
+            Route::get('/raw-export-data', [ApiMasterProductController::class, 'getRawExportData'])->name('apiMasterProducts.getRawExportData');
+
             Route::post('/bulk-delete', [ApiMasterProductController::class, 'bulkDelete'])->name('apiMasterProducts.bulkDelete');
 
             Route::get('/barcode/{barcode}', [ApiMasterProductController::class, 'getByBarcode'])->name('apiMasterProducts.getByBarcode');
@@ -163,6 +163,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
             Route::post('/import', [ApiMasterProductController::class, 'importMasterProductExcelData'])->name('apiMasterProducts.importProductsExcelData');
         });
+
+        Route::resource('master-product', ApiMasterProductController::class)->names('apiMasterProducts')->only(['index', 'store', 'show', 'update', 'destroy']);
 
         // transactions
         Route::group(['prefix' => 'transactions'], function () {

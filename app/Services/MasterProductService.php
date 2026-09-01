@@ -237,4 +237,16 @@ class MasterProductService implements MasterProductServiceInterface
             throw CheckException::Check($th);
         }
     }
+
+    /**
+     * Get all master products without pagination or filters.
+     */
+    public function getAllRaw(): Collection
+    {
+        try {
+            return $this->MasterproductRepository->getAllRaw();
+        } catch (\Throwable $th) {
+            throw CheckException::Check($th);
+        }
+    }
 }

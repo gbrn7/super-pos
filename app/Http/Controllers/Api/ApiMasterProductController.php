@@ -29,7 +29,7 @@ class ApiMasterProductController extends Controller implements HasMiddleware
         return [
             new Middleware(
                 'permission:' . MasterProductPermissionEnums::READ_MASTER_PRODUCT->value,
-                only: ['index', 'show', 'getByBarcode', 'exportMasterProductExcelData', 'exportMasterProductPdfData']
+                only: ['index', 'show', 'getByBarcode', 'exportMasterProductExcelData', 'exportMasterProductPdfData', 'getRawExportData']
             ),
 
             new Middleware(
@@ -56,7 +56,6 @@ class ApiMasterProductController extends Controller implements HasMiddleware
     {
         try {
             $Masterproducts = $this->MasterProductService->getAllByIndex(new GetMasterProductReqModel($request));
-
 
             if ($Masterproducts instanceof Paginator) {
                 $items = MasterProductResource::collection($Masterproducts->items());
@@ -202,6 +201,21 @@ class ApiMasterProductController extends Controller implements HasMiddleware
             return $this->MasterProductService->exportPdf();
         } catch (\Throwable $th) {
             return ResponseApi::make(false, $th->getMessage(), null, $th->getcode());
+        }
+    }
+
+    /**
+     * Export raw master product data as JSON (no pagination, no filters).
+     */
+    public function getRawExportData()
+    {
+        try {
+            set_time_limit(0);
+            $data = $this->MasterProductService->getAllRaw();
+
+            return ResponseApi::make(true, trans('message.success.success'), $data);
+        } catch (\Throwable $th) {
+            return ResponseApi::make(false, $th->getMessage(), null, $th->getCode());
         }
     }
 }

@@ -3,8 +3,6 @@
 namespace App\Support\Interfaces\Services;
 
 use App\Models\MasterProduct;
-use App\Support\Models\MasterProduct\GetMasterProductReqModel;
-use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Collection;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -14,7 +12,10 @@ interface MasterProductServiceInterface
     /**
      * Get all Master products.
      */
-    public function getAllByIndex(GetMasterProductReqModel $request): Paginator|Collection;
+    /**
+     * Get all master products without pagination or filters.
+     */
+    public function getAllRaw(): Collection;
 
     /**
      * Get a Masterproduct by its ID.

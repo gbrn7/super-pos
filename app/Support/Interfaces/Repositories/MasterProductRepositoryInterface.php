@@ -15,6 +15,11 @@ interface MasterProductRepositoryInterface
     public function getAllByIndex(GetMasterProductReqModel $request): Paginator|Collection;
 
     /**
+     * Get all master products without any eager loading or pagination.
+     */
+    public function getAllRaw(): Collection;
+
+    /**
      * Get a Master products by its ID.
      */
     public function getById(int $id): ?MasterProduct;

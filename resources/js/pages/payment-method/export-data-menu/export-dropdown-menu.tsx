@@ -22,9 +22,7 @@ export function ExportDropdownMenu<TData>({
         try {
             setLoading(true);
             const route = apiPaymentMethods.index();
-            const response = await axiosInstance.get(route.url, {
-                params: { limit: 999999 }
-            });
+            const response = await axiosInstance.get(route.url);
 
             const paymentMethods = response.data.data || [];
 
