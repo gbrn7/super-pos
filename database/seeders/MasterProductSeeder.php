@@ -20,10 +20,7 @@ class MasterProductSeeder extends Seeder
     {
         set_time_limit(300);
 
-        $customFilePath = storage_path('app/temp/custom_master_products.xlsx');
-        $defaultFilePath = public_path('imports/master-products-database.xlsx');
-
-        $publicFilePath = file_exists($customFilePath) ? $customFilePath : $defaultFilePath;
+        $publicFilePath = public_path('imports/master-products-database.xlsx');
 
         if (! file_exists($publicFilePath)) {
             $this->command?->error("Import file not found: {$publicFilePath}");
@@ -94,9 +91,5 @@ class MasterProductSeeder extends Seeder
             }
         }
         DB::commit();
-
-        if (file_exists($customFilePath)) {
-            @unlink($customFilePath);
-        }
     }
 }

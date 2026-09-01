@@ -35,8 +35,6 @@ Route::get('/setup', [SetupController::class, 'index'])->name('setup.index');
 Route::post('/setup/test-db', [SetupController::class, 'testDatabase'])->name('setup.test-db');
 Route::post('/setup/migrate', [SetupController::class, 'runMigration'])->name('setup.migrate');
 Route::post('/setup/complete', [SetupController::class, 'complete'])->name('setup.complete');
-Route::post('/setup/upload-master-product', [SetupController::class, 'uploadMasterProduct'])->name('setup.upload_master_product');
-Route::delete('/setup/reset-master-product', [SetupController::class, 'resetMasterProduct'])->name('setup.reset_master_product');
 
 Route::get('/', function () {
     return redirect()->route('dashboard');

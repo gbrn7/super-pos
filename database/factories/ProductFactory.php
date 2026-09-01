@@ -24,11 +24,11 @@ class ProductFactory extends Factory
         $price = $this->faker->numberBetween(1000, 100000);
 
         return [
-            'sku' => 'PRD-' . Str::upper(Str::random(6)),
+            'sku' => 'PRD-'.Str::upper(Str::random(6)),
             // 'master_code' => null,
             'category_id' => Category::factory(),
             'unit_id' => Unit::factory(),
-            'barcode' => $this->faker->ean13() . Str::upper(Str::random(6)),
+            'barcode' => $this->faker->ean13().Str::upper(Str::random(6)),
             'stock' => $this->faker->numberBetween(0, 100),
             // 'stock_alert' => 10,
             'cost_price' => $price,

@@ -55,7 +55,7 @@ class SetupController extends Controller
             // Resolve SQLite database path to a user-writable location (e.g. storage_path) if base_path is read-only
             if ($database !== ':memory:' && ! str_starts_with($database, '/')) {
                 if (! is_writable(base_path())) {
-                    $databasePath = storage_path('app/'.basename($database));
+                    $databasePath = storage_path('app/' . basename($database));
                 } else {
                     $databasePath = base_path($database);
                 }
@@ -136,7 +136,7 @@ class SetupController extends Controller
 
                 if ($database !== ':memory:' && ! str_starts_with($database, '/')) {
                     if (! is_writable(base_path())) {
-                        $databasePath = storage_path('app/'.basename($database));
+                        $databasePath = storage_path('app/' . basename($database));
                     } else {
                         $databasePath = base_path($database);
                     }
@@ -158,7 +158,7 @@ class SetupController extends Controller
                 DB::purge('sqlite');
             }
 
-            Artisan::call('migrate:fresh', ['--force' => true]);
+            Artisan::call('migrate', ['--force' => true]);
             Artisan::call('db:seed', ['--force' => true]);
 
             return response()->json([
@@ -251,43 +251,5 @@ class SetupController extends Controller
         } catch (Exception $e) {
             return redirect()->back()->withErrors(['general' => $e->getMessage()]);
         }
-    }
-
-    public function uploadMasterProduct(Request $request): JsonResponse
-    {
-        $request->validate([
-            'file' => 'required|file|mimes:xlsx,xls|max:20480',
-        ]);
-
-        $file = $request->file('file');
-        $originalName = $file->getClientOriginalName();
-        $fileSize = number_format($file->getSize() / 1024 / 1024, 2).' MB';
-
-        $tempDir = storage_path('app/temp');
-        if (! is_dir($tempDir)) {
-            mkdir($tempDir, 0755, true);
-        }
-
-        $file->move($tempDir, 'custom_master_products.xlsx');
-
-        return response()->json([
-            'success' => true,
-            'message' => __('File katalog kustom berhasil diunggah.'),
-            'filename' => $originalName,
-            'size' => $fileSize,
-        ]);
-    }
-
-    public function resetMasterProduct(): JsonResponse
-    {
-        $tempPath = storage_path('app/temp/custom_master_products.xlsx');
-        if (file_exists($tempPath)) {
-            unlink($tempPath);
-        }
-
-        return response()->json([
-            'success' => true,
-            'message' => __('Kembali menggunakan file katalog default.'),
-        ]);
     }
 }
