@@ -32,16 +32,16 @@ export function ExportDropdownMenu<TData>({
             // Map data to Excel columns
             const rows = products.map((product: any) => ({
                 [t('page.product.form.name_label', 'Nama')]: product.name,
-                [t('page.product.form.sku_label', 'SKU')]: product.sku,
-                [t('page.product.form.barcode_label', 'Barcode')]: product.barcode,
                 [t('page.product.form.category_label', 'Kategori')]: product.category_name || '',
                 [t('page.product.form.unit_label', 'Satuan')]: product.unit_name || '',
+                [t('page.product.form.barcode_label', 'Barcode')]: product.barcode,
                 [t('page.product.form.stock_label', 'Stok')]: product.stock,
                 [t('page.product.form.cost_price_label', 'Harga Modal')]: product.cost_price,
                 [t('page.product.form.price_label', 'Harga Jual')]: product.price,
                 [t('page.product.form.status_label', 'Status')]: product.is_active ? 'Aktif' : 'Tidak Aktif',
                 [t('page.product.form.stock_type_label', 'Tipe Stok')]: product.is_unlimited ? 'Tidak Terbatas' : 'Terbatas',
                 [t('page.product.form.desc_label', 'Deskripsi')]: product.desc || '',
+                [t('page.product.form.sku_label', 'SKU')]: product.sku,
             }));
 
             // Generate workbook and download
