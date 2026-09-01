@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Settings;
 
+use App\Support\Enums\RoleEnums;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Hash;
 
@@ -9,7 +10,7 @@ class PurgeDataRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return $this->user()->hasRole(\App\Support\Enums\RoleEnums::SUPER_ADMIN->value);
+        return $this->user()->hasRole(RoleEnums::SUPER_ADMIN->value);
     }
 
     public function rules(): array

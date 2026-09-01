@@ -79,7 +79,7 @@ class TransactionSeeder extends Seeder
             }
 
             $changeAmount = $paymentAmount - $totalAmount;
-            $invoiceNumber = 'INV-' . $createdAt->format('Ymd') . '-' . str_pad((string) $i, 4, '0', STR_PAD_LEFT) . '-' . str_pad((string) rand(0, 999999), 6, '0', STR_PAD_LEFT);
+            $invoiceNumber = 'INV-'.$createdAt->format('Ymd').'-'.str_pad((string) $i, 4, '0', STR_PAD_LEFT).'-'.str_pad((string) rand(0, 999999), 6, '0', STR_PAD_LEFT);
 
             $transaction = Transaction::create([
                 'user_id' => $user->id,
@@ -97,6 +97,9 @@ class TransactionSeeder extends Seeder
                 $detail['transaction_id'] = $transaction->id;
                 TransactionDetail::create($detail);
                 $totalCost += $detail['cost_price'] * $detail['quantity'];
+
+                // Update product sold quantity
+                Product::where('id', $detail['product_id'])->increment('sold_quantity', $detail['quantity']);
             }
 
             // Record mutations in Profit Wallet & Capital Wallet

@@ -28,22 +28,22 @@ class ApiMasterProductController extends Controller implements HasMiddleware
     {
         return [
             new Middleware(
-                'permission:' . MasterProductPermissionEnums::READ_MASTER_PRODUCT->value,
+                'permission:'.MasterProductPermissionEnums::READ_MASTER_PRODUCT->value,
                 only: ['index', 'show', 'getByBarcode', 'exportMasterProductExcelData', 'exportMasterProductPdfData', 'getRawExportData']
             ),
 
             new Middleware(
-                'permission:' . MasterProductPermissionEnums::CREATE_MASTER_PRODUCT->value,
+                'permission:'.MasterProductPermissionEnums::CREATE_MASTER_PRODUCT->value,
                 only: ['store', 'getMasterProductImportTemplate', 'importMasterProductExcelData']
             ),
 
             new Middleware(
-                'permission:' . MasterProductPermissionEnums::UPDATE_MASTER_PRODUCT->value,
+                'permission:'.MasterProductPermissionEnums::UPDATE_MASTER_PRODUCT->value,
                 only: ['update']
             ),
 
             new Middleware(
-                'permission:' . MasterProductPermissionEnums::DELETE_MASTER_PRODUCT->value,
+                'permission:'.MasterProductPermissionEnums::DELETE_MASTER_PRODUCT->value,
                 only: ['destroy', 'bulkDelete']
             ),
         ];
@@ -164,7 +164,7 @@ class ApiMasterProductController extends Controller implements HasMiddleware
     public function getMasterProductImportTemplate()
     {
         $fileName = 'import-master-products-template.xlsx';
-        $publiFilePath = 'template/' . $fileName;
+        $publiFilePath = 'template/'.$fileName;
 
         if (! file_exists($publiFilePath)) {
             return ResponseApi::make(false, trans('message.error.not_found', ['resource' => 'file']), null, Response::HTTP_INTERNAL_SERVER_ERROR);

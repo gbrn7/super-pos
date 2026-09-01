@@ -29,12 +29,12 @@ class MasterProductRepository implements MasterProductRepositoryInterface
                         ->orwhere('desc', $like, "%{$request->keyword}%");
                 }
             })
-            ->when($request->name, fn($query) => $query->where('name', $like, "%{$request->name}%"))
-            ->when($request->barcode, fn($query) => $query->where('barcode', $like, "%{$request->barcode}%"))
-            ->when($request->category_name, fn($query) => $query->where('category_name', $like, "%{$request->category_name}%"))
-            ->when($request->unit_name, fn($query) => $query->where('unit_name', $like, "%{$request->unit_name}%"))
-            ->when($request->price, fn($query) => $query->where('price', $request->price))
-            ->when($request->cost_price, fn($query) => $query->where('cost_price', $request->cost_price))
+            ->when($request->name, fn ($query) => $query->where('name', $like, "%{$request->name}%"))
+            ->when($request->barcode, fn ($query) => $query->where('barcode', $like, "%{$request->barcode}%"))
+            ->when($request->category_name, fn ($query) => $query->where('category_name', $like, "%{$request->category_name}%"))
+            ->when($request->unit_name, fn ($query) => $query->where('unit_name', $like, "%{$request->unit_name}%"))
+            ->when($request->price, fn ($query) => $query->where('price', $request->price))
+            ->when($request->cost_price, fn ($query) => $query->where('cost_price', $request->cost_price))
             ->when($request->is_added !== null && $request->is_added !== '', function ($query) use ($request) {
                 if ($request->is_added === 'true' || $request->is_added === '1' || $request->is_added === true) {
                     $query->whereHas('product');

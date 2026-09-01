@@ -30,22 +30,22 @@ class ApiProductController extends Controller implements HasMiddleware
     {
         return [
             new Middleware(
-                'permission:' . ProductPermissionEnums::READ_PRODUCT->value,
+                'permission:'.ProductPermissionEnums::READ_PRODUCT->value,
                 only: ['index', 'show', 'getByBarcode', 'exportProductExcelData', 'exportProductPdfData', 'printBarcode']
             ),
 
             new Middleware(
-                'permission:' . ProductPermissionEnums::CREATE_PRODUCT->value,
+                'permission:'.ProductPermissionEnums::CREATE_PRODUCT->value,
                 only: ['store', 'bulkStore', 'getProductImportTemplate', 'importProductExcelData']
             ),
 
             new Middleware(
-                'permission:' . ProductPermissionEnums::UPDATE_PRODUCT->value,
+                'permission:'.ProductPermissionEnums::UPDATE_PRODUCT->value,
                 only: ['update']
             ),
 
             new Middleware(
-                'permission:' . ProductPermissionEnums::DELETE_PRODUCT->value,
+                'permission:'.ProductPermissionEnums::DELETE_PRODUCT->value,
                 only: ['destroy', 'bulkDelete']
             ),
         ];
@@ -66,7 +66,6 @@ class ApiProductController extends Controller implements HasMiddleware
             } else {
                 $data = ProductResource::collection($products);
             }
-
 
             return ResponseApi::make(true, trans('message.success.success'), $data);
         } catch (\Throwable $th) {
@@ -181,7 +180,7 @@ class ApiProductController extends Controller implements HasMiddleware
     public function getProductImportTemplate()
     {
         $fileName = 'import-products-template.xlsx';
-        $publiFilePath = 'template/' . $fileName;
+        $publiFilePath = 'template/'.$fileName;
 
         if (! file_exists($publiFilePath)) {
             return ResponseApi::make(false, trans('message.error.not_found', ['resource' => 'file']), null, Response::HTTP_INTERNAL_SERVER_ERROR);
