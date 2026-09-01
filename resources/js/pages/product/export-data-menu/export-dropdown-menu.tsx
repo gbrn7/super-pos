@@ -25,10 +25,12 @@ export function ExportDropdownMenu<TData>({
                 responseType: 'blob',
             });
 
+            const contentType = response.headers['content-type'];
             const blob = new Blob([response.data], {
                 type:
-                    response.headers['content-type'] ||
-                    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                    typeof contentType === 'string'
+                        ? contentType
+                        : 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
             });
             const url = window.URL.createObjectURL(blob);
             const link = document.createElement('a');
@@ -36,7 +38,7 @@ export function ExportDropdownMenu<TData>({
 
             const contentDisposition = response.headers['content-disposition'];
             let fileName = `products_${new Date().toISOString().split('T')[0]}.xlsx`;
-            if (contentDisposition) {
+            if (typeof contentDisposition === 'string') {
                 const match = contentDisposition.match(/filename="?([^";]+)"?/);
                 if (match && match[1]) {
                     fileName = match[1];
