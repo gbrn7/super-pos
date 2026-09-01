@@ -21,29 +21,21 @@ class TransactionSeeder extends Seeder
     {
         $users = User::all();
         if ($users->isEmpty()) {
-            $users = User::factory(3)->create();
+            throw new \RuntimeException('Users data is empty. Please run UserSeeder or ensure users exist before running TransactionSeeder.');
         }
 
         $products = Product::with('unit')->get();
         if ($products->isEmpty()) {
-            Product::factory(10)->create();
-            $products = Product::with('unit')->get();
+            throw new \RuntimeException('Products data is empty. Please run ProductSeeder or ensure products exist before running TransactionSeeder.');
         }
 
         $paymentMethods = PaymentMethod::all();
         if ($paymentMethods->isEmpty()) {
-            foreach (['Cash', 'Qris', 'Transfer'] as $pmName) {
-                PaymentMethod::create([
-                    'name' => $pmName,
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ]);
-            }
-            $paymentMethods = PaymentMethod::all();
+            throw new \RuntimeException('Payment methods data is empty. Please run PaymentMethodSeeder or ensure payment methods exist before running TransactionSeeder.');
         }
 
-        // Generate 50 transactions spread across recent dates
-        for ($i = 1; $i <= 50; $i++) {
+        // Generate 200 transactions spread across recent dates
+        for ($i = 1; $i <= 200; $i++) {
             $user = $users->random();
             $paymentMethod = $paymentMethods->random();
             $createdAt = Carbon::now()->subDays(rand(0, 30))->subHours(rand(0, 23))->subMinutes(rand(0, 59));
@@ -87,7 +79,7 @@ class TransactionSeeder extends Seeder
             }
 
             $changeAmount = $paymentAmount - $totalAmount;
-            $invoiceNumber = 'INV-'.$createdAt->format('Ymd').'-'.str_pad((string) $i, 4, '0', STR_PAD_LEFT).'-'.str_pad((string) rand(0, 999999), 6, '0', STR_PAD_LEFT);
+            $invoiceNumber = 'INV-' . $createdAt->format('Ymd') . '-' . str_pad((string) $i, 4, '0', STR_PAD_LEFT) . '-' . str_pad((string) rand(0, 999999), 6, '0', STR_PAD_LEFT);
 
             $transaction = Transaction::create([
                 'user_id' => $user->id,
