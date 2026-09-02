@@ -1,7 +1,6 @@
 import { Product } from '@/support/models/product';
 import { formatRupiah } from '@/lib/format-money';
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
 import { ImageIcon, Plus, ShoppingCart } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useTranslation } from 'react-i18next';
@@ -50,8 +49,8 @@ export default function ProductCard({
                                 product.stock <= 0
                                     ? 'destructive'
                                     : product.stock <= 5
-                                      ? 'secondary'
-                                      : 'default'
+                                        ? 'secondary'
+                                        : 'default'
                             }
                             className="px-1.5 py-0.5 text-[10px] font-semibold"
                         >
