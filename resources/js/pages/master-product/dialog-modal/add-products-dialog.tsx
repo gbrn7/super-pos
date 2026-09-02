@@ -107,10 +107,23 @@ export function AddProductsDialog({
 
     useEffect(() => {
         if (masterProduct && open) {
+            const matchedCategory = categories.find(
+                (c) =>
+                    c.name.trim().toLowerCase() ===
+                    masterProduct.category_name?.trim().toLowerCase(),
+            );
+            const matchedUnit = units.find(
+                (u) =>
+                    u.name.trim().toLowerCase() ===
+                    masterProduct.unit_name?.trim().toLowerCase(),
+            );
+
             setFormData((prev) => ({
                 ...prev,
                 name: masterProduct.name,
                 barcode: masterProduct.barcode,
+                category_id: matchedCategory ? matchedCategory.id : null,
+                unit_id: matchedUnit ? matchedUnit.id : null,
                 price:
                     masterProduct.price != null &&
                     Number(masterProduct.price) !== 0
@@ -123,8 +136,12 @@ export function AddProductsDialog({
                         : null,
                 desc: masterProduct.desc,
             }));
+        } else if (!open) {
+            setFormData(defaultFormData);
+            setErrorForm(defaultErrorForm);
+            setImagePreview('');
         }
-    }, [masterProduct, open]);
+    }, [masterProduct, open, categories, units]);
 
     const handleChange = (
         e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,

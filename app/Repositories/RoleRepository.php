@@ -18,7 +18,7 @@ class RoleRepository implements RoleRepositoryInterface
 
         $query = Role::query()
             ->orderBy('id', 'desc')
-            ->when($request->name, fn ($query) => $query->where('name', $like, "%{$request->name}%"))
+            ->when($request->name, fn($query) => $query->where('name', $like, "%{$request->name}%"))
             ->where('name', '!=', RoleEnums::SUPER_ADMIN->value);
 
         if ($request->limit === null) {
@@ -60,11 +60,15 @@ class RoleRepository implements RoleRepositoryInterface
 
     public function getByName(string $name): ?Role
     {
-        return Role::where('name', $name)->first();
+        $like = QueryHelper::likeOperator();
+
+        return Role::where('name', $like, $name)->first();
     }
 
     public function getByNameExceptID(string $name, int $id): ?Role
     {
-        return Role::where('name', $name)->where('id', '!=', $id)->first();
+        $like = QueryHelper::likeOperator();
+
+        return Role::where('name', $like, $name)->where('id', '!=', $id)->first();
     }
 }
