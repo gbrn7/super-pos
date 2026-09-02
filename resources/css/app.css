@@ -197,11 +197,13 @@
 @media print {
     @page {
         size: 58mm auto;
-        margin: 0;
+        margin: 0mm;
     }
 
     /* Box model reset */
-    * {
+    *,
+    *::before,
+    *::after {
         box-sizing: border-box !important;
     }
 
@@ -211,13 +213,13 @@
     }
 
     /* Hide ALL direct body children by default (portals, toasts, etc.) */
-    body>* {
+    body > * {
         display: none !important;
     }
 
-    /* Then selectively show only the portal/dialog that contains the receipt */
-    body>*:has(#printable-receipt),
-    body>*:has(#printable-receipt) div[data-radix-portal],
+    /* Selectively show only the portal/dialog containing the receipt */
+    body > *:has(#printable-receipt),
+    body > *:has(#printable-receipt) div[data-radix-portal],
     div[data-radix-portal]:has(#printable-receipt),
     [data-slot='dialog-content']:has(#printable-receipt),
     div[role='dialog']:has(#printable-receipt) {
@@ -252,6 +254,8 @@
         margin: 0 !important;
         padding: 0 !important;
         overflow: visible !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
     }
 
     /* Force crisp black text color and transparent background inside the printable receipt */
@@ -272,7 +276,7 @@
         display: none !important;
     }
 
-    /* Reset portal/dialog positioning only */
+    /* Reset portal/dialog positioning */
     div[data-radix-portal],
     [data-radix-portal],
     [data-slot='dialog-content'],
@@ -296,15 +300,20 @@
         overflow: visible !important;
     }
 
-    /* Strictly bounded print width: 44mm total width */
+    /* 58mm Thermal Receipt Container: 44mm safe printable area, strictly left-aligned with safe right margin */
     #printable-receipt {
         display: block !important;
         border: none !important;
         box-shadow: none !important;
-        padding: 0 0.5mm !important;
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+        padding-left: 0 !important;
+        padding-right: 1.5mm !important;
         margin: 0 !important;
         width: 44mm !important;
         max-width: 44mm !important;
+        font-size: 10px !important;
         box-sizing: border-box !important;
+        overflow: visible !important;
     }
 }

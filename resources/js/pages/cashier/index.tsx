@@ -541,10 +541,10 @@ export default function CashierIndex({ storeSetting }: { storeSetting?: StoreSet
 
                 if (shouldPrintReceipt) {
                     setReceiptOpen(true);
+                    clearCart();
                     setTimeout(() => {
                         window.print();
-                        handleNewTransaction();
-                    }, 150);
+                    }, 300);
                 } else {
                     clearCart();
                     setMobileTab('products');

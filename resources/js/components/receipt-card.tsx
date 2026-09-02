@@ -59,7 +59,7 @@ export default function ReceiptCard({
     return (
         <div
             id="printable-receipt"
-            className="w-full max-w-[260px] mx-auto space-y-4 rounded-xl border bg-card p-4 font-sans text-[11px] leading-relaxed shadow-xs"
+            className="w-full max-w-[260px] print:max-w-full print:p-0 mx-auto space-y-4 rounded-xl border bg-card p-4 font-sans text-[11px] leading-relaxed shadow-xs"
         >
             {/* Store Header */}
             <div className="space-y-1 text-center">
