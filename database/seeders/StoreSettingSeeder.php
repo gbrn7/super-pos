@@ -15,7 +15,6 @@ class StoreSettingSeeder extends Seeder
                 'name' => 'PRAKTIS POS',
                 'address' => 'Jl. Jenderal Sudirman No. 123, Jakarta',
                 'phone' => '021-5551234',
-                'email' => 'info@praktispos.com',
                 'receipt_footer' => 'Barang yang sudah dibeli tidak dapat ditukar',
             ]
         );
