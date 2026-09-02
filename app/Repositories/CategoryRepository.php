@@ -17,7 +17,7 @@ class CategoryRepository implements CategoryRepositoryInterface
 
         $query = Category::query()
             ->orderBy(isset($request->order_by) ? $request->order_by : 'id', isset($request->order) ? $request->order : 'desc')
-            ->when($request->name, fn ($query) => $query->where('name', $like, "%{$request->name}%"));
+            ->when($request->name, fn($query) => $query->where('name', $like, "%{$request->name}%"));
 
         if ($request->limit === null) {
             return $query->get();
@@ -58,11 +58,14 @@ class CategoryRepository implements CategoryRepositoryInterface
 
     public function getByName(string $name): ?Category
     {
-        return Category::where('name', $name)->first();
+        $like = QueryHelper::likeOperator();
+        return Category::where('name', $like, $name)->first();
     }
 
     public function getByNameExceptID(string $name, int $id): ?Category
     {
-        return Category::where('name', $name)->where('id', '!=', $id)->first();
+        $like = QueryHelper::likeOperator();
+
+        return Category::where('name', $like, $name)->where('id', '!=', $id)->first();
     }
 }
