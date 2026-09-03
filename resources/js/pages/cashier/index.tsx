@@ -1,5 +1,5 @@
-import { Head } from '@inertiajs/react';
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { Head, usePage } from '@inertiajs/react';
+import { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import i18next from 'i18next';
 import { index as cashierRoute } from '@/routes/cashier';
@@ -31,13 +31,13 @@ import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Separator } from '@/components/ui/separator';
 import {
-    AlertDialog,
-    AlertDialogCancel,
-    AlertDialogContent,
-    AlertDialogFooter,
-    AlertDialogHeader,
-    AlertDialogTitle,
-} from '@/components/ui/alert-dialog';
+    Dialog,
+    DialogContent,
+    DialogHeader,
+    DialogTitle,
+    DialogFooter,
+    DialogClose,
+} from '@/components/ui/dialog';
 import {
     Search,
     ScanBarcode,
@@ -59,10 +59,12 @@ import {
 } from 'lucide-react';
 import ProductRow from './components/product-row';
 import CartItemRow from './components/cart-item-row';
-import ReceiptModal, { StoreSetting } from '@/components/receipt-modal';
+import ReceiptCard from '@/components/receipt-card';
+import { StoreSetting } from '@/components/receipt-modal';
 import PaymentMethodDetailDialog from './components/payment-method-detail-dialog';
 import UpdateStockDialog from './components/update-stock-dialog';
 import { CreateDialog as CreateProductDialog } from '../product/dialog-modal/create-dialog';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 export interface CartItem {
     product: Product;
@@ -107,7 +109,6 @@ export default function CashierIndex({ storeSetting }: { storeSetting?: StoreSet
     // ── UI / Mobile navigation state ───────────────────────────────────────────
     const [processing, setProcessing] = useState(false);
     const [confirmOpen, setConfirmOpen] = useState(false);
-    const [receiptOpen, setReceiptOpen] = useState(false);
     const [lastTransaction, setLastTransaction] = useState<Transaction | null>(
         null,
     );
@@ -133,6 +134,9 @@ export default function CashierIndex({ storeSetting }: { storeSetting?: StoreSet
             searchRef.current.value = '';
         }
     }, []);
+
+    const { auth } = usePage().props as { auth?: { user?: { name?: string; id?: number } | null } };
+    const currentUserName = auth?.user?.name || 'Kasir';
 
     // ── Computed values ─────────────────────────────────────────────────────────
     const grossSubtotal = cart.reduce(
@@ -172,6 +176,55 @@ export default function CashierIndex({ storeSetting }: { storeSetting?: StoreSet
         (pm) => String(pm.id) === paymentMethodId,
     );
     const selectedPaymentMethodName = selectedPaymentMethodObj?.name || 'Tunai';
+
+    const previewTransaction = useMemo<Transaction>(() => {
+        return {
+            id: 0,
+            user_id: auth?.user?.id || 0,
+            user_name: currentUserName,
+            payment_method_id: Number(paymentMethodId) || 0,
+            payment_method_name: selectedPaymentMethodName,
+            invoice_number: 'INV-PREVIEW',
+            total_amount: grandTotal,
+            discount_amount: discountAmount,
+            payment_amount: Number(paymentAmount) || 0,
+            change_amount: Math.max(0, change),
+            created_at: Math.floor(Date.now() / 1000),
+            updated_at: Math.floor(Date.now() / 1000),
+            details: cart.map((item, idx) => {
+                const discType = item.discountType || 'nominal';
+                const discPerUnit =
+                    discType === 'percent'
+                        ? (item.product.price * (item.discount || 0)) / 100
+                        : item.discount || 0;
+                const netPrice = Math.max(0, item.product.price - discPerUnit);
+                return {
+                    id: idx + 1,
+                    transaction_id: 0,
+                    product_id: item.product.id,
+                    product_name: item.product.name,
+                    unit_name: item.product.unit_name || '',
+                    quantity: item.quantity,
+                    price: item.product.price,
+                    cost_price: item.product.cost_price || 0,
+                    discount: discPerUnit,
+                    subtotal: netPrice * item.quantity,
+                    created_at: Math.floor(Date.now() / 1000),
+                    updated_at: Math.floor(Date.now() / 1000),
+                };
+            }),
+        };
+    }, [
+        auth?.user?.id,
+        currentUserName,
+        paymentMethodId,
+        selectedPaymentMethodName,
+        grandTotal,
+        discountAmount,
+        paymentAmount,
+        change,
+        cart,
+    ]);
 
     // Auto-select cash payment method if available
     useEffect(() => {
@@ -499,7 +552,6 @@ export default function CashierIndex({ storeSetting }: { storeSetting?: StoreSet
     };
 
     const submitCheckout = async (shouldPrintReceipt: boolean = true) => {
-        setConfirmOpen(false);
         setProcessing(true);
         try {
             const { data } = await axiosInstance.post<ResponseApi<Transaction>>(
@@ -530,7 +582,8 @@ export default function CashierIndex({ storeSetting }: { storeSetting?: StoreSet
             );
 
             if (data.success) {
-                setLastTransaction(data.data as unknown as Transaction);
+                const completedTx = data.data as unknown as Transaction;
+                setLastTransaction(completedTx);
                 showSuccessToast(
                     t(
                         'page.kasir.checkout_success',
@@ -540,33 +593,22 @@ export default function CashierIndex({ storeSetting }: { storeSetting?: StoreSet
                 fetchProducts(search, page, selectedCategory);
 
                 if (shouldPrintReceipt) {
-                    setReceiptOpen(true);
-                    setTimeout(() => {
-                        window.print();
-                        handleNewTransaction();
-                    }, 150);
-                } else {
-                    clearCart();
-                    setMobileTab('products');
-                    setTimeout(() => {
-                        searchRef.current?.focus();
-                    }, 100);
+                    // Elemen #printable-receipt sudah ada dan aktif di dalam dialog
+                    window.print();
                 }
+
+                setConfirmOpen(false);
+                clearCart();
+                setMobileTab('products');
+                setTimeout(() => {
+                    searchRef.current?.focus();
+                }, 100);
             }
         } catch (e) {
             handleApiError(e);
         } finally {
             setProcessing(false);
         }
-    };
-
-    const handleNewTransaction = () => {
-        setReceiptOpen(false);
-        clearCart();
-        setMobileTab('products');
-        setTimeout(() => {
-            searchRef.current?.focus();
-        }, 100);
     };
 
     // ── Render ──────────────────────────────────────────────────────────────────
@@ -1425,235 +1467,201 @@ export default function CashierIndex({ storeSetting }: { storeSetting?: StoreSet
                 </div>
             </div>
 
-            {/* Enhanced Confirm Payment Dialog */}
-            <AlertDialog open={confirmOpen} onOpenChange={setConfirmOpen}>
-                <AlertDialogContent className="max-w-md">
-                    <AlertDialogHeader>
-                        <div className="flex w-full items-center justify-between border-b pb-3">
-                            <div className="flex items-center gap-2">
-                                <div className="rounded-full bg-emerald-500/10 p-2.5 text-emerald-600 dark:text-emerald-400">
-                                    <CreditCard className="h-6 w-6" />
+            {/* Enhanced Confirm Payment & Receipt Preview Dialog */}
+            <Dialog open={confirmOpen} onOpenChange={setConfirmOpen}>
+                <DialogContent className="max-h-[90vh] overflow-y-auto p-6 sm:max-w-2xl">
+                    <div className="space-y-6 print:hidden">
+                        <DialogHeader className="border-b pb-4">
+                            <div className="flex w-full items-center justify-between">
+                                <div className="flex items-center gap-2">
+                                    <div className="rounded-full bg-emerald-500/10 p-2 text-emerald-600 dark:text-emerald-400">
+                                        <CreditCard className="h-5 w-5 sm:h-6 sm:w-6" />
+                                    </div>
+                                    <div>
+                                        <DialogTitle className="text-base font-extrabold sm:text-lg">
+                                            {t(
+                                                'page.kasir.confirm_dialog_title',
+                                                'Konfirmasi Pembayaran',
+                                            )}
+                                        </DialogTitle>
+                                        <p className="text-xs font-medium text-muted-foreground">
+                                            {t(
+                                                'page.kasir.confirm_dialog_desc',
+                                                'Periksa rincian sebelum menyelesaikan transaksi',
+                                            )}
+                                        </p>
+                                    </div>
                                 </div>
-                                <div>
-                                    <AlertDialogTitle className="text-lg font-extrabold">
-                                        {t(
-                                            'page.kasir.confirm_dialog_title',
-                                            'Konfirmasi Pembayaran',
-                                        )}
-                                    </AlertDialogTitle>
-                                    <p className="text-xs font-medium text-muted-foreground sm:text-sm">
-                                        {t(
-                                            'page.kasir.confirm_dialog_desc',
-                                            'Periksa rincian sebelum menyelesaikan transaksi',
-                                        )}
-                                    </p>
-                                </div>
+                                <Badge
+                                    variant="outline"
+                                    className="border-primary/30 bg-primary/10 px-2.5 py-1 text-xs font-bold text-primary sm:text-sm mr-8"
+                                >
+                                    {selectedPaymentMethodName}
+                                </Badge>
                             </div>
-                            <Badge
-                                variant="outline"
-                                className="border-primary/30 bg-primary/10 px-2.5 py-1 text-xs font-bold text-primary sm:text-sm"
-                            >
-                                {selectedPaymentMethodName}
-                            </Badge>
-                        </div>
-                    </AlertDialogHeader>
+                        </DialogHeader>
 
-                    <div className="space-y-3.5 py-1">
-                        {/* Items Overview */}
-                        <div className="space-y-2.5 rounded-xl border bg-muted/40 p-3.5 text-xs sm:text-sm">
-                            <div className="flex items-center justify-between border-b border-border/60 pb-2 font-bold text-muted-foreground">
-                                <span>
-                                    {t(
-                                        'page.kasir.items_breakdown',
-                                        'Rincian Barang',
-                                    )}
-                                </span>
-                                <span className="font-extrabold text-foreground">
-                                    {cart.length}{' '}
-                                    {t('page.kasir.items_types', 'Jenis')} (
-                                    {cartCount} Item)
-                                </span>
-                            </div>
-                            <div className="max-h-48 space-y-2 overflow-y-auto pr-1">
-                                {cart.map((item) => {
-                                    const discType =
-                                        item.discountType || 'nominal';
-                                    const discPerUnit =
-                                        discType === 'percent'
-                                            ? (item.product.price *
-                                                (item.discount || 0)) /
-                                            100
-                                            : item.discount || 0;
-                                    const netUnitPrice = Math.max(
-                                        0,
-                                        item.product.price - discPerUnit,
-                                    );
-                                    const itemSubtotal =
-                                        netUnitPrice * item.quantity;
-                                    const hasDisc = discPerUnit > 0;
+                        {/* Unified Tabbed Layout for All Screen Sizes */}
+                        <Tabs defaultValue="summary" className="w-full">
+                            <TabsList className="mb-4 grid w-full grid-cols-2">
+                                <TabsTrigger value="summary" className="text-xs sm:text-sm font-bold gap-1.5">
+                                    <CreditCard className="h-4 w-4" />
+                                    {t('page.kasir.tab_summary', 'Ringkasan Pembayaran')}
+                                </TabsTrigger>
+                                <TabsTrigger value="receipt" className="text-xs sm:text-sm font-bold gap-1.5">
+                                    <Receipt className="h-4 w-4" />
+                                    {t('page.kasir.tab_receipt_preview', 'Preview Struk')}
+                                </TabsTrigger>
+                            </TabsList>
 
-                                    return (
-                                        <div
-                                            key={item.product.id}
-                                            className="space-y-0.5 border-b border-border/40 pb-1.5 last:border-b-0 last:pb-0"
-                                        >
-                                            <div className="flex justify-between gap-2 text-xs font-bold sm:text-sm">
-                                                <span className="flex-1 truncate text-foreground">
-                                                    {item.product.name}
-                                                </span>
-                                                <span className="shrink-0 text-right font-mono font-extrabold">
-                                                    {formatRupiah(itemSubtotal)}
-                                                </span>
-                                            </div>
-                                            <div className="flex justify-between font-mono text-[11px] text-muted-foreground">
-                                                <span>
-                                                    {item.quantity} x{' '}
-                                                    {hasDisc ? (
-                                                        <>
-                                                            <span className="mr-1 font-normal text-muted-foreground/70 line-through">
-                                                                {formatRupiah(
-                                                                    item.product
-                                                                        .price,
-                                                                )}
-                                                            </span>
-                                                            <span className="font-bold text-emerald-600 dark:text-emerald-400">
-                                                                {formatRupiah(
-                                                                    netUnitPrice,
-                                                                )}
-                                                            </span>
-                                                        </>
-                                                    ) : (
+                            {/* Tab 1: Summary */}
+                            <TabsContent value="summary" className="space-y-4 border-none p-0 outline-none">
+                                {/* Items Overview */}
+                                <div className="space-y-2.5 rounded-xl border bg-muted/40 p-3.5 text-xs sm:text-sm">
+                                    <div className="flex items-center justify-between border-b border-border/60 pb-2 font-bold text-muted-foreground">
+                                        <span>{t('page.kasir.items_breakdown', 'Rincian Barang')}</span>
+                                        <span className="font-extrabold text-foreground">
+                                            {cart.length} {t('page.kasir.items_types', 'Jenis')} ({cartCount} Item)
+                                        </span>
+                                    </div>
+                                    <div className="max-h-48 space-y-2 overflow-y-auto pr-1">
+                                        {cart.map((item) => {
+                                            const discType = item.discountType || 'nominal';
+                                            const discPerUnit =
+                                                discType === 'percent'
+                                                    ? (item.product.price * (item.discount || 0)) / 100
+                                                    : item.discount || 0;
+                                            const netUnitPrice = Math.max(0, item.product.price - discPerUnit);
+                                            const itemSubtotal = netUnitPrice * item.quantity;
+                                            const hasDisc = discPerUnit > 0;
+
+                                            return (
+                                                <div
+                                                    key={item.product.id}
+                                                    className="space-y-0.5 border-b border-border/40 pb-1.5 last:border-b-0 last:pb-0"
+                                                >
+                                                    <div className="flex justify-between gap-2 text-xs sm:text-sm font-bold">
+                                                        <span className="flex-1 truncate text-foreground">{item.product.name}</span>
+                                                        <span className="shrink-0 text-right font-mono font-extrabold">{formatRupiah(itemSubtotal)}</span>
+                                                    </div>
+                                                    <div className="flex justify-between font-mono text-[11px] text-muted-foreground">
                                                         <span>
-                                                            {formatRupiah(
-                                                                item.product
-                                                                    .price,
+                                                            {item.quantity} x{' '}
+                                                            {hasDisc ? (
+                                                                <>
+                                                                    <span className="mr-1 line-through opacity-70">{formatRupiah(item.product.price)}</span>
+                                                                    <span className="font-bold text-emerald-600 dark:text-emerald-400">{formatRupiah(netUnitPrice)}</span>
+                                                                </>
+                                                            ) : (
+                                                                <span>{formatRupiah(item.product.price)}</span>
                                                             )}
+                                                            {item.product.unit_name ? ` (${item.product.unit_name})` : ''}
                                                         </span>
-                                                    )}
-                                                    {item.product.unit_name
-                                                        ? ` (${item.product.unit_name})`
-                                                        : ''}
-                                                </span>
-                                            </div>
-                                        </div>
-                                    );
-                                })}
-                            </div>
-                        </div>
-
-                        {/* Financial Summary Card */}
-                        <div className="space-y-2 rounded-xl border bg-card p-3.5 font-mono text-xs font-semibold sm:text-sm">
-                            <div className="flex justify-between text-muted-foreground">
-                                <span>
-                                    {t(
-                                        'page.kasir.items_subtotal',
-                                        'Subtotal Barang',
-                                    )}
-                                    :
-                                </span>
-                                <span className="font-bold text-foreground">
-                                    {formatRupiah(itemsSubtotal)}
-                                </span>
-                            </div>
-                            {discountAmount > 0 && (
-                                <div className="flex justify-between text-emerald-600 dark:text-emerald-400">
-                                    <span>
-                                        {t(
-                                            'page.kasir.total_discount_label',
-                                            'Diskon Transaksi',
-                                        )}{' '}
-                                        (
-                                        {totalDiscountType === 'percent'
-                                            ? `${totalDiscountValue}%`
-                                            : 'Rp'}
-                                        ):
-                                    </span>
-                                    <span className="font-bold">
-                                        - {formatRupiah(discountAmount)}
-                                    </span>
+                                                    </div>
+                                                </div>
+                                            );
+                                        })}
+                                    </div>
                                 </div>
-                            )}
-                            <div className="flex justify-between border-t pt-1.5 text-base font-black text-foreground">
-                                <span>
-                                    {t(
-                                        'page.kasir.grand_total_label',
-                                        'TOTAL HARGA',
-                                    )}
-                                    :
-                                </span>
-                                <span className="text-lg text-emerald-600 sm:text-xl dark:text-emerald-400">
-                                    {formatRupiah(grandTotal)}
-                                </span>
-                            </div>
-                            <div className="flex justify-between pt-0.5 text-muted-foreground">
-                                <span>
-                                    {t(
-                                        'page.kasir.payment_amount_label',
-                                        'Nominal Diterima',
-                                    )}
-                                    :
-                                </span>
-                                <span className="font-bold text-foreground">
-                                    {formatRupiah(Number(paymentAmount))}
-                                </span>
-                            </div>
-                        </div>
 
-                        {/* Change highlight panel */}
-                        <div className="flex items-center justify-between rounded-xl border border-emerald-500/40 bg-emerald-500/15 p-3.5 font-mono text-emerald-800 dark:text-emerald-300">
-                            <span className="text-xs font-black tracking-wider uppercase sm:text-sm">
-                                {t('page.kasir.change_label', 'KEMBALIAN')}
-                            </span>
-                            <span className="text-xl font-black sm:text-2xl">
-                                {formatRupiah(Math.max(0, change))}
-                            </span>
-                        </div>
+                                {/* Financial Summary */}
+                                <div className="space-y-2 rounded-xl border bg-card p-3.5 font-mono text-xs sm:text-sm">
+                                    <div className="flex justify-between text-muted-foreground">
+                                        <span>{t('page.kasir.items_subtotal', 'Subtotal Barang')}:</span>
+                                        <span className="font-bold text-foreground">{formatRupiah(itemsSubtotal)}</span>
+                                    </div>
+                                    {discountAmount > 0 && (
+                                        <div className="flex justify-between text-emerald-600 dark:text-emerald-400">
+                                            <span>
+                                                {t('page.kasir.total_discount_label', 'Diskon Transaksi')} ({totalDiscountType === 'percent' ? `${totalDiscountValue}%` : 'Rp'}):
+                                            </span>
+                                            <span className="font-bold">- {formatRupiah(discountAmount)}</span>
+                                        </div>
+                                    )}
+                                    <div className="flex justify-between border-t pt-1.5 text-base font-black text-foreground">
+                                        <span>{t('page.kasir.grand_total_label', 'TOTAL HARGA')}:</span>
+                                        <span className="text-lg text-emerald-600 sm:text-xl dark:text-emerald-400">{formatRupiah(grandTotal)}</span>
+                                    </div>
+                                    <div className="flex justify-between pt-0.5 text-muted-foreground">
+                                        <span>{t('page.kasir.payment_amount_label', 'Nominal Diterima')}:</span>
+                                        <span className="font-bold text-foreground">{formatRupiah(Number(paymentAmount))}</span>
+                                    </div>
+                                </div>
+
+                                {/* Change Panel */}
+                                <div className="flex items-center justify-between rounded-xl border border-emerald-500/40 bg-emerald-500/15 p-3.5 font-mono text-emerald-800 dark:text-emerald-300">
+                                    <span className="text-xs font-black tracking-wider uppercase sm:text-sm">{t('page.kasir.change_label', 'KEMBALIAN')}</span>
+                                    <span className="text-xl font-black sm:text-2xl">{formatRupiah(Math.max(0, change))}</span>
+                                </div>
+                            </TabsContent>
+
+                            {/* Tab 2: Receipt Preview in UI */}
+                            <TabsContent value="receipt" className="border-none p-0 outline-none">
+                                <div className="flex justify-center rounded-lg bg-muted/20 py-4">
+                                    <ReceiptCard
+                                        storeName={storeSetting?.name || 'Toko Maju Jaya'}
+                                        storeAddress={storeSetting?.address || 'Jl. Raya Bekasi KM.18 RT.004/0009'}
+                                        storePhone={storeSetting?.phone || '081234567890'}
+                                        storeEmail={storeSetting?.email}
+                                        storeReceiptFooter={storeSetting?.receipt_footer}
+                                        transaction={lastTransaction || previewTransaction}
+                                    />
+                                </div>
+                            </TabsContent>
+                        </Tabs>
+
+                        <DialogFooter className="flex-col gap-2 pt-2 sm:flex-row">
+                            <DialogClose asChild>
+                                <Button
+                                    type="button"
+                                    variant="outline"
+                                    disabled={processing}
+                                    className="h-10 text-xs font-bold sm:mr-auto sm:h-11 sm:text-sm"
+                                >
+                                    {t('page.kasir.cancel_btn', 'Batal')}
+                                </Button>
+                            </DialogClose>
+                            <Button
+                                type="button"
+                                variant="outline"
+                                disabled={processing}
+                                className="h-10 gap-2 border-emerald-600/40 text-xs font-bold text-emerald-700 hover:bg-emerald-50 sm:h-11 sm:text-sm dark:text-emerald-400 dark:hover:bg-emerald-950/40"
+                                onClick={() => submitCheckout(false)}
+                            >
+                                <Check className="h-4 w-4" />
+                                {t(
+                                    'page.kasir.checkout_no_receipt',
+                                    'Bayar Tanpa Struk',
+                                )}
+                            </Button>
+                            <Button
+                                type="button"
+                                disabled={processing}
+                                className="h-10 gap-2 bg-emerald-600 text-xs font-extrabold text-white hover:bg-emerald-700 sm:h-11 sm:text-sm"
+                                onClick={() => submitCheckout(true)}
+                            >
+                                <Printer className="h-4 w-4" />
+                                {t(
+                                    'page.kasir.checkout_with_receipt',
+                                    'Bayar & Cetak Struk',
+                                )}
+                            </Button>
+                        </DialogFooter>
                     </div>
 
-                    <AlertDialogFooter className="flex-col gap-2 pt-2 sm:flex-row">
-                        <AlertDialogCancel
-                            disabled={processing}
-                            className="h-10 text-xs font-bold sm:mr-auto sm:h-11 sm:text-sm"
-                        >
-                            {t('page.kasir.cancel_btn', 'Batal')}
-                        </AlertDialogCancel>
-                        <Button
-                            type="button"
-                            variant="outline"
-                            disabled={processing}
-                            className="h-10 gap-2 border-emerald-600/40 text-xs font-bold text-emerald-700 hover:bg-emerald-50 sm:h-11 sm:text-sm dark:text-emerald-400 dark:hover:bg-emerald-950/40"
-                            onClick={() => submitCheckout(false)}
-                        >
-                            <Check className="h-4 w-4" />
-                            {t(
-                                'page.kasir.checkout_no_receipt',
-                                'Bayar Tanpa Struk',
-                            )}
-                        </Button>
-                        <Button
-                            type="button"
-                            disabled={processing}
-                            className="h-10 gap-2 bg-emerald-600 text-xs font-extrabold text-white hover:bg-emerald-700 sm:h-11 sm:text-sm"
-                            onClick={() => submitCheckout(true)}
-                        >
-                            <Printer className="h-4 w-4" />
-                            {t(
-                                'page.kasir.checkout_with_receipt',
-                                'Bayar & Cetak Struk',
-                            )}
-                        </Button>
-                    </AlertDialogFooter>
-                </AlertDialogContent>
-            </AlertDialog>
-
-            {/* Receipt Modal */}
-            <ReceiptModal
-                open={receiptOpen}
-                transaction={lastTransaction}
-                storeSetting={storeSetting}
-                onClose={() => setReceiptOpen(false)}
-                onNewTransaction={handleNewTransaction}
-            />
+                    {/* Dedicated Printable Area (always rendered for print media regardless of active tab) */}
+                    <div className="hidden print:block">
+                        <ReceiptCard
+                            storeName={storeSetting?.name || 'Toko Maju Jaya'}
+                            storeAddress={storeSetting?.address || 'Jl. Raya Bekasi KM.18 RT.004/0009'}
+                            storePhone={storeSetting?.phone || '081234567890'}
+                            storeEmail={storeSetting?.email}
+                            storeReceiptFooter={storeSetting?.receipt_footer}
+                            transaction={lastTransaction || previewTransaction}
+                        />
+                    </div>
+                </DialogContent>
+            </Dialog>
 
             {/* Payment Method Detail Dialog */}
             <PaymentMethodDetailDialog

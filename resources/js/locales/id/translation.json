@@ -1415,6 +1415,8 @@
             "exact_cash": "Uang Pas",
             "confirm_dialog_title": "Konfirmasi Pembayaran",
             "confirm_dialog_desc": "Periksa rincian sebelum menyelesaikan transaksi",
+            "tab_summary": "Ringkasan Pembayaran",
+            "tab_receipt_preview": "Preview Struk",
             "items_breakdown": "Rincian Barang",
             "cancel_btn": "Batal",
             "checkout_no_receipt": "Bayar Tanpa Struk",

@@ -1419,6 +1419,8 @@
             "exact_cash": "Exact Cash",
             "confirm_dialog_title": "Confirm Payment",
             "confirm_dialog_desc": "Check details before completing the transaction",
+            "tab_summary": "Payment Summary",
+            "tab_receipt_preview": "Receipt Preview",
             "items_breakdown": "Items Breakdown",
             "cancel_btn": "Cancel",
             "checkout_no_receipt": "Pay Without Receipt",
