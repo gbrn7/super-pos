@@ -213,23 +213,23 @@
     }
 
     /* Hide ALL direct body children by default (portals, toasts, etc.) */
-    body > * {
+    body>* {
         display: none !important;
     }
 
     /* Selectively show only the portal/dialog containing the receipt */
-    body > *:has(#printable-receipt),
-    body > *:has(#printable-receipt) div[data-radix-portal],
+    body>*:has(#printable-receipt),
+    body>*:has(#printable-receipt) div[data-radix-portal],
     div[data-radix-portal]:has(#printable-receipt),
     [data-slot='dialog-content']:has(#printable-receipt),
     div[role='dialog']:has(#printable-receipt) {
         display: block !important;
         position: static !important;
-        width: 44mm !important;
-        max-width: 44mm !important;
+        width: 100% !important;
+        max-width: 100% !important;
         height: auto !important;
         min-height: 0 !important;
-        margin: 0 !important;
+        margin: 0 auto !important;
         padding: 0 !important;
         background: white !important;
         border: none !important;
@@ -248,8 +248,8 @@
         background-color: white !important;
         background-image: none !important;
         color: black !important;
-        width: 44mm !important;
-        max-width: 44mm !important;
+        width: 100% !important;
+        max-width: 100% !important;
         height: auto !important;
         margin: 0 !important;
         padding: 0 !important;
@@ -283,11 +283,11 @@
     div[role='dialog'] {
         display: block !important;
         position: static !important;
-        width: 44mm !important;
-        max-width: 44mm !important;
+        width: 100% !important;
+        max-width: 100% !important;
         height: auto !important;
         min-height: 0 !important;
-        margin: 0 !important;
+        margin: 0 auto !important;
         padding: 0 !important;
         background: white !important;
         border: none !important;
@@ -300,18 +300,18 @@
         overflow: visible !important;
     }
 
-    /* 58mm Thermal Receipt Container: 44mm safe printable area, strictly left-aligned with safe right margin */
+    /* Thermal Receipt Container: center-aligned with safe printable width */
     #printable-receipt {
         display: block !important;
         border: none !important;
         box-shadow: none !important;
         padding-top: 0 !important;
         padding-bottom: 0 !important;
-        padding-left: 0 !important;
-        padding-right: 1.5mm !important;
-        margin: 0 !important;
-        width: 44mm !important;
-        max-width: 44mm !important;
+        padding-left: 0mm !important;
+        padding-right: 3mm !important;
+        margin: 0 auto !important;
+        width: 100% !important;
+        max-width: 48mm !important;
         font-size: 10px !important;
         box-sizing: border-box !important;
         overflow: visible !important;
