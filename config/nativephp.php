@@ -88,6 +88,8 @@ return [
         'content',
         'node_modules',
         '*/tests',
+        'public/hot',
+        'hot',
     ],
 
     /**
@@ -156,6 +158,7 @@ return [
      * Define your own scripts to run before and after the build process.
      */
     'prebuild' => [
+        'php -r "file_exists(\'public/hot\') && unlink(\'public/hot\');"',
         'php artisan wayfinder:generate --with-form',
         'npm run build',
     ],
