@@ -9,7 +9,8 @@
 
 @font-face {
     font-family: 'Plus Jakarta Sans';
-    src: url('/asset/Plus_Jakarta_Sans/PlusJakartaSans-VariableFont_wght.ttf') format('truetype-variations'),
+    src:
+        url('/asset/Plus_Jakarta_Sans/PlusJakartaSans-VariableFont_wght.ttf') format('truetype-variations'),
         url('/asset/Plus_Jakarta_Sans/PlusJakartaSans-VariableFont_wght.ttf') format('truetype');
     font-weight: 200 800;
     font-style: normal;
@@ -18,7 +19,8 @@
 
 @font-face {
     font-family: 'Plus Jakarta Sans';
-    src: url('/asset/Plus_Jakarta_Sans/PlusJakartaSans-Italic-VariableFont_wght.ttf') format('truetype-variations'),
+    src:
+        url('/asset/Plus_Jakarta_Sans/PlusJakartaSans-Italic-VariableFont_wght.ttf') format('truetype-variations'),
         url('/asset/Plus_Jakarta_Sans/PlusJakartaSans-Italic-VariableFont_wght.ttf') format('truetype');
     font-weight: 200 800;
     font-style: italic;
@@ -27,8 +29,8 @@
 
 @theme {
     --font-sans:
-        'Plus Jakarta Sans', 'Instrument Sans', ui-sans-serif, system-ui, sans-serif,
-        'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
+        'Plus Jakarta Sans', 'Instrument Sans', ui-sans-serif, system-ui,
+        sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
         'Noto Color Emoji';
 
     --radius-lg: var(--radius);
@@ -80,34 +82,34 @@
 }
 
 :root {
-    --background: oklch(0.9940 0 0);
+    --background: oklch(0.994 0 0);
     --foreground: oklch(0 0 0);
-    --card: oklch(0.9940 0 0);
+    --card: oklch(0.994 0 0);
     --card-foreground: oklch(0 0 0);
     --popover: oklch(0.9911 0 0);
     --popover-foreground: oklch(0 0 0);
     --primary: oklch(0.6225 0.1878 37.8255);
-    --primary-foreground: oklch(1.0000 0 0);
-    --secondary: oklch(0.9540 0.0063 255.4755);
+    --primary-foreground: oklch(1 0 0);
+    --secondary: oklch(0.954 0.0063 255.4755);
     --secondary-foreground: oklch(0.1344 0 0);
     --muted: oklch(0.9702 0 0);
     --muted-foreground: oklch(0.4386 0 0);
     --accent: oklch(0.9656 0.0176 39.4009);
     --accent-foreground: oklch(0.6225 0.1878 37.8255);
-    --destructive: oklch(0.6290 0.1902 23.0704);
-    --destructive-foreground: oklch(1.0000 0 0);
-    --border: oklch(0.9300 0.0094 286.2156);
+    --destructive: oklch(0.629 0.1902 23.0704);
+    --destructive-foreground: oklch(1 0 0);
+    --border: oklch(0.93 0.0094 286.2156);
     --input: oklch(0.9401 0 0);
     --ring: oklch(0.6404 0.2153 35.9003);
     --chart-1: oklch(0.6404 0.2153 35.9003);
     --chart-2: oklch(0.8231 0.0995 30.7543);
     --chart-3: oklch(0.7336 0.1758 50.5517);
     --chart-4: oklch(0.5828 0.1809 259.7276);
-    --chart-5: oklch(0.8860 0.1230 84.7452);
+    --chart-5: oklch(0.886 0.123 84.7452);
     --sidebar: oklch(0.9777 0.0051 247.8763);
     --sidebar-foreground: oklch(0 0 0);
     --sidebar-primary: oklch(0 0 0);
-    --sidebar-primary-foreground: oklch(1.0000 0 0);
+    --sidebar-primary-foreground: oklch(1 0 0);
     --sidebar-accent: oklch(0.9563 0.0228 41.4107);
     --sidebar-accent-foreground: oklch(0 0 0);
     --sidebar-border: oklch(0.9401 0 0);
@@ -121,11 +123,16 @@
     --shadow-color: oklch(0 0 0);
     --shadow-2xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
     --shadow-xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
-    --shadow-sm: 0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 1px 2px -1px hsl(0 0% 0% / 0.10);
-    --shadow: 0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 1px 2px -1px hsl(0 0% 0% / 0.10);
-    --shadow-md: 0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 2px 4px -1px hsl(0 0% 0% / 0.10);
-    --shadow-lg: 0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 4px 6px -1px hsl(0 0% 0% / 0.10);
-    --shadow-xl: 0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 8px 10px -1px hsl(0 0% 0% / 0.10);
+    --shadow-sm:
+        0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 1px 2px -1px hsl(0 0% 0% / 0.1);
+    --shadow:
+        0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 1px 2px -1px hsl(0 0% 0% / 0.1);
+    --shadow-md:
+        0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 2px 4px -1px hsl(0 0% 0% / 0.1);
+    --shadow-lg:
+        0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 4px 6px -1px hsl(0 0% 0% / 0.1);
+    --shadow-xl:
+        0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 8px 10px -1px hsl(0 0% 0% / 0.1);
     --shadow-2xl: 0 1px 3px 0px hsl(0 0% 0% / 0.25);
     --tracking-normal: -0.03em;
     --spacing: 0.27rem;
@@ -139,15 +146,15 @@
     --popover: oklch(0.2138 0.0019 286.2347);
     --popover-foreground: oklch(0.9551 0 0);
     --primary: oklch(0.6404 0.2153 35.9003);
-    --primary-foreground: oklch(1.0000 0 0);
+    --primary-foreground: oklch(1 0 0);
     --secondary: oklch(0.5646 0.1905 35.5743);
     --secondary-foreground: oklch(0.9551 0 0);
-    --muted: oklch(0.2570 0.0037 286.1360);
+    --muted: oklch(0.257 0.0037 286.136);
     --muted-foreground: oklch(0.6731 0 0);
     --accent: oklch(0.6404 0.2153 35.9003);
-    --accent-foreground: oklch(1.0000 0 0);
+    --accent-foreground: oklch(1 0 0);
     --destructive: oklch(0.577 0.245 27.325);
-    --destructive-foreground: oklch(0.9970 0 0);
+    --destructive-foreground: oklch(0.997 0 0);
     --border: oklch(0.2393 0 0);
     --input: oklch(0.3523 0 0);
     --ring: oklch(0.6404 0.2153 35.9003);
@@ -155,13 +162,13 @@
     --chart-2: oklch(0.8565 0.1745 94.9076);
     --chart-3: oklch(0.8077 0.1035 19.5706);
     --chart-4: oklch(0.6691 0.1569 260.1063);
-    --chart-5: oklch(0.8860 0.1230 84.7452);
+    --chart-5: oklch(0.886 0.123 84.7452);
     --sidebar: oklch(0.1822 0 0);
     --sidebar-foreground: oklch(0.9551 0 0);
     --sidebar-primary: oklch(0.6404 0.2153 35.9003);
-    --sidebar-primary-foreground: oklch(1.0000 0 0);
+    --sidebar-primary-foreground: oklch(1 0 0);
     --sidebar-accent: oklch(0.6404 0.2153 35.9003);
-    --sidebar-accent-foreground: oklch(1.0000 0 0);
+    --sidebar-accent-foreground: oklch(1 0 0);
     --sidebar-border: oklch(0.3289 0.0092 268.3843);
     --sidebar-ring: oklch(0.6404 0.2153 35.9003);
     --radius: 0.5rem;
@@ -173,15 +180,18 @@
     --shadow-color: oklch(0 0 0);
     --shadow-2xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
     --shadow-xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
-    --shadow-sm: 0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 1px 2px -1px hsl(0 0% 0% / 0.10);
-    --shadow: 0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 1px 2px -1px hsl(0 0% 0% / 0.10);
-    --shadow-md: 0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 2px 4px -1px hsl(0 0% 0% / 0.10);
-    --shadow-lg: 0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 4px 6px -1px hsl(0 0% 0% / 0.10);
-    --shadow-xl: 0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 8px 10px -1px hsl(0 0% 0% / 0.10);
+    --shadow-sm:
+        0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 1px 2px -1px hsl(0 0% 0% / 0.1);
+    --shadow:
+        0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 1px 2px -1px hsl(0 0% 0% / 0.1);
+    --shadow-md:
+        0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 2px 4px -1px hsl(0 0% 0% / 0.1);
+    --shadow-lg:
+        0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 4px 6px -1px hsl(0 0% 0% / 0.1);
+    --shadow-xl:
+        0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 8px 10px -1px hsl(0 0% 0% / 0.1);
     --shadow-2xl: 0 1px 3px 0px hsl(0 0% 0% / 0.25);
 }
-
-
 
 @layer base {
     * {
@@ -207,50 +217,16 @@
         box-sizing: border-box !important;
     }
 
-    /* Hide the entire background application */
-    #app {
-        display: none !important;
-    }
-
-    /* Hide ALL direct body children by default (portals, toasts, etc.) */
-    body>* {
-        display: none !important;
-    }
-
-    /* Selectively show only the portal/dialog containing the receipt */
-    body>*:has(#printable-receipt),
-    body>*:has(#printable-receipt) div[data-radix-portal],
-    div[data-radix-portal]:has(#printable-receipt),
-    [data-slot='dialog-content']:has(#printable-receipt),
-    div[role='dialog']:has(#printable-receipt) {
-        display: block !important;
-        position: static !important;
+    /* Root elements */
+    html,
+    body {
+        background-color: #ffffff !important;
+        background-image: none !important;
+        color: #000000 !important;
         width: 100% !important;
         max-width: 100% !important;
         height: auto !important;
         min-height: 0 !important;
-        margin: 0 auto !important;
-        padding: 0 !important;
-        background: white !important;
-        border: none !important;
-        box-shadow: none !important;
-        transform: none !important;
-        translate: none !important;
-        left: 0 !important;
-        top: 0 !important;
-        inset: unset !important;
-        overflow: visible !important;
-    }
-
-    /* Strip all margin/padding from root elements */
-    html,
-    body {
-        background-color: white !important;
-        background-image: none !important;
-        color: black !important;
-        width: 100% !important;
-        max-width: 100% !important;
-        height: auto !important;
         margin: 0 !important;
         padding: 0 !important;
         overflow: visible !important;
@@ -258,61 +234,95 @@
         print-color-adjust: exact !important;
     }
 
-    /* Force crisp black text color and transparent background inside the printable receipt */
-    #printable-receipt,
-    #printable-receipt * {
-        color: black !important;
-        background-color: transparent !important;
-        background-image: none !important;
-    }
-
-    /* Hide the black/semi-transparent backdrop overlay completely */
-    [data-slot='dialog-overlay'] {
+    /* Hide any top-level body child that does NOT contain #printable-receipt */
+    body>*:not(:has(#printable-receipt)) {
         display: none !important;
     }
 
-    /* Hide the dialog close button (x) during print */
-    [data-slot='dialog-close'] {
+    /* Hide overlays, close buttons, toasts, navbars, and explicitly hidden elements */
+    [data-slot='dialog-overlay'],
+    [data-slot='dialog-close'],
+    .print\:hidden {
         display: none !important;
     }
 
-    /* Reset portal/dialog positioning */
-    div[data-radix-portal],
-    [data-radix-portal],
-    [data-slot='dialog-content'],
+    /* Ensure dedicated print elements are visible */
+    .print\:block {
+        display: block !important;
+    }
+
+    /* Reset every ancestor containing #printable-receipt to prevent coordinate shifting,
+       overflow clipping, margins, transforms, translates, and flex/grid offset bugs */
+    body>*:has(#printable-receipt),
+    body>*:has(#printable-receipt) *:has(#printable-receipt),
+    div[data-slot='dialog-portal'],
+    div[data-slot='dialog-content'],
     div[role='dialog'] {
         display: block !important;
         position: static !important;
+        inset: auto !important;
+        top: auto !important;
+        left: auto !important;
+        right: auto !important;
+        bottom: auto !important;
         width: 100% !important;
         max-width: 100% !important;
+        min-width: 0 !important;
         height: auto !important;
         min-height: 0 !important;
-        margin: 0 auto !important;
+        max-height: none !important;
+        margin: 0 !important;
         padding: 0 !important;
-        background: white !important;
+        background: transparent !important;
         border: none !important;
+        border-radius: 0 !important;
         box-shadow: none !important;
-        transform: none !important;
-        translate: none !important;
-        left: 0 !important;
-        top: 0 !important;
-        inset: unset !important;
         overflow: visible !important;
+        transform: none !important;
+        -webkit-transform: none !important;
+        translate: 0 0 !important;
+        --tw-translate-x: 0 !important;
+        --tw-translate-y: 0 !important;
+        --tw-translate-z: 0 !important;
+        --tw-enter-translate-x: 0 !important;
+        --tw-enter-translate-y: 0 !important;
+        --tw-exit-translate-x: 0 !important;
+        --tw-exit-translate-y: 0 !important;
+        animation: none !important;
+        transition: none !important;
     }
 
-    /* Thermal Receipt Container: center-aligned with safe printable width */
+    /* Crisp black text and transparent background inside printable receipt */
+    #printable-receipt,
+    #printable-receipt * {
+        color: #000000 !important;
+        background-color: transparent !important;
+        background-image: none !important;
+        box-shadow: none !important;
+        text-shadow: none !important;
+    }
+
+    /* Thermal Receipt Container: 
+       Aligned to the left margin with safe printable width for 58mm thermal rolls */
     #printable-receipt {
         display: block !important;
-        border: none !important;
-        box-shadow: none !important;
-        padding-top: 0 !important;
-        padding-bottom: 0 !important;
-        padding-left: 0mm !important;
-        padding-right: 2.5mm !important;
-        margin: 0 auto !important;
+        position: relative !important;
         width: 100% !important;
         max-width: 48mm !important;
+        margin-left: 0 !important;
+        margin-right: auto !important;
+        margin-top: 0 !important;
+        margin-bottom: 0 !important;
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+        padding-left: 5mm !important;
+        padding-right: 0 !important;
+        border: none !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        background: transparent !important;
         font-size: 10px !important;
+        line-height: 1.35 !important;
         box-sizing: border-box !important;
         overflow: visible !important;
     }
