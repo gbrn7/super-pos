@@ -56,6 +56,7 @@ import {
     DownloadCloud,
 } from 'lucide-react';
 import { Spinner } from '@/components/ui/spinner';
+import { ProfitWalletTransactionTypeEnums } from '@/support/enums/ProfitWalletTransactionTypeEnums';
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[];
@@ -286,25 +287,25 @@ export function DataTable<TData, TValue>({
                                     'Semua Jenis',
                                 )}
                             </SelectItem>
-                            <SelectItem value="sales_profit">
+                            <SelectItem value={ProfitWalletTransactionTypeEnums.SALES_PROFIT}>
                                 {t(
                                     'page.profit_wallet.data_table.filters.tx_sales_profit',
                                     'Keuntungan Penjualan',
                                 )}
                             </SelectItem>
-                            <SelectItem value="disbursement">
+                            <SelectItem value={ProfitWalletTransactionTypeEnums.DISBURSEMENT}>
                                 {t(
                                     'page.profit_wallet.data_table.filters.tx_disbursement',
                                     'Pencairan Profit',
                                 )}
                             </SelectItem>
-                            <SelectItem value="capital_withdrawal">
+                            <SelectItem value={ProfitWalletTransactionTypeEnums.CAPITAL_WITHDRAWAL}>
                                 {t(
                                     'page.profit_wallet.data_table.filters.tx_capital_withdrawal',
                                     'Penarikan Modal',
                                 )}
                             </SelectItem>
-                            <SelectItem value="sales_return_deduction">
+                            <SelectItem value={ProfitWalletTransactionTypeEnums.SALES_RETURN_DEDUCTION}>
                                 {t(
                                     'page.profit_wallet.data_table.filters.tx_sales_return_deduction',
                                     'Potongan Retur',
@@ -495,24 +496,26 @@ export function DataTable<TData, TValue>({
                             variant="secondary"
                             className="gap-1 bg-muted/50 px-2 py-0.5 font-normal hover:bg-muted"
                         >
-                            {queryParam.transaction_type === 'sales_profit'
+                            {queryParam.transaction_type ===
+                            ProfitWalletTransactionTypeEnums.SALES_PROFIT
                                 ? t(
                                       'page.profit_wallet.data_table.filters.tx_sales_profit',
                                       'Keuntungan Penjualan',
                                   )
-                                : queryParam.transaction_type === 'disbursement'
+                                : queryParam.transaction_type ===
+                                    ProfitWalletTransactionTypeEnums.DISBURSEMENT
                                   ? t(
                                         'page.profit_wallet.data_table.filters.tx_disbursement',
                                         'Pencairan Profit',
                                     )
                                   : queryParam.transaction_type ===
-                                      'capital_withdrawal'
+                                      ProfitWalletTransactionTypeEnums.CAPITAL_WITHDRAWAL
                                     ? t(
                                           'page.profit_wallet.data_table.filters.tx_capital_withdrawal',
                                           'Penarikan Modal',
                                       )
                                     : queryParam.transaction_type ===
-                                        'sales_return_deduction'
+                                        ProfitWalletTransactionTypeEnums.SALES_RETURN_DEDUCTION
                                       ? t(
                                             'page.profit_wallet.data_table.filters.tx_sales_return_deduction',
                                             'Potongan Retur',

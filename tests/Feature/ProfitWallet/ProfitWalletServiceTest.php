@@ -83,3 +83,22 @@ test('recordSalesProfit handles negative profit correctly', function () {
 
     expect($wallet->fresh()->balance)->toEqual(800.00);
 });
+
+test('service uses default localized notes when notes is not provided', function () {
+    $wallet = $this->service->getOrCreateWallet();
+    $this->service->recordSalesProfit(1000.00, 1);
+
+    app()->setLocale('id');
+    $txDisburseId = $this->service->disburse(new DisburseProfitWalletReqModel(new Request(['amount' => 100.00])));
+    expect($txDisburseId->notes)->toBe('Pencairan ke rekening bank pemilik');
+
+    $txWithdrawId = $this->service->withdrawCapital(new WithdrawCapitalProfitWalletReqModel(new Request(['amount' => 100.00])));
+    expect($txWithdrawId->notes)->toBe('Penarikan modal usaha / reinvestasi');
+
+    app()->setLocale('en');
+    $txDisburseEn = $this->service->disburse(new DisburseProfitWalletReqModel(new Request(['amount' => 100.00])));
+    expect($txDisburseEn->notes)->toBe('Disbursement to owner bank account');
+
+    $txWithdrawEn = $this->service->withdrawCapital(new WithdrawCapitalProfitWalletReqModel(new Request(['amount' => 100.00])));
+    expect($txWithdrawEn->notes)->toBe('Reinvestment/business capital withdrawal');
+});

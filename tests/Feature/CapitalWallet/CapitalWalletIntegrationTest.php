@@ -7,7 +7,9 @@ use App\Models\User;
 use App\Support\Interfaces\Services\CapitalWalletServiceInterface;
 use App\Support\Interfaces\Services\ProfitWalletServiceInterface;
 use App\Support\Interfaces\Services\TransactionServiceInterface;
+use App\Support\Models\CapitalWallet\DrawdownCapitalWalletReqModel;
 use App\Support\Models\CapitalWallet\InjectCapitalWalletReqModel;
+use App\Support\Models\CapitalWallet\PurchaseProductCapitalWalletReqModel;
 use App\Support\Models\ProfitWallet\WithdrawCapitalProfitWalletReqModel;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Request;
@@ -136,4 +138,26 @@ test('withdrawing capital from profit wallet triggers reinvestment in capital wa
         'reference_id' => $profitTx->id,
         'reference_type' => get_class($profitTx),
     ]);
+});
+
+test('capital wallet service uses default localized notes when notes is not provided', function () {
+    app()->setLocale('id');
+    $txInjectId = $this->capitalWalletService->inject(new InjectCapitalWalletReqModel(new Request(['amount' => 500.00])));
+    expect($txInjectId->notes)->toBe('Suntik modal usaha');
+
+    $txDrawdownId = $this->capitalWalletService->drawdown(new DrawdownCapitalWalletReqModel(new Request(['amount' => 100.00])));
+    expect($txDrawdownId->notes)->toBe('Penarikan modal ke pemilik');
+
+    $txPurchaseId = $this->capitalWalletService->purchaseProduct(new PurchaseProductCapitalWalletReqModel(new Request(['amount' => 100.00])));
+    expect($txPurchaseId->notes)->toBe('Belanja pengadaan stok');
+
+    app()->setLocale('en');
+    $txInjectEn = $this->capitalWalletService->inject(new InjectCapitalWalletReqModel(new Request(['amount' => 500.00])));
+    expect($txInjectEn->notes)->toBe('Capital injection');
+
+    $txDrawdownEn = $this->capitalWalletService->drawdown(new DrawdownCapitalWalletReqModel(new Request(['amount' => 100.00])));
+    expect($txDrawdownEn->notes)->toBe('Capital drawdown');
+
+    $txPurchaseEn = $this->capitalWalletService->purchaseProduct(new PurchaseProductCapitalWalletReqModel(new Request(['amount' => 100.00])));
+    expect($txPurchaseEn->notes)->toBe('Stock procurement purchase');
 });

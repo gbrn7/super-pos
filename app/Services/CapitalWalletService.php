@@ -144,7 +144,7 @@ class CapitalWalletService implements CapitalWalletServiceInterface
                     'transaction_type' => CapitalWalletTransactionTypeEnums::CAPITAL_INJECTION->value,
                     'balance_before' => $before,
                     'balance_after' => $after,
-                    'notes' => $request->notes ?? 'Capital injection',
+                    'notes' => $request->notes ?? trans('message.success.capital_wallet.injection_notes'),
                 ]);
 
                 $inflowUpdate = (float) $wallet->total_inflow + $request->amount;
@@ -181,7 +181,7 @@ class CapitalWalletService implements CapitalWalletServiceInterface
                     'transaction_type' => CapitalWalletTransactionTypeEnums::CAPITAL_DRAWDOWN->value,
                     'balance_before' => $before,
                     'balance_after' => $after,
-                    'notes' => $request->notes ?? 'Capital drawdown',
+                    'notes' => $request->notes ?? trans('message.success.capital_wallet.drawdown_notes'),
                 ]);
 
                 $outflowUpdate = (float) $wallet->total_outflow + $request->amount;
@@ -218,7 +218,7 @@ class CapitalWalletService implements CapitalWalletServiceInterface
                     'transaction_type' => CapitalWalletTransactionTypeEnums::PRODUCT_PURCHASE->value,
                     'balance_before' => $before,
                     'balance_after' => $after,
-                    'notes' => $request->notes ?? 'Product purchase',
+                    'notes' => $request->notes ?? trans('message.success.capital_wallet.purchase_notes'),
                 ]);
 
                 $outflowUpdate = (float) $wallet->total_outflow + $request->amount;

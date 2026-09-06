@@ -16,11 +16,16 @@ return [
         'profit_wallet' => [
             'sales_notes' => 'Sales from POS checkout',
             'return_notes' => 'Deduction due to return (:invoice)',
+            'disbursement_notes' => 'Disbursement to owner bank account',
+            'withdrawal_notes' => 'Reinvestment/business capital withdrawal',
         ],
         'capital_wallet' => [
             'sales_recovery_notes' => 'Sales capital recovery from POS checkout',
             'reinvestment_notes' => 'Reinvestment from profit wallet',
             'return_notes' => 'Deduction due to return (:invoice)',
+            'injection_notes' => 'Capital injection',
+            'drawdown_notes' => 'Capital drawdown',
+            'purchase_notes' => 'Stock procurement purchase',
         ],
         'returns' => [
             'success_get' => 'Returns data retrieved successfully.',

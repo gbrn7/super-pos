@@ -1,12 +1,12 @@
+import { ProfitWalletTransactionTypeEnums } from '@/support/enums/ProfitWalletTransactionTypeEnums';
+
 export interface ProfitWalletTransaction {
     id: number;
     amount: number;
     type: 'in' | 'out';
     transaction_type:
-        | 'sales_profit'
-        | 'disbursement'
-        | 'capital_withdrawal'
-        | 'sales_return_deduction';
+        | ProfitWalletTransactionTypeEnums
+        | `${ProfitWalletTransactionTypeEnums}`;
     balance_before: number;
     balance_after: number;
     notes: string;

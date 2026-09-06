@@ -132,7 +132,7 @@ class ProfitWalletService implements ProfitWalletServiceInterface
                     'transaction_type' => ProfitWalletTransactionTypeEnums::DISBURSEMENT->value,
                     'balance_before' => $before,
                     'balance_after' => $after,
-                    'notes' => $request->notes ?? 'Disbursement to owner bank account',
+                    'notes' => $request->notes ?? trans('message.success.profit_wallet.disbursement_notes'),
                 ]);
 
                 $outflowUpdate = (float) $wallet->total_outflow + $request->amount;
@@ -169,7 +169,7 @@ class ProfitWalletService implements ProfitWalletServiceInterface
                     'transaction_type' => ProfitWalletTransactionTypeEnums::CAPITAL_WITHDRAWAL->value,
                     'balance_before' => $before,
                     'balance_after' => $after,
-                    'notes' => $request->notes ?? 'Reinvestment/business capital withdrawal',
+                    'notes' => $request->notes ?? trans('message.success.profit_wallet.withdrawal_notes'),
                 ]);
 
                 $outflowUpdate = (float) $wallet->total_outflow + $request->amount;
