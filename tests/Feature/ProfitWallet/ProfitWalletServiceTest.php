@@ -90,14 +90,14 @@ test('service uses default localized notes when notes is not provided', function
 
     app()->setLocale('id');
     $txDisburseId = $this->service->disburse(new DisburseProfitWalletReqModel(new Request(['amount' => 100.00])));
-    expect($txDisburseId->notes)->toBe('Pencairan ke rekening bank pemilik');
+    expect($txDisburseId->notes)->toBe('Pencairan dana profit');
 
     $txWithdrawId = $this->service->withdrawCapital(new WithdrawCapitalProfitWalletReqModel(new Request(['amount' => 100.00])));
     expect($txWithdrawId->notes)->toBe('Penarikan modal usaha / reinvestasi');
 
     app()->setLocale('en');
     $txDisburseEn = $this->service->disburse(new DisburseProfitWalletReqModel(new Request(['amount' => 100.00])));
-    expect($txDisburseEn->notes)->toBe('Disbursement to owner bank account');
+    expect($txDisburseEn->notes)->toBe('Profit funds disbursement');
 
     $txWithdrawEn = $this->service->withdrawCapital(new WithdrawCapitalProfitWalletReqModel(new Request(['amount' => 100.00])));
     expect($txWithdrawEn->notes)->toBe('Reinvestment/business capital withdrawal');

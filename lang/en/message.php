@@ -16,7 +16,7 @@ return [
         'profit_wallet' => [
             'sales_notes' => 'Sales from POS checkout',
             'return_notes' => 'Deduction due to return (:invoice)',
-            'disbursement_notes' => 'Disbursement to owner bank account',
+            'disbursement_notes' => 'Profit funds disbursement',
             'withdrawal_notes' => 'Reinvestment/business capital withdrawal',
         ],
         'capital_wallet' => [
