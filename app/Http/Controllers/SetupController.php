@@ -65,6 +65,9 @@ class SetupController extends Controller
 
     public function runMigration(): JsonResponse
     {
+        @set_time_limit(0);
+        @ini_set('memory_limit', '512M');
+
         try {
             $connection = config('database.default', 'sqlite');
             $databasePath = config("database.connections.{$connection}.database");
@@ -123,6 +126,9 @@ class SetupController extends Controller
 
     public function complete(Request $request)
     {
+        @set_time_limit(0);
+        @ini_set('memory_limit', '512M');
+
         try {
             $connection = config('database.default', 'sqlite');
             $databasePath = config("database.connections.{$connection}.database");

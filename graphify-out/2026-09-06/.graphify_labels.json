@@ -377,6 +377,7 @@
   "375": "react-barcode",
   "376": "react-chartjs-2",
   "377": "react-day-picker",
+  "378": "eslint-plugin-react",
   "379": "@vitejs/plugin-react",
   "380": "auth.php",
   "381": "setup.php",
@@ -391,5 +392,6 @@
   "390": "MasterProductUploadTest.php",
   "391": "SetupControllerTest.php",
   "392": "capital_wallet.blade.php",
-  "393": "profit_wallet.blade.php"
+  "393": "profit_wallet.blade.php",
+  "394": "@stylistic/eslint-plugin"
 }

@@ -393,5 +393,10 @@
   "391": "SetupControllerTest.php",
   "392": "capital_wallet.blade.php",
   "393": "profit_wallet.blade.php",
-  "394": "@stylistic/eslint-plugin"
+  "394": "@stylistic/eslint-plugin",
+  "395": "post-update-cmd",
+  "396": "index.tsx",
+  "397": "babel-plugin-react-compiler",
+  "398": "@tanstack/react-table",
+  "399": "typescript-eslint"
 }
