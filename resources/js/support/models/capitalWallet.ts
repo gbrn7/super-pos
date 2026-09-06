@@ -2,7 +2,14 @@ export interface CapitalWalletTransaction {
     id: number;
     amount: number;
     type: 'in' | 'out';
-    transaction_type: 'capital_injection' | 'capital_drawdown' | 'product_purchase' | 'sales_recovery' | 'reinvestment';
+    transaction_type:
+        | 'capital_injection'
+        | 'capital_drawdown'
+        | 'product_purchase'
+        | 'sales_capital_recovery'
+        | 'sales_recovery'
+        | 'sales_return_deduction'
+        | 'reinvestment';
     balance_before: number;
     balance_after: number;
     notes: string;

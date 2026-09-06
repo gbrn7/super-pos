@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { DownloadCloud, FileText, FileSpreadsheet, Loader2 } from 'lucide-react';
+import {
+    DownloadCloud,
+    FileText,
+    FileSpreadsheet,
+    Loader2,
+} from 'lucide-react';
 import {
     Dialog,
     DialogContent,
@@ -21,6 +26,7 @@ import { Calendar as CalendarIcon } from 'lucide-react';
 import axiosInstance from '@/lib/axios';
 import { exportData as apiExportTransactions } from '@/routes/apiTransactions';
 import { handleApiError, showSuccessToast } from '@/lib/utils';
+import dayjs from 'dayjs';
 
 interface ExportModalProps {
     isOpen: boolean;
@@ -56,7 +62,9 @@ export function ExportModal({
     };
 
     const initialDates = getDefaultDates();
-    const [startDate, setStartDate] = useState<string>(initialDates.defaultStart);
+    const [startDate, setStartDate] = useState<string>(
+        initialDates.defaultStart,
+    );
     const [endDate, setEndDate] = useState<string>(initialDates.defaultEnd);
     const [loading, setLoading] = useState<boolean>(false);
 
@@ -75,18 +83,27 @@ export function ExportModal({
             const params: Record<string, any> = { format };
 
             if (startDate) {
-                const [y, m, d] = startDate.split('-').map(Number);
-                params.start_date = Math.floor(
-                    new Date(y, m - 1, d, 0, 0, 0).getTime() / 1000,
-                );
+                params.start_date = startDate;
             }
 
             if (endDate) {
-                const [y, m, d] = endDate.split('-').map(Number);
-                params.end_date = Math.floor(
-                    new Date(y, m - 1, d, 23, 59, 59).getTime() / 1000,
-                );
+                params.end_date = endDate;
             }
+
+            const dateSuffix =
+                startDate && endDate
+                    ? startDate === endDate
+                        ? startDate
+                        : `${startDate}-sd-${endDate}`
+                    : startDate
+                      ? `mulai-${startDate}`
+                      : endDate
+                        ? `sampai-${endDate}`
+                        : dayjs().format('YYYY-MM-DD');
+
+            const fileName = `laporan-transaksi-${dateSuffix}.${
+                format === 'excel' ? 'xlsx' : 'pdf'
+            }`;
 
             const exportUrl = apiExportTransactions({ query: params }).url;
 
@@ -104,12 +121,7 @@ export function ExportModal({
             const url = window.URL.createObjectURL(blob);
             const link = document.createElement('a');
             link.href = url;
-            link.setAttribute(
-                'download',
-                `laporan-transaksi-${new Date().toISOString().slice(0, 10)}.${
-                    format === 'excel' ? 'xlsx' : 'pdf'
-                }`,
-            );
+            link.setAttribute('download', fileName);
             document.body.appendChild(link);
             link.click();
             link.remove();
@@ -130,7 +142,10 @@ export function ExportModal({
                 <DialogHeader>
                     <DialogTitle className="flex items-center gap-2">
                         <DownloadCloud className="h-5 w-5 text-primary" />
-                        {t('component.export_modal.title', 'Ekspor Laporan Transaksi')}
+                        {t(
+                            'component.export_modal.title',
+                            'Ekspor Laporan Transaksi',
+                        )}
                     </DialogTitle>
                 </DialogHeader>
 
@@ -139,25 +154,48 @@ export function ExportModal({
                     <div className="grid grid-cols-2 gap-3">
                         <div className="space-y-1.5">
                             <Label className="text-xs font-medium">
-                                {t('component.data_table.filter.start_date_label', 'Tanggal Mulai')}
+                                {t(
+                                    'component.data_table.filter.start_date_label',
+                                    'Tanggal Mulai',
+                                )}
                             </Label>
                             <Popover>
                                 <PopoverTrigger asChild>
-                                    <Button variant="outline" className="w-full justify-start text-left font-normal text-xs h-9">
+                                    <Button
+                                        variant="outline"
+                                        className="h-9 w-full justify-start text-left text-xs font-normal"
+                                    >
                                         {startDate ? (
-                                            new Date(startDate).toLocaleDateString('id-ID')
+                                            new Date(
+                                                startDate,
+                                            ).toLocaleDateString('id-ID')
                                         ) : (
-                                            <span className="text-muted-foreground">Pilih Tanggal</span>
+                                            <span className="text-muted-foreground">
+                                                Pilih Tanggal
+                                            </span>
                                         )}
                                     </Button>
                                 </PopoverTrigger>
-                                <PopoverContent className="w-auto p-0" align="start">
+                                <PopoverContent
+                                    className="w-auto p-0"
+                                    align="start"
+                                >
                                     <CalendarPicker
                                         mode="single"
-                                        selected={startDate ? new Date(startDate) : undefined}
+                                        selected={
+                                            startDate
+                                                ? new Date(startDate)
+                                                : undefined
+                                        }
                                         onSelect={(date) => {
                                             if (date) {
-                                                const iso = new Date(date.getTime() - date.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+                                                const iso = new Date(
+                                                    date.getTime() -
+                                                        date.getTimezoneOffset() *
+                                                            60000,
+                                                )
+                                                    .toISOString()
+                                                    .slice(0, 10);
                                                 setStartDate(iso);
                                             }
                                         }}
@@ -167,25 +205,48 @@ export function ExportModal({
                         </div>
                         <div className="space-y-1.5">
                             <Label className="text-xs font-medium">
-                                {t('component.data_table.filter.end_date_label', 'Tanggal Akhir')}
+                                {t(
+                                    'component.data_table.filter.end_date_label',
+                                    'Tanggal Akhir',
+                                )}
                             </Label>
                             <Popover>
                                 <PopoverTrigger asChild>
-                                    <Button variant="outline" className="w-full justify-start text-left font-normal text-xs h-9">
+                                    <Button
+                                        variant="outline"
+                                        className="h-9 w-full justify-start text-left text-xs font-normal"
+                                    >
                                         {endDate ? (
-                                            new Date(endDate).toLocaleDateString('id-ID')
+                                            new Date(
+                                                endDate,
+                                            ).toLocaleDateString('id-ID')
                                         ) : (
-                                            <span className="text-muted-foreground">Pilih Tanggal</span>
+                                            <span className="text-muted-foreground">
+                                                Pilih Tanggal
+                                            </span>
                                         )}
                                     </Button>
                                 </PopoverTrigger>
-                                <PopoverContent className="w-auto p-0" align="start">
+                                <PopoverContent
+                                    className="w-auto p-0"
+                                    align="start"
+                                >
                                     <CalendarPicker
                                         mode="single"
-                                        selected={endDate ? new Date(endDate) : undefined}
+                                        selected={
+                                            endDate
+                                                ? new Date(endDate)
+                                                : undefined
+                                        }
                                         onSelect={(date) => {
                                             if (date) {
-                                                const iso = new Date(date.getTime() - date.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+                                                const iso = new Date(
+                                                    date.getTime() -
+                                                        date.getTimezoneOffset() *
+                                                            60000,
+                                                )
+                                                    .toISOString()
+                                                    .slice(0, 10);
                                                 setEndDate(iso);
                                             }
                                         }}
@@ -198,7 +259,10 @@ export function ExportModal({
                     {/* Format Selection */}
                     <div className="space-y-2 pt-2">
                         <Label className="text-xs font-medium">
-                            {t('component.export_modal.format_label', 'Format Laporan')}
+                            {t(
+                                'component.export_modal.format_label',
+                                'Format Laporan',
+                            )}
                         </Label>
                         <div className="grid grid-cols-2 gap-3">
                             <label
@@ -219,7 +283,9 @@ export function ExportModal({
                                     className="sr-only"
                                 />
                                 <FileText className="mb-2 h-6 w-6 text-red-500" />
-                                <span className="text-xs font-medium">PDF Document</span>
+                                <span className="text-xs font-medium">
+                                    PDF Document
+                                </span>
                             </label>
 
                             <label
@@ -240,14 +306,20 @@ export function ExportModal({
                                     className="sr-only"
                                 />
                                 <FileSpreadsheet className="mb-2 h-6 w-6 text-green-600" />
-                                <span className="text-xs font-medium">Excel Spreadsheet</span>
+                                <span className="text-xs font-medium">
+                                    Excel Spreadsheet
+                                </span>
                             </label>
                         </div>
                     </div>
                 </div>
 
                 <DialogFooter className="gap-2 sm:gap-0">
-                    <Button variant="outline" onClick={onClose} disabled={loading}>
+                    <Button
+                        variant="outline"
+                        onClick={onClose}
+                        disabled={loading}
+                    >
                         {t('common.cancel', 'Batal')}
                     </Button>
                     <Button onClick={handleExport} disabled={loading}>

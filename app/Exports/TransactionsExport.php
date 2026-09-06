@@ -40,7 +40,7 @@ class TransactionsExport implements FromCollection, ShouldAutoSize, WithHeadings
     public function map($transaction): array
     {
         $formattedDate = $transaction->created_at
-            ? Carbon::parse($transaction->created_at)->format('Y-m-d H:i:s')
+            ? Carbon::parse($transaction->created_at)->format('d/m/Y, H:i')
             : '-';
 
         $totalAmount = (float) ($transaction->total_amount ?? 0);

@@ -2,7 +2,11 @@ export interface ProfitWalletTransaction {
     id: number;
     amount: number;
     type: 'in' | 'out';
-    transaction_type: 'sales_profit' | 'disbursement' | 'capital_withdrawal';
+    transaction_type:
+        | 'sales_profit'
+        | 'sales_return_deduction'
+        | 'disbursement'
+        | 'capital_withdrawal';
     balance_before: number;
     balance_after: number;
     notes: string;

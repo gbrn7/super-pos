@@ -179,11 +179,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
         });
 
         // profit wallet
+        Route::get('/profit-wallet/export', [ApiProfitWalletController::class, 'export'])->name('apiProfitWallet.exportData');
         Route::get('/profit-wallet', [ApiProfitWalletController::class, 'index'])->name('apiProfitWallet.index');
         Route::post('/profit-wallet/disburse', [ApiProfitWalletController::class, 'disburse'])->name('apiProfitWallet.disburse');
         Route::post('/profit-wallet/withdraw-capital', [ApiProfitWalletController::class, 'withdrawCapital'])->name('apiProfitWallet.withdrawCapital');
 
         // capital wallet
+        Route::get('/capital-wallet/export', [ApiCapitalWalletController::class, 'export'])->name('apiCapitalWallet.exportData');
         Route::get('/capital-wallet', [ApiCapitalWalletController::class, 'index'])->name('apiCapitalWallet.index');
         Route::post('/capital-wallet/inject', [ApiCapitalWalletController::class, 'inject'])->name('apiCapitalWallet.inject');
         Route::post('/capital-wallet/drawdown', [ApiCapitalWalletController::class, 'drawdown'])->name('apiCapitalWallet.drawdown');
