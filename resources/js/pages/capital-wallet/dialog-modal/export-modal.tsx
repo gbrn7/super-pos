@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { DownloadCloud, FileText, FileSpreadsheet, Loader2 } from 'lucide-react';
+import {
+    DownloadCloud,
+    FileText,
+    FileSpreadsheet,
+    Loader2,
+} from 'lucide-react';
 import {
     Dialog,
     DialogContent,
@@ -17,9 +22,13 @@ import {
 } from '@/components/ui/popover';
 import { Calendar as CalendarPicker } from '@/components/ui/calendar';
 import axiosInstance from '@/lib/axios';
-import { index as apiGetCapitalWallet, exportData as apiExportCapitalWallet } from '@/routes/apiCapitalWallet';
+import {
+    index as apiGetCapitalWallet,
+    exportData as apiExportCapitalWallet,
+} from '@/routes/apiCapitalWallet';
 import { handleApiError, showSuccessToast } from '@/lib/utils';
 import * as XLSX from 'xlsx';
+import dayjs from 'dayjs';
 
 interface ExportModalProps {
     isOpen: boolean;
@@ -55,7 +64,9 @@ export function ExportModal({
     };
 
     const initialDates = getDefaultDates();
-    const [startDate, setStartDate] = useState<string>(initialDates.defaultStart);
+    const [startDate, setStartDate] = useState<string>(
+        initialDates.defaultStart,
+    );
     const [endDate, setEndDate] = useState<string>(initialDates.defaultEnd);
     const [loading, setLoading] = useState<boolean>(false);
 
@@ -81,54 +92,110 @@ export function ExportModal({
                 params.end_date = endDate;
             }
 
+            const dateSuffix =
+                startDate && endDate
+                    ? startDate === endDate
+                        ? startDate
+                        : `${startDate}-sd-${endDate}`
+                    : startDate
+                      ? `mulai-${startDate}`
+                      : endDate
+                        ? `sampai-${endDate}`
+                        : dayjs().format('YYYY-MM-DD');
+
+            const fileName = `laporan-dompet-modal-${dateSuffix}.${format === 'excel' ? 'xlsx' : 'pdf'}`;
+
             if (format === 'excel') {
                 const exportUrl = apiGetCapitalWallet({ query: params }).url;
                 const response = await axiosInstance.get(exportUrl);
-                
+
                 if (response.data.success) {
-                    const transactions = response.data.data.transactions?.items || [];
+                    const transactions =
+                        response.data.data.transactions?.items || [];
 
                     const rows = transactions.map((tx: any) => {
                         let txTypeLabel = tx.transaction_type;
                         if (tx.transaction_type === 'sales_capital_recovery') {
-                            txTypeLabel = t('page.capital_wallet.data_table.filters.tx_sales_capital_recovery', 'Pemulihan Modal');
+                            txTypeLabel = t(
+                                'page.capital_wallet.data_table.filters.tx_sales_capital_recovery',
+                                'Pemulihan Modal',
+                            );
                         } else if (tx.transaction_type === 'reinvestment') {
-                            txTypeLabel = t('page.capital_wallet.data_table.filters.tx_reinvestment', 'Reinvestasi Profit');
-                        } else if (tx.transaction_type === 'capital_injection') {
-                            txTypeLabel = t('page.capital_wallet.data_table.filters.tx_capital_injection', 'Suntikan Modal');
+                            txTypeLabel = t(
+                                'page.capital_wallet.data_table.filters.tx_reinvestment',
+                                'Reinvestasi Profit',
+                            );
+                        } else if (
+                            tx.transaction_type === 'capital_injection'
+                        ) {
+                            txTypeLabel = t(
+                                'page.capital_wallet.data_table.filters.tx_capital_injection',
+                                'Suntikan Modal',
+                            );
                         } else if (tx.transaction_type === 'capital_drawdown') {
-                            txTypeLabel = t('page.capital_wallet.data_table.filters.tx_capital_drawdown', 'Tarik Modal');
+                            txTypeLabel = t(
+                                'page.capital_wallet.data_table.filters.tx_capital_drawdown',
+                                'Tarik Modal',
+                            );
                         } else if (tx.transaction_type === 'product_purchase') {
-                            txTypeLabel = t('page.capital_wallet.data_table.filters.tx_product_purchase', 'Belanja Stok');
-                        } else if (tx.transaction_type === 'sales_return_deduction') {
-                            txTypeLabel = t('page.capital_wallet.data_table.filters.tx_sales_return_deduction', 'Potongan Retur');
+                            txTypeLabel = t(
+                                'page.capital_wallet.data_table.filters.tx_product_purchase',
+                                'Belanja Stok',
+                            );
+                        } else if (
+                            tx.transaction_type === 'sales_return_deduction'
+                        ) {
+                            txTypeLabel = t(
+                                'page.capital_wallet.data_table.filters.tx_sales_return_deduction',
+                                'Potongan Retur',
+                            );
                         }
 
                         const flowLabel = tx.type === 'in' ? 'Masuk' : 'Keluar';
 
-                        const formattedDate = tx.created_at
-                            ? new Date(tx.created_at).toISOString().replace('T', ' ').slice(0, 19)
-                            : '-';
+                        const formattedDate = (() => {
+                            const dateVal = tx.created_at;
+                            if (!dateVal) return '-';
+                            let parsed: dayjs.Dayjs;
+                            if (
+                                typeof dateVal === 'number' ||
+                                !isNaN(Number(dateVal))
+                            ) {
+                                const num = Number(dateVal);
+                                parsed =
+                                    num > 1e11 ? dayjs(num) : dayjs.unix(num);
+                            } else {
+                                parsed = dayjs(dateVal);
+                            }
+                            return parsed.isValid()
+                                ? parsed.format('DD/MM/YYYY, HH:mm')
+                                : '-';
+                        })();
 
                         return {
-                            'Tanggal': formattedDate,
+                            Tanggal: formattedDate,
                             'Tipe Transaksi': txTypeLabel,
-                            'Arah': flowLabel,
-                            'Jumlah': parseFloat(tx.amount || 0),
+                            Arah: flowLabel,
+                            Jumlah: parseFloat(tx.amount || 0),
                             'Saldo Sebelum': parseFloat(tx.balance_before || 0),
                             'Saldo Sesudah': parseFloat(tx.balance_after || 0),
-                            'Catatan': tx.notes || '-',
+                            Catatan: tx.notes || '-',
                         };
                     });
 
                     const worksheet = XLSX.utils.json_to_sheet(rows);
                     const workbook = XLSX.utils.book_new();
-                    XLSX.utils.book_append_sheet(workbook, worksheet, 'Dompet Modal');
+                    XLSX.utils.book_append_sheet(
+                        workbook,
+                        worksheet,
+                        'Dompet Modal',
+                    );
 
-                    const fileName = `laporan-dompet-modal-${new Date().toISOString().slice(0, 10)}.xlsx`;
                     XLSX.writeFile(workbook, fileName);
 
-                    showSuccessToast(t('message.success.success', 'Ekspor berhasil'));
+                    showSuccessToast(
+                        t('message.success.success', 'Ekspor berhasil'),
+                    );
                     onClose();
                 }
             } else {
@@ -145,16 +212,15 @@ export function ExportModal({
                 const url = window.URL.createObjectURL(blob);
                 const link = document.createElement('a');
                 link.href = url;
-                link.setAttribute(
-                    'download',
-                    `laporan-dompet-modal-${new Date().toISOString().slice(0, 10)}.pdf`,
-                );
+                link.setAttribute('download', fileName);
                 document.body.appendChild(link);
                 link.click();
                 link.remove();
                 window.URL.revokeObjectURL(url);
 
-                showSuccessToast(t('message.success.success', 'Ekspor berhasil'));
+                showSuccessToast(
+                    t('message.success.success', 'Ekspor berhasil'),
+                );
                 onClose();
             }
         } catch (error) {
@@ -170,7 +236,10 @@ export function ExportModal({
                 <DialogHeader>
                     <DialogTitle className="flex items-center gap-2">
                         <DownloadCloud className="h-5 w-5 text-primary" />
-                        {t('component.export_modal.capital_title', 'Ekspor Laporan Dompet Modal')}
+                        {t(
+                            'component.export_modal.capital_title',
+                            'Ekspor Laporan Dompet Modal',
+                        )}
                     </DialogTitle>
                 </DialogHeader>
 
@@ -179,25 +248,48 @@ export function ExportModal({
                     <div className="grid grid-cols-2 gap-3">
                         <div className="space-y-1.5">
                             <Label className="text-xs font-medium">
-                                {t('component.data_table.filter.start_date_label', 'Tanggal Mulai')}
+                                {t(
+                                    'component.data_table.filter.start_date_label',
+                                    'Tanggal Mulai',
+                                )}
                             </Label>
                             <Popover>
                                 <PopoverTrigger asChild>
-                                    <Button variant="outline" className="w-full justify-start text-left font-normal text-xs h-9">
+                                    <Button
+                                        variant="outline"
+                                        className="h-9 w-full justify-start text-left text-xs font-normal"
+                                    >
                                         {startDate ? (
-                                            new Date(startDate).toLocaleDateString('id-ID')
+                                            new Date(
+                                                startDate,
+                                            ).toLocaleDateString('id-ID')
                                         ) : (
-                                            <span className="text-muted-foreground">Pilih Tanggal</span>
+                                            <span className="text-muted-foreground">
+                                                Pilih Tanggal
+                                            </span>
                                         )}
                                     </Button>
                                 </PopoverTrigger>
-                                <PopoverContent className="w-auto p-0" align="start">
+                                <PopoverContent
+                                    className="w-auto p-0"
+                                    align="start"
+                                >
                                     <CalendarPicker
                                         mode="single"
-                                        selected={startDate ? new Date(startDate) : undefined}
+                                        selected={
+                                            startDate
+                                                ? new Date(startDate)
+                                                : undefined
+                                        }
                                         onSelect={(date) => {
                                             if (date) {
-                                                const iso = new Date(date.getTime() - date.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+                                                const iso = new Date(
+                                                    date.getTime() -
+                                                        date.getTimezoneOffset() *
+                                                            60000,
+                                                )
+                                                    .toISOString()
+                                                    .slice(0, 10);
                                                 setStartDate(iso);
                                             }
                                         }}
@@ -207,25 +299,48 @@ export function ExportModal({
                         </div>
                         <div className="space-y-1.5">
                             <Label className="text-xs font-medium">
-                                {t('component.data_table.filter.end_date_label', 'Tanggal Akhir')}
+                                {t(
+                                    'component.data_table.filter.end_date_label',
+                                    'Tanggal Akhir',
+                                )}
                             </Label>
                             <Popover>
                                 <PopoverTrigger asChild>
-                                    <Button variant="outline" className="w-full justify-start text-left font-normal text-xs h-9">
+                                    <Button
+                                        variant="outline"
+                                        className="h-9 w-full justify-start text-left text-xs font-normal"
+                                    >
                                         {endDate ? (
-                                            new Date(endDate).toLocaleDateString('id-ID')
+                                            new Date(
+                                                endDate,
+                                            ).toLocaleDateString('id-ID')
                                         ) : (
-                                            <span className="text-muted-foreground">Pilih Tanggal</span>
+                                            <span className="text-muted-foreground">
+                                                Pilih Tanggal
+                                            </span>
                                         )}
                                     </Button>
                                 </PopoverTrigger>
-                                <PopoverContent className="w-auto p-0" align="start">
+                                <PopoverContent
+                                    className="w-auto p-0"
+                                    align="start"
+                                >
                                     <CalendarPicker
                                         mode="single"
-                                        selected={endDate ? new Date(endDate) : undefined}
+                                        selected={
+                                            endDate
+                                                ? new Date(endDate)
+                                                : undefined
+                                        }
                                         onSelect={(date) => {
                                             if (date) {
-                                                const iso = new Date(date.getTime() - date.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+                                                const iso = new Date(
+                                                    date.getTime() -
+                                                        date.getTimezoneOffset() *
+                                                            60000,
+                                                )
+                                                    .toISOString()
+                                                    .slice(0, 10);
                                                 setEndDate(iso);
                                             }
                                         }}
@@ -238,7 +353,10 @@ export function ExportModal({
                     {/* Format Selection */}
                     <div className="space-y-2 pt-2">
                         <Label className="text-xs font-medium">
-                            {t('component.export_modal.format_label', 'Format Laporan')}
+                            {t(
+                                'component.export_modal.format_label',
+                                'Format Laporan',
+                            )}
                         </Label>
                         <div className="grid grid-cols-2 gap-3">
                             <label
@@ -259,7 +377,9 @@ export function ExportModal({
                                     className="sr-only"
                                 />
                                 <FileText className="mb-2 h-6 w-6 text-red-500" />
-                                <span className="text-xs font-medium">PDF Document</span>
+                                <span className="text-xs font-medium">
+                                    PDF Document
+                                </span>
                             </label>
 
                             <label
@@ -280,14 +400,20 @@ export function ExportModal({
                                     className="sr-only"
                                 />
                                 <FileSpreadsheet className="mb-2 h-6 w-6 text-green-600" />
-                                <span className="text-xs font-medium">Excel Spreadsheet</span>
+                                <span className="text-xs font-medium">
+                                    Excel Spreadsheet
+                                </span>
                             </label>
                         </div>
                     </div>
                 </div>
 
                 <DialogFooter className="gap-2">
-                    <Button variant="outline" onClick={onClose} disabled={loading}>
+                    <Button
+                        variant="outline"
+                        onClick={onClose}
+                        disabled={loading}
+                    >
                         {t('common.cancel', 'Batal')}
                     </Button>
                     <Button onClick={handleExport} disabled={loading}>

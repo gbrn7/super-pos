@@ -314,6 +314,7 @@
                     "tx_sales_profit": "Keuntungan Penjualan",
                     "tx_disbursement": "Pencairan Profit",
                     "tx_capital_withdrawal": "Penarikan Modal",
+                    "tx_sales_return_deduction": "Potongan Retur",
                     "start_date_label": "Mulai",
                     "end_date_label": "Hingga",
                     "end_date_badge_label": "Akhir"
@@ -387,8 +388,10 @@
                     "tx_capital_injection": "Suntik Modal",
                     "tx_capital_drawdown": "Tarik Modal",
                     "tx_product_purchase": "Belanja Stok",
+                    "tx_sales_capital_recovery": "Pemulihan Modal",
                     "tx_sales_recovery": "Pemulihan Modal",
                     "tx_reinvestment": "Reinvestasi",
+                    "tx_sales_return_deduction": "Potongan Retur",
                     "start_date_label": "Mulai",
                     "end_date_label": "Hingga",
                     "end_date_badge_label": "Akhir"

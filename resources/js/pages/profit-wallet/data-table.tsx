@@ -45,7 +45,16 @@ import {
     DropdownMenuCheckboxItem,
 } from '@/components/ui/dropdown-menu';
 import { Badge } from '@/components/ui/badge';
-import { RotateCcw, Search, Calendar, CreditCard, ArrowUpDown, X, Table as TableIcon, DownloadCloud } from 'lucide-react';
+import {
+    RotateCcw,
+    Search,
+    Calendar,
+    CreditCard,
+    ArrowUpDown,
+    X,
+    Table as TableIcon,
+    DownloadCloud,
+} from 'lucide-react';
 import { Spinner } from '@/components/ui/spinner';
 
 interface DataTableProps<TData, TValue> {
@@ -106,24 +115,39 @@ export function DataTable<TData, TValue>({
         queryParam.end_date !== null;
 
     return (
-        <div className="rounded-2xl border bg-card p-3 space-y-4">
+        <div className="space-y-4 rounded-2xl border bg-card p-3">
             {/* Top Action Bar */}
-            <div className="flex justify-end gap-2 items-center">
+            <div className="flex items-center justify-end gap-2">
                 {isFilterActive && (
-                    <Button variant="outline" onClick={onResetFilter} size="sm" className="h-8" disabled={processing}>
+                    <Button
+                        variant="outline"
+                        onClick={onResetFilter}
+                        size="sm"
+                        className="h-8"
+                        disabled={processing}
+                    >
                         <RotateCcw className="mr-1.5 h-3.5 w-3.5" />
                         {t('component.data_table.reset_filter', 'Reset Filter')}
                     </Button>
                 )}
 
                 {onExport && (
-                    <Button variant="outline" onClick={onExport} size="sm" className="h-8" disabled={processing || exporting}>
+                    <Button
+                        variant="outline"
+                        onClick={onExport}
+                        size="sm"
+                        className="h-8"
+                        disabled={processing || exporting}
+                    >
                         {exporting ? (
                             <Spinner className="mr-1.5 h-4 w-4" />
                         ) : (
                             <DownloadCloud className="mr-1.5 h-4 w-4" />
                         )}
-                        {t('component.data_table.export.export_excel_btn', 'Ekspor')}
+                        {t(
+                            'component.data_table.export.export_excel_btn',
+                            'Ekspor',
+                        )}
                     </Button>
                 )}
 
@@ -143,7 +167,9 @@ export function DataTable<TData, TValue>({
                                     key={column.id}
                                     className="capitalize"
                                     checked={column.getIsVisible()}
-                                    onCheckedChange={(value) => column.toggleVisibility(!!value)}
+                                    onCheckedChange={(value) =>
+                                        column.toggleVisibility(!!value)
+                                    }
                                 >
                                     {column.id}
                                 </DropdownMenuCheckboxItem>
@@ -157,16 +183,24 @@ export function DataTable<TData, TValue>({
                 {/* Keyword Search */}
                 <div className="space-y-1.5">
                     <Label className="text-sm font-medium text-muted-foreground">
-                        {t('component.data_table.search_component.search_label', 'Pencarian')}
+                        {t(
+                            'component.data_table.search_component.search_label',
+                            'Pencarian',
+                        )}
                     </Label>
                     <div className="relative w-full">
-                        <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+                        <Search className="absolute top-2.5 left-2.5 h-4 w-4 text-muted-foreground" />
                         <Input
-                            placeholder={t('page.profit_wallet.data_table.filters.keyword_placeholder', 'Cari Catatan / Rujukan...')}
+                            placeholder={t(
+                                'page.profit_wallet.data_table.filters.keyword_placeholder',
+                                'Cari Catatan / Rujukan...',
+                            )}
                             value={queryParam.keyword || ''}
-                            onChange={(e) => onQueryParamChange('keyword', e.target.value)}
+                            onChange={(e) =>
+                                onQueryParamChange('keyword', e.target.value)
+                            }
                             disabled={processing}
-                            className="pl-8 w-full"
+                            className="w-full pl-8"
                         />
                     </div>
                 </div>
@@ -175,20 +209,45 @@ export function DataTable<TData, TValue>({
                 <div className="space-y-1.5">
                     <Label className="flex items-center gap-1 text-sm font-medium text-muted-foreground">
                         <ArrowUpDown className="h-3.5 w-3.5" />
-                        {t('page.profit_wallet.data_table.filters.type_label', 'Arah Aliran')}
+                        {t(
+                            'page.profit_wallet.data_table.filters.type_label',
+                            'Arah Aliran',
+                        )}
                     </Label>
                     <Select
                         value={queryParam.type || 'all'}
-                        onValueChange={(val) => onQueryParamChange('type', val === 'all' ? '' : val)}
+                        onValueChange={(val) =>
+                            onQueryParamChange('type', val === 'all' ? '' : val)
+                        }
                         disabled={processing}
                     >
                         <SelectTrigger className="w-full">
-                            <SelectValue placeholder={t('page.profit_wallet.data_table.filters.type_placeholder', 'Semua Arah')} />
+                            <SelectValue
+                                placeholder={t(
+                                    'page.profit_wallet.data_table.filters.type_placeholder',
+                                    'Semua Arah',
+                                )}
+                            />
                         </SelectTrigger>
                         <SelectContent>
-                            <SelectItem value="all">{t('page.profit_wallet.data_table.filters.type_placeholder', 'Semua Arah')}</SelectItem>
-                            <SelectItem value="in">{t('page.profit_wallet.data_table.filters.direction_in', 'Uang Masuk')}</SelectItem>
-                            <SelectItem value="out">{t('page.profit_wallet.data_table.filters.direction_out', 'Uang Keluar')}</SelectItem>
+                            <SelectItem value="all">
+                                {t(
+                                    'page.profit_wallet.data_table.filters.type_placeholder',
+                                    'Semua Arah',
+                                )}
+                            </SelectItem>
+                            <SelectItem value="in">
+                                {t(
+                                    'page.profit_wallet.data_table.filters.direction_in',
+                                    'Uang Masuk',
+                                )}
+                            </SelectItem>
+                            <SelectItem value="out">
+                                {t(
+                                    'page.profit_wallet.data_table.filters.direction_out',
+                                    'Uang Keluar',
+                                )}
+                            </SelectItem>
                         </SelectContent>
                     </Select>
                 </div>
@@ -197,21 +256,60 @@ export function DataTable<TData, TValue>({
                 <div className="space-y-1.5">
                     <Label className="flex items-center gap-1 text-sm font-medium text-muted-foreground">
                         <CreditCard className="h-3.5 w-3.5" />
-                        {t('page.profit_wallet.data_table.filters.tx_type_label', 'Jenis Transaksi')}
+                        {t(
+                            'page.profit_wallet.data_table.filters.tx_type_label',
+                            'Jenis Transaksi',
+                        )}
                     </Label>
                     <Select
                         value={queryParam.transaction_type || 'all'}
-                        onValueChange={(val) => onQueryParamChange('transaction_type', val === 'all' ? '' : val)}
+                        onValueChange={(val) =>
+                            onQueryParamChange(
+                                'transaction_type',
+                                val === 'all' ? '' : val,
+                            )
+                        }
                         disabled={processing}
                     >
                         <SelectTrigger className="w-full">
-                            <SelectValue placeholder={t('page.profit_wallet.data_table.filters.tx_type_placeholder', 'Semua Jenis')} />
+                            <SelectValue
+                                placeholder={t(
+                                    'page.profit_wallet.data_table.filters.tx_type_placeholder',
+                                    'Semua Jenis',
+                                )}
+                            />
                         </SelectTrigger>
                         <SelectContent>
-                            <SelectItem value="all">{t('page.profit_wallet.data_table.filters.tx_type_placeholder', 'Semua Jenis')}</SelectItem>
-                            <SelectItem value="sales_profit">{t('page.profit_wallet.data_table.filters.tx_sales_profit', 'Keuntungan Penjualan')}</SelectItem>
-                            <SelectItem value="disbursement">{t('page.profit_wallet.data_table.filters.tx_disbursement', 'Pencairan Profit')}</SelectItem>
-                            <SelectItem value="capital_withdrawal">{t('page.profit_wallet.data_table.filters.tx_capital_withdrawal', 'Penarikan Modal')}</SelectItem>
+                            <SelectItem value="all">
+                                {t(
+                                    'page.profit_wallet.data_table.filters.tx_type_placeholder',
+                                    'Semua Jenis',
+                                )}
+                            </SelectItem>
+                            <SelectItem value="sales_profit">
+                                {t(
+                                    'page.profit_wallet.data_table.filters.tx_sales_profit',
+                                    'Keuntungan Penjualan',
+                                )}
+                            </SelectItem>
+                            <SelectItem value="disbursement">
+                                {t(
+                                    'page.profit_wallet.data_table.filters.tx_disbursement',
+                                    'Pencairan Profit',
+                                )}
+                            </SelectItem>
+                            <SelectItem value="capital_withdrawal">
+                                {t(
+                                    'page.profit_wallet.data_table.filters.tx_capital_withdrawal',
+                                    'Penarikan Modal',
+                                )}
+                            </SelectItem>
+                            <SelectItem value="sales_return_deduction">
+                                {t(
+                                    'page.profit_wallet.data_table.filters.tx_sales_return_deduction',
+                                    'Potongan Retur',
+                                )}
+                            </SelectItem>
                         </SelectContent>
                     </Select>
                 </div>
@@ -220,28 +318,53 @@ export function DataTable<TData, TValue>({
                 <div className="space-y-1.5">
                     <Label className="flex items-center gap-1 text-sm font-medium text-muted-foreground">
                         <Calendar className="h-3.5 w-3.5" />
-                        {t('page.profit_wallet.data_table.filters.start_date_label', 'Mulai')}
+                        {t(
+                            'page.profit_wallet.data_table.filters.start_date_label',
+                            'Mulai',
+                        )}
                     </Label>
                     <Popover>
                         <PopoverTrigger asChild>
-                            <Button variant="outline" disabled={processing} className="w-full justify-start text-left font-normal text-xs h-9">
+                            <Button
+                                variant="outline"
+                                disabled={processing}
+                                className="h-9 w-full justify-start text-left text-xs font-normal"
+                            >
                                 {queryParam.start_date ? (
-                                    new Date(queryParam.start_date).toLocaleDateString('id-ID')
+                                    new Date(
+                                        queryParam.start_date,
+                                    ).toLocaleDateString('id-ID')
                                 ) : (
-                                    <span className="text-muted-foreground">{t('page.profit_wallet.data_table.filters.start_date_label', 'Mulai')}</span>
+                                    <span className="text-muted-foreground">
+                                        {t(
+                                            'page.profit_wallet.data_table.filters.start_date_label',
+                                            'Mulai',
+                                        )}
+                                    </span>
                                 )}
                             </Button>
                         </PopoverTrigger>
                         <PopoverContent className="w-auto p-0" align="start">
                             <CalendarPicker
                                 mode="single"
-                                selected={queryParam.start_date ? new Date(queryParam.start_date) : undefined}
+                                selected={
+                                    queryParam.start_date
+                                        ? new Date(queryParam.start_date)
+                                        : undefined
+                                }
                                 onSelect={(date) => {
                                     if (date) {
                                         const year = date.getFullYear();
-                                        const month = String(date.getMonth() + 1).padStart(2, '0');
-                                        const day = String(date.getDate()).padStart(2, '0');
-                                        onQueryParamChange('start_date', `${year}-${month}-${day}`);
+                                        const month = String(
+                                            date.getMonth() + 1,
+                                        ).padStart(2, '0');
+                                        const day = String(
+                                            date.getDate(),
+                                        ).padStart(2, '0');
+                                        onQueryParamChange(
+                                            'start_date',
+                                            `${year}-${month}-${day}`,
+                                        );
                                     } else {
                                         onQueryParamChange('start_date', null);
                                     }
@@ -255,28 +378,53 @@ export function DataTable<TData, TValue>({
                 <div className="space-y-1.5">
                     <Label className="flex items-center gap-1 text-sm font-medium text-muted-foreground">
                         <Calendar className="h-3.5 w-3.5" />
-                        {t('page.profit_wallet.data_table.filters.end_date_label', 'Hingga')}
+                        {t(
+                            'page.profit_wallet.data_table.filters.end_date_label',
+                            'Hingga',
+                        )}
                     </Label>
                     <Popover>
                         <PopoverTrigger asChild>
-                            <Button variant="outline" disabled={processing} className="w-full justify-start text-left font-normal text-xs h-9">
+                            <Button
+                                variant="outline"
+                                disabled={processing}
+                                className="h-9 w-full justify-start text-left text-xs font-normal"
+                            >
                                 {queryParam.end_date ? (
-                                    new Date(queryParam.end_date).toLocaleDateString('id-ID')
+                                    new Date(
+                                        queryParam.end_date,
+                                    ).toLocaleDateString('id-ID')
                                 ) : (
-                                    <span className="text-muted-foreground">{t('page.profit_wallet.data_table.filters.end_date_label', 'Hingga')}</span>
+                                    <span className="text-muted-foreground">
+                                        {t(
+                                            'page.profit_wallet.data_table.filters.end_date_label',
+                                            'Hingga',
+                                        )}
+                                    </span>
                                 )}
                             </Button>
                         </PopoverTrigger>
                         <PopoverContent className="w-auto p-0" align="start">
                             <CalendarPicker
                                 mode="single"
-                                selected={queryParam.end_date ? new Date(queryParam.end_date) : undefined}
+                                selected={
+                                    queryParam.end_date
+                                        ? new Date(queryParam.end_date)
+                                        : undefined
+                                }
                                 onSelect={(date) => {
                                     if (date) {
                                         const year = date.getFullYear();
-                                        const month = String(date.getMonth() + 1).padStart(2, '0');
-                                        const day = String(date.getDate()).padStart(2, '0');
-                                        onQueryParamChange('end_date', `${year}-${month}-${day}`);
+                                        const month = String(
+                                            date.getMonth() + 1,
+                                        ).padStart(2, '0');
+                                        const day = String(
+                                            date.getDate(),
+                                        ).padStart(2, '0');
+                                        onQueryParamChange(
+                                            'end_date',
+                                            `${year}-${month}-${day}`,
+                                        );
                                     } else {
                                         onQueryParamChange('end_date', null);
                                     }
@@ -290,69 +438,151 @@ export function DataTable<TData, TValue>({
             {/* Active Filter Badges */}
             {isFilterActive && (
                 <div className="col-span-full flex flex-wrap items-center gap-1.5 pt-2 text-xs">
-                    <span className="text-muted-foreground">{t('page.profit_wallet.data_table.filters.active_filters', 'Filter Aktif:')}</span>
+                    <span className="text-muted-foreground">
+                        {t(
+                            'page.profit_wallet.data_table.filters.active_filters',
+                            'Filter Aktif:',
+                        )}
+                    </span>
                     {queryParam.keyword && (
-                        <Badge variant="secondary" className="gap-1 font-normal py-0.5 px-2 bg-muted/50 hover:bg-muted">
+                        <Badge
+                            variant="secondary"
+                            className="gap-1 bg-muted/50 px-2 py-0.5 font-normal hover:bg-muted"
+                        >
                             "{queryParam.keyword}"
                             <button
                                 type="button"
-                                onClick={() => onQueryParamChange('keyword', '')}
+                                onClick={() =>
+                                    onQueryParamChange('keyword', '')
+                                }
                                 className="ml-0.5 rounded-full p-0.5 text-muted-foreground transition-colors hover:bg-muted-foreground/20 hover:text-foreground"
                             >
                                 <X className="h-3 w-3" />
-                                <span className="sr-only">Hapus filter pencarian</span>
+                                <span className="sr-only">
+                                    Hapus filter pencarian
+                                </span>
                             </button>
                         </Badge>
                     )}
                     {queryParam.type && (
-                        <Badge variant="secondary" className="gap-1 font-normal py-0.5 px-2 bg-muted/50 hover:bg-muted">
-                            {queryParam.type === 'in' ? t('page.profit_wallet.data_table.filters.direction_in', 'Uang Masuk') : t('page.profit_wallet.data_table.filters.direction_out', 'Uang Keluar')}
+                        <Badge
+                            variant="secondary"
+                            className="gap-1 bg-muted/50 px-2 py-0.5 font-normal hover:bg-muted"
+                        >
+                            {queryParam.type === 'in'
+                                ? t(
+                                      'page.profit_wallet.data_table.filters.direction_in',
+                                      'Uang Masuk',
+                                  )
+                                : t(
+                                      'page.profit_wallet.data_table.filters.direction_out',
+                                      'Uang Keluar',
+                                  )}
                             <button
                                 type="button"
                                 onClick={() => onQueryParamChange('type', '')}
                                 className="ml-0.5 rounded-full p-0.5 text-muted-foreground transition-colors hover:bg-muted-foreground/20 hover:text-foreground"
                             >
                                 <X className="h-3 w-3" />
-                                <span className="sr-only">Hapus filter arah aliran</span>
+                                <span className="sr-only">
+                                    Hapus filter arah aliran
+                                </span>
                             </button>
                         </Badge>
                     )}
                     {queryParam.transaction_type && (
-                        <Badge variant="secondary" className="gap-1 font-normal py-0.5 px-2 bg-muted/50 hover:bg-muted">
-                            {queryParam.transaction_type === 'sales_profit' ? t('page.profit_wallet.data_table.filters.tx_sales_profit', 'Keuntungan') : queryParam.transaction_type === 'disbursement' ? t('page.profit_wallet.data_table.filters.tx_disbursement', 'Pencairan') : t('page.profit_wallet.data_table.filters.tx_capital_withdrawal', 'Modal')}
+                        <Badge
+                            variant="secondary"
+                            className="gap-1 bg-muted/50 px-2 py-0.5 font-normal hover:bg-muted"
+                        >
+                            {queryParam.transaction_type === 'sales_profit'
+                                ? t(
+                                      'page.profit_wallet.data_table.filters.tx_sales_profit',
+                                      'Keuntungan Penjualan',
+                                  )
+                                : queryParam.transaction_type === 'disbursement'
+                                  ? t(
+                                        'page.profit_wallet.data_table.filters.tx_disbursement',
+                                        'Pencairan Profit',
+                                    )
+                                  : queryParam.transaction_type ===
+                                      'capital_withdrawal'
+                                    ? t(
+                                          'page.profit_wallet.data_table.filters.tx_capital_withdrawal',
+                                          'Penarikan Modal',
+                                      )
+                                    : queryParam.transaction_type ===
+                                        'sales_return_deduction'
+                                      ? t(
+                                            'page.profit_wallet.data_table.filters.tx_sales_return_deduction',
+                                            'Potongan Retur',
+                                        )
+                                      : queryParam.transaction_type}
                             <button
                                 type="button"
-                                onClick={() => onQueryParamChange('transaction_type', '')}
+                                onClick={() =>
+                                    onQueryParamChange('transaction_type', '')
+                                }
                                 className="ml-0.5 rounded-full p-0.5 text-muted-foreground transition-colors hover:bg-muted-foreground/20 hover:text-foreground"
                             >
                                 <X className="h-3 w-3" />
-                                <span className="sr-only">Hapus filter jenis transaksi</span>
+                                <span className="sr-only">
+                                    Hapus filter jenis transaksi
+                                </span>
                             </button>
                         </Badge>
                     )}
                     {queryParam.start_date && (
-                        <Badge variant="secondary" className="gap-1 font-normal py-0.5 px-2 bg-muted/50 hover:bg-muted">
-                            {t('page.profit_wallet.data_table.filters.start_date_label', 'Mulai')}: {queryParam.start_date}
+                        <Badge
+                            variant="secondary"
+                            className="gap-1 bg-muted/50 px-2 py-0.5 font-normal hover:bg-muted"
+                        >
+                            {t(
+                                'page.profit_wallet.data_table.filters.start_date_label',
+                                'Mulai',
+                            )}
+                            : {queryParam.start_date}
                             <button
                                 type="button"
-                                onClick={() => onQueryParamChange('start_date', null)}
+                                onClick={() =>
+                                    onQueryParamChange('start_date', null)
+                                }
                                 className="ml-0.5 rounded-full p-0.5 text-muted-foreground transition-colors hover:bg-muted-foreground/20 hover:text-foreground"
                             >
                                 <X className="h-3 w-3" />
-                                <span className="sr-only">{t('component.data_table.remove_start_date_filter', 'Hapus filter tanggal mulai')}</span>
+                                <span className="sr-only">
+                                    {t(
+                                        'component.data_table.remove_start_date_filter',
+                                        'Hapus filter tanggal mulai',
+                                    )}
+                                </span>
                             </button>
                         </Badge>
                     )}
                     {queryParam.end_date && (
-                        <Badge variant="secondary" className="gap-1 font-normal py-0.5 px-2 bg-muted/50 hover:bg-muted">
-                            {t('page.profit_wallet.data_table.filters.end_date_badge_label', 'Akhir')}: {queryParam.end_date}
+                        <Badge
+                            variant="secondary"
+                            className="gap-1 bg-muted/50 px-2 py-0.5 font-normal hover:bg-muted"
+                        >
+                            {t(
+                                'page.profit_wallet.data_table.filters.end_date_badge_label',
+                                'Akhir',
+                            )}
+                            : {queryParam.end_date}
                             <button
                                 type="button"
-                                onClick={() => onQueryParamChange('end_date', null)}
+                                onClick={() =>
+                                    onQueryParamChange('end_date', null)
+                                }
                                 className="ml-0.5 rounded-full p-0.5 text-muted-foreground transition-colors hover:bg-muted-foreground/20 hover:text-foreground"
                             >
                                 <X className="h-3 w-3" />
-                                <span className="sr-only">{t('component.data_table.remove_end_date_filter', 'Hapus filter tanggal akhir')}</span>
+                                <span className="sr-only">
+                                    {t(
+                                        'component.data_table.remove_end_date_filter',
+                                        'Hapus filter tanggal akhir',
+                                    )}
+                                </span>
                             </button>
                         </Badge>
                     )}
@@ -367,7 +597,13 @@ export function DataTable<TData, TValue>({
                             <TableRow key={headerGroup.id}>
                                 {headerGroup.headers.map((header) => (
                                     <TableHead key={header.id}>
-                                        {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
+                                        {header.isPlaceholder
+                                            ? null
+                                            : flexRender(
+                                                  header.column.columnDef
+                                                      .header,
+                                                  header.getContext(),
+                                              )}
                                     </TableHead>
                                 ))}
                             </TableRow>
@@ -376,8 +612,14 @@ export function DataTable<TData, TValue>({
                     <TableBody>
                         {processing ? (
                             <TableRow>
-                                <TableCell colSpan={columns.length} className="h-24 text-center text-muted-foreground">
-                                    {t('component.data_table.loading', 'Memuat...')}
+                                <TableCell
+                                    colSpan={columns.length}
+                                    className="h-24 text-center text-muted-foreground"
+                                >
+                                    {t(
+                                        'component.data_table.loading',
+                                        'Memuat...',
+                                    )}
                                 </TableCell>
                             </TableRow>
                         ) : data.length > 0 ? (
@@ -385,15 +627,24 @@ export function DataTable<TData, TValue>({
                                 <TableRow key={row.id}>
                                     {row.getVisibleCells().map((cell) => (
                                         <TableCell key={cell.id}>
-                                            {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                                            {flexRender(
+                                                cell.column.columnDef.cell,
+                                                cell.getContext(),
+                                            )}
                                         </TableCell>
                                     ))}
                                 </TableRow>
                             ))
                         ) : (
                             <TableRow>
-                                <TableCell colSpan={columns.length} className="h-24 text-center text-muted-foreground">
-                                    {t('component.data_table.no_data', 'Tidak ada data.')}
+                                <TableCell
+                                    colSpan={columns.length}
+                                    className="h-24 text-center text-muted-foreground"
+                                >
+                                    {t(
+                                        'component.data_table.no_data',
+                                        'Tidak ada data.',
+                                    )}
                                 </TableCell>
                             </TableRow>
                         )}
@@ -417,7 +668,9 @@ export function DataTable<TData, TValue>({
                 <div className="flex w-full items-center gap-8 lg:w-fit">
                     <Select
                         value={queryParam.limit.toString()}
-                        onValueChange={(value) => onChangePaginationLimit(Number(value))}
+                        onValueChange={(value) =>
+                            onChangePaginationLimit(Number(value))
+                        }
                         disabled={processing}
                     >
                         <SelectTrigger className="w-20">
@@ -426,10 +679,16 @@ export function DataTable<TData, TValue>({
                         <SelectContent>
                             <SelectGroup>
                                 <SelectLabel>
-                                    {t('component.data_table.row_per_page', 'Baris per halaman')}
+                                    {t(
+                                        'component.data_table.row_per_page',
+                                        'Baris per halaman',
+                                    )}
                                 </SelectLabel>
                                 {limitOptions.map((option) => (
-                                    <SelectItem key={option} value={option.toString()}>
+                                    <SelectItem
+                                        key={option}
+                                        value={option.toString()}
+                                    >
                                         {option}
                                     </SelectItem>
                                 ))}
@@ -441,9 +700,16 @@ export function DataTable<TData, TValue>({
                             variant="outline"
                             className="hidden h-8 w-8 p-0 lg:flex"
                             onClick={() => onChangePaginationPage(1)}
-                            disabled={pagination.current_page === 1 || processing}
+                            disabled={
+                                pagination.current_page === 1 || processing
+                            }
                         >
-                            <span className="sr-only">{t('component.data_table.pagination.first_page', 'Halaman Pertama')}</span>
+                            <span className="sr-only">
+                                {t(
+                                    'component.data_table.pagination.first_page',
+                                    'Halaman Pertama',
+                                )}
+                            </span>
                             <IconChevronsLeft className="h-4 w-4" />
                         </Button>
                         <Button
@@ -452,12 +718,21 @@ export function DataTable<TData, TValue>({
                             size="icon"
                             onClick={() => {
                                 if (pagination.current_page - 1 > 0) {
-                                    onChangePaginationPage(pagination.current_page - 1);
+                                    onChangePaginationPage(
+                                        pagination.current_page - 1,
+                                    );
                                 }
                             }}
-                            disabled={pagination.current_page === 1 || processing}
+                            disabled={
+                                pagination.current_page === 1 || processing
+                            }
                         >
-                            <span className="sr-only">{t('component.data_table.pagination.prev_page', 'Halaman Sebelumnya')}</span>
+                            <span className="sr-only">
+                                {t(
+                                    'component.data_table.pagination.prev_page',
+                                    'Halaman Sebelumnya',
+                                )}
+                            </span>
                             <IconChevronLeft className="h-4 w-4" />
                         </Button>
                         <Button
@@ -465,23 +740,46 @@ export function DataTable<TData, TValue>({
                             className="size-8"
                             size="icon"
                             onClick={() => {
-                                if (pagination.current_page !== pagination.last_page) {
-                                    onChangePaginationPage(pagination.current_page + 1);
+                                if (
+                                    pagination.current_page !==
+                                    pagination.last_page
+                                ) {
+                                    onChangePaginationPage(
+                                        pagination.current_page + 1,
+                                    );
                                 }
                             }}
-                            disabled={pagination.current_page === pagination.last_page || processing}
+                            disabled={
+                                pagination.current_page ===
+                                    pagination.last_page || processing
+                            }
                         >
-                            <span className="sr-only">{t('component.data_table.pagination.next_page', 'Halaman Selanjutnya')}</span>
+                            <span className="sr-only">
+                                {t(
+                                    'component.data_table.pagination.next_page',
+                                    'Halaman Selanjutnya',
+                                )}
+                            </span>
                             <IconChevronRight className="h-4 w-4" />
                         </Button>
                         <Button
                             variant="outline"
                             className="hidden size-8 lg:flex"
                             size="icon"
-                            onClick={() => onChangePaginationPage(pagination.last_page)}
-                            disabled={pagination.current_page === pagination.last_page || processing}
+                            onClick={() =>
+                                onChangePaginationPage(pagination.last_page)
+                            }
+                            disabled={
+                                pagination.current_page ===
+                                    pagination.last_page || processing
+                            }
                         >
-                            <span className="sr-only">{t('component.data_table.pagination.last_page', 'Halaman Terakhir')}</span>
+                            <span className="sr-only">
+                                {t(
+                                    'component.data_table.pagination.last_page',
+                                    'Halaman Terakhir',
+                                )}
+                            </span>
                             <IconChevronsRight className="h-4 w-4" />
                         </Button>
                     </div>

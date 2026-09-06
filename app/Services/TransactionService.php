@@ -231,10 +231,27 @@ class TransactionService implements TransactionServiceInterface
             $transactions = $this->transactionRepository->getAllByIndex($request);
             $transactions->load('returns');
 
+            $formattedStartDate = $request->start_date ? Carbon::parse($request->start_date)->format('Y-m-d') : null;
+            $formattedEndDate = $request->end_date ? Carbon::parse($request->end_date)->format('Y-m-d') : null;
+
+            if ($formattedStartDate && $formattedEndDate) {
+                $dateSuffix = $formattedStartDate === $formattedEndDate
+                    ? $formattedStartDate
+                    : "{$formattedStartDate}-sd-{$formattedEndDate}";
+            } elseif ($formattedStartDate) {
+                $dateSuffix = "mulai-{$formattedStartDate}";
+            } elseif ($formattedEndDate) {
+                $dateSuffix = "sampai-{$formattedEndDate}";
+            } else {
+                $dateSuffix = Carbon::now()->format('Y-m-d');
+            }
+
+            $fileName = "laporan-transaksi-{$dateSuffix}";
+
             if ($format === 'excel') {
                 return Excel::download(
                     new TransactionsExport($transactions),
-                    'laporan-transaksi-'.date('Y-m-d-His').'.xlsx'
+                    "{$fileName}.xlsx"
                 );
             }
 
@@ -251,7 +268,7 @@ class TransactionService implements TransactionServiceInterface
                 'storeSetting' => $storeSetting,
             ])->setPaper('a4', 'portrait');
 
-            return $pdf->download('laporan-transaksi-'.date('Y-m-d-His').'.pdf');
+            return $pdf->download("{$fileName}.pdf");
         } catch (\Throwable $th) {
             throw CheckException::Check($th);
         }

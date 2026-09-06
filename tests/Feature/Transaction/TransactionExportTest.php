@@ -38,3 +38,26 @@ test('unauthorized user cannot export transactions', function () {
 
     $response->assertStatus(403);
 });
+
+test('export filename includes date range when specified', function () {
+    $user = User::factory()->create();
+    $user->givePermissionTo(TransactionPermissionEnums::READ_TRANSACTION->value);
+
+    $responsePdf = $this->actingAs($user)->get(route('apiTransactions.exportData', [
+        'format' => 'pdf',
+        'start_date' => '2026-08-01',
+        'end_date' => '2026-08-31',
+    ]));
+
+    $responsePdf->assertStatus(200);
+    expect($responsePdf->headers->get('content-disposition'))->toContain('laporan-transaksi-2026-08-01-sd-2026-08-31.pdf');
+
+    $responseExcel = $this->actingAs($user)->get(route('apiTransactions.exportData', [
+        'format' => 'excel',
+        'start_date' => '2026-08-01',
+        'end_date' => '2026-08-01',
+    ]));
+
+    $responseExcel->assertStatus(200);
+    expect($responseExcel->headers->get('content-disposition'))->toContain('laporan-transaksi-2026-08-01.xlsx');
+});

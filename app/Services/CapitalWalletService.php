@@ -293,10 +293,27 @@ class CapitalWalletService implements CapitalWalletServiceInterface
             $transactions = $this->getTransactions($request);
             $summary = $this->getTransactionSummary($request);
 
+            $formattedStartDate = $request->start_date ? Carbon::parse($request->start_date)->format('Y-m-d') : null;
+            $formattedEndDate = $request->end_date ? Carbon::parse($request->end_date)->format('Y-m-d') : null;
+
+            if ($formattedStartDate && $formattedEndDate) {
+                $dateSuffix = $formattedStartDate === $formattedEndDate
+                    ? $formattedStartDate
+                    : "{$formattedStartDate}-sd-{$formattedEndDate}";
+            } elseif ($formattedStartDate) {
+                $dateSuffix = "mulai-{$formattedStartDate}";
+            } elseif ($formattedEndDate) {
+                $dateSuffix = "sampai-{$formattedEndDate}";
+            } else {
+                $dateSuffix = Carbon::now()->format('Y-m-d');
+            }
+
+            $fileName = "laporan-dompet-modal-{$dateSuffix}";
+
             if ($format === 'excel') {
                 return Excel::download(
                     new CapitalWalletExport($transactions),
-                    'laporan-dompet-modal-'.date('Y-m-d-His').'.xlsx'
+                    "{$fileName}.xlsx"
                 );
             }
 
@@ -314,7 +331,7 @@ class CapitalWalletService implements CapitalWalletServiceInterface
                 'storeSetting' => $storeSetting,
             ])->setPaper('a4', 'portrait');
 
-            return $pdf->download('laporan-dompet-modal-'.date('Y-m-d-His').'.pdf');
+            return $pdf->download("{$fileName}.pdf");
         } catch (\Throwable $th) {
             throw CheckException::Check($th);
         }

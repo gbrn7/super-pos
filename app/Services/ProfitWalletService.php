@@ -227,10 +227,27 @@ class ProfitWalletService implements ProfitWalletServiceInterface
             $transactions = $this->getTransactions($request);
             $summary = $this->getTransactionSummary($request);
 
+            $formattedStartDate = $request->start_date ? Carbon::parse($request->start_date)->format('Y-m-d') : null;
+            $formattedEndDate = $request->end_date ? Carbon::parse($request->end_date)->format('Y-m-d') : null;
+
+            if ($formattedStartDate && $formattedEndDate) {
+                $dateSuffix = $formattedStartDate === $formattedEndDate
+                    ? $formattedStartDate
+                    : "{$formattedStartDate}-sd-{$formattedEndDate}";
+            } elseif ($formattedStartDate) {
+                $dateSuffix = "mulai-{$formattedStartDate}";
+            } elseif ($formattedEndDate) {
+                $dateSuffix = "sampai-{$formattedEndDate}";
+            } else {
+                $dateSuffix = Carbon::now()->format('Y-m-d');
+            }
+
+            $fileName = "laporan-dompet-profit-{$dateSuffix}";
+
             if ($format === 'excel') {
                 return Excel::download(
                     new ProfitWalletExport($transactions),
-                    'laporan-dompet-profit-'.date('Y-m-d-His').'.xlsx'
+                    "{$fileName}.xlsx"
                 );
             }
 
@@ -248,7 +265,7 @@ class ProfitWalletService implements ProfitWalletServiceInterface
                 'storeSetting' => $storeSetting,
             ])->setPaper('a4', 'portrait');
 
-            return $pdf->download('laporan-dompet-profit-'.date('Y-m-d-His').'.pdf');
+            return $pdf->download("{$fileName}.pdf");
         } catch (\Throwable $th) {
             throw CheckException::Check($th);
         }

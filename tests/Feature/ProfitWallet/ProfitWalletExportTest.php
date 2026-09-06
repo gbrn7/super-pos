@@ -99,4 +99,43 @@ class ProfitWalletExportTest extends TestCase
             str_contains($response->headers->get('content-type'), 'vnd.openxmlformats-officedocument.spreadsheetml.sheet')
         );
     }
+
+    public function test_export_filename_includes_date_range_when_specified()
+    {
+        $wallet = ProfitWallet::factory()->create(['balance' => 1000]);
+        ProfitWalletTransaction::factory()->create([
+            'profit_wallet_id' => $wallet->id,
+            'amount' => 100,
+            'type' => 'in',
+            'transaction_type' => 'sales_profit',
+            'balance_before' => 900,
+            'balance_after' => 1000,
+        ]);
+
+        $responsePdf = $this->actingAs($this->authorizedUser)
+            ->get(route('apiProfitWallet.exportData', [
+                'format' => 'pdf',
+                'start_date' => '2026-08-01',
+                'end_date' => '2026-08-31',
+            ]));
+
+        $responsePdf->assertStatus(200);
+        $this->assertStringContainsString(
+            'laporan-dompet-profit-2026-08-01-sd-2026-08-31.pdf',
+            $responsePdf->headers->get('content-disposition') ?? ''
+        );
+
+        $responseExcel = $this->actingAs($this->authorizedUser)
+            ->get(route('apiProfitWallet.exportData', [
+                'format' => 'excel',
+                'start_date' => '2026-08-01',
+                'end_date' => '2026-08-01',
+            ]));
+
+        $responseExcel->assertStatus(200);
+        $this->assertStringContainsString(
+            'laporan-dompet-profit-2026-08-01.xlsx',
+            $responseExcel->headers->get('content-disposition') ?? ''
+        );
+    }
 }

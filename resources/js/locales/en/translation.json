@@ -331,6 +331,7 @@
                     "tx_sales_profit": "Sales Profit",
                     "tx_disbursement": "Disbursement",
                     "tx_capital_withdrawal": "Capital Withdrawal",
+                    "tx_sales_return_deduction": "Return Deduction",
                     "start_date_label": "Start Date",
                     "end_date_label": "End Date",
                     "end_date_badge_label": "End"
@@ -404,8 +405,10 @@
                     "tx_capital_injection": "Capital Injection",
                     "tx_capital_drawdown": "Capital Drawdown",
                     "tx_product_purchase": "Product Purchase",
+                    "tx_sales_capital_recovery": "Sales Capital Recovery",
                     "tx_sales_recovery": "Sales Capital Recovery",
                     "tx_reinvestment": "Reinvestment",
+                    "tx_sales_return_deduction": "Return Deduction",
                     "start_date_label": "Start Date",
                     "end_date_label": "End Date",
                     "end_date_badge_label": "End"
