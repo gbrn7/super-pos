@@ -5,6 +5,7 @@ import { Badge } from '@/components/ui/badge';
 import { formatRupiah } from '@/lib/format-money';
 import { formatDate } from '@/lib/format-date';
 import type { ProfitWalletTransaction } from '@/support/models/profitWallet';
+import { ProfitWalletTransactionTypeEnums } from '@/support/enums/ProfitWalletTransactionTypeEnums';
 
 interface ColumnProps {
     onInvoiceClick: (invoiceNumber: string) => void;
@@ -42,22 +43,26 @@ export const columns = ({
         cell: ({ row }) => {
             const txType = row.original.transaction_type;
             let label: string = txType;
-            if (txType === 'sales_profit') {
+            if (txType === ProfitWalletTransactionTypeEnums.SALES_PROFIT) {
                 label = i18next.t(
                     'page.profit_wallet.data_table.filters.tx_sales_profit',
                     'Keuntungan Penjualan',
                 );
-            } else if (txType === 'sales_return_deduction') {
+            } else if (
+                txType === ProfitWalletTransactionTypeEnums.SALES_RETURN_DEDUCTION
+            ) {
                 label = i18next.t(
                     'page.profit_wallet.data_table.filters.tx_sales_return_deduction',
                     'Potongan Retur',
                 );
-            } else if (txType === 'disbursement') {
+            } else if (txType === ProfitWalletTransactionTypeEnums.DISBURSEMENT) {
                 label = i18next.t(
                     'page.profit_wallet.data_table.filters.tx_disbursement',
                     'Pencairan Profit',
                 );
-            } else if (txType === 'capital_withdrawal') {
+            } else if (
+                txType === ProfitWalletTransactionTypeEnums.CAPITAL_WITHDRAWAL
+            ) {
                 label = i18next.t(
                     'page.profit_wallet.data_table.filters.tx_capital_withdrawal',
                     'Penarikan Modal',

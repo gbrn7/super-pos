@@ -28,6 +28,7 @@ import {
 } from '@/routes/apiCapitalWallet';
 import { handleApiError, showSuccessToast } from '@/lib/utils';
 import * as XLSX from 'xlsx';
+import { CapitalWalletTransactionTypeEnums } from '@/support/enums/CapitalWalletTransactionTypeEnums';
 import dayjs from 'dayjs';
 
 interface ExportModalProps {
@@ -115,35 +116,49 @@ export function ExportModal({
 
                     const rows = transactions.map((tx: any) => {
                         let txTypeLabel = tx.transaction_type;
-                        if (tx.transaction_type === 'sales_capital_recovery') {
+                        if (
+                            tx.transaction_type ===
+                            CapitalWalletTransactionTypeEnums.SALES_CAPITAL_RECOVERY
+                        ) {
                             txTypeLabel = t(
                                 'page.capital_wallet.data_table.filters.tx_sales_capital_recovery',
                                 'Pemulihan Modal',
                             );
-                        } else if (tx.transaction_type === 'reinvestment') {
+                        } else if (
+                            tx.transaction_type ===
+                            CapitalWalletTransactionTypeEnums.REINVESTMENT
+                        ) {
                             txTypeLabel = t(
                                 'page.capital_wallet.data_table.filters.tx_reinvestment',
                                 'Reinvestasi Profit',
                             );
                         } else if (
-                            tx.transaction_type === 'capital_injection'
+                            tx.transaction_type ===
+                            CapitalWalletTransactionTypeEnums.CAPITAL_INJECTION
                         ) {
                             txTypeLabel = t(
                                 'page.capital_wallet.data_table.filters.tx_capital_injection',
                                 'Suntikan Modal',
                             );
-                        } else if (tx.transaction_type === 'capital_drawdown') {
+                        } else if (
+                            tx.transaction_type ===
+                            CapitalWalletTransactionTypeEnums.CAPITAL_DRAWDOWN
+                        ) {
                             txTypeLabel = t(
                                 'page.capital_wallet.data_table.filters.tx_capital_drawdown',
                                 'Tarik Modal',
                             );
-                        } else if (tx.transaction_type === 'product_purchase') {
+                        } else if (
+                            tx.transaction_type ===
+                            CapitalWalletTransactionTypeEnums.PRODUCT_PURCHASE
+                        ) {
                             txTypeLabel = t(
                                 'page.capital_wallet.data_table.filters.tx_product_purchase',
                                 'Belanja Stok',
                             );
                         } else if (
-                            tx.transaction_type === 'sales_return_deduction'
+                            tx.transaction_type ===
+                            CapitalWalletTransactionTypeEnums.SALES_RETURN_DEDUCTION
                         ) {
                             txTypeLabel = t(
                                 'page.capital_wallet.data_table.filters.tx_sales_return_deduction',

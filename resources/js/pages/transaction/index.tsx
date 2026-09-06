@@ -20,7 +20,7 @@ import type { PaymentMethod } from '@/support/models/paymentMethod';
 import type { Transaction } from '@/support/models/transaction';
 import type { User } from '@/support/models/user';
 import { RotateCcw } from 'lucide-react';
-import ReturnModal from '@/Components/ReturnModal';
+import ReturnModal from '@/components/return-modal';
 import { columns } from './columns';
 import { DataTable } from './data-table';
 import { useAuth } from '@/hooks/use-auth';

@@ -28,6 +28,7 @@ import {
 } from '@/routes/apiProfitWallet';
 import { handleApiError, showSuccessToast } from '@/lib/utils';
 import * as XLSX from 'xlsx';
+import { ProfitWalletTransactionTypeEnums } from '@/support/enums/ProfitWalletTransactionTypeEnums';
 import dayjs from 'dayjs';
 
 interface ExportModalProps {
@@ -115,25 +116,33 @@ export function ExportModal({
 
                     const rows = transactions.map((tx: any) => {
                         let txTypeLabel = tx.transaction_type;
-                        if (tx.transaction_type === 'sales_profit') {
+                        if (
+                            tx.transaction_type ===
+                            ProfitWalletTransactionTypeEnums.SALES_PROFIT
+                        ) {
                             txTypeLabel = t(
                                 'page.profit_wallet.data_table.filters.tx_sales_profit',
                                 'Profit Penjualan',
                             );
-                        } else if (tx.transaction_type === 'disbursement') {
+                        } else if (
+                            tx.transaction_type ===
+                            ProfitWalletTransactionTypeEnums.DISBURSEMENT
+                        ) {
                             txTypeLabel = t(
                                 'page.profit_wallet.data_table.filters.tx_disbursement',
                                 'Disburse Ke Pemilik',
                             );
                         } else if (
-                            tx.transaction_type === 'capital_withdrawal'
+                            tx.transaction_type ===
+                            ProfitWalletTransactionTypeEnums.CAPITAL_WITHDRAWAL
                         ) {
                             txTypeLabel = t(
                                 'page.profit_wallet.data_table.filters.tx_capital_withdrawal',
                                 'Penarikan Modal',
                             );
                         } else if (
-                            tx.transaction_type === 'sales_return_deduction'
+                            tx.transaction_type ===
+                            ProfitWalletTransactionTypeEnums.SALES_RETURN_DEDUCTION
                         ) {
                             txTypeLabel = t(
                                 'page.profit_wallet.data_table.filters.tx_sales_return_deduction',

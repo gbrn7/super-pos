@@ -16,11 +16,16 @@ return [
         'profit_wallet' => [
             'sales_notes' => 'Penjualan dari POS kasir',
             'return_notes' => 'Pemotongan karena retur (:invoice)',
+            'disbursement_notes' => 'Pencairan ke rekening bank pemilik',
+            'withdrawal_notes' => 'Penarikan modal usaha / reinvestasi',
         ],
         'capital_wallet' => [
             'sales_recovery_notes' => 'Pemulihan modal dari penjualan POS',
             'reinvestment_notes' => 'Reinvestasi dari dompet profit',
             'return_notes' => 'Pemotongan karena retur (:invoice)',
+            'injection_notes' => 'Suntik modal usaha',
+            'drawdown_notes' => 'Penarikan modal ke pemilik',
+            'purchase_notes' => 'Belanja pengadaan stok',
         ],
         'returns' => [
             'success_get' => 'Berhasil mengambil data retur.',

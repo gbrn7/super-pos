@@ -45,6 +45,7 @@ import {
     DropdownMenuCheckboxItem,
 } from '@/components/ui/dropdown-menu';
 import { Badge } from '@/components/ui/badge';
+import { CapitalWalletTransactionTypeEnums } from '@/support/enums/CapitalWalletTransactionTypeEnums';
 import {
     RotateCcw,
     Search,
@@ -281,25 +282,41 @@ export function DataTable<TData, TValue>({
                                     'Semua Jenis',
                                 )}
                             </SelectItem>
-                            <SelectItem value="capital_injection">
+                            <SelectItem
+                                value={
+                                    CapitalWalletTransactionTypeEnums.CAPITAL_INJECTION
+                                }
+                            >
                                 {t(
                                     'page.capital_wallet.data_table.filters.tx_capital_injection',
                                     'Suntik Modal',
                                 )}
                             </SelectItem>
-                            <SelectItem value="capital_drawdown">
+                            <SelectItem
+                                value={
+                                    CapitalWalletTransactionTypeEnums.CAPITAL_DRAWDOWN
+                                }
+                            >
                                 {t(
                                     'page.capital_wallet.data_table.filters.tx_capital_drawdown',
                                     'Tarik Modal',
                                 )}
                             </SelectItem>
-                            <SelectItem value="product_purchase">
+                            <SelectItem
+                                value={
+                                    CapitalWalletTransactionTypeEnums.PRODUCT_PURCHASE
+                                }
+                            >
                                 {t(
                                     'page.capital_wallet.data_table.filters.tx_product_purchase',
                                     'Belanja Stok',
                                 )}
                             </SelectItem>
-                            <SelectItem value="sales_capital_recovery">
+                            <SelectItem
+                                value={
+                                    CapitalWalletTransactionTypeEnums.SALES_CAPITAL_RECOVERY
+                                }
+                            >
                                 {t(
                                     'page.capital_wallet.data_table.filters.tx_sales_capital_recovery',
                                     t(
@@ -308,13 +325,21 @@ export function DataTable<TData, TValue>({
                                     ),
                                 )}
                             </SelectItem>
-                            <SelectItem value="sales_return_deduction">
+                            <SelectItem
+                                value={
+                                    CapitalWalletTransactionTypeEnums.SALES_RETURN_DEDUCTION
+                                }
+                            >
                                 {t(
                                     'page.capital_wallet.data_table.filters.tx_sales_return_deduction',
                                     'Potongan Retur',
                                 )}
                             </SelectItem>
-                            <SelectItem value="reinvestment">
+                            <SelectItem
+                                value={
+                                    CapitalWalletTransactionTypeEnums.REINVESTMENT
+                                }
+                            >
                                 {t(
                                     'page.capital_wallet.data_table.filters.tx_reinvestment',
                                     'Reinvestasi',
@@ -505,25 +530,26 @@ export function DataTable<TData, TValue>({
                             variant="secondary"
                             className="gap-1 bg-muted/50 px-2 py-0.5 font-normal hover:bg-muted"
                         >
-                            {queryParam.transaction_type === 'capital_injection'
+                            {queryParam.transaction_type ===
+                            CapitalWalletTransactionTypeEnums.CAPITAL_INJECTION
                                 ? t(
                                       'page.capital_wallet.data_table.filters.tx_capital_injection',
                                       'Suntik Modal',
                                   )
                                 : queryParam.transaction_type ===
-                                    'capital_drawdown'
+                                    CapitalWalletTransactionTypeEnums.CAPITAL_DRAWDOWN
                                   ? t(
                                         'page.capital_wallet.data_table.filters.tx_capital_drawdown',
                                         'Tarik Modal',
                                     )
                                   : queryParam.transaction_type ===
-                                      'product_purchase'
+                                      CapitalWalletTransactionTypeEnums.PRODUCT_PURCHASE
                                     ? t(
                                           'page.capital_wallet.data_table.filters.tx_product_purchase',
                                           'Belanja Stok',
                                       )
                                     : queryParam.transaction_type ===
-                                            'sales_capital_recovery' ||
+                                            CapitalWalletTransactionTypeEnums.SALES_CAPITAL_RECOVERY ||
                                         queryParam.transaction_type ===
                                             'sales_recovery'
                                       ? t(
@@ -534,7 +560,7 @@ export function DataTable<TData, TValue>({
                                             ),
                                         )
                                       : queryParam.transaction_type ===
-                                          'sales_return_deduction'
+                                          CapitalWalletTransactionTypeEnums.SALES_RETURN_DEDUCTION
                                         ? t(
                                               'page.capital_wallet.data_table.filters.tx_sales_return_deduction',
                                               'Potongan Retur',

@@ -5,6 +5,7 @@ import { Badge } from '@/components/ui/badge';
 import { formatRupiah } from '@/lib/format-money';
 import { formatDate } from '@/lib/format-date';
 import type { CapitalWalletTransaction } from '@/support/models/capitalWallet';
+import { CapitalWalletTransactionTypeEnums } from '@/support/enums/CapitalWalletTransactionTypeEnums';
 
 interface ColumnProps {
     onInvoiceClick: (invoiceNumber: string) => void;
@@ -42,23 +43,30 @@ export const columns = ({
         cell: ({ row }) => {
             const txType = row.original.transaction_type;
             let label: string = txType;
-            if (txType === 'capital_injection') {
+            if (
+                txType === CapitalWalletTransactionTypeEnums.CAPITAL_INJECTION
+            ) {
                 label = i18next.t(
                     'page.capital_wallet.data_table.filters.tx_capital_injection',
                     'Suntik Modal',
                 );
-            } else if (txType === 'capital_drawdown') {
+            } else if (
+                txType === CapitalWalletTransactionTypeEnums.CAPITAL_DRAWDOWN
+            ) {
                 label = i18next.t(
                     'page.capital_wallet.data_table.filters.tx_capital_drawdown',
                     'Tarik Modal',
                 );
-            } else if (txType === 'product_purchase') {
+            } else if (
+                txType === CapitalWalletTransactionTypeEnums.PRODUCT_PURCHASE
+            ) {
                 label = i18next.t(
                     'page.capital_wallet.data_table.filters.tx_product_purchase',
                     'Belanja Stok',
                 );
             } else if (
-                txType === 'sales_capital_recovery' ||
+                txType ===
+                    CapitalWalletTransactionTypeEnums.SALES_CAPITAL_RECOVERY ||
                 txType === 'sales_recovery'
             ) {
                 label = i18next.t(
@@ -68,12 +76,17 @@ export const columns = ({
                         'Pemulihan Modal',
                     ),
                 );
-            } else if (txType === 'sales_return_deduction') {
+            } else if (
+                txType ===
+                CapitalWalletTransactionTypeEnums.SALES_RETURN_DEDUCTION
+            ) {
                 label = i18next.t(
                     'page.capital_wallet.data_table.filters.tx_sales_return_deduction',
                     'Potongan Retur',
                 );
-            } else if (txType === 'reinvestment') {
+            } else if (
+                txType === CapitalWalletTransactionTypeEnums.REINVESTMENT
+            ) {
                 label = i18next.t(
                     'page.capital_wallet.data_table.filters.tx_reinvestment',
                     'Reinvestasi',
