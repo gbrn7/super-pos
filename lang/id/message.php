@@ -16,7 +16,7 @@ return [
         'profit_wallet' => [
             'sales_notes' => 'Penjualan dari POS kasir',
             'return_notes' => 'Pemotongan karena retur (:invoice)',
-            'disbursement_notes' => 'Pencairan ke rekening bank pemilik',
+            'disbursement_notes' => 'Pencairan dana profit',
             'withdrawal_notes' => 'Penarikan modal usaha / reinvestasi',
         ],
         'capital_wallet' => [
