@@ -1,5 +1,18 @@
 import dayjs from 'dayjs';
-import { CreditCard, Calendar, User, Printer, ShoppingBag, Package, Hash, Wallet, TrendingUp, Landmark, PercentCircle, RotateCcw } from 'lucide-react';
+import {
+    CreditCard,
+    Calendar,
+    User,
+    Printer,
+    ShoppingBag,
+    Package,
+    Hash,
+    Wallet,
+    TrendingUp,
+    Landmark,
+    PercentCircle,
+    RotateCcw,
+} from 'lucide-react';
 import { useMemo, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Doughnut } from 'react-chartjs-2';
@@ -7,10 +20,7 @@ import ReceiptCard from '@/components/receipt-card';
 import type { StoreSetting } from '@/components/receipt-modal';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import {
-    ChartContainer,
-    type ChartConfig,
-} from '@/components/ui/chart';
+import { ChartContainer, type ChartConfig } from '@/components/ui/chart';
 import {
     Dialog,
     DialogContent,
@@ -35,9 +45,12 @@ import type { ResponseApi } from '@/support/interfaces/response/Response';
 import type { Transaction } from '@/support/models/transaction';
 
 const getBreakdownColors = () => {
-    if (typeof window === 'undefined') return { profit: '#ea580c', cost: '#fdba74', discount: '#fed7aa' };
+    if (typeof window === 'undefined')
+        return { profit: '#ea580c', cost: '#fdba74', discount: '#fed7aa' };
     const style = getComputedStyle(document.documentElement);
-    const primary = style.getPropertyValue('--primary').trim() || 'oklch(0.6225 0.1878 37.8255)';
+    const primary =
+        style.getPropertyValue('--primary').trim() ||
+        'oklch(0.6225 0.1878 37.8255)';
     return {
         profit: primary,
         cost: `color-mix(in oklch, ${primary} 55%, transparent)`,
@@ -116,16 +129,17 @@ export function DetailDialog({
     const currentTransaction = detailData || transaction;
     const discountAmount = Number(currentTransaction?.discount_amount || 0);
     const details = currentTransaction?.details ?? [];
-    const netSubtotal = details.length > 0
-        ? details.reduce(
-            (sum, item) =>
-                sum +
-                (item.subtotal ??
-                    (Number(item.price) - Number(item.discount || 0)) *
-                    item.quantity),
-            0,
-        )
-        : Number(currentTransaction?.total_amount || 0) + discountAmount;
+    const netSubtotal =
+        details.length > 0
+            ? details.reduce(
+                  (sum, item) =>
+                      sum +
+                      (item.subtotal ??
+                          (Number(item.price) - Number(item.discount || 0)) *
+                              item.quantity),
+                  0,
+              )
+            : Number(currentTransaction?.total_amount || 0) + discountAmount;
 
     const totalItems = details.length;
     const totalQuantity = details.reduce((sum, item) => sum + item.quantity, 0);
@@ -143,22 +157,20 @@ export function DetailDialog({
     const totalRefund = useMemo(() => {
         if (!currentTransaction?.returns) return 0;
         return currentTransaction.returns.reduce(
-            (sum: number, ret: any) => sum + Number(ret.total_refund_amount || 0),
+            (sum: number, ret: any) =>
+                sum + Number(ret.total_refund_amount || 0),
             0,
         );
     }, [currentTransaction?.returns]);
     const totalRefundQuantity = useMemo(() => {
         if (!currentTransaction?.returns) return 0;
-        return currentTransaction.returns.reduce(
-            (sum: number, ret: any) => {
-                const detailsSum = (ret.details || []).reduce(
-                    (dSum: number, d: any) => dSum + Number(d.quantity || 0),
-                    0
-                );
-                return sum + detailsSum;
-            },
-            0,
-        );
+        return currentTransaction.returns.reduce((sum: number, ret: any) => {
+            const detailsSum = (ret.details || []).reduce(
+                (dSum: number, d: any) => dSum + Number(d.quantity || 0),
+                0,
+            );
+            return sum + detailsSum;
+        }, 0);
     }, [currentTransaction?.returns]);
     const profitMarginPercentage = useMemo(() => {
         const totalAmount = Number(currentTransaction?.total_amount || 0);
@@ -170,29 +182,47 @@ export function DetailDialog({
 
     const pieData = useMemo(() => {
         if (!details.length) return [];
-        const grossTotal = totalCost + Math.max(totalProfit, 0) + totalAllDiscount;
+        const grossTotal =
+            totalCost + Math.max(totalProfit, 0) + totalAllDiscount;
         if (grossTotal <= 0) return [];
         const data: { name: string; value: number; fill: string }[] = [
             {
-                name: t('page.transaction.dialog_modal.detail_dialog.profit_label', 'Keuntungan'),
+                name: t(
+                    'page.transaction.dialog_modal.detail_dialog.profit_label',
+                    'Keuntungan',
+                ),
                 value: Math.max(totalProfit, 0),
                 fill: breakdownColors.profit,
             },
             {
-                name: t('page.transaction.dialog_modal.detail_dialog.cost_label', 'Biaya Modal'),
+                name: t(
+                    'page.transaction.dialog_modal.detail_dialog.cost_label',
+                    'Biaya Modal',
+                ),
                 value: totalCost,
                 fill: breakdownColors.cost,
             },
         ];
         if (totalAllDiscount > 0) {
             data.push({
-                name: t('page.transaction.dialog_modal.detail_dialog.discount_label', 'Diskon'),
+                name: t(
+                    'page.transaction.dialog_modal.detail_dialog.discount_label',
+                    'Diskon',
+                ),
                 value: totalAllDiscount,
                 fill: breakdownColors.discount,
             });
         }
         return data;
-    }, [details, totalCost, totalProfit, totalAllDiscount, discountAmount, breakdownColors, t]);
+    }, [
+        details,
+        totalCost,
+        totalProfit,
+        totalAllDiscount,
+        discountAmount,
+        breakdownColors,
+        t,
+    ]);
 
     if (!transaction || !currentTransaction) {
         return null;
@@ -200,15 +230,24 @@ export function DetailDialog({
 
     const chartConfig: ChartConfig = {
         profit: {
-            label: t('page.transaction.dialog_modal.detail_dialog.profit_label', 'Keuntungan'),
+            label: t(
+                'page.transaction.dialog_modal.detail_dialog.profit_label',
+                'Keuntungan',
+            ),
             color: breakdownColors.profit,
         },
         cost: {
-            label: t('page.transaction.dialog_modal.detail_dialog.cost_label', 'Biaya Modal'),
+            label: t(
+                'page.transaction.dialog_modal.detail_dialog.cost_label',
+                'Biaya Modal',
+            ),
             color: breakdownColors.cost,
         },
         discount: {
-            label: t('page.transaction.dialog_modal.detail_dialog.discount_label', 'Diskon'),
+            label: t(
+                'page.transaction.dialog_modal.detail_dialog.discount_label',
+                'Diskon',
+            ),
             color: breakdownColors.discount,
         },
     };
@@ -220,8 +259,8 @@ export function DetailDialog({
     const formattedDate = currentTransaction.created_at
         ? typeof currentTransaction.created_at === 'number'
             ? dayjs
-                .unix(currentTransaction.created_at)
-                .format('DD/MM/YYYY, HH:mm')
+                  .unix(currentTransaction.created_at)
+                  .format('DD/MM/YYYY, HH:mm')
             : dayjs(currentTransaction.created_at).format('DD/MM/YYYY, HH:mm')
         : '-';
 
@@ -324,9 +363,9 @@ export function DetailDialog({
                                             <p className="text-sm font-semibold">
                                                 {currentTransaction.payment_method_name
                                                     ? t(
-                                                        `payment_method_name.${currentTransaction.payment_method_name}`,
-                                                        currentTransaction.payment_method_name,
-                                                    )
+                                                          `payment_method_name.${currentTransaction.payment_method_name}`,
+                                                          currentTransaction.payment_method_name,
+                                                      )
                                                     : '-'}
                                             </p>
                                         )}
@@ -367,13 +406,18 @@ export function DetailDialog({
                                             </div>
                                             <div className="min-w-0">
                                                 <p className="truncate text-xs text-muted-foreground">
-                                                    {t('page.transaction.dialog_modal.detail_dialog.total_amount_card', 'Total Transaksi')}
+                                                    {t(
+                                                        'page.transaction.dialog_modal.detail_dialog.total_amount_card',
+                                                        'Total Transaksi',
+                                                    )}
                                                 </p>
                                                 {loading ? (
                                                     <Skeleton className="mt-1 h-5 w-20" />
                                                 ) : (
-                                                    <p className="text-base font-bold tabular-nums text-emerald-600 dark:text-emerald-400">
-                                                        {formatRupiah(currentTransaction.total_amount)}
+                                                    <p className="text-base font-bold text-emerald-600 tabular-nums dark:text-emerald-400">
+                                                        {formatRupiah(
+                                                            currentTransaction.total_amount,
+                                                        )}
                                                     </p>
                                                 )}
                                             </div>
@@ -388,13 +432,18 @@ export function DetailDialog({
                                             </div>
                                             <div className="min-w-0">
                                                 <p className="truncate text-xs text-muted-foreground">
-                                                    {t('page.transaction.dialog_modal.detail_dialog.total_cost_card', 'Total Modal')}
+                                                    {t(
+                                                        'page.transaction.dialog_modal.detail_dialog.total_cost_card',
+                                                        'Total Modal',
+                                                    )}
                                                 </p>
                                                 {loading ? (
                                                     <Skeleton className="mt-1 h-5 w-16" />
                                                 ) : (
-                                                    <p className="text-base font-bold tabular-nums text-blue-600 dark:text-blue-400">
-                                                        {formatRupiah(totalCost)}
+                                                    <p className="text-base font-bold text-blue-600 tabular-nums dark:text-blue-400">
+                                                        {formatRupiah(
+                                                            totalCost,
+                                                        )}
                                                     </p>
                                                 )}
                                             </div>
@@ -404,18 +453,31 @@ export function DetailDialog({
                                     {/* 3. Margin / Keuntungan Bersih */}
                                     <Card className="gap-2 py-3">
                                         <CardContent className="flex items-center gap-3 px-4">
-                                            <div className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-lg ${totalProfit >= 0 ? 'bg-teal-500/10' : 'bg-red-500/10'}`}>
-                                                <TrendingUp className={`h-4.5 w-4.5 ${totalProfit >= 0 ? 'text-teal-600 dark:text-teal-400' : 'text-red-600 dark:text-red-400'}`} />
+                                            <div
+                                                className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-lg ${totalProfit >= 0 ? 'bg-teal-500/10' : 'bg-red-500/10'}`}
+                                            >
+                                                <TrendingUp
+                                                    className={`h-4.5 w-4.5 ${totalProfit >= 0 ? 'text-teal-600 dark:text-teal-400' : 'text-red-600 dark:text-red-400'}`}
+                                                />
                                             </div>
                                             <div className="min-w-0">
                                                 <p className="truncate text-xs text-muted-foreground">
-                                                    {t('page.transaction.dialog_modal.detail_dialog.total_profit_card', 'Margin / Keuntungan')}
+                                                    {t(
+                                                        'page.transaction.dialog_modal.detail_dialog.total_profit_card',
+                                                        'Margin / Keuntungan',
+                                                    )}
                                                 </p>
                                                 {loading ? (
                                                     <Skeleton className="mt-1 h-5 w-16" />
                                                 ) : (
-                                                    <p className={`text-base font-bold tabular-nums ${totalProfit >= 0 ? 'text-teal-600 dark:text-teal-400' : 'text-red-600 dark:text-red-400'}`}>
-                                                        {totalProfit > 0 ? `+${formatRupiah(totalProfit)}` : totalProfit < 0 ? `-${formatRupiah(Math.abs(totalProfit))}` : formatRupiah(0)}
+                                                    <p
+                                                        className={`text-base font-bold tabular-nums ${totalProfit >= 0 ? 'text-teal-600 dark:text-teal-400' : 'text-red-600 dark:text-red-400'}`}
+                                                    >
+                                                        {totalProfit > 0
+                                                            ? `+${formatRupiah(totalProfit)}`
+                                                            : totalProfit < 0
+                                                              ? `-${formatRupiah(Math.abs(totalProfit))}`
+                                                              : formatRupiah(0)}
                                                     </p>
                                                 )}
                                             </div>
@@ -425,18 +487,30 @@ export function DetailDialog({
                                     {/* Persentase Margin Keuntungan */}
                                     <Card className="gap-2 py-3">
                                         <CardContent className="flex items-center gap-3 px-4">
-                                            <div className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-lg ${profitMarginPercentage >= 0 ? 'bg-teal-500/10' : 'bg-red-500/10'}`}>
-                                                <TrendingUp className={`h-4.5 w-4.5 ${profitMarginPercentage >= 0 ? 'text-teal-600 dark:text-teal-400' : 'text-red-600 dark:text-red-400'}`} />
+                                            <div
+                                                className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-lg ${profitMarginPercentage >= 0 ? 'bg-teal-500/10' : 'bg-red-500/10'}`}
+                                            >
+                                                <TrendingUp
+                                                    className={`h-4.5 w-4.5 ${profitMarginPercentage >= 0 ? 'text-teal-600 dark:text-teal-400' : 'text-red-600 dark:text-red-400'}`}
+                                                />
                                             </div>
                                             <div className="min-w-0">
                                                 <p className="truncate text-xs text-muted-foreground">
-                                                    {t('page.transaction.dialog_modal.detail_dialog.profit_margin_percentage_card', 'Persentase Margin')}
+                                                    {t(
+                                                        'page.transaction.dialog_modal.detail_dialog.profit_margin_percentage_card',
+                                                        'Persentase Margin',
+                                                    )}
                                                 </p>
                                                 {loading ? (
                                                     <Skeleton className="mt-1 h-5 w-16" />
                                                 ) : (
-                                                    <p className={`text-base font-bold tabular-nums ${profitMarginPercentage >= 0 ? 'text-teal-600 dark:text-teal-400' : 'text-red-600 dark:text-red-400'}`}>
-                                                        {profitMarginPercentage > 0 ? `+${profitMarginPercentage.toFixed(1)}%` : `${profitMarginPercentage.toFixed(1)}%`}
+                                                    <p
+                                                        className={`text-base font-bold tabular-nums ${profitMarginPercentage >= 0 ? 'text-teal-600 dark:text-teal-400' : 'text-red-600 dark:text-red-400'}`}
+                                                    >
+                                                        {profitMarginPercentage >
+                                                        0
+                                                            ? `+${profitMarginPercentage.toFixed(1)}%`
+                                                            : `${profitMarginPercentage.toFixed(1)}%`}
                                                     </p>
                                                 )}
                                             </div>
@@ -451,12 +525,15 @@ export function DetailDialog({
                                             </div>
                                             <div className="min-w-0">
                                                 <p className="truncate text-xs text-muted-foreground">
-                                                    {t('page.transaction.dialog_modal.detail_dialog.total_items', 'Total Produk')}
+                                                    {t(
+                                                        'page.transaction.dialog_modal.detail_dialog.total_items',
+                                                        'Total Produk',
+                                                    )}
                                                 </p>
                                                 {loading ? (
                                                     <Skeleton className="mt-1 h-5 w-10" />
                                                 ) : (
-                                                    <p className="text-lg font-bold tabular-nums text-primary">
+                                                    <p className="text-lg font-bold text-primary tabular-nums">
                                                         {totalItems}
                                                     </p>
                                                 )}
@@ -472,12 +549,15 @@ export function DetailDialog({
                                             </div>
                                             <div className="min-w-0">
                                                 <p className="truncate text-xs text-muted-foreground">
-                                                    {t('page.transaction.dialog_modal.detail_dialog.total_quantity', 'Total Kuantitas')}
+                                                    {t(
+                                                        'page.transaction.dialog_modal.detail_dialog.total_quantity',
+                                                        'Total Kuantitas',
+                                                    )}
                                                 </p>
                                                 {loading ? (
                                                     <Skeleton className="mt-1 h-5 w-10" />
                                                 ) : (
-                                                    <p className="text-lg font-bold tabular-nums text-blue-600 dark:text-blue-400">
+                                                    <p className="text-lg font-bold text-blue-600 tabular-nums dark:text-blue-400">
                                                         {totalQuantity}
                                                     </p>
                                                 )}
@@ -493,13 +573,18 @@ export function DetailDialog({
                                             </div>
                                             <div className="min-w-0">
                                                 <p className="truncate text-xs text-muted-foreground">
-                                                    {t('page.transaction.dialog_modal.detail_dialog.total_discount_card', 'Total Diskon')}
+                                                    {t(
+                                                        'page.transaction.dialog_modal.detail_dialog.total_discount_card',
+                                                        'Total Diskon',
+                                                    )}
                                                 </p>
                                                 {loading ? (
                                                     <Skeleton className="mt-1 h-5 w-16" />
                                                 ) : (
-                                                    <p className="text-base font-bold tabular-nums text-rose-600 dark:text-rose-400">
-                                                        {formatRupiah(totalAllDiscount)}
+                                                    <p className="text-base font-bold text-rose-600 tabular-nums dark:text-rose-400">
+                                                        {formatRupiah(
+                                                            totalAllDiscount,
+                                                        )}
                                                     </p>
                                                 )}
                                             </div>
@@ -514,13 +599,18 @@ export function DetailDialog({
                                             </div>
                                             <div className="min-w-0">
                                                 <p className="truncate text-xs text-muted-foreground">
-                                                    {t('page.transaction.dialog_modal.detail_dialog.total_refund_card', 'Total Nominal Retur')}
+                                                    {t(
+                                                        'page.transaction.dialog_modal.detail_dialog.total_refund_card',
+                                                        'Total Nominal Retur',
+                                                    )}
                                                 </p>
                                                 {loading ? (
                                                     <Skeleton className="mt-1 h-5 w-16" />
                                                 ) : (
-                                                    <p className="text-base font-bold tabular-nums text-orange-600 dark:text-orange-400">
-                                                        {formatRupiah(totalRefund)}
+                                                    <p className="text-base font-bold text-orange-600 tabular-nums dark:text-orange-400">
+                                                        {formatRupiah(
+                                                            totalRefund,
+                                                        )}
                                                     </p>
                                                 )}
                                             </div>
@@ -535,12 +625,15 @@ export function DetailDialog({
                                             </div>
                                             <div className="min-w-0">
                                                 <p className="truncate text-xs text-muted-foreground">
-                                                    {t('page.transaction.dialog_modal.detail_dialog.total_refund_qty_card', 'Total Barang Diretur')}
+                                                    {t(
+                                                        'page.transaction.dialog_modal.detail_dialog.total_refund_qty_card',
+                                                        'Total Barang Diretur',
+                                                    )}
                                                 </p>
                                                 {loading ? (
                                                     <Skeleton className="mt-1 h-5 w-10" />
                                                 ) : (
-                                                    <p className="text-lg font-bold tabular-nums text-orange-600 dark:text-orange-400">
+                                                    <p className="text-lg font-bold text-orange-600 tabular-nums dark:text-orange-400">
                                                         {totalRefundQuantity}
                                                     </p>
                                                 )}
@@ -562,15 +655,24 @@ export function DetailDialog({
                                     <div className="flex flex-col items-center gap-4 md:flex-row">
                                         <ChartContainer
                                             config={chartConfig}
-                                            className="relative aspect-square h-50 w-full max-w-50 shrink-0 flex items-center justify-center"
+                                            className="relative flex aspect-square h-50 w-full max-w-50 shrink-0 items-center justify-center"
                                         >
                                             <Doughnut
                                                 data={{
-                                                    labels: pieData.map((item) => item.name),
+                                                    labels: pieData.map(
+                                                        (item) => item.name,
+                                                    ),
                                                     datasets: [
                                                         {
-                                                            data: pieData.map((item) => item.value),
-                                                            backgroundColor: pieData.map((item) => item.fill),
+                                                            data: pieData.map(
+                                                                (item) =>
+                                                                    item.value,
+                                                            ),
+                                                            backgroundColor:
+                                                                pieData.map(
+                                                                    (item) =>
+                                                                        item.fill,
+                                                                ),
                                                         },
                                                     ],
                                                 }}
@@ -578,31 +680,47 @@ export function DetailDialog({
                                                     responsive: true,
                                                     maintainAspectRatio: false,
                                                     plugins: {
-                                                        legend: { display: false },
+                                                        legend: {
+                                                            display: false,
+                                                        },
                                                         tooltip: {
                                                             callbacks: {
-                                                                label: (context) => `${context.label}: ${formatRupiah(context.raw as number)}`,
+                                                                label: (
+                                                                    context,
+                                                                ) =>
+                                                                    `${context.label}: ${formatRupiah(context.raw as number)}`,
                                                             },
                                                         },
                                                     },
                                                     cutout: '65%',
                                                 }}
                                             />
-                                            <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none text-center">
+                                            <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center text-center">
                                                 <span className="text-sm font-bold text-foreground tabular-nums">
                                                     {formatRupiah(netSubtotal)}
                                                 </span>
                                                 <span className="text-xs text-muted-foreground">
-                                                    {t('page.transaction.dialog_modal.detail_dialog.chart_center_label', 'Total')}
+                                                    {t(
+                                                        'page.transaction.dialog_modal.detail_dialog.chart_center_label',
+                                                        'Total',
+                                                    )}
                                                 </span>
                                             </div>
                                         </ChartContainer>
                                         <div className="flex-1 space-y-2 overflow-hidden">
                                             {pieData.map((item, index) => {
-                                                const grossTotal = totalCost + Math.max(totalProfit, 0) + totalAllDiscount;
-                                                const percentage = grossTotal > 0
-                                                    ? ((item.value / grossTotal) * 100).toFixed(1)
-                                                    : '0';
+                                                const grossTotal =
+                                                    totalCost +
+                                                    Math.max(totalProfit, 0) +
+                                                    totalAllDiscount;
+                                                const percentage =
+                                                    grossTotal > 0
+                                                        ? (
+                                                              (item.value /
+                                                                  grossTotal) *
+                                                              100
+                                                          ).toFixed(1)
+                                                        : '0';
                                                 return (
                                                     <div
                                                         key={index}
@@ -610,7 +728,10 @@ export function DetailDialog({
                                                     >
                                                         <div
                                                             className="h-3 w-3 shrink-0 rounded-full"
-                                                            style={{ backgroundColor: item.fill }}
+                                                            style={{
+                                                                backgroundColor:
+                                                                    item.fill,
+                                                            }}
                                                         />
                                                         <span className="min-w-0 flex-1 font-medium">
                                                             {item.name}
@@ -619,7 +740,9 @@ export function DetailDialog({
                                                             {percentage}%
                                                         </span>
                                                         <span className="shrink-0 font-mono text-xs font-semibold tabular-nums">
-                                                            {formatRupiah(item.value)}
+                                                            {formatRupiah(
+                                                                item.value,
+                                                            )}
                                                         </span>
                                                     </div>
                                                 );
@@ -637,27 +760,45 @@ export function DetailDialog({
                                         'Rincian Produk',
                                     )}
                                 </h4>
-                                <div className="w-full overflow-x-auto overflow-y-auto max-h-80 rounded-md border">
+                                <div className="max-h-80 w-full overflow-x-auto overflow-y-auto rounded-md border">
                                     <Table>
                                         <TableHeader className="sticky top-0 z-10 bg-muted">
                                             <TableRow>
                                                 <TableHead className="min-w-40">
-                                                    {t('page.transaction.dialog_modal.detail_dialog.product_header', 'Produk')}
+                                                    {t(
+                                                        'page.transaction.dialog_modal.detail_dialog.product_header',
+                                                        'Produk',
+                                                    )}
                                                 </TableHead>
                                                 <TableHead className="min-w-17.5 text-center">
-                                                    {t('page.transaction.dialog_modal.detail_dialog.unit_header', 'Satuan')}
+                                                    {t(
+                                                        'page.transaction.dialog_modal.detail_dialog.unit_header',
+                                                        'Satuan',
+                                                    )}
                                                 </TableHead>
                                                 <TableHead className="min-w-27.5 text-right">
-                                                    {t('page.transaction.dialog_modal.detail_dialog.price_header', 'Harga')}
+                                                    {t(
+                                                        'page.transaction.dialog_modal.detail_dialog.price_header',
+                                                        'Harga',
+                                                    )}
                                                 </TableHead>
                                                 <TableHead className="min-w-27.5 text-right">
-                                                    {t('page.transaction.dialog_modal.detail_dialog.discount_header', 'Diskon / Item')}
+                                                    {t(
+                                                        'page.transaction.dialog_modal.detail_dialog.discount_header',
+                                                        'Diskon / Item',
+                                                    )}
                                                 </TableHead>
                                                 <TableHead className="min-w-15 text-center">
-                                                    {t('page.transaction.dialog_modal.detail_dialog.qty_header', 'Jumlah')}
+                                                    {t(
+                                                        'page.transaction.dialog_modal.detail_dialog.qty_header',
+                                                        'Jumlah',
+                                                    )}
                                                 </TableHead>
                                                 <TableHead className="min-w-30 text-right">
-                                                    {t('page.transaction.dialog_modal.detail_dialog.subtotal_header', 'Subtotal')}
+                                                    {t(
+                                                        'page.transaction.dialog_modal.detail_dialog.subtotal_header',
+                                                        'Subtotal',
+                                                    )}
                                                 </TableHead>
                                             </TableRow>
                                         </TableHeader>
@@ -688,24 +829,42 @@ export function DetailDialog({
                                                     ),
                                                 )
                                             ) : currentTransaction.details &&
-                                                currentTransaction.details
-                                                    .length > 0 ? (
+                                              currentTransaction.details
+                                                  .length > 0 ? (
                                                 currentTransaction.details.map(
                                                     (item) => (
                                                         <TableRow key={item.id}>
                                                             <TableCell className="font-medium">
-                                                                {item.product_name || t('page.transaction.dialog_modal.detail_dialog.default_product_name', 'Produk #{{id}}', { id: item.product_id })}
+                                                                {item.product_name ||
+                                                                    t(
+                                                                        'page.transaction.dialog_modal.detail_dialog.default_product_name',
+                                                                        'Produk #{{id}}',
+                                                                        {
+                                                                            id: item.product_id,
+                                                                        },
+                                                                    )}
                                                             </TableCell>
                                                             <TableCell className="text-center text-xs text-muted-foreground">
-                                                                {item.unit_name || '-'}
+                                                                {item.unit_name ||
+                                                                    '-'}
                                                             </TableCell>
                                                             <TableCell className="text-right text-xs">
-                                                                {formatRupiah(item.price)}
+                                                                {formatRupiah(
+                                                                    item.price,
+                                                                )}
                                                             </TableCell>
                                                             <TableCell className="text-right text-xs">
-                                                                {item.discount && Number(item.discount) > 0 ? (
+                                                                {item.discount &&
+                                                                Number(
+                                                                    item.discount,
+                                                                ) > 0 ? (
                                                                     <span className="font-semibold text-rose-600 dark:text-rose-400">
-                                                                        -{formatRupiah(Number(item.discount))}
+                                                                        -
+                                                                        {formatRupiah(
+                                                                            Number(
+                                                                                item.discount,
+                                                                            ),
+                                                                        )}
                                                                     </span>
                                                                 ) : (
                                                                     '-'
@@ -717,8 +876,14 @@ export function DetailDialog({
                                                             <TableCell className="text-right font-medium">
                                                                 {formatRupiah(
                                                                     item.subtotal ??
-                                                                    (Number(item.price) - Number(item.discount || 0)) *
-                                                                    item.quantity,
+                                                                        (Number(
+                                                                            item.price,
+                                                                        ) -
+                                                                            Number(
+                                                                                item.discount ||
+                                                                                    0,
+                                                                            )) *
+                                                                            item.quantity,
                                                                 )}
                                                             </TableCell>
                                                         </TableRow>
@@ -730,7 +895,10 @@ export function DetailDialog({
                                                         colSpan={6}
                                                         className="h-20 text-center text-muted-foreground"
                                                     >
-                                                        {t('page.transaction.dialog_modal.detail_dialog.empty_items', 'Detail produk tidak tersedia.')}
+                                                        {t(
+                                                            'page.transaction.dialog_modal.detail_dialog.empty_items',
+                                                            'Detail produk tidak tersedia.',
+                                                        )}
                                                     </TableCell>
                                                 </TableRow>
                                             )}
@@ -743,7 +911,10 @@ export function DetailDialog({
                             <div className="space-y-2 rounded-lg border bg-muted/30 p-4">
                                 <div className="flex items-center justify-between text-sm">
                                     <span className="text-muted-foreground">
-                                        {t('page.transaction.dialog_modal.detail_dialog.subtotal_header', 'Subtotal')}
+                                        {t(
+                                            'page.transaction.dialog_modal.detail_dialog.subtotal_header',
+                                            'Subtotal',
+                                        )}
                                     </span>
                                     {loading ? (
                                         <Skeleton className="h-5 w-20" />
@@ -756,7 +927,10 @@ export function DetailDialog({
                                 {discountAmount > 0 && (
                                     <div className="flex items-center justify-between text-sm">
                                         <span className="font-medium text-muted-foreground">
-                                            {t('page.transaction.dialog_modal.detail_dialog.transaction_discount', 'Diskon Transaksi')}
+                                            {t(
+                                                'page.transaction.dialog_modal.detail_dialog.transaction_discount',
+                                                'Diskon Transaksi',
+                                            )}
                                         </span>
                                         {loading ? (
                                             <Skeleton className="h-5 w-20" />
@@ -769,7 +943,10 @@ export function DetailDialog({
                                 )}
                                 <div className="flex items-center justify-between border-t pt-2 text-sm">
                                     <span className="font-medium text-muted-foreground">
-                                        {t('page.transaction.dialog_modal.detail_dialog.total_transaction', 'Total Transaksi')}
+                                        {t(
+                                            'page.transaction.dialog_modal.detail_dialog.total_transaction',
+                                            'Total Transaksi',
+                                        )}
                                     </span>
                                     {loading ? (
                                         <Skeleton className="h-6 w-24" />
@@ -784,7 +961,10 @@ export function DetailDialog({
                                 {totalRefund > 0 && (
                                     <div className="flex items-center justify-between text-sm text-orange-600 dark:text-orange-400">
                                         <span className="font-medium">
-                                            {t('page.transaction.dialog_modal.detail_dialog.total_refund', 'Total Nominal Retur')}
+                                            {t(
+                                                'page.transaction.dialog_modal.detail_dialog.total_refund',
+                                                'Total Nominal Retur',
+                                            )}
                                         </span>
                                         {loading ? (
                                             <Skeleton className="h-5 w-20" />
@@ -797,7 +977,10 @@ export function DetailDialog({
                                 )}
                                 <div className="flex items-center justify-between text-sm">
                                     <span className="text-muted-foreground">
-                                        {t('page.transaction.dialog_modal.detail_dialog.payment_amount', 'Nominal Pembayaran')}
+                                        {t(
+                                            'page.transaction.dialog_modal.detail_dialog.payment_amount',
+                                            'Nominal Pembayaran',
+                                        )}
                                     </span>
                                     {loading ? (
                                         <Skeleton className="h-5 w-20" />
@@ -811,7 +994,10 @@ export function DetailDialog({
                                 </div>
                                 <div className="flex items-center justify-between border-t pt-2 text-sm">
                                     <span className="text-muted-foreground">
-                                        {t('page.transaction.dialog_modal.detail_dialog.change_amount', 'Kembalian')}
+                                        {t(
+                                            'page.transaction.dialog_modal.detail_dialog.change_amount',
+                                            'Kembalian',
+                                        )}
                                     </span>
                                     {loading ? (
                                         <Skeleton className="h-5 w-20" />
@@ -839,6 +1025,7 @@ export function DetailDialog({
                                         finalStoreSetting.receipt_footer
                                     }
                                     transaction={currentTransaction}
+                                    isPrintable={false}
                                 />
                             </div>
                         </TabsContent>
@@ -854,14 +1041,23 @@ export function DetailDialog({
                                         </div>
                                         <div>
                                             <h5 className="font-semibold text-amber-900 dark:text-amber-200">
-                                                {t('page.transaction.dialog_modal.detail_dialog.returns_total_refund_title', 'Total Nominal Retur')}
+                                                {t(
+                                                    'page.transaction.dialog_modal.detail_dialog.returns_total_refund_title',
+                                                    'Total Nominal Retur',
+                                                )}
                                             </h5>
                                             <p className="text-xs text-amber-700 dark:text-amber-400">
-                                                {t('page.transaction.dialog_modal.detail_dialog.returns_total_refund_desc', 'Total {{count}} barang dikembalikan untuk transaksi ini', { count: totalRefundQuantity })}
+                                                {t(
+                                                    'page.transaction.dialog_modal.detail_dialog.returns_total_refund_desc',
+                                                    'Total {{count}} barang dikembalikan untuk transaksi ini',
+                                                    {
+                                                        count: totalRefundQuantity,
+                                                    },
+                                                )}
                                             </p>
                                         </div>
                                     </div>
-                                    <span className="text-xl font-bold text-amber-600 dark:text-amber-400 font-mono">
+                                    <span className="font-mono text-xl font-bold text-amber-600 dark:text-amber-400">
                                         {formatRupiah(totalRefund)}
                                     </span>
                                 </div>
@@ -870,49 +1066,129 @@ export function DetailDialog({
                                 <Table>
                                     <TableHeader className="bg-muted/50">
                                         <TableRow>
-                                            <TableHead>{t('page.transaction.dialog_modal.detail_dialog.product_header', 'Produk')}</TableHead>
-                                            <TableHead className="text-center">{t('page.transaction.dialog_modal.detail_dialog.qty_header', 'Jumlah')}</TableHead>
-                                            <TableHead className="text-right">{t('page.transaction.dialog_modal.detail_dialog.price_header', 'Harga Satuan')}</TableHead>
-                                            <TableHead className="text-right">{t('page.transaction.dialog_modal.detail_dialog.returns_table_total_refund', 'Total Refund')}</TableHead>
-                                            <TableHead>{t('page.transaction.dialog_modal.detail_dialog.returns_table_reason', 'Alasan')}</TableHead>
-                                            <TableHead className="text-right">{t('page.transaction.dialog_modal.detail_dialog.returns_table_time', 'Waktu Retur')}</TableHead>
+                                            <TableHead>
+                                                {t(
+                                                    'page.transaction.dialog_modal.detail_dialog.product_header',
+                                                    'Produk',
+                                                )}
+                                            </TableHead>
+                                            <TableHead className="text-center">
+                                                {t(
+                                                    'page.transaction.dialog_modal.detail_dialog.qty_header',
+                                                    'Jumlah',
+                                                )}
+                                            </TableHead>
+                                            <TableHead className="text-right">
+                                                {t(
+                                                    'page.transaction.dialog_modal.detail_dialog.price_header',
+                                                    'Harga Satuan',
+                                                )}
+                                            </TableHead>
+                                            <TableHead className="text-right">
+                                                {t(
+                                                    'page.transaction.dialog_modal.detail_dialog.returns_table_total_refund',
+                                                    'Total Refund',
+                                                )}
+                                            </TableHead>
+                                            <TableHead>
+                                                {t(
+                                                    'page.transaction.dialog_modal.detail_dialog.returns_table_reason',
+                                                    'Alasan',
+                                                )}
+                                            </TableHead>
+                                            <TableHead className="text-right">
+                                                {t(
+                                                    'page.transaction.dialog_modal.detail_dialog.returns_table_time',
+                                                    'Waktu Retur',
+                                                )}
+                                            </TableHead>
                                         </TableRow>
                                     </TableHeader>
                                     <TableBody>
-                                        {currentTransaction.returns && currentTransaction.returns.length > 0 ? (
-                                            currentTransaction.returns.flatMap((ret: any) => 
-                                                (ret.details || []).map((detail: any) => ({
-                                                    ...detail,
-                                                    return_number: ret.return_number,
-                                                    reason: ret.reason,
-                                                    created_at: ret.created_at
-                                                }))
-                                            ).map((detail: any, idx: number) => (
-                                                <TableRow key={`${detail.id}-${idx}`}>
-                                                    <TableCell className="font-medium">
-                                                        {detail.product_name || t('page.transaction.dialog_modal.detail_dialog.default_product', 'Produk')}
-                                                    </TableCell>
-                                                    <TableCell className="text-center font-semibold">
-                                                        {detail.quantity}
-                                                    </TableCell>
-                                                    <TableCell className="text-right text-xs">
-                                                        {formatRupiah(detail.price_per_unit)}
-                                                    </TableCell>
-                                                    <TableCell className="text-right font-medium text-xs text-rose-600 dark:text-rose-400">
-                                                        {formatRupiah(detail.subtotal)}
-                                                    </TableCell>
-                                                    <TableCell className="text-xs text-muted-foreground max-w-40 truncate" title={detail.reason}>
-                                                        {detail.reason || '-'}
-                                                    </TableCell>
-                                                    <TableCell className="text-right text-[10px] text-muted-foreground whitespace-nowrap">
-                                                        {detail.created_at ? new Date(detail.created_at * 1000).toLocaleString('id-ID', { dateStyle: 'short', timeStyle: 'short' }) : '-'}
-                                                    </TableCell>
-                                                </TableRow>
-                                            ))
+                                        {currentTransaction.returns &&
+                                        currentTransaction.returns.length >
+                                            0 ? (
+                                            currentTransaction.returns
+                                                .flatMap((ret: any) =>
+                                                    (ret.details || []).map(
+                                                        (detail: any) => ({
+                                                            ...detail,
+                                                            return_number:
+                                                                ret.return_number,
+                                                            reason: ret.reason,
+                                                            created_at:
+                                                                ret.created_at,
+                                                        }),
+                                                    ),
+                                                )
+                                                .map(
+                                                    (
+                                                        detail: any,
+                                                        idx: number,
+                                                    ) => (
+                                                        <TableRow
+                                                            key={`${detail.id}-${idx}`}
+                                                        >
+                                                            <TableCell className="font-medium">
+                                                                {detail.product_name ||
+                                                                    t(
+                                                                        'page.transaction.dialog_modal.detail_dialog.default_product',
+                                                                        'Produk',
+                                                                    )}
+                                                            </TableCell>
+                                                            <TableCell className="text-center font-semibold">
+                                                                {
+                                                                    detail.quantity
+                                                                }
+                                                            </TableCell>
+                                                            <TableCell className="text-right text-xs">
+                                                                {formatRupiah(
+                                                                    detail.price_per_unit,
+                                                                )}
+                                                            </TableCell>
+                                                            <TableCell className="text-right text-xs font-medium text-rose-600 dark:text-rose-400">
+                                                                {formatRupiah(
+                                                                    detail.subtotal,
+                                                                )}
+                                                            </TableCell>
+                                                            <TableCell
+                                                                className="max-w-40 truncate text-xs text-muted-foreground"
+                                                                title={
+                                                                    detail.reason
+                                                                }
+                                                            >
+                                                                {detail.reason ||
+                                                                    '-'}
+                                                            </TableCell>
+                                                            <TableCell className="text-right text-[10px] whitespace-nowrap text-muted-foreground">
+                                                                {detail.created_at
+                                                                    ? new Date(
+                                                                          detail.created_at *
+                                                                              1000,
+                                                                      ).toLocaleString(
+                                                                          'id-ID',
+                                                                          {
+                                                                              dateStyle:
+                                                                                  'short',
+                                                                              timeStyle:
+                                                                                  'short',
+                                                                          },
+                                                                      )
+                                                                    : '-'}
+                                                            </TableCell>
+                                                        </TableRow>
+                                                    ),
+                                                )
                                         ) : (
                                             <TableRow>
-                                                <TableCell colSpan={6} className="h-16 text-center text-muted-foreground text-xs">
-                                                    {t('page.transaction.dialog_modal.detail_dialog.returns_empty', 'Belum ada barang yang diretur untuk transaksi ini.')}
+                                                <TableCell
+                                                    colSpan={6}
+                                                    className="h-16 text-center text-xs text-muted-foreground"
+                                                >
+                                                    {t(
+                                                        'page.transaction.dialog_modal.detail_dialog.returns_empty',
+                                                        'Belum ada barang yang diretur untuk transaksi ini.',
+                                                    )}
                                                 </TableCell>
                                             </TableRow>
                                         )}

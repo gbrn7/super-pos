@@ -75,7 +75,11 @@ export interface CartItem {
 
 const { url } = cashierRoute();
 
-export default function CashierIndex({ storeSetting }: { storeSetting?: StoreSetting | null }) {
+export default function CashierIndex({
+    storeSetting,
+}: {
+    storeSetting?: StoreSetting | null;
+}) {
     const { t } = useTranslation();
 
     // ── Products state ──────────────────────────────────────────────────────────
@@ -135,7 +139,9 @@ export default function CashierIndex({ storeSetting }: { storeSetting?: StoreSet
         }
     }, []);
 
-    const { auth } = usePage().props as { auth?: { user?: { name?: string; id?: number } | null } };
+    const { auth } = usePage().props as {
+        auth?: { user?: { name?: string; id?: number } | null };
+    };
     const currentUserName = auth?.user?.name || 'Kasir';
 
     // ── Computed values ─────────────────────────────────────────────────────────
@@ -254,10 +260,9 @@ export default function CashierIndex({ storeSetting }: { storeSetting?: StoreSet
                 if (catId) {
                     params.category_id = catId;
                 }
-                const { data } = await axiosInstance.get<ResponseApi<PaginationResponse<Product>>>(
-                    apiGetProducts().url,
-                    { params },
-                );
+                const { data } = await axiosInstance.get<
+                    ResponseApi<PaginationResponse<Product>>
+                >(apiGetProducts().url, { params });
                 if (data.success) {
                     setProducts(data.data.items);
                     setTotalPages(data.data.pagination.last_page);
@@ -286,8 +291,6 @@ export default function CashierIndex({ storeSetting }: { storeSetting?: StoreSet
         [fetchProducts, search, page, selectedCategory],
     );
 
-
-
     // Fetch products immediately when search query, page, or category changes
     useEffect(() => {
         fetchProducts(search, page, selectedCategory);
@@ -314,9 +317,9 @@ export default function CashierIndex({ storeSetting }: { storeSetting?: StoreSet
                 }
 
                 // Fetch Payment Methods
-                const pmRes = await axiosInstance.get<ResponseApi<PaymentMethod[]>>(
-                    apiGetPaymentMethods().url,
-                );
+                const pmRes = await axiosInstance.get<
+                    ResponseApi<PaymentMethod[]>
+                >(apiGetPaymentMethods().url);
                 if (pmRes.data.success) {
                     setPaymentMethods(pmRes.data.data);
                 }
@@ -407,7 +410,7 @@ export default function CashierIndex({ storeSetting }: { storeSetting?: StoreSet
                         p.barcode === barcodeQuery.trim() ||
                         p.sku === barcodeQuery.trim() ||
                         p.name.toLowerCase() ===
-                        barcodeQuery.trim().toLowerCase(),
+                            barcodeQuery.trim().toLowerCase(),
                 );
                 if (exactMatch) {
                     const success = addToCart(exactMatch);
@@ -472,7 +475,14 @@ export default function CashierIndex({ storeSetting }: { storeSetting?: StoreSet
 
         window.addEventListener('keydown', handleKeyDown);
         return () => window.removeEventListener('keydown', handleKeyDown);
-    }, [cart, paymentMethodId, paymentAmount, grandTotal, confirmOpen, clearSearchInput]);
+    }, [
+        cart,
+        paymentMethodId,
+        paymentAmount,
+        grandTotal,
+        confirmOpen,
+        clearSearchInput,
+    ]);
 
     // ── Cart operations ─────────────────────────────────────────────────────────
     const updateQty = useCallback((productId: number, qty: number) => {
@@ -567,7 +577,7 @@ export default function CashierIndex({ storeSetting }: { storeSetting?: StoreSet
                         const discPerUnit =
                             discType === 'percent'
                                 ? (item.product.price * (item.discount || 0)) /
-                                100
+                                  100
                                 : item.discount || 0;
                         return {
                             product_id: item.product.id,
@@ -725,16 +735,16 @@ export default function CashierIndex({ storeSetting }: { storeSetting?: StoreSet
                                     <button
                                         type="button"
                                         onClick={clearSearchInput}
-                                        className="peer-placeholder-shown:hidden absolute top-1/2 right-3.5 -translate-y-1/2 p-1 text-sm font-extrabold text-muted-foreground hover:text-foreground"
+                                        className="absolute top-1/2 right-3.5 -translate-y-1/2 p-1 text-sm font-extrabold text-muted-foreground peer-placeholder-shown:hidden hover:text-foreground"
                                     >
                                         ✕
                                     </button>
-                                    <ScanBarcode className="peer-placeholder-shown:block hidden pointer-events-none absolute top-1/2 right-3.5 h-5 w-5 -translate-y-1/2 text-muted-foreground" />
+                                    <ScanBarcode className="pointer-events-none absolute top-1/2 right-3.5 hidden h-5 w-5 -translate-y-1/2 text-muted-foreground peer-placeholder-shown:block" />
                                 </div>
                                 <Button
                                     type="button"
                                     onClick={triggerSearch}
-                                    className="h-11 font-black px-5 sm:h-12 border-primary/40 border bg-primary text-primary-foreground hover:bg-primary/90"
+                                    className="h-11 border border-primary/40 bg-primary px-5 font-black text-primary-foreground hover:bg-primary/90 sm:h-12"
                                 >
                                     <Search className="mr-1.5 h-4 w-4" />
                                     {t('common.search', 'Cari')}
@@ -743,7 +753,7 @@ export default function CashierIndex({ storeSetting }: { storeSetting?: StoreSet
                                     type="button"
                                     onClick={clearSearchInput}
                                     variant="outline"
-                                    className="h-11 font-black px-4 sm:h-12 border-muted-foreground/30 hover:bg-muted text-muted-foreground hover:text-foreground"
+                                    className="h-11 border-muted-foreground/30 px-4 font-black text-muted-foreground hover:bg-muted hover:text-foreground sm:h-12"
                                 >
                                     {t('common.clear', 'Reset')}
                                 </Button>
@@ -826,14 +836,20 @@ export default function CashierIndex({ storeSetting }: { storeSetting?: StoreSet
                                             'Barang tidak ditemukan atau tidak aktif',
                                         )}
                                     </p>
-                                    <p className="mt-1 max-w-xs text-sm font-medium text-muted-foreground mb-4">
+                                    <p className="mt-1 mb-4 max-w-xs text-sm font-medium text-muted-foreground">
                                         {t(
                                             'page.kasir.no_products_desc',
                                             'Coba ketik kata kunci lain atau scan ulang barcode barang',
                                         )}
                                     </p>
                                     <CreateProductDialog
-                                        onSuccess={() => fetchProducts(search, page, selectedCategory)}
+                                        onSuccess={() =>
+                                            fetchProducts(
+                                                search,
+                                                page,
+                                                selectedCategory,
+                                            )
+                                        }
                                         units={units}
                                         categories={categories}
                                     />
@@ -1099,9 +1115,9 @@ export default function CashierIndex({ storeSetting }: { storeSetting?: StoreSet
                                                     );
                                                     if (
                                                         typeof totalDiscountValue ===
-                                                        'number' &&
+                                                            'number' &&
                                                         totalDiscountValue >
-                                                        itemsSubtotal
+                                                            itemsSubtotal
                                                     ) {
                                                         setTotalDiscountValue(
                                                             itemsSubtotal,
@@ -1127,7 +1143,7 @@ export default function CashierIndex({ storeSetting }: { storeSetting?: StoreSet
                                                     );
                                                     if (
                                                         typeof totalDiscountValue ===
-                                                        'number' &&
+                                                            'number' &&
                                                         totalDiscountValue > 100
                                                     ) {
                                                         setTotalDiscountValue(
@@ -1425,13 +1441,13 @@ export default function CashierIndex({ storeSetting }: { storeSetting?: StoreSet
                                 <span className="text-xs font-extrabold tracking-wider uppercase sm:text-sm">
                                     {change < 0
                                         ? t(
-                                            'page.kasir.underpaid_label',
-                                            'Kurang Bayar:',
-                                        )
+                                              'page.kasir.underpaid_label',
+                                              'Kurang Bayar:',
+                                          )
                                         : t(
-                                            'page.kasir.change_label',
-                                            'Kembalian:',
-                                        )}
+                                              'page.kasir.change_label',
+                                              'Kembalian:',
+                                          )}
                                 </span>
                                 <span className="text-lg font-black sm:text-xl">
                                     {formatRupiah(Math.abs(change))}
@@ -1494,7 +1510,7 @@ export default function CashierIndex({ storeSetting }: { storeSetting?: StoreSet
                                 </div>
                                 <Badge
                                     variant="outline"
-                                    className="border-primary/30 bg-primary/10 px-2.5 py-1 text-xs font-bold text-primary sm:text-sm mr-8"
+                                    className="mr-8 border-primary/30 bg-primary/10 px-2.5 py-1 text-xs font-bold text-primary sm:text-sm"
                                 >
                                     {selectedPaymentMethodName}
                                 </Badge>
@@ -1504,35 +1520,69 @@ export default function CashierIndex({ storeSetting }: { storeSetting?: StoreSet
                         {/* Unified Tabbed Layout for All Screen Sizes */}
                         <Tabs defaultValue="summary" className="w-full">
                             <TabsList className="mb-4 grid w-full grid-cols-2">
-                                <TabsTrigger value="summary" className="text-xs sm:text-sm font-bold gap-1.5">
+                                <TabsTrigger
+                                    value="summary"
+                                    className="gap-1.5 text-xs font-bold sm:text-sm"
+                                >
                                     <CreditCard className="h-4 w-4" />
-                                    {t('page.kasir.tab_summary', 'Ringkasan Pembayaran')}
+                                    {t(
+                                        'page.kasir.tab_summary',
+                                        'Ringkasan Pembayaran',
+                                    )}
                                 </TabsTrigger>
-                                <TabsTrigger value="receipt" className="text-xs sm:text-sm font-bold gap-1.5">
+                                <TabsTrigger
+                                    value="receipt"
+                                    className="gap-1.5 text-xs font-bold sm:text-sm"
+                                >
                                     <Receipt className="h-4 w-4" />
-                                    {t('page.kasir.tab_receipt_preview', 'Preview Struk')}
+                                    {t(
+                                        'page.kasir.tab_receipt_preview',
+                                        'Preview Struk',
+                                    )}
                                 </TabsTrigger>
                             </TabsList>
 
                             {/* Tab 1: Summary */}
-                            <TabsContent value="summary" className="space-y-4 border-none p-0 outline-none">
+                            <TabsContent
+                                value="summary"
+                                className="space-y-4 border-none p-0 outline-none"
+                            >
                                 {/* Items Overview */}
                                 <div className="space-y-2.5 rounded-xl border bg-muted/40 p-3.5 text-xs sm:text-sm">
                                     <div className="flex items-center justify-between border-b border-border/60 pb-2 font-bold text-muted-foreground">
-                                        <span>{t('page.kasir.items_breakdown', 'Rincian Barang')}</span>
+                                        <span>
+                                            {t(
+                                                'page.kasir.items_breakdown',
+                                                'Rincian Barang',
+                                            )}
+                                        </span>
                                         <span className="font-extrabold text-foreground">
-                                            {cart.length} {t('page.kasir.items_types', 'Jenis')} ({cartCount} Item)
+                                            {cart.length}{' '}
+                                            {t(
+                                                'page.kasir.items_types',
+                                                'Jenis',
+                                            )}{' '}
+                                            ({cartCount} Item)
                                         </span>
                                     </div>
                                     <div className="max-h-48 space-y-2 overflow-y-auto pr-1">
                                         {cart.map((item) => {
-                                            const discType = item.discountType || 'nominal';
+                                            const discType =
+                                                item.discountType || 'nominal';
                                             const discPerUnit =
                                                 discType === 'percent'
-                                                    ? (item.product.price * (item.discount || 0)) / 100
+                                                    ? (item.product.price *
+                                                          (item.discount ||
+                                                              0)) /
+                                                      100
                                                     : item.discount || 0;
-                                            const netUnitPrice = Math.max(0, item.product.price - discPerUnit);
-                                            const itemSubtotal = netUnitPrice * item.quantity;
+                                            const netUnitPrice = Math.max(
+                                                0,
+                                                item.product.price -
+                                                    discPerUnit,
+                                            );
+                                            const itemSubtotal =
+                                                netUnitPrice * item.quantity;
                                             const hasDisc = discPerUnit > 0;
 
                                             return (
@@ -1540,22 +1590,47 @@ export default function CashierIndex({ storeSetting }: { storeSetting?: StoreSet
                                                     key={item.product.id}
                                                     className="space-y-0.5 border-b border-border/40 pb-1.5 last:border-b-0 last:pb-0"
                                                 >
-                                                    <div className="flex justify-between gap-2 text-xs sm:text-sm font-bold">
-                                                        <span className="flex-1 truncate text-foreground">{item.product.name}</span>
-                                                        <span className="shrink-0 text-right font-mono font-extrabold">{formatRupiah(itemSubtotal)}</span>
+                                                    <div className="flex justify-between gap-2 text-xs font-bold sm:text-sm">
+                                                        <span className="flex-1 truncate text-foreground">
+                                                            {item.product.name}
+                                                        </span>
+                                                        <span className="shrink-0 text-right font-mono font-extrabold">
+                                                            {formatRupiah(
+                                                                itemSubtotal,
+                                                            )}
+                                                        </span>
                                                     </div>
                                                     <div className="flex justify-between font-mono text-[11px] text-muted-foreground">
                                                         <span>
                                                             {item.quantity} x{' '}
                                                             {hasDisc ? (
                                                                 <>
-                                                                    <span className="mr-1 line-through opacity-70">{formatRupiah(item.product.price)}</span>
-                                                                    <span className="font-bold text-emerald-600 dark:text-emerald-400">{formatRupiah(netUnitPrice)}</span>
+                                                                    <span className="mr-1 line-through opacity-70">
+                                                                        {formatRupiah(
+                                                                            item
+                                                                                .product
+                                                                                .price,
+                                                                        )}
+                                                                    </span>
+                                                                    <span className="font-bold text-emerald-600 dark:text-emerald-400">
+                                                                        {formatRupiah(
+                                                                            netUnitPrice,
+                                                                        )}
+                                                                    </span>
                                                                 </>
                                                             ) : (
-                                                                <span>{formatRupiah(item.product.price)}</span>
+                                                                <span>
+                                                                    {formatRupiah(
+                                                                        item
+                                                                            .product
+                                                                            .price,
+                                                                    )}
+                                                                </span>
                                                             )}
-                                                            {item.product.unit_name ? ` (${item.product.unit_name})` : ''}
+                                                            {item.product
+                                                                .unit_name
+                                                                ? ` (${item.product.unit_name})`
+                                                                : ''}
                                                         </span>
                                                     </div>
                                                 </div>
@@ -1567,44 +1642,105 @@ export default function CashierIndex({ storeSetting }: { storeSetting?: StoreSet
                                 {/* Financial Summary */}
                                 <div className="space-y-2 rounded-xl border bg-card p-3.5 font-mono text-xs sm:text-sm">
                                     <div className="flex justify-between text-muted-foreground">
-                                        <span>{t('page.kasir.items_subtotal', 'Subtotal Barang')}:</span>
-                                        <span className="font-bold text-foreground">{formatRupiah(itemsSubtotal)}</span>
+                                        <span>
+                                            {t(
+                                                'page.kasir.items_subtotal',
+                                                'Subtotal Barang',
+                                            )}
+                                            :
+                                        </span>
+                                        <span className="font-bold text-foreground">
+                                            {formatRupiah(itemsSubtotal)}
+                                        </span>
                                     </div>
                                     {discountAmount > 0 && (
                                         <div className="flex justify-between text-emerald-600 dark:text-emerald-400">
                                             <span>
-                                                {t('page.kasir.total_discount_label', 'Diskon Transaksi')} ({totalDiscountType === 'percent' ? `${totalDiscountValue}%` : 'Rp'}):
+                                                {t(
+                                                    'page.kasir.total_discount_label',
+                                                    'Diskon Transaksi',
+                                                )}{' '}
+                                                (
+                                                {totalDiscountType === 'percent'
+                                                    ? `${totalDiscountValue}%`
+                                                    : 'Rp'}
+                                                ):
                                             </span>
-                                            <span className="font-bold">- {formatRupiah(discountAmount)}</span>
+                                            <span className="font-bold">
+                                                - {formatRupiah(discountAmount)}
+                                            </span>
                                         </div>
                                     )}
                                     <div className="flex justify-between border-t pt-1.5 text-base font-black text-foreground">
-                                        <span>{t('page.kasir.grand_total_label', 'TOTAL HARGA')}:</span>
-                                        <span className="text-lg text-emerald-600 sm:text-xl dark:text-emerald-400">{formatRupiah(grandTotal)}</span>
+                                        <span>
+                                            {t(
+                                                'page.kasir.grand_total_label',
+                                                'TOTAL HARGA',
+                                            )}
+                                            :
+                                        </span>
+                                        <span className="text-lg text-emerald-600 sm:text-xl dark:text-emerald-400">
+                                            {formatRupiah(grandTotal)}
+                                        </span>
                                     </div>
                                     <div className="flex justify-between pt-0.5 text-muted-foreground">
-                                        <span>{t('page.kasir.payment_amount_label', 'Nominal Diterima')}:</span>
-                                        <span className="font-bold text-foreground">{formatRupiah(Number(paymentAmount))}</span>
+                                        <span>
+                                            {t(
+                                                'page.kasir.payment_amount_label',
+                                                'Nominal Diterima',
+                                            )}
+                                            :
+                                        </span>
+                                        <span className="font-bold text-foreground">
+                                            {formatRupiah(
+                                                Number(paymentAmount),
+                                            )}
+                                        </span>
                                     </div>
                                 </div>
 
                                 {/* Change Panel */}
                                 <div className="flex items-center justify-between rounded-xl border border-emerald-500/40 bg-emerald-500/15 p-3.5 font-mono text-emerald-800 dark:text-emerald-300">
-                                    <span className="text-xs font-black tracking-wider uppercase sm:text-sm">{t('page.kasir.change_label', 'KEMBALIAN')}</span>
-                                    <span className="text-xl font-black sm:text-2xl">{formatRupiah(Math.max(0, change))}</span>
+                                    <span className="text-xs font-black tracking-wider uppercase sm:text-sm">
+                                        {t(
+                                            'page.kasir.change_label',
+                                            'KEMBALIAN',
+                                        )}
+                                    </span>
+                                    <span className="text-xl font-black sm:text-2xl">
+                                        {formatRupiah(Math.max(0, change))}
+                                    </span>
                                 </div>
                             </TabsContent>
 
                             {/* Tab 2: Receipt Preview in UI */}
-                            <TabsContent value="receipt" className="border-none p-0 outline-none">
+                            <TabsContent
+                                value="receipt"
+                                className="border-none p-0 outline-none"
+                            >
                                 <div className="flex justify-center rounded-lg bg-muted/20 py-4">
                                     <ReceiptCard
-                                        storeName={storeSetting?.name || 'Toko Maju Jaya'}
-                                        storeAddress={storeSetting?.address || 'Jl. Raya Bekasi KM.18 RT.004/0009'}
-                                        storePhone={storeSetting?.phone || '081234567890'}
+                                        storeName={
+                                            storeSetting?.name ||
+                                            'Toko Maju Jaya'
+                                        }
+                                        storeAddress={
+                                            storeSetting?.address ||
+                                            'Jl. Raya Bekasi KM.18 RT.004/0009'
+                                        }
+                                        storePhone={
+                                            storeSetting?.phone ||
+                                            '081234567890'
+                                        }
                                         storeEmail={storeSetting?.email}
-                                        storeReceiptFooter={storeSetting?.receipt_footer}
-                                        transaction={lastTransaction || previewTransaction}
+                                        storeReceiptFooter={
+                                            storeSetting?.receipt_footer
+                                        }
+                                        transaction={
+                                            lastTransaction ||
+                                            previewTransaction
+                                        }
+                                        isPrintable={false}
                                     />
                                 </div>
                             </TabsContent>
@@ -1653,11 +1789,15 @@ export default function CashierIndex({ storeSetting }: { storeSetting?: StoreSet
                     <div className="hidden print:block">
                         <ReceiptCard
                             storeName={storeSetting?.name || 'Toko Maju Jaya'}
-                            storeAddress={storeSetting?.address || 'Jl. Raya Bekasi KM.18 RT.004/0009'}
+                            storeAddress={
+                                storeSetting?.address ||
+                                'Jl. Raya Bekasi KM.18 RT.004/0009'
+                            }
                             storePhone={storeSetting?.phone || '081234567890'}
                             storeEmail={storeSetting?.email}
                             storeReceiptFooter={storeSetting?.receipt_footer}
                             transaction={lastTransaction || previewTransaction}
+                            isPrintable={true}
                         />
                     </div>
                 </DialogContent>
