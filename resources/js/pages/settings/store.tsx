@@ -23,7 +23,11 @@ interface StoreSetting {
     receipt_footer: string | null;
 }
 
-export default function Store({ storeSetting }: { storeSetting: StoreSetting }) {
+export default function Store({
+    storeSetting,
+}: {
+    storeSetting: StoreSetting;
+}) {
     const { t } = useTranslation();
 
     // Local state to bind fields for real-time receipt preview
@@ -31,13 +35,18 @@ export default function Store({ storeSetting }: { storeSetting: StoreSetting }) 
     const [address, setAddress] = useState(storeSetting.address);
     const [phone, setPhone] = useState(storeSetting.phone);
     const [email, setEmail] = useState(storeSetting.email || '');
-    const [receiptFooter, setReceiptFooter] = useState(storeSetting.receipt_footer || '');
+    const [receiptFooter, setReceiptFooter] = useState(
+        storeSetting.receipt_footer || '',
+    );
 
     const dummyTransaction = {
         id: 1,
         invoice_number: 'INV-' + dayjs().format('YYYYMMDD') + '-ABCDEF',
         payment_method_name: 'Cash',
-        user_name: t('page.settings.store.receipt_preview.mock_cashier', 'Admin'),
+        user_name: t(
+            'page.settings.store.receipt_preview.mock_cashier',
+            'Admin',
+        ),
         created_at: '2026-07-23T08:42:00.000000Z',
         total_amount: 48000,
         discount_amount: 0,
@@ -46,7 +55,10 @@ export default function Store({ storeSetting }: { storeSetting: StoreSetting }) 
         details: [
             {
                 id: 1,
-                product_name: t('page.settings.store.receipt_preview.mock_item_1', 'Kopi Susu Gula Aren'),
+                product_name: t(
+                    'page.settings.store.receipt_preview.mock_item_1',
+                    'Kopi Susu Gula Aren',
+                ),
                 product_id: 1,
                 price: 18000,
                 quantity: 1,
@@ -55,7 +67,10 @@ export default function Store({ storeSetting }: { storeSetting: StoreSetting }) 
             },
             {
                 id: 2,
-                product_name: t('page.settings.store.receipt_preview.mock_item_2', 'Roti Bakar Cokelat'),
+                product_name: t(
+                    'page.settings.store.receipt_preview.mock_item_2',
+                    'Roti Bakar Cokelat',
+                ),
                 product_id: 2,
                 price: 15000,
                 quantity: 2,
@@ -67,17 +82,15 @@ export default function Store({ storeSetting }: { storeSetting: StoreSetting }) 
 
     return (
         <>
-            <Head
-                title={t('page.settings.store.title', 'Pengaturan Toko')}
-            />
+            <Head title={t('page.settings.store.title', 'Pengaturan Toko')} />
 
             <h1 className="sr-only">
                 {t('page.settings.store.title', 'Pengaturan Toko')}
             </h1>
 
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-12">
                 {/* Form Section */}
-                <div className="lg:col-span-7 space-y-6">
+                <div className="space-y-6 lg:col-span-7">
                     <Heading
                         variant="small"
                         title={t(
@@ -111,7 +124,9 @@ export default function Store({ storeSetting }: { storeSetting: StoreSetting }) 
                                         id="name"
                                         className="mt-1 block w-full"
                                         defaultValue={storeSetting.name}
-                                        onChange={(e) => setName(e.target.value)}
+                                        onChange={(e) =>
+                                            setName(e.target.value)
+                                        }
                                         name="name"
                                         required
                                         placeholder={t(
@@ -136,9 +151,11 @@ export default function Store({ storeSetting }: { storeSetting: StoreSetting }) 
 
                                     <Textarea
                                         id="address"
-                                        className="mt-1 block w-full min-h-[80px]"
+                                        className="mt-1 block min-h-[80px] w-full"
                                         defaultValue={storeSetting.address}
-                                        onChange={(e) => setAddress(e.target.value)}
+                                        onChange={(e) =>
+                                            setAddress(e.target.value)
+                                        }
                                         name="address"
                                         required
                                         placeholder={t(
@@ -165,7 +182,9 @@ export default function Store({ storeSetting }: { storeSetting: StoreSetting }) 
                                         id="phone"
                                         className="mt-1 block w-full"
                                         defaultValue={storeSetting.phone}
-                                        onChange={(e) => setPhone(e.target.value)}
+                                        onChange={(e) =>
+                                            setPhone(e.target.value)
+                                        }
                                         name="phone"
                                         required
                                         placeholder={t(
@@ -193,7 +212,9 @@ export default function Store({ storeSetting }: { storeSetting: StoreSetting }) 
                                         type="email"
                                         className="mt-1 block w-full"
                                         value={email}
-                                        onChange={(e) => setEmail(e.target.value)}
+                                        onChange={(e) =>
+                                            setEmail(e.target.value)
+                                        }
                                         name="email"
                                         placeholder={t(
                                             'page.settings.store.form.email_input_placeholder',
@@ -207,7 +228,6 @@ export default function Store({ storeSetting }: { storeSetting: StoreSetting }) 
                                     />
                                 </div>
 
-
                                 <div className="grid gap-2">
                                     <Label htmlFor="receipt_footer">
                                         {t(
@@ -218,9 +238,13 @@ export default function Store({ storeSetting }: { storeSetting: StoreSetting }) 
 
                                     <Textarea
                                         id="receipt_footer"
-                                        className="mt-1 block w-full min-h-[60px]"
-                                        defaultValue={storeSetting.receipt_footer ?? ''}
-                                        onChange={(e) => setReceiptFooter(e.target.value)}
+                                        className="mt-1 block min-h-[60px] w-full"
+                                        defaultValue={
+                                            storeSetting.receipt_footer ?? ''
+                                        }
+                                        onChange={(e) =>
+                                            setReceiptFooter(e.target.value)
+                                        }
                                         name="receipt_footer"
                                         placeholder={t(
                                             'page.settings.store.form.receipt_footer_input_placeholder',
@@ -251,10 +275,13 @@ export default function Store({ storeSetting }: { storeSetting: StoreSetting }) 
                 </div>
 
                 {/* Receipt Preview Section */}
-                <div className="lg:col-span-5 space-y-4 lg:sticky lg:top-6 border-t border-border pt-6 lg:border-t-0 lg:pt-0">
+                <div className="space-y-4 border-t border-border pt-6 lg:sticky lg:top-6 lg:col-span-5 lg:border-t-0 lg:pt-0">
                     <Heading
                         variant="small"
-                        title={t('page.settings.store.receipt_preview_label', 'Pratinjau Struk')}
+                        title={t(
+                            'page.settings.store.receipt_preview_label',
+                            'Pratinjau Struk',
+                        )}
                         description={t(
                             'page.settings.store.receipt_preview_desc',
                             'Pratinjau tampilan struk belanja cetak.',
@@ -269,6 +296,7 @@ export default function Store({ storeSetting }: { storeSetting: StoreSetting }) 
                         storeEmail={email}
                         storeReceiptFooter={receiptFooter}
                         transaction={dummyTransaction}
+                        isPrintable={false}
                     />
                 </div>
             </div>
@@ -279,10 +307,7 @@ export default function Store({ storeSetting }: { storeSetting: StoreSetting }) 
 Store.layout = {
     breadcrumbs: [
         {
-            title: i18next.t(
-                'page.settings.store.title',
-                'Pengaturan toko',
-            ),
+            title: i18next.t('page.settings.store.title', 'Pengaturan toko'),
             href: editStore(),
         },
     ],

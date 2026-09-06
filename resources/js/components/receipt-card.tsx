@@ -10,6 +10,7 @@ export interface ReceiptCardProps {
     storeEmail?: string | null;
     storeReceiptFooter?: string | null;
     transaction: Transaction;
+    isPrintable?: boolean;
 }
 
 function ReceiptDivider({ className = '' }: { className?: string }) {
@@ -43,6 +44,7 @@ export default function ReceiptCard({
     storeEmail,
     storeReceiptFooter,
     transaction,
+    isPrintable = true,
 }: ReceiptCardProps) {
     const { t } = useTranslation();
 
@@ -82,8 +84,12 @@ export default function ReceiptCard({
 
     return (
         <div
-            id="printable-receipt"
-            className="mx-auto w-full max-w-[260px] space-y-3 rounded-xl border bg-card p-4 font-sans text-[11px] leading-relaxed shadow-xs print:m-0 print:mr-auto print:ml-0 print:w-full print:max-w-[46mm] print:space-y-2 print:rounded-none print:border-none print:bg-transparent print:p-0 print:pr-1 print:text-[10px] print:leading-tight print:shadow-none"
+            id={isPrintable ? 'printable-receipt' : undefined}
+            className={`mx-auto w-full max-w-[260px] space-y-3 rounded-xl border bg-card p-4 font-sans text-[11px] leading-relaxed shadow-xs ${
+                isPrintable
+                    ? 'print:m-0 print:mr-auto print:ml-0 print:w-full print:max-w-[46mm] print:space-y-2 print:rounded-none print:border-none print:bg-transparent print:p-0 print:pr-1 print:text-[10px] print:leading-tight print:shadow-none'
+                    : 'print:hidden'
+            }`}
         >
             {/* Store Header */}
             <div className="space-y-1 text-center">

@@ -239,25 +239,19 @@
         display: none !important;
     }
 
-    /* Hide overlays, close buttons, toasts, navbars, and explicitly hidden elements */
-    [data-slot='dialog-overlay'],
-    [data-slot='dialog-close'],
-    .print\:hidden {
-        display: none !important;
-    }
-
     /* Ensure dedicated print elements are visible */
     .print\:block {
         display: block !important;
     }
 
     /* Reset every ancestor containing #printable-receipt to prevent coordinate shifting,
-       overflow clipping, margins, transforms, translates, and flex/grid offset bugs */
-    body>*:has(#printable-receipt),
-    body>*:has(#printable-receipt) *:has(#printable-receipt),
+       overflow clipping, margins, transforms, translates, and flex/grid offset bugs.
+       EXCLUDE any element that is marked print:hidden or inside print:hidden. */
+    body>*:has(#printable-receipt):not(.print\:hidden):not([class*='print:hidden']),
+    body>*:has(#printable-receipt) *:has(#printable-receipt):not(.print\:hidden):not([class*='print:hidden']):not(.print\:hidden *),
     div[data-slot='dialog-portal'],
-    div[data-slot='dialog-content'],
-    div[role='dialog'] {
+    div[data-slot='dialog-content']:not(.print\:hidden):not([class*='print:hidden']),
+    div[role='dialog']:not(.print\:hidden):not([class*='print:hidden']) {
         display: block !important;
         position: static !important;
         inset: auto !important;
@@ -325,5 +319,19 @@
         line-height: 1.35 !important;
         box-sizing: border-box !important;
         overflow: visible !important;
+    }
+
+    /* STRICT HIDING: Highest specificity rules to guarantee that dialog overlays,
+       close buttons, dialog headers, dialog footers, and all .print:hidden elements 
+       and their children are completely hidden and NEVER displayed during print */
+    html body .print\:hidden,
+    html body [class*='print:hidden'],
+    html body .print\:hidden *,
+    html body [class*='print:hidden'] *,
+    html body [data-slot='dialog-overlay'],
+    html body [data-slot='dialog-close'],
+    html body [data-slot='dialog-header'].print\:hidden,
+    html body [data-slot='dialog-footer'].print\:hidden {
+        display: none !important;
     }
 }
