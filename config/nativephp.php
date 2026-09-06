@@ -144,14 +144,15 @@ return [
 
     /**
      * The queue workers that get auto-started on your application start.
+     * Disabled to prevent background SQLite lock conflicts on desktop.
      */
     'queue_workers' => [
-        'default' => [
-            'queues' => ['default'],
-            'memory_limit' => 128,
-            'timeout' => 60,
-            'sleep' => 3,
-        ],
+        // 'default' => [
+        //     'queues' => ['default'],
+        //     'memory_limit' => 128,
+        //     'timeout' => 60,
+        //     'sleep' => 3,
+        // ],
     ],
 
     /**

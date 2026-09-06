@@ -96,11 +96,33 @@ class SetupController extends Controller
                 @unlink($lockPath);
             }
 
+            $isSqlite = config("database.connections.{$connection}.driver") === 'sqlite';
+            try {
+                $wipeExit = Artisan::call('db:wipe', ['--force' => true]);
+                if ($wipeExit !== 0) {
+                    throw new Exception('Database wipe failed: '.Artisan::output());
+                }
+            } catch (Exception $e) {
+                if ($isSqlite && ! app()->environment('testing') && $databasePath && $databasePath !== ':memory:') {
+                    DB::disconnect($connection);
+                    @unlink($databasePath);
+                    @unlink($databasePath.'-wal');
+                    @unlink($databasePath.'-shm');
+                    @touch($databasePath);
+                    DB::reconnect($connection);
+                } else {
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Database wipe failed: '.$e->getMessage(),
+                    ], 500);
+                }
+            }
+
             $migrateExit = Artisan::call('migrate', ['--force' => true]);
             if ($migrateExit !== 0) {
                 return response()->json([
                     'success' => false,
-                    'message' => 'Migration failed: ' . Artisan::output(),
+                    'message' => 'Migration failed: '.Artisan::output(),
                 ], 500);
             }
 
@@ -108,7 +130,7 @@ class SetupController extends Controller
             if ($seedExit !== 0) {
                 return response()->json([
                     'success' => false,
-                    'message' => 'Seeding failed: ' . Artisan::output(),
+                    'message' => 'Seeding failed: '.Artisan::output(),
                 ], 500);
             }
 
@@ -158,14 +180,33 @@ class SetupController extends Controller
                 @unlink($lockPath);
             }
 
-            $migrateExit = Artisan::call('migrate:fresh', ['--force' => true]);
+            $isSqlite = config("database.connections.{$connection}.driver") === 'sqlite';
+            try {
+                $wipeExit = Artisan::call('db:wipe', ['--force' => true]);
+                if ($wipeExit !== 0) {
+                    throw new Exception('Database wipe failed: '.Artisan::output());
+                }
+            } catch (Exception $e) {
+                if ($isSqlite && ! app()->environment('testing') && $databasePath && $databasePath !== ':memory:') {
+                    DB::disconnect($connection);
+                    @unlink($databasePath);
+                    @unlink($databasePath.'-wal');
+                    @unlink($databasePath.'-shm');
+                    @touch($databasePath);
+                    DB::reconnect($connection);
+                } else {
+                    throw $e;
+                }
+            }
+
+            $migrateExit = Artisan::call('migrate', ['--force' => true]);
             if ($migrateExit !== 0) {
-                throw new Exception('Migration failed: ' . Artisan::output());
+                throw new Exception('Migration failed: '.Artisan::output());
             }
 
             $seedExit = Artisan::call('db:seed', ['--force' => true]);
             if ($seedExit !== 0) {
-                throw new Exception('Seeding failed: ' . Artisan::output());
+                throw new Exception('Seeding failed: '.Artisan::output());
             }
 
             $validated = $request->validate([
@@ -215,13 +256,6 @@ class SetupController extends Controller
                 config(['app.installed' => true]);
             });
 
-            // Pre-compile views to avoid concurrent compilation locks on Windows
-            try {
-                Artisan::call('view:cache');
-            } catch (Exception $e) {
-                // Keep going if view caching fails
-            }
-
             return redirect()->route('login')->with('success', __('setup.complete_success'));
         } catch (Exception $e) {
             return redirect()->back()->withErrors(['general' => $e->getMessage()]);
@@ -236,7 +270,7 @@ class SetupController extends Controller
 
         $file = $request->file('file');
         $originalName = $file->getClientOriginalName();
-        $fileSize = number_format($file->getSize() / 1024 / 1024, 2) . ' MB';
+        $fileSize = number_format($file->getSize() / 1024 / 1024, 2).' MB';
 
         $tempDir = storage_path('app/temp');
         if (! is_dir($tempDir)) {
