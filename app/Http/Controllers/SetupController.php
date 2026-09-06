@@ -158,7 +158,7 @@ class SetupController extends Controller
                 DB::purge('sqlite');
             }
 
-            Artisan::call('migrate', ['--force' => true]);
+            Artisan::call('migrate:fresh', ['--force' => true]);
             Artisan::call('db:seed', ['--force' => true]);
 
             return response()->json([
