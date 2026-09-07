@@ -1,5 +1,6 @@
 import { Head, usePage } from '@inertiajs/react';
 import { useState, useEffect, useCallback, useRef, useMemo } from 'react';
+import { flushSync, createPortal } from 'react-dom';
 import { useTranslation } from 'react-i18next';
 import i18next from 'i18next';
 import { index as cashierRoute } from '@/routes/cashier';
@@ -122,6 +123,11 @@ export default function CashierIndex({
         null,
     );
     const [mobileTab, setMobileTab] = useState<'products' | 'cart'>('products');
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
 
     const searchRef = useRef<HTMLInputElement>(null);
 
@@ -593,7 +599,12 @@ export default function CashierIndex({
 
             if (data.success) {
                 const completedTx = data.data as unknown as Transaction;
-                setLastTransaction(completedTx);
+                flushSync(() => {
+                    setLastTransaction(completedTx);
+                    setConfirmOpen(false);
+                    clearCart();
+                });
+
                 showSuccessToast(
                     t(
                         'page.kasir.checkout_success',
@@ -603,16 +614,15 @@ export default function CashierIndex({
                 fetchProducts(search, page, selectedCategory);
 
                 if (shouldPrintReceipt) {
-                    // Elemen #printable-receipt sudah ada dan aktif di dalam dialog
-                    window.print();
+                    setTimeout(() => {
+                        window.print();
+                    }, 150);
                 }
 
-                setConfirmOpen(false);
-                clearCart();
                 setMobileTab('products');
                 setTimeout(() => {
                     searchRef.current?.focus();
-                }, 100);
+                }, 200);
             }
         } catch (e) {
             handleApiError(e);
@@ -626,7 +636,7 @@ export default function CashierIndex({
         <>
             <Head title={t('page.kasir.page_name', 'Kasir')} />
 
-            <div className="flex h-[calc(100vh-4rem)] flex-col overflow-hidden bg-background">
+            <div className="flex h-[calc(100vh-4rem)] flex-col overflow-hidden bg-background print:hidden">
                 {/* ─── MOBILE NAVIGATION TABS (Visible only on < lg screens) ───── */}
                 <div className="flex shrink-0 border-b bg-card shadow-xs lg:hidden">
                     <button
@@ -1736,10 +1746,7 @@ export default function CashierIndex({
                                         storeReceiptFooter={
                                             storeSetting?.receipt_footer
                                         }
-                                        transaction={
-                                            lastTransaction ||
-                                            previewTransaction
-                                        }
+                                        transaction={previewTransaction}
                                         isPrintable={false}
                                     />
                                 </div>
@@ -1784,8 +1791,13 @@ export default function CashierIndex({
                             </Button>
                         </DialogFooter>
                     </div>
+                </DialogContent>
+            </Dialog>
 
-                    {/* Dedicated Printable Area (always rendered for print media regardless of active tab) */}
+            {/* Dedicated Printable Area (portaled directly to document.body so that body>*:not(:has(#printable-receipt)) cleanly hides #app) */}
+            {mounted &&
+                lastTransaction &&
+                createPortal(
                     <div className="hidden print:block">
                         <ReceiptCard
                             storeName={storeSetting?.name || 'Toko Maju Jaya'}
@@ -1796,12 +1808,12 @@ export default function CashierIndex({
                             storePhone={storeSetting?.phone || '081234567890'}
                             storeEmail={storeSetting?.email}
                             storeReceiptFooter={storeSetting?.receipt_footer}
-                            transaction={lastTransaction || previewTransaction}
+                            transaction={lastTransaction}
                             isPrintable={true}
                         />
-                    </div>
-                </DialogContent>
-            </Dialog>
+                    </div>,
+                    document.body,
+                )}
 
             {/* Payment Method Detail Dialog */}
             <PaymentMethodDetailDialog
