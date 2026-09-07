@@ -1927,8 +1927,8 @@
       "source_location": "L130",
       "_origin": "ast",
       "id": "app_http_controllers_api_apipaymentmethodcontroller_apipaymentmethodcontroller_bulkdelete",
-      "community": 45,
-      "community_name": "API Controllers & Endpoints (45)",
+      "community": 37,
+      "community_name": "API Controllers & Endpoints (37)",
       "norm_label": ".bulkdelete()"
     },
     {
@@ -2070,8 +2070,8 @@
       "source_location": "L137",
       "_origin": "ast",
       "id": "app_http_controllers_api_apiproductcontroller_apiproductcontroller_update",
-      "community": 288,
-      "community_name": "UpdateProductRequest",
+      "community": 45,
+      "community_name": "API Controllers & Endpoints (45)",
       "norm_label": ".update()"
     },
     {
@@ -2323,8 +2323,8 @@
       "source_location": "L20",
       "_origin": "ast",
       "id": "app_http_controllers_api_apirolecontroller_apirolecontroller",
-      "community": 7,
-      "community_name": "Transaction Management (7)",
+      "community": 17,
+      "community_name": "Unit Domain (17)",
       "norm_label": "apirolecontroller"
     },
     {
@@ -2334,8 +2334,8 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "app_http_controllers_api_apirolecontroller_apirolecontroller_construct",
-      "community": 7,
-      "community_name": "Transaction Management (7)",
+      "community": 17,
+      "community_name": "Unit Domain (17)",
       "norm_label": ".__construct()"
     },
     {
@@ -2345,8 +2345,8 @@
       "source_location": "L24",
       "_origin": "ast",
       "id": "app_http_controllers_api_apirolecontroller_apirolecontroller_middleware",
-      "community": 7,
-      "community_name": "Transaction Management (7)",
+      "community": 17,
+      "community_name": "Unit Domain (17)",
       "norm_label": ".middleware()"
     },
     {
@@ -2356,8 +2356,8 @@
       "source_location": "L52",
       "_origin": "ast",
       "id": "app_http_controllers_api_apirolecontroller_apirolecontroller_index",
-      "community": 7,
-      "community_name": "Transaction Management (7)",
+      "community": 17,
+      "community_name": "Unit Domain (17)",
       "norm_label": ".index()"
     },
     {
@@ -2367,8 +2367,8 @@
       "source_location": "L66",
       "_origin": "ast",
       "id": "app_http_controllers_api_apirolecontroller_apirolecontroller_store",
-      "community": 7,
-      "community_name": "Transaction Management (7)",
+      "community": 17,
+      "community_name": "Unit Domain (17)",
       "norm_label": ".store()"
     },
     {
@@ -2378,8 +2378,8 @@
       "source_location": "L82",
       "_origin": "ast",
       "id": "app_http_controllers_api_apirolecontroller_apirolecontroller_show",
-      "community": 7,
-      "community_name": "Transaction Management (7)",
+      "community": 17,
+      "community_name": "Unit Domain (17)",
       "norm_label": ".show()"
     },
     {
@@ -2389,8 +2389,8 @@
       "source_location": "L98",
       "_origin": "ast",
       "id": "app_http_controllers_api_apirolecontroller_apirolecontroller_update",
-      "community": 37,
-      "community_name": "API Controllers & Endpoints (37)",
+      "community": 17,
+      "community_name": "Unit Domain (17)",
       "norm_label": ".update()"
     },
     {
@@ -2400,8 +2400,8 @@
       "source_location": "L114",
       "_origin": "ast",
       "id": "app_http_controllers_api_apirolecontroller_apirolecontroller_destroy",
-      "community": 7,
-      "community_name": "Transaction Management (7)",
+      "community": 17,
+      "community_name": "Unit Domain (17)",
       "norm_label": ".destroy()"
     },
     {
@@ -2411,8 +2411,8 @@
       "source_location": "L132",
       "_origin": "ast",
       "id": "app_http_controllers_api_apirolecontroller_apirolecontroller_bulkdelete",
-      "community": 37,
-      "community_name": "API Controllers & Endpoints (37)",
+      "community": 17,
+      "community_name": "Unit Domain (17)",
       "norm_label": ".bulkdelete()"
     },
     {
@@ -2422,8 +2422,8 @@
       "source_location": "L143",
       "_origin": "ast",
       "id": "app_http_controllers_api_apirolecontroller_apirolecontroller_getroleimporttemplate",
-      "community": 7,
-      "community_name": "Transaction Management (7)",
+      "community": 17,
+      "community_name": "Unit Domain (17)",
       "norm_label": ".getroleimporttemplate()"
     },
     {
@@ -2818,8 +2818,8 @@
       "source_location": "L152",
       "_origin": "ast",
       "id": "app_http_controllers_api_apiunitcontroller_apiunitcontroller_importunitexceldata",
-      "community": 45,
-      "community_name": "API Controllers & Endpoints (45)",
+      "community": 37,
+      "community_name": "API Controllers & Endpoints (37)",
       "norm_label": ".importunitexceldata()"
     },
     {
@@ -3445,8 +3445,8 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "app_http_controllers_rolecontroller_rolecontroller",
-      "community": 0,
-      "community_name": "API Controllers & Endpoints (0)",
+      "community": 63,
+      "community_name": "User & Auth Management (63)",
       "norm_label": "rolecontroller"
     },
     {
@@ -3456,8 +3456,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "app_http_controllers_rolecontroller_rolecontroller_middleware",
-      "community": 0,
-      "community_name": "API Controllers & Endpoints (0)",
+      "community": 63,
+      "community_name": "User & Auth Management (63)",
       "norm_label": ".middleware()"
     },
     {
@@ -3467,8 +3467,8 @@
       "source_location": "L29",
       "_origin": "ast",
       "id": "app_http_controllers_rolecontroller_rolecontroller_index",
-      "community": 0,
-      "community_name": "API Controllers & Endpoints (0)",
+      "community": 63,
+      "community_name": "User & Auth Management (63)",
       "norm_label": ".index()"
     },
     {
@@ -3478,8 +3478,8 @@
       "source_location": "L34",
       "_origin": "ast",
       "id": "app_http_controllers_rolecontroller_rolecontroller_create",
-      "community": 0,
-      "community_name": "API Controllers & Endpoints (0)",
+      "community": 63,
+      "community_name": "User & Auth Management (63)",
       "norm_label": ".create()"
     },
     {
@@ -3489,8 +3489,8 @@
       "source_location": "L39",
       "_origin": "ast",
       "id": "app_http_controllers_rolecontroller_rolecontroller_show",
-      "community": 0,
-      "community_name": "API Controllers & Endpoints (0)",
+      "community": 63,
+      "community_name": "User & Auth Management (63)",
       "norm_label": ".show()"
     },
     {
@@ -3500,8 +3500,8 @@
       "source_location": "L44",
       "_origin": "ast",
       "id": "app_http_controllers_rolecontroller_rolecontroller_edit",
-      "community": 0,
-      "community_name": "API Controllers & Endpoints (0)",
+      "community": 63,
+      "community_name": "User & Auth Management (63)",
       "norm_label": ".edit()"
     },
     {
@@ -3984,8 +3984,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "app_http_controllers_usercontroller_usercontroller",
-      "community": 280,
-      "community_name": "UserController",
+      "community": 7,
+      "community_name": "Transaction Management (7)",
       "norm_label": "usercontroller"
     },
     {
@@ -3995,8 +3995,8 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "app_http_controllers_usercontroller_usercontroller_middleware",
-      "community": 280,
-      "community_name": "UserController",
+      "community": 7,
+      "community_name": "Transaction Management (7)",
       "norm_label": ".middleware()"
     },
     {
@@ -4006,8 +4006,8 @@
       "source_location": "L25",
       "_origin": "ast",
       "id": "app_http_controllers_usercontroller_usercontroller_index",
-      "community": 280,
-      "community_name": "UserController",
+      "community": 7,
+      "community_name": "Transaction Management (7)",
       "norm_label": ".index()"
     },
     {
@@ -4017,8 +4017,8 @@
       "source_location": "L33",
       "_origin": "ast",
       "id": "app_http_controllers_usercontroller_usercontroller_create",
-      "community": 280,
-      "community_name": "UserController",
+      "community": 7,
+      "community_name": "Transaction Management (7)",
       "norm_label": ".create()"
     },
     {
@@ -4028,8 +4028,8 @@
       "source_location": "L41",
       "_origin": "ast",
       "id": "app_http_controllers_usercontroller_usercontroller_store",
-      "community": 280,
-      "community_name": "UserController",
+      "community": 7,
+      "community_name": "Transaction Management (7)",
       "norm_label": ".store()"
     },
     {
@@ -4039,8 +4039,8 @@
       "source_location": "L49",
       "_origin": "ast",
       "id": "app_http_controllers_usercontroller_usercontroller_show",
-      "community": 280,
-      "community_name": "UserController",
+      "community": 7,
+      "community_name": "Transaction Management (7)",
       "norm_label": ".show()"
     },
     {
@@ -4050,8 +4050,8 @@
       "source_location": "L57",
       "_origin": "ast",
       "id": "app_http_controllers_usercontroller_usercontroller_edit",
-      "community": 280,
-      "community_name": "UserController",
+      "community": 7,
+      "community_name": "Transaction Management (7)",
       "norm_label": ".edit()"
     },
     {
@@ -4061,8 +4061,8 @@
       "source_location": "L65",
       "_origin": "ast",
       "id": "app_http_controllers_usercontroller_usercontroller_update",
-      "community": 280,
-      "community_name": "UserController",
+      "community": 7,
+      "community_name": "Transaction Management (7)",
       "norm_label": ".update()"
     },
     {
@@ -4072,8 +4072,8 @@
       "source_location": "L73",
       "_origin": "ast",
       "id": "app_http_controllers_usercontroller_usercontroller_destroy",
-      "community": 280,
-      "community_name": "UserController",
+      "community": 7,
+      "community_name": "Transaction Management (7)",
       "norm_label": ".destroy()"
     },
     {
@@ -4754,8 +4754,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_http_requests_paymentmethod_bulkdeletepaymentmethodrequest",
-      "community": 45,
-      "community_name": "API Controllers & Endpoints (45)",
+      "community": 37,
+      "community_name": "API Controllers & Endpoints (37)",
       "norm_label": "bulkdeletepaymentmethodrequest.php"
     },
     {
@@ -4765,8 +4765,8 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "app_http_requests_paymentmethod_bulkdeletepaymentmethodrequest_bulkdeletepaymentmethodrequest",
-      "community": 45,
-      "community_name": "API Controllers & Endpoints (45)",
+      "community": 37,
+      "community_name": "API Controllers & Endpoints (37)",
       "norm_label": "bulkdeletepaymentmethodrequest"
     },
     {
@@ -4776,8 +4776,8 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "app_http_requests_paymentmethod_bulkdeletepaymentmethodrequest_bulkdeletepaymentmethodrequest_authorize",
-      "community": 45,
-      "community_name": "API Controllers & Endpoints (45)",
+      "community": 37,
+      "community_name": "API Controllers & Endpoints (37)",
       "norm_label": ".authorize()"
     },
     {
@@ -4787,8 +4787,8 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "app_http_requests_paymentmethod_bulkdeletepaymentmethodrequest_bulkdeletepaymentmethodrequest_rules",
-      "community": 45,
-      "community_name": "API Controllers & Endpoints (45)",
+      "community": 37,
+      "community_name": "API Controllers & Endpoints (37)",
       "norm_label": ".rules()"
     },
     {
@@ -5172,8 +5172,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_http_requests_product_updateproductrequest",
-      "community": 288,
-      "community_name": "UpdateProductRequest",
+      "community": 45,
+      "community_name": "API Controllers & Endpoints (45)",
       "norm_label": "updateproductrequest.php"
     },
     {
@@ -5183,8 +5183,8 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "app_http_requests_product_updateproductrequest_updateproductrequest",
-      "community": 288,
-      "community_name": "UpdateProductRequest",
+      "community": 45,
+      "community_name": "API Controllers & Endpoints (45)",
       "norm_label": "updateproductrequest"
     },
     {
@@ -5194,8 +5194,8 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "app_http_requests_product_updateproductrequest_updateproductrequest_authorize",
-      "community": 288,
-      "community_name": "UpdateProductRequest",
+      "community": 45,
+      "community_name": "API Controllers & Endpoints (45)",
       "norm_label": ".authorize()"
     },
     {
@@ -5205,8 +5205,8 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "app_http_requests_product_updateproductrequest_updateproductrequest_rules",
-      "community": 288,
-      "community_name": "UpdateProductRequest",
+      "community": 45,
+      "community_name": "API Controllers & Endpoints (45)",
       "norm_label": ".rules()"
     },
     {
@@ -5216,8 +5216,8 @@
       "source_location": "L45",
       "_origin": "ast",
       "id": "app_http_requests_product_updateproductrequest_updateproductrequest_messages",
-      "community": 288,
-      "community_name": "UpdateProductRequest",
+      "community": 45,
+      "community_name": "API Controllers & Endpoints (45)",
       "norm_label": ".messages()"
     },
     {
@@ -5403,8 +5403,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_http_requests_role_bulkdeleterolerequest",
-      "community": 37,
-      "community_name": "API Controllers & Endpoints (37)",
+      "community": 17,
+      "community_name": "Unit Domain (17)",
       "norm_label": "bulkdeleterolerequest.php"
     },
     {
@@ -5414,8 +5414,8 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "app_http_requests_role_bulkdeleterolerequest_bulkdeleterolerequest",
-      "community": 37,
-      "community_name": "API Controllers & Endpoints (37)",
+      "community": 17,
+      "community_name": "Unit Domain (17)",
       "norm_label": "bulkdeleterolerequest"
     },
     {
@@ -5425,8 +5425,8 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "app_http_requests_role_bulkdeleterolerequest_bulkdeleterolerequest_authorize",
-      "community": 37,
-      "community_name": "API Controllers & Endpoints (37)",
+      "community": 17,
+      "community_name": "Unit Domain (17)",
       "norm_label": ".authorize()"
     },
     {
@@ -5436,8 +5436,8 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "app_http_requests_role_bulkdeleterolerequest_bulkdeleterolerequest_rules",
-      "community": 37,
-      "community_name": "API Controllers & Endpoints (37)",
+      "community": 17,
+      "community_name": "Unit Domain (17)",
       "norm_label": ".rules()"
     },
     {
@@ -5447,8 +5447,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_http_requests_role_storerolerequest",
-      "community": 7,
-      "community_name": "Transaction Management (7)",
+      "community": 17,
+      "community_name": "Unit Domain (17)",
       "norm_label": "storerolerequest.php"
     },
     {
@@ -5458,8 +5458,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "app_http_requests_role_storerolerequest_storerolerequest",
-      "community": 7,
-      "community_name": "Transaction Management (7)",
+      "community": 17,
+      "community_name": "Unit Domain (17)",
       "norm_label": "storerolerequest"
     },
     {
@@ -5469,8 +5469,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "app_http_requests_role_storerolerequest_storerolerequest_authorize",
-      "community": 7,
-      "community_name": "Transaction Management (7)",
+      "community": 17,
+      "community_name": "Unit Domain (17)",
       "norm_label": ".authorize()"
     },
     {
@@ -5480,8 +5480,8 @@
       "source_location": "L25",
       "_origin": "ast",
       "id": "app_http_requests_role_storerolerequest_storerolerequest_rules",
-      "community": 7,
-      "community_name": "Transaction Management (7)",
+      "community": 17,
+      "community_name": "Unit Domain (17)",
       "norm_label": ".rules()"
     },
     {
@@ -5491,8 +5491,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_http_requests_role_updaterolerequest",
-      "community": 37,
-      "community_name": "API Controllers & Endpoints (37)",
+      "community": 17,
+      "community_name": "Unit Domain (17)",
       "norm_label": "updaterolerequest.php"
     },
     {
@@ -5502,8 +5502,8 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "app_http_requests_role_updaterolerequest_updaterolerequest",
-      "community": 37,
-      "community_name": "API Controllers & Endpoints (37)",
+      "community": 17,
+      "community_name": "Unit Domain (17)",
       "norm_label": "updaterolerequest"
     },
     {
@@ -5513,8 +5513,8 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "app_http_requests_role_updaterolerequest_updaterolerequest_authorize",
-      "community": 37,
-      "community_name": "API Controllers & Endpoints (37)",
+      "community": 17,
+      "community_name": "Unit Domain (17)",
       "norm_label": ".authorize()"
     },
     {
@@ -5524,8 +5524,8 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "app_http_requests_role_updaterolerequest_updaterolerequest_rules",
-      "community": 37,
-      "community_name": "API Controllers & Endpoints (37)",
+      "community": 17,
+      "community_name": "Unit Domain (17)",
       "norm_label": ".rules()"
     },
     {
@@ -6107,8 +6107,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_http_requests_unit_importunitrequest",
-      "community": 45,
-      "community_name": "API Controllers & Endpoints (45)",
+      "community": 37,
+      "community_name": "API Controllers & Endpoints (37)",
       "norm_label": "importunitrequest.php"
     },
     {
@@ -6118,8 +6118,8 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "app_http_requests_unit_importunitrequest_importunitrequest",
-      "community": 45,
-      "community_name": "API Controllers & Endpoints (45)",
+      "community": 37,
+      "community_name": "API Controllers & Endpoints (37)",
       "norm_label": "importunitrequest"
     },
     {
@@ -6129,8 +6129,8 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "app_http_requests_unit_importunitrequest_importunitrequest_authorize",
-      "community": 45,
-      "community_name": "API Controllers & Endpoints (45)",
+      "community": 37,
+      "community_name": "API Controllers & Endpoints (37)",
       "norm_label": ".authorize()"
     },
     {
@@ -6140,8 +6140,8 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "app_http_requests_unit_importunitrequest_importunitrequest_rules",
-      "community": 45,
-      "community_name": "API Controllers & Endpoints (45)",
+      "community": 37,
+      "community_name": "API Controllers & Endpoints (37)",
       "norm_label": ".rules()"
     },
     {
@@ -6602,8 +6602,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_http_resources_roleresource",
-      "community": 7,
-      "community_name": "Transaction Management (7)",
+      "community": 17,
+      "community_name": "Unit Domain (17)",
       "norm_label": "roleresource.php"
     },
     {
@@ -6613,8 +6613,8 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "app_http_resources_roleresource_roleresource",
-      "community": 7,
-      "community_name": "Transaction Management (7)",
+      "community": 17,
+      "community_name": "Unit Domain (17)",
       "norm_label": "roleresource"
     },
     {
@@ -6624,8 +6624,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "app_http_resources_roleresource_roleresource_toarray",
-      "community": 7,
-      "community_name": "Transaction Management (7)",
+      "community": 17,
+      "community_name": "Unit Domain (17)",
       "norm_label": ".toarray()"
     },
     {
@@ -7460,8 +7460,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_models_role",
-      "community": 71,
-      "community_name": "UI Notification & Error Handling (71)",
+      "community": 38,
+      "community_name": "Permission Domain (38)",
       "norm_label": "role.php"
     },
     {
@@ -7581,8 +7581,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_models_storesetting",
-      "community": 17,
-      "community_name": "Unit Domain (17)",
+      "community": 63,
+      "community_name": "User & Auth Management (63)",
       "norm_label": "storesetting.php"
     },
     {
@@ -11178,8 +11178,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_support_enums_capitalwalletpermissionenums",
-      "community": 17,
-      "community_name": "Unit Domain (17)",
+      "community": 0,
+      "community_name": "API Controllers & Endpoints (0)",
       "norm_label": "capitalwalletpermissionenums.php"
     },
     {
@@ -11244,8 +11244,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_support_enums_masterproductpermissionenums",
-      "community": 17,
-      "community_name": "Unit Domain (17)",
+      "community": 0,
+      "community_name": "API Controllers & Endpoints (0)",
       "norm_label": "masterproductpermissionenums.php"
     },
     {
@@ -11277,8 +11277,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_support_enums_profitwalletpermissionenums",
-      "community": 17,
-      "community_name": "Unit Domain (17)",
+      "community": 0,
+      "community_name": "API Controllers & Endpoints (0)",
       "norm_label": "profitwalletpermissionenums.php"
     },
     {
@@ -14478,8 +14478,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_support_models_transactiondetail_gettransactiondetailreqmodel",
-      "community": 17,
-      "community_name": "Unit Domain (17)",
+      "community": 0,
+      "community_name": "API Controllers & Endpoints (0)",
       "norm_label": "gettransactiondetailreqmodel.php"
     },
     {
@@ -15754,8 +15754,8 @@
       "source_location": "L72",
       "_origin": "ast",
       "id": "composer_scripts_test",
-      "community": 294,
-      "community_name": "test",
+      "community": 64,
+      "community_name": "ci:check Domain (64)",
       "norm_label": "test"
     },
     {
@@ -15765,8 +15765,8 @@
       "source_location": "L72",
       "_origin": "ast",
       "id": "ref_php_artisan_config_clear_ansi",
-      "community": 294,
-      "community_name": "test",
+      "community": 64,
+      "community_name": "ci:check Domain (64)",
       "norm_label": "@php artisan config:clear --ansi"
     },
     {
@@ -15776,8 +15776,8 @@
       "source_location": "L72",
       "_origin": "ast",
       "id": "ref_lint_check",
-      "community": 294,
-      "community_name": "test",
+      "community": 64,
+      "community_name": "ci:check Domain (64)",
       "norm_label": "@lint:check"
     },
     {
@@ -15787,8 +15787,8 @@
       "source_location": "L72",
       "_origin": "ast",
       "id": "ref_php_artisan_test",
-      "community": 294,
-      "community_name": "test",
+      "community": 64,
+      "community_name": "ci:check Domain (64)",
       "norm_label": "@php artisan test"
     },
     {
@@ -15831,8 +15831,8 @@
       "source_location": "L81",
       "_origin": "ast",
       "id": "composer_scripts_post_update_cmd",
-      "community": 64,
-      "community_name": "ci:check Domain (64)",
+      "community": 378,
+      "community_name": "post-update-cmd",
       "norm_label": "post-update-cmd"
     },
     {
@@ -15842,8 +15842,8 @@
       "source_location": "L81",
       "_origin": "ast",
       "id": "ref_php_artisan_vendor_publish_tag_laravel_assets_ansi_force",
-      "community": 64,
-      "community_name": "ci:check Domain (64)",
+      "community": 378,
+      "community_name": "post-update-cmd",
       "norm_label": "@php artisan vendor:publish --tag=laravel-assets --ansi --force"
     },
     {
@@ -15853,8 +15853,8 @@
       "source_location": "L81",
       "_origin": "ast",
       "id": "ref_php_artisan_boost_update_ansi",
-      "community": 64,
-      "community_name": "ci:check Domain (64)",
+      "community": 378,
+      "community_name": "post-update-cmd",
       "norm_label": "@php artisan boost:update --ansi"
     },
     {
@@ -16205,8 +16205,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "config_queue",
-      "community": 17,
-      "community_name": "Unit Domain (17)",
+      "community": 0,
+      "community_name": "API Controllers & Endpoints (0)",
       "norm_label": "queue.php"
     },
     {
@@ -17492,8 +17492,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "database_seeders_permissionseeder",
-      "community": 17,
-      "community_name": "Unit Domain (17)",
+      "community": 0,
+      "community_name": "API Controllers & Endpoints (0)",
       "norm_label": "permissionseeder.php"
     },
     {
@@ -17558,8 +17558,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "database_seeders_roleseeder",
-      "community": 17,
-      "community_name": "Unit Domain (17)",
+      "community": 0,
+      "community_name": "API Controllers & Endpoints (0)",
       "norm_label": "roleseeder.php"
     },
     {
@@ -17591,8 +17591,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "database_seeders_storesettingseeder",
-      "community": 17,
-      "community_name": "Unit Domain (17)",
+      "community": 63,
+      "community_name": "User & Auth Management (63)",
       "norm_label": "storesettingseeder.php"
     },
     {
@@ -17602,8 +17602,8 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "database_seeders_storesettingseeder_storesettingseeder",
-      "community": 17,
-      "community_name": "Unit Domain (17)",
+      "community": 63,
+      "community_name": "User & Auth Management (63)",
       "norm_label": "storesettingseeder"
     },
     {
@@ -17613,8 +17613,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "database_seeders_storesettingseeder_storesettingseeder_run",
-      "community": 17,
-      "community_name": "Unit Domain (17)",
+      "community": 63,
+      "community_name": "User & Auth Management (63)",
       "norm_label": ".run()"
     },
     {
@@ -20781,8 +20781,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "resources_js_components_text_link",
-      "community": 293,
-      "community_name": "text-link.tsx",
+      "community": 165,
+      "community_name": "@types/react",
       "norm_label": "text-link.tsx"
     },
     {
@@ -20792,8 +20792,8 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "resources_js_components_text_link_props",
-      "community": 293,
-      "community_name": "text-link.tsx",
+      "community": 165,
+      "community_name": "@types/react",
       "norm_label": "props"
     },
     {
@@ -20803,8 +20803,8 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "resources_js_components_text_link_textlink",
-      "community": 293,
-      "community_name": "text-link.tsx",
+      "community": 165,
+      "community_name": "@types/react",
       "norm_label": "textlink()"
     },
     {
@@ -24939,8 +24939,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "resources_js_lib_utils",
-      "community": 23,
-      "community_name": "Product Catalog & Inventory (23)",
+      "community": 32,
+      "community_name": "Category",
       "norm_label": "utils.ts"
     },
     {
@@ -24983,8 +24983,8 @@
       "source_location": "L49",
       "_origin": "ast",
       "id": "resources_js_lib_utils_showvalidationerrors",
-      "community": 70,
-      "community_name": "Pest & Testing Suite (70)",
+      "community": 6,
+      "community_name": "API Controllers & Endpoints (6)",
       "norm_label": "showvalidationerrors()"
     },
     {
@@ -24994,8 +24994,8 @@
       "source_location": "L57",
       "_origin": "ast",
       "id": "resources_js_lib_utils_showtoast",
-      "community": 23,
-      "community_name": "Product Catalog & Inventory (23)",
+      "community": 32,
+      "community_name": "Category",
       "norm_label": "showtoast()"
     },
     {
@@ -25005,8 +25005,8 @@
       "source_location": "L61",
       "_origin": "ast",
       "id": "resources_js_lib_utils_showinfotoast",
-      "community": 23,
-      "community_name": "Product Catalog & Inventory (23)",
+      "community": 32,
+      "community_name": "Category",
       "norm_label": "showinfotoast()"
     },
     {
@@ -25016,8 +25016,8 @@
       "source_location": "L68",
       "_origin": "ast",
       "id": "resources_js_lib_utils_showerrortoast",
-      "community": 70,
-      "community_name": "Pest & Testing Suite (70)",
+      "community": 6,
+      "community_name": "API Controllers & Endpoints (6)",
       "norm_label": "showerrortoast()"
     },
     {
@@ -25203,8 +25203,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "resources_js_pages_auth_verify_email",
-      "community": 293,
-      "community_name": "text-link.tsx",
+      "community": 165,
+      "community_name": "@types/react",
       "norm_label": "verify-email.tsx"
     },
     {
@@ -25214,8 +25214,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "resources_js_pages_auth_verify_email_verifyemail",
-      "community": 293,
-      "community_name": "text-link.tsx",
+      "community": 165,
+      "community_name": "@types/react",
       "norm_label": "verifyemail()"
     },
     {
@@ -25643,8 +25643,8 @@
       "source_location": "L79",
       "_origin": "ast",
       "id": "resources_js_pages_cashier_index_cashierindex",
-      "community": 70,
-      "community_name": "Pest & Testing Suite (70)",
+      "community": 6,
+      "community_name": "API Controllers & Endpoints (6)",
       "norm_label": "cashierindex()"
     },
     {
@@ -26292,8 +26292,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "resources_js_pages_hpp_calculator_index",
-      "community": 32,
-      "community_name": "Category",
+      "community": 165,
+      "community_name": "@types/react",
       "norm_label": "index.tsx"
     },
     {
@@ -26303,8 +26303,8 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "resources_js_pages_hpp_calculator_index_costitem",
-      "community": 32,
-      "community_name": "Category",
+      "community": 165,
+      "community_name": "@types/react",
       "norm_label": "costitem"
     },
     {
@@ -26314,8 +26314,8 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "resources_js_pages_hpp_calculator_index_hppcalculator",
-      "community": 32,
-      "community_name": "Category",
+      "community": 165,
+      "community_name": "@types/react",
       "norm_label": "hppcalculator()"
     },
     {
@@ -26677,8 +26677,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "resources_js_pages_master_product_export_data_menu_export_dropdown_menu",
-      "community": 6,
-      "community_name": "API Controllers & Endpoints (6)",
+      "community": 32,
+      "community_name": "Category",
       "norm_label": "export-dropdown-menu.tsx"
     },
     {
@@ -26688,8 +26688,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "resources_js_pages_master_product_export_data_menu_export_dropdown_menu_exportdropdownmenuprops",
-      "community": 6,
-      "community_name": "API Controllers & Endpoints (6)",
+      "community": 32,
+      "community_name": "Category",
       "norm_label": "exportdropdownmenuprops"
     },
     {
@@ -29724,8 +29724,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "resources_js_support_interfaces_response_responseerror",
-      "community": 23,
-      "community_name": "Product Catalog & Inventory (23)",
+      "community": 32,
+      "community_name": "Category",
       "norm_label": "responseerror.tsx"
     },
     {
@@ -29735,8 +29735,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "resources_js_support_interfaces_response_responseerror_responseerrorapi",
-      "community": 23,
-      "community_name": "Product Catalog & Inventory (23)",
+      "community": 32,
+      "community_name": "Category",
       "norm_label": "responseerrorapi"
     },
     {
@@ -30505,8 +30505,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_feature_auth_recoverytest",
-      "community": 17,
-      "community_name": "Unit Domain (17)",
+      "community": 0,
+      "community_name": "API Controllers & Endpoints (0)",
       "norm_label": "recoverytest.php"
     },
     {
@@ -30549,8 +30549,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_feature_capitalwallet_apicapitalwalletcontrollertest",
-      "community": 17,
-      "community_name": "Unit Domain (17)",
+      "community": 0,
+      "community_name": "API Controllers & Endpoints (0)",
       "norm_label": "apicapitalwalletcontrollertest.php"
     },
     {
@@ -30659,8 +30659,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_feature_capitalwallet_capitalwalletpermissiontest",
-      "community": 17,
-      "community_name": "Unit Domain (17)",
+      "community": 0,
+      "community_name": "API Controllers & Endpoints (0)",
       "norm_label": "capitalwalletpermissiontest.php"
     },
     {
@@ -30681,8 +30681,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_feature_capitalwallet_capitalwalletwebtest",
-      "community": 17,
-      "community_name": "Unit Domain (17)",
+      "community": 0,
+      "community_name": "API Controllers & Endpoints (0)",
       "norm_label": "capitalwalletwebtest.php"
     },
     {
@@ -30736,8 +30736,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_feature_categoryexporttest",
-      "community": 17,
-      "community_name": "Unit Domain (17)",
+      "community": 0,
+      "community_name": "API Controllers & Endpoints (0)",
       "norm_label": "categoryexporttest.php"
     },
     {
@@ -30747,8 +30747,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_feature_dashboard_apidashboardcontrollertest",
-      "community": 17,
-      "community_name": "Unit Domain (17)",
+      "community": 0,
+      "community_name": "API Controllers & Endpoints (0)",
       "norm_label": "apidashboardcontrollertest.php"
     },
     {
@@ -30824,8 +30824,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_feature_masterproduct_masterproductimporttest",
-      "community": 17,
-      "community_name": "Unit Domain (17)",
+      "community": 0,
+      "community_name": "API Controllers & Endpoints (0)",
       "norm_label": "masterproductimporttest.php"
     },
     {
@@ -30835,8 +30835,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_feature_masterproduct_masterproductindextest",
-      "community": 17,
-      "community_name": "Unit Domain (17)",
+      "community": 0,
+      "community_name": "API Controllers & Endpoints (0)",
       "norm_label": "masterproductindextest.php"
     },
     {
@@ -30846,8 +30846,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_feature_masterproductexporttest",
-      "community": 17,
-      "community_name": "Unit Domain (17)",
+      "community": 0,
+      "community_name": "API Controllers & Endpoints (0)",
       "norm_label": "masterproductexporttest.php"
     },
     {
@@ -30912,8 +30912,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_feature_product_productprintbarcodetest",
-      "community": 17,
-      "community_name": "Unit Domain (17)",
+      "community": 0,
+      "community_name": "API Controllers & Endpoints (0)",
       "norm_label": "productprintbarcodetest.php"
     },
     {
@@ -30923,8 +30923,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_feature_productcreatemasterproducttest",
-      "community": 17,
-      "community_name": "Unit Domain (17)",
+      "community": 0,
+      "community_name": "API Controllers & Endpoints (0)",
       "norm_label": "productcreatemasterproducttest.php"
     },
     {
@@ -30934,8 +30934,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_feature_profitwallet_apiprofitwalletcontrollertest",
-      "community": 17,
-      "community_name": "Unit Domain (17)",
+      "community": 0,
+      "community_name": "API Controllers & Endpoints (0)",
       "norm_label": "apiprofitwalletcontrollertest.php"
     },
     {
@@ -31033,8 +31033,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_feature_profitwallet_profitwalletmigrationtest",
-      "community": 17,
-      "community_name": "Unit Domain (17)",
+      "community": 0,
+      "community_name": "API Controllers & Endpoints (0)",
       "norm_label": "profitwalletmigrationtest.php"
     },
     {
@@ -31044,8 +31044,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_feature_profitwallet_profitwalletmodeltest",
-      "community": 17,
-      "community_name": "Unit Domain (17)",
+      "community": 0,
+      "community_name": "API Controllers & Endpoints (0)",
       "norm_label": "profitwalletmodeltest.php"
     },
     {
@@ -31055,8 +31055,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_feature_profitwallet_profitwalletpermissiontest",
-      "community": 17,
-      "community_name": "Unit Domain (17)",
+      "community": 0,
+      "community_name": "API Controllers & Endpoints (0)",
       "norm_label": "profitwalletpermissiontest.php"
     },
     {
@@ -31066,8 +31066,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_feature_profitwallet_profitwalletrepositorytest",
-      "community": 17,
-      "community_name": "Unit Domain (17)",
+      "community": 0,
+      "community_name": "API Controllers & Endpoints (0)",
       "norm_label": "profitwalletrepositorytest.php"
     },
     {
@@ -31121,8 +31121,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_feature_profitwallet_profitwalletwebtest",
-      "community": 17,
-      "community_name": "Unit Domain (17)",
+      "community": 0,
+      "community_name": "API Controllers & Endpoints (0)",
       "norm_label": "profitwalletwebtest.php"
     },
     {
@@ -31154,8 +31154,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_feature_settings_datapurgetest",
-      "community": 17,
-      "community_name": "Unit Domain (17)",
+      "community": 0,
+      "community_name": "API Controllers & Endpoints (0)",
       "norm_label": "datapurgetest.php"
     },
     {
@@ -31165,8 +31165,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_feature_settings_databaseexporttest",
-      "community": 17,
-      "community_name": "Unit Domain (17)",
+      "community": 0,
+      "community_name": "API Controllers & Endpoints (0)",
       "norm_label": "databaseexporttest.php"
     },
     {
@@ -31198,8 +31198,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_feature_settings_storesettingdatabasetest",
-      "community": 17,
-      "community_name": "Unit Domain (17)",
+      "community": 63,
+      "community_name": "User & Auth Management (63)",
       "norm_label": "storesettingdatabasetest.php"
     },
     {
@@ -31209,8 +31209,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_feature_settings_storesettingtest",
-      "community": 17,
-      "community_name": "Unit Domain (17)",
+      "community": 63,
+      "community_name": "User & Auth Management (63)",
       "norm_label": "storesettingtest.php"
     },
     {
@@ -31286,8 +31286,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_feature_transaction_apitransactioncontrollertest",
-      "community": 17,
-      "community_name": "Unit Domain (17)",
+      "community": 0,
+      "community_name": "API Controllers & Endpoints (0)",
       "norm_label": "apitransactioncontrollertest.php"
     },
     {
@@ -31297,8 +31297,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_feature_transaction_transactionexporttest",
-      "community": 17,
-      "community_name": "Unit Domain (17)",
+      "community": 0,
+      "community_name": "API Controllers & Endpoints (0)",
       "norm_label": "transactionexporttest.php"
     },
     {
@@ -31341,8 +31341,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_feature_transactiondetail_apitransactiondetailcontrollertest",
-      "community": 17,
-      "community_name": "Unit Domain (17)",
+      "community": 0,
+      "community_name": "API Controllers & Endpoints (0)",
       "norm_label": "apitransactiondetailcontrollertest.php"
     },
     {
@@ -31352,8 +31352,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_feature_transactiondetail_transactiondetailrepositorytest",
-      "community": 17,
-      "community_name": "Unit Domain (17)",
+      "community": 0,
+      "community_name": "API Controllers & Endpoints (0)",
       "norm_label": "transactiondetailrepositorytest.php"
     },
     {
@@ -31363,8 +31363,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_feature_transactiondetail_transactiondetailservicetest",
-      "community": 17,
-      "community_name": "Unit Domain (17)",
+      "community": 0,
+      "community_name": "API Controllers & Endpoints (0)",
       "norm_label": "transactiondetailservicetest.php"
     },
     {
@@ -31572,8 +31572,8 @@
       "source_location": "L32",
       "_origin": "ast",
       "id": "ref_react",
-      "community": 32,
-      "community_name": "Category",
+      "community": 165,
+      "community_name": "@types/react",
       "norm_label": "react"
     },
     {
@@ -39679,8 +39679,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "spatie_permission_traits_hasassignedmodels",
-      "community": 71,
-      "community_name": "UI Notification & Error Handling (71)",
+      "community": 38,
+      "community_name": "Permission Domain (38)",
       "norm_label": "spatie\\permission\\traits\\hasassignedmodels"
     },
     {
@@ -39690,8 +39690,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "spatie_permission_traits_haspermissions",
-      "community": 71,
-      "community_name": "UI Notification & Error Handling (71)",
+      "community": 38,
+      "community_name": "Permission Domain (38)",
       "norm_label": "spatie\\permission\\traits\\haspermissions"
     },
     {
@@ -39866,8 +39866,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "illuminate_foundation_testing_refreshdatabase",
-      "community": 17,
-      "community_name": "Unit Domain (17)",
+      "community": 0,
+      "community_name": "API Controllers & Endpoints (0)",
       "norm_label": "illuminate\\foundation\\testing\\refreshdatabase"
     },
     {
@@ -129905,7 +129905,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "resources/js/pages/cashier/index.tsx",
-      "source_location": "L976",
+      "source_location": "L971",
       "weight": 1.0,
       "_origin": "ast",
       "source": "resources_js_pages_cashier_index_cashierindex",
@@ -131250,7 +131250,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "resources/js/pages/cashier/index.tsx",
-      "source_location": "L644",
+      "source_location": "L639",
       "weight": 1.0,
       "_origin": "ast",
       "source": "resources_js_pages_cashier_index_cashierindex",
@@ -131442,7 +131442,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "resources/js/pages/cashier/index.tsx",
-      "source_location": "L278",
+      "source_location": "L273",
       "weight": 1.0,
       "_origin": "ast",
       "source": "resources_js_pages_cashier_index_cashierindex",
@@ -132918,7 +132918,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "resources/js/pages/cashier/index.tsx",
-      "source_location": "L343",
+      "source_location": "L338",
       "weight": 1.0,
       "_origin": "ast",
       "source": "resources_js_pages_cashier_index_cashierindex",
@@ -134190,7 +134190,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "resources/js/pages/cashier/index.tsx",
-      "source_location": "L608",
+      "source_location": "L603",
       "weight": 1.0,
       "_origin": "ast",
       "source": "resources_js_pages_cashier_index_cashierindex",
