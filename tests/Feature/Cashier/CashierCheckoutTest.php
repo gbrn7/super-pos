@@ -324,3 +324,33 @@ test('cashier index page displays with store settings', function () {
         ->where('storeSetting.name', 'Toko Maju Jaya')
     );
 });
+
+test('checkout succeeds and falls back to product unit when unit_name is omitted or null', function () {
+    $user = cashierSetupUser();
+    $paymentMethod = PaymentMethod::create(['name' => 'Cash', 'desc' => '', 'image' => '']);
+    $product = Product::factory()->create(['price' => 10000, 'cost_price' => 7000, 'stock' => 10, 'is_unlimited' => false, 'is_active' => true]);
+
+    $response = $this->actingAs($user)->postJson('/api/transactions/checkout', [
+        'payment_method_id' => $paymentMethod->id,
+        'total_amount' => 10000,
+        'discount_amount' => 0,
+        'payment_amount' => 10000,
+        'change_amount' => 0,
+        'items' => [
+            [
+                'product_id' => $product->id,
+                'quantity' => 1,
+                'price' => $product->price,
+                'cost_price' => $product->cost_price,
+                'discount' => 0,
+            ],
+        ],
+    ]);
+
+    $response->assertStatus(201);
+    $response->assertJsonPath('success', true);
+
+    $transaction = Transaction::first();
+    expect($transaction->transactionDetails)->toHaveCount(1);
+    expect($transaction->transactionDetails->first()->unit_name)->toBe($product->unit->name);
+});

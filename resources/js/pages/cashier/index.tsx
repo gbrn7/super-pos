@@ -308,7 +308,19 @@ export default function CashierIndex({
             setCart((prev) =>
                 prev.map((item) =>
                     item.product.id === updatedProduct.id
-                        ? { ...item, product: updatedProduct }
+                        ? {
+                              ...item,
+                              product: {
+                                  ...item.product,
+                                  ...updatedProduct,
+                                  unit_name:
+                                      updatedProduct.unit_name ||
+                                      item.product.unit_name,
+                                  category_name:
+                                      updatedProduct.category_name ||
+                                      item.product.category_name,
+                              },
+                          }
                         : item,
                 ),
             );
@@ -606,7 +618,10 @@ export default function CashierIndex({
                                 : item.discount || 0;
                         return {
                             product_id: item.product.id,
-                            unit_name: item.product.unit_name,
+                            unit_name:
+                                item.product.unit_name ||
+                                (item.product as any).unit?.name ||
+                                '',
                             quantity: item.quantity,
                             price: item.product.price,
                             cost_price: item.product.cost_price,

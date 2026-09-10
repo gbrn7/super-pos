@@ -39,7 +39,6 @@ class TransactionService implements TransactionServiceInterface
         try {
             return $this->transactionRepository->getAllByIndex($request);
         } catch (\Throwable $th) {
-            dd($th->getMessage());
             throw CheckException::Check($th);
         }
     }
@@ -55,7 +54,6 @@ class TransactionService implements TransactionServiceInterface
 
             return $transaction;
         } catch (\Throwable $th) {
-            dd($th->getMessage());
             throw CheckException::Check($th);
         }
     }
@@ -188,10 +186,14 @@ class TransactionService implements TransactionServiceInterface
                     $item = $validated['item'];
                     $product = $validated['product'];
 
+                    $unitName = ! empty($item['unit_name'])
+                        ? $item['unit_name']
+                        : ($product->unit?->name ?? '-');
+
                     $this->transactionDetailRepository->create([
                         'transaction_id' => $transaction->id,
                         'product_id' => $item['product_id'],
-                        'unit_name' => $item['unit_name'],
+                        'unit_name' => $unitName,
                         'quantity' => $item['quantity'],
                         'price' => $item['price'],
                         'cost_price' => $item['cost_price'],

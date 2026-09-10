@@ -86,13 +86,16 @@ export default function UpdateStockDialog({
                         'Stok produk berhasil diperbarui!',
                     ),
                 );
-                onSuccess(
-                    data.data || {
-                        ...product,
-                        stock: newStockValue,
-                        is_unlimited: isUnlimited,
-                    },
-                );
+                const updatedProductData: Product = {
+                    ...product,
+                    ...(data.data || {}),
+                    unit_name: data.data?.unit_name || product.unit_name,
+                    category_name:
+                        data.data?.category_name || product.category_name,
+                    stock: data.data?.stock ?? newStockValue,
+                    is_unlimited: data.data?.is_unlimited ?? isUnlimited,
+                };
+                onSuccess(updatedProductData);
                 onClose();
             }
         } catch (err) {
