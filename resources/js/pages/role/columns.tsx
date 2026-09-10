@@ -68,23 +68,6 @@ export const columns = (props?: ColumnsProps): ColumnDef<Role>[] => {
         },
         {
             id: t(
-                'page.role.data_table.columns.guard_name_column_label',
-                'Nama Garda',
-            ),
-            accessorKey: 'guard_name',
-            header: ({ column }) => (
-                <DataTableHeader
-                    column={column}
-                    title={t(
-                        'page.role.data_table.columns.guard_name_column_label',
-                        'Nama Garda',
-                    )}
-                />
-            ),
-            enableSorting: true,
-        },
-        {
-            id: t(
                 'page.role.data_table.columns.created_at_column_label',
                 'Tanggal Dibuat',
             ),
