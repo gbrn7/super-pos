@@ -76,7 +76,7 @@ class ApiProductController extends Controller implements HasMiddleware
         try {
             $product = $this->productService->create($request->validated());
 
-            return ResponseApi::make(true, trans('message.success.created'), $product, Response::HTTP_CREATED);
+            return ResponseApi::make(true, trans('message.success.created'), new ProductResource($product->load(['category', 'unit'])), Response::HTTP_CREATED);
         } catch (\Throwable $th) {
             return ResponseApi::make(false, $th->getMessage(), null, $th->getcode());
         }
@@ -104,7 +104,7 @@ class ApiProductController extends Controller implements HasMiddleware
         try {
             $data = $this->productService->getById($id);
 
-            return ResponseApi::make(true, trans('message.success.success'), $data);
+            return ResponseApi::make(true, trans('message.success.success'), new ProductResource($data->load(['category', 'unit'])));
         } catch (\Throwable $th) {
             return ResponseApi::make(false, $th->getMessage(), null, $th->getcode());
         }
@@ -134,7 +134,7 @@ class ApiProductController extends Controller implements HasMiddleware
         try {
             $product = $this->productService->update($id, $request->validated());
 
-            return ResponseApi::make(true, trans('message.success.updated'), $product);
+            return ResponseApi::make(true, trans('message.success.updated'), new ProductResource($product->load(['category', 'unit'])));
         } catch (\Throwable $th) {
             return ResponseApi::make(false, $th->getMessage(), null, $th->getcode());
         }
