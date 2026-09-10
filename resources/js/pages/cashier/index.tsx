@@ -57,8 +57,11 @@ import {
     Check,
     Info,
     PlusCircle,
+    List,
+    LayoutGrid,
 } from 'lucide-react';
 import ProductRow from './components/product-row';
+import ProductCard from './components/product-card';
 import CartItemRow from './components/cart-item-row';
 import ReceiptCard from '@/components/receipt-card';
 import { StoreSetting } from '@/components/receipt-modal';
@@ -94,6 +97,22 @@ export default function CashierIndex({
     const [totalPages, setTotalPages] = useState(1);
     const [totalProducts, setTotalProducts] = useState(0);
     const LIMIT = 25;
+    const [viewMode, setViewMode] = useState<'table' | 'grid'>(() => {
+        if (typeof window !== 'undefined') {
+            const saved = localStorage.getItem('cashier_view_mode');
+            if (saved === 'grid' || saved === 'table') {
+                return saved;
+            }
+        }
+        return 'table';
+    });
+
+    const handleViewModeChange = (mode: 'table' | 'grid') => {
+        setViewMode(mode);
+        if (typeof window !== 'undefined') {
+            localStorage.setItem('cashier_view_mode', mode);
+        }
+    };
 
     // ── Categories & Payment methods state ──────────────────────────────────────
     const [categories, setCategories] = useState<Category[]>([]);
@@ -714,17 +733,63 @@ export default function CashierIndex({
                                     )}
                                 </span>
                             </div>
-                            <Badge
-                                variant="outline"
-                                className="gap-1 px-2.5 py-0.5 font-mono text-xs font-bold"
-                            >
-                                <Package className="h-3.5 w-3.5 text-primary" />
-                                {totalProducts}{' '}
-                                {t(
-                                    'page.kasir.product_data_count',
-                                    'Data Barang',
-                                )}
-                            </Badge>
+                            <div className="flex items-center gap-2">
+                                <Badge
+                                    variant="outline"
+                                    className="gap-1 px-2.5 py-0.5 font-mono text-xs font-bold"
+                                >
+                                    <Package className="h-3.5 w-3.5 text-primary" />
+                                    {totalProducts}{' '}
+                                    {t(
+                                        'page.kasir.product_data_count',
+                                        'Data Barang',
+                                    )}
+                                </Badge>
+                                <div className="flex items-center rounded-lg border bg-muted/60 p-0.5">
+                                    <Button
+                                        type="button"
+                                        variant="ghost"
+                                        size="sm"
+                                        onClick={() => handleViewModeChange('table')}
+                                        className={cn(
+                                            'h-8 gap-1.5 px-3 text-xs sm:text-sm font-bold transition-all',
+                                            viewMode === 'table'
+                                                ? 'bg-background text-foreground shadow-xs'
+                                                : 'text-muted-foreground hover:text-foreground',
+                                        )}
+                                        title={t(
+                                            'page.kasir.view_mode_table',
+                                            'Mode Tabel (Tanpa Gambar)',
+                                        )}
+                                    >
+                                        <List className="h-4 w-4" />
+                                        <span className="hidden sm:inline">
+                                            {t('page.kasir.view_table', 'Tabel')}
+                                        </span>
+                                    </Button>
+                                    <Button
+                                        type="button"
+                                        variant="ghost"
+                                        size="sm"
+                                        onClick={() => handleViewModeChange('grid')}
+                                        className={cn(
+                                            'h-8 gap-1.5 px-3 text-xs sm:text-sm font-bold transition-all',
+                                            viewMode === 'grid'
+                                                ? 'bg-background text-foreground shadow-xs'
+                                                : 'text-muted-foreground hover:text-foreground',
+                                        )}
+                                        title={t(
+                                            'page.kasir.view_mode_grid',
+                                            'Mode Grid (Dengan Gambar)',
+                                        )}
+                                    >
+                                        <LayoutGrid className="h-4 w-4" />
+                                        <span className="hidden sm:inline">
+                                            {t('page.kasir.view_grid', 'Gambar')}
+                                        </span>
+                                    </Button>
+                                </div>
+                            </div>
                         </div>
 
                         {/* Search Bar & Category Filter */}
@@ -824,19 +889,39 @@ export default function CashierIndex({
                         {/* Product Data Table */}
                         <div className="flex-1 overflow-y-auto">
                             {loadingProducts ? (
-                                <div className="space-y-3 p-4">
-                                    {Array.from({ length: 8 }).map((_, i) => (
-                                        <div
-                                            key={i}
-                                            className="flex items-center gap-3"
-                                        >
-                                            <Skeleton className="h-10 w-28" />
-                                            <Skeleton className="h-10 flex-1" />
-                                            <Skeleton className="h-10 w-20" />
-                                            <Skeleton className="h-10 w-24" />
-                                        </div>
-                                    ))}
-                                </div>
+                                viewMode === 'table' ? (
+                                    <div className="space-y-3 p-4">
+                                        {Array.from({ length: 8 }).map(
+                                            (_, i) => (
+                                                <div
+                                                    key={i}
+                                                    className="flex items-center gap-3"
+                                                >
+                                                    <Skeleton className="h-10 w-28" />
+                                                    <Skeleton className="h-10 flex-1" />
+                                                    <Skeleton className="h-10 w-20" />
+                                                    <Skeleton className="h-10 w-24" />
+                                                </div>
+                                            ),
+                                        )}
+                                    </div>
+                                ) : (
+                                    <div className="grid grid-cols-2 gap-3 p-3.5 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+                                        {Array.from({ length: 10 }).map(
+                                            (_, i) => (
+                                                <div
+                                                    key={i}
+                                                    className="flex flex-col space-y-2 overflow-hidden rounded-xl border bg-card p-2.5"
+                                                >
+                                                    <Skeleton className="aspect-square w-full rounded-lg" />
+                                                    <Skeleton className="h-4 w-3/4" />
+                                                    <Skeleton className="h-3 w-1/2" />
+                                                    <Skeleton className="h-4 w-1/3" />
+                                                </div>
+                                            ),
+                                        )}
+                                    </div>
+                                )
                             ) : products.length === 0 ? (
                                 <div className="flex h-full flex-col items-center justify-center p-8 text-center text-muted-foreground">
                                     <Search className="mb-2 h-14 w-14 stroke-1 opacity-25" />
@@ -864,7 +949,7 @@ export default function CashierIndex({
                                         categories={categories}
                                     />
                                 </div>
-                            ) : (
+                            ) : viewMode === 'table' ? (
                                 <table className="w-full border-collapse text-left">
                                     <thead className="sticky top-0 z-10 border-b bg-muted/95 text-xs font-extrabold tracking-wider text-muted-foreground uppercase shadow-xs backdrop-blur-xs sm:text-sm">
                                         <tr>
@@ -924,6 +1009,24 @@ export default function CashierIndex({
                                         ))}
                                     </tbody>
                                 </table>
+                            ) : (
+                                <div className="grid grid-cols-2 gap-3 p-3.5 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+                                    {products.map((product) => (
+                                        <ProductCard
+                                            key={product.id}
+                                            product={product}
+                                            onAdd={addToCart}
+                                            onEditStock={(p) =>
+                                                setStockEditProduct(p)
+                                            }
+                                            isInCart={cart.some(
+                                                (i) =>
+                                                    i.product.id ===
+                                                    product.id,
+                                            )}
+                                        />
+                                    ))}
+                                </div>
                             )}
                         </div>
 
