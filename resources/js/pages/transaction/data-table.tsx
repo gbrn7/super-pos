@@ -170,6 +170,8 @@ export function DataTable<TData, TValue>({
     const [columnVisibility, setColumnVisibility] =
         React.useState<VisibilityState>({});
     const [exportModalOpen, setExportModalOpen] = React.useState(false);
+    const [openStartDate, setOpenStartDate] = React.useState(false);
+    const [openEndDate, setOpenEndDate] = React.useState(false);
 
     const table = useReactTable({
         data,
@@ -417,7 +419,7 @@ export function DataTable<TData, TValue>({
                             <Calendar className="h-4 w-4" />
                             {t('component.data_table.filter.start_date_label', 'Tanggal Mulai')}
                         </Label>
-                        <Popover>
+                        <Popover open={openStartDate} onOpenChange={setOpenStartDate}>
                             <PopoverTrigger asChild>
                                 <Button
                                     variant="outline"
@@ -453,6 +455,7 @@ export function DataTable<TData, TValue>({
                                             onChangeStartDate(
                                                 `${year}-${month}-${day}`,
                                             );
+                                            setOpenStartDate(false);
                                         } else {
                                             onChangeStartDate(null);
                                         }
@@ -468,7 +471,7 @@ export function DataTable<TData, TValue>({
                             <Calendar className="h-4 w-4" />
                             {t('component.data_table.filter.end_date_label', 'Tanggal Akhir')}
                         </Label>
-                        <Popover>
+                        <Popover open={openEndDate} onOpenChange={setOpenEndDate}>
                             <PopoverTrigger asChild>
                                 <Button
                                     variant="outline"
@@ -504,6 +507,7 @@ export function DataTable<TData, TValue>({
                                             onChangeEndDate(
                                                 `${year}-${month}-${day}`,
                                             );
+                                            setOpenEndDate(false);
                                         } else {
                                             onChangeEndDate(null);
                                         }
