@@ -21,9 +21,12 @@ import type { StoreSetting } from '@/components/receipt-modal';
 import type { ResponseApi } from '@/support/interfaces/response/Response';
 import type { PaginationResponse } from '@/support/interfaces/resource/resource-response';
 import type { CapitalWalletTransaction, CapitalWalletSummary } from '@/support/models/capitalWallet';
+import { useAuth } from '@/hooks/use-auth';
 
 export default function CapitalWalletIndex({ storeSetting }: { storeSetting?: StoreSetting | null }) {
     const { t } = useTranslation();
+    const { hasPermission } = useAuth();
+    const canReadTransaction = hasPermission(PERMISSIONENUMS.TRANSACTION.READ);
 
     const [ledgerData, setLedgerData] = useState<CapitalWalletTransaction[]>([]);
     const [summary, setSummary] = useState<CapitalWalletSummary>({
@@ -173,6 +176,7 @@ export default function CapitalWalletIndex({ storeSetting }: { storeSetting?: St
                         onSortChange: () => {},
                         orderBy: 'id',
                         order: 'desc',
+                        canReadTransaction,
                     })}
                     data={ledgerData}
                     processing={processing}
@@ -187,7 +191,7 @@ export default function CapitalWalletIndex({ storeSetting }: { storeSetting?: St
                 />
 
                 {/* Struk / Detail Transaction Modal */}
-                {selectedTransaction && (
+                {canReadTransaction && selectedTransaction && (
                     <DetailDialog
                         isOpen={detailOpen}
                         transaction={selectedTransaction}
