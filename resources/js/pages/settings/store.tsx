@@ -186,7 +186,6 @@ export default function Store({
                                             setPhone(e.target.value)
                                         }
                                         name="phone"
-                                        required
                                         placeholder={t(
                                             'page.settings.store.form.phone_input_placeholder',
                                             'Masukkan nomor telepon toko',
