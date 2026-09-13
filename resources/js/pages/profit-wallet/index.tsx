@@ -21,9 +21,12 @@ import type { StoreSetting } from '@/components/receipt-modal';
 import type { ResponseApi } from '@/support/interfaces/response/Response';
 import type { PaginationResponse } from '@/support/interfaces/resource/resource-response';
 import type { ProfitWalletTransaction, ProfitWalletSummary } from '@/support/models/profitWallet';
+import { useAuth } from '@/hooks/use-auth';
 
 export default function ProfitWalletIndex({ storeSetting }: { storeSetting?: StoreSetting | null }) {
     const { t } = useTranslation();
+    const { hasPermission } = useAuth();
+    const canReadTransaction = hasPermission(PERMISSIONENUMS.TRANSACTION.READ);
 
     const [ledgerData, setLedgerData] = useState<ProfitWalletTransaction[]>([]);
     const [summary, setSummary] = useState<ProfitWalletSummary>({
@@ -174,6 +177,7 @@ export default function ProfitWalletIndex({ storeSetting }: { storeSetting?: Sto
                         onSortChange: () => {},
                         orderBy: 'id',
                         order: 'desc',
+                        canReadTransaction,
                     })}
                     data={ledgerData}
                     processing={processing}
@@ -189,7 +193,7 @@ export default function ProfitWalletIndex({ storeSetting }: { storeSetting?: Sto
                 />
 
                 {/* Struk / Detail Transaction Modal */}
-                {selectedTransaction && (
+                {canReadTransaction && selectedTransaction && (
                     <DetailDialog
                         isOpen={detailOpen}
                         transaction={selectedTransaction}
