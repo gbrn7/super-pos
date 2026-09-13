@@ -228,10 +228,12 @@ class TransactionService implements TransactionServiceInterface
 
     public function export(GetTransactionReqModel $request, string $format)
     {
+        @ini_set('max_execution_time', '300');
+        @set_time_limit(300);
+        @ini_set('memory_limit', '1024M');
+
         try {
             $request->limit = null;
-            $transactions = $this->transactionRepository->getAllByIndex($request);
-            $transactions->load('returns');
 
             $formattedStartDate = $request->start_date ? Carbon::parse($request->start_date)->format('Y-m-d') : null;
             $formattedEndDate = $request->end_date ? Carbon::parse($request->end_date)->format('Y-m-d') : null;
@@ -250,13 +252,29 @@ class TransactionService implements TransactionServiceInterface
 
             $fileName = "laporan-transaksi-{$dateSuffix}";
 
+            $summary = $this->transactionRepository->getTransactionSummary($request);
+
             if ($format === 'excel') {
+                $transactions = $this->transactionRepository->getAllForExport($request);
+
                 return Excel::download(
                     new TransactionsExport($transactions),
                     "{$fileName}.xlsx"
                 );
             }
 
+            $maxPdfRows = 2000;
+            if ($summary['count'] > $maxPdfRows) {
+                throw new Exception(
+                    trans('message.error.export_pdf_too_large', [
+                        'count' => number_format($summary['count'], 0, ',', '.'),
+                        'max' => number_format($maxPdfRows, 0, ',', '.'),
+                    ]),
+                    Response::HTTP_UNPROCESSABLE_ENTITY
+                );
+            }
+
+            $transactions = $this->transactionRepository->getAllForExport($request);
             $printedAt = date('d/m/Y H:i:s');
             $startDate = $request->start_date ? Carbon::parse($request->start_date)->format('d/m/Y') : null;
             $endDate = $request->end_date ? Carbon::parse($request->end_date)->format('d/m/Y') : null;
@@ -264,6 +282,7 @@ class TransactionService implements TransactionServiceInterface
 
             $pdf = Pdf::loadView('pdf.transactions', [
                 'transactions' => $transactions,
+                'summary' => $summary,
                 'startDate' => $startDate,
                 'endDate' => $endDate,
                 'printedAt' => $printedAt,

@@ -17,7 +17,7 @@ class PaymentMethodRepository implements PaymentMethodRepositoryInterface
 
         $query = PaymentMethod::query()
             ->orderBy('id', 'desc')
-            ->when($request->name, fn($query) => $query->where('name', $like, "%{$request->name}%"));
+            ->when($request->name, fn ($query) => $query->where('name', $like, "%{$request->name}%"));
 
         if ($request->limit === null) {
             return $query->get();
@@ -59,6 +59,7 @@ class PaymentMethodRepository implements PaymentMethodRepositoryInterface
     public function getByName(string $name): ?PaymentMethod
     {
         $like = QueryHelper::likeOperator();
+
         return PaymentMethod::where('name', $like, $name)->first();
     }
 

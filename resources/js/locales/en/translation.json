@@ -238,6 +238,13 @@
             "pagination_info_total": "Page %d of %d (%d total items)",
             "remove_start_date_filter": "Remove start date filter",
             "remove_end_date_filter": "Remove end date filter"
+        },
+        "export_modal": {
+            "title": "Export Transaction Data",
+            "capital_title": "Export Capital Wallet Data",
+            "profit_title": "Export Profit Wallet Data",
+            "format_label": "Report Format",
+            "pdf_tip": "* For exporting large amounts of data (> 2,000 records), use Excel format or narrow the date range."
         }
     },
     "page": {
@@ -1645,5 +1652,10 @@
     "common": {
         "search": "Search",
         "clear": "Reset"
+    },
+    "message": {
+        "success": {
+            "success": "Export successful"
+        }
     }
 }

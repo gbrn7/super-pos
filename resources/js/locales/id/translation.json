@@ -238,6 +238,13 @@
             "remove_start_date_filter": "Hapus filter tanggal mulai",
             "remove_end_date_filter": "Hapus filter tanggal akhir",
             "pagination_info_total": "Halaman %d dari %d (%d total data)"
+        },
+        "export_modal": {
+            "title": "Ekspor Data Transaksi",
+            "capital_title": "Ekspor Data Dompet Modal",
+            "profit_title": "Ekspor Data Dompet Profit",
+            "format_label": "Format Laporan",
+            "pdf_tip": "* Untuk ekspor data dalam jumlah besar (> 2.000 data), gunakan format Excel atau persempit rentang tanggal."
         }
     },
     "page": {
@@ -1623,5 +1630,10 @@
     "common": {
         "search": "Cari",
         "clear": "Reset"
+    },
+    "message": {
+        "success": {
+            "success": "Ekspor berhasil"
+        }
     }
 }

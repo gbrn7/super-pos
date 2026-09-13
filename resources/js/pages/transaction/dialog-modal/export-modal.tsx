@@ -28,15 +28,15 @@ import {
     exportData as apiExportTransactions,
     index as apiGetTransactions,
 } from '@/routes/apiTransactions';
-import { handleApiError, showSuccessToast } from '@/lib/utils';
+import { handleApiError, showErrorToast, showSuccessToast } from '@/lib/utils';
 import * as XLSX from 'xlsx';
 import dayjs from 'dayjs';
 
 interface ExportModalProps {
     isOpen: boolean;
     onClose: () => void;
-    defaultStartDate?: number | null;
-    defaultEndDate?: number | null;
+    defaultStartDate?: string | null;
+    defaultEndDate?: string | null;
 }
 
 export function ExportModal({
@@ -55,11 +55,11 @@ export function ExportModal({
         oneMonthAgo.setMonth(today.getMonth() - 1);
 
         const defaultStart = defaultStartDate
-            ? new Date(defaultStartDate * 1000).toISOString().slice(0, 10)
+            ? defaultStartDate
             : oneMonthAgo.toISOString().slice(0, 10);
 
         const defaultEnd = defaultEndDate
-            ? new Date(defaultEndDate * 1000).toISOString().slice(0, 10)
+            ? defaultEndDate
             : today.toISOString().slice(0, 10);
 
         return { defaultStart, defaultEnd };
@@ -226,7 +226,17 @@ export function ExportModal({
                 );
                 onClose();
             }
-        } catch (error) {
+        } catch (error: any) {
+            if (error?.response?.data instanceof Blob) {
+                try {
+                    const text = await error.response.data.text();
+                    const json = JSON.parse(text);
+                    if (json.message) {
+                        showErrorToast(json.message);
+                        return;
+                    }
+                } catch (_) {}
+            }
             handleApiError(error);
         } finally {
             setLoading(false);
@@ -408,6 +418,14 @@ export function ExportModal({
                                 </span>
                             </label>
                         </div>
+                        {format === 'pdf' && (
+                            <p className="mt-1 text-[11px] text-muted-foreground">
+                                {t(
+                                    'component.export_modal.pdf_tip',
+                                    '* Untuk ekspor data dalam jumlah besar (> 2.000 data), gunakan format Excel atau persempit rentang tanggal.',
+                                )}
+                            </p>
+                        )}
                     </div>
                 </div>
 

@@ -26,7 +26,7 @@ import {
     index as apiGetCapitalWallet,
     exportData as apiExportCapitalWallet,
 } from '@/routes/apiCapitalWallet';
-import { handleApiError, showSuccessToast } from '@/lib/utils';
+import { handleApiError, showErrorToast, showSuccessToast } from '@/lib/utils';
 import * as XLSX from 'xlsx';
 import { CapitalWalletTransactionTypeEnums } from '@/support/enums/CapitalWalletTransactionTypeEnums';
 import dayjs from 'dayjs';
@@ -238,7 +238,17 @@ export function ExportModal({
                 );
                 onClose();
             }
-        } catch (error) {
+        } catch (error: any) {
+            if (error?.response?.data instanceof Blob) {
+                try {
+                    const text = await error.response.data.text();
+                    const json = JSON.parse(text);
+                    if (json.message) {
+                        showErrorToast(json.message);
+                        return;
+                    }
+                } catch (_) {}
+            }
             handleApiError(error);
         } finally {
             setLoading(false);
@@ -420,6 +430,14 @@ export function ExportModal({
                                 </span>
                             </label>
                         </div>
+                        {format === 'pdf' && (
+                            <p className="mt-1 text-[11px] text-muted-foreground">
+                                {t(
+                                    'component.export_modal.pdf_tip',
+                                    '* Untuk ekspor data dalam jumlah besar (> 2.000 data), gunakan format Excel atau persempit rentang tanggal.',
+                                )}
+                            </p>
+                        )}
                     </div>
                 </div>
 

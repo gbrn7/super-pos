@@ -53,6 +53,7 @@ return [
         'blank_unit_template_validation' => 'There are blank units in the template, please check your template.',
         'product_not_active' => 'Product is not active',
         'out_of_stock' => 'Product stock for :product is insufficient',
+        'export_pdf_too_large' => 'Too many records to export as PDF (:count rows). The maximum limit for PDF export is :max rows. Please narrow the date filter or use Excel export.',
         'profit_wallet' => [
             'amount_must_be_greater_than_zero' => 'Amount must be greater than zero.',
             'insufficient_balance_for_disbursement' => 'Insufficient wallet balance for disbursement.',

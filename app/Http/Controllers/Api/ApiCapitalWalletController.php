@@ -126,7 +126,9 @@ class ApiCapitalWalletController extends Controller implements HasMiddleware
 
             return $this->capitalWalletService->export($reqModel, $format);
         } catch (\Throwable $th) {
-            return ResponseApi::make(false, $th->getMessage(), null, 500);
+            $code = ($th->getCode() >= 400 && $th->getCode() < 600) ? (int) $th->getCode() : Response::HTTP_INTERNAL_SERVER_ERROR;
+
+            return ResponseApi::make(false, $th->getMessage(), null, $code);
         }
     }
 }

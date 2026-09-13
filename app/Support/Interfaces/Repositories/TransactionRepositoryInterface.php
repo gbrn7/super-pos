@@ -15,6 +15,16 @@ interface TransactionRepositoryInterface
     public function getAllByIndex(GetTransactionReqModel $request): Paginator|Collection;
 
     /**
+     * Get transactions specifically optimized for export.
+     */
+    public function getAllForExport(GetTransactionReqModel $request): Collection;
+
+    /**
+     * Get aggregated transaction summary for reports.
+     */
+    public function getTransactionSummary(GetTransactionReqModel $request): array;
+
+    /**
      * Get a transaction by its ID.
      */
     public function getById(int $id): ?Transaction;

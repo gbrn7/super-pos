@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\DB;
 
 class TransactionSeeder extends Seeder
 {
-    public function __construct(public int $count = 10000) {}
+    public function __construct(public int $count = 5000) {}
 
     /**
      * Run the database seeds.
@@ -43,7 +43,7 @@ class TransactionSeeder extends Seeder
         $profitService = app(ProfitWalletServiceInterface::class);
         $capitalService = app(CapitalWalletServiceInterface::class);
 
-        $totalCount = app()->environment('testing') && $this->count === 10000 ? 10 : $this->count;
+        $totalCount = app()->environment('testing') && $this->count === 5000 ? 10 : $this->count;
         $batchSize = 250;
         $productSoldQuantities = [];
 

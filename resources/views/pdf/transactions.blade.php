@@ -5,8 +5,8 @@
     <title>Laporan Transaksi</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            font-size: 11px;
+            font-family: Helvetica, Arial, sans-serif;
+            font-size: 10px;
             color: #333333;
             margin: 0;
             padding: 0;
@@ -38,23 +38,28 @@
         table.data-table {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 20px;
+            table-layout: fixed;
+            margin-bottom: 15px;
         }
         table.data-table th {
             background-color: #0f172a;
             color: #ffffff;
             font-weight: bold;
             text-align: left;
-            padding: 8px 6px;
-            font-size: 10px;
+            padding: 6px 5px;
+            font-size: 9px;
         }
         table.data-table td {
-            padding: 6px;
+            padding: 5px;
             border-bottom: 1px solid #e2e8f0;
-            font-size: 10px;
+            font-size: 9px;
+            word-wrap: break-word;
         }
-        table.data-table tr:nth-child(even) {
-            background-color: #f8fafc;
+        table.data-table tr {
+            page-break-inside: avoid;
+        }
+        .page-break {
+            page-break-after: always;
         }
         .text-right {
             text-align: right;
@@ -69,6 +74,7 @@
             padding: 10px;
             border-radius: 4px;
             background-color: #f8fafc;
+            page-break-inside: avoid;
         }
         .summary-table {
             width: 100%;
@@ -118,77 +124,108 @@
         Tanggal Cetak: {{ $printedAt }}
     </div>
 
-    <table class="data-table">
-        <thead>
-            <tr>
-                <th style="width: 4%;">No</th>
-                <th style="width: 16%;">No. Invoice</th>
-                <th style="width: 12%;">Tanggal</th>
-                <th style="width: 12%;">Kasir</th>
-                <th style="width: 10%;">Metode</th>
-                <th style="width: 11%;" class="text-right">Subtotal</th>
-                <th style="width: 8%;" class="text-right">Diskon</th>
-                <th style="width: 11%;" class="text-right">Total</th>
-                <th style="width: 11%;" class="text-right">Retur</th>
-                <th style="width: 15%;" class="text-right">Total Bersih</th>
-            </tr>
-        </thead>
-        <tbody>
-            @forelse($transactions as $index => $trx)
-                @php
-                    $trxTotal = $trx->total_amount ?? 0;
-                    $trxDiscount = $trx->discount_amount ?? 0;
-                    $trxSubtotal = $trxTotal + $trxDiscount;
-                    $trxReturn = $trx->returns ? $trx->returns->sum('total_refund_amount') : 0;
-                    $trxNet = $trxTotal - $trxReturn;
-                @endphp
+    @if($transactions->isEmpty())
+        <table class="data-table">
+            <thead>
                 <tr>
-                    <td class="text-center">{{ $index + 1 }}</td>
-                    <td class="font-bold">{{ $trx->invoice_number }}</td>
-                    <td>
-                        @if($trx->created_at)
-                            {{ \Carbon\Carbon::parse($trx->created_at)->format('d/m/Y H:i') }}
-                        @else
-                            -
-                        @endif
-                    </td>
-                    <td>{{ $trx->user?->name ?? '-' }}</td>
-                    <td>{{ $trx->paymentMethod?->name ?? '-' }}</td>
-                    <td class="text-right">Rp {{ number_format($trxSubtotal, 0, ',', '.') }}</td>
-                    <td class="text-right">Rp {{ number_format($trxDiscount, 0, ',', '.') }}</td>
-                    <td class="text-right">Rp {{ number_format($trxTotal, 0, ',', '.') }}</td>
-                    <td class="text-right" style="color: #d97706;">
-                        {{ $trxReturn > 0 ? 'Rp ' . number_format($trxReturn, 0, ',', '.') : '-' }}
-                    </td>
-                    <td class="text-right font-bold">Rp {{ number_format($trxNet, 0, ',', '.') }}</td>
+                    <th style="width: 4%;">No</th>
+                    <th style="width: 17%;">No. Invoice</th>
+                    <th style="width: 12%;">Tanggal</th>
+                    <th style="width: 12%;">Kasir</th>
+                    <th style="width: 10%;">Metode</th>
+                    <th style="width: 11%;" class="text-right">Subtotal</th>
+                    <th style="width: 8%;" class="text-right">Diskon</th>
+                    <th style="width: 11%;" class="text-right">Total</th>
+                    <th style="width: 10%;" class="text-right">Retur</th>
+                    <th style="width: 15%;" class="text-right">Total Bersih</th>
                 </tr>
-            @empty
+            </thead>
+            <tbody>
                 <tr>
                     <td colspan="10" class="text-center" style="padding: 20px;">Tidak ada data transaksi.</td>
                 </tr>
-            @endforelse
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    @else
+        @php
+            $chunks = $transactions->chunk(35);
+            $totalChunks = $chunks->count();
+            $globalIndex = 1;
+        @endphp
+
+        @foreach($chunks as $chunkIndex => $chunk)
+            <table class="data-table {{ $chunkIndex < $totalChunks - 1 ? 'page-break' : '' }}">
+                <thead>
+                    <tr>
+                        <th style="width: 4%;">No</th>
+                        <th style="width: 17%;">No. Invoice</th>
+                        <th style="width: 12%;">Tanggal</th>
+                        <th style="width: 12%;">Kasir</th>
+                        <th style="width: 10%;">Metode</th>
+                        <th style="width: 11%;" class="text-right">Subtotal</th>
+                        <th style="width: 8%;" class="text-right">Diskon</th>
+                        <th style="width: 11%;" class="text-right">Total</th>
+                        <th style="width: 10%;" class="text-right">Retur</th>
+                        <th style="width: 15%;" class="text-right">Total Bersih</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($chunk as $trx)
+                        @php
+                            $trxTotal = $trx->total_amount ?? 0;
+                            $trxDiscount = $trx->discount_amount ?? 0;
+                            $trxSubtotal = $trxTotal + $trxDiscount;
+                            $trxReturn = $trx->returns_sum_total_refund_amount ?? ($trx->returns ? $trx->returns->sum('total_refund_amount') : 0);
+                            $trxNet = $trxTotal - $trxReturn;
+                        @endphp
+                        <tr>
+                            <td class="text-center">{{ $globalIndex++ }}</td>
+                            <td class="font-bold">{{ $trx->invoice_number }}</td>
+                            <td>
+                                @if($trx->created_at)
+                                    {{ \Carbon\Carbon::parse($trx->created_at)->format('d/m/Y H:i') }}
+                                @else
+                                    -
+                                @endif
+                            </td>
+                            <td>{{ $trx->user?->name ?? '-' }}</td>
+                            <td>{{ $trx->paymentMethod?->name ?? '-' }}</td>
+                            <td class="text-right">Rp {{ number_format($trxSubtotal, 0, ',', '.') }}</td>
+                            <td class="text-right">Rp {{ number_format($trxDiscount, 0, ',', '.') }}</td>
+                            <td class="text-right">Rp {{ number_format($trxTotal, 0, ',', '.') }}</td>
+                            <td class="text-right" style="color: #d97706;">
+                                {{ $trxReturn > 0 ? 'Rp ' . number_format($trxReturn, 0, ',', '.') : '-' }}
+                            </td>
+                            <td class="text-right font-bold">Rp {{ number_format($trxNet, 0, ',', '.') }}</td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        @endforeach
+    @endif
 
     @php
-        $grossSales = $transactions->sum('total_amount');
-        $totalDiscounts = $transactions->sum('discount_amount');
-        $totalReturns = 0;
-        $grossProfit = 0;
+        $totalTrxCount = isset($summary['count']) ? $summary['count'] : count($transactions);
+        $grossSales = isset($summary['gross_sales']) ? $summary['gross_sales'] : $transactions->sum('total_amount');
+        $totalDiscounts = isset($summary['total_discounts']) ? $summary['total_discounts'] : $transactions->sum('discount_amount');
+        $totalReturns = isset($summary['total_returns']) ? $summary['total_returns'] : 0;
+        $netSales = isset($summary['net_sales']) ? $summary['net_sales'] : ($grossSales - $totalReturns);
+        $netProfit = isset($summary['net_profit']) ? $summary['net_profit'] : 0;
 
-        foreach ($transactions as $trx) {
-            if ($trx->returns) {
-                $totalReturns += $trx->returns->sum('total_refund_amount');
-            }
-            if ($trx->transactionDetails) {
-                foreach ($trx->transactionDetails as $detail) {
-                    $grossProfit += ($detail->price - $detail->cost_price - $detail->discount) * $detail->quantity;
+        if (!isset($summary)) {
+            foreach ($transactions as $trx) {
+                if ($trx->returns) {
+                    $totalReturns += $trx->returns->sum('total_refund_amount');
+                }
+                if ($trx->transactionDetails) {
+                    foreach ($trx->transactionDetails as $detail) {
+                        $netProfit += ($detail->price - $detail->cost_price - $detail->discount) * $detail->quantity;
+                    }
                 }
             }
+            $netSales = $grossSales - $totalReturns;
+            $netProfit = $netProfit - $totalReturns;
         }
-
-        $netSales = $grossSales - $totalReturns;
-        $netProfit = $grossProfit - $totalReturns;
     @endphp
 
     <div class="clearfix">
@@ -196,7 +233,7 @@
             <table class="summary-table">
                 <tr>
                     <td>Total Transaksi:</td>
-                    <td class="text-right font-bold">{{ count($transactions) }}</td>
+                    <td class="text-right font-bold">{{ number_format($totalTrxCount, 0, ',', '.') }}</td>
                 </tr>
                 <tr>
                     <td>Penjualan Kotor:</td>
