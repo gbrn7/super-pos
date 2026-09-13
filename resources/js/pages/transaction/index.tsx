@@ -41,6 +41,11 @@ export default function Index({ storeSetting }: { storeSetting?: StoreSetting | 
     const { t } = useTranslation();
     const { hasPermission } = useAuth();
 
+    const canReadUser = hasPermission(PERMISSIONENUMS.USER.READ);
+    const canReadPaymentMethod = hasPermission(
+        PERMISSIONENUMS.PAYMENT_METHOD.READ,
+    );
+
     const [transactionsData, setTransactionsData] = useState<Transaction[]>([]);
     const [paymentMethods, setPaymentMethods] = useState<PaymentMethod[]>([]);
     const [users, setUsers] = useState<User[]>([]);
@@ -119,9 +124,20 @@ export default function Index({ storeSetting }: { storeSetting?: StoreSetting | 
     };
 
     useEffect(() => {
-        // eslint-disable-next-line react-hooks/set-state-in-effect
-        void Promise.all([fetchPaymentMethods(), fetchUsers()]);
-    }, []);
+        const promises: Promise<void>[] = [];
+
+        if (canReadPaymentMethod) {
+            promises.push(fetchPaymentMethods());
+        }
+
+        if (canReadUser) {
+            promises.push(fetchUsers());
+        }
+
+        if (promises.length > 0) {
+            void Promise.all(promises);
+        }
+    }, [canReadPaymentMethod, canReadUser]);
 
     const fetchTransactions = useCallback(async () => {
         try {
@@ -283,6 +299,8 @@ export default function Index({ storeSetting }: { storeSetting?: StoreSetting | 
                     columns={columns}
                     paymentMethods={paymentMethods}
                     users={users}
+                    canReadUser={canReadUser}
+                    canReadPaymentMethod={canReadPaymentMethod}
                     processing={processing}
                     data={transactionsData}
                     limitOptions={PAGINATIONLIMITOPTIONDEFAULT}
