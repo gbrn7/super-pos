@@ -31,91 +31,91 @@ export const columns = ({
     onDetailClick: (item: ReturnItem) => void;
     onInvoiceClick: (transactionId: number) => void;
 }): ColumnDef<ReturnItem>[] => [
-    {
-        accessorKey: 'return_number',
-        header: i18next.t('page.return.data_table.columns.return_number', 'No. Retur'),
-        cell: ({ row }) => (
-            <button
-                type="button"
-                onClick={() => onDetailClick(row.original)}
-                className="font-semibold text-primary hover:underline font-mono text-left bg-transparent border-0 p-0 cursor-pointer"
-            >
-                {row.original.return_number}
-            </button>
-        ),
-    },
-    {
-        accessorKey: 'transaction.invoice_number',
-        header: i18next.t('page.return.data_table.columns.invoice_number', 'No. Invoice Struk'),
-        cell: ({ row }) => {
-            const invoiceNumber = row.original.transaction?.invoice_number;
-            const transactionId = row.original.transaction_id;
-            return invoiceNumber ? (
+        {
+            accessorKey: 'return_number',
+            header: i18next.t('page.return.data_table.columns.return_number', 'No. Retur'),
+            cell: ({ row }) => (
                 <button
                     type="button"
-                    onClick={() => onInvoiceClick(transactionId)}
-                    className="font-mono text-xs text-primary hover:underline text-left bg-transparent border-0 p-0 cursor-pointer"
+                    onClick={() => onDetailClick(row.original)}
+                    className="font-semibold text-primary hover:underline font-mono text-left bg-transparent border-0 p-0 cursor-pointer"
                 >
-                    {invoiceNumber}
+                    {row.original.return_number}
                 </button>
-            ) : (
-                <span className="font-mono text-xs text-muted-foreground">-</span>
-            );
+            ),
         },
-    },
-    {
-        accessorKey: 'user.name',
-        header: i18next.t('page.return.data_table.columns.user_name', 'Kasir / Petugas'),
-        cell: ({ row }) => row.original.user?.name || '-',
-    },
-    {
-        accessorKey: 'total_refund_amount',
-        header: i18next.t('page.return.data_table.columns.total_refund', 'Total Refund'),
-        cell: ({ row }) => (
-            <span className="font-bold text-rose-600 dark:text-rose-400 tabular-nums">
-                {formatRupiah(row.original.total_refund_amount)}
-            </span>
-        ),
-    },
-    {
-        accessorKey: 'reason',
-        header: i18next.t('page.return.data_table.columns.reason', 'Alasan Retur'),
-        cell: ({ row }) => (
-            <span className="truncate max-w-48 block text-muted-foreground text-xs">
-                {row.original.reason || '-'}
-            </span>
-        ),
-    },
-    {
-        accessorKey: 'created_at',
-        header: i18next.t('page.return.data_table.columns.created_at', 'Tanggal & Waktu'),
-        cell: ({ row }) => {
-            const dateVal = row.original.created_at;
-            if (!dateVal) return '-';
-            const date = new Date(dateVal * 1000);
-            return (
-                <span className="text-xs text-muted-foreground">
-                    {date.toLocaleString(i18next.language === 'en' ? 'en-US' : 'id-ID', {
-                        dateStyle: 'medium',
-                        timeStyle: 'short',
-                    })}
+        {
+            accessorKey: 'transaction.invoice_number',
+            header: i18next.t('page.return.data_table.columns.invoice_number', 'No. Invoice Struk'),
+            cell: ({ row }) => {
+                const invoiceNumber = row.original.transaction?.invoice_number;
+                const transactionId = row.original.transaction_id;
+                return invoiceNumber ? (
+                    <button
+                        type="button"
+                        onClick={() => onInvoiceClick(transactionId)}
+                        className="font-semibold text-primary hover:underline font-mono text-left bg-transparent border-0 p-0 cursor-pointer"
+                    >
+                        {invoiceNumber}
+                    </button>
+                ) : (
+                    <span className="font-mono text-xs text-muted-foreground">-</span>
+                );
+            },
+        },
+        {
+            accessorKey: 'user.name',
+            header: i18next.t('page.return.data_table.columns.user_name', 'Kasir / Petugas'),
+            cell: ({ row }) => row.original.user?.name || '-',
+        },
+        {
+            accessorKey: 'total_refund_amount',
+            header: i18next.t('page.return.data_table.columns.total_refund', 'Total Refund'),
+            cell: ({ row }) => (
+                <span className="font-bold text-rose-600 dark:text-rose-400 tabular-nums">
+                    {formatRupiah(row.original.total_refund_amount)}
                 </span>
-            );
+            ),
         },
-    },
-    {
-        id: 'actions',
-        header: i18next.t('page.return.data_table.columns.actions', 'Aksi'),
-        cell: ({ row }) => (
-            <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => onDetailClick(row.original)}
-                title={i18next.t('page.return.data_table.actions.view_detail', 'Lihat Detail Retur')}
-            >
-                <Eye className="h-4 w-4 text-muted-foreground hover:text-foreground" />
-                <span className="sr-only">{i18next.t('component.data_table.actions.detail', 'Detail')}</span>
-            </Button>
-        ),
-    },
-];
+        {
+            accessorKey: 'reason',
+            header: i18next.t('page.return.data_table.columns.reason', 'Alasan Retur'),
+            cell: ({ row }) => (
+                <span className="truncate max-w-48 block text-muted-foreground text-xs">
+                    {row.original.reason || '-'}
+                </span>
+            ),
+        },
+        {
+            accessorKey: 'created_at',
+            header: i18next.t('page.return.data_table.columns.created_at', 'Tanggal & Waktu'),
+            cell: ({ row }) => {
+                const dateVal = row.original.created_at;
+                if (!dateVal) return '-';
+                const date = new Date(dateVal * 1000);
+                return (
+                    <span className="text-xs text-muted-foreground">
+                        {date.toLocaleString(i18next.language === 'en' ? 'en-US' : 'id-ID', {
+                            dateStyle: 'medium',
+                            timeStyle: 'short',
+                        })}
+                    </span>
+                );
+            },
+        },
+        {
+            id: 'actions',
+            header: i18next.t('page.return.data_table.columns.actions', 'Aksi'),
+            cell: ({ row }) => (
+                <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => onDetailClick(row.original)}
+                    title={i18next.t('page.return.data_table.actions.view_detail', 'Lihat Detail Retur')}
+                >
+                    <Eye className="h-4 w-4 text-muted-foreground hover:text-foreground" />
+                    <span className="sr-only">{i18next.t('component.data_table.actions.detail', 'Detail')}</span>
+                </Button>
+            ),
+        },
+    ];

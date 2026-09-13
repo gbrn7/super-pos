@@ -200,10 +200,10 @@ export function CreateDialog({
             } else {
                 showWarningToast(
                     res.data.message ||
-                        t(
-                            'page.product.dialog_modal.create_dialog.master_product_not_found',
-                            'Data master produk tidak ditemukan.',
-                        ),
+                    t(
+                        'page.product.dialog_modal.create_dialog.master_product_not_found',
+                        'Data master produk tidak ditemukan.',
+                    ),
                 );
             }
         } catch (error) {
@@ -314,7 +314,7 @@ export function CreateDialog({
                             <label htmlFor="barcode" className="text-sm">
                                 {t(
                                     'page.product.dialog_modal.create_dialog.barcode_input_label',
-                                    'Barcode',
+                                    'Barcode Opsional',
                                 )}
                             </label>
                             <div className="flex gap-2">
