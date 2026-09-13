@@ -268,7 +268,10 @@ export function ExportModal({
                                     'Tanggal Mulai',
                                 )}
                             </Label>
-                            <Popover open={openStartDate} onOpenChange={setOpenStartDate}>
+                            <Popover
+                                open={openStartDate}
+                                onOpenChange={setOpenStartDate}
+                            >
                                 <PopoverTrigger asChild>
                                     <Button
                                         variant="outline"
@@ -320,7 +323,10 @@ export function ExportModal({
                                     'Tanggal Akhir',
                                 )}
                             </Label>
-                            <Popover open={openEndDate} onOpenChange={setOpenEndDate}>
+                            <Popover
+                                open={openEndDate}
+                                onOpenChange={setOpenEndDate}
+                            >
                                 <PopoverTrigger asChild>
                                     <Button
                                         variant="outline"

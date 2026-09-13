@@ -287,13 +287,22 @@ export function DataTable<TData, TValue>({
                                             )}
                                         </SelectItem>
                                         <SelectItem value="invoice_number">
-                                            {t('component.data_table.search_component.invoice_number', 'No. Invoice')}
+                                            {t(
+                                                'component.data_table.search_component.invoice_number',
+                                                'No. Invoice',
+                                            )}
                                         </SelectItem>
                                         <SelectItem value="payment_method_name">
-                                            {t('component.data_table.search_component.payment_method_name', 'Metode Pembayaran')}
+                                            {t(
+                                                'component.data_table.search_component.payment_method_name',
+                                                'Metode Pembayaran',
+                                            )}
                                         </SelectItem>
                                         <SelectItem value="user_name">
-                                            {t('component.data_table.search_component.user_name', 'Kasir / Petugas')}
+                                            {t(
+                                                'component.data_table.search_component.user_name',
+                                                'Kasir / Petugas',
+                                            )}
                                         </SelectItem>
                                     </SelectGroup>
                                 </SelectContent>
@@ -331,7 +340,9 @@ export function DataTable<TData, TValue>({
                                 onValueChange={(value) => {
                                     if (onChangeUser) {
                                         onChangeUser(
-                                            value === 'all' ? null : Number(value),
+                                            value === 'all'
+                                                ? null
+                                                : Number(value),
                                         );
                                     }
                                 }}
@@ -352,7 +363,10 @@ export function DataTable<TData, TValue>({
                                         )}
                                     </SelectItem>
                                     {users?.map((u) => (
-                                        <SelectItem key={u.id} value={String(u.id)}>
+                                        <SelectItem
+                                            key={u.id}
+                                            value={String(u.id)}
+                                        >
                                             {u.name}
                                         </SelectItem>
                                     ))}
@@ -380,7 +394,9 @@ export function DataTable<TData, TValue>({
                                 onValueChange={(value) => {
                                     if (onChangePaymentMethod) {
                                         onChangePaymentMethod(
-                                            value === 'all' ? null : Number(value),
+                                            value === 'all'
+                                                ? null
+                                                : Number(value),
                                         );
                                     }
                                 }}
@@ -417,25 +433,39 @@ export function DataTable<TData, TValue>({
                     <div className="space-y-1.5">
                         <Label className="flex items-center gap-1 text-sm font-medium text-muted-foreground">
                             <Calendar className="h-4 w-4" />
-                            {t('component.data_table.filter.start_date_label', 'Tanggal Mulai')}
+                            {t(
+                                'component.data_table.filter.start_date_label',
+                                'Tanggal Mulai',
+                            )}
                         </Label>
-                        <Popover open={openStartDate} onOpenChange={setOpenStartDate}>
+                        <Popover
+                            open={openStartDate}
+                            onOpenChange={setOpenStartDate}
+                        >
                             <PopoverTrigger asChild>
                                 <Button
                                     variant="outline"
                                     disabled={processing}
-                                    className="w-full justify-start text-left font-normal text-sm h-9"
+                                    className="h-9 w-full justify-start text-left text-sm font-normal"
                                 >
                                     {queryParam.start_date ? (
                                         new Date(
                                             queryParam.start_date,
                                         ).toLocaleDateString('id-ID')
                                     ) : (
-                                        <span className="text-muted-foreground">{t('component.data_table.filter.start_date_label', 'Pilih Tanggal Mulai')}</span>
+                                        <span className="text-muted-foreground">
+                                            {t(
+                                                'component.data_table.filter.start_date_label',
+                                                'Pilih Tanggal Mulai',
+                                            )}
+                                        </span>
                                     )}
                                 </Button>
                             </PopoverTrigger>
-                            <PopoverContent className="w-auto p-0" align="start">
+                            <PopoverContent
+                                className="w-auto p-0"
+                                align="start"
+                            >
                                 <CalendarPicker
                                     mode="single"
                                     selected={
@@ -469,25 +499,39 @@ export function DataTable<TData, TValue>({
                     <div className="space-y-1.5">
                         <Label className="flex items-center gap-1 text-sm font-medium text-muted-foreground">
                             <Calendar className="h-4 w-4" />
-                            {t('component.data_table.filter.end_date_label', 'Tanggal Akhir')}
+                            {t(
+                                'component.data_table.filter.end_date_label',
+                                'Tanggal Akhir',
+                            )}
                         </Label>
-                        <Popover open={openEndDate} onOpenChange={setOpenEndDate}>
+                        <Popover
+                            open={openEndDate}
+                            onOpenChange={setOpenEndDate}
+                        >
                             <PopoverTrigger asChild>
                                 <Button
                                     variant="outline"
                                     disabled={processing}
-                                    className="w-full justify-start text-left font-normal text-sm h-9"
+                                    className="h-9 w-full justify-start text-left text-sm font-normal"
                                 >
                                     {queryParam.end_date ? (
                                         new Date(
                                             queryParam.end_date,
                                         ).toLocaleDateString('id-ID')
                                     ) : (
-                                        <span className="text-muted-foreground">{t('component.data_table.filter.end_date_label', 'Pilih Tanggal Akhir')}</span>
+                                        <span className="text-muted-foreground">
+                                            {t(
+                                                'component.data_table.filter.end_date_label',
+                                                'Pilih Tanggal Akhir',
+                                            )}
+                                        </span>
                                     )}
                                 </Button>
                             </PopoverTrigger>
-                            <PopoverContent className="w-auto p-0" align="start">
+                            <PopoverContent
+                                className="w-auto p-0"
+                                align="start"
+                            >
                                 <CalendarPicker
                                     mode="single"
                                     selected={
@@ -582,38 +626,40 @@ export function DataTable<TData, TValue>({
                                 </Badge>
                             )}
 
-                            {canReadPaymentMethod && queryParam.payment_method_id && (
-                                <Badge
-                                    variant="secondary"
-                                    className="gap-1.5 bg-muted/50 px-2 py-0.5 text-xs font-normal hover:bg-muted"
-                                >
-                                    <span>
-                                        {t(
-                                            'page.transaction.dialog_modal.detail_dialog.payment_method_label',
-                                            'Metode Pembayaran',
-                                        )}
-                                        :{' '}
-                                        {paymentMethods?.find(
-                                            (pm) =>
-                                                pm.id ===
-                                                queryParam.payment_method_id,
-                                        )?.name || queryParam.payment_method_id}
-                                    </span>
-                                    <button
-                                        type="button"
-                                        onClick={() =>
-                                            onChangePaymentMethod &&
-                                            onChangePaymentMethod(null)
-                                        }
-                                        className="ml-0.5 rounded-full p-0.5 text-muted-foreground transition-colors hover:bg-muted-foreground/20 hover:text-foreground"
+                            {canReadPaymentMethod &&
+                                queryParam.payment_method_id && (
+                                    <Badge
+                                        variant="secondary"
+                                        className="gap-1.5 bg-muted/50 px-2 py-0.5 text-xs font-normal hover:bg-muted"
                                     >
-                                        <X className="h-3 w-3" />
-                                        <span className="sr-only">
-                                            Hapus filter metode pembayaran
+                                        <span>
+                                            {t(
+                                                'page.transaction.dialog_modal.detail_dialog.payment_method_label',
+                                                'Metode Pembayaran',
+                                            )}
+                                            :{' '}
+                                            {paymentMethods?.find(
+                                                (pm) =>
+                                                    pm.id ===
+                                                    queryParam.payment_method_id,
+                                            )?.name ||
+                                                queryParam.payment_method_id}
                                         </span>
-                                    </button>
-                                </Badge>
-                            )}
+                                        <button
+                                            type="button"
+                                            onClick={() =>
+                                                onChangePaymentMethod &&
+                                                onChangePaymentMethod(null)
+                                            }
+                                            className="ml-0.5 rounded-full p-0.5 text-muted-foreground transition-colors hover:bg-muted-foreground/20 hover:text-foreground"
+                                        >
+                                            <X className="h-3 w-3" />
+                                            <span className="sr-only">
+                                                Hapus filter metode pembayaran
+                                            </span>
+                                        </button>
+                                    </Badge>
+                                )}
 
                             {queryParam.start_date && (
                                 <Badge
@@ -831,10 +877,16 @@ export function DataTable<TData, TValue>({
                                 onChangePaginationPage(1);
                             }}
                             disabled={
-                                (pagination.current_page || 1) <= 1 || processing
+                                (pagination.current_page || 1) <= 1 ||
+                                processing
                             }
                         >
-                            <span className="sr-only">{t('component.data_table.pagination.first_page', 'Halaman Pertama')}</span>
+                            <span className="sr-only">
+                                {t(
+                                    'component.data_table.pagination.first_page',
+                                    'Halaman Pertama',
+                                )}
+                            </span>
                             <IconChevronsLeft className="h-4 w-4" />
                         </Button>
                         <Button
@@ -842,7 +894,8 @@ export function DataTable<TData, TValue>({
                             className="size-8"
                             size="icon"
                             onClick={() => {
-                                const prevPage = (pagination.current_page || 1) - 1;
+                                const prevPage =
+                                    (pagination.current_page || 1) - 1;
                                 if (prevPage > 0) {
                                     setQueryParam((prev) => ({
                                         ...prev,
@@ -852,10 +905,16 @@ export function DataTable<TData, TValue>({
                                 }
                             }}
                             disabled={
-                                (pagination.current_page || 1) <= 1 || processing
+                                (pagination.current_page || 1) <= 1 ||
+                                processing
                             }
                         >
-                            <span className="sr-only">{t('component.data_table.pagination.prev_page', 'Halaman Sebelumnya')}</span>
+                            <span className="sr-only">
+                                {t(
+                                    'component.data_table.pagination.prev_page',
+                                    'Halaman Sebelumnya',
+                                )}
+                            </span>
                             <IconChevronLeft className="h-4 w-4" />
                         </Button>
                         <Button
@@ -863,7 +922,8 @@ export function DataTable<TData, TValue>({
                             className="size-8"
                             size="icon"
                             onClick={() => {
-                                const nextPage = (pagination.current_page || 1) + 1;
+                                const nextPage =
+                                    (pagination.current_page || 1) + 1;
                                 const lastPage = pagination.last_page || 1;
                                 if (nextPage <= lastPage) {
                                     setQueryParam((prev) => ({
@@ -878,7 +938,12 @@ export function DataTable<TData, TValue>({
                                     (pagination.last_page || 1) || processing
                             }
                         >
-                            <span className="sr-only">{t('component.data_table.pagination.next_page', 'Halaman Selanjutnya')}</span>
+                            <span className="sr-only">
+                                {t(
+                                    'component.data_table.pagination.next_page',
+                                    'Halaman Selanjutnya',
+                                )}
+                            </span>
                             <IconChevronRight className="h-4 w-4" />
                         </Button>
                         <Button
@@ -898,7 +963,12 @@ export function DataTable<TData, TValue>({
                                     (pagination.last_page || 1) || processing
                             }
                         >
-                            <span className="sr-only">{t('component.data_table.pagination.last_page', 'Halaman Terakhir')}</span>
+                            <span className="sr-only">
+                                {t(
+                                    'component.data_table.pagination.last_page',
+                                    'Halaman Terakhir',
+                                )}
+                            </span>
                             <IconChevronsRight className="h-4 w-4" />
                         </Button>
                     </div>
