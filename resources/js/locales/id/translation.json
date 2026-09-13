@@ -157,7 +157,8 @@
             "group_finance": "Keuangan",
             "profit_wallet_menu_label": "Dompet Profit",
             "capital_wallet_menu_label": "Dompet Modal",
-            "return_menu_label": "Retur Barang"
+            "return_menu_label": "Retur Barang",
+            "hpp_calculator_menu_label": "Kalkulator HPP"
         },
         "data_table": {
             "search_component": {
@@ -247,6 +248,30 @@
         }
     },
     "page": {
+        "hpp_calculator": {
+            "title": "Kalkulator HPP",
+            "subtitle": "Simulasikan Harga Pokok Penjualan (HPP) dan tentukan harga jual produk Anda.",
+            "detail_section": "Detail Simulasi",
+            "product_name": "Nama Produk (Opsional)",
+            "product_placeholder": "Contoh: Nasi Goreng Spesial",
+            "quantity_label": "Banyak Barang / Qty Produksi",
+            "costs_section": "Komponen Biaya",
+            "add_row": "Tambah Baris",
+            "cost_placeholder": "Komponen Biaya",
+            "result_section": "Hasil Simulasi",
+            "target_margin": "Target Margin (%)",
+            "total_hpp": "Total HPP (Total Biaya)",
+            "banyak_barang": "Banyak Barang",
+            "hpp_per_unit": "HPP per Unit",
+            "margin_profit": "Margin Keuntungan",
+            "suggested_price": "Rekomendasi Jual / Unit",
+            "reset": "Reset",
+            "default_costs": {
+                "raw_material": "Bahan Baku",
+                "packaging": "Kemasan",
+                "operational": "Operasional"
+            }
+        },
         "profit_wallet": {
             "page_name": "Dompet Profit",
             "cards": {

@@ -13,6 +13,7 @@ import {
     TrendingUp,
     Wallet,
     RotateCcw,
+    Calculator,
 } from 'lucide-react';
 import AppLogo from '@/components/app-logo';
 import { NavFooter } from '@/components/nav-footer';
@@ -178,6 +179,12 @@ export function AppSidebar() {
                     href: capitalWallet(),
                     icon: Wallet,
                     permission: PERMISSIONENUMS.CAPITAL_WALLET.READ,
+                    role: [],
+                },
+                {
+                    title: t('component.sidebar.hpp_calculator_menu_label', 'Kalkulator HPP'),
+                    href: '/hpp-calculator',
+                    icon: Calculator,
                     role: [],
                 },
             ],
