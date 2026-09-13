@@ -63,10 +63,33 @@ test('store setting update requires validation', function () {
         ->patch(route('store.update'), [
             'name' => '',
             'address' => '',
-            'phone' => '',
         ]);
 
     $response
-        ->assertSessionHasErrors(['name', 'address', 'phone'])
+        ->assertSessionHasErrors(['name', 'address'])
         ->assertRedirect(route('store.edit'));
+});
+
+test('store setting can be updated without phone number', function () {
+    $user = User::factory()->create();
+    StoreSetting::factory()->create();
+
+    $response = $this
+        ->actingAs($user)
+        ->patch(route('store.update'), [
+            'name' => 'Store Without Phone',
+            'address' => 'Valid Address',
+            'phone' => null,
+            'email' => null,
+            'receipt_footer' => null,
+        ]);
+
+    $response
+        ->assertSessionHasNoErrors()
+        ->assertRedirect(route('store.edit'));
+
+    $setting = StoreSetting::first();
+    expect($setting->name)->toBe('Store Without Phone');
+    expect($setting->address)->toBe('Valid Address');
+    expect($setting->phone)->toBeNull();
 });
