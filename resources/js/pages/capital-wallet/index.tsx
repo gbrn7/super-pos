@@ -32,6 +32,7 @@ import type {
     CapitalWalletTransaction,
     CapitalWalletSummary,
 } from '@/support/models/capitalWallet';
+import { useAuth } from '@/hooks/use-auth';
 
 export default function CapitalWalletIndex({
     storeSetting,
@@ -39,6 +40,8 @@ export default function CapitalWalletIndex({
     storeSetting?: StoreSetting | null;
 }) {
     const { t } = useTranslation();
+    const { hasPermission } = useAuth();
+    const canReadTransaction = hasPermission(PERMISSIONENUMS.TRANSACTION.READ);
 
     const [ledgerData, setLedgerData] = useState<CapitalWalletTransaction[]>(
         [],
@@ -245,6 +248,7 @@ export default function CapitalWalletIndex({
                         onSortChange: () => {},
                         orderBy: 'id',
                         order: 'desc',
+                        canReadTransaction,
                     })}
                     data={ledgerData}
                     processing={processing}
@@ -263,7 +267,7 @@ export default function CapitalWalletIndex({
                 />
 
                 {/* Struk / Detail Transaction Modal */}
-                {selectedTransaction && (
+                {canReadTransaction && selectedTransaction && (
                     <DetailDialog
                         isOpen={detailOpen}
                         transaction={selectedTransaction}
