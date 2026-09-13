@@ -107,6 +107,8 @@ interface DataTableProps<TData, TValue> {
     rowSelection: RowSelectionState;
     setRowSelection: React.Dispatch<React.SetStateAction<RowSelectionState>>;
     storeSetting?: StoreSetting | null;
+    canReadUser?: boolean;
+    canReadPaymentMethod?: boolean;
 }
 
 export function DataTable<TData, TValue>({
@@ -136,6 +138,8 @@ export function DataTable<TData, TValue>({
     rowSelection,
     setRowSelection,
     storeSetting,
+    canReadUser = false,
+    canReadPaymentMethod = false,
 }: DataTableProps<TData, TValue>) {
     const { t } = useTranslation();
 
@@ -307,101 +311,105 @@ export function DataTable<TData, TValue>({
                     </div>
 
                     {/* Cashier / User Filter */}
-                    <div className="space-y-1.5">
-                        <Label className="flex items-center gap-1 text-sm font-medium text-muted-foreground">
-                            <UserIcon className="h-4 w-4" />
-                            {t(
-                                'page.transaction.dialog_modal.detail_dialog.cashier_label',
-                                'Kasir / Petugas',
-                            )}
-                        </Label>
-                        <Select
-                            value={
-                                queryParam.user_id
-                                    ? String(queryParam.user_id)
-                                    : 'all'
-                            }
-                            onValueChange={(value) => {
-                                if (onChangeUser) {
-                                    onChangeUser(
-                                        value === 'all' ? null : Number(value),
-                                    );
+                    {canReadUser && (
+                        <div className="space-y-1.5">
+                            <Label className="flex items-center gap-1 text-sm font-medium text-muted-foreground">
+                                <UserIcon className="h-4 w-4" />
+                                {t(
+                                    'page.transaction.dialog_modal.detail_dialog.cashier_label',
+                                    'Kasir / Petugas',
+                                )}
+                            </Label>
+                            <Select
+                                value={
+                                    queryParam.user_id
+                                        ? String(queryParam.user_id)
+                                        : 'all'
                                 }
-                            }}
-                        >
-                            <SelectTrigger className="w-full">
-                                <SelectValue
-                                    placeholder={t(
-                                        'component.data_table.all_cashiers',
-                                        'Semua Kasir',
-                                    )}
-                                />
-                            </SelectTrigger>
-                            <SelectContent>
-                                <SelectItem value="all">
-                                    {t(
-                                        'component.data_table.all_cashiers',
-                                        'Semua Kasir',
-                                    )}
-                                </SelectItem>
-                                {users?.map((u) => (
-                                    <SelectItem key={u.id} value={String(u.id)}>
-                                        {u.name}
+                                onValueChange={(value) => {
+                                    if (onChangeUser) {
+                                        onChangeUser(
+                                            value === 'all' ? null : Number(value),
+                                        );
+                                    }
+                                }}
+                            >
+                                <SelectTrigger className="w-full">
+                                    <SelectValue
+                                        placeholder={t(
+                                            'component.data_table.all_cashiers',
+                                            'Semua Kasir',
+                                        )}
+                                    />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectItem value="all">
+                                        {t(
+                                            'component.data_table.all_cashiers',
+                                            'Semua Kasir',
+                                        )}
                                     </SelectItem>
-                                ))}
-                            </SelectContent>
-                        </Select>
-                    </div>
+                                    {users?.map((u) => (
+                                        <SelectItem key={u.id} value={String(u.id)}>
+                                            {u.name}
+                                        </SelectItem>
+                                    ))}
+                                </SelectContent>
+                            </Select>
+                        </div>
+                    )}
 
                     {/* Payment Method Filter */}
-                    <div className="space-y-1.5">
-                        <Label className="flex items-center gap-1 text-sm font-medium text-muted-foreground">
-                            <CreditCard className="h-4 w-4" />
-                            {t(
-                                'page.transaction.dialog_modal.detail_dialog.payment_method_label',
-                                'Metode Pembayaran',
-                            )}
-                        </Label>
-                        <Select
-                            value={
-                                queryParam.payment_method_id
-                                    ? String(queryParam.payment_method_id)
-                                    : 'all'
-                            }
-                            onValueChange={(value) => {
-                                if (onChangePaymentMethod) {
-                                    onChangePaymentMethod(
-                                        value === 'all' ? null : Number(value),
-                                    );
+                    {canReadPaymentMethod && (
+                        <div className="space-y-1.5">
+                            <Label className="flex items-center gap-1 text-sm font-medium text-muted-foreground">
+                                <CreditCard className="h-4 w-4" />
+                                {t(
+                                    'page.transaction.dialog_modal.detail_dialog.payment_method_label',
+                                    'Metode Pembayaran',
+                                )}
+                            </Label>
+                            <Select
+                                value={
+                                    queryParam.payment_method_id
+                                        ? String(queryParam.payment_method_id)
+                                        : 'all'
                                 }
-                            }}
-                        >
-                            <SelectTrigger className="w-full">
-                                <SelectValue
-                                    placeholder={t(
-                                        'component.data_table.all_payment_methods',
-                                        'Semua Metode Pembayaran',
-                                    )}
-                                />
-                            </SelectTrigger>
-                            <SelectContent>
-                                <SelectItem value="all">
-                                    {t(
-                                        'component.data_table.all_payment_methods',
-                                        'Semua Metode Pembayaran',
-                                    )}
-                                </SelectItem>
-                                {paymentMethods?.map((pm) => (
-                                    <SelectItem
-                                        key={pm.id}
-                                        value={String(pm.id)}
-                                    >
-                                        {pm.name}
+                                onValueChange={(value) => {
+                                    if (onChangePaymentMethod) {
+                                        onChangePaymentMethod(
+                                            value === 'all' ? null : Number(value),
+                                        );
+                                    }
+                                }}
+                            >
+                                <SelectTrigger className="w-full">
+                                    <SelectValue
+                                        placeholder={t(
+                                            'component.data_table.all_payment_methods',
+                                            'Semua Metode Pembayaran',
+                                        )}
+                                    />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectItem value="all">
+                                        {t(
+                                            'component.data_table.all_payment_methods',
+                                            'Semua Metode Pembayaran',
+                                        )}
                                     </SelectItem>
-                                ))}
-                            </SelectContent>
-                        </Select>
-                    </div>
+                                    {paymentMethods?.map((pm) => (
+                                        <SelectItem
+                                            key={pm.id}
+                                            value={String(pm.id)}
+                                        >
+                                            {pm.name}
+                                        </SelectItem>
+                                    ))}
+                                </SelectContent>
+                            </Select>
+                        </div>
+                    )}
 
                     {/* Start Date Filter */}
                     <div className="space-y-1.5">
@@ -504,7 +512,7 @@ export function DataTable<TData, TValue>({
                                 </Badge>
                             )}
 
-                            {queryParam.user_id && (
+                            {canReadUser && queryParam.user_id && (
                                 <Badge
                                     variant="secondary"
                                     className="gap-1.5 bg-muted/50 px-2 py-0.5 text-xs font-normal hover:bg-muted"
@@ -534,7 +542,7 @@ export function DataTable<TData, TValue>({
                                 </Badge>
                             )}
 
-                            {queryParam.payment_method_id && (
+                            {canReadPaymentMethod && queryParam.payment_method_id && (
                                 <Badge
                                     variant="secondary"
                                     className="gap-1.5 bg-muted/50 px-2 py-0.5 text-xs font-normal hover:bg-muted"
