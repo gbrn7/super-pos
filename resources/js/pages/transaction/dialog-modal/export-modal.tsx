@@ -70,6 +70,8 @@ export function ExportModal({
         initialDates.defaultStart,
     );
     const [endDate, setEndDate] = useState<string>(initialDates.defaultEnd);
+    const [openStartDate, setOpenStartDate] = useState<boolean>(false);
+    const [openEndDate, setOpenEndDate] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(false);
 
     React.useEffect(() => {
@@ -266,7 +268,7 @@ export function ExportModal({
                                     'Tanggal Mulai',
                                 )}
                             </Label>
-                            <Popover>
+                            <Popover open={openStartDate} onOpenChange={setOpenStartDate}>
                                 <PopoverTrigger asChild>
                                     <Button
                                         variant="outline"
@@ -304,6 +306,7 @@ export function ExportModal({
                                                     .toISOString()
                                                     .slice(0, 10);
                                                 setStartDate(iso);
+                                                setOpenStartDate(false);
                                             }
                                         }}
                                     />
@@ -317,7 +320,7 @@ export function ExportModal({
                                     'Tanggal Akhir',
                                 )}
                             </Label>
-                            <Popover>
+                            <Popover open={openEndDate} onOpenChange={setOpenEndDate}>
                                 <PopoverTrigger asChild>
                                     <Button
                                         variant="outline"
@@ -355,6 +358,7 @@ export function ExportModal({
                                                     .toISOString()
                                                     .slice(0, 10);
                                                 setEndDate(iso);
+                                                setOpenEndDate(false);
                                             }
                                         }}
                                     />
