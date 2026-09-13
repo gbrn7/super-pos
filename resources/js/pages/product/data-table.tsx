@@ -113,6 +113,8 @@ interface DataTableProps<TData, TValue> {
     setQueryParam: React.Dispatch<React.SetStateAction<ProductQueryParam>>;
     rowSelection: RowSelectionState;
     setRowSelection: React.Dispatch<React.SetStateAction<RowSelectionState>>;
+    canReadCategory?: boolean;
+    canReadUnit?: boolean;
 }
 export function DataTable<TData, TValue>({
     columns: columnsOrFn,
@@ -152,6 +154,8 @@ export function DataTable<TData, TValue>({
     setQueryParam,
     rowSelection,
     setRowSelection,
+    canReadCategory = false,
+    canReadUnit = false,
 }: DataTableProps<TData, TValue>) {
     const { t } = useTranslation();
 
@@ -419,66 +423,70 @@ export function DataTable<TData, TValue>({
                             />
                         </div>
                     </div>
-                    <div className="space-y-1.5">
-                        <Label className="text-sm font-medium text-muted-foreground">
-                            {t(
-                                'component.data_table.filter.category_label',
-                                'Kategori',
-                            )}
-                        </Label>
-                        <SearchableSelect
-                            options={categoryFilterOptions}
-                            value={getNumberFilterValue(queryParam.category_id)}
-                            onValueChange={(value) =>
-                                updateQueryParam(
-                                    'category_id',
-                                    getNullableNumberFilterValue(value),
-                                )
-                            }
-                            placeholder={t(
-                                'component.data_table.filter.category_placeholder',
-                                'Pilih Kategori',
-                            )}
-                            searchPlaceholder={t(
-                                'component.data_table.filter.search_category_placeholder',
-                                'Cari Kategori...',
-                            )}
-                            emptyMessage={t(
-                                'component.data_table.filter.no_category_found',
-                                'Kategori tidak ditemukan.',
-                            )}
-                        />
-                    </div>
-                    <div className="space-y-1.5">
-                        <Label className="text-sm font-medium text-muted-foreground">
-                            {t(
-                                'component.data_table.filter.unit_label',
-                                'Satuan',
-                            )}
-                        </Label>
-                        <SearchableSelect
-                            options={unitFilterOptions}
-                            value={getNumberFilterValue(queryParam.unit_id)}
-                            onValueChange={(value) =>
-                                updateQueryParam(
-                                    'unit_id',
-                                    getNullableNumberFilterValue(value),
-                                )
-                            }
-                            placeholder={t(
-                                'component.data_table.filter.unit_placeholder',
-                                'Pilih Satuan',
-                            )}
-                            searchPlaceholder={t(
-                                'component.data_table.filter.search_unit_placeholder',
-                                'Cari Satuan...',
-                            )}
-                            emptyMessage={t(
-                                'component.data_table.filter.no_unit_found',
-                                'Satuan tidak ditemukan.',
-                            )}
-                        />
-                    </div>
+                    {canReadCategory && (
+                        <div className="space-y-1.5">
+                            <Label className="text-sm font-medium text-muted-foreground">
+                                {t(
+                                    'component.data_table.filter.category_label',
+                                    'Kategori',
+                                )}
+                            </Label>
+                            <SearchableSelect
+                                options={categoryFilterOptions}
+                                value={getNumberFilterValue(queryParam.category_id)}
+                                onValueChange={(value) =>
+                                    updateQueryParam(
+                                        'category_id',
+                                        getNullableNumberFilterValue(value),
+                                    )
+                                }
+                                placeholder={t(
+                                    'component.data_table.filter.category_placeholder',
+                                    'Pilih Kategori',
+                                )}
+                                searchPlaceholder={t(
+                                    'component.data_table.filter.search_category_placeholder',
+                                    'Cari Kategori...',
+                                )}
+                                emptyMessage={t(
+                                    'component.data_table.filter.no_category_found',
+                                    'Kategori tidak ditemukan.',
+                                )}
+                            />
+                        </div>
+                    )}
+                    {canReadUnit && (
+                        <div className="space-y-1.5">
+                            <Label className="text-sm font-medium text-muted-foreground">
+                                {t(
+                                    'component.data_table.filter.unit_label',
+                                    'Satuan',
+                                )}
+                            </Label>
+                            <SearchableSelect
+                                options={unitFilterOptions}
+                                value={getNumberFilterValue(queryParam.unit_id)}
+                                onValueChange={(value) =>
+                                    updateQueryParam(
+                                        'unit_id',
+                                        getNullableNumberFilterValue(value),
+                                    )
+                                }
+                                placeholder={t(
+                                    'component.data_table.filter.unit_placeholder',
+                                    'Pilih Satuan',
+                                )}
+                                searchPlaceholder={t(
+                                    'component.data_table.filter.search_unit_placeholder',
+                                    'Cari Satuan...',
+                                )}
+                                emptyMessage={t(
+                                    'component.data_table.filter.no_unit_found',
+                                    'Satuan tidak ditemukan.',
+                                )}
+                            />
+                        </div>
+                    )}
                     <div className="space-y-1.5">
                         <Label className="text-sm font-medium text-muted-foreground">
                             {t(
@@ -680,7 +688,7 @@ export function DataTable<TData, TValue>({
                                 </Badge>
                             )}
 
-                            {queryParam.category_id && (
+                            {canReadCategory && queryParam.category_id && (
                                 <Badge
                                     variant="secondary"
                                     className="gap-1.5 bg-muted/50 px-2 py-0.5 text-xs font-normal hover:bg-muted"
@@ -714,7 +722,7 @@ export function DataTable<TData, TValue>({
                                 </Badge>
                             )}
 
-                            {queryParam.unit_id && (
+                            {canReadUnit && queryParam.unit_id && (
                                 <Badge
                                     variant="secondary"
                                     className="gap-1.5 bg-muted/50 px-2 py-0.5 text-xs font-normal hover:bg-muted"
