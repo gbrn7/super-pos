@@ -770,7 +770,7 @@
                     "is_unlimited_input_label": "Stok tidak terbatas",
                     "desc_input_label": "Deskripsi",
                     "desc_input_placeholder": "Masukkan deskripsi produk",
-                    "barcode_input_label": "Barcode",
+                    "barcode_input_label": "Barcode (Opsional)",
                     "barcode_input_placeholder": "Masukkan barcode produk",
                     "cancel_button": "Batal",
                     "confirm_button": "Tambah Produk"

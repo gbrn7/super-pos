@@ -770,7 +770,7 @@
                     "is_unlimited_input_label": "Stock Status",
                     "desc_input_label": "Description",
                     "desc_input_placeholder": "Enter product description",
-                    "barcode_input_label": "Barcode",
+                    "barcode_input_label": "Barcode (Optional)",
                     "barcode_input_placeholder": "Enter product barcode",
                     "cancel_button": "Cancel",
                     "confirm_button": "Add Product"
