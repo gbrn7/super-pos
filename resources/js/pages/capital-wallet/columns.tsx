@@ -12,6 +12,7 @@ interface ColumnProps {
     onSortChange: (orderBy: string | null, order: string | null) => void;
     orderBy?: string;
     order?: string;
+    canReadTransaction?: boolean;
 }
 
 export const columns = ({
@@ -19,6 +20,7 @@ export const columns = ({
     onSortChange,
     orderBy,
     order,
+    canReadTransaction = false,
 }: ColumnProps): ColumnDef<CapitalWalletTransaction>[] => [
     {
         accessorKey: 'created_at',
@@ -183,24 +185,28 @@ export const columns = ({
             </span>
         ),
     },
-    {
-        accessorKey: 'reference',
-        header: () =>
-            i18next.t(
-                'page.capital_wallet.data_table.columns.reference',
-                'Rujukan',
-            ),
-        cell: ({ row }) => {
-            const inv = row.original.invoice_number;
-            if (!inv || inv === '-') return <span>-</span>;
-            return (
-                <button
-                    onClick={() => onInvoiceClick(inv)}
-                    className="cursor-pointer text-left font-medium text-primary hover:underline"
-                >
-                    {inv}
-                </button>
-            );
-        },
-    },
+    ...(canReadTransaction
+        ? [
+              {
+                  accessorKey: 'reference',
+                  header: () =>
+                      i18next.t(
+                          'page.capital_wallet.data_table.columns.reference',
+                          'Rujukan',
+                      ),
+                  cell: ({ row }: any) => {
+                      const inv = row.original.invoice_number;
+                      if (!inv || inv === '-') return <span>-</span>;
+                      return (
+                          <button
+                              onClick={() => onInvoiceClick(inv)}
+                              className="cursor-pointer text-left font-medium text-primary hover:underline"
+                          >
+                              {inv}
+                          </button>
+                      );
+                  },
+              } as ColumnDef<CapitalWalletTransaction>,
+          ]
+        : []),
 ];
