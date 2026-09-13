@@ -19,9 +19,9 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             CategorySeeder::class,
             UnitSeeder::class,
-            ProductSeeder::class,
+            // ProductSeeder::class,
             PaymentMethodSeeder::class,
-            TransactionSeeder::class,
+            // TransactionSeeder::class,
             StoreSettingSeeder::class,
         ]);
     }
