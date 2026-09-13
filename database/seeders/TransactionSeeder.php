@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\DB;
 
 class TransactionSeeder extends Seeder
 {
-    public function __construct(public int $count = 5000) {}
+    public function __construct(public int $count = 750) {}
 
     /**
      * Run the database seeds.
@@ -43,7 +43,7 @@ class TransactionSeeder extends Seeder
         $profitService = app(ProfitWalletServiceInterface::class);
         $capitalService = app(CapitalWalletServiceInterface::class);
 
-        $totalCount = app()->environment('testing') && $this->count === 5000 ? 10 : $this->count;
+        $totalCount = app()->environment('testing') && $this->count === 750 ? 10 : $this->count;
         $batchSize = 250;
         $productSoldQuantities = [];
 
@@ -99,7 +99,7 @@ class TransactionSeeder extends Seeder
                     }
 
                     $changeAmount = $paymentAmount - $totalAmount;
-                    $invoiceNumber = 'INV-'.$createdAt->format('Ymd').'-'.str_pad((string) $i, 4, '0', STR_PAD_LEFT).'-'.str_pad((string) rand(0, 999999), 6, '0', STR_PAD_LEFT);
+                    $invoiceNumber = 'INV-' . $createdAt->format('Ymd') . '-' . str_pad((string) $i, 4, '0', STR_PAD_LEFT) . '-' . str_pad((string) rand(0, 999999), 6, '0', STR_PAD_LEFT);
 
                     $transaction = Transaction::create([
                         'user_id' => $user->id,
