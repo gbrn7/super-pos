@@ -78,8 +78,8 @@ export default function Index() {
         page: 1,
         field: 'default',
         keyword: '',
-        start_date: null as number | null,
-        end_date: null as number | null,
+        start_date: null as string | null,
+        end_date: null as string | null,
     });
 
     const fetchReturns = async (paramsToSend = queryParam) => {
@@ -161,7 +161,7 @@ export default function Index() {
         }));
     };
 
-    const handleChangeStartDate = (date: number | null) => {
+    const handleChangeStartDate = (date: string | null) => {
         setQueryParam((prev) => ({
             ...prev,
             start_date: date,
@@ -169,7 +169,7 @@ export default function Index() {
         }));
     };
 
-    const handleChangeEndDate = (date: number | null) => {
+    const handleChangeEndDate = (date: string | null) => {
         setQueryParam((prev) => ({
             ...prev,
             end_date: date,
@@ -277,9 +277,15 @@ export default function Index() {
                                 </Label>
                                 <Popover>
                                     <PopoverTrigger asChild>
-                                        <Button variant="outline" className="w-full justify-start text-left font-normal text-sm h-9">
+                                        <Button
+                                            variant="outline"
+                                            disabled={loading}
+                                            className="w-full justify-start text-left font-normal text-sm h-9"
+                                        >
                                             {queryParam.start_date ? (
-                                                new Date(queryParam.start_date * 1000).toLocaleDateString('id-ID')
+                                                new Date(
+                                                    queryParam.start_date,
+                                                ).toLocaleDateString('id-ID')
                                             ) : (
                                                 <span className="text-muted-foreground">{t('component.data_table.filter.start_date_label', 'Pilih Tanggal Mulai')}</span>
                                             )}
@@ -288,11 +294,23 @@ export default function Index() {
                                     <PopoverContent className="w-auto p-0" align="start">
                                         <CalendarPicker
                                             mode="single"
-                                            selected={queryParam.start_date ? new Date(queryParam.start_date * 1000) : undefined}
+                                            selected={
+                                                queryParam.start_date
+                                                    ? new Date(queryParam.start_date)
+                                                    : undefined
+                                            }
                                             onSelect={(date) => {
                                                 if (date) {
-                                                    const startDate = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0, 0, 0);
-                                                    handleChangeStartDate(Math.floor(startDate.getTime() / 1000));
+                                                    const year = date.getFullYear();
+                                                    const month = String(
+                                                        date.getMonth() + 1,
+                                                    ).padStart(2, '0');
+                                                    const day = String(
+                                                        date.getDate(),
+                                                    ).padStart(2, '0');
+                                                    handleChangeStartDate(
+                                                        `${year}-${month}-${day}`,
+                                                    );
                                                 } else {
                                                     handleChangeStartDate(null);
                                                 }
@@ -310,9 +328,15 @@ export default function Index() {
                                 </Label>
                                 <Popover>
                                     <PopoverTrigger asChild>
-                                        <Button variant="outline" className="w-full justify-start text-left font-normal text-sm h-9">
+                                        <Button
+                                            variant="outline"
+                                            disabled={loading}
+                                            className="w-full justify-start text-left font-normal text-sm h-9"
+                                        >
                                             {queryParam.end_date ? (
-                                                new Date(queryParam.end_date * 1000).toLocaleDateString('id-ID')
+                                                new Date(
+                                                    queryParam.end_date,
+                                                ).toLocaleDateString('id-ID')
                                             ) : (
                                                 <span className="text-muted-foreground">{t('component.data_table.filter.end_date_label', 'Pilih Tanggal Akhir')}</span>
                                             )}
@@ -321,11 +345,23 @@ export default function Index() {
                                     <PopoverContent className="w-auto p-0" align="start">
                                         <CalendarPicker
                                             mode="single"
-                                            selected={queryParam.end_date ? new Date(queryParam.end_date * 1000) : undefined}
+                                            selected={
+                                                queryParam.end_date
+                                                    ? new Date(queryParam.end_date)
+                                                    : undefined
+                                            }
                                             onSelect={(date) => {
                                                 if (date) {
-                                                    const endDate = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 23, 59, 59, 999);
-                                                    handleChangeEndDate(Math.floor(endDate.getTime() / 1000));
+                                                    const year = date.getFullYear();
+                                                    const month = String(
+                                                        date.getMonth() + 1,
+                                                    ).padStart(2, '0');
+                                                    const day = String(
+                                                        date.getDate(),
+                                                    ).padStart(2, '0');
+                                                    handleChangeEndDate(
+                                                        `${year}-${month}-${day}`,
+                                                    );
                                                 } else {
                                                     handleChangeEndDate(null);
                                                 }
@@ -367,7 +403,7 @@ export default function Index() {
                                         >
                                             <span>
                                                 {t('component.data_table.filter.start_date_label', 'Tanggal Mulai')}:{' '}
-                                                {new Date(queryParam.start_date * 1000).toLocaleDateString()}
+                                                {queryParam.start_date}
                                             </span>
                                             <button
                                                 type="button"
@@ -375,7 +411,9 @@ export default function Index() {
                                                 className="ml-0.5 rounded-full p-0.5 text-muted-foreground transition-colors hover:bg-muted-foreground/20 hover:text-foreground"
                                             >
                                                 <X className="h-3 w-3" />
-                                                <span className="sr-only">Hapus filter tanggal mulai</span>
+                                                <span className="sr-only">
+                                                    {t('component.data_table.remove_start_date_filter', 'Hapus filter tanggal mulai')}
+                                                </span>
                                             </button>
                                         </Badge>
                                     )}
@@ -387,7 +425,7 @@ export default function Index() {
                                         >
                                             <span>
                                                 {t('component.data_table.filter.end_date_label', 'Tanggal Akhir')}:{' '}
-                                                {new Date(queryParam.end_date * 1000).toLocaleDateString()}
+                                                {queryParam.end_date}
                                             </span>
                                             <button
                                                 type="button"
@@ -395,7 +433,9 @@ export default function Index() {
                                                 className="ml-0.5 rounded-full p-0.5 text-muted-foreground transition-colors hover:bg-muted-foreground/20 hover:text-foreground"
                                             >
                                                 <X className="h-3 w-3" />
-                                                <span className="sr-only">Hapus filter tanggal akhir</span>
+                                                <span className="sr-only">
+                                                    {t('component.data_table.remove_end_date_filter', 'Hapus filter tanggal akhir')}
+                                                </span>
                                             </button>
                                         </Badge>
                                     )}

@@ -7,6 +7,7 @@ use App\Models\Transaction;
 use App\Models\TransactionDetail;
 use App\Models\User;
 use App\Support\Enums\ReturnPermissionEnums;
+use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
@@ -62,4 +63,45 @@ test('authenticated user can index returns', function () {
         ->assertJson([
             'success' => true,
         ]);
+});
+
+test('authenticated user can filter returns by start_date and end_date in Y-m-d format', function () {
+    $user = User::factory()->create();
+    $user->givePermissionTo(Permission::findOrCreate(ReturnPermissionEnums::READ_RETURN->value));
+    $transaction = Transaction::factory()->create();
+
+    $r1 = ProductReturn::forceCreate([
+        'return_number' => 'RET-DATE-001',
+        'transaction_id' => $transaction->id,
+        'user_id' => $user->id,
+        'total_refund_amount' => 10000,
+        'reason' => 'Old',
+        'created_at' => Carbon::parse('2026-02-01 10:00:00'),
+    ]);
+    $r2 = ProductReturn::forceCreate([
+        'return_number' => 'RET-DATE-002',
+        'transaction_id' => $transaction->id,
+        'user_id' => $user->id,
+        'total_refund_amount' => 20000,
+        'reason' => 'Target',
+        'created_at' => Carbon::parse('2026-02-15 10:00:00'),
+    ]);
+    $r3 = ProductReturn::forceCreate([
+        'return_number' => 'RET-DATE-003',
+        'transaction_id' => $transaction->id,
+        'user_id' => $user->id,
+        'total_refund_amount' => 30000,
+        'reason' => 'Future',
+        'created_at' => Carbon::parse('2026-03-01 10:00:00'),
+    ]);
+
+    $response = $this->actingAs($user)->getJson(route('apiReturns.index', [
+        'start_date' => '2026-02-10',
+        'end_date' => '2026-02-20',
+    ]));
+
+    $response->assertStatus(200)
+        ->assertJson(['success' => true])
+        ->assertJsonPath('data.items.0.return_number', 'RET-DATE-002')
+        ->assertJsonCount(1, 'data.items');
 });
