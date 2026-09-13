@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
     flexRender,
     getCoreRowModel,
@@ -106,6 +107,9 @@ export function DataTable<TData, TValue>({
         columns,
         getCoreRowModel: getCoreRowModel(),
     });
+
+    const [openStartDate, setOpenStartDate] = useState(false);
+    const [openEndDate, setOpenEndDate] = useState(false);
 
     const isFilterActive =
         queryParam.keyword !== '' ||
@@ -282,25 +286,41 @@ export function DataTable<TData, TValue>({
                                     'Semua Jenis',
                                 )}
                             </SelectItem>
-                            <SelectItem value={ProfitWalletTransactionTypeEnums.SALES_PROFIT}>
+                            <SelectItem
+                                value={
+                                    ProfitWalletTransactionTypeEnums.SALES_PROFIT
+                                }
+                            >
                                 {t(
                                     'page.profit_wallet.data_table.filters.tx_sales_profit',
                                     'Keuntungan Penjualan',
                                 )}
                             </SelectItem>
-                            <SelectItem value={ProfitWalletTransactionTypeEnums.SALES_RETURN_DEDUCTION}>
+                            <SelectItem
+                                value={
+                                    ProfitWalletTransactionTypeEnums.SALES_RETURN_DEDUCTION
+                                }
+                            >
                                 {t(
                                     'page.profit_wallet.data_table.filters.tx_sales_return_deduction',
                                     'Potongan Retur',
                                 )}
                             </SelectItem>
-                            <SelectItem value={ProfitWalletTransactionTypeEnums.DISBURSEMENT}>
+                            <SelectItem
+                                value={
+                                    ProfitWalletTransactionTypeEnums.DISBURSEMENT
+                                }
+                            >
                                 {t(
                                     'page.profit_wallet.data_table.filters.tx_disbursement',
                                     'Pencairan Profit',
                                 )}
                             </SelectItem>
-                            <SelectItem value={ProfitWalletTransactionTypeEnums.CAPITAL_WITHDRAWAL}>
+                            <SelectItem
+                                value={
+                                    ProfitWalletTransactionTypeEnums.CAPITAL_WITHDRAWAL
+                                }
+                            >
                                 {t(
                                     'page.profit_wallet.data_table.filters.tx_capital_withdrawal',
                                     'Penarikan Modal',
@@ -319,7 +339,10 @@ export function DataTable<TData, TValue>({
                             'Mulai',
                         )}
                     </Label>
-                    <Popover>
+                    <Popover
+                        open={openStartDate}
+                        onOpenChange={setOpenStartDate}
+                    >
                         <PopoverTrigger asChild>
                             <Button
                                 variant="outline"
@@ -361,6 +384,7 @@ export function DataTable<TData, TValue>({
                                             'start_date',
                                             `${year}-${month}-${day}`,
                                         );
+                                        setOpenStartDate(false);
                                     } else {
                                         onQueryParamChange('start_date', null);
                                     }
@@ -379,7 +403,7 @@ export function DataTable<TData, TValue>({
                             'Hingga',
                         )}
                     </Label>
-                    <Popover>
+                    <Popover open={openEndDate} onOpenChange={setOpenEndDate}>
                         <PopoverTrigger asChild>
                             <Button
                                 variant="outline"
@@ -421,6 +445,7 @@ export function DataTable<TData, TValue>({
                                             'end_date',
                                             `${year}-${month}-${day}`,
                                         );
+                                        setOpenEndDate(false);
                                     } else {
                                         onQueryParamChange('end_date', null);
                                     }
