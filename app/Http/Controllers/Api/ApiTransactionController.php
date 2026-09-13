@@ -179,7 +179,9 @@ class ApiTransactionController extends Controller implements HasMiddleware
 
             return $this->transactionService->export($reqModel, $format);
         } catch (\Throwable $th) {
-            return ResponseApi::make(false, $th->getMessage(), null, $th->getCode());
+            $code = ($th->getCode() >= 400 && $th->getCode() < 600) ? (int) $th->getCode() : Response::HTTP_INTERNAL_SERVER_ERROR;
+
+            return ResponseApi::make(false, $th->getMessage(), null, $code);
         }
     }
 }

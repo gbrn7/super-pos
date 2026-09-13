@@ -101,8 +101,8 @@ interface DataTableProps<TData, TValue> {
     onChangeUser?: (userId: number | null) => void;
     onChangePaymentMethod?: (paymentMethodId: number | null) => void;
     onChangeKeyword: (keyword: string) => void;
-    onChangeStartDate: (date: number | null) => void;
-    onChangeEndDate: (date: number | null) => void;
+    onChangeStartDate: (date: string | null) => void;
+    onChangeEndDate: (date: string | null) => void;
     setQueryParam: React.Dispatch<React.SetStateAction<TransactionQueryParam>>;
     rowSelection: RowSelectionState;
     setRowSelection: React.Dispatch<React.SetStateAction<RowSelectionState>>;
@@ -419,9 +419,15 @@ export function DataTable<TData, TValue>({
                         </Label>
                         <Popover>
                             <PopoverTrigger asChild>
-                                <Button variant="outline" className="w-full justify-start text-left font-normal text-sm h-9">
+                                <Button
+                                    variant="outline"
+                                    disabled={processing}
+                                    className="w-full justify-start text-left font-normal text-sm h-9"
+                                >
                                     {queryParam.start_date ? (
-                                        new Date(queryParam.start_date * 1000).toLocaleDateString('id-ID')
+                                        new Date(
+                                            queryParam.start_date,
+                                        ).toLocaleDateString('id-ID')
                                     ) : (
                                         <span className="text-muted-foreground">{t('component.data_table.filter.start_date_label', 'Pilih Tanggal Mulai')}</span>
                                     )}
@@ -430,11 +436,23 @@ export function DataTable<TData, TValue>({
                             <PopoverContent className="w-auto p-0" align="start">
                                 <CalendarPicker
                                     mode="single"
-                                    selected={queryParam.start_date ? new Date(queryParam.start_date * 1000) : undefined}
+                                    selected={
+                                        queryParam.start_date
+                                            ? new Date(queryParam.start_date)
+                                            : undefined
+                                    }
                                     onSelect={(date) => {
                                         if (date) {
-                                            const startDate = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0, 0, 0);
-                                            onChangeStartDate(Math.floor(startDate.getTime() / 1000));
+                                            const year = date.getFullYear();
+                                            const month = String(
+                                                date.getMonth() + 1,
+                                            ).padStart(2, '0');
+                                            const day = String(
+                                                date.getDate(),
+                                            ).padStart(2, '0');
+                                            onChangeStartDate(
+                                                `${year}-${month}-${day}`,
+                                            );
                                         } else {
                                             onChangeStartDate(null);
                                         }
@@ -452,9 +470,15 @@ export function DataTable<TData, TValue>({
                         </Label>
                         <Popover>
                             <PopoverTrigger asChild>
-                                <Button variant="outline" className="w-full justify-start text-left font-normal text-sm h-9">
+                                <Button
+                                    variant="outline"
+                                    disabled={processing}
+                                    className="w-full justify-start text-left font-normal text-sm h-9"
+                                >
                                     {queryParam.end_date ? (
-                                        new Date(queryParam.end_date * 1000).toLocaleDateString('id-ID')
+                                        new Date(
+                                            queryParam.end_date,
+                                        ).toLocaleDateString('id-ID')
                                     ) : (
                                         <span className="text-muted-foreground">{t('component.data_table.filter.end_date_label', 'Pilih Tanggal Akhir')}</span>
                                     )}
@@ -463,11 +487,23 @@ export function DataTable<TData, TValue>({
                             <PopoverContent className="w-auto p-0" align="start">
                                 <CalendarPicker
                                     mode="single"
-                                    selected={queryParam.end_date ? new Date(queryParam.end_date * 1000) : undefined}
+                                    selected={
+                                        queryParam.end_date
+                                            ? new Date(queryParam.end_date)
+                                            : undefined
+                                    }
                                     onSelect={(date) => {
                                         if (date) {
-                                            const endDate = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 23, 59, 59, 999);
-                                            onChangeEndDate(Math.floor(endDate.getTime() / 1000));
+                                            const year = date.getFullYear();
+                                            const month = String(
+                                                date.getMonth() + 1,
+                                            ).padStart(2, '0');
+                                            const day = String(
+                                                date.getDate(),
+                                            ).padStart(2, '0');
+                                            onChangeEndDate(
+                                                `${year}-${month}-${day}`,
+                                            );
                                         } else {
                                             onChangeEndDate(null);
                                         }
@@ -581,8 +617,11 @@ export function DataTable<TData, TValue>({
                                     className="gap-1.5 bg-muted/50 px-2 py-0.5 text-xs font-normal hover:bg-muted"
                                 >
                                     <span>
-                                        {t('component.data_table.filter.start_date_label', 'Tanggal Mulai')}:{' '}
-                                        {new Date(queryParam.start_date * 1000).toLocaleDateString()}
+                                        {t(
+                                            'component.data_table.filter.start_date_label',
+                                            'Tanggal Mulai',
+                                        )}
+                                        : {queryParam.start_date}
                                     </span>
                                     <button
                                         type="button"
@@ -591,7 +630,10 @@ export function DataTable<TData, TValue>({
                                     >
                                         <X className="h-3 w-3" />
                                         <span className="sr-only">
-                                            {t('component.data_table.remove_start_date_filter', 'Hapus filter tanggal mulai')}
+                                            {t(
+                                                'component.data_table.remove_start_date_filter',
+                                                'Hapus filter tanggal mulai',
+                                            )}
                                         </span>
                                     </button>
                                 </Badge>
@@ -603,8 +645,11 @@ export function DataTable<TData, TValue>({
                                     className="gap-1.5 bg-muted/50 px-2 py-0.5 text-xs font-normal hover:bg-muted"
                                 >
                                     <span>
-                                        {t('component.data_table.filter.end_date_label', 'Tanggal Akhir')}:{' '}
-                                        {new Date(queryParam.end_date * 1000).toLocaleDateString()}
+                                        {t(
+                                            'component.data_table.filter.end_date_label',
+                                            'Tanggal Akhir',
+                                        )}
+                                        : {queryParam.end_date}
                                     </span>
                                     <button
                                         type="button"
@@ -613,7 +658,10 @@ export function DataTable<TData, TValue>({
                                     >
                                         <X className="h-3 w-3" />
                                         <span className="sr-only">
-                                            {t('component.data_table.remove_end_date_filter', 'Hapus filter tanggal akhir')}
+                                            {t(
+                                                'component.data_table.remove_end_date_filter',
+                                                'Hapus filter tanggal akhir',
+                                            )}
                                         </span>
                                     </button>
                                 </Badge>

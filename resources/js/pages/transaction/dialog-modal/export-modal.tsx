@@ -24,15 +24,19 @@ import {
 import { Calendar as CalendarPicker } from '@/components/ui/calendar';
 import { Calendar as CalendarIcon } from 'lucide-react';
 import axiosInstance from '@/lib/axios';
-import { exportData as apiExportTransactions } from '@/routes/apiTransactions';
-import { handleApiError, showSuccessToast } from '@/lib/utils';
+import {
+    exportData as apiExportTransactions,
+    index as apiGetTransactions,
+} from '@/routes/apiTransactions';
+import { handleApiError, showErrorToast, showSuccessToast } from '@/lib/utils';
+import * as XLSX from 'xlsx';
 import dayjs from 'dayjs';
 
 interface ExportModalProps {
     isOpen: boolean;
     onClose: () => void;
-    defaultStartDate?: number | null;
-    defaultEndDate?: number | null;
+    defaultStartDate?: string | null;
+    defaultEndDate?: string | null;
 }
 
 export function ExportModal({
@@ -51,11 +55,11 @@ export function ExportModal({
         oneMonthAgo.setMonth(today.getMonth() - 1);
 
         const defaultStart = defaultStartDate
-            ? new Date(defaultStartDate * 1000).toISOString().slice(0, 10)
+            ? defaultStartDate
             : oneMonthAgo.toISOString().slice(0, 10);
 
         const defaultEnd = defaultEndDate
-            ? new Date(defaultEndDate * 1000).toISOString().slice(0, 10)
+            ? defaultEndDate
             : today.toISOString().slice(0, 10);
 
         return { defaultStart, defaultEnd };
@@ -80,7 +84,7 @@ export function ExportModal({
         try {
             setLoading(true);
 
-            const params: Record<string, any> = { format };
+            const params: Record<string, any> = {};
 
             if (startDate) {
                 params.start_date = startDate;
@@ -101,35 +105,138 @@ export function ExportModal({
                         ? `sampai-${endDate}`
                         : dayjs().format('YYYY-MM-DD');
 
-            const fileName = `laporan-transaksi-${dateSuffix}.${
-                format === 'excel' ? 'xlsx' : 'pdf'
-            }`;
+            const fileName = `laporan-transaksi-${dateSuffix}.${format === 'excel' ? 'xlsx' : 'pdf'}`;
 
-            const exportUrl = apiExportTransactions({ query: params }).url;
+            if (format === 'excel') {
+                const exportUrl = apiGetTransactions({ query: params }).url;
+                const response = await axiosInstance.get(exportUrl);
 
-            const response = await axiosInstance.get(exportUrl, {
-                responseType: 'blob',
-            });
+                if (response.data.success) {
+                    const data = response.data.data;
+                    const transactions =
+                        (data && data.items) ||
+                        (data && data.data) ||
+                        (Array.isArray(data) ? data : []);
 
-            const blob = new Blob([response.data], {
-                type:
-                    format === 'excel'
-                        ? 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-                        : 'application/pdf',
-            });
+                    const rows = transactions.map((transaction: any) => {
+                        const totalAmount = parseFloat(
+                            transaction.total_amount || 0,
+                        );
+                        const discountAmount = parseFloat(
+                            transaction.discount_amount || 0,
+                        );
+                        const subtotal = totalAmount + discountAmount;
 
-            const url = window.URL.createObjectURL(blob);
-            const link = document.createElement('a');
-            link.href = url;
-            link.setAttribute('download', fileName);
-            document.body.appendChild(link);
-            link.click();
-            link.remove();
-            window.URL.revokeObjectURL(url);
+                        const totalReturn =
+                            transaction.returns &&
+                            Array.isArray(transaction.returns)
+                                ? transaction.returns.reduce(
+                                      (sum: number, r: any) =>
+                                          sum +
+                                          parseFloat(
+                                              r.total_refund_amount || 0,
+                                          ),
+                                      0,
+                                  )
+                                : 0;
 
-            showSuccessToast(t('message.success.success', 'Ekspor berhasil'));
-            onClose();
-        } catch (error) {
+                        const netTotal = totalAmount - totalReturn;
+
+                        const totalQty =
+                            transaction.details &&
+                            Array.isArray(transaction.details)
+                                ? transaction.details.reduce(
+                                      (sum: number, d: any) =>
+                                          sum + parseFloat(d.quantity || 0),
+                                      0,
+                                  )
+                                : 0;
+
+                        const formattedDate = (() => {
+                            const dateVal = transaction.created_at;
+                            if (!dateVal) return '-';
+                            let parsed: dayjs.Dayjs;
+                            if (
+                                typeof dateVal === 'number' ||
+                                !isNaN(Number(dateVal))
+                            ) {
+                                const num = Number(dateVal);
+                                parsed =
+                                    num > 1e11 ? dayjs(num) : dayjs.unix(num);
+                            } else {
+                                parsed = dayjs(dateVal);
+                            }
+                            return parsed.isValid()
+                                ? parsed.format('DD/MM/YYYY, HH:mm')
+                                : '-';
+                        })();
+
+                        return {
+                            'No. Invoice': transaction.invoice_number,
+                            Tanggal: formattedDate,
+                            'Kasir / Petugas': transaction.user_name || '-',
+                            'Metode Pembayaran':
+                                transaction.payment_method_name || '-',
+                            Subtotal: subtotal,
+                            Diskon: discountAmount,
+                            'Total Transaksi': totalAmount,
+                            'Total Retur': totalReturn,
+                            'Total Bersih': netTotal,
+                            'Jumlah Item': totalQty,
+                        };
+                    });
+
+                    const worksheet = XLSX.utils.json_to_sheet(rows);
+                    const workbook = XLSX.utils.book_new();
+                    XLSX.utils.book_append_sheet(
+                        workbook,
+                        worksheet,
+                        'Laporan Transaksi',
+                    );
+
+                    XLSX.writeFile(workbook, fileName);
+
+                    showSuccessToast(
+                        t('message.success.success', 'Ekspor berhasil'),
+                    );
+                    onClose();
+                }
+            } else {
+                params.format = 'pdf';
+                const exportUrl = apiExportTransactions({ query: params }).url;
+                const response = await axiosInstance.get(exportUrl, {
+                    responseType: 'blob',
+                });
+
+                const blob = new Blob([response.data], {
+                    type: 'application/pdf',
+                });
+
+                const url = window.URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.setAttribute('download', fileName);
+                document.body.appendChild(link);
+                link.click();
+                link.remove();
+                window.URL.revokeObjectURL(url);
+
+                showSuccessToast(
+                    t('message.success.success', 'Ekspor berhasil'),
+                );
+                onClose();
+            }
+        } catch (error: any) {
+            if (error?.response?.data instanceof Blob) {
+                try {
+                    const text = await error.response.data.text();
+                    const json = JSON.parse(text);
+                    if (json.message) {
+                        showErrorToast(json.message);
+                        return;
+                    }
+                } catch (_) {}
+            }
             handleApiError(error);
         } finally {
             setLoading(false);
@@ -311,10 +418,18 @@ export function ExportModal({
                                 </span>
                             </label>
                         </div>
+                        {format === 'pdf' && (
+                            <p className="mt-1 text-[11px] text-muted-foreground">
+                                {t(
+                                    'component.export_modal.pdf_tip',
+                                    '* Untuk ekspor data dalam jumlah besar (> 2.000 data), gunakan format Excel atau persempit rentang tanggal.',
+                                )}
+                            </p>
+                        )}
                     </div>
                 </div>
 
-                <DialogFooter className="gap-2 sm:gap-0">
+                <DialogFooter className="gap-2">
                     <Button
                         variant="outline"
                         onClick={onClose}

@@ -222,6 +222,10 @@ class ProfitWalletService implements ProfitWalletServiceInterface
 
     public function export(GetProfitWalletTransactionReqModel $request, string $format)
     {
+        @ini_set('max_execution_time', '300');
+        @set_time_limit(300);
+        @ini_set('memory_limit', '1024M');
+
         try {
             $request->limit = null;
             $transactions = $this->getTransactions($request);
@@ -248,6 +252,18 @@ class ProfitWalletService implements ProfitWalletServiceInterface
                 return Excel::download(
                     new ProfitWalletExport($transactions),
                     "{$fileName}.xlsx"
+                );
+            }
+
+            $maxPdfRows = 2000;
+            $count = $transactions->count();
+            if ($count > $maxPdfRows) {
+                throw new Exception(
+                    trans('message.error.export_pdf_too_large', [
+                        'count' => number_format($count, 0, ',', '.'),
+                        'max' => number_format($maxPdfRows, 0, ',', '.'),
+                    ]),
+                    Response::HTTP_UNPROCESSABLE_ENTITY
                 );
             }
 

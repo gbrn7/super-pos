@@ -7,6 +7,7 @@ use App\Models\Transaction;
 use App\Models\User;
 use App\Support\Enums\RoleEnums;
 use App\Support\Enums\TransactionPermissionEnums;
+use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
@@ -107,4 +108,31 @@ test('bulkDelete removes multiple transactions', function () {
 
     $response->assertOk()
         ->assertJsonPath('success', true);
+});
+
+test('index filters transactions by start_date and end_date', function () {
+    $t1 = Transaction::factory()->create([
+        'user_id' => $this->user->id,
+        'created_at' => Carbon::parse('2026-02-01 10:00:00'),
+    ]);
+    $t2 = Transaction::factory()->create([
+        'user_id' => $this->user->id,
+        'created_at' => Carbon::parse('2026-02-15 10:00:00'),
+    ]);
+    $t3 = Transaction::factory()->create([
+        'user_id' => $this->user->id,
+        'created_at' => Carbon::parse('2026-03-01 10:00:00'),
+    ]);
+
+    $response = $this->actingAs($this->user)
+        ->getJson(route('apiTransactions.index', [
+            'start_date' => '2026-02-10',
+            'end_date' => '2026-02-20',
+            'limit' => 10,
+        ]));
+
+    $response->assertOk()
+        ->assertJsonPath('success', true)
+        ->assertJsonPath('data.items.0.id', $t2->id)
+        ->assertJsonCount(1, 'data.items');
 });

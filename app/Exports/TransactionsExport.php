@@ -46,8 +46,9 @@ class TransactionsExport implements FromCollection, ShouldAutoSize, WithHeadings
         $totalAmount = (float) ($transaction->total_amount ?? 0);
         $discountAmount = (float) ($transaction->discount_amount ?? 0);
         $subtotal = $totalAmount + $discountAmount;
-        $totalReturn = (float) ($transaction->returns?->sum('total_refund_amount') ?? 0);
+        $totalReturn = (float) ($transaction->returns_sum_total_refund_amount ?? ($transaction->returns?->sum('total_refund_amount') ?? 0));
         $netTotal = $totalAmount - $totalReturn;
+        $totalQuantity = (float) ($transaction->transaction_details_sum_quantity ?? ($transaction->transactionDetails?->sum('quantity') ?? 0));
 
         return [
             $transaction->invoice_number,
@@ -59,7 +60,7 @@ class TransactionsExport implements FromCollection, ShouldAutoSize, WithHeadings
             $totalAmount,
             $totalReturn,
             $netTotal,
-            $transaction->transactionDetails?->sum('quantity') ?? 0,
+            $totalQuantity,
         ];
     }
 

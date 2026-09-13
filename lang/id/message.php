@@ -51,6 +51,7 @@ return [
         'blank_unit_template_validation' => 'Terdapat unit kosong pada templat, silakan periksa kembali templat Anda.',
         'product_not_active' => 'Produk tidak aktif',
         'out_of_stock' => 'Stok produk :product tidak mencukupi',
+        'export_pdf_too_large' => 'Jumlah data terlalu banyak untuk ekspor PDF (:count data). Maksimal data yang dapat diekspor ke PDF adalah :max data. Silakan persempit filter tanggal atau gunakan format Excel.',
         'profit_wallet' => [
             'amount_must_be_greater_than_zero' => 'Jumlah nominal harus lebih besar dari nol.',
             'insufficient_balance_for_disbursement' => 'Saldo dompet profit tidak mencukupi untuk pencairan.',

@@ -5,6 +5,7 @@ use App\Models\Transaction;
 use App\Models\User;
 use App\Repositories\TransactionRepository;
 use App\Support\Models\Transaction\GetTransactionReqModel;
+use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Request;
 
@@ -98,4 +99,19 @@ test('deleteMany transactions', function () {
     $deletedCount = $this->repository->deleteMany($ids);
 
     expect($deletedCount)->toBe(3);
+});
+
+test('getAllByIndex filters by start_date and end_date in Y-m-d format', function () {
+    $t1 = Transaction::factory()->create(['created_at' => Carbon::parse('2026-01-10 10:00:00')]);
+    $t2 = Transaction::factory()->create(['created_at' => Carbon::parse('2026-01-15 15:00:00')]);
+    $t3 = Transaction::factory()->create(['created_at' => Carbon::parse('2026-01-20 12:00:00')]);
+
+    $reqModel = new GetTransactionReqModel(new Request([
+        'start_date' => '2026-01-12',
+        'end_date' => '2026-01-18',
+    ]));
+    $result = $this->repository->getAllByIndex($reqModel);
+
+    expect($result)->toHaveCount(1)
+        ->and($result->first()->id)->toBe($t2->id);
 });

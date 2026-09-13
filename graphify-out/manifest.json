@@ -40,9 +40,9 @@
     "semantic_hash": ""
   },
   "app/Http/Controllers/Api/ApiMasterProductController.php": {
-    "mtime": 1789271031.5100224,
-    "ast_hash": "a3c85ac352e2c0538b2b76ed947c2f95",
-    "semantic_hash": "a3c85ac352e2c0538b2b76ed947c2f95"
+    "mtime": 1789271437.1591437,
+    "ast_hash": "c1f51787788897af195f07b02b486773",
+    "semantic_hash": ""
   },
   "app/Http/Controllers/Api/ApiPaymentMethodController.php": {
     "mtime": 1789192952.8022697,
@@ -50,8 +50,8 @@
     "semantic_hash": ""
   },
   "app/Http/Controllers/Api/ApiProductController.php": {
-    "mtime": 1789271031.513701,
-    "ast_hash": "b2b2c7f392f0ddba4bb90ffee14ccae9",
+    "mtime": 1789271437.159677,
+    "ast_hash": "1a5bd0e19bcc7b7e0d79279b74f1ffc4",
     "semantic_hash": ""
   },
   "app/Http/Controllers/Api/ApiRoleController.php": {
@@ -60,8 +60,8 @@
     "semantic_hash": ""
   },
   "app/Http/Controllers/Api/ApiTransactionController.php": {
-    "mtime": 1789060426.4964066,
-    "ast_hash": "3c2d719807624912483485ca0e205f93",
+    "mtime": 1789279921.1490576,
+    "ast_hash": "c9b260ee3cf26c1087db206da029a219",
     "semantic_hash": ""
   },
   "app/Http/Controllers/Api/ApiTransactionDetailController.php": {
@@ -425,8 +425,8 @@
     "semantic_hash": ""
   },
   "app/Models/Product.php": {
-    "mtime": 1789271031.528415,
-    "ast_hash": "27a049c5f566f809687e35596765ec94",
+    "mtime": 1789271437.1670637,
+    "ast_hash": "2f1b146b3f31b1d8182b6d208e33ca70",
     "semantic_hash": ""
   },
   "app/Models/Role.php": {
@@ -455,28 +455,28 @@
     "semantic_hash": ""
   },
   "app/Providers/AppServiceProvider.php": {
-    "mtime": 1789271031.5320935,
-    "ast_hash": "2fb6f4361c4688c440a527146ca1a76c",
+    "mtime": 1789271437.1680787,
+    "ast_hash": "c129fb36445b25a1be56dca0cf7e650a",
     "semantic_hash": ""
   },
   "app/Providers/FortifyServiceProvider.php": {
-    "mtime": 1789271031.5373318,
-    "ast_hash": "a14047b594dda6e35cb41c39e6e1dffe",
-    "semantic_hash": "a14047b594dda6e35cb41c39e6e1dffe"
+    "mtime": 1789271437.1694636,
+    "ast_hash": "57c819e08562075c4ea9ec6d68a0eca4",
+    "semantic_hash": ""
   },
   "app/Repositories/CategoryRepository.php": {
-    "mtime": 1788627732.7868276,
-    "ast_hash": "ff35d8b3d8e4d519971a7c075a94fd65",
+    "mtime": 1789279924.3486001,
+    "ast_hash": "8da21de946c609b816796ab214a63ce2",
     "semantic_hash": ""
   },
   "app/Repositories/MasterProductRepository.php": {
-    "mtime": 1789271031.5373318,
-    "ast_hash": "7a7c2daa4bc92c77f0892331db51bea0",
+    "mtime": 1789271437.1702151,
+    "ast_hash": "c3fdc4dc8218c63e4d9d5aacfc0b7a01",
     "semantic_hash": ""
   },
   "app/Repositories/PaymentMethodRepository.php": {
-    "mtime": 1788627732.7883801,
-    "ast_hash": "16cf5443e4a8d0b8c44a8d3dd405ced6",
+    "mtime": 1789279924.9265366,
+    "ast_hash": "1bd94be9440a333714ce9a8957f7ed6e",
     "semantic_hash": ""
   },
   "app/Repositories/ProductRepository.php": {
@@ -485,8 +485,8 @@
     "semantic_hash": ""
   },
   "app/Repositories/RoleRepository.php": {
-    "mtime": 1788627732.7883823,
-    "ast_hash": "a69244ffc3bb9a69c5c4b459caa59470",
+    "mtime": 1789279924.9736905,
+    "ast_hash": "a6edb4dabdc1d0b9c31cb2b7d74b036d",
     "semantic_hash": ""
   },
   "app/Repositories/TransactionDetailRepository.php": {
@@ -495,13 +495,13 @@
     "semantic_hash": ""
   },
   "app/Repositories/TransactionRepository.php": {
-    "mtime": 1789271031.5394504,
-    "ast_hash": "26be7707aeb6d29918068ff20d18ed3d",
+    "mtime": 1789279731.463105,
+    "ast_hash": "19d9a430c9e22a39cfe6073d3659122c",
     "semantic_hash": ""
   },
   "app/Repositories/UnitRepository.php": {
-    "mtime": 1788627732.7883823,
-    "ast_hash": "aa846f74ea6d84e6623d86f0f138efa7",
+    "mtime": 1789279924.8809335,
+    "ast_hash": "3871d7fda6a753d85af2b9d8aa730a74",
     "semantic_hash": ""
   },
   "app/Repositories/UserRepository.php": {
@@ -515,8 +515,8 @@
     "semantic_hash": ""
   },
   "app/Services/MasterProductService.php": {
-    "mtime": 1789271031.5394504,
-    "ast_hash": "2f5b4eb02b3d5b4c930281325ea98af8",
+    "mtime": 1789271437.173035,
+    "ast_hash": "0bda17a7fbe8aff0451577de2869f2a7",
     "semantic_hash": ""
   },
   "app/Services/PaymentMethodService.php": {
@@ -525,8 +525,8 @@
     "semantic_hash": ""
   },
   "app/Services/ProductService.php": {
-    "mtime": 1789271031.5468075,
-    "ast_hash": "4695896a5bde6f58cc3b64bce4062958",
+    "mtime": 1789271437.1743343,
+    "ast_hash": "83609e68a8c7ff0d5f860bf57868ec84",
     "semantic_hash": ""
   },
   "app/Services/RoleService.php": {
@@ -540,8 +540,8 @@
     "semantic_hash": "8797c0389f21458e44c7db4b8a00f99f"
   },
   "app/Services/TransactionService.php": {
-    "mtime": 1789060426.501309,
-    "ast_hash": "2fe4c1d5632bb32fb58ed52820c2d5c0",
+    "mtime": 1789279918.6761181,
+    "ast_hash": "5cf6f49235acf18b20b19b3eb1702459",
     "semantic_hash": ""
   },
   "app/Services/UnitService.php": {
@@ -630,9 +630,9 @@
     "semantic_hash": "9a39d2ea491f9cc58b08db1e78be82c5"
   },
   "app/Support/Interfaces/Repositories/MasterProductRepositoryInterface.php": {
-    "mtime": 1789271031.5468075,
-    "ast_hash": "041499e21377d4733825b043ede8f981",
-    "semantic_hash": "041499e21377d4733825b043ede8f981"
+    "mtime": 1789271437.175163,
+    "ast_hash": "696eb580cd8ababc43d64ce06cfe6621",
+    "semantic_hash": ""
   },
   "app/Support/Interfaces/Repositories/PaymentMethodRepositoryInterface.php": {
     "mtime": 1780825269.641868,
@@ -655,9 +655,9 @@
     "semantic_hash": "8a1c4c2d9174b611af30e1b40416d6e3"
   },
   "app/Support/Interfaces/Repositories/TransactionRepositoryInterface.php": {
-    "mtime": 1785109607.4749458,
-    "ast_hash": "6768d3a77d10f62c910fea4c13caf5b0",
-    "semantic_hash": "6768d3a77d10f62c910fea4c13caf5b0"
+    "mtime": 1789279718.0069702,
+    "ast_hash": "6ab19353d4e5466e5b38479870c7b1e1",
+    "semantic_hash": ""
   },
   "app/Support/Interfaces/Repositories/UnitRepositoryInterface.php": {
     "mtime": 1780825268.180268,
@@ -675,9 +675,9 @@
     "semantic_hash": ""
   },
   "app/Support/Interfaces/Services/MasterProductServiceInterface.php": {
-    "mtime": 1789271031.5504858,
-    "ast_hash": "32e10a7a584ce6b49b2ae0af2233964c",
-    "semantic_hash": "32e10a7a584ce6b49b2ae0af2233964c"
+    "mtime": 1789271437.1763697,
+    "ast_hash": "c2a527de12e1f38e25bb85768ba80058",
+    "semantic_hash": ""
   },
   "app/Support/Interfaces/Services/PaymentMethodServiceInterface.php": {
     "mtime": 1785519414.3788483,
@@ -760,9 +760,9 @@
     "semantic_hash": "5971e7856111f171c016eaa80c853e67"
   },
   "app/Support/Utils/CheckException.php": {
-    "mtime": 1789271031.557843,
-    "ast_hash": "48ab2ae6c88c4cb80bf7d2bb3c778d48",
-    "semantic_hash": "48ab2ae6c88c4cb80bf7d2bb3c778d48"
+    "mtime": 1789271437.1799073,
+    "ast_hash": "f3c93b40f941f9273ff7432746d58a91",
+    "semantic_hash": ""
   },
   "app/Support/Utils/FormatIdrMoney.php": {
     "mtime": 1783262662.99102,
@@ -830,14 +830,14 @@
     "semantic_hash": "c4c6c3d814db6eabf0e3f2a2985d7eab"
   },
   "config/database.php": {
-    "mtime": 1789271031.557843,
-    "ast_hash": "580e0b30518f7cd85f09dc0cd274976b",
+    "mtime": 1789271437.1811364,
+    "ast_hash": "25fa0661670f3a5733b1145f61e429a9",
     "semantic_hash": ""
   },
   "config/filesystems.php": {
-    "mtime": 1789271031.557843,
-    "ast_hash": "bde1aa1027f0448f17348dbd93f3d7ea",
-    "semantic_hash": "bde1aa1027f0448f17348dbd93f3d7ea"
+    "mtime": 1789271437.1820028,
+    "ast_hash": "fb4321a59135393eb8caa35841516e97",
+    "semantic_hash": ""
   },
   "config/fortify.php": {
     "mtime": 1785954551.7210796,
@@ -895,8 +895,8 @@
     "semantic_hash": ""
   },
   "database/factories/ProductFactory.php": {
-    "mtime": 1789271031.5615215,
-    "ast_hash": "22b8c0c9c8451dc24b5e630e0ef13518",
+    "mtime": 1789271437.183738,
+    "ast_hash": "d4f646c20f5e8e05f171420e5af15e32",
     "semantic_hash": ""
   },
   "database/factories/TransactionDetailFactory.php": {
@@ -990,13 +990,13 @@
     "semantic_hash": ""
   },
   "database/seeders/DatabaseSeeder.php": {
-    "mtime": 1789271031.5651999,
+    "mtime": 1789273354.9555504,
     "ast_hash": "7af90667c22b9bbcd7fc4e5268cadc9f",
     "semantic_hash": ""
   },
   "database/seeders/MasterProductSeeder.php": {
-    "mtime": 1789271031.5651999,
-    "ast_hash": "df59032660dc31db23f7f115847573db",
+    "mtime": 1789271437.185833,
+    "ast_hash": "e3ca66093168fe65dbd92219099ce8d2",
     "semantic_hash": ""
   },
   "database/seeders/PaymentMethodSeeder.php": {
@@ -1010,8 +1010,8 @@
     "semantic_hash": ""
   },
   "database/seeders/ProductSeeder.php": {
-    "mtime": 1789271031.5688784,
-    "ast_hash": "fcaaba18ff00ce4bf3d699bf23e7ef3d",
+    "mtime": 1789279925.5287683,
+    "ast_hash": "b60cd61895abadafc1fab07af47cd675",
     "semantic_hash": ""
   },
   "database/seeders/RoleSeeder.php": {
@@ -1020,18 +1020,18 @@
     "semantic_hash": "2ad74fe516df2844ecf6f220843fe687"
   },
   "database/seeders/TransactionSeeder.php": {
-    "mtime": 1789271031.572557,
-    "ast_hash": "eb02deadb4364bd7483a4cb43e73bb64",
+    "mtime": 1789279925.7816217,
+    "ast_hash": "86dc2fd7a1f0c7338c32d29d8ebe1bbf",
     "semantic_hash": ""
   },
   "database/seeders/UnitSeeder.php": {
-    "mtime": 1789271031.572557,
-    "ast_hash": "b5466aae21a7ec43ec5cc59fa40620e9",
+    "mtime": 1789271437.188658,
+    "ast_hash": "20f879264ac7dcf5da4fbef4ccb7129b",
     "semantic_hash": ""
   },
   "database/seeders/UserSeeder.php": {
-    "mtime": 1789271031.5762353,
-    "ast_hash": "7c781de5d96fb53cd852f28f5128c819",
+    "mtime": 1789271437.1896517,
+    "ast_hash": "ed4aa3b3a204b6c222bfa4199a6b61e9",
     "semantic_hash": ""
   },
   "eslint.config.js": {
@@ -1045,24 +1045,24 @@
     "semantic_hash": "83c7c8fb076f9ef11c9ce6322b5fdac1"
   },
   "lang/en/message.php": {
-    "mtime": 1789271031.8226945,
-    "ast_hash": "1b67f121f5866edf1b01615b2fa7771e",
+    "mtime": 1789280738.7490542,
+    "ast_hash": "b870320bfa2bc4c90bf7fd6a0efd2958",
     "semantic_hash": ""
   },
   "lang/en/validation.php": {
-    "mtime": 1789271031.8226945,
-    "ast_hash": "dc40dd7c951e98694618a66aeb33a0ad",
-    "semantic_hash": "dc40dd7c951e98694618a66aeb33a0ad"
+    "mtime": 1789271437.7772381,
+    "ast_hash": "97636cc096665257ccccc7311b1dffdf",
+    "semantic_hash": ""
   },
   "lang/id/message.php": {
-    "mtime": 1789271031.8226945,
-    "ast_hash": "bdcd840f35ed06dad8a894d7f359b855",
+    "mtime": 1789280734.9503877,
+    "ast_hash": "ac50fab6ca865eccef79dc788b4c4336",
     "semantic_hash": ""
   },
   "lang/id/validation.php": {
-    "mtime": 1789271031.826373,
-    "ast_hash": "7f8af5957c313a6b2ad5fb22178f5efb",
-    "semantic_hash": "7f8af5957c313a6b2ad5fb22178f5efb"
+    "mtime": 1789271437.779096,
+    "ast_hash": "b6b3ce0f4bb93176bb1f6f9ff65142ad",
+    "semantic_hash": ""
   },
   "package.json": {
     "mtime": 1785651614.5379357,
@@ -1120,8 +1120,8 @@
     "semantic_hash": "0d3a837ac67b8969159f68d3d4310faa"
   },
   "resources/js/components/app-sidebar.tsx": {
-    "mtime": 1789271031.8300517,
-    "ast_hash": "3b20c63a93e511464fd383fdc58a2c4b",
+    "mtime": 1789271437.7877247,
+    "ast_hash": "04be9ca07e30736b7cb15968f16b5f02",
     "semantic_hash": ""
   },
   "resources/js/components/appearance-tabs.tsx": {
@@ -1520,13 +1520,13 @@
     "semantic_hash": "f3ef07e8086a8feb1b8147e6b75d203a"
   },
   "resources/js/layouts/settings/layout.tsx": {
-    "mtime": 1789271031.8337302,
-    "ast_hash": "cc41cddfc811ccfa8074ebd1365cb7a3",
+    "mtime": 1789271437.7887223,
+    "ast_hash": "ea376d557547d716154b4a2fd8fafe5a",
     "semantic_hash": ""
   },
   "resources/js/lib/axios.ts": {
-    "mtime": 1789271031.8337302,
-    "ast_hash": "5b2dff245d5ead9926ba763f1d6685d9",
+    "mtime": 1789271437.789723,
+    "ast_hash": "cf0895915bea011ffb8eb448ebbec098",
     "semantic_hash": ""
   },
   "resources/js/lib/format-date.ts": {
@@ -1550,13 +1550,13 @@
     "semantic_hash": ""
   },
   "resources/js/locales/en/translation.json": {
-    "mtime": 1789271031.8374085,
-    "ast_hash": "187727eeca1b90ff18e1d323a0b63488",
+    "mtime": 1789281049.7029948,
+    "ast_hash": "20c74d0de38d562d4ebc48e8e572d3e7",
     "semantic_hash": ""
   },
   "resources/js/locales/id/translation.json": {
-    "mtime": 1789271031.841087,
-    "ast_hash": "228b9b63bba30190b958eaea549495ae",
+    "mtime": 1789281044.587994,
+    "ast_hash": "bcc198a8b6b7656830fefc0cf72d9a14",
     "semantic_hash": ""
   },
   "resources/js/pages/auth/confirm-password.tsx": {
@@ -1570,8 +1570,8 @@
     "semantic_hash": ""
   },
   "resources/js/pages/auth/login.tsx": {
-    "mtime": 1789271031.841087,
-    "ast_hash": "86a8314812fedce9ef0f2966b158ba7f",
+    "mtime": 1789271437.794934,
+    "ast_hash": "928aa8371fd3a585c44f983874e7de84",
     "semantic_hash": ""
   },
   "resources/js/pages/auth/register.tsx": {
@@ -1755,8 +1755,8 @@
     "semantic_hash": ""
   },
   "resources/js/pages/master-product/export-data-menu/export-dropdown-menu.tsx": {
-    "mtime": 1789271031.8521225,
-    "ast_hash": "214058797ef5c51a89ae632e0819c9bb",
+    "mtime": 1789271437.8019502,
+    "ast_hash": "6b27c3ddac89a4e502807d839c7dfe96",
     "semantic_hash": ""
   },
   "resources/js/pages/master-product/index.tsx": {
@@ -1800,8 +1800,8 @@
     "semantic_hash": ""
   },
   "resources/js/pages/payment-method/export-data-menu/export-dropdown-menu.tsx": {
-    "mtime": 1789271031.8521225,
-    "ast_hash": "544875ce29a490ad86c0c5b03e1cbdab",
+    "mtime": 1789271437.8027158,
+    "ast_hash": "6c3f25f3599c1e94ef4c7e7c3c9a58ce",
     "semantic_hash": ""
   },
   "resources/js/pages/payment-method/index.tsx": {
@@ -1840,8 +1840,8 @@
     "semantic_hash": ""
   },
   "resources/js/pages/product/dialog-modal/edit-dialog.tsx": {
-    "mtime": 1789271031.8594797,
-    "ast_hash": "339a3b1d858c47489cea58cb980a5ea8",
+    "mtime": 1789271437.8040845,
+    "ast_hash": "821de98c16633533e2986339676dbcdb",
     "semantic_hash": ""
   },
   "resources/js/pages/product/dialog-modal/import-excel-dialog.tsx": {
@@ -1850,8 +1850,8 @@
     "semantic_hash": ""
   },
   "resources/js/pages/product/export-data-menu/export-dropdown-menu.tsx": {
-    "mtime": 1789271031.8594797,
-    "ast_hash": "6c0ff2a2c4ffe78d2c1c82a9e9b60016",
+    "mtime": 1789271437.804948,
+    "ast_hash": "6c2370817c10f9a12bf3246048e0dbaf",
     "semantic_hash": ""
   },
   "resources/js/pages/product/index.tsx": {
@@ -1860,8 +1860,8 @@
     "semantic_hash": ""
   },
   "resources/js/pages/role/columns.tsx": {
-    "mtime": 1789271031.8741937,
-    "ast_hash": "45f17eb2f11a9fe0d445d9f21bbd581d",
+    "mtime": 1789271437.8084342,
+    "ast_hash": "69e054c38c103b46f7965b416079b1e1",
     "semantic_hash": ""
   },
   "resources/js/pages/role/create.tsx": {
@@ -1940,8 +1940,8 @@
     "semantic_hash": ""
   },
   "resources/js/pages/transaction/data-table.tsx": {
-    "mtime": 1789271039.8733132,
-    "ast_hash": "d05e8cc8752edafef9acd10b28526fc4",
+    "mtime": 1789272864.9859335,
+    "ast_hash": "d852083a7022a3047820cca48d393813",
     "semantic_hash": ""
   },
   "resources/js/pages/transaction/dialog-modal/bulk-delete-dialog.tsx": {
@@ -1960,8 +1960,8 @@
     "semantic_hash": ""
   },
   "resources/js/pages/transaction/index.tsx": {
-    "mtime": 1789271039.9326355,
-    "ast_hash": "1876bb680b44660d176b0e720bc85bc7",
+    "mtime": 1789271437.8137834,
+    "ast_hash": "d4b75a2a29d3b598372f71ff6b2bffaf",
     "semantic_hash": ""
   },
   "resources/js/pages/unit/columns.tsx": {
@@ -2095,8 +2095,8 @@
     "semantic_hash": ""
   },
   "resources/js/support/interfaces/request/transaction.ts": {
-    "mtime": 1785070484.0650656,
-    "ast_hash": "a6ed757876eafd6dd73feaa1996e1f69",
+    "mtime": 1789272818.7204564,
+    "ast_hash": "90b3ea1c790a5d1ce2bc144680c38f94",
     "semantic_hash": ""
   },
   "resources/js/support/interfaces/request/unit.tsx": {
@@ -2250,13 +2250,13 @@
     "semantic_hash": "316b31ec503e66838e9ce06bf55e4caa"
   },
   "routes/settings.php": {
-    "mtime": 1789271031.885229,
-    "ast_hash": "1bb120e76deda1babbb5d4a19f9af7b6",
+    "mtime": 1789271437.815701,
+    "ast_hash": "9f4f727377244ca470b7f84ba5fac84a",
     "semantic_hash": ""
   },
   "routes/web.php": {
-    "mtime": 1789271031.8889077,
-    "ast_hash": "d5d98a9fcad0bf85afa9acd21769a4a5",
+    "mtime": 1789271437.8164804,
+    "ast_hash": "2b2303b9e2234cf84f1fc512c68f4ae4",
     "semantic_hash": ""
   },
   "src/@types/i18next.d.ts": {
@@ -2270,9 +2270,9 @@
     "semantic_hash": "a965f406a04b81168c742fd279e3dd3d"
   },
   "tests/Feature/Auth/AuthenticationTest.php": {
-    "mtime": 1789271031.8889077,
-    "ast_hash": "ceca8b72c92dcc1b9828af5f84053eab",
-    "semantic_hash": "ceca8b72c92dcc1b9828af5f84053eab"
+    "mtime": 1789271437.8174071,
+    "ast_hash": "4d677c901138555c77cf5f3589ebb840",
+    "semantic_hash": ""
   },
   "tests/Feature/Auth/EmailVerificationTest.php": {
     "mtime": 1780825279.9942544,
@@ -2340,8 +2340,8 @@
     "semantic_hash": "2bd7b23d74c41552c58a2af2b134702c"
   },
   "tests/Feature/Product/ProductBulkCreateTest.php": {
-    "mtime": 1789271031.8889077,
-    "ast_hash": "bcbc2e0b5ba48bb2f16222c88f5b9174",
+    "mtime": 1789271437.8198562,
+    "ast_hash": "254ef56c50acddbbc1434e9cf7e79338",
     "semantic_hash": ""
   },
   "tests/Feature/Product/ProductExportTest.php": {
@@ -2365,19 +2365,19 @@
     "semantic_hash": "b4d22aa9d28b4fc90995f33405eb5fdb"
   },
   "tests/Feature/Transaction/ApiTransactionControllerTest.php": {
-    "mtime": 1784396891.7596886,
-    "ast_hash": "cba35f67377706514a3b61f49318a752",
-    "semantic_hash": "cba35f67377706514a3b61f49318a752"
+    "mtime": 1789272798.9415498,
+    "ast_hash": "6dbf23e18d84055c53f6fa8ad7f18c79",
+    "semantic_hash": ""
   },
   "tests/Feature/Transaction/TransactionRepositoryTest.php": {
-    "mtime": 1784396900.7237031,
-    "ast_hash": "527f21047664bd8ea69b1292e389e73d",
-    "semantic_hash": "527f21047664bd8ea69b1292e389e73d"
+    "mtime": 1789272761.2430701,
+    "ast_hash": "7554341f63714a96f633b2d07e84b59d",
+    "semantic_hash": ""
   },
   "tests/Feature/Transaction/TransactionSeederTest.php": {
-    "mtime": 1789271031.899943,
-    "ast_hash": "482a9337638df8db4c82a0d2fd3bc5c2",
-    "semantic_hash": "482a9337638df8db4c82a0d2fd3bc5c2"
+    "mtime": 1789271437.8293211,
+    "ast_hash": "af5703583fd91ffb15e8adf82007766b",
+    "semantic_hash": ""
   },
   "tests/Feature/Transaction/TransactionServiceTest.php": {
     "mtime": 1784991737.5514045,
@@ -2655,8 +2655,8 @@
     "semantic_hash": ""
   },
   "app/Http/Controllers/Settings/StoreSettingController.php": {
-    "mtime": 1789271031.5173795,
-    "ast_hash": "4dddf7d458f90e40919e56af4c8e1857",
+    "mtime": 1789271437.1617618,
+    "ast_hash": "ed6de873b7bc38b9d0585b568eed774a",
     "semantic_hash": ""
   },
   "app/Http/Requests/Settings/StoreSettingUpdateRequest.php": {
@@ -2680,8 +2680,8 @@
     "semantic_hash": ""
   },
   "database/seeders/StoreSettingSeeder.php": {
-    "mtime": 1789271031.5688784,
-    "ast_hash": "f811ffe547b156adf8aa79e9b875a5ca",
+    "mtime": 1789271437.186742,
+    "ast_hash": "edb4d07ffe4ccc2da8e3c2874e50f5cb",
     "semantic_hash": ""
   },
   "resources/js/pages/settings/store.tsx": {
@@ -2695,8 +2695,8 @@
     "semantic_hash": ""
   },
   "tests/Feature/Settings/StoreSettingTest.php": {
-    "mtime": 1789271031.8962646,
-    "ast_hash": "e92b8b2a7d471bc3065bef3160e9ac4d",
+    "mtime": 1789271437.8259687,
+    "ast_hash": "e7fe9ed37c8de899634176aed08a5b84",
     "semantic_hash": ""
   },
   "docs/superpowers/plans/2026-07-23-store-settings.md": {
@@ -2810,8 +2810,8 @@
     "semantic_hash": ""
   },
   "app/Services/ProfitWalletService.php": {
-    "mtime": 1788680890.9408634,
-    "ast_hash": "051fe6fb58b8eb9f541636318ff8a448",
+    "mtime": 1789281374.2100418,
+    "ast_hash": "cb7407a8ac6e5592682bf110cb9df2d9",
     "semantic_hash": ""
   },
   "app/Support/Interfaces/Repositories/ProfitWalletRepositoryInterface.php": {
@@ -2820,8 +2820,8 @@
     "semantic_hash": ""
   },
   "app/Support/Interfaces/Services/ProfitWalletServiceInterface.php": {
-    "mtime": 1789271031.5541644,
-    "ast_hash": "eb4956aa24e7fa5b2b3c46e486347ad7",
+    "mtime": 1789271437.1772704,
+    "ast_hash": "76d6ca80a2304f29475e14ee052167d8",
     "semantic_hash": ""
   },
   "tests/Feature/ProfitWallet/ProfitWalletRepositoryTest.php": {
@@ -2865,8 +2865,8 @@
     "semantic_hash": ""
   },
   "app/Http/Requests/ProfitWallet/IndexProfitWalletRequest.php": {
-    "mtime": 1789271031.5247364,
-    "ast_hash": "641e15b0389fd18dc59ee3e4677581d7",
+    "mtime": 1789271437.1660554,
+    "ast_hash": "cf8a82009e912dc8b8c6ff4b4d1f73dd",
     "semantic_hash": ""
   },
   "app/Http/Requests/ProfitWallet/WithdrawCapitalProfitWalletRequest.php": {
@@ -2900,8 +2900,8 @@
     "semantic_hash": ""
   },
   "app/Http/Controllers/Api/ApiProfitWalletController.php": {
-    "mtime": 1788677038.5034885,
-    "ast_hash": "a1d4cc80597e5fcb648a3d041890fda5",
+    "mtime": 1789281477.1545687,
+    "ast_hash": "838b4c0e09fc447ea16bd7ba43721aef",
     "semantic_hash": ""
   },
   "tests/Feature/ProfitWallet/ApiProfitWalletControllerTest.php": {
@@ -2930,13 +2930,13 @@
     "semantic_hash": ""
   },
   "resources/js/pages/profit-wallet/columns.tsx": {
-    "mtime": 1789271054.7769408,
-    "ast_hash": "6f364ef10a3b0a5d7e6ac302a4f79d78",
+    "mtime": 1789271437.8054345,
+    "ast_hash": "27eff6d2487112eb00ad90962b41d88c",
     "semantic_hash": ""
   },
   "resources/js/pages/profit-wallet/data-table.tsx": {
-    "mtime": 1789271031.870515,
-    "ast_hash": "1c79f78e26257de960c449b067bd54bc",
+    "mtime": 1789271437.8065279,
+    "ast_hash": "f1dfd7a57ac19ff4694295a3ed639b46",
     "semantic_hash": ""
   },
   "resources/js/pages/profit-wallet/dialog-modal/disburse-dialog.tsx": {
@@ -2950,8 +2950,8 @@
     "semantic_hash": ""
   },
   "resources/js/pages/profit-wallet/index.tsx": {
-    "mtime": 1789271080.1216238,
-    "ast_hash": "7cdc18e24a295d7b5306d3bde599474b",
+    "mtime": 1789271437.8074608,
+    "ast_hash": "76f8cff57a7e1f925a27c6af309d7472",
     "semantic_hash": ""
   },
   "tests/Feature/ProfitWallet/ProfitWalletWebTest.php": {
@@ -3025,8 +3025,8 @@
     "semantic_hash": ""
   },
   "app/Services/CapitalWalletService.php": {
-    "mtime": 1788680904.1670897,
-    "ast_hash": "b8ed43a78663482766b80af9d2607870",
+    "mtime": 1789280755.9163866,
+    "ast_hash": "af13263d8b1fb9ce251c2da56b5d0e15",
     "semantic_hash": ""
   },
   "app/Support/Enums/CapitalWalletStatusEnums.php": {
@@ -3050,8 +3050,8 @@
     "semantic_hash": ""
   },
   "app/Support/Interfaces/Services/CapitalWalletServiceInterface.php": {
-    "mtime": 1789271031.5504858,
-    "ast_hash": "9305e2cff2a4f8f694ddc14c8fc95f7f",
+    "mtime": 1789271437.1759539,
+    "ast_hash": "6acee09fc8a07bcb0f8003460373b0c3",
     "semantic_hash": ""
   },
   "app/Support/Models/CapitalWallet/GetCapitalWalletTransactionReqModel.php": {
@@ -3075,8 +3075,8 @@
     "semantic_hash": ""
   },
   "app/Http/Controllers/Api/ApiCapitalWalletController.php": {
-    "mtime": 1788677038.4966986,
-    "ast_hash": "84e63d42a898116af6f39d7bc9895b32",
+    "mtime": 1789280745.822054,
+    "ast_hash": "b8d4865bf577c11bd849eefac905a14a",
     "semantic_hash": ""
   },
   "app/Http/Requests/CapitalWallet/DrawdownCapitalWalletRequest.php": {
@@ -3085,8 +3085,8 @@
     "semantic_hash": ""
   },
   "app/Http/Requests/CapitalWallet/IndexCapitalWalletRequest.php": {
-    "mtime": 1789271031.5210578,
-    "ast_hash": "57f4040b75ca5f034b8dd6c813fa3df0",
+    "mtime": 1789271437.1651993,
+    "ast_hash": "d255bc5031a75e890e278f19e3057c51",
     "semantic_hash": ""
   },
   "app/Http/Requests/CapitalWallet/InjectCapitalWalletRequest.php": {
@@ -3135,13 +3135,13 @@
     "semantic_hash": ""
   },
   "resources/js/pages/capital-wallet/columns.tsx": {
-    "mtime": 1789271124.253633,
-    "ast_hash": "f11456fa7ada8bcb800cc40c941911d0",
+    "mtime": 1789271437.7959063,
+    "ast_hash": "5588fd3904680955d64b1f0dbeecd782",
     "semantic_hash": ""
   },
   "resources/js/pages/capital-wallet/data-table.tsx": {
-    "mtime": 1789271031.8447657,
-    "ast_hash": "5ec7d74003cc720c25a32011a41b2e42",
+    "mtime": 1789271437.7971427,
+    "ast_hash": "9aa4d60e23ec8972f4d16a58f75b5f2d",
     "semantic_hash": ""
   },
   "resources/js/pages/capital-wallet/dialog-modal/drawdown-dialog.tsx": {
@@ -3160,8 +3160,8 @@
     "semantic_hash": ""
   },
   "resources/js/pages/capital-wallet/index.tsx": {
-    "mtime": 1789271136.7139738,
-    "ast_hash": "c78dc85767074596f2964182bd97bebe",
+    "mtime": 1789271437.798414,
+    "ast_hash": "7a4fafec1706636a59f5e310302a3f6e",
     "semantic_hash": ""
   },
   "resources/js/support/models/capitalWallet.ts": {
@@ -3470,8 +3470,8 @@
     "semantic_hash": ""
   },
   "app/Exports/TransactionsExport.php": {
-    "mtime": 1789271031.5100224,
-    "ast_hash": "5d272d968e1f9ae76a21a0e558380ebd",
+    "mtime": 1789279738.7634377,
+    "ast_hash": "529312f8afa236c70a743ad48dcf72fc",
     "semantic_hash": ""
   },
   "app/Exports/UnitExport.php": {
@@ -3485,13 +3485,13 @@
     "semantic_hash": ""
   },
   "app/Http/Controllers/SetupController.php": {
-    "mtime": 1789271031.5173795,
-    "ast_hash": "820cf89139cc54118a9749d5c9f56198",
+    "mtime": 1789271437.1618757,
+    "ast_hash": "9b469c09f03cd093f2acf738b7feca95",
     "semantic_hash": ""
   },
   "app/Http/Middleware/EnsureAppIsNotInstalled.php": {
-    "mtime": 1789271031.5210578,
-    "ast_hash": "4ce8e489d9d6e4fbb0d72aaecad60214",
+    "mtime": 1789271437.1642296,
+    "ast_hash": "8b8b702f90649865b8ba0e3f77840e3e",
     "semantic_hash": ""
   },
   "app/Http/Requests/PaymentMethod/ImportPaymentMethodRequest.php": {
@@ -3525,13 +3525,13 @@
     "semantic_hash": ""
   },
   "app/Support/Utils/BarcodeGenerator.php": {
-    "mtime": 1789271031.5541644,
-    "ast_hash": "f91684d78db162e60455a2fd4168b34e",
+    "mtime": 1789271437.1782334,
+    "ast_hash": "6d012c5c3f20e9a4a1d18e623e2eda0e",
     "semantic_hash": ""
   },
   "config/nativephp.php": {
-    "mtime": 1789271031.5615215,
-    "ast_hash": "9092f4431744a87edde9202763c4d733",
+    "mtime": 1789271437.1825714,
+    "ast_hash": "96c672dd13c39d4bce6f13090b660806",
     "semantic_hash": ""
   },
   "lang/en/auth.php": {
@@ -3580,13 +3580,13 @@
     "semantic_hash": ""
   },
   "resources/js/pages/setup/index.tsx": {
-    "mtime": 1789271031.877872,
-    "ast_hash": "8110e10d9495cdd5279d36f32e4f0196",
+    "mtime": 1789271437.8119917,
+    "ast_hash": "1e2fd74bae6e9913f868cd95ef478ca3",
     "semantic_hash": ""
   },
   "resources/js/pages/transaction/dialog-modal/export-modal.tsx": {
-    "mtime": 1789271031.8815506,
-    "ast_hash": "dfd2b081094a356f7563e3023ec78fb4",
+    "mtime": 1789280527.0733922,
+    "ast_hash": "8b5b0809b7cc6e8272daa28567df6dab",
     "semantic_hash": ""
   },
   "resources/js/pages/unit/dialog-modal/import-excel-dialog.tsx": {
@@ -3600,8 +3600,8 @@
     "semantic_hash": ""
   },
   "resources/views/pdf/transactions.blade.php": {
-    "mtime": 1785642774.0994556,
-    "ast_hash": "1623b79ef106a66723d11ed9e5536024",
+    "mtime": 1789279763.268153,
+    "ast_hash": "98396473b55d6f7089ce9993c3482ffe",
     "semantic_hash": ""
   },
   "tests/Feature/Auth/RecoveryTest.php": {
@@ -3625,8 +3625,8 @@
     "semantic_hash": ""
   },
   "tests/Feature/MasterProductExportTest.php": {
-    "mtime": 1789271031.8889077,
-    "ast_hash": "b0a2141c052889c50919dca6daaea07d",
+    "mtime": 1789271437.8189733,
+    "ast_hash": "a408b47d0e6169e3febf43cbac05de54",
     "semantic_hash": ""
   },
   "tests/Feature/PaymentMethod/PaymentMethodImportTest.php": {
@@ -3640,8 +3640,18 @@
     "semantic_hash": ""
   },
   "tests/Feature/ProductCreateMasterProductTest.php": {
-    "mtime": 1789271031.892586,
-    "ast_hash": "5a29b8c5c893de9aa2f99f937a3bf688",
+    "mtime": 1789271437.8219109,
+    "ast_hash": "8279d6761f651556fa92645cc80dfa1a",
+    "semantic_hash": ""
+  },
+  "tests/Feature/Setup/MasterProductSeederCustomFileTest.php": {
+    "mtime": 1789271437.8283093,
+    "ast_hash": "0b26dd65509376e3196bbe9a6aabb351",
+    "semantic_hash": ""
+  },
+  "tests/Feature/Setup/MasterProductUploadTest.php": {
+    "mtime": 1789271437.8287148,
+    "ast_hash": "b031b822dff385630b155e6d89b7829a",
     "semantic_hash": ""
   },
   "tests/Feature/SetupControllerTest.php": {
@@ -3650,8 +3660,8 @@
     "semantic_hash": ""
   },
   "tests/Feature/Transaction/TransactionExportTest.php": {
-    "mtime": 1788677038.7275138,
-    "ast_hash": "56aa628f90e57494f9a829b0d466a1ef",
+    "mtime": 1789279929.1534474,
+    "ast_hash": "529811f3901bc1644fa858084421bc9c",
     "semantic_hash": ""
   },
   "tests/Feature/Unit/UnitImportTest.php": {
@@ -3879,49 +3889,134 @@
     "ast_hash": "64f67c4a546d7ea80be8d2a6e118a74c",
     "semantic_hash": ""
   },
-  "readme.txt": {
-    "mtime": 1789271031.8300517,
-    "ast_hash": "5b61db1465a0e02dd82724cf26a32711",
+  "tests/Feature/Setup/DesktopSetupTest.php": {
+    "mtime": 1789271437.8273876,
+    "ast_hash": "0a50cd1c1178c55b80ff8cbce2a8692c",
+    "semantic_hash": ""
+  },
+  "docs/superpowers/plans/2026-08-09-desktop-setup-wizard.md": {
+    "mtime": 1789271437.1906803,
+    "ast_hash": "e8c2826411bbc9b7221dc1483ab217cf",
+    "semantic_hash": ""
+  },
+  "docs/superpowers/specs/2026-08-09-desktop-setup-wizard-design.md": {
+    "mtime": 1789271437.1974864,
+    "ast_hash": "f565a7f8d0f31b0c8a6b62fcbe676289",
+    "semantic_hash": ""
+  },
+  "app/Http/Controllers/Settings/DataManagementController.php": {
+    "mtime": 1789271437.1607726,
+    "ast_hash": "5f65cd460c3cedca683ede82e1d6b624",
+    "semantic_hash": ""
+  },
+  "app/Http/Requests/Settings/PurgeDataRequest.php": {
+    "mtime": 1789271437.1665165,
+    "ast_hash": "f61aaa30830f6a9d55c62c230c9483a1",
+    "semantic_hash": ""
+  },
+  "resources/js/pages/settings/data-management.tsx": {
+    "mtime": 1789271437.810135,
+    "ast_hash": "af4fc9e9b8febb9784106c68240d7cf9",
+    "semantic_hash": ""
+  },
+  "tests/Feature/Settings/DataPurgeTest.php": {
+    "mtime": 1789271437.8241184,
+    "ast_hash": "607a67b40e1f668b5c40a46e2574a224",
+    "semantic_hash": ""
+  },
+  "docs/superpowers/plans/2026-08-25-data-purging.md": {
+    "mtime": 1789271437.1933265,
+    "ast_hash": "5064c412340903789db06decdc157714",
+    "semantic_hash": ""
+  },
+  "docs/superpowers/specs/2026-08-25-data-purging-design.md": {
+    "mtime": 1789271437.198542,
+    "ast_hash": "c8df17ffc7f9306d878980aca7f9f7a6",
+    "semantic_hash": ""
+  },
+  "public/icon.png": {
+    "mtime": 1789271437.7857103,
+    "ast_hash": "c1653106c7c4fbe41669d2feb3ae4d18",
+    "semantic_hash": ""
+  },
+  "tests/Feature/Settings/DatabaseExportTest.php": {
+    "mtime": 1789271437.8251011,
+    "ast_hash": "e17fd85bfa1d729d12eeebd78b46cdbd",
+    "semantic_hash": ""
+  },
+  "docs/superpowers/plans/2026-08-26-export-sql.md": {
+    "mtime": 1789271437.1942809,
+    "ast_hash": "093d51ad225fda46eb0637295ff08bc7",
+    "semantic_hash": ""
+  },
+  "docs/superpowers/specs/2026-08-26-export-sql-design-doc.md": {
+    "mtime": 1789271437.1995995,
+    "ast_hash": "a72d939b5ea1b374a88ddec938fa6116",
+    "semantic_hash": ""
+  },
+  "resources/js/pages/hpp-calculator/index.tsx": {
+    "mtime": 1789271437.8003747,
+    "ast_hash": "9b7a28524af15ae789d7309838e27e38",
+    "semantic_hash": ""
+  },
+  "tests/Feature/HppCalculatorTest.php": {
+    "mtime": 1789271437.818438,
+    "ast_hash": "3b13ea4ec45665a951d8e4db51ab0348",
+    "semantic_hash": ""
+  },
+  "docs/superpowers/plans/2026-08-27-kalkulator-hpp.md": {
+    "mtime": 1789271437.1964357,
+    "ast_hash": "17faf96741e4b11641b38fe8b8416a52",
+    "semantic_hash": ""
+  },
+  "docs/superpowers/specs/2026-08-27-kalkulator-hpp-design-spec.md": {
+    "mtime": 1789271437.2003741,
+    "ast_hash": "a13b23605e73581242f8ccf94caeb97d",
     "semantic_hash": ""
   },
   "app/Exports/CapitalWalletExport.php": {
-    "mtime": 1789271031.506344,
-    "ast_hash": "c2ddd580824458589bf7f414dc3ea856",
+    "mtime": 1789271437.1571836,
+    "ast_hash": "b634a64e87c9e23dd53fb99f915a3f97",
     "semantic_hash": ""
   },
   "app/Exports/ProfitWalletExport.php": {
-    "mtime": 1789271031.506344,
-    "ast_hash": "dc125fb6b37e04f7f354471dacb11132",
+    "mtime": 1789271437.1580954,
+    "ast_hash": "23cf37fd1cfff7cf910fdf6c8ab14c19",
     "semantic_hash": ""
   },
   "resources/js/pages/capital-wallet/dialog-modal/export-modal.tsx": {
-    "mtime": 1788680862.0392573,
-    "ast_hash": "d31fd3f1aa6a8b7094f1b8cebdff5e41",
+    "mtime": 1789280804.298145,
+    "ast_hash": "7aefbcd4431dab1f63b1e6deb0c5027b",
     "semantic_hash": ""
   },
   "resources/js/pages/profit-wallet/dialog-modal/export-modal.tsx": {
-    "mtime": 1788680804.569555,
-    "ast_hash": "be7585737c800f2c572e0e2bbf9940bf",
+    "mtime": 1789281405.6562026,
+    "ast_hash": "2dd42267aca5c32fc5830d40a197eacf",
     "semantic_hash": ""
   },
   "resources/views/pdf/capital_wallet.blade.php": {
-    "mtime": 1788677038.718424,
-    "ast_hash": "cc33f1807e609cf5f5514f9e78b64290",
+    "mtime": 1789280772.2187228,
+    "ast_hash": "152a23f42a4effae23b51889f5bc7be7",
     "semantic_hash": ""
   },
   "resources/views/pdf/profit_wallet.blade.php": {
-    "mtime": 1788677038.722427,
-    "ast_hash": "63dfe2d3bf31c3c31a967c583303c7c5",
+    "mtime": 1789281383.5087087,
+    "ast_hash": "01bab9dce26abb5a85242f34d6b6790d",
     "semantic_hash": ""
   },
   "tests/Feature/CapitalWallet/CapitalWalletExportTest.php": {
-    "mtime": 1788677038.7246501,
-    "ast_hash": "659a9166b12065876d8664f784517219",
+    "mtime": 1789280839.7978063,
+    "ast_hash": "ab7b28a1029c243532e8674d282ad319",
     "semantic_hash": ""
   },
   "tests/Feature/ProfitWallet/ProfitWalletExportTest.php": {
-    "mtime": 1788677038.7253175,
-    "ast_hash": "e7dc0559c214f209a6f26de8e9eb698c",
+    "mtime": 1789281432.429209,
+    "ast_hash": "5935ffee7922e5d2096cc7df3ec6b596",
+    "semantic_hash": ""
+  },
+  "README.md": {
+    "mtime": 1789271437.1563134,
+    "ast_hash": "3fa9e6f80792a720b1cc499e872aae27",
     "semantic_hash": ""
   },
   "resources/js/components/return-modal.tsx": {
@@ -3939,11 +4034,6 @@
     "ast_hash": "c26650cea24821164d69166dfca4946b",
     "semantic_hash": ""
   },
-  "tests/Feature/Product/ProductUpdateTest.php": {
-    "mtime": 1789060426.698871,
-    "ast_hash": "c4d719d8d54cb435640f775f56155e4b",
-    "semantic_hash": ""
-  },
   "docs/superpowers/plans/2026-09-10-cashier-product-view-toggle.md": {
     "mtime": 1789053624.5884964,
     "ast_hash": "2abb53b946dc41624b7e84f8171e40ec",
@@ -3954,9 +4044,9 @@
     "ast_hash": "bf1a52483f57169d6de35f78914d9ebc",
     "semantic_hash": ""
   },
-  "docs/superpowers/plans/2026-09-13-capital-wallet-reference-permission-check.md": {
-    "mtime": 1789271124.193147,
-    "ast_hash": "2cb91d2d9bfcc37902aaad17f0c97dd8",
+  "tests/Feature/Product/ProductUpdateTest.php": {
+    "mtime": 1789060426.698871,
+    "ast_hash": "c4d719d8d54cb435640f775f56155e4b",
     "semantic_hash": ""
   },
   "docs/superpowers/plans/2026-09-13-product-filter-permission-check.md": {
@@ -3964,19 +4054,9 @@
     "ast_hash": "c7f9c09ea076ce73a9d82de262febdda",
     "semantic_hash": ""
   },
-  "docs/superpowers/plans/2026-09-13-profit-wallet-reference-permission-check.md": {
-    "mtime": 1789271054.4873378,
-    "ast_hash": "83e58b62376a24ed9f3413bc993bce35",
-    "semantic_hash": ""
-  },
   "docs/superpowers/plans/2026-09-13-transaction-filter-permission-check.md": {
     "mtime": 1789271039.8176985,
     "ast_hash": "74092c07d328a8c19a38040052970c59",
-    "semantic_hash": ""
-  },
-  "docs/superpowers/specs/2026-09-13-capital-wallet-reference-permission-check-design.md": {
-    "mtime": 1789271123.9552307,
-    "ast_hash": "06ac081e9e4901a6a317eb6922b53d38",
     "semantic_hash": ""
   },
   "docs/superpowers/specs/2026-09-13-product-filter-permission-check-design.md": {
@@ -3984,14 +4064,29 @@
     "ast_hash": "44487f54c988834cb61b9ded6bf7fd27",
     "semantic_hash": ""
   },
+  "docs/superpowers/specs/2026-09-13-transaction-filter-permission-check-design.md": {
+    "mtime": 1789271038.8685396,
+    "ast_hash": "f1ee156c03ae7c30d3dc21bc9683f772",
+    "semantic_hash": ""
+  },
+  "docs/superpowers/plans/2026-09-13-profit-wallet-reference-permission-check.md": {
+    "mtime": 1789271054.4873378,
+    "ast_hash": "83e58b62376a24ed9f3413bc993bce35",
+    "semantic_hash": ""
+  },
   "docs/superpowers/specs/2026-09-13-profit-wallet-reference-permission-check-design.md": {
     "mtime": 1789271054.231534,
     "ast_hash": "501c7a19fa3f665cd090c708706ffd92",
     "semantic_hash": ""
   },
-  "docs/superpowers/specs/2026-09-13-transaction-filter-permission-check-design.md": {
-    "mtime": 1789271038.8685396,
-    "ast_hash": "f1ee156c03ae7c30d3dc21bc9683f772",
+  "docs/superpowers/plans/2026-09-13-capital-wallet-reference-permission-check.md": {
+    "mtime": 1789271124.193147,
+    "ast_hash": "2cb91d2d9bfcc37902aaad17f0c97dd8",
+    "semantic_hash": ""
+  },
+  "docs/superpowers/specs/2026-09-13-capital-wallet-reference-permission-check-design.md": {
+    "mtime": 1789271123.9552307,
+    "ast_hash": "06ac081e9e4901a6a317eb6922b53d38",
     "semantic_hash": ""
   }
 }
