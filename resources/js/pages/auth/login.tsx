@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next';
 import InputError from '@/components/input-error';
 import PasswordInput from '@/components/password-input';
 import { Button } from '@/components/ui/button';
-import { Checkbox } from '@/components/ui/checkbox';
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -245,20 +244,8 @@ export default function Login({
                                     <InputError message={errors.password} />
                                 </div>
 
-                                {/* Remember me */}
-                                <div className="flex items-center justify-between">
-                                    <div className="flex items-center space-x-2.5">
-                                        <Checkbox
-                                            id="remember"
-                                            name="remember"
-                                            tabIndex={3}
-                                            className="border-border data-[state=checked]:bg-orange-500 data-[state=checked]:border-orange-500"
-                                        />
-                                        <Label htmlFor="remember" className="cursor-pointer text-sm text-muted-foreground select-none">
-                                            {t('page.auth.login.remember_me', 'Ingat saya')}
-                                        </Label>
-                                    </div>
-
+                                {/* Forgot password link */}
+                                <div className="flex items-center justify-end">
                                     <button
                                         type="button"
                                         onClick={() => setMode('recovery_code')}
@@ -272,7 +259,7 @@ export default function Login({
                                 <Button
                                     type="submit"
                                     className="mt-2 h-11 w-full bg-orange-500 text-white hover:bg-orange-600 active:bg-orange-700 transition-colors font-semibold shadow-sm cursor-pointer"
-                                    tabIndex={4}
+                                    tabIndex={3}
                                     disabled={processing}
                                     data-test="login-button"
                                 >

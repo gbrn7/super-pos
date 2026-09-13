@@ -11,6 +11,7 @@ use App\Http\Requests\Product\StoreProductRequest;
 use App\Http\Requests\Product\UpdateProductRequest;
 use App\Http\Resources\ProductResource;
 use App\Support\Enums\ProductPermissionEnums;
+use App\Support\Enums\TransactionPermissionEnums;
 use App\Support\Interfaces\Services\ProductServiceInterface;
 use App\Support\Models\Product\GetProductReqModel;
 use App\Support\Utils\PaginationResource;
@@ -30,7 +31,7 @@ class ApiProductController extends Controller implements HasMiddleware
     {
         return [
             new Middleware(
-                'permission:'.ProductPermissionEnums::READ_PRODUCT->value,
+                'permission:'.ProductPermissionEnums::READ_PRODUCT->value.'|'.TransactionPermissionEnums::CREATE_TRANSACTION->value,
                 only: ['index', 'show', 'getByBarcode', 'exportProductExcelData', 'exportProductPdfData', 'printBarcode']
             ),
 

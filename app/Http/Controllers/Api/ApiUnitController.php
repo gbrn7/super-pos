@@ -8,6 +8,7 @@ use App\Http\Requests\Unit\ImportUnitRequest;
 use App\Http\Requests\Unit\StoreUnitRequest;
 use App\Http\Requests\Unit\UpdateUnitRequest;
 use App\Http\Resources\UnitResource;
+use App\Support\Enums\TransactionPermissionEnums;
 use App\Support\Enums\UnitPermissionEnums;
 use App\Support\Interfaces\Services\UnitServiceInterface;
 use App\Support\Models\Unit\GetUnitReqModel;
@@ -26,7 +27,7 @@ class ApiUnitController extends Controller implements HasMiddleware
     {
         return [
             new Middleware(
-                'permission:'.UnitPermissionEnums::READ_UNIT->value,
+                'permission:'.UnitPermissionEnums::READ_UNIT->value.'|'.TransactionPermissionEnums::CREATE_TRANSACTION->value,
                 only: ['index', 'show', 'exportUnitExcelData']
             ),
 
