@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
     flexRender,
     getCoreRowModel,
@@ -106,6 +107,9 @@ export function DataTable<TData, TValue>({
         columns,
         getCoreRowModel: getCoreRowModel(),
     });
+
+    const [openStartDate, setOpenStartDate] = useState(false);
+    const [openEndDate, setOpenEndDate] = useState(false);
 
     const isFilterActive =
         queryParam.keyword !== '' ||
@@ -355,7 +359,10 @@ export function DataTable<TData, TValue>({
                             'Mulai',
                         )}
                     </Label>
-                    <Popover>
+                    <Popover
+                        open={openStartDate}
+                        onOpenChange={setOpenStartDate}
+                    >
                         <PopoverTrigger asChild>
                             <Button
                                 variant="outline"
@@ -397,6 +404,7 @@ export function DataTable<TData, TValue>({
                                             'start_date',
                                             `${year}-${month}-${day}`,
                                         );
+                                        setOpenStartDate(false);
                                     } else {
                                         onQueryParamChange('start_date', null);
                                     }
@@ -415,7 +423,7 @@ export function DataTable<TData, TValue>({
                             'Hingga',
                         )}
                     </Label>
-                    <Popover>
+                    <Popover open={openEndDate} onOpenChange={setOpenEndDate}>
                         <PopoverTrigger asChild>
                             <Button
                                 variant="outline"
@@ -457,6 +465,7 @@ export function DataTable<TData, TValue>({
                                             'end_date',
                                             `${year}-${month}-${day}`,
                                         );
+                                        setOpenEndDate(false);
                                     } else {
                                         onQueryParamChange('end_date', null);
                                     }
