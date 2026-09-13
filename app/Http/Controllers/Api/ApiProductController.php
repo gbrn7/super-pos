@@ -11,11 +11,13 @@ use App\Http\Requests\Product\StoreProductRequest;
 use App\Http\Requests\Product\UpdateProductRequest;
 use App\Http\Resources\ProductResource;
 use App\Support\Enums\ProductPermissionEnums;
+use App\Support\Enums\TransactionPermissionEnums;
 use App\Support\Interfaces\Services\ProductServiceInterface;
 use App\Support\Models\Product\GetProductReqModel;
 use App\Support\Utils\PaginationResource;
 use App\Support\Utils\ResponseApi;
 use Exception;
+use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
@@ -29,7 +31,7 @@ class ApiProductController extends Controller implements HasMiddleware
     {
         return [
             new Middleware(
-                'permission:'.ProductPermissionEnums::READ_PRODUCT->value,
+                'permission:'.ProductPermissionEnums::READ_PRODUCT->value.'|'.TransactionPermissionEnums::CREATE_TRANSACTION->value,
                 only: ['index', 'show', 'getByBarcode', 'exportProductExcelData', 'exportProductPdfData', 'printBarcode']
             ),
 
@@ -58,9 +60,12 @@ class ApiProductController extends Controller implements HasMiddleware
         try {
             $products = $this->productService->getAllByIndex(new GetProductReqModel($request));
 
-            $items = ProductResource::collection($products->items());
-
-            $data = PaginationResource::make($items, $products);
+            if ($products instanceof Paginator) {
+                $items = ProductResource::collection($products->items());
+                $data = PaginationResource::make($items, $products);
+            } else {
+                $data = ProductResource::collection($products);
+            }
 
             return ResponseApi::make(true, trans('message.success.success'), $data);
         } catch (\Throwable $th) {

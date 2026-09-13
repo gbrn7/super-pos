@@ -9,6 +9,7 @@ use App\Http\Requests\PaymentMethod\StorePaymentMethodRequest;
 use App\Http\Requests\PaymentMethod\UpdatePaymentMethodRequest;
 use App\Http\Resources\PaymentMethodResource;
 use App\Support\Enums\PaymentMethodPermissionEnums;
+use App\Support\Enums\TransactionPermissionEnums;
 use App\Support\Interfaces\Services\PaymentMethodServiceInterface;
 use App\Support\Models\PaymentMethod\GetPaymentMethodReqModel;
 use App\Support\Utils\ResponseApi;
@@ -26,7 +27,7 @@ class ApiPaymentMethodController extends Controller implements HasMiddleware
     {
         return [
             new Middleware(
-                'permission:'.PaymentMethodPermissionEnums::READ_PAYMENT_METHOD->value,
+                'permission:'.PaymentMethodPermissionEnums::READ_PAYMENT_METHOD->value.'|'.TransactionPermissionEnums::CREATE_TRANSACTION->value,
                 only: ['index', 'show', 'exportPaymentMethodExcelData']
             ),
 

@@ -69,6 +69,8 @@ import PaymentMethodDetailDialog from './components/payment-method-detail-dialog
 import UpdateStockDialog from './components/update-stock-dialog';
 import { CreateDialog as CreateProductDialog } from '../product/dialog-modal/create-dialog';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { useAuth } from '@/hooks/use-auth';
+import { PERMISSIONENUMS } from '@/support/enums/PermissionEnums';
 
 export interface CartItem {
     product: Product;
@@ -85,6 +87,8 @@ export default function CashierIndex({
     storeSetting?: StoreSetting | null;
 }) {
     const { t } = useTranslation();
+    const { hasPermission } = useAuth();
+    const canUpdateProduct = hasPermission(PERMISSIONENUMS.PRODUCT.UPDATE);
 
     // ── Products state ──────────────────────────────────────────────────────────
     const [products, setProducts] = useState<Product[]>([]);
@@ -1012,8 +1016,13 @@ export default function CashierIndex({
                                                 key={product.id}
                                                 product={product}
                                                 onAdd={addToCart}
-                                                onEditStock={(p) =>
-                                                    setStockEditProduct(p)
+                                                onEditStock={
+                                                    canUpdateProduct
+                                                        ? (p) =>
+                                                              setStockEditProduct(
+                                                                  p,
+                                                              )
+                                                        : undefined
                                                 }
                                                 isInCart={cart.some(
                                                     (i) =>
@@ -1031,8 +1040,11 @@ export default function CashierIndex({
                                             key={product.id}
                                             product={product}
                                             onAdd={addToCart}
-                                            onEditStock={(p) =>
-                                                setStockEditProduct(p)
+                                            onEditStock={
+                                                canUpdateProduct
+                                                    ? (p) =>
+                                                          setStockEditProduct(p)
+                                                    : undefined
                                             }
                                             isInCart={cart.some(
                                                 (i) =>
@@ -1943,12 +1955,14 @@ export default function CashierIndex({
             />
 
             {/* Update Stock Dialog */}
-            <UpdateStockDialog
-                open={!!stockEditProduct}
-                product={stockEditProduct}
-                onClose={() => setStockEditProduct(null)}
-                onSuccess={handleStockUpdateSuccess}
-            />
+            {canUpdateProduct && (
+                <UpdateStockDialog
+                    open={!!stockEditProduct}
+                    product={stockEditProduct}
+                    onClose={() => setStockEditProduct(null)}
+                    onSuccess={handleStockUpdateSuccess}
+                />
+            )}
         </>
     );
 }

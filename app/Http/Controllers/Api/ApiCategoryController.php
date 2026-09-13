@@ -9,6 +9,7 @@ use App\Http\Requests\Category\StoreCategoryRequest;
 use App\Http\Requests\Category\UpdateCategoryRequest;
 use App\Http\Resources\CategoryResource;
 use App\Support\Enums\CategoryPermissionEnums;
+use App\Support\Enums\TransactionPermissionEnums;
 use App\Support\Interfaces\Services\CategoryServiceInterface;
 use App\Support\Models\Category\GetCategoryReqModel;
 use App\Support\Utils\ResponseApi;
@@ -26,7 +27,7 @@ class ApiCategoryController extends Controller implements HasMiddleware
     {
         return [
             new Middleware(
-                'permission:'.CategoryPermissionEnums::READ_CATEGORY->value,
+                'permission:'.CategoryPermissionEnums::READ_CATEGORY->value.'|'.TransactionPermissionEnums::CREATE_TRANSACTION->value,
                 only: ['index', 'show', 'exportCategoryExcelData']
             ),
 
