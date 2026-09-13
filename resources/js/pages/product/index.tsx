@@ -25,12 +25,18 @@ import type { Product } from '@/support/models/product';
 import type { Unit } from '@/support/models/unit';
 import { columns } from './columns';
 import { DataTable } from './data-table';
+import { useAuth } from '@/hooks/use-auth';
+import { PERMISSIONENUMS } from '@/support/enums/PermissionEnums';
 
 const { url } = products();
 
 export default function Index() {
     const { url: apiUrl } = apiGetProducts();
     const { t } = useTranslation();
+    const { hasPermission } = useAuth();
+
+    const canReadCategory = hasPermission(PERMISSIONENUMS.CATEGORY.READ);
+    const canReadUnit = hasPermission(PERMISSIONENUMS.UNIT.READ);
 
     const [allProducts, setAllProducts] = useState<Product[]>([]);
     const [pagination, setPagination] = useState<Pagination>({
@@ -217,9 +223,20 @@ export default function Index() {
     };
 
     useEffect(() => {
-        // eslint-disable-next-line react-hooks/set-state-in-effect
-        void Promise.all([fetchUnits(), fetchCategories()]);
-    }, []);
+        const promises: Promise<void>[] = [];
+
+        if (canReadCategory) {
+            promises.push(fetchCategories());
+        }
+
+        if (canReadUnit) {
+            promises.push(fetchUnits());
+        }
+
+        if (promises.length > 0) {
+            void Promise.all(promises);
+        }
+    }, [canReadCategory, canReadUnit]);
 
     useEffect(() => {
         if (!hasMountedQueryEffect.current) {
@@ -261,6 +278,8 @@ export default function Index() {
                     columns={columns}
                     categories={categories}
                     units={units}
+                    canReadCategory={canReadCategory}
+                    canReadUnit={canReadUnit}
                     processing={processing}
                     data={allProducts}
                     limitOptions={PAGINATIONLIMITOPTIONDEFAULT}
