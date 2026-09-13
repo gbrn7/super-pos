@@ -3135,8 +3135,8 @@
     "semantic_hash": ""
   },
   "resources/js/pages/capital-wallet/columns.tsx": {
-    "mtime": 1789060794.3491468,
-    "ast_hash": "70a088e7807203c14bc6d46d271132ef",
+    "mtime": 1789270724.7322524,
+    "ast_hash": "5588fd3904680955d64b1f0dbeecd782",
     "semantic_hash": ""
   },
   "resources/js/pages/capital-wallet/data-table.tsx": {
@@ -3160,8 +3160,8 @@
     "semantic_hash": ""
   },
   "resources/js/pages/capital-wallet/index.tsx": {
-    "mtime": 1789060794.353039,
-    "ast_hash": "6de84c9d3d8930bac24a522f939ba6de",
+    "mtime": 1789270747.3977332,
+    "ast_hash": "7a4fafec1706636a59f5e310302a3f6e",
     "semantic_hash": ""
   },
   "resources/js/support/models/capitalWallet.ts": {
@@ -4077,6 +4077,16 @@
   "docs/superpowers/specs/2026-09-13-profit-wallet-reference-permission-check-design.md": {
     "mtime": 1789270258.9045346,
     "ast_hash": "501c7a19fa3f665cd090c708706ffd92",
+    "semantic_hash": ""
+  },
+  "docs/superpowers/plans/2026-09-13-capital-wallet-reference-permission-check.md": {
+    "mtime": 1789270688.3432696,
+    "ast_hash": "2cb91d2d9bfcc37902aaad17f0c97dd8",
+    "semantic_hash": ""
+  },
+  "docs/superpowers/specs/2026-09-13-capital-wallet-reference-permission-check-design.md": {
+    "mtime": 1789270661.2130482,
+    "ast_hash": "06ac081e9e4901a6a317eb6922b53d38",
     "semantic_hash": ""
   }
 }

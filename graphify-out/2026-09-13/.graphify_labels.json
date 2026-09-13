@@ -401,5 +401,6 @@
   "399": "@types/react",
   "400": "vaul",
   "401": "prettier-plugin-tailwindcss",
-  "402": "@types/sprintf-js"
+  "402": "@types/sprintf-js",
+  "403": "typescript-eslint"
 }

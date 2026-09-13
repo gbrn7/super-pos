@@ -2930,8 +2930,8 @@
     "semantic_hash": ""
   },
   "resources/js/pages/profit-wallet/columns.tsx": {
-    "mtime": 1789060794.3688567,
-    "ast_hash": "3e668d6f34685da1a9fd8ec81633fa54",
+    "mtime": 1789270308.837251,
+    "ast_hash": "27eff6d2487112eb00ad90962b41d88c",
     "semantic_hash": ""
   },
   "resources/js/pages/profit-wallet/data-table.tsx": {
@@ -2950,8 +2950,8 @@
     "semantic_hash": ""
   },
   "resources/js/pages/profit-wallet/index.tsx": {
-    "mtime": 1789060794.372429,
-    "ast_hash": "d5778df94c50c6201f5fad5c55607b02",
+    "mtime": 1789270341.0238426,
+    "ast_hash": "76f8cff57a7e1f925a27c6af309d7472",
     "semantic_hash": ""
   },
   "tests/Feature/ProfitWallet/ProfitWalletWebTest.php": {
@@ -4067,6 +4067,16 @@
   "docs/superpowers/specs/2026-09-13-transaction-filter-permission-check-design.md": {
     "mtime": 1789268957.2801101,
     "ast_hash": "f1ee156c03ae7c30d3dc21bc9683f772",
+    "semantic_hash": ""
+  },
+  "docs/superpowers/plans/2026-09-13-profit-wallet-reference-permission-check.md": {
+    "mtime": 1789270286.5581675,
+    "ast_hash": "83e58b62376a24ed9f3413bc993bce35",
+    "semantic_hash": ""
+  },
+  "docs/superpowers/specs/2026-09-13-profit-wallet-reference-permission-check-design.md": {
+    "mtime": 1789270258.9045346,
+    "ast_hash": "501c7a19fa3f665cd090c708706ffd92",
     "semantic_hash": ""
   }
 }
