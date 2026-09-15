@@ -4105,13 +4105,13 @@
     "semantic_hash": ""
   },
   "database/seeders/ProductFromMasterProductSeeder.php": {
-    "mtime": 1789481185.7548006,
-    "ast_hash": "731c36deecfbbc2631f3074655890d43",
+    "mtime": 1789483215.1164103,
+    "ast_hash": "1743a4e1ccc52ab2953278b557d4cdab",
     "semantic_hash": ""
   },
   "tests/Feature/ProductFromMasterProductSeederTest.php": {
-    "mtime": 1789482270.2406514,
-    "ast_hash": "08f9d48e9da9e38b434c667680d9fdde",
+    "mtime": 1789483215.2019935,
+    "ast_hash": "e0d05d72ea0adf974fd5d3bddeb11869",
     "semantic_hash": ""
   },
   "docs/superpowers/plans/2026-09-15-product-from-master-product-seeder.md": {
