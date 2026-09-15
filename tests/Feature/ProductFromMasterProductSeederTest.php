@@ -4,6 +4,7 @@ use App\Models\Category;
 use App\Models\MasterProduct;
 use App\Models\Product;
 use App\Models\Unit;
+use Database\Seeders\CategorySeeder;
 use Database\Seeders\ProductFromMasterProductSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -90,4 +91,12 @@ test('it handles duplicate barcodes gracefully without error', function () {
 
     // Product count should remain 1
     expect(Product::where('barcode', '8999999999001')->count())->toBe(1);
+});
+
+test('category seeder includes the Umum category', function () {
+    $this->seed(CategorySeeder::class);
+
+    $umum = Category::where('name', 'Umum')->first();
+    expect($umum)->not->toBeNull()
+        ->and($umum->desc)->toBe('Kategori umum untuk produk lainnya.');
 });
