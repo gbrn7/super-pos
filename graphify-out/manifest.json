@@ -985,17 +985,17 @@
     "semantic_hash": ""
   },
   "database/seeders/CategorySeeder.php": {
-    "mtime": 1785950192.088372,
-    "ast_hash": "689efe1a745f4b16e48671bb431ea4c2",
+    "mtime": 1789482107.5498428,
+    "ast_hash": "7214d2bbd577f8041594c2b49469c55b",
     "semantic_hash": ""
   },
   "database/seeders/DatabaseSeeder.php": {
-    "mtime": 1789299320.317218,
-    "ast_hash": "0079eaa1aa3415ef287d950bccdc7ccb",
+    "mtime": 1789481779.0874362,
+    "ast_hash": "ec3415d4511adf9820d2b1db13e39e48",
     "semantic_hash": ""
   },
   "database/seeders/MasterProductSeeder.php": {
-    "mtime": 1789299320.3181648,
+    "mtime": 1789481850.948494,
     "ast_hash": "e3ca66093168fe65dbd92219099ce8d2",
     "semantic_hash": ""
   },
@@ -4110,8 +4110,8 @@
     "semantic_hash": ""
   },
   "tests/Feature/ProductFromMasterProductSeederTest.php": {
-    "mtime": 1789481068.3440754,
-    "ast_hash": "473e32584683570779095c7948e1171a",
+    "mtime": 1789482270.2406514,
+    "ast_hash": "08f9d48e9da9e38b434c667680d9fdde",
     "semantic_hash": ""
   },
   "docs/superpowers/plans/2026-09-15-product-from-master-product-seeder.md": {
