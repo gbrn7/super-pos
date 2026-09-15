@@ -14,6 +14,10 @@ class CategorySeeder extends Seeder
     {
         $categories = [
             [
+                'name' => 'Umum',
+                'desc' => 'Kategori umum untuk produk lainnya.',
+            ],
+            [
                 'name' => 'Sembako',
                 'desc' => 'Beras, minyak goreng, gula, tepung, dan bahan pokok harian.',
             ],
