@@ -100,3 +100,28 @@ test('category seeder includes the Umum category', function () {
     expect($umum)->not->toBeNull()
         ->and($umum->desc)->toBe('Kategori umum untuk produk lainnya.');
 });
+
+test('it provides default thousands cost_price and price divisible by 500 when master price is 0', function () {
+    MasterProduct::create([
+        'name' => 'Zero Price Product',
+        'category_name' => 'Umum',
+        'unit_name' => 'Pcs',
+        'barcode' => '8999888777666',
+        'price' => 0,
+        'cost_price' => 0,
+    ]);
+
+    $this->seed(ProductFromMasterProductSeeder::class);
+
+    $product = Product::where('barcode', '8999888777666')->first();
+
+    expect($product)->not->toBeNull();
+    $costPrice = (int) $product->cost_price;
+    $price = (int) $product->price;
+
+    expect($costPrice)->toBeGreaterThanOrEqual(1000)
+        ->and($price)->toBeGreaterThanOrEqual(1000)
+        ->and($costPrice % 500)->toBe(0)
+        ->and($price % 500)->toBe(0)
+        ->and($price)->toBeGreaterThanOrEqual($costPrice);
+});

@@ -75,6 +75,9 @@ class ProductFromMasterProductSeeder extends Seeder
 
                     $sku = $prefix.'-'.strtoupper(Str::random(8));
 
+                    // Resolve prices: ensure defaults in thousands and divisible by 500 when 0
+                    $prices = $this->resolvePrices((float) $master->cost_price, (float) $master->price);
+
                     $productsToInsert[] = [
                         'category_id' => $categoryId,
                         'unit_id' => $unitId,
@@ -87,8 +90,8 @@ class ProductFromMasterProductSeeder extends Seeder
                         'stock' => rand(10, 50),
                         'sold_quantity' => 0,
                         'image' => null,
-                        'price' => $master->price,
-                        'cost_price' => $master->cost_price,
+                        'price' => $prices['price'],
+                        'cost_price' => $prices['cost_price'],
                         'created_at' => $now,
                         'updated_at' => $now,
                     ];
@@ -98,5 +101,32 @@ class ProductFromMasterProductSeeder extends Seeder
                     Product::insertOrIgnore($productsToInsert);
                 }
             });
+    }
+
+    /**
+     * Resolve cost price and selling price.
+     * When master price is 0, provide default thousands divisible by 500.
+     *
+     * @return array{cost_price: float, price: float}
+     */
+    private function resolvePrices(float $costPrice, float $price): array
+    {
+        if ($costPrice <= 0 && $price <= 0) {
+            $costPrice = rand(4, 40) * 500; // 2.000 - 20.000
+            $price = $costPrice + (rand(2, 10) * 500); // 1.000 - 5.000 di atas harga modal
+        } elseif ($costPrice <= 0) {
+            $estimatedCost = ((int) floor(($price * 0.8) / 500)) * 500;
+            $costPrice = max(1000, min((int) $price, $estimatedCost));
+            if ($costPrice % 500 !== 0) {
+                $costPrice = ((int) round($costPrice / 500)) * 500;
+            }
+        } elseif ($price <= 0) {
+            $price = max(1000, ((int) ceil(($costPrice + 1000) / 500)) * 500);
+        }
+
+        return [
+            'cost_price' => $costPrice,
+            'price' => $price,
+        ];
     }
 }
