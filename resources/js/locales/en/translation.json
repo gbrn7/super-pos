@@ -853,7 +853,8 @@
                     "product_label": "Product",
                     "no_barcode_error": "This product does not have a barcode code.",
                     "cancel_button": "Cancel",
-                    "confirm_button": "Print PDF"
+                    "confirm_button": "Print PDF",
+                    "processing":"Processing..."
                 }
             }
         },

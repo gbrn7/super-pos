@@ -853,7 +853,8 @@
                     "product_label": "Produk",
                     "no_barcode_error": "Produk ini belum memiliki kode barcode.",
                     "cancel_button": "Batal",
-                    "confirm_button": "Cetak PDF"
+                    "confirm_button": "Cetak PDF",
+                    "processing":"Memproses..."
                 }
             }
         },

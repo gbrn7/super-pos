@@ -64,10 +64,10 @@ export function PrintBarcodeDialog({
                     const json = JSON.parse(text);
                     setErrorMessage(
                         json.message ||
-                            t(
-                                'page.product.dialog_modal.print_barcode_dialog.no_barcode_error',
-                                'Barcode tidak ditemukan pada produk ini.',
-                            ),
+                        t(
+                            'page.product.dialog_modal.print_barcode_dialog.no_barcode_error',
+                            'Barcode tidak ditemukan pada produk ini.',
+                        ),
                     );
                 } catch {
                     setErrorMessage(
@@ -205,11 +205,14 @@ export function PrintBarcodeDialog({
                     </Button>
                     <Button onClick={handlePrint} disabled={!hasBarcode || loading}>
                         {loading
-                            ? 'Processing...'
+                            ? t(
+                                'page.product.dialog_modal.print_barcode_dialog.processing',
+                                'Memproses...',
+                            )
                             : t(
-                                  'page.product.dialog_modal.print_barcode_dialog.confirm_button',
-                                  'Cetak PDF',
-                              )}
+                                'page.product.dialog_modal.print_barcode_dialog.confirm_button',
+                                'Cetak PDF',
+                            )}
                     </Button>
                 </DialogFooter>
             </DialogContent>
