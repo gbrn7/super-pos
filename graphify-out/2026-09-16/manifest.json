@@ -3300,8 +3300,8 @@
     "semantic_hash": ""
   },
   "resources/js/pages/returns/index.tsx": {
-    "mtime": 1789567498.7559624,
-    "ast_hash": "e1de43d7fa333708c775b59f63cf1722",
+    "mtime": 1789566721.4588976,
+    "ast_hash": "2a35d31194148973cba9ade15575bbfb",
     "semantic_hash": ""
   },
   "tests/Feature/ReturnControllerTest.php": {
@@ -4122,11 +4122,6 @@
   "docs/superpowers/specs/2026-09-15-product-from-master-product-seeder-design.md": {
     "mtime": 1789484304.399873,
     "ast_hash": "49c69ff33aff62042adc710ada878906",
-    "semantic_hash": ""
-  },
-  "resources/js/pages/returns/data-table.tsx": {
-    "mtime": 1789567453.1843998,
-    "ast_hash": "d7c3265ed46f90df8b5a4ceab0f816fb",
     "semantic_hash": ""
   }
 }
