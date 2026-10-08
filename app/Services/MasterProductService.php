@@ -197,7 +197,6 @@ class MasterProductService implements MasterProductServiceInterface
 
             return $insertedCount;
         } catch (\Throwable $th) {
-            dd($th->getMessage());
             DB::rollback();
             if ($th->getCode() === ErrorCode::SQL_UNIQUE_VIOLATION) {
                 $th = new Exception(trans('message.error.duplicate_data_error_import'), Response::HTTP_INTERNAL_SERVER_ERROR);
