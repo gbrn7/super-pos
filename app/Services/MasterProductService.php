@@ -197,6 +197,7 @@ class MasterProductService implements MasterProductServiceInterface
 
             return $insertedCount;
         } catch (\Throwable $th) {
+            dd($th->getMessage());
             DB::rollback();
             if ($th->getCode() === ErrorCode::SQL_UNIQUE_VIOLATION) {
                 $th = new Exception(trans('message.error.duplicate_data_error_import'), Response::HTTP_INTERNAL_SERVER_ERROR);
@@ -224,7 +225,7 @@ class MasterProductService implements MasterProductServiceInterface
             $request = new GetMasterProductReqModel(new Request(['limit' => null]));
             $Masterproducts = $this->MasterproductRepository->getAllByIndex($request);
 
-            $temporaryFilePath = tempnam(sys_get_temp_dir(), 'MasterProducts-export-').'.pdf';
+            $temporaryFilePath = tempnam(sys_get_temp_dir(), 'MasterProducts-export-') . '.pdf';
 
             Pdf::loadView('exports.master-products-pdf', ['masterproducts' => $Masterproducts])
                 ->setPaper('a4', 'landscape')
