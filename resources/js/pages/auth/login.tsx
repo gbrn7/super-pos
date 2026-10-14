@@ -221,6 +221,7 @@ export default function Login({
                                         autoComplete="email"
                                         placeholder="email@example.com"
                                         className="h-11 transition-shadow focus-visible:ring-orange-500/50"
+                                        value="superadmin@praktispos.com"
                                     />
                                     <InputError message={errors.email} />
                                 </div>
@@ -240,6 +241,7 @@ export default function Login({
                                         autoComplete="current-password"
                                         placeholder="Password"
                                         className="h-11 transition-shadow focus-visible:ring-orange-500/50"
+                                        value="password"
                                     />
                                     <InputError message={errors.password} />
                                 </div>
